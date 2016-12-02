@@ -1,0 +1,8 @@
+.datatable-body-cell-label span {
+  width: auto;
+  word-wrap: break-word;
+}
+
+.action-holder > .btn{
+  margin: 1%;
+}

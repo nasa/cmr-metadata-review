@@ -1,0 +1,91 @@
+<div>
+  <div class='col-md-7'>
+    <h4 *ngIf="collection"> The comparision is between revision {{collection.previous_version}} and {{collection.latest_version}}</h4>
+    <div class='action-holder' *ngIf='ng2TokenService.userSignedIn()'>
+      <button class='btn btn-primary' id='start_review_btn' (click)="startReviewing()" *ngIf="!review">
+        Start Reviewing
+      </button>
+      <div *ngIf="review && review.status != 'reviewed'">
+        <span>You are currently reviewing this collection/granule.</span>
+        <button class='btn btn-success' id='finish_review_btn' (click)="collReviewed()">
+          Reviewed
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-4' *ngIf='ng2TokenService.userSignedIn()'>
+    <table class='table simple-table table-bordered' *ngIf="history.length > 0">
+      <thead>
+        <tr>
+          <th>
+            Checked By
+          </th>
+          <th>
+            Time
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hist of history">
+          <td>
+            <span>
+              {{hist.user}}
+            </span>
+          </td>
+          <td>
+            <span>
+              {{hist.end_time}} ( {{hist.status}} )
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h4 *ngIf="history.length <= 0">
+      No one has started reviewing this.
+    </h4>
+  </div>
+  <datatable
+    class='material stripped'
+    [rows]='elements'
+    [options]='options'>
+    <template #recommended let-value='value' let-row='row'>
+      <div *ngIf='ng2TokenService.userSignedIn() && review && review.status != "reviewed"'>
+        <span
+          title='Double click to edit'
+          (dblclick)="editing[row.$$index]['recommended'] = true"
+          *ngIf="!editing[row.$$index]['recommended']">
+          {{value}}
+        </span>
+        <div *ngIf="editing[row.$$index]['recommended']">
+          <textarea
+            autofocus
+            (blur)="updateValue($event, 'recommended', value, row)"
+            [value]="value" row=5 column=25>
+          </textarea>
+        </div>
+      </div>
+      <span *ngIf="!ng2TokenService.userSignedIn() || (review && review.status === 'reviewed')">
+        {{value}}
+      </span>
+    </template>
+    <template #reason let-value='value' let-row='row'>
+      <div *ngIf='ng2TokenService.userSignedIn() && review && review.status != "reviewed"'>
+        <span
+          title='Double click to edit'
+          (dblclick)="editing[row.$$index]['reason'] = true"
+          *ngIf="!editing[row.$$index]['reason']">
+          {{value}}
+        </span>
+        <div *ngIf="editing[row.$$index]['reason']">
+          <textarea autofocus
+            (blur)="updateValue($event, 'reason', value, row)"
+            [value]="value" row=5 column=25>
+          </textarea>
+        </div>
+      </div>
+      <span *ngIf="!ng2TokenService.userSignedIn() || (review && review.status === 'reviewed')">
+        {{value}}
+      </span>
+    </template>
+  </datatable>
+</div>

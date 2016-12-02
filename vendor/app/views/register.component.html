@@ -1,0 +1,25 @@
+<div class="row" align='center'>
+  <div class="login-box panel panel-default">
+    <div class="card card-block">
+      <h4 class="card-title">Sign up</h4>
+
+      <form #signUpForm="ngForm" (ngSubmit)="signUp()">
+        <div class="form-group">
+          <label for="formGroupExampleInput">Email</label>
+          <input class="form-control" name="email" placeholder="Email" [(ngModel)]= "auth_data.email" required="required" type="text" >
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Password</label>
+          <input class="form-control" [(ngModel)]= "auth_data.password" name="password" placeholder="Password" required="required" type="password">
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Password Confirmation</label>
+          <input class="form-control" [(ngModel)]= "auth_data.passwordConfirmation" name="password-confirmation" placeholder="Password Confirmation" required="required" type="password">
+        </div>
+        <button class="btn btn-primary" [disabled]="!signUpForm.form.valid" type="submit">Sign Up</button>
+        <span>OR</span>
+        <a routerLink="/signin"> Sign in </a>
+      </form>
+    </div>
+  </div>
+</div>

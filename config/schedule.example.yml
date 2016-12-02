@@ -1,0 +1,4 @@
+gather_daac_details:
+  cron: '00 00 * * *'
+  class: 'GatherDaacDetails'
+  queue: cron_jobs

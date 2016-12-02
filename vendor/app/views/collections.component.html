@@ -1,0 +1,35 @@
+<div align='center'>
+  <div *ngIf="daac" align='center'>
+    <ul class="nav nav-pills">
+      <li role="presentation" routerLinkActive='active'><a routerLink="/daac/{{daac.name}}/collections" >Collections</a></li>
+      <li role="presentation" routerLinkActive='active'><a routerLink="/daac/{{daac.name}}/granules">Granules</a></li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <input
+    type='text'
+    style="padding:8px;margin:15px;width:30%;"
+    placeholder='Search using id for {{ resource }}'
+    [ngModel]='val'
+    (ngModelChange)='updateFilter($event)'
+  />
+  <datatable
+    class='material stripped'
+    [rows]='collections'
+    [options]='options'>
+    <template #template let-value="value" let-row="row">
+      <a routerLink="/{{resource}}/{{value}}" (click)="$event.stopPropagation()">{{value}}</a>
+    </template>
+    <template #collectionTemplate let-value="value" let-row="row">
+      <a routerLink="/collections/{{value}}" (click)="$event.stopPropagation()">{{value}}</a>
+    </template>
+    <template #selected_granule_template let-value="value" let-row="row">
+      <a routerLink="/granules/{{value}}" *ngIf="value">{{value}}</a>
+      <button class='btn btn-primary' *ngIf="row.granule_count != 0 && !value" (click)="randomGranule(row);$event.stopPropagation()">Random Granule</button>
+      <span *ngIf="row.granule_count == 0">No Granules found</span>
+    </template>
+  </datatable>
+</div>
+
