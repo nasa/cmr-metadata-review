@@ -23,7 +23,6 @@ gem 'httparty'
 #   gem 'rails-assets-tether', '>= 1.1.0'
 # end
 
-gem 'libxml-ruby'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -32,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'mongoid', '~> 5.1.0'
+gem 'pg',       '~> 0.17.1'
 gem 'bson_ext'
 
 gem 'redis'
@@ -72,4 +71,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
+
+
+gem 'dotenv-rails', '~> 2.1.0'
+gem 'aws-sdk', '~> 2'
 
