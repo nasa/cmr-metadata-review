@@ -4,7 +4,11 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.3.12', group: [:test]
+# use pg for local and prod development
+gem 'pg', '~> 0.17.1', group: [:development, :production]
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -36,6 +40,22 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end
+
+#using puma server instead of webBrick
+gem 'puma', '~> 3.6.2'
+#base authentication gem
+gem 'devise', '~> 3.5.10'
+#setting user permissions for pages
+gem 'cancan', '~> 1.6.10'
+
+#js runtime
+gem 'execjs', '~> 2.7.0'
+#communication with aws S3 & other utils
+gem 'aws-sdk', '~> 2.2.37'
+#store env vars in the .env file
+gem 'dotenv-rails', '~> 2.1.1'
+
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
