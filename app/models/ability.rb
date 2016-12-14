@@ -7,7 +7,7 @@ class Ability
       user ||= User.new # guest user (not logged in)
       if user.admin?
         can :access, :curate
-        can :access, :sign_up
+        can :access, :create_user
       end
 
       if user.curator?
