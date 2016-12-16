@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216202003) do
+ActiveRecord::Schema.define(version: 20161216204306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,53 @@ ActiveRecord::Schema.define(version: 20161216202003) do
 
   add_index "collection_reviews", ["collection_record_id"], name: "index_collection_reviews_on_collection_record_id", using: :btree
   add_index "collection_reviews", ["user_id"], name: "index_collection_reviews_on_user_id", using: :btree
+
+  create_table "granule_comments", force: :cascade do |t|
+    t.integer "granule_record_id"
+    t.integer "user_id"
+    t.integer "total_comment_count"
+    t.string  "rawJSON"
+  end
+
+  add_index "granule_comments", ["granule_record_id"], name: "index_granule_comments_on_granule_record_id", using: :btree
+  add_index "granule_comments", ["user_id"], name: "index_granule_comments_on_user_id", using: :btree
+
+  create_table "granule_flags", force: :cascade do |t|
+    t.integer "granule_record_id"
+    t.integer "user_id"
+    t.integer "total_flag_count"
+    t.string  "rawJSON"
+  end
+
+  add_index "granule_flags", ["granule_record_id"], name: "index_granule_flags_on_granule_record_id", using: :btree
+  add_index "granule_flags", ["user_id"], name: "index_granule_flags_on_user_id", using: :btree
+
+  create_table "granule_ingests", force: :cascade do |t|
+    t.integer  "granule_record_id"
+    t.integer  "user_id"
+    t.datetime "date_ingested"
+  end
+
+  add_index "granule_ingests", ["granule_record_id"], name: "index_granule_ingests_on_granule_record_id", using: :btree
+  add_index "granule_ingests", ["user_id"], name: "index_granule_ingests_on_user_id", using: :btree
+
+  create_table "granule_records", force: :cascade do |t|
+    t.string  "granule_ur"
+    t.float   "version_id"
+    t.string  "collection_concept_id"
+    t.boolean "closed"
+    t.string  "rawJSON"
+  end
+
+  create_table "granule_reviews", force: :cascade do |t|
+    t.integer  "granule_record_id"
+    t.integer  "user_id"
+    t.datetime "review_completion_date"
+    t.integer  "review_state"
+  end
+
+  add_index "granule_reviews", ["granule_record_id"], name: "index_granule_reviews_on_granule_record_id", using: :btree
+  add_index "granule_reviews", ["user_id"], name: "index_granule_reviews_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
