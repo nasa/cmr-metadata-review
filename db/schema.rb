@@ -11,10 +11,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214170518) do
+ActiveRecord::Schema.define(version: 20161216202003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "collection_comments", force: :cascade do |t|
+    t.integer "collection_record_id"
+    t.integer "user_id"
+    t.integer "total_comment_count"
+    t.string  "rawJSON"
+  end
+
+  add_index "collection_comments", ["collection_record_id"], name: "index_collection_comments_on_collection_record_id", using: :btree
+  add_index "collection_comments", ["user_id"], name: "index_collection_comments_on_user_id", using: :btree
+
+  create_table "collection_flags", force: :cascade do |t|
+    t.integer "collection_record_id"
+    t.integer "user_id"
+    t.integer "total_flag_count"
+    t.string  "rawJSON"
+  end
+
+  add_index "collection_flags", ["collection_record_id"], name: "index_collection_flags_on_collection_record_id", using: :btree
+  add_index "collection_flags", ["user_id"], name: "index_collection_flags_on_user_id", using: :btree
+
+  create_table "collection_ingests", force: :cascade do |t|
+    t.integer  "collection_record_id"
+    t.integer  "user_id"
+    t.datetime "date_ingested"
+  end
+
+  add_index "collection_ingests", ["collection_record_id"], name: "index_collection_ingests_on_collection_record_id", using: :btree
+  add_index "collection_ingests", ["user_id"], name: "index_collection_ingests_on_user_id", using: :btree
+
+  create_table "collection_records", force: :cascade do |t|
+    t.string  "concept_id",              null: false
+    t.string  "short_name", default: ""
+    t.float   "version_id"
+    t.boolean "closed"
+    t.string  "rawJSON"
+  end
+
+  create_table "collection_reviews", force: :cascade do |t|
+    t.integer  "collection_record_id"
+    t.integer  "user_id"
+    t.datetime "review_completion_date"
+    t.integer  "review_state"
+  end
+
+  add_index "collection_reviews", ["collection_record_id"], name: "index_collection_reviews_on_collection_record_id", using: :btree
+  add_index "collection_reviews", ["user_id"], name: "index_collection_reviews_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
