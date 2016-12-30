@@ -145,10 +145,10 @@ ArchtoURLs = {'SEDAC':'http://sedac.ciesin.columbia.edu/data/set/',
 
         checkEndDateTime(metadata, script_results)
 
-        try:
-            result += self.checkEndDateTime(metadata['Temporal']['RangeDateTime']['EndingDateTime']) + ', '
-        except KeyError:
-            result += "Check for single date time or periodic date time fields" + ', '    
+        # try:
+        #     result += self.checkEndDateTime(metadata['Temporal']['RangeDateTime']['EndingDateTime']) + ', '
+        # except KeyError:
+        #     result += "Check for single date time or periodic date time fields" + ', '    
         # ================
         checkContactRole(metadata, script_results)
 
@@ -234,18 +234,20 @@ ArchtoURLs = {'SEDAC':'http://sedac.ciesin.columbia.edu/data/set/',
         # except KeyError:
         #     result += "np - Please provide at least one platform for this dataset. This is a required field." + ', , '
         # ================
-        try:
-            metadata['Platforms']['Platform']['Type']
-            result += self.checkPlatformType(metadata['Platforms']['Platform']['Type'], 1) + ', , , , , , '
-        except TypeError:
-            if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
-                length = len(metadata['Platforms']['Platform'])
-                result += self.checkPlatformType(metadata['Platforms']['Platform'], length) + ', , , , , , '
-            else:
-                pass
-        except KeyError:
-                # According to spec, not need to handle this case.
-                pass
+
+        checkPlatformType(metadata, script_results)
+        # try:
+        #     metadata['Platforms']['Platform']['Type']
+        #     result += self.checkPlatformType(metadata['Platforms']['Platform']['Type'], 1) + ', , , , , , '
+        # except TypeError:
+        #     if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
+        #         length = len(metadata['Platforms']['Platform'])
+        #         result += self.checkPlatformType(metadata['Platforms']['Platform'], length) + ', , , , , , '
+        #     else:
+        #         pass
+        # except KeyError:
+        #         # According to spec, not need to handle this case.
+        #         pass
         # ================
         try:
             metadata['Platforms']['Platform']['ShortName']
@@ -1014,41 +1016,90 @@ ArchtoURLs = {'SEDAC':'http://sedac.ciesin.columbia.edu/data/set/',
         return
     end
 
-    def checkPlatformType(self, val, length):
-        print "Input of checkPlatformType() is ..."
-        PlatformTypeKeys = list()
-        response = urllib2.urlopen(PlatformURL)
-        data = csv.reader(response)
-        next(data)  # Skip the first two line information
-        next(data)
-        for item in data:
-            PlatformTypeKeys += item[0:1]
-        PlatformTypeKeys = list(set(PlatformTypeKeys))
-        response.close()
+    def checkPlatformType(metadata, script_results)
+        platformData = HTTParty.get(PlatformURL)
+        platformList = CSV.parse(platformData.body)
+        x.shift(2)
 
-        if length == 1:
-            if val == 'SATELLITE':
-                return "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
-            elif val == 'IN SITU LAND BASED':
-                return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
-            elif val == 'AIRCRAFT':
-                return "Please change from \"AIRCRAFT\" to \"Aircraft\" to precisely match GCMD keywords. This will allow case sensitive programming languages to identify \"Aircraft\" as a GCMD keyword."
-            elif val not in PlatformTypeKeys:
-                return "Platform Type does not conform to GCMD Version 8.4"
-            else:
-                return "OK"
-        else:
-            for i in range(0, length):
-                if val == 'SATELLITE':
-                    return "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
-                elif val == 'IN SITU LAND BASED':
-                    return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
-                elif val == 'AIRCRAFT':
-                    return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
-                elif val not in PlatformTypeKeys:
-                    return "Platform Type does not conform to GCMD Version 8.4"
-                else:
-                    return "OK"
+        platformKeys = []
+        platformList.each do |entry|
+            platformList.push(entry[0])
+        end
+
+        if metadata['Platforms'].nil? || metadata['Platforms']['Platform'].nil? || metadata['Platforms']['Platform']['Type'].nil?
+            if metadata['Platforms'].nil? || metadata['Platforms']['Platform'].nil?
+                script_results["PlatformType"] = "OK"
+                return
+            end
+            platformList = metadata['Platforms']['Platform']
+            platformList.each do |entry|
+                val = entry["Type"]
+                if val == 'SATELLITE'
+                    script_results["PlatformType"] = "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
+                elsif val == 'IN SITU LAND BASED'
+                    script_results["PlatformType"] = "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
+                elsif val == 'AIRCRAFT'
+                    script_results["PlatformType"] = "Please change from \"AIRCRAFT\" to \"Aircraft\" to precisely match GCMD keywords. This will allow case sensitive programming languages to identify \"Aircraft\" as a GCMD keyword."
+                elsif !platformKeys.include? val
+                    script_results["PlatformType"] = "Platform Type does not conform to GCMD Version 8.4"
+                end
+            end
+
+            script_results["PlatformType"] = "OK"
+            return
+        else
+            val = metadata['Platforms']['Platform']['Type']
+            if val == 'SATELLITE'
+                script_results["PlatformType"] = "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
+                return
+            elsif val == 'IN SITU LAND BASED'
+                script_results["PlatformType"] = "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
+                return
+            elsif val == 'AIRCRAFT'
+                script_results["PlatformType"] = "Please change from \"AIRCRAFT\" to \"Aircraft\" to precisely match GCMD keywords. This will allow case sensitive programming languages to identify \"Aircraft\" as a GCMD keyword."
+                return
+            elsif !platformKeys.include? val
+                script_results["PlatformType"] = "Platform Type does not conform to GCMD Version 8.4"
+                return
+            else
+                script_results["PlatformType"] = "OK"
+                return
+        end
+        # print "Input of checkPlatformType() is ..."
+        # PlatformTypeKeys = list()
+        # response = urllib2.urlopen(PlatformURL)
+        # data = csv.reader(response)
+        # next(data)  # Skip the first two line information
+        # next(data)
+        # for item in data:
+        #     PlatformTypeKeys += item[0:1]
+        # PlatformTypeKeys = list(set(PlatformTypeKeys))
+        # response.close()
+
+        # if length == 1:
+        #     if val == 'SATELLITE':
+        #         return "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
+        #     elif val == 'IN SITU LAND BASED':
+        #         return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
+        #     elif val == 'AIRCRAFT':
+        #         return "Please change from \"AIRCRAFT\" to \"Aircraft\" to precisely match GCMD keywords. This will allow case sensitive programming languages to identify \"Aircraft\" as a GCMD keyword."
+        #     elif val not in PlatformTypeKeys:
+        #         return "Platform Type does not conform to GCMD Version 8.4"
+        #     else:
+        #         return "OK"
+        # else:
+        #     for i in range(0, length):
+        #         if val == 'SATELLITE':
+        #             return "Change to \'Earth Observation Satellites\' to Conform with GCMD Version 8.4 keywords."
+        #         elif val == 'IN SITU LAND BASED':
+        #             return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
+        #         elif val == 'AIRCRAFT':
+        #             return "Change to \'In Situ Land-based Platforms\' to conform with GCMD Version 8.4 keywords."
+        #         elif val not in PlatformTypeKeys:
+        #             return "Platform Type does not conform to GCMD Version 8.4"
+        #         else:
+        #             return "OK"
+    end
 
     def checkInstrShortName(self, val, platformNum):
         print "Input of checkInstrShortName() is ..."
