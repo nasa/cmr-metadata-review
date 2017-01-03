@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root 'site#index'
   get '/curators', to: 'site#curators'
   get '/normal_users', to: 'site#normal_users'
+  get '/cmrsearch', to: 'site#search'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

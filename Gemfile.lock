@@ -181,7 +181,7 @@ DEPENDENCIES
   devise (~> 3.5.10)
   dotenv-rails (~> 2.1.1)
   execjs (~> 2.7.0)
-  httparty
+  httparty (~> 0.14.0)
   jbuilder (~> 2.0)
   jquery-rails
   pg (~> 0.17.1)
