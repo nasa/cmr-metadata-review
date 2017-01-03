@@ -1,0 +1,52 @@
+//take base vpc template and setup on empty ec2
+
+sudo yum -y update
+sudo yum remove ruby 
+//removing the ruby gems, so run again
+sudo yum remove ruby
+
+sudo yum install ruby23-devel.x86_64
+sudo yum install git
+sudo yum install nginx
+sudo yum install postgresql8-devel.x86_64
+yum -y install gcc zlib-devel.x86_64  
+sudo yum install sqlite-devel
+
+//installing node
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install 4.4.5
+
+//creating working dir
+git clone -b abaker_working_branch https://abaker:Mcgladrey1@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git
+
+//enter dir
+cd cmr-metadata-review
+gem install bundler --no-rdoc --no-ri
+
+bundle install
+
+//setting up the nginx settings for rails
+sudo vi /etc/nginx/nginx.conf
+//added in http section of .conf file
+
+    upstream cmrdash {
+        server 127.0.0.1:3000;
+    }
+
+    location / {
+                proxy_pass http://cmrdash;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+
+
+//set up DB connection
+
+//stopping apache
+sudo apachectl stop
+//starting nginx
+sudo service nginx restart 
+
+//starting server if desired manually
+bundle exec puma --debug --bind tcp://127.0.0.1:3000
