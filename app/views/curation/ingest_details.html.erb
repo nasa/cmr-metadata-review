@@ -1,0 +1,42 @@
+<h1>Metadata Curation: Data Ingest</h1>
+
+<table cellpadding="5" border="1">
+      <tr>
+          <td>Concept_ID</td>
+          <td>Revision_ID</td>
+          <td>ShortName</td>
+      </tr>
+      <tr>
+          <td><%= @collection_data["concept_id"] %></td>
+          <td><%= @collection_data["revision_id"] %></td>
+          <td><%= @collection_data["Collection"]["ShortName"] %></td>
+      </tr>
+</table>
+
+<% unless @already_ingested %>
+  <% if @granule_results["hits"].to_i < 3 %>
+    <% if @granule_results["hits"].to_i < 1 %>
+      <p>No Granules Associated with This Collection</p>
+      <%= form_tag("/curation_ingest" ,  {method: "post"}) do %>
+        <%= hidden_field_tag(:concept_id, @collection_data["concept_id"]) %>
+        <%= submit_tag("Ingest Collection Without Granules", id: 'ingest_submit') %>
+      <% end %>
+    <% else %>
+      <p>Select Number of Granules to Ingest With This Collection</p>
+      <%= form_tag("/curation_ingest" ,  {method: "post"}) do %>
+        <%= hidden_field_tag(:concept_id, @collection_data["concept_id"]) %>
+        <%= select_tag(:granulesCount, options_for_select([['1', 1]])) %>
+        <%= submit_tag("Ingest Collection With Granules", id: 'ingest_submit') %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>Select Number of Granules to Ingest With This Collection</p>
+    <%= form_tag("/curation_ingest" ,  {method: "post"}) do %>
+        <%= hidden_field_tag(:concept_id, @collection_data["concept_id"]) %>
+        <%= select_tag(:granulesCount, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]])) %>
+        <%= submit_tag("Ingest Collection With Granules", id: 'ingest_submit') %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>This record has already been ingested into the system for review</p>
+<% end %>  

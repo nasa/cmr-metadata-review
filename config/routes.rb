@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   get '/normal_users', to: 'site#normal_users'
   get '/cmrsearch', to: 'site#search'
 
+  get '/curation_home', to: 'curation#home'
+  get '/curation_ingest_details', to: 'curation#ingest_details'
+
+  post '/curation_ingest', to: 'curation#ingest'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,0 +1,89 @@
+<h1>Metadata Curation: Search</h1>
+
+<p>Search the CMR:</p>
+
+<%= form_tag("/curation_home", method: "get") do %>
+  <%= text_field_tag(:free_text) %>
+  <%= hidden_field_tag(:curr_page, "1") %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<br>
+<br>
+
+<% if @search_results %>
+<p>Search Results</p>
+<p>Search Phrase = <%= @free_text %></p>
+<p>Total Results = <%= @search_results["hits"] %></p>
+  <table cellpadding="5" border="1">
+      <tr>
+          <td>Results #</td>
+          <td>Concept_ID</td>
+          <td>Revision_ID</td>
+          <td>ShortName</td>
+          <td>Selection</td>
+      </tr>
+
+
+    <% @search_results["result"].each_with_index do |result, index| %>
+      <tr>
+          <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
+          <td id="concept<%= index.to_s %>"><%= result["concept_id"] %></td>
+          <td><%= result["revision_id"] %></td>
+          <td><%= result["Collection"]["ShortName"] %></td>
+          <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+
+  <% if @curr_page.to_i > 1 %>
+    <%= link_to "previous page", curation_home_path(free_text: @free_text, curr_page: (@curr_page.to_i - 1).to_s) %>
+  <% end %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  <% if @curr_page.to_i * 10 < @search_results["hits"].to_i %>
+    <%= link_to "next page", curation_home_path(free_text: @free_text, curr_page: (@curr_page.to_i + 1).to_s)  %>
+  <% end %>
+
+
+<% end %>
+
+<br>
+<br>
+
+<%= form_tag("/curation_ingest_details" ,  {method: "get", id: 'ingest_form'}) do %>
+  <%= hidden_field_tag(:concept_id, "") %>
+  <%= submit_tag("Select Collection", id: 'ingest_submit') %>
+<% end %>
+
+
+<script type="text/javascript">
+
+  var ingestButton = document.getElementById("ingest_submit");
+  ingestButton.disabled = true;
+
+  var searchSelector = document.getElementsByName("searchSelection");
+  console.log("ho");
+  for (var i = 0, length = searchSelector.length; i < length; i++) {
+      (function(index) {
+          var temp = document.getElementById("search" + i);
+          temp.onclick = function() {
+                                var count = index;
+                                updateSelection(count);
+                                ingestButton.disabled = false;
+                                }
+      })(i);
+  }
+
+  var updateSelection = function(count) {
+    var rowName = "concept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("concept_id").value = newConceptId;
+  }
+
+
+
+</script>
+
+
