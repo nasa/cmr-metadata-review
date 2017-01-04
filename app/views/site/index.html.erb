@@ -1,10 +1,18 @@
 <h1>Welcome to the CMR MetaData Dashboard!!</h1>
 
-<%= link_to "Sign up", new_user_registration_path %>
-<br>
+<% if current_user && current_user.admin? %>
+  <%= link_to "Create User", new_user_registration_path %>
+  <br>
+<% end %>
+
 <%= link_to "Sign in", new_user_session_path %>
 <br>
-<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+<%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %>
 <br>
 <br>
 <%= link_to "Change your password", edit_user_registration_path %>
+
+<br>
+<br>
+<br>
+
