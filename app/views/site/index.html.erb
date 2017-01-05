@@ -5,8 +5,11 @@
   <br>
 <% end %>
 
-<%= link_to "Sign in", new_user_session_path %>
-<br>
+<% unless current_user %>
+  <%= link_to "Sign in", new_user_session_path %>
+  <br>
+<% end %>
+
 <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %>
 <br>
 <br>
@@ -15,4 +18,8 @@
 <br>
 <br>
 <br>
+
+<% if current_user && current_user.curator%>
+  <%= link_to "See Curation Home Page", curation_home_path %>
+<% end %>
 
