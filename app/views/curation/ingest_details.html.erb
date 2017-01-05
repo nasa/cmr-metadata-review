@@ -1,4 +1,6 @@
-<h1>Metadata Curation: Data Ingest</h1>
+<div class="page_header">
+  <h1>Metadata Curation: Data Ingest</h1>
+</div>
 
 <table cellpadding="5" border="1">
       <tr>
@@ -22,6 +24,7 @@
         <%= submit_tag("Ingest Collection Without Granules", id: 'ingest_submit') %>
       <% end %>
     <% else %>
+      <p>Total Granules in this Collection: <%= @granule_results["hits"] %></p>
       <p>Select Number of Granules to Ingest With This Collection</p>
       <%= form_tag("/curation_ingest" ,  {method: "post"}) do %>
         <%= hidden_field_tag(:concept_id, @collection_data["concept_id"]) %>
@@ -30,6 +33,7 @@
       <% end %>
     <% end %>
   <% else %>
+    <p>Total Granules in this Collection: <%= @granule_results["hits"] %></p>
     <p>Select Number of Granules to Ingest With This Collection</p>
     <%= form_tag("/curation_ingest" ,  {method: "post"}) do %>
         <%= hidden_field_tag(:concept_id, @collection_data["concept_id"]) %>
