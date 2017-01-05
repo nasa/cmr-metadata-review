@@ -1,5 +1,6 @@
-<h1>Welcome to the CMR MetaData Dashboard!!</h1>
-
+<div class="page_header">
+  <h1>Welcome to the CMR MetaData Dashboard!!</h1>
+</div>
 <% if current_user && current_user.admin? %>
   <%= link_to "Create User", new_user_registration_path %>
   <br>

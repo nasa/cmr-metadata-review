@@ -1,6 +1,7 @@
 class CurationController < ApplicationController
+  ANY_KEYWORD = 'Any'
 
-  PROVIDERS = ['PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
+  PROVIDERS = [ANY_KEYWORD, 'PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
               'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
               ]
 
@@ -19,7 +20,13 @@ class CurationController < ApplicationController
       @free_text = params["free_text"]
       @provider = params["provider"]
 
-      @search_results = @user_available_reviews.select { |record| (((record.concept_id.include? @free_text) || (record.short_name.include? @free_text)) && (record.concept_id.include? @provider)) }
+
+      @search_results = @user_available_reviews.select { |record| ((record.concept_id.include? @free_text) || (record.short_name.include? @free_text)) }
+      unless @provider == ANY_KEYWORD
+        @search_results = @search_results.select { |record| (record.concept_id.include? @provider) }
+      end
+
+      
     end
 
     @provider_select_list = []
@@ -43,11 +50,22 @@ class CurationController < ApplicationController
     if params["free_text"]
       @free_text = params["free_text"]
       @provider = params["provider"]
-      raw_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?provider=#{@provider}&keyword=?*#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}").parsed_response
+
+      query_text = "https://cmr.earthdata.nasa.gov/search/collections.echo10?keyword=?*#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}"
+
+      #cmr does not accept first character wildcards for some reason, so remove char and retry query
+      query_text_first_char = "https://cmr.earthdata.nasa.gov/search/collections.echo10?keyword=#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}"
+      unless @provider == ANY_KEYWORD
+        query_text = query_text + "&provider=#{@provider}"
+        query_text_first_char = query_text_first_char + "&provider=#{@provider}"
+      end
+
+      raw_xml = HTTParty.get(query_text).parsed_response
       @search_results = Hash.from_xml(raw_xml)["results"]
 
+      #rerun query with first wildcard removed
       if @search_results["hits"].to_i == 0
-        raw_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?provider=#{@provider}&keyword=#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}").parsed_response
+        raw_xml = HTTParty.get(query_text_first_char).parsed_response
         @search_results = Hash.from_xml(raw_xml)["results"]
       end
 
@@ -115,8 +133,9 @@ class CurationController < ApplicationController
       ingest_record.user_id = current_user.id
       ingest_record.date_ingested = DateTime.now
       ingest_record.save
+
     else
-      flash[:error] = 'The selected record has already been ingested for review'
+      flash[:alert] = 'The selected record has already been ingested for review'
     end 
 
     if @granule_results["hits"].to_i == 0
@@ -124,7 +143,7 @@ class CurationController < ApplicationController
     else
 
     end
-
+    flash[:notice] = "The selected collection has been successfully ingested into the system"
     redirect_to curation_home_path
   end
 
