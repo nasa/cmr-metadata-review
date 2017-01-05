@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   root 'site#index'
   get '/curators', to: 'site#curators'
   get '/normal_users', to: 'site#normal_users'
-  get '/cmrsearch', to: 'site#search'
 
   get '/curation_home', to: 'curation#home'
+  get '/curation_search', to: 'curation#search'
   get '/curation_ingest_details', to: 'curation#ingest_details'
 
   post '/curation_ingest', to: 'curation#ingest'

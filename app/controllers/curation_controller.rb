@@ -1,6 +1,24 @@
 class CurationController < ApplicationController
 
+PROVIDERS = ['PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
+            'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
+            ]
+
   def home
+    byebug
+
+    #ingested records that do not have two completed reviews
+    @user_open_ingests = CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where user_id = #{current_user.id} and closed = false")
+    
+    #unfinished review records
+    @user_open_reviews = CollectionRecord.find_by_sql("select * from collection_reviews inner join collection_records on collection_records.id = collection_reviews.collection_record_id where user_id = 1 and review_state = 0")
+
+    #all records that do not have a completed review by the user
+    @user_available_reviews = CollectionRecord.find_by_sql("with completed_reviews as (select * from collection_reviews where user_id=1 and review_state=1) select * from collection_records left outer join completed_reviews on collection_records.id = completed_reviews.collection_record_id where completed_reviews.collection_record_id is null")
+
+  end
+
+  def search
 
     if params["curr_page"]
       @curr_page = params["curr_page"]
@@ -12,9 +30,21 @@ class CurationController < ApplicationController
 
     if params["free_text"]
       @free_text = params["free_text"]
-      raw_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?keyword=?*#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}").parsed_response
+      @provider = params["provider"]
+      raw_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?provider=#{@provider}&keyword=?*#{@free_text}?*&page_size=#{@page_size}&page_num=#{@curr_page}").parsed_response
       @search_results = Hash.from_xml(raw_xml)["results"]
+      if @search_results["hits"].to_i > 1
+        @search_iterator = @search_results["result"]
+      else
+        @search_iterator = [@search_results["result"]]
+      end
+
     end
+
+    @provider_select_list = []
+    PROVIDERS.each do |provider|
+      @provider_select_list.push([provider, provider])
+    end                
 
   end
 
