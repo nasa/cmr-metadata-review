@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   post '/curation_ingest', to: 'curation#ingest'
 
+  get '/collection_record_details', to: 'collection#record_details'
+  get '/collection_record_review', to: 'collection#record_review'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
