@@ -5,7 +5,9 @@
   <br>
 <% end %>
 
-<% unless current_user %>
+<% if current_user %>
+  <p>Current User: <%= current_user.email %></p>
+<% else %>
   <%= link_to "Sign in", new_user_session_path %>
   <br>
 <% end %>

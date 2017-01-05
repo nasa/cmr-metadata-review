@@ -1,6 +1,6 @@
 <h1>Curation Home Page</h1>
 <p>Current User: <%= current_user.email %></p>
-<%= link_to "Search the CMR Database", curation_search_path %>
+<%= link_to "Search the CMR Database For Data Ingest", curation_search_path %>
 
 <br>
 
@@ -17,13 +17,49 @@
 
   <% @user_open_ingests.each_with_index do |record, index| %>
     <tr>
-        <td id="concept<%= index.to_s %>"><%= record.concept_id %></td>
+        <td id="uncompleteConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>
         <td><%= record.short_name %></td>
-        <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+        <td><input type="radio" id="uncomplete<%= index.to_s %>" name="uncompleteSelection" value="<%= index.to_s %>"/></td>
     </tr>
   <% end %>
 </table>
+<br>
+
+<%= form_tag("/collection_record_details" ,  {method: "get", id: 'uncomplete_form'}) do %>
+  <%= hidden_field_tag(:concept_id, "", id: "uncompleteConceptId") %>
+  <%= submit_tag("See Collection Review Detail", id: 'uncompleteSubmit') %>
+<% end %>
+
+<script type="text/javascript">
+
+  var uncompleteButton = document.getElementById("uncompleteSubmit");
+  uncompleteButton.disabled = true;
+
+  var uncompleteSelector = document.getElementsByName("uncompleteSelection");
+  for (var i = 0, length = uncompleteSelector.length; i < length; i++) {
+      (function(index) {
+          var temp = document.getElementById("uncomplete" + i);
+          temp.onclick = function() {
+                                var count = index;
+                                updateUncomplete(count);
+                                uncompleteButton.disabled = false;
+                                }
+      })(i);
+  }
+
+  var updateUncomplete = function(count) {
+    var rowName = "uncompleteConcept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("uncompleteConceptId").value = newConceptId;
+  }
+
+
+
+</script>
+
+
+
 
 <br>
 
@@ -40,17 +76,124 @@
 
   <% @user_open_reviews.each_with_index do |record, index| %>
     <tr>
-        <td id="concept<%= index.to_s %>"><%= record.concept_id %></td>
+        <td id="unfinishedConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>
         <td><%= record.short_name %></td>
-        <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+        <td><input type="radio" id="unfinished<%= index.to_s %>" name="unfinishedSelection" value="<%= index.to_s %>"/></td>
     </tr>
   <% end %>
 </table>
 
 <br>
 
-<p>Records Available For Review:</p>
+<%= form_tag("/collection_record_details" ,  {method: "get", id: 'unfinished_form'}) do %>
+  <%= hidden_field_tag(:concept_id, "", id: "unfinishedConceptId") %>
+  <%= submit_tag("See Collection Review Detail", id: 'unfinishedSubmit') %>
+<% end %>
+
+<script type="text/javascript">
+
+  var unfinishedButton = document.getElementById("unfinishedSubmit");
+  unfinishedButton.disabled = true;
+
+  var unfinishedSelector = document.getElementsByName("unfinishedSelection");
+  for (var i = 0, length = unfinishedSelector.length; i < length; i++) {
+      (function(index) {
+          var temp = document.getElementById("unfinished" + i);
+          temp.onclick = function() {
+                                var count = index;
+                                updateUncomplete(count);
+                                unfinishedButton.disabled = false;
+                                }
+      })(i);
+  }
+
+  var updateUnfinished = function(count) {
+    var rowName = "unfinishedConcept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("unfinishedConceptId").value = newConceptId;
+  }
+
+
+
+</script>
+
+
+<br>
+
+
+<p>Search Available Records For Review:</p>
+
+<%= form_tag("/curation_home", method: "get") do %>
+  <%= text_field_tag(:free_text) %>
+  <%= select_tag(:provider, options_for_select(@provider_select_list, :selected => @provider)) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+
+<% if @search_results %>
+  <p>Found Records Available For Review:</p>
+
+  <table cellpadding="5" border="1">
+      <tr>
+          <td>Concept_ID</td>
+          <td>Revision_ID</td>
+          <td>ShortName</td>
+          <td>Selection</td>
+      </tr>
+
+
+    <% @search_results.each_with_index do |record, index| %>
+      <tr>
+          <td id="searchConcept<%= index.to_s %>"><%= record.concept_id %></td>
+          <td><%= record.version_id %></td>
+          <td><%= record.short_name %></td>
+          <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br>
+
+  <%= form_tag("/collection_record_details" ,  {method: "get", id: 'search_form'}) do %>
+    <%= hidden_field_tag(:concept_id, "", id: "searchConceptId") %>
+    <%= submit_tag("See Collection Review Detail", id: 'searchSubmit') %>
+  <% end %>
+
+  <script type="text/javascript">
+
+    var searchButton = document.getElementById("searchSubmit");
+    searchButton.disabled = true;
+
+    var searchSelector = document.getElementsByName("searchSelection");
+    for (var i = 0, length = searchSelector.length; i < length; i++) {
+        (function(index) {
+            var temp = document.getElementById("search" + i);
+            temp.onclick = function() {
+                                  var count = index;
+                                  updateSearch(count);
+                                  searchButton.disabled = false;
+                                  }
+        })(i);
+    }
+
+    var updateSearch = function(count) {
+      var rowName = "searchConcept" + count;
+      var newConceptId = document.getElementById(rowName).innerHTML;
+      document.getElementById("searchConceptId").value = newConceptId;
+    }
+
+
+
+  </script>
+
+<% end %>
+
+
+
+<br>
+
+<p>All Records Available For Review:</p>
 
 <table cellpadding="5" border="1">
     <tr>
@@ -63,10 +206,48 @@
 
   <% @user_available_reviews.each_with_index do |record, index| %>
     <tr>
-        <td id="concept<%= index.to_s %>"><%= record.concept_id %></td>
+        <td id="availableConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>
         <td><%= record.short_name %></td>
-        <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+        <td><input type="radio" id="available<%= index.to_s %>" name="availableSelection" value="<%= index.to_s %>"/></td>
     </tr>
   <% end %>
 </table>
+
+
+<br>
+
+<%= form_tag("/collection_record_details" ,  {method: "get", id: 'available_form'}) do %>
+  <%= hidden_field_tag(:concept_id, "", id: "availableConceptId") %>
+  <%= submit_tag("See Collection Review Detail", id: 'availableSubmit') %>
+<% end %>
+
+<script type="text/javascript">
+
+  var availableButton = document.getElementById("availableSubmit");
+  availableButton.disabled = true;
+
+  var availableSelector = document.getElementsByName("availableSelection");
+  for (var i = 0, length = availableSelector.length; i < length; i++) {
+      (function(index) {
+          var temp = document.getElementById("available" + i);
+          temp.onclick = function() {
+                                var count = index;
+                                updateAvailable(count);
+                                availableButton.disabled = false;
+                                }
+      })(i);
+  }
+
+  var updateAvailable = function(count) {
+    var rowName = "availableConcept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("availableConceptId").value = newConceptId;
+  }
+
+
+
+</script>
+
+
+
