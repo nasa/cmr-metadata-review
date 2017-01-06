@@ -8,66 +8,14 @@
 
 <br>
 
-<p>Your Uncompleted Ingests:</p>
 
-<table cellpadding="5" border="1">
-    <tr>
-        <th>Concept_ID</th>
-        <th>Revision_ID</th>
-        <th>ShortName</th>
-        <th>Selection</th>
-    </tr>
-
-
-  <% @user_open_ingests.each_with_index do |record, index| %>
-    <tr>
-        <td id="uncompleteConcept<%= index.to_s %>"><%= record.concept_id %></td>
-        <td><%= record.version_id %></td>
-        <td><%= record.short_name %></td>
-        <td><input type="radio" id="uncomplete<%= index.to_s %>" name="uncompleteSelection" value="<%= index.to_s %>"/></td>
-    </tr>
-  <% end %>
-</table>
-<br>
-
-<%= form_tag("/collection_record_details" ,  {method: "get", id: 'uncomplete_form'}) do %>
-  <%= hidden_field_tag(:concept_id, "", id: "uncompleteConceptId") %>
-  <%= submit_tag("See Collection Review Detail", id: 'uncompleteSubmit') %>
-<% end %>
-
-<script type="text/javascript">
-
-  var uncompleteButton = document.getElementById("uncompleteSubmit");
-  uncompleteButton.disabled = true;
-
-  var uncompleteSelector = document.getElementsByName("uncompleteSelection");
-  for (var i = 0, length = uncompleteSelector.length; i < length; i++) {
-      (function(index) {
-          var temp = document.getElementById("uncomplete" + i);
-          temp.onclick = function() {
-                                var count = index;
-                                updateUncomplete(count);
-                                uncompleteButton.disabled = false;
-                                }
-      })(i);
-  }
-
-  var updateUncomplete = function(count) {
-    var rowName = "uncompleteConcept" + count;
-    var newConceptId = document.getElementById(rowName).innerHTML;
-    document.getElementById("uncompleteConceptId").value = newConceptId;
-  }
-
-
-
-</script>
 
 
 
 
 <br>
 
-<p>Your Unfinished Reviews:</p>
+<p>Your In Process Reviews:</p>
 
 <table cellpadding="5" border="1">
     <tr>
@@ -127,6 +75,7 @@
 
 
 <p>Search Available Records For Review:</p>
+<p style="font-size:0.8em;">Search Text &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DAAC</p>
 
 <%= form_tag("/curation_home", method: "get") do %>
   <%= text_field_tag(:free_text) %>
@@ -247,6 +196,66 @@
     var rowName = "availableConcept" + count;
     var newConceptId = document.getElementById(rowName).innerHTML;
     document.getElementById("availableConceptId").value = newConceptId;
+  }
+
+
+
+</script>
+
+<p>Your Ingested Records:</p>
+
+<table cellpadding="5" border="1">
+    <tr>
+        <th>Concept_ID</th>
+        <th>Revision_ID</th>
+        <th>ShortName</th>
+        <th>Review State</th>
+        <th>Selection</th>
+    </tr>
+
+
+  <% @user_open_ingests.each_with_index do |record, index| %>
+    <tr>
+        <td id="uncompleteConcept<%= index.to_s %>"><%= record.concept_id %></td>
+        <td><%= record.version_id %></td>
+        <td><%= record.short_name %></td>
+        <% if record.closed %>
+          <td>Completed</td>
+        <% else %>
+          <td>In Process</td>
+        <% end %>
+        <td><input type="radio" id="uncomplete<%= index.to_s %>" name="uncompleteSelection" value="<%= index.to_s %>"/></td>
+    </tr>
+  <% end %>
+</table>
+<br>
+
+<%= form_tag("/collection_record_details" ,  {method: "get", id: 'uncomplete_form'}) do %>
+  <%= hidden_field_tag(:concept_id, "", id: "uncompleteConceptId") %>
+  <%= submit_tag("See Collection Review Detail", id: 'uncompleteSubmit') %>
+<% end %>
+
+<script type="text/javascript">
+
+  var uncompleteButton = document.getElementById("uncompleteSubmit");
+  uncompleteButton.disabled = true;
+
+  var uncompleteSelector = document.getElementsByName("uncompleteSelection");
+  for (var i = 0, length = uncompleteSelector.length; i < length; i++) {
+      (function(index) {
+          var temp = document.getElementById("uncomplete" + i);
+          temp.onclick = function() {
+                                var count = index;
+                                updateUncomplete(count);
+                                uncompleteButton.disabled = false;
+                                }
+      })(i);
+  }
+
+  var updateUncomplete = function(count) {
+    var rowName = "uncompleteConcept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("uncompleteConceptId").value = newConceptId;
   }
 
 

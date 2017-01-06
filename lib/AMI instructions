@@ -34,6 +34,10 @@ sudo vi /etc/nginx/nginx.conf
         server 127.0.0.1:3000;
     }
 
+    //change root in server area to public for assets
+    root         /home/ec2-user/cmr-metadata-review/public;
+
+
     location / {
                 proxy_pass http://cmrdash;
                 proxy_set_header Host $host;
