@@ -6,15 +6,19 @@ class CurationController < ApplicationController
               ]
 
   def home
-
+    if Rails.env == "production"
+      db_false = "0"
+    else
+      db_false = "false"
+    end
     #ingested records that do not have two completed reviews
-    @user_open_ingests = CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where user_id = #{current_user.id} and closed = false")
+    @user_open_ingests = CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where user_id=#{current_user.id} and closed=#{db_false}")
     
     #unfinished review records
-    @user_open_reviews = CollectionRecord.find_by_sql("select * from collection_reviews inner join collection_records on collection_records.id = collection_reviews.collection_record_id where user_id = 1 and review_state = 0")
+    @user_open_reviews = CollectionRecord.find_by_sql("select * from collection_reviews inner join collection_records on collection_records.id = collection_reviews.collection_record_id where user_id=#{current_user.id} and review_state=0")
 
     #all records that do not have a completed review by the user
-    @user_available_reviews = CollectionRecord.find_by_sql("with completed_reviews as (select * from collection_reviews where user_id=1 and review_state=1) select * from collection_records left outer join completed_reviews on collection_records.id = completed_reviews.collection_record_id where completed_reviews.collection_record_id is null")
+    @user_available_reviews = CollectionRecord.find_by_sql("with completed_reviews as (select * from collection_reviews where user_id=#{current_user.id} and review_state=1) select * from collection_records left outer join completed_reviews on collection_records.id = completed_reviews.collection_record_id where completed_reviews.collection_record_id is null")
 
     if params["free_text"]
       @free_text = params["free_text"]
