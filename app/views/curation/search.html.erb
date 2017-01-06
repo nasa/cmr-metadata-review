@@ -4,6 +4,7 @@
 
 <p>Search the CMR:</p>
 
+<p style="font-size:0.8em;">Search Text &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DAAC</p>
 <%= form_tag("/curation_search", method: "get") do %>
   <%= text_field_tag(:free_text) %>
   <%= hidden_field_tag(:curr_page, "1") %>
@@ -22,11 +23,11 @@
     <p>Total Results = <%= @search_results["hits"] %></p>
       <table cellpadding="5" border="1">
           <tr>
-              <td>Results #</td>
-              <td>Concept_ID</td>
-              <td>Revision_ID</td>
-              <td>ShortName</td>
-              <td>Selection</td>
+              <th>Results #</th>
+              <th>Concept_ID</th>
+              <th>Revision_ID</th>
+              <th>ShortName</th>
+              <th>Selection</th>
           </tr>
 
           

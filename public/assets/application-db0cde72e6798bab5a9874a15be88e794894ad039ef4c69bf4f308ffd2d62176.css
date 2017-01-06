@@ -10,9 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
+
+
  */
+
 
 body {
    font-family: 'Open Sans', sans-serif !important;
@@ -57,22 +58,13 @@ tr:nth-child(odd) {background: #FFF}
 
 
 input[type=submit] {
-    color: white;
+    color: #323232;
     border: 1px solid rgba(50, 50, 50, 0.15);
-    background: #2276ac;
+    background: #ebebeb;
     display: inline-block;
     padding: 0.5em 1em;
     text-align: center;
     vertical-align: middle;
     transition: background 0.15s ease-in-out;
     outline: none;
-}
-
-input[type=submit]:disabled {
-    /*color: white;*/
-    border: 1px solid rgba(50, 50, 50, 0.15);
-    background: #ebebeb;
-    color: #323232;
-    opacity: 0.65;
-    background: #ebebeb;
 }

@@ -5,14 +5,16 @@ class CurationController < ApplicationController
               'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
               ]
 
+  before_filter :ensure_curate_access            
+
+  #ensuring that only curators can access the information
+  def ensure_curate_access
+    authorize! :access, :curate
+  end
+
   def home
-    if Rails.env == "production"
-      db_false = "0"
-    else
-      db_false = "false"
-    end
-    #ingested records that do not have two completed reviews
-    @user_open_ingests = CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where user_id=#{current_user.id} and closed=#{db_false}")
+    #ingested records by user
+    @user_open_ingests = CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{current_user.id}")
     
     #unfinished review records
     @user_open_reviews = CollectionRecord.find_by_sql("select * from collection_reviews inner join collection_records on collection_records.id = collection_reviews.collection_record_id where user_id=#{current_user.id} and review_state=0")
