@@ -8,18 +8,21 @@ class CurationController < ApplicationController
 
   def home
     #ingested records by user
-    @user_collection_ingests = Curation.user_collection_ingests
+    @user_collection_ingests = Curation.user_collection_ingests(current_user)
     #unfinished review records
     @user_open_collection_reviews = Curation.user_open_collection_reviews(current_user)
     #all records that do not have a completed review by the user
     @user_available_collection_reviews = Curation.user_available_collection_review(current_user)
 
-    @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"])
+    @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"], current_user)
     @provider_select_list = Curation.provider_select_list
   end
 
   def search
-    @search_iterator = Curation.collection_search(params["free_text"], params["provider"], params["curr_page"])
+    @search_iterator, @collection_count = Curation.collection_search(params["free_text"], params["provider"], params["curr_page"])
+    @free_text = params["free_text"]
+    @provider = params["provider"]
+    @curr_page = params["curr_page"]
     @provider_select_list = Curation.provider_select_list
   end
 
@@ -30,7 +33,7 @@ class CurationController < ApplicationController
   end
 
   def ingest
-    ingest_success = CollectionRecord.ingest(params["concept_id"])
+    ingest_success = CollectionRecord.ingest(params["concept_id"], params["revision_id"], current_user)
 
     if ingest_success
       flash[:notice] = "The selected collection has been successfully ingested into the system"

@@ -10,7 +10,7 @@ class CollectionRecord < ActiveRecord::Base
     CollectionRecord.where(concept_id: concept_id, version_id: revision_id).any?
   end
 
-  def self.ingest(concept_id)
+  def self.ingest(concept_id, revision_id, user)
     collection_data = Curation.collection_data(concept_id)
     already_ingested = CollectionRecord.ingested?(concept_id, revision_id)
     granule_results = Curation.granule_list_from_collection(concept_id)
@@ -30,7 +30,7 @@ class CollectionRecord < ActiveRecord::Base
 
       ingest_record = CollectionIngest.new
       ingest_record.collection_record_id = record.id
-      ingest_record.user_id = current_user.id
+      ingest_record.user_id = user.id
       ingest_record.date_ingested = DateTime.now
       ingest_record.save
 

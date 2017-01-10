@@ -351,18 +351,19 @@
         "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
           "#!/bin/bash -xe\n",
           "yum update -y aws-cfn-bootstrap\n",
-
           "# Install the sample application\n",
+
           "/opt/aws/bin/cfn-init -v ",
           "    --stack ", { "Ref" : "AWS::StackId" },
           "    --resource WebServerLaunchConfig ",
           "    --region ", { "Ref" : "AWS::Region" }, "\n",
 
-          "# Signal copletion\n",
+          "# Signal completion\n",
           "/opt/aws/bin/cfn-signal -e $? ",
           "    --stack ", { "Ref" : "AWS::StackId" },
           "    --resource WebServerFleet ",
           "    --region ", { "Ref" : "AWS::Region" }, "\n",
+
 
           "export S3BUCKET=", { "Ref" : "S3BucketName" }, "\n",
 
@@ -376,9 +377,9 @@
           "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle install )\" - ec2-user", "\n",
           "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && rake db:create RAILS_ENV=production )\" - ec2-user", "\n",
           "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && rake db:migrate RAILS_ENV=production )\" - ec2-user", "\n",
-          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && rake db:seed RAILS_ENV=production )\" - ec2-user", "\n",
           "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && RAILS_ENV=production bundle exec rake assets:precompile )\" - ec2-user", "\n",
-          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle exec puma --debug --bind tcp://127.0.0.1:3000 -e production )\" - ec2-user"
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle exec puma --debug --bind tcp://127.0.0.1:3000 -e production )\" - ec2-user", "\n"
+
         ]]}}
       }
     },

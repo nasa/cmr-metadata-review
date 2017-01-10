@@ -16,11 +16,11 @@
 <br>
 
 <% unless @search_iterator.nil? %>
-  <% if @search_results["hits"].to_i > 0 %>
+  <% unless @search_iterator.empty? %>
 
     <p>Search Results</p>
     <p>Search Phrase = <%= @free_text.to_s %></p>
-    <p>Total Results = <%= @search_results["hits"] %></p>
+    <p>Total Results = <%= @collection_count %></p>
       <table cellpadding="5" border="1">
           <tr>
               <th>Results #</th>
@@ -49,7 +49,7 @@
       <% end %>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-      <% if @curr_page.to_i * 10 < @search_results["hits"].to_i %>
+      <% if @curr_page.to_i * 10 < @collection_count %>
         <%= link_to "next page", curation_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)  %>
       <% end %>
     <% else %>  
