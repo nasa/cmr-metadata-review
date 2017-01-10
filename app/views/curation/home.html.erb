@@ -26,7 +26,7 @@
     </tr>
 
 
-  <% @user_open_reviews.each_with_index do |record, index| %>
+  <% @user_open_collection_reviews.each_with_index do |record, index| %>
     <tr>
         <td id="unfinishedConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>
@@ -157,7 +157,7 @@
     </tr>
 
 
-  <% @user_available_reviews.each_with_index do |record, index| %>
+  <% @user_available_collection_reviews.each_with_index do |record, index| %>
     <tr>
         <td id="availableConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>
@@ -214,7 +214,7 @@
     </tr>
 
 
-  <% @user_open_ingests.each_with_index do |record, index| %>
+  <% @user_collection_ingests.each_with_index do |record, index| %>
     <tr>
         <td id="uncompleteConcept<%= index.to_s %>"><%= record.concept_id %></td>
         <td><%= record.version_id %></td>

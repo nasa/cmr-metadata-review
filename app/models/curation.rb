@@ -7,8 +7,8 @@ class Curation
 
 
 
-  def self.user_collection_ingests
-    CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{current_user.id}")
+  def self.user_collection_ingests(user)
+    CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{user.id}")
   end
 
   def self.user_open_collection_reviews(user)
@@ -27,11 +27,11 @@ class Curation
     provider_select_list  
   end
 
-  def self.homepage_collection_search_results(provider, free_text)
+  def self.homepage_collection_search_results(provider, free_text, user)
     if free_text
-      search_results = @user_available_collection_reviews.select { |record| ((record.concept_id.include? @free_text) || (record.short_name.include? @free_text)) }
+      search_results = Curation.user_available_collection_review(user).select { |record| ((record.concept_id.include? free_text) || (record.short_name.include? free_text)) }
       unless provider.nil? || provider == ANY_KEYWORD
-        search_results = @search_results.select { |record| (record.concept_id.include? @provider) }
+        search_results = search_results.select { |record| (record.concept_id.include? provider) }
       end
       search_results
     else
@@ -66,14 +66,18 @@ class Curation
         search_results = Hash.from_xml(raw_xml)["results"]
       end
 
+      collection_count = search_results["hits"].to_i
+
       if search_results["hits"].to_i > 1
         search_iterator = search_results["result"]
-      else
+      elsif search_results["hits"].to_i == 1
         search_iterator = [search_results["result"]]
+      else
+        search_iterator = []
       end
     end
 
-    search_iterator
+    return search_iterator, collection_count
   end
 
 
