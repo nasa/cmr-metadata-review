@@ -20,5 +20,11 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: sqlite3
-  database: db/prod.sqlite3
+  adapter: postgresql
+  database: <%= ENV['PROD_DB_DATABASE'] %>
+  host: <%= ENV['PROD_DB_HOST'] %>
+  port: <%= ENV['PROD_DB_PORT'] %>
+  username: <%= ENV['PROD_DB_USER'] %>
+  password: <%= ENV['PROD_DB_PASSWORD'] %>
+  min_messages: ERROR
+  pool: 16
