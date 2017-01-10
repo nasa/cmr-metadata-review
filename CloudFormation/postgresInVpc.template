@@ -88,8 +88,8 @@
            "GroupDescription" : "Security group for RDS DB Instance.",
            "SecurityGroupIngress" : [{
              "IpProtocol" : "tcp",
-             "FromPort" : "3306",
-             "ToPort" : "3306",
+             "FromPort" : "5432",
+             "ToPort" : "5432",
              "CidrIp" : { "Ref" : "SubnetIpBlock" }
             }],
            "VpcId" : { "Ref" : "VpcId" }
