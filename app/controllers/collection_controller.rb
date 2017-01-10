@@ -8,7 +8,6 @@ class CollectionController < ApplicationController
     end
 
     @collection_records = CollectionRecord.where(concept_id: @concept_id).order(:version_id).reverse_order
-
   end
 
 end

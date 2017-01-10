@@ -15,7 +15,7 @@
 <br>
 <br>
 
-<% if @search_results %>
+<% unless @search_iterator.nil? %>
   <% if @search_results["hits"].to_i > 0 %>
 
     <p>Search Results</p>
