@@ -84,7 +84,7 @@
 <% end %>
 
 
-<% if @search_results %>
+<% unless @search_results.empty? %>
   <p>Found Records Available For Review:</p>
 
   <table cellpadding="5" border="1">

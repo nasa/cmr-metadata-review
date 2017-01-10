@@ -1,0 +1,102 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This template creates a S3 bucket and a IAM role to get objects from the bucket.  Outputs are bucket name and Instance profile for the role",
+
+  "Parameters" : {
+
+    "BucketName" : {
+      "Description" : "Desired Name for S3 Bucket",
+      "Type" : "String"
+    }
+
+  },
+
+  "Resources" : {
+
+    "S3CommunicationRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version" : "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [ "ec2.amazonaws.com", "s3.amazonaws.com" ]
+              },
+              "Action": [ "sts:AssumeRole" ]
+            }
+          ]
+        }, 
+        "Policies": [ {
+             "PolicyName": "s3Getter",
+             "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "s3:Get*",
+                      "s3:List*"
+                    ],
+                    "Resource": "*"
+                  }
+                ]
+              }
+        } ]
+
+      }
+    },
+
+    "S3InstanceProfile": {
+       "Type": "AWS::IAM::InstanceProfile",
+       "Properties": {
+          "Path": "/",
+          "Roles": [ {
+             "Ref": "S3CommunicationRole"
+          } ]
+       }
+    },
+
+    "S3Bucket" : {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "BucketName": { "Ref": "BucketName"}
+      }
+    },
+
+    "CMRBucketPolicy" : {
+      "Type" : "AWS::S3::BucketPolicy",
+      "Properties" : {
+        "Bucket" : {"Ref" : "S3Bucket"},
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "AllowcmrdashAccess",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {"Fn::GetAtt" : ["S3CommunicationRole", "Arn"] }
+              },
+              "Action": "s3:GetObject",
+              "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "S3Bucket" } , "/*" ]]}
+            }
+          ]
+        }
+      }
+    }
+
+  },
+
+  "Outputs" : {
+    "BucketName": {
+      "Value": { "Ref": "S3Bucket" },
+      "Description": "Name of the sample Amazon S3 bucket with CORS enabled."
+    },
+    "InstanceProfileArn": {
+      "Value": { "Fn::GetAtt" : ["S3InstanceProfile", "Arn"] },
+      "Description": "The ARN of the instance profile"
+    }
+  }
+}
