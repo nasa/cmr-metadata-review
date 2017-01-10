@@ -1,9 +1,10 @@
 class Curation
+  ANY_KEYWORD = 'Any'
   PROVIDERS = [ANY_KEYWORD, 'PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
               'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
               ]
 
-  ANY_KEYWORD = 'Any'
+
 
 
   def self.user_collection_ingests
@@ -36,6 +37,7 @@ class Curation
     else
       []
     end
+  end
 
   def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page)
     unless curr_page
