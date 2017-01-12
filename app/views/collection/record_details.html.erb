@@ -40,6 +40,27 @@
 </table>
 <% end %>
 
+<% x = JSON.parse(@collection_records.first.rawJSON) %>
+
+ <table cellpadding="5" border="1">
+              <tr>
+                  <td>Title</td>
+                  <td>Data</td>
+              </tr>
+
+
+            <% x["Collection"].each do |key, array| %>
+              <tr>
+                  <td><%= key %></td>
+                  <td><%= array %></td>
+              </tr>
+            <% end %>
+
+          </table>
+
+
+
+
 <br>
 
 <% if current_user && current_user.curator%>
