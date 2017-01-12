@@ -33,12 +33,28 @@ class CurationController < ApplicationController
   end
 
   def ingest
-    ingest_success = CollectionRecord.ingest(params["concept_id"], params["revision_id"], current_user)
+    ingest_success = CollectionRecord.ingest_with_granules(params["concept_id"], params["revision_id"], params["granulesCount"], current_user)
 
     if ingest_success
-      flash[:notice] = "The selected collection has been successfully ingested into the system"
+      collection = CollectionRecord.where(concept_id: params["concept_id"], version_id: params["revision_id"]).first
+      collection_script_success = collection.evaluate_script
+
+      granules_list = GranuleRecord.where(collection_concept_id: params["concept_id"])
+      granule_script_success = true
+      #filter for those with no automated check
+      granules_list = granules_list.select { |granule| !(granule.granule_reviews.where(user_id: -1).any?) }
+      granules_list.each { |granule| script_result = granule.evaluate_script; granule_script_success = script_result if !script_result }
+
+      script_results_phrase = ", the automated reviews were not completed for all collections and granules"
+      if collection_script_success && granule_script_success
+        script_results_phrase = ", and all automated scripts ran successfully"
+      end
+    end
+
+    if ingest_success
+      flash[:notice] = "The selected collection has been successfully ingested into the system" + script_results_phrase.to_s
     else 
-      flash[:alert] = 'The selected record has already been ingested for review'
+      flash[:alert] = 'There was an error ingesting the record into the system' + script_results_phrase.to_s
     end
     redirect_to curation_home_path
   end

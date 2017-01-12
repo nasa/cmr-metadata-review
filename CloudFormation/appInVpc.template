@@ -240,8 +240,8 @@
           "Target" : "HTTP:80/",
           "HealthyThreshold" : "3",
           "UnhealthyThreshold" : "5",
-          "Interval" : "90",
-          "Timeout" : "60"
+          "Interval" : "30",
+          "Timeout" : "15"
         }
       }
     },
@@ -256,6 +256,28 @@
       }
     },
 
+    "ScaleUpByOnePolicy": {
+      "Type" : "AWS::AutoScaling::ScalingPolicy",
+      "Properties" : {
+        "AdjustmentType" : "ChangeInCapacity",
+        "PolicyType" : "SimpleScaling", 
+        "Cooldown" : "60",
+        "AutoScalingGroupName" : { "Ref" : "WebServerFleet" },
+        "ScalingAdjustment" : 1
+      }
+    },   
+
+    "ScaleDownByOnePolicy": {
+      "Type" : "AWS::AutoScaling::ScalingPolicy",
+      "Properties" : {
+        "AdjustmentType" : "ChangeInCapacity",
+        "PolicyType" : "SimpleScaling", 
+        "Cooldown" : "60",
+        "AutoScalingGroupName" : { "Ref" : "WebServerFleet" },
+        "ScalingAdjustment" : -1
+      }
+    },   
+
     "WebServerFleet" : {
       "Type" : "AWS::AutoScaling::AutoScalingGroup",
       "Properties" : {
@@ -267,12 +289,6 @@
         "DesiredCapacity" : { "Ref" : "WebServerCount" },
         "LoadBalancerNames" : [ { "Ref" : "PublicElasticLoadBalancer" } ],
         "Tags" : [ { "Key" : "Network", "Value" : "Public", "PropagateAtLaunch" : "true" } ]
-      },
-      "CreationPolicy" : {
-        "ResourceSignal" : {
-          "Timeout" : "PT15M",
-          "Count"   : { "Ref" : "WebServerCount" }
-        }
       },
       "UpdatePolicy": {
         "AutoScalingRollingUpdate": {
@@ -357,13 +373,6 @@
           "    --stack ", { "Ref" : "AWS::StackId" },
           "    --resource WebServerLaunchConfig ",
           "    --region ", { "Ref" : "AWS::Region" }, "\n",
-
-          "# Signal completion\n",
-          "/opt/aws/bin/cfn-signal -e $? ",
-          "    --stack ", { "Ref" : "AWS::StackId" },
-          "    --resource WebServerFleet ",
-          "    --region ", { "Ref" : "AWS::Region" }, "\n",
-
 
           "export S3BUCKET=", { "Ref" : "S3BucketName" }, "\n",
 

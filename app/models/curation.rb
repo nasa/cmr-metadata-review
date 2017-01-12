@@ -5,8 +5,6 @@ class Curation
               ]
 
 
-
-
   def self.user_collection_ingests(user)
     CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{user.id}")
   end
@@ -87,8 +85,8 @@ class Curation
     collection_results["result"]
   end
 
-  def self.granule_list_from_collection(concept_id)
-    granule_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}").parsed_response
+  def self.granule_list_from_collection(concept_id, page_num = 1)
+    granule_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
     Hash.from_xml(granule_xml)["results"]
   end
 end
