@@ -36,6 +36,7 @@ class CurationController < ApplicationController
     ingest_success = CollectionRecord.ingest_with_granules(params["concept_id"], params["revision_id"], params["granulesCount"], current_user)
 
     if ingest_success
+      byebug
       collection = CollectionRecord.where(concept_id: params["concept_id"], version_id: params["revision_id"]).first
       collection_script_success = collection.evaluate_script
 
@@ -43,7 +44,9 @@ class CurationController < ApplicationController
       granule_script_success = true
       #filter for those with no automated check
       granules_list = granules_list.select { |granule| !(granule.granule_reviews.where(user_id: -1).any?) }
-      granules_list.each { |granule| script_result = granule.evaluate_script; granule_script_success = script_result if !script_result }
+      granules_list.each { |granule| 
+        script_result = granule.evaluate_script; 
+        granule_script_success = script_result if !script_result }
 
       script_results_phrase = ", the automated reviews were not completed for all collections and granules"
       if collection_script_success && granule_script_success

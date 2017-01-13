@@ -1,4 +1,4 @@
-module CollectionRecordHelper
+module RecordHelper
 
   def empty_contents(value)
     new_value = nil
