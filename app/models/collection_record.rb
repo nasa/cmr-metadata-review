@@ -1,5 +1,5 @@
 class CollectionRecord < ActiveRecord::Base
-  include CollectionRecordHelper
+  include RecordHelper
 
   has_many :collection_flags
   has_one :collection_ingests
@@ -126,7 +126,6 @@ class CollectionRecord < ActiveRecord::Base
   end
 
   def self.ingest_with_granules(concept_id, revision_id, granule_count, user)
-    byebug
     collection_data = Curation.collection_data(concept_id)
     already_ingested = CollectionRecord.ingested?(concept_id, revision_id)
 
@@ -154,10 +153,29 @@ class CollectionRecord < ActiveRecord::Base
     new_comment.save!
   end
 
+  def add_script_comment(script_JSON)
+    new_comment = CollectionComment.new
+    new_comment.collection_record = self
+    new_comment.user_id = -1
+    new_comment.total_comment_count = 0
+    new_comment.rawJSON = script_JSON
+    new_comment.save!
+  end
+
   def new_comment_JSON
     record_hash = JSON.parse(self.rawJSON)
     empty_hash = empty_contents(record_hash)
+  end
 
+  def evaluate_script
+    begin
+      script_results = CollectionScript.run_script(self)
+      self.add_script_comment(script_results)
+    rescue
+      return false
+    end
+
+    return true
   end
 
 end
