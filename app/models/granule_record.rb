@@ -36,6 +36,7 @@ class GranuleRecord < ActiveRecord::Base
   def new_comment_JSON
     record_hash = JSON.parse(self.rawJSON)
     empty_hash = empty_contents(record_hash)
+    empty_hash.to_json
   end
 
   def evaluate_script

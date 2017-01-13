@@ -36,7 +36,6 @@ class CurationController < ApplicationController
     ingest_success = CollectionRecord.ingest_with_granules(params["concept_id"], params["revision_id"], params["granulesCount"], current_user)
 
     if ingest_success
-      byebug
       collection = CollectionRecord.where(concept_id: params["concept_id"], version_id: params["revision_id"]).first
       collection_script_success = collection.evaluate_script
 
