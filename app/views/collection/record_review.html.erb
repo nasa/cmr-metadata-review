@@ -1,0 +1,37 @@
+
+  <table cellpadding="5" border="1">
+      <tr>
+        <td>Source</td>
+          <% @display_list.each do |item| %>
+            <td><%= item[0] %></td>
+          <% end %>
+      </tr>
+      <tr>
+        <td>Original Record</td>
+          <% @display_list.each do |item| %>
+            <td><%= item[1] %></td>
+          <% end %>
+      </tr>
+      <tr>
+        <td>Auto Script</td>
+          <% @display_list.each do |item| %>
+            <td><%= item[2] %></td>
+          <% end %>
+      </tr>
+
+      <%= form_tag("/collection_comment_update" , {method: "post"}) do %>
+        <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
+        <%= hidden_field_tag(:revision_id, params["revision_id"]) %>
+        
+
+      <tr>
+        <td>User Comments</td>
+          <% @display_list.each do |item| %>
+            <td><input type="text" name="user_<%= item[0] %>" id="user_<%= item[0] %>" value="<%= item[3] %>"></td>
+          <% end %>
+      </tr>
+
+  </table>
+
+      <%= submit_tag("Update Comments") %>
+      <% end %>

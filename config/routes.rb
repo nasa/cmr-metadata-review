@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   get '/collection_record_details', to: 'collection#record_details'
   get '/collection_record_review', to: 'collection#record_review'
+  post '/collection_comment_update', to: 'collection#comment_update'
 
 devise_scope :user do
   get '/users/sign_out', to: 'users/sessions#destroy'
