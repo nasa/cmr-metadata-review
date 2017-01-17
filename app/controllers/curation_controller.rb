@@ -8,13 +8,17 @@ class CurationController < ApplicationController
 
   def home
     #ingested records by user
-    @user_collection_ingests = Curation.user_collection_ingests(current_user)
+    # @user_collection_ingests = Curation.user_collection_ingests(current_user)
+    @user_collection_ingests = []
     #unfinished review records
-    @user_open_collection_reviews = Curation.user_open_collection_reviews(current_user)
-    #all records that do not have a completed review by the user
-    @user_available_collection_reviews = Curation.user_available_collection_review(current_user)
+    @user_open_collection_reviews = []
 
-    @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"], current_user)
+    # @user_open_collection_reviews = Curation.user_open_collection_reviews(current_user)
+    #all records that do not have a completed review by the user
+    # @user_available_collection_reviews = Curation.user_available_collection_review(current_user)
+    @user_available_collection_reviews = CollectionRecord.all
+    # @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"], current_user)
+    @search_results = []
     @provider_select_list = Curation.provider_select_list
   end
 
@@ -33,6 +37,7 @@ class CurationController < ApplicationController
   end
 
   def ingest
+    byebug
     ingest_success = CollectionRecord.ingest_with_granules(params["concept_id"], params["revision_id"], params["granulesCount"], current_user)
 
     if ingest_success
@@ -42,7 +47,7 @@ class CurationController < ApplicationController
       granules_list = GranuleRecord.where(collection_concept_id: params["concept_id"])
       granule_script_success = true
       #filter for those with no automated check
-      granules_list = granules_list.select { |granule| !(granule.granule_reviews.where(user_id: -1).any?) }
+      granules_list = granules_list.select { |granule| !(granule.reviews.where(user_id: -1).any?) }
       granules_list.each { |granule| 
         script_result = granule.evaluate_script; 
         granule_script_success = script_result if !script_result }

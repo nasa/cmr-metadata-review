@@ -1,3 +1,4 @@
-class Comment < ApplicationRecord
-  belongs_to :commentable, polymorphic: true
+class Comment < ActiveRecord::Base
+  belongs_to :record
+  belongs_to :user
 end

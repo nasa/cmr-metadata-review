@@ -63,8 +63,8 @@ class CollectionRecord < ActiveRecord::Base
         granule_object_list.each do |granule_object|
           granule_object.save!
 
-          granule_ingest_record = GranuleIngest.new
-          granule_ingest_record.granule_record_id = granule_object.id
+          granule_ingest_record = Ingest.new
+          granule_ingest_record.ingestable = granule_object
           granule_ingest_record.user_id = user.id
           granule_ingest_record.date_ingested = DateTime.now
           granule_ingest_list.push(granule_ingest_record)
@@ -104,8 +104,8 @@ class CollectionRecord < ActiveRecord::Base
       record.rawJSON = collection_data.to_json
       record.save!
 
-      ingest_record = CollectionIngest.new
-      ingest_record.collection_record_id = record.id
+      ingest_record = Ingest.new
+      ingest_record.ingestable = record
       ingest_record.user_id = user.id
       ingest_record.date_ingested = DateTime.now
       ingest_record.save!
@@ -126,7 +126,7 @@ class CollectionRecord < ActiveRecord::Base
   end
 
   def self.ingest_with_granules(concept_id, revision_id, granule_count, user)
-    collection_data = Curation.collection_data(concept_id)
+    collection_data = Cmr.get_collection(concept_id)
     already_ingested = CollectionRecord.ingested?(concept_id, revision_id)
 
     unless already_ingested
@@ -145,8 +145,8 @@ class CollectionRecord < ActiveRecord::Base
   #   t.integer "total_comment_count"
   #   t.string  "rawJSON"
   # end
-    new_comment = CollectionComment.new
-    new_comment.collection_record = self
+    new_comment = Comment.new
+    new_comment.commentable = self
     new_comment.user = user
     new_comment.total_comment_count = 0
     new_comment.rawJSON = self.new_comment_JSON
@@ -154,8 +154,8 @@ class CollectionRecord < ActiveRecord::Base
   end
 
   def add_script_comment(script_JSON)
-    new_comment = CollectionComment.new
-    new_comment.collection_record = self
+    new_comment = Comment.new
+    new_comment.commentable = self
     new_comment.user_id = -1
     new_comment.total_comment_count = 0
     new_comment.rawJSON = script_JSON
