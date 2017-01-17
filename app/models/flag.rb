@@ -1,3 +1,4 @@
-class Flag < ApplicationRecord
-  belongs_to :flagable, polymorphic: true
+class Flag < ActiveRecord::Base
+  belongs_to :record
+  belongs_to :user
 end

@@ -1,3 +1,4 @@
-class Review < ApplicationRecord
-  belongs_to :reviewable, polymorphic: true
+class Review < ActiveRecord::Base
+  belongs_to :record
+  belongs_to :user
 end

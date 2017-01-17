@@ -11,104 +11,71 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216204306) do
+ActiveRecord::Schema.define(version: 20170117211258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "collection_comments", force: :cascade do |t|
-    t.integer "collection_record_id"
+  create_table "collections", force: :cascade do |t|
+    t.string "concept_id",              null: false
+    t.string "short_name", default: ""
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "record_id"
     t.integer "user_id"
     t.integer "total_comment_count"
     t.string  "rawJSON"
   end
 
-  add_index "collection_comments", ["collection_record_id"], name: "index_collection_comments_on_collection_record_id", using: :btree
-  add_index "collection_comments", ["user_id"], name: "index_collection_comments_on_user_id", using: :btree
+  add_index "comments", ["record_id"], name: "index_comments_on_record_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
-  create_table "collection_flags", force: :cascade do |t|
-    t.integer "collection_record_id"
+  create_table "flags", force: :cascade do |t|
+    t.integer "record_id"
     t.integer "user_id"
     t.integer "total_flag_count"
     t.string  "rawJSON"
   end
 
-  add_index "collection_flags", ["collection_record_id"], name: "index_collection_flags_on_collection_record_id", using: :btree
-  add_index "collection_flags", ["user_id"], name: "index_collection_flags_on_user_id", using: :btree
+  add_index "flags", ["record_id"], name: "index_flags_on_record_id", using: :btree
+  add_index "flags", ["user_id"], name: "index_flags_on_user_id", using: :btree
 
-  create_table "collection_ingests", force: :cascade do |t|
-    t.integer  "collection_record_id"
+  create_table "granules", force: :cascade do |t|
+    t.string  "concept_id"
+    t.integer "collection_id"
+  end
+
+  add_index "granules", ["collection_id"], name: "index_granules_on_collection_id", using: :btree
+
+  create_table "ingests", force: :cascade do |t|
+    t.integer  "record_id"
     t.integer  "user_id"
     t.datetime "date_ingested"
   end
 
-  add_index "collection_ingests", ["collection_record_id"], name: "index_collection_ingests_on_collection_record_id", using: :btree
-  add_index "collection_ingests", ["user_id"], name: "index_collection_ingests_on_user_id", using: :btree
+  add_index "ingests", ["record_id"], name: "index_ingests_on_record_id", using: :btree
+  add_index "ingests", ["user_id"], name: "index_ingests_on_user_id", using: :btree
 
-  create_table "collection_records", force: :cascade do |t|
-    t.string  "concept_id",              null: false
-    t.string  "short_name", default: ""
-    t.float   "version_id"
+  create_table "records", force: :cascade do |t|
+    t.integer "recordable_id"
+    t.string  "recordable_type"
+    t.string  "revision_id"
     t.boolean "closed"
     t.string  "rawJSON"
   end
 
-  create_table "collection_reviews", force: :cascade do |t|
-    t.integer  "collection_record_id"
+  add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "record_id"
     t.integer  "user_id"
     t.datetime "review_completion_date"
     t.integer  "review_state"
   end
 
-  add_index "collection_reviews", ["collection_record_id"], name: "index_collection_reviews_on_collection_record_id", using: :btree
-  add_index "collection_reviews", ["user_id"], name: "index_collection_reviews_on_user_id", using: :btree
-
-  create_table "granule_comments", force: :cascade do |t|
-    t.integer "granule_record_id"
-    t.integer "user_id"
-    t.integer "total_comment_count"
-    t.string  "rawJSON"
-  end
-
-  add_index "granule_comments", ["granule_record_id"], name: "index_granule_comments_on_granule_record_id", using: :btree
-  add_index "granule_comments", ["user_id"], name: "index_granule_comments_on_user_id", using: :btree
-
-  create_table "granule_flags", force: :cascade do |t|
-    t.integer "granule_record_id"
-    t.integer "user_id"
-    t.integer "total_flag_count"
-    t.string  "rawJSON"
-  end
-
-  add_index "granule_flags", ["granule_record_id"], name: "index_granule_flags_on_granule_record_id", using: :btree
-  add_index "granule_flags", ["user_id"], name: "index_granule_flags_on_user_id", using: :btree
-
-  create_table "granule_ingests", force: :cascade do |t|
-    t.integer  "granule_record_id"
-    t.integer  "user_id"
-    t.datetime "date_ingested"
-  end
-
-  add_index "granule_ingests", ["granule_record_id"], name: "index_granule_ingests_on_granule_record_id", using: :btree
-  add_index "granule_ingests", ["user_id"], name: "index_granule_ingests_on_user_id", using: :btree
-
-  create_table "granule_records", force: :cascade do |t|
-    t.string  "granule_ur"
-    t.float   "version_id"
-    t.string  "collection_concept_id"
-    t.boolean "closed"
-    t.string  "rawJSON"
-  end
-
-  create_table "granule_reviews", force: :cascade do |t|
-    t.integer  "granule_record_id"
-    t.integer  "user_id"
-    t.datetime "review_completion_date"
-    t.integer  "review_state"
-  end
-
-  add_index "granule_reviews", ["granule_record_id"], name: "index_granule_reviews_on_granule_record_id", using: :btree
-  add_index "granule_reviews", ["user_id"], name: "index_granule_reviews_on_user_id", using: :btree
+  add_index "reviews", ["record_id"], name: "index_reviews_on_record_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false

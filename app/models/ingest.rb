@@ -1,3 +1,4 @@
-class Ingest < ApplicationRecord
-  belongs_to :ingestable, polymorphic: true
+class Ingest < ActiveRecord::Base
+  belongs_to :record
+  belongs_to :user
 end
