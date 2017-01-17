@@ -1,12 +1,12 @@
 class GranuleRecord < ActiveRecord::Base
   include RecordHelper
 
-  has_many :granule_flags
-  has_many :granule_ingests
-  has_many :granule_comments
-  has_many :granule_reviews
+  has_many :flags, as: :flagable
+  has_one :ingest, as: :ingestable
+  has_many :comments, as: :commentable
+  has_many :reviews, as: :reviewable
 
-  has_many :users, through: :granule_reviews 
+  # has_many :users, through: :granule_reviews 
 
 
   def add_comment(user)
