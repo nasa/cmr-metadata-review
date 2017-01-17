@@ -3,19 +3,19 @@
       <tr>
         <td>Source</td>
           <% @display_list.each do |item| %>
-            <td><%= item[0] %></td>
+            <td><div class="record_review_text"><%= item[0] %></div></td>
           <% end %>
       </tr>
       <tr>
         <td>Original Record</td>
           <% @display_list.each do |item| %>
-            <td><%= item[1] %></td>
+            <td><div class="record_review_text"><%= item[1] %></div></td>
           <% end %>
       </tr>
       <tr>
         <td>Auto Script</td>
           <% @display_list.each do |item| %>
-            <td><%= item[2] %></td>
+            <td><div class="record_review_text"><%= item[2] %></div></td>
           <% end %>
       </tr>
 
@@ -23,7 +23,7 @@
         <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
         <%= hidden_field_tag(:revision_id, params["revision_id"]) %>
         
-
+        
       <tr>
         <td>User Comments</td>
           <% @display_list.each do |item| %>

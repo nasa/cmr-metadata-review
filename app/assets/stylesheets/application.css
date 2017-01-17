@@ -76,3 +76,9 @@ input[type=submit]:disabled {
     opacity: 0.65;
     background: #ebebeb;
 }
+
+.record_review_text {
+  font-size: 0.7em;
+  max-height:150px;
+  overflow: auto;
+}

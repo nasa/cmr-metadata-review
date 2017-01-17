@@ -39,7 +39,7 @@ class CollectionController < ApplicationController
     @user_comment_contents = JSON.parse(@user_comment.rawJSON)
 
     @display_list = []
-    JSON.parse(@collection_record.rawJSON).each do |key, value|
+    JSON.parse(@collection_record.rawJSON)["Collection"].each do |key, value|
       if value.is_a?(String) 
         @display_list.push([key, value, @script_comment[key], @user_comment_contents[key]])
       end
