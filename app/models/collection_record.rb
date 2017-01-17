@@ -1,12 +1,12 @@
 class CollectionRecord < ActiveRecord::Base
   include RecordHelper
 
-  has_many :collection_flags
-  has_one :collection_ingests
-  has_many :collection_comments
-  has_many :collection_reviews
+  has_many :flags, as: :flagable
+  has_one :ingest, as: :ingestable
+  has_many :comments, as: :commentable
+  has_many :reviews, as: :reviewable
 
-  has_many :users, through: :collection_reviews   
+  # has_many :users, through: :collection_reviews   
 
   def self.ingested?(concept_id, revision_id)
     CollectionRecord.where(concept_id: concept_id, version_id: revision_id).any?
