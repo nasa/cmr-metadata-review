@@ -7,7 +7,7 @@ class CollectionController < ApplicationController
       redirect_to curation_home_path
     end
 
-    @collection_records = CollectionRecord.where(concept_id: @concept_id).order(:version_id).reverse_order
+    @collection_records = Collection.find_by(concept_id: @concept_id).records.order(:revision_id).reverse_order
   end
 
   def search
