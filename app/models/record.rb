@@ -1,6 +1,10 @@
 class Record < ActiveRecord::Base
   include RecordHelper
   belongs_to :recordable, :polymorphic => true
+  has_many :reviews
+  has_many :comments
+  has_one :ingest
+  has_many :flags
 
   def is_collection?
     self.recordable_type == "Collection"

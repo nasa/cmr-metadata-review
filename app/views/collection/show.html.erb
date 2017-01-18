@@ -1,6 +1,6 @@
 <h2>Review Details for Collection Record</h2>
 <h3>Concept ID: <%= @concept_id %></h3>
-<h3>Short Name: <%= @collection_records.first.short_name %></h3>
+<h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
 
 <% @collection_records.each do |record| %>
 
@@ -8,7 +8,7 @@
 
   <tr>
     <th>
-      <h4>Revision ID: <%= record.version_id %></h4>
+      <h4>Revision ID: <%= record.revision_id %></h4>
     </th>
   </tr>
 
@@ -23,7 +23,7 @@
               </tr>
 
 
-            <% record.collection_reviews.each do |review| %>
+            <% record.reviews.each do |review| %>
               <tr>
                   <td><%= review.user.email %></td>
                   <td><%= review.review_state %></td>
@@ -33,7 +33,7 @@
           </table>
 
       <p>Ingest Script Score:</p>
-      <%= link_to "Start or Continue Review on This Record", collection_record_review_path(concept_id: @concept_id, revision_id: record.version_id) %> 
+      <%= link_to "Start or Continue Review on This Record", collection_record_review_path(concept_id: @concept_id, revision_id: record.revision_id) %> 
     </td>
   </tr>
 
