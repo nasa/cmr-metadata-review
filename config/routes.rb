@@ -10,18 +10,19 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'site#index'
-  get '/curators', to: 'site#curators'
-  get '/normal_users', to: 'site#normal_users'
 
-  get '/curation_home', to: 'curation#home'
-  get '/curation_search', to: 'curation#search'
-  get '/curation_ingest_details', to: 'curation#ingest_details'
+  # get '/curators', to: 'site#curators'
+  # get '/normal_users', to: 'site#normal_users'
 
-  post '/curation_ingest', to: 'curation#ingest'
+  get '/curation_home', to: 'site#home'
+  get '/curation_search', to: 'collection#search'
+  get '/curation_ingest_details', to: 'collection#new'
 
-  get '/collection_record_details', to: 'collection#record_details'
-  get '/collection_record_review', to: 'collection#record_review'
-  post '/collection_comment_update', to: 'collection#comment_update'
+  post '/curation_ingest', to: 'collection#create'
+
+  get '/collection_record_details', to: 'collection#show'
+  get '/collection_record_review', to: 'collection#review'
+  post '/collection_comment_update', to: 'comment#update'
 
 devise_scope :user do
   get '/users/sign_out', to: 'users/sessions#destroy'

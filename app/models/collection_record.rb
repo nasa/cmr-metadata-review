@@ -8,10 +8,6 @@ class CollectionRecord < ActiveRecord::Base
 
   # has_many :users, through: :collection_reviews   
 
-  def self.ingested?(concept_id, revision_id)
-    CollectionRecord.where(concept_id: concept_id, version_id: revision_id).any?
-  end
-
   def self.save_granules(concept_id, shortname, version_id, granule_count, user)
     if granule_count == 0
       #no actions needed
@@ -138,35 +134,11 @@ class CollectionRecord < ActiveRecord::Base
     end 
   end
 
-  def add_comment(user)
-  #   create_table "collection_comments", force: :cascade do |t|
-  #   t.integer "collection_record_id"
-  #   t.integer "user_id"
-  #   t.integer "total_comment_count"
-  #   t.string  "rawJSON"
-  # end
-    new_comment = Comment.new
-    new_comment.commentable = self
-    new_comment.user = user
-    new_comment.total_comment_count = 0
-    new_comment.rawJSON = self.new_comment_JSON
-    new_comment.save!
-  end
+  
 
-  def add_script_comment(script_JSON)
-    new_comment = Comment.new
-    new_comment.commentable = self
-    new_comment.user_id = -1
-    new_comment.total_comment_count = 0
-    new_comment.rawJSON = script_JSON
-    new_comment.save!
-  end
+  
 
-  def new_comment_JSON
-    record_hash = JSON.parse(self.rawJSON)
-    empty_hash = empty_contents(record_hash)
-    empty_hash.to_json
-  end
+
 
   def evaluate_script
     begin
