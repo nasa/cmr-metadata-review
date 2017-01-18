@@ -10,10 +10,10 @@ class SiteController < ApplicationController
     # @user_open_collection_reviews = Curation.user_open_collection_reviews(current_user)
     #all records that do not have a completed review by the user
     # @user_available_collection_reviews = Curation.user_available_collection_review(current_user)
-    @user_available_collection_reviews = CollectionRecord.all
+    @user_available_collection_reviews = Collection.all_records
     # @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"], current_user)
     @search_results = []
-    @provider_select_list = Curation.provider_select_list
+    @provider_select_list = provider_select_list
   end
 
 end

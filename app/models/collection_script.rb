@@ -4,7 +4,7 @@ class CollectionScript
     comment_JSON = collection_record.new_comment_JSON
     comment_hash = JSON.parse(comment_JSON)
 
-    byebug
+
     #operate over comment hash
 
     #escaping json for passing to python

@@ -159,9 +159,9 @@
 
   <% @user_available_collection_reviews.each_with_index do |record, index| %>
     <tr>
-        <td id="availableConcept<%= index.to_s %>"><%= record.concept_id %></td>
-        <td><%= record.version_id %></td>
-        <td><%= record.short_name %></td>
+        <td id="availableConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+        <td><%= record.revision_id %></td>
+        <td><%= record.recordable.short_name %></td>
         <td><input type="radio" id="available<%= index.to_s %>" name="availableSelection" value="<%= index.to_s %>"/></td>
     </tr>
   <% end %>
