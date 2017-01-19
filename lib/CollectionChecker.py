@@ -102,10 +102,12 @@ class Checker():
 
         try:
             #print("555")
-            metadata = json.loads(metadata)
-
             result = ""
             resultFields = ""
+
+            metadata = json.loads(metadata)
+
+            
 
 
 
@@ -150,41 +152,49 @@ class Checker():
             except KeyError:
                 result += 'Provide a description for this dataset. This is a required field.' + ', , '
             # ================
+            resultFields += 'Orderable' + ', '
             try:
                 result += self.checkOrderable(metadata['Orderable']) + ', '
             except KeyError:
                 result += 'np' + ', '
             # ================
+            resultFields += 'Visible' + ', '
             try:
                 result += self.checkVisible(metadata['Visible']) + ', '
             except KeyError:
                 result += 'np' + ', '
             # ================
+            resultFields += 'RevisionDate' + ', '
             try:
                 result += self.checkRevisionDate(metadata['RevisionDate']) + ', , '
             except KeyError:
                 result += 'np' + ', , '
             # ================
+            resultFields += 'ProcessingCenter' + ', '
             try:
                 result += self.checkProcCenter(metadata['ProcessingCenter']) + ', '
             except KeyError:
                 result += 'np' + ', '
             # ================
+            resultFields += 'ProcessingLevelId' + ', '
             try:
                 result += self.checkProcLevelID(metadata['ProcessingLevelId']) + ', , '
             except KeyError:
                 result += 'Provide a processing level Id for this dataset. This is a required field.' + ', , '
             # ================
+            resultFields += 'ArchiveCenter' + ', '
             try:
                 result += self.checkArchiveCenter(metadata['ArchiveCenter']) + ', , '
             except KeyError:
                 result += 'np' + ', , '
             # ================
+            resultFields += 'CitationForExternalPublication' + ', '
             try:
                 result += self.checkExtPub(metadata['CitationForExternalPublication']) + ', '
             except KeyError:
                 result += 'np' + ', '
             # ================
+            resultFields += 'CollectionState' + ', '
             try:
                 result += self.checkCollectionState(metadata['CollectionState']) + ', , , , , '
             except KeyError:
@@ -195,6 +205,7 @@ class Checker():
             # except KeyError:
             #     result += 'np' + ', , '
             # ================
+            resultFields += 'DataFormat' + ', '
             try:
                 result += self.checkDateFormat(metadata['DataFormat']) + ', '
             except KeyError:
@@ -205,6 +216,7 @@ class Checker():
             # except KeyError:
             #     result += 'np' + ', '
             # ================
+            
             try:
                 result += self.checkSpatialKey(metadata['SpatialKeywords']['Keyword']) + ', , , , , , , '
             except KeyError:

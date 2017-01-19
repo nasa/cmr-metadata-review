@@ -7,7 +7,11 @@ class CollectionController < ApplicationController
       redirect_to curation_home_path
     end
 
-    @collection_records = Collection.find_by(concept_id: @concept_id).records.order(:revision_id).reverse_order
+    collection = Collection.find_by(concept_id: @concept_id)
+    @collection_records = collection.records.order(:revision_id).reverse_order
+
+    @granule_objects = Granule.where(collection: collection)
+    # @granule_records = granule_objects.map { |granule|}
   end
 
   def search
@@ -41,7 +45,7 @@ class CollectionController < ApplicationController
       return
     end
 
-    begin 
+    # begin 
       collection_data = Cmr.get_collection(concept_id)
       short_name = collection_data["Collection"]["ShortName"]
       ingest_time = DateTime.now
@@ -80,9 +84,9 @@ class CollectionController < ApplicationController
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
-    rescue
+    # rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
-    end
+    # end
       
     redirect_to curation_home_path
   end
@@ -96,9 +100,11 @@ class CollectionController < ApplicationController
       redirect_to curation_home_path
     end
 
-    @collection_record = CollectionRecord.where(concept_id: @concept_id, version_id: @revision_id).first
-    @record_comments = @collection_record.collection_comments
+    @collection_record = Collection.find_record(@concept_id, @revision_id)
+    @record_comments = @collection_record.comments
     @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
+    @other_users_comments = @record_comments.select { |comment| (comment.user_id != current_user.id && comment.user_id != -1) }
+
     @script_comment = @record_comments.select { |comment| comment.user_id == -1 }.first
 
     if @script_comment
@@ -106,9 +112,9 @@ class CollectionController < ApplicationController
     end
 
     if @user_comment.empty?
-      @collection_record.add_comment(current_user)
+      @collection_record.add_comment(current_user.id)
       #grabbing the newly made comment
-      @user_comment = CollectionComment.where(user_id: current_user.id, collection_record_id: @collection_record.id).first
+      @user_comment = Comment.where(user: current_user, record: @collection_record).first
     else
       @user_comment = @user_comment.first
     end
@@ -116,9 +122,10 @@ class CollectionController < ApplicationController
     @user_comment_contents = JSON.parse(@user_comment.rawJSON)
 
     @display_list = []
+
     JSON.parse(@collection_record.rawJSON)["Collection"].each do |key, value|
       if value.is_a?(String) 
-        @display_list.push([key, value, @script_comment[key], @user_comment_contents[key]])
+        @display_list.push({key: key, value: value, script: @script_comment[key], reviewer: @user_comment_contents["Collection"][key]})
       end
     end
 
