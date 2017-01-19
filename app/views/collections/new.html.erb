@@ -21,7 +21,7 @@
   <% if @granule_count < 3 %>
     <% if @granule_count < 1 %>
       <p>No Granules Associated with This Collection</p>
-      <%= form_tag( collections_path ,  {method: "post"}) do %>
+      <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
         <%= hidden_field_tag(:concept_id, @concept_id) %>
         <%= hidden_field_tag(:revision_id, @revision_id) %>
         <%= submit_tag("Ingest Collection Without Granules", id: 'ingest_submit') %>
@@ -29,7 +29,7 @@
     <% else %>
       <p>Total Granules in this Collection: <%= @granule_count %></p>
       <p>Select Number of Granules to Ingest With This Collection</p>
-      <%= form_tag( collections_path ,  {method: "post"}) do %>
+      <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
         <%= hidden_field_tag(:concept_id, @concept_id) %>
         <%= hidden_field_tag(:revision_id, @revision_id) %>
         <%= select_tag(:granulesCount, options_for_select([['1', 1]])) %>
@@ -39,7 +39,7 @@
   <% else %>
     <p>Total Granules in this Collection: <%= @granule_count %></p>
     <p>Select Number of Granules to Ingest With This Collection</p>
-    <%= form_tag( collections_path ,  {method: "post"}) do %>
+    <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
         <%= hidden_field_tag(:concept_id, @concept_id) %>
         <%= hidden_field_tag(:revision_id, @revision_id) %>
         <%= select_tag(:granulesCount, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]])) %>
@@ -49,3 +49,52 @@
 <% else %>
   <p>This record has already been ingested into the system for review</p>
 <% end %>  
+
+<!-- Static Modal -->
+<div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true" style="visibility: hidden;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
+                    <h4>Saving CMR Data and Running Auto Scripts</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  document.getElementById('ingest_submit').onclick = function() {
+
+    document.getElementById('processing-modal').style.visibility = "visible";
+    document.getElementById('ingest_submit').disabled = true;
+    document.forms["collection_form"].submit();
+  };
+</script>
+
+
+<style type="text/css">
+  .modal-static { 
+    position: fixed;
+    top: 60% !important; 
+    left: 15% !important; 
+    margin-top: -100px;  
+    margin-left: -100px; 
+    overflow: visible !important;
+}
+.modal-static,
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    width: 200px; 
+    height: 200px; 
+}
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    padding: 0 !important; 
+    margin: 0 !important;
+}
+.modal-static .modal-content .icon {
+}
+</style>

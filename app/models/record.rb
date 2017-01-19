@@ -37,12 +37,27 @@ class Record < ActiveRecord::Base
       #creating a hash with values { row_header => result_string }
       comment_hash = Hash[script_results[3].zip(script_results[1])]
 
-      add_script_comment(comment_hash.to_json)
+
+      score = score_script_hash(comment_hash)
+
+      add_script_comment(comment_hash.to_json, score)
     else
       #run granule script
 
     end
 
+  end
+
+  def score_script_hash(script_hash) 
+    score = 0
+    script_hash.each do |key, sub_value|
+      if script_hash[key].is_a?(String)
+        if (sub_value.include? "OK") || (sub_value.include? "ok") || (sub_value.include? "Ok")
+          score = score + 1
+        end
+      end
+    end
+    score
   end
 
   def blank_comment_JSON
@@ -51,15 +66,25 @@ class Record < ActiveRecord::Base
     empty_hash.to_json
   end
 
-  def add_script_comment(script_JSON)
-    add_comment(-1, script_JSON)
+  def script_score
+    script_comment = self.comments.where(user_id: -1).first
+    if script_comment.nil?
+      0
+    else 
+      script_comment.total_comment_count
+    end
+        
   end
 
-  def add_comment(user_id, comment_json=nil)
+  def add_script_comment(script_JSON, score)
+    add_comment(-1, script_JSON, score)
+  end
+
+  def add_comment(user_id, comment_json=nil, score=0)
     new_comment = Comment.new
     new_comment.record = self
     new_comment.user_id = user_id
-    new_comment.total_comment_count = 0
+    new_comment.total_comment_count = score
     if comment_json.nil?
       new_comment.rawJSON = self.blank_comment_JSON
     else
@@ -86,6 +111,7 @@ class Record < ActiveRecord::Base
     new_review.record = self
     new_review.user_id = user_id
     new_review.review_state = 0
+    new_review.save!
   end
 
 end

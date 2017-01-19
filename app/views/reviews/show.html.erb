@@ -94,6 +94,12 @@
 </div>
 <br>
 
+
+<input type="checkbox" name="userreviewcheck" value="done" form="comment_form" <%= @review_complete %>>My Review Is Complete
+
+<br><br>
+
+
 <%= form_tag(review_path(id: 1) , {method: "put", id: "comment_form"}) do %>
   <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
   <%= hidden_field_tag(:revision_id, params["revision_id"]) %>

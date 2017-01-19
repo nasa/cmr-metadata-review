@@ -61,13 +61,14 @@
                 <% record.reviews.each do |review| %>
                   <tr>
                       <td><%= review.user.email %></td>
-                      <td><%= review.review_state %></td>
-                      <td><%= review.review_completion_date %></td>
+                      <td><%= review.state_string %></td>
+                      <td><%= review.formatted_date %></td>
                   </tr>
+
                 <% end %>
               </table>
 
-          <p>Ingest Script Score:</p>
+          <p>Ingest Script Score: <%= record.script_score %></p>
           <%= link_to "Start or Continue Review on This Record", review_path(id:1, concept_id: @concept_id, revision_id: record.revision_id) %> 
         </td>
       </tr>
