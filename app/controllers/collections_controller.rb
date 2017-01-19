@@ -45,7 +45,7 @@ class CollectionsController < ApplicationController
       return
     end
 
-    # begin 
+    begin 
       collection_data = Cmr.get_collection(concept_id)
       short_name = collection_data["Collection"]["ShortName"]
       ingest_time = DateTime.now
@@ -84,9 +84,9 @@ class CollectionsController < ApplicationController
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
-    # rescue
+    rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
-    # end
+    end
       
     redirect_to home_path
   end

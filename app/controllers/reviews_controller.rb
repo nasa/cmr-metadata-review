@@ -38,6 +38,12 @@ class ReviewsController < ApplicationController
       @user_review = Review.where(user: current_user, record: @collection_record).first
     end
 
+    if @user_review.review_state == 1
+      @review_complete = "checked"
+    else 
+      @review_complete = ""
+    end
+
     @user_comment_contents = JSON.parse(@user_comment.rawJSON)
     @user_flag = JSON.parse(@user_flag.rawJSON)
 
@@ -66,7 +72,6 @@ class ReviewsController < ApplicationController
 
 
   def update
-
     @collection_record = Collection.find_record(params["concept_id"], params["revision_id"])
 
     #updating comment text
@@ -93,8 +98,26 @@ class ReviewsController < ApplicationController
     @user_flags.save!
 
 
-    flash[:notice] = "User Comments have been saved"
+    #updating review
+    if params["userreviewcheck"] == "done"
+      @user_review = @collection_record.reviews.where(user: current_user).first
+      if @user_review.review_state == 0
+        @user_review.review_state = 1
+        @user_review.review_completion_date = DateTime.now
+        @user_review.save!
+      end
 
+      flash[:notice] = "User Review has been saved"
+      redirect_to collection_path(id: 1, concept_id: params["concept_id"])
+      return
+    else
+      @user_review = @collection_record.reviews.where(user: current_user).first
+      @user_review.review_state = 0
+      @user_review.review_completion_date = nil
+      @user_review.save!
+    end
+
+    flash[:notice] = "User Comments have been saved"
     redirect_to review_path(id: 1, concept_id: params["concept_id"], revision_id: params["revision_id"])
   end
 
