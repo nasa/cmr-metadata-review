@@ -1,4 +1,9 @@
 <div style="overflow-x: auto;">
+
+ <%= link_to "Return to Collection Detail Page", collection_path(id: 1, concept_id: @concept_id) %>
+
+ <br><br>
+
   <table cellpadding="5" border="1">
       <tr>
         <td>Source</td>
@@ -19,25 +24,22 @@
           <% end %>
       </tr>
 
-      <% @other_users_comments.each do |other_user_comment| %>
+
+      <% (0...@other_users_comments_count).to_a.each_with_index do |other_user_comment, index| %>
         <tr>
           <td>Other Comments</td>
-            <% other_user_comment.each do |item| %>
-              <td><div class="record_review_text"><%= item[:reviewer] %></div></td>
+
+            <% @display_list.each do |item| %>
+              <td><div class="record_review_text"><%= item[("other_user" + index.to_s).to_sym] %></div></td>
             <% end %>
         </tr>
       <% end %>
-
-      <%= form_tag("/collection_comment_update" , {method: "post", id: "comment_form"}) do %>
-        <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
-        <%= hidden_field_tag(:revision_id, params["revision_id"]) %>
-        
         
       <tr>
         <td>User Comments</td>
           <% @display_list.each do |item| %>
             <td>
-            <textarea style="height: 90px;padding-top:0px" name="user_<%= item[:key] %>" id="user_<%= item[:key] %>" form="comment_form"><%= item[:reviewer] %></textarea>
+            <textarea style="height: 90px; padding-top:0px" name="user_<%= item[:key] %>" id="user_<%= item[:key] %>" form="comment_form"><%= item[:reviewer] %></textarea>
             </td>
           <% end %>
       </tr>
@@ -46,5 +48,11 @@
 
 </div>
 <br>
-      <%= submit_tag("Save Comments") %>
-      <% end %>
+
+<%= form_tag(review_path(id: 1) , {method: "put", id: "comment_form"}) do %>
+  <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
+  <%= hidden_field_tag(:revision_id, params["revision_id"]) %>
+  
+
+<%= submit_tag("Save Comments") %>
+<% end %>
