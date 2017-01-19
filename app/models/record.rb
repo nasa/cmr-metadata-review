@@ -68,4 +68,24 @@ class Record < ActiveRecord::Base
     new_comment.save!
   end
 
+  def add_flag(user_id, flag_json=nil)
+    new_flag = Flag.new
+    new_flag.record = self
+    new_flag.user_id = user_id
+    new_flag.total_flag_count = 0
+    if flag_json.nil?
+      new_flag.rawJSON = self.blank_comment_JSON
+    else
+      new_flag.rawJSON = comment_json
+    end
+    new_flag.save!
+  end
+
+  def add_review(user_id)
+    new_review = Review.new
+    new_review.record = self
+    new_review.user_id = user_id
+    new_review.review_state = 0
+  end
+
 end
