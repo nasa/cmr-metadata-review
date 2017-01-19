@@ -1,0 +1,50 @@
+<div style="overflow-x: auto;">
+  <table cellpadding="5" border="1">
+      <tr>
+        <td>Source</td>
+          <% @display_list.each do |item| %>
+            <td><div class="record_review_text"><%= item[:key] %></div></td>
+          <% end %>
+      </tr>
+      <tr>
+        <td>Original Record</td>
+          <% @display_list.each do |item| %>
+            <td><div class="record_review_text"><%= item[:value] %></div></td>
+          <% end %>
+      </tr>
+      <tr>
+        <td>Auto Script</td>
+          <% @display_list.each do |item| %>
+            <td><div class="record_review_text"><%= item[:script] %></div></td>
+          <% end %>
+      </tr>
+
+      <% @other_users_comments.each do |other_user_comment| %>
+        <tr>
+          <td>Other Comments</td>
+            <% other_user_comment.each do |item| %>
+              <td><div class="record_review_text"><%= item[:reviewer] %></div></td>
+            <% end %>
+        </tr>
+      <% end %>
+
+      <%= form_tag("/collection_comment_update" , {method: "post", id: "comment_form"}) do %>
+        <%= hidden_field_tag(:concept_id, params["concept_id"]) %>
+        <%= hidden_field_tag(:revision_id, params["revision_id"]) %>
+        
+        
+      <tr>
+        <td>User Comments</td>
+          <% @display_list.each do |item| %>
+            <td>
+            <textarea style="height: 90px;padding-top:0px" name="user_<%= item[:key] %>" id="user_<%= item[:key] %>" form="comment_form"><%= item[:reviewer] %></textarea>
+            </td>
+          <% end %>
+      </tr>
+
+  </table>
+
+</div>
+<br>
+      <%= submit_tag("Save Comments") %>
+      <% end %>

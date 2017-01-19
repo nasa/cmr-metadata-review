@@ -2,67 +2,80 @@
 <h3>Concept ID: <%= @concept_id %></h3>
 <h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
 
-<% @collection_records.each do |record| %>
-
-<table cellpadding="5" border="1">
-
-  <tr>
-    <th>
-      <h4>Revision ID: <%= record.revision_id %></h4>
-    </th>
-  </tr>
-
-  <tr>
-    <td>
-      <p>Reviews:</p>
-          <table cellpadding="5" border="1">
-              <tr>
-                  <td>Reviewer</td>
-                  <td>Status</td>
-                  <td>Completion Date</td>
-              </tr>
-
-
-            <% record.reviews.each do |review| %>
-              <tr>
-                  <td><%= review.user.email %></td>
-                  <td><%= review.review_state %></td>
-                  <td><%= review.review_completion_date %></td>
-              </tr>
-            <% end %>
-          </table>
-
-      <p>Ingest Script Score:</p>
-      <%= link_to "Start or Continue Review on This Record", collection_record_review_path(concept_id: @concept_id, revision_id: record.revision_id) %> 
-    </td>
-  </tr>
-
-</table>
-<% end %>
-
-<% x = JSON.parse(@collection_records.first.rawJSON) %>
-
- <table cellpadding="5" border="1">
-              <tr>
-                  <td>Title</td>
-                  <td>Data</td>
-              </tr>
-
-
-            <% x["Collection"].each do |key, array| %>
-              <tr>
-                  <td><%= key %></td>
-                  <td><%= array %></td>
-              </tr>
-            <% end %>
-
-          </table>
-
-
-
-
-<br>
 
 <% if current_user && current_user.curator%>
   <%= link_to "Return to Curation Home Page", curation_home_path %>
 <% end %>
+
+<br><br>
+
+<div style="float:right; margin-right:40px;">
+  <h3>Granules</h3>
+    <% @granule_objects.each do |granule| %>
+
+    <table cellpadding="5" border="1">
+
+      <tr>
+        <th>
+          <h4>Revision ID: <%= granule.concept_id %></h4>
+        </th>
+      </tr>
+
+      <tr>
+        <td>
+          <a href="/granule_show?concept_id=<%= granule.concept_id %>">Granule Review Page</a>
+
+
+        </td>
+      </tr>
+
+    </table>
+    <% end %>
+
+</div>
+
+<div style="float:left;">
+
+    <h3>Collection Revisions</h3>
+    <% @collection_records.each do |record| %>
+
+    <table cellpadding="5" border="1">
+
+      <tr>
+        <th>
+          <h4>Revision ID: <%= record.revision_id %></h4>
+        </th>
+      </tr>
+
+      <tr>
+        <td>
+          <p>Reviews:</p>
+              <table cellpadding="5" border="1">
+                  <tr>
+                      <td>Reviewer</td>
+                      <td>Status</td>
+                      <td>Completion Date</td>
+                  </tr>
+
+
+                <% record.reviews.each do |review| %>
+                  <tr>
+                      <td><%= review.user.email %></td>
+                      <td><%= review.review_state %></td>
+                      <td><%= review.review_completion_date %></td>
+                  </tr>
+                <% end %>
+              </table>
+
+          <p>Ingest Script Score:</p>
+          <%= link_to "Start or Continue Review on This Record", collection_record_review_path(concept_id: @concept_id, revision_id: record.revision_id) %> 
+        </td>
+      </tr>
+
+    </table>
+    <% end %>
+
+</div>
+
+
+<br>

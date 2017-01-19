@@ -21,8 +21,10 @@ Rails.application.routes.draw do
   post '/curation_ingest', to: 'collection#create'
 
   get '/collection_record_details', to: 'collection#show'
-  get '/collection_record_review', to: 'collection#review'
+  get '/collection_record_review', to: 'review#show'
   post '/collection_comment_update', to: 'comment#update'
+
+  get '/granule_show', to: 'granule#show'
 
 devise_scope :user do
   get '/users/sign_out', to: 'users/sessions#destroy'

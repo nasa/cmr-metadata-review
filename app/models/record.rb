@@ -16,7 +16,7 @@ class Record < ActiveRecord::Base
 
   def evaluate_script
     collection_data = JSON.parse(rawJSON)
-    comment_JSON = new_comment_JSON
+    comment_JSON = blank_comment_JSON
     comment_hash = JSON.parse(comment_JSON)
 
     if self.is_collection?
@@ -45,22 +45,26 @@ class Record < ActiveRecord::Base
 
   end
 
-  def new_comment_JSON
+  def blank_comment_JSON
     record_hash = JSON.parse(self.rawJSON)
     empty_hash = empty_contents(record_hash)
     empty_hash.to_json
   end
 
   def add_script_comment(script_JSON)
-    add_comment(-1)
+    add_comment(-1, script_JSON)
   end
 
-  def add_comment(user_id)
+  def add_comment(user_id, comment_json=nil)
     new_comment = Comment.new
     new_comment.record = self
     new_comment.user_id = user_id
     new_comment.total_comment_count = 0
-    new_comment.rawJSON = self.new_comment_JSON
+    if comment_json.nil?
+      new_comment.rawJSON = self.blank_comment_JSON
+    else
+      new_comment.rawJSON = comment_json
+    end
     new_comment.save!
   end
 
