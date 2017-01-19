@@ -4,7 +4,7 @@
 
 
 <p>Current User: <%= current_user.email %></p>
-<%= link_to "Search the CMR Database For Data Ingest", curation_search_path %>
+<%= link_to "Search the CMR Database For Data Ingest", collections_search_path %>
 
 <br>
 
@@ -38,7 +38,7 @@
 
 <br>
 
-<%= form_tag("/collection_record_details" ,  {method: "get", id: 'unfinished_form'}) do %>
+<%= form_tag( collection_path(id: 1),  {method: "get", id: 'unfinished_form'}) do %>
   <%= hidden_field_tag(:concept_id, "", id: "unfinishedConceptId") %>
   <%= submit_tag("See Collection Review Detail", id: 'unfinishedSubmit') %>
 <% end %>
@@ -77,7 +77,7 @@
 <p>Search Available Records For Review:</p>
 <p style="font-size:0.8em;">Search Text &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DAAC</p>
 
-<%= form_tag("/curation_home", method: "get") do %>
+<%= form_tag( home_path , method: "get") do %>
   <%= text_field_tag(:free_text) %>
   <%= select_tag(:provider, options_for_select(@provider_select_list, :selected => @provider)) %>
   <%= submit_tag("Search") %>
@@ -108,7 +108,7 @@
 
   <br>
 
-  <%= form_tag("/collection_record_details" ,  {method: "get", id: 'search_form'}) do %>
+  <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'search_form'}) do %>
     <%= hidden_field_tag(:concept_id, "", id: "searchConceptId") %>
     <%= submit_tag("See Collection Review Detail", id: 'searchSubmit') %>
   <% end %>
@@ -170,10 +170,13 @@
 
 <br>
 
-<%= form_tag("/collection_record_details" ,  {method: "get", id: 'available_form'}) do %>
+<%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'available_form'}) do %>
   <%= hidden_field_tag(:concept_id, "", id: "availableConceptId") %>
   <%= submit_tag("See Collection Review Detail", id: 'availableSubmit') %>
 <% end %>
+
+
+
 
 <script type="text/javascript">
 
@@ -230,7 +233,7 @@
 </table>
 <br>
 
-<%= form_tag("/collection_record_details" ,  {method: "get", id: 'uncomplete_form'}) do %>
+<%= form_tag( collection_path(id: 1),  {method: "get", id: 'uncomplete_form'}) do %>
   <%= hidden_field_tag(:concept_id, "", id: "uncompleteConceptId") %>
   <%= submit_tag("See Collection Review Detail", id: 'uncompleteSubmit') %>
 <% end %>
