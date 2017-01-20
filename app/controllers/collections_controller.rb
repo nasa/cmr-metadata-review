@@ -15,21 +15,37 @@ class CollectionsController < ApplicationController
   end
 
   def search
-    @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
-    @free_text = params["free_text"]
-    @provider = params["provider"]
-    @curr_page = params["curr_page"]
-    @provider_select_list = provider_select_list
+    begin
+      @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
+      @free_text = params["free_text"]
+      @provider = params["provider"]
+      @curr_page = params["curr_page"]
+      @provider_select_list = provider_select_list
+    rescue Net::OpenTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue Net::ReadTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue
+      flash[:alert] = 'There was an error ingesting the record into the system'
+    end
   end
 
   def new
-    collection_data = Cmr.get_collection(params["concept_id"])
-    @concept_id = collection_data["concept_id"]
-    @revision_id = collection_data["revision_id"]
-    @short_name = collection_data["Collection"]["ShortName"]
+    begin
+      collection_data = Cmr.get_collection(params["concept_id"])
+      @concept_id = collection_data["concept_id"]
+      @revision_id = collection_data["revision_id"]
+      @short_name = collection_data["Collection"]["ShortName"]
 
-    @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
-    @granule_count = Cmr.collection_granule_count(@concept_id)
+      @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
+      @granule_count = Cmr.collection_granule_count(@concept_id)
+    rescue Net::OpenTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue Net::ReadTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue
+      flash[:alert] = 'There was an error ingesting the record into the system'
+    end
   end
 
   #this is a behemoth method, but it does several things
@@ -84,6 +100,10 @@ class CollectionsController < ApplicationController
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
+    rescue Net::OpenTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue Net::ReadTimeout
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
     end
