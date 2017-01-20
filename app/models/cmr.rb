@@ -1,5 +1,6 @@
 class Cmr
   include ApplicationHelper
+  include CmrHelper
 
   #cmr api auto returns only the most recent revision of a collection
   # &all_revisions=true&pretty=true" params can be used to find specific revision
@@ -7,7 +8,7 @@ class Cmr
   def self.get_collection(concept_id)
     collection_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     collection_results = Hash.from_xml(collection_xml)["results"]
-    collection_results["result"]
+    flatten_collection(collection_results["result"]["Collection"])
   end
 
   def self.collection_granule_count(collection_concept_id)

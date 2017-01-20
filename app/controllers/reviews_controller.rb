@@ -49,17 +49,17 @@ class ReviewsController < ApplicationController
 
     @display_list = []
 
-    JSON.parse(@collection_record.rawJSON)["Collection"].each do |key, value|
+    JSON.parse(@collection_record.rawJSON).each do |key, value|
       if value.is_a?(String) 
         display_hash = {}
         display_hash[:key] = key
         display_hash[:value] = value
         display_hash[:script] = @script_comment[key]
-        display_hash[:reviewer_comment] = @user_comment_contents["Collection"][key]
-        display_hash[:flag] = @user_flag["Collection"][key]
+        display_hash[:reviewer_comment] = @user_comment_contents[key]
+        display_hash[:flag] = @user_flag[key]
         
         @other_users_comments.each_with_index do | comments, index | 
-          display_hash[("other_user" + index.to_s).to_sym] = comments["Collection"][key]
+          display_hash[("other_user" + index.to_s).to_sym] = comments[key]
         end
 
         @display_list.push(display_hash)
@@ -79,7 +79,7 @@ class ReviewsController < ApplicationController
     new_comment = JSON.parse(@user_comment.rawJSON)
     params.each do |key, value|
       if key =~ /user_(.*)/
-        new_comment["Collection"][$1] = value
+        new_comment[$1] = value
       end
     end
     @user_comment.rawJSON = new_comment.to_json
@@ -91,7 +91,7 @@ class ReviewsController < ApplicationController
     new_flags = JSON.parse(@user_flags.rawJSON)
     params.each do |key, value|
       if key =~ /userflag_(.*)/
-        new_flags["Collection"][$1] = value
+        new_flags[$1] = value
       end
     end
     @user_flags.rawJSON = new_flags.to_json

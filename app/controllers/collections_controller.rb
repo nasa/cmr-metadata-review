@@ -24,9 +24,9 @@ class CollectionsController < ApplicationController
 
   def new
     collection_data = Cmr.get_collection(params["concept_id"])
-    @concept_id = collection_data["concept_id"]
-    @revision_id = collection_data["revision_id"]
-    @short_name = collection_data["Collection"]["ShortName"]
+    @concept_id = params["concept_id"]
+    @revision_id = params["revision_id"]
+    @short_name = collection_data["ShortName"]
 
     @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
     @granule_count = Cmr.collection_granule_count(@concept_id)
@@ -47,7 +47,7 @@ class CollectionsController < ApplicationController
 
     begin 
       collection_data = Cmr.get_collection(concept_id)
-      short_name = collection_data["Collection"]["ShortName"]
+      short_name = collection_data["ShortName"]
       ingest_time = DateTime.now
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
