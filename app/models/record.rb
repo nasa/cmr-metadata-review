@@ -21,7 +21,7 @@ class Record < ActiveRecord::Base
 
     if self.is_collection?
       #escaping json for passing to python
-      collection_json = collection_data["Collection"].to_json.gsub("\"", "\\\"")
+      collection_json = collection_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
       script_results = `python lib/CollectionChecker.py "#{collection_json}"`
 

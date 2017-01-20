@@ -36,7 +36,7 @@
           <tr>
               <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
               <td id="concept<%= index.to_s %>"><%= result["concept_id"] %></td>
-              <td><%= result["revision_id"] %></td>
+              <td id="revision<%= index.to_s %>"><%= result["revision_id"] %></td>
               <td><%= result["Collection"]["ShortName"] %></td>
               <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
           </tr>
@@ -62,6 +62,7 @@
 
 <%= form_tag( new_collection_path ,  {method: "get", id: 'ingest_form'}) do %>
   <%= hidden_field_tag(:concept_id, "") %>
+  <%= hidden_field_tag(:revision_id, "") %>
   <%= submit_tag("Select Collection", id: 'ingest_submit') %>
 <% end %>
 
@@ -88,6 +89,10 @@
     var rowName = "concept" + count;
     var newConceptId = document.getElementById(rowName).innerHTML;
     document.getElementById("concept_id").value = newConceptId;
+
+    var rowNameRevision = "revision" + count;
+    var newRevisionId = document.getElementById(rowNameRevision).innerHTML;
+    document.getElementById("revision_id").value = newRevisionId;
   }
 
 
