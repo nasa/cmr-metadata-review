@@ -1,0 +1,51 @@
+<%= render(partial: 'navbar', locals: {page: "navigation"}) %>
+
+<%= render(partial: 'record_title') %>
+
+<!-- everything below the nav -->
+<section>
+  <!-- container of metadata sections -->
+  <div>
+    <!-- header for sections -->
+    <div>
+      METADATA FIELDS
+    </div>
+
+    <!-- two coulmns holder -->
+    <div>
+      <!-- left column of section details -->
+      <div>
+        <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION INFORMATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "SPATIAL INFORMATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "DATA IDENTIFICATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "DATA CENTERS"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "DISTRIBUTION INFORMATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "DATA CONTACTS"}) %>
+      </div>
+
+      <!-- right column of section details -->
+      <div>
+        <%= render(partial: 'navigation_section_details', locals: {title: "DESCRIPTIVE KEYWORDS"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION CITATIONS"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "ACQUISITION INFORMATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "METADATA INFORMATION"}) %>
+        <%= render(partial: 'navigation_section_details', locals: {title: "TEMPORAL INFORMATION"}) %>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- right side completion/reviewers metrics -->
+  <div>
+    
+  </div>
+
+  <!-- legend area -->
+  <div>
+    <p>LEGEND</p>
+    <div>NEEDS REVIEW</div>
+    <div>NEEDS REVIEW, FLAGGED BY SCRIPT</div>
+    <div>2ND OPINION REQUESTED</div>
+    <div>REVIEWED, COLOR CODED</div>
+  </div>
+</section>

@@ -1,5 +1,9 @@
 class ReviewsController < ApplicationController
 
+  def navigation
+
+  end
+
   def show
     @concept_id = params["concept_id"]
     @revision_id = params["revision_id"]
