@@ -68,37 +68,38 @@
 }
 
 
-.record_show_navigation .bubble {
+.bubble {
     display: inline-block;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+    /*This is to hold the 2 text content for second opinion*/
     padding-left: 5px;
 }
 
 /*the unique flag background colors*/
-.record_show_navigation .flag_white {
+.flag_white {
     background-color: white;
 }
 
-.record_show_navigation .flag_green {
+.flag_green {
     background-color: green;
 }
 
-.record_show_navigation .flag_yellow {
+.flag_yellow {
     background-color: yellow;
 }
 
-.record_show_navigation .flag_red {
+.flag_red {
     background-color: red;
 }
 
-.record_show_navigation .no_script {
+.no_script {
     border: 1px solid #d9d9d9;
     height: 17px;
     width: 17px;
 }
 
-.record_show_navigation .script {
+.script {
     border: 3px solid #000;
     height: 17px;
     width: 17px;
@@ -122,10 +123,29 @@
 
 }
 
-.record_nav .complete_buttons {
-  margin-left: 25%;
+.record_title .complete_buttons {
+  margin-right: 5%;
   display: inline-block;
-  float:left;
+  font-size: 0.9em;
+  float:right;
+}
+
+.record_title .complete_buttons button {
+  padding: 5px;
+  width: 150px;
+  text-align: left;
+}
+
+
+.record_title .complete_buttons button .button_text{
+  display: inline-block;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.record_title .complete_buttons button .button_symbol{
+  display: inline-block;
+  text-align: right;
 }
 
 .record_nav .nav_info {
