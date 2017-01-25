@@ -50,14 +50,13 @@
     <div class="filter_dropdown">
       <i class="eui-icon eui-fa-unsorted"></i>
       <p>SAVE AND GO TO:</p> 
-      <select>
+      <select class="filter_select">
         
       </select>  
     </div>
 
   </div>
 </div>
-
 
 <!-- Data/review area -->
 <section class="flex_table_container">
@@ -66,37 +65,42 @@
   <div class="flex_table_fixed">
     <table>
       <tr>
-        <td>TITLE</td>
+        <td>FLAGGED BY SCRIPT</td>
       </tr>
       <tr>
-        <td>Current Value</td>
+        <td>SCRIPT RESULT</td>
       </tr>
       <tr>
-        <td>Initial Value</td>
+        <td>PREVIOUS VALUE</td>
       </tr>
       <tr>
         <td>
-          Automated Script Result
+          CURRENT VALUE
         </td>
       </tr>
       <tr>
         <td>
-          Flags
+          FLAGS
         </td>
       </tr>
       <tr>
         <td>
-          Color Code
+          RECOMMENDATION
         </td>
       </tr>
       <tr>
         <td>
-          Recommendation
+          2ND OPINION
         </td>
       </tr>
       <tr>
         <td>
-          Discussion
+          COLOR CODE
+        </td>
+      </tr>
+      <tr>
+        <td>
+        DISCUSSION &amp; JUSTIFICATION
         </td>
       </tr>
     </table>    
@@ -149,9 +153,20 @@
           <td>TITLE</td>
         <% end %>
       </tr>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
     </table>  
 
     </div>  
   </div>
+
+</section>
+
+<section class="detail_footer">
+
+<%= render(partial: 'legend') %>
 
 </section>

@@ -34,6 +34,13 @@
 
 .filter_dropdown {
   float: right;
+  padding-right: 46px;
+}
+
+.filter_select {
+  width: 180px;
+  background-color: #d9d9d9;
+
 }
 
 
@@ -49,10 +56,48 @@
     font-size: 0.8em;
 }
 
+.flex_table_container tr:nth-child(1) {
+  height:30px;
+}
+.flex_table_container tr:nth-child(2) {
+  height:60px;
+}
+.flex_table_container tr:nth-child(3) {
+  height:150px;
+}
+.flex_table_container tr:nth-child(4) {
+  height:150px;
+}
+.flex_table_container tr:nth-child(5) {
+  height:80px;
+}
+.flex_table_container tr:nth-child(6) {
+  height:110px;
+}
+.flex_table_container tr:nth-child(7) {
+  height:40px;
+}
+.flex_table_container tr:nth-child(8) {
+  height:40px;
+}
+.flex_table_container tr:nth-child(9) {
+  height:100px;
+}
+
+
 .flex_table_fixed {
 
     width: 430px;
 }
+
+
+.flex_table_container td {
+  padding-left: 20px;
+  /*padding-top: 10px;
+  padding-bottom: 0px;*/
+  vertical-align:top;
+}
+
 
 .flex_table_details {
     /*width:80%;*/
@@ -62,14 +107,16 @@
 
 
 
+.detail_footer {
+  padding-top: 20px;
+  padding-left: 46px;
+  font-size: 0.7em;
+}
 
 
 
 
-
-
-
-
+/*code for the toggle sliders*/
 /*http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch*/
 
 .switch {
