@@ -2,37 +2,68 @@
 
 <%= render(partial: 'record_title') %>
 
-<!-- bubbles and drop down navigation -->
-<div>
+<div class="toggle_area">
+  <!-- bubbles and drop down navigation -->
   <div>
-    METADATA INFORMATION
-  </div>
-  <!-- bubbles -->
-  <div>
-    
+    <div class="bubble_title">
+      <p>METADATA INFORMATION</p>
+    </div>
+    <!-- bubbles -->
+    <div class="bubble_title">
+      <% @bubble_data.each_with_index do | bubble, index | %>
+        <% script_class = bubble[:script] ? "script" : "no_script" %>
+
+        <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div>
-    SAVE AND GO TO: 
-    <select>
-      
-    </select>  
-  </div>
+  <div class="filter_row">
+    <p><strong>FILTERS:</strong></p>
+    <!-- slider toggles -->
+    <div>
+      <div class="filter_switch">
+        <p>FLAGGED BY SCRIPT</p>
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider round"></div>
+        </label>
+      </div>
+      <div class="filter_switch">
+        <p>REQUIRES 2ND OPINION</p>
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider round"></div>
+        </label>
+      </div>
+      <div class="filter_switch">
+        <p>NOT CODED</p>
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
 
+
+    <div class="filter_dropdown">
+      <i class="eui-icon eui-fa-unsorted"></i>
+      <p>SAVE AND GO TO:</p> 
+      <select>
+        
+      </select>  
+    </div>
+
+  </div>
 </div>
 
-<!-- slider toggles -->
-<div>
-  <div>AUTOMATED REVIEW</div>
-  <div>REQUIRES SECOND OPINION</div>
-  <div>RECOMMENDATIONS</div>
-</div>
 
 <!-- Data/review area -->
-<section>
+<section class="flex_table_container">
   
   <!-- row title information -->
-  <div>
+  <div class="flex_table_fixed">
     <table>
       <tr>
         <td>TITLE</td>
@@ -43,18 +74,11 @@
       <tr>
         <td>Initial Value</td>
       </tr>
-    </table>
-
-    <table>
       <tr>
         <td>
           Automated Script Result
         </td>
       </tr>
-    </table>
-    
-
-    <table>
       <tr>
         <td>
           Flags
@@ -79,50 +103,55 @@
   </div>
 
   <!-- horizontal scroll information -->
-  <div>
-    <table>
+  <div class="flex_table_details">
+    <div style="overflow-x: scroll;">
+    <% counter = (0..10).to_a %> 
+
+    <table style="width:2000px;">
       <tr>
         <!-- for each of shown value list, create td for value -->
-        <td>TITLE</td>
+        <% counter.each do |num| %>
+          <td style="width:500px;">TITLE</td>
+        <% end %>
       </tr>
       <tr>
-        <td>Current Value</td>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
       </tr>
       <tr>
-        <td>Initial Value</td>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
       </tr>
-    </table>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
+      <tr>
+        <% counter.each do |num| %>
+          <td>TITLE</td>
+        <% end %>
+      </tr>
+    </table>  
 
-    <table>
-      <tr>
-        <td>
-          Automated Script Result
-        </td>
-      </tr>
-    </table>
-    
-    <table>
-      <tr>
-        <td>
-          Flags
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Color Code
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Recommendation
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Discussion
-        </td>
-      </tr>
-    </table>    
+    </div>  
   </div>
 
 </section>

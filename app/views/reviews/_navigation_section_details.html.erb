@@ -9,7 +9,7 @@
     <% bubble_data.each_with_index do | bubble, index | %>
       <% script_class = bubble[:script] ? "script" : "no_script" %>
 
-      <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+      <div class="bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
       </div>
     <% end %>
   </div>
