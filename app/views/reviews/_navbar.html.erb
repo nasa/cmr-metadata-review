@@ -1,7 +1,7 @@
-<nav>
-  <button>
+<nav class="record_nav">
+  <button class="nav_button">
     <!-- arrow link -->
-    <div></div>
+    <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
     <% if page == "navigation" %>
       MAIN MENU
     <% else %>
@@ -9,12 +9,20 @@
     <% end %>
   </button>
 
-  <!-- review complete button -->
-  <button type="button">REVIEW COMPLETE</button>
-  <!-- close record button -->
-  <button type="button">CLOSE RECORD</button>    
+  <div class="complete_buttons">
+    <!-- review complete button -->
+    <button type="button" class="eui-btn eui-btn--round eui-btn--sm eui-btn--green">
+      REVIEW COMPLETE
+      <i class="eui-icon eui-check-o"></i>
+    </button>
+    <!-- close record button -->
+    <button type="button" class="eui-btn eui-btn--round eui-btn--sm eui-btn--red">
+      CLOSE RECORD
+      <i class="eui-icon eui-fa-times-circle"></i>
+    </button>    
+  </div>
 
-  <div>
+  <div class="nav_info">
     <p>REVIEWER: X</p>
     <p>Last Updated: X</p>
   </div>

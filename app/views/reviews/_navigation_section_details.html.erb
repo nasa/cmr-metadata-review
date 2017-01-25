@@ -1,8 +1,17 @@
-<article>
+<article class="section_display flex_item">
+  <button class="section_button">
   <%= title %>
   <!-- arrow to review section -->
-  <a href="" class="eui-fa-arrow-circle-right"></a>
+  <div class="eui-icon eui-fa-arrow-circle-right"></div>
+  </button>
   <!-- dynamically add bubble divs -->
-  <div></div>
+  <div class="nav_bubbles">
+    <% bubble_data.each_with_index do | bubble, index | %>
+      <% script_class = bubble[:script] ? "script" : "no_script" %>
+
+      <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+      </div>
+    <% end %>
+  </div>
 </article>  
 
