@@ -1,7 +1,8 @@
 class ReviewsController < ApplicationController
 
   def navigation
-
+    record = Record.find_by id: params["record_id"]
+    @bubble_data = record.section_bubble_data(Record::COLLECTION_INFORMATION_FIELDS)
   end
 
   def show

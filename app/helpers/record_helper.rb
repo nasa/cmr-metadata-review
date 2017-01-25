@@ -20,4 +20,8 @@ module RecordHelper
     return new_value
   end
 
+  def script_test(value)
+    return ((value.include? "OK") || (value.include? "ok") || (value.include? "Ok"))
+  end
+
 end
