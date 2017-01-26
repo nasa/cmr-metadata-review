@@ -1,14 +1,7 @@
 class ReviewsController < ApplicationController
 
-  def navigation
-    record = Record.find_by id: params["record_id"]
-    @bubble_data = record.section_bubble_data(Record::COLLECTION_INFORMATION_FIELDS)
-  end
-
   def show
     record = Record.find_by id: params[:id]
-    @bubble_data = record.section_bubble_data(Record::COLLECTION_INFORMATION_FIELDS)
-
     # @concept_id = params["concept_id"]
     # @revision_id = params["revision_id"]
 
@@ -56,6 +49,8 @@ class ReviewsController < ApplicationController
     @user_flag = JSON.parse(@user_flag.rawJSON)
 
     @display_list = []
+
+    @bubble_data = record.section_bubble_data(Record::COLLECTION_INFORMATION_FIELDS)
 
     JSON.parse(@collection_record.rawJSON).each do |key, value|
       if value.is_a?(String) 
