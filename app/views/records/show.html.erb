@@ -1,16 +1,13 @@
-<%= render(partial: 'navbar', locals: {page: "navigation"}) %>
-
-<%= render(partial: 'record_title') %>
+<%= render(partial: 'reviews/navbar', locals: {page: "navigation"}) %>
 
 <!-- everything below the nav -->
 <section class="record_show_navigation">
   <div class="outer_flexbox">
-
     <!-- container of metadata sections -->
     <div class="section_container outer_flex_item_left">
       <!-- header for sections -->
       <div class="section_header">
-        <strong>METADATA FIELDS</strong>
+        <h3>METADATA FIELDS</h3>
       </div>
 
       <!-- two coulmns holder -->
@@ -44,6 +41,7 @@
 
   </div>
 
-  <%= render(partial: 'legend') %>
+
+  <%= render(partial: 'reviews/legend') %>
   
 </section>
