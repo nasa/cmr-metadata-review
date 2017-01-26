@@ -1,15 +1,13 @@
-<%= render(partial: 'navbar', locals: {page: "navigation"}) %>
-
-<%= render(partial: 'record_title') %>
+<%= render(partial: 'reviews/navbar', locals: {page: "navigation"}) %>
 
 <!-- everything below the nav -->
 <section>
   <!-- container of metadata sections -->
   <div>
     <!-- header for sections -->
-    <div>
+    <h3>
       METADATA FIELDS
-    </div>
+    </h3>
 
     <!-- two coulmns holder -->
     <div>
@@ -42,10 +40,10 @@
 
   <!-- legend area -->
   <div>
-    <p>LEGEND</p>
-    <div>NEEDS REVIEW</div>
-    <div>NEEDS REVIEW, FLAGGED BY SCRIPT</div>
-    <div>2ND OPINION REQUESTED</div>
-    <div>REVIEWED, COLOR CODED</div>
+    <h3>LEGEND</h3>
+    <div><div></div><p>NEEDS REVIEW</p></div>
+    <div><div></div><p>NEEDS REVIEW, FLAGGED BY SCRIPT</p></div>
+    <div><div></div><p>2ND OPINION REQUESTED</p></div>
+    <div><div></div><p>REVIEWED, COLOR CODED</p></div>
   </div>
 </section>

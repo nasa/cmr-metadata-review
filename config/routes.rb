@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   resources :comments
 
   resources :reviews
-  get '/reviews_navigation', to: 'reviews#navigation'
+
+  resources :records
+
 
 
 
