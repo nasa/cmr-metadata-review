@@ -9,8 +9,8 @@ class Record < ActiveRecord::Base
   COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
                          "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",
                          "TEMPORAL INFORMATION"]
-  COLLECTION_INFORMATION_FIELDS = ['ShortName', 'VersionId', 'InsertTime', 'LastUpdate', 'LongName', 'DatasetId', 'CollectionState',
-                                   'Description', 'CollectionDataType', 'Orderable', 'Visible', 'RevisionDate', 'SuggestedUsage' ]
+  COLLECTION_FIELDS = [['ShortName', 'VersionId', 'InsertTime', 'LastUpdate', 'LongName', 'DatasetId', 'CollectionState',
+                                   'Description', 'CollectionDataType', 'Orderable', 'Visible', 'RevisionDate', 'SuggestedUsage' ]]
 
 
   def is_collection?
@@ -130,7 +130,8 @@ class Record < ActiveRecord::Base
     new_review.save!
   end
 
-  def section_bubble_data(field_set)
+  def section_bubble_data(field_set_index)
+    field_set = Record.get_collection_section_list(field_set_index)
     record_set = JSON.parse(self.rawJSON)
     included_field_set = field_set.select { |field| !(record_set[field].nil?) }
     bubble_set = []
@@ -175,5 +176,71 @@ class Record < ActiveRecord::Base
   end
 
 
+  def self.get_collection_section_list(list_index) 
+    return COLLECTION_FIELDS[list_index]
+  end
+
+  def section_titles(section_index) 
+    section_list = Record.get_collection_section_list(section_index.to_i)
+    record_set = JSON.parse(self.rawJSON)
+    included_field_set = section_list.select { |field| !(record_set[field].nil?) }
+    included_field_set
+  end
+
+  def values 
+    JSON.parse(self.rawJSON)
+  end
+
+  def color_codes
+    JSON.parse(self.flags.first.rawJSON)
+  end
+
+  def update_color_codes(color_code_values)
+    color_codes = self.flags.first
+    color_codes.rawJSON = color_code_values.to_json
+    color_codes.save
+  end
+
+  def flag_values
+    flag = RecordRow.where(record_id: self.id, row_name: "flag")
+    if flag.empty?
+      flag = RecordRow.new(record_id: self.id, row_name: "flag", rawJSON: self.blank_comment_JSON)
+      flag.save
+    else
+      flag = flag.first
+    end
+
+    JSON.parse(flag.rawJSON)
+  end
+
+  def recommendation_values
+    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation")
+    if recommendation.empty?
+      recommendation = RecordRow.new(record_id: self.id, row_name: "recommendation", rawJSON: self.blank_comment_JSON)
+      recommendation.save
+    else
+      recommendation = recommendation.first
+    end
+
+    JSON.parse(recommendation.rawJSON)
+  end
+
+  def update_recommendation(value_hash)
+    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation").first
+    recommendation.rawJSON = value_hash.to_json
+    recommendation.save
+  end
+
+  def second_opinion_values
+    second_opinion = RecordRow.where(record_id: self.id, row_name: "second_opinion")
+    if second_opinion.empty?
+      second_opinion = RecordRow.new(record_id: self.id, row_name: "second_opinion", rawJSON: self.blank_comment_JSON)
+      second_opinion.save
+    else
+      second_opinion = second_opinion.first
+    end
+
+    JSON.parse(second_opinion.rawJSON)
+  end
 
 end
