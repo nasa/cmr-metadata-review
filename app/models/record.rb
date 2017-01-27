@@ -192,7 +192,13 @@ class Record < ActiveRecord::Base
   end
 
   def color_codes
-    JSON.parse(self.flags.first.rawJSON)
+    flags = self.flags
+    if flags.empty?
+      self.add_flag(-1)
+      JSON.parse(self.flags.first.rawJSON)
+    else
+      JSON.parse(self.flags.first.rawJSON)
+    end
   end
 
   def update_color_codes(color_code_values)

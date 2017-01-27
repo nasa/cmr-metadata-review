@@ -7,7 +7,7 @@ class ReviewsController < ApplicationController
 
     @collection_record = Record.find_by id: params[:id]
     @record_comments = @collection_record.comments
-    @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
+    # @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
 
     # @other_users_comments = @record_comments.select { |comment| (comment.user_id != current_user.id && comment.user_id != -1) }
     # @other_users_comments_count = @other_users_comments.length
@@ -17,46 +17,23 @@ class ReviewsController < ApplicationController
       @script_comment = JSON.parse(@script_comment.rawJSON)
     end
 
-    #a boolean test to determine if any review exists (should replace with review??)
-    if @user_comment.empty?
-      @collection_record.add_review(current_user.id)
-      @collection_record.add_flag(current_user.id)
-      @collection_record.add_comment(current_user.id)
-    end
+    # #a boolean test to determine if any review exists (should replace with review??)
+    # if @user_comment.empty?
+    #   @collection_record.add_review(current_user.id)
+    #   @collection_record.add_flag(current_user.id)
+    #   @collection_record.add_comment(current_user.id)
+    # end
 
-    @user_comment = Comment.where(user: current_user, record: @collection_record).first
-    @user_flag = Flag.where(user: current_user, record: @collection_record).first
-    @user_review = Review.where(user: current_user, record: @collection_record).first
+    # @user_flag = Flag.where(user: current_user, record: @collection_record).first
+    # @user_review = Review.where(user: current_user, record: @collection_record).first
 
-    if @user_review.review_state == 1
-      @review_complete = "checked"
-    else 
-      @review_complete = ""
-    end
-
-    @user_comment_contents = JSON.parse(@user_comment.rawJSON)
-    @user_flag = JSON.parse(@user_flag.rawJSON)
-
-    @display_list = []
+    # if @user_review.review_state == 1
+    #   @review_complete = "checked"
+    # else 
+    #   @review_complete = ""
+    # end
 
     @bubble_data = record.section_bubble_data(0)
-
-    JSON.parse(@collection_record.rawJSON).each do |key, value|
-      if value.is_a?(String) 
-        display_hash = {}
-        display_hash[:key] = key
-        display_hash[:value] = value
-        display_hash[:script] = @script_comment[key]
-        display_hash[:reviewer_comment] = @user_comment_contents[key]
-        display_hash[:flag] = @user_flag[key]
-        
-        # @other_users_comments.each_with_index do | comments, index | 
-        #   display_hash[("other_user" + index.to_s).to_sym] = comments[key]
-        # end
-
-        @display_list.push(display_hash)
-      end
-    end
 
     @section_titles = record.section_titles(section_index)
     @flagged_by_script = record.binary_script_values
