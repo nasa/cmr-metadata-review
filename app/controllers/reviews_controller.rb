@@ -52,8 +52,8 @@ class ReviewsController < ApplicationController
 
 
   def update
-
     record = Record.find_by id: params[:id]
+    section_index = params["section_index"]
 
     recommendations = record.recommendation_values
     params.each do |key, value|
@@ -70,6 +70,42 @@ class ReviewsController < ApplicationController
       end
     end
     record.update_color_codes(color_codes)
+
+    #flags are stored in a hash => list relationship
+    #each hash key is a column of a record
+    #each value is a list containing the string names of each checked flag for that key
+    #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
+    flags_hash = record.flag_values
+    section_titles = record.section_titles(section_index)
+    section_titles.each do |title|
+      flags_hash[title] = [];
+    end
+    params.each do |key, value|
+      if key =~ /flag_(.*)_check_(.*)/
+        if value == "on"
+          flags_hash[$2].push($1)
+        end
+      end
+    end
+
+    record.update_flag_values(flags_hash)
+
+
+    opinion_values = record.second_opinion_values
+    section_titles = record.section_titles(section_index)
+    section_titles.each do |title|
+      opinion_values[title] = false
+    end
+
+    params.each do |key, value|
+      if key =~ /opinion_check_(.*)/
+        if value == "on"
+          opinion_values[$1] = true
+        end
+      end
+    end
+
+    record.update_opinion_values(opinion_values)
 
   #   @collection_record = Collection.find_record(params["concept_id"], params["revision_id"])
 

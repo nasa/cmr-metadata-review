@@ -219,6 +219,18 @@ class Record < ActiveRecord::Base
     JSON.parse(flag.rawJSON)
   end
 
+  def update_flag_values(flag_hash)
+    flag_object = RecordRow.where(record_id: self.id, row_name: "flag")
+    if flag_object.empty?
+      flag_object = RecordRow.new(record_id: self.id, row_name: "flag", rawJSON: self.blank_comment_JSON)
+      flag_object.save
+    else
+      flag_object = flag_object.first
+    end
+    flag_object.rawJSON = flag_hash.to_json
+    flag_object.save
+  end
+
   def recommendation_values
     recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation")
     if recommendation.empty?
@@ -247,6 +259,12 @@ class Record < ActiveRecord::Base
     end
 
     JSON.parse(second_opinion.rawJSON)
+  end
+
+  def update_opinion_values(opinion_values)
+    opinion = RecordRow.where(record_id: self.id, row_name: "second_opinion").first
+    opinion.rawJSON = opinion_values.to_json
+    opinion.save
   end
 
 end
