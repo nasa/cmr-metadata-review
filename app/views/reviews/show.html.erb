@@ -1,4 +1,4 @@
-<%= render(partial: 'navbar', locals: {page: "review"}) %>
+<%= render(partial: 'navbar', locals: {page: "review", long_name: @long_name, short_name: @short_name, user_email: current_user.email}) %>
 
 <div class="toggle_area">
   <!-- bubbles and drop down navigation -->
@@ -49,7 +49,9 @@
       <i class="eui-icon eui-fa-unsorted"></i>
       <p>SAVE AND GO TO:</p> 
       <select class="filter_select">
-        
+        <% @navigation_list.each do |data_section| %>
+          <option><%= data_section %></option>
+        <% end %>
       </select>  
     </div>
 
@@ -57,84 +59,51 @@
 </div>
 
 <!-- Data/review area -->
-<section class="flex_table_container">
-    <!-- row title information -->
-    <div class="flex_table_fixed">
-      <table>
-        <tr>
-          <td></td>
-        </tr>
-        <tr>
-          <td>FLAGGED BY SCRIPT</td>
-        </tr>
-        <tr>
-          <td>SCRIPT RESULT</td>
-        </tr>
-        <tr>
-          <td>PREVIOUS VALUE</td>
-        </tr>
-        <tr>
-          <td>
-            CURRENT VALUE
-          </td>
-        </tr>
-        <tr>
-          <td>
-            FLAGS
-          </td>
-        </tr>
-        <tr>
-          <td>
-            RECOMMENDATION
-          </td>
-        </tr>
-        <tr>
-          <td>
-            2ND OPINION
-          </td>
-        </tr>
-        <tr>
-          <td>
-            COLOR CODE
-          </td>
-        </tr>
-        <tr>
-          <td>
-          DISCUSSION &amp; JUSTIFICATION
-          </td>
-        </tr>
-      </table>    
-    </div>
+<section >
 
-    <!-- horizontal scroll information -->
-    <div class="flex_table_details">
-      <div style="overflow-x: scroll;">
-      <% counter = (0..10).to_a %> 
+    <div >
+      <div class="scroll_table">
 
-      <table style="width:2000px;">
+      <table >
         <tr>
+        <th class="headcol"></th>
+
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
-            <td style="width:500px;"><%= title %></td>
+            <td>
+              <div class="title_text">
+                <%= split_on_capitals(title) %>
+              </div>
+            </td>
           <% end %>
         </tr>
         <tr>
+        <th class="headcol">FLAGGED BY SCRIPT</th>
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
-            <td style="width:500px;"><%= @flagged_by_script[title] %></td>
+            <td>
+              <div class="script_check_cell">
+                <% if @flagged_by_script[title] %>
+                  <i class="eui-icon eui-check-o"></i>
+                <% end %>    
+              </div>
+            </td>
           <% end %>
         </tr>
         <tr>
+        <th class="headcol">SCRIPT RESULT</th>
           <% @section_titles.each do |title| %>
             <td><div><%= @script_values[title] %></div></td>
           <% end %>
         </tr>
         <tr>
+        <th class="headcol">PREVIOUS VALUE</th>
           <% @section_titles.each do |title| %>
             <td>Prev</td>
           <% end %>
         </tr>
         <tr>
+        <th class="headcol">CURRENT VALUE</th>
           <% @section_titles.each do |title| %>
             <td>
               <div>
@@ -146,40 +115,53 @@
 
 
         <script type="text/javascript">
-          function add_flag_click_handler(cell_id, check_id) {
+          function add_flag_click_handler(cell_id, check_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
               let cell = document.getElementById(cell_id);
               let checkbox = document.getElementById(check_id);
+              let icon = document.getElementById(icon_id);
               if (checkbox.checked == true) {
                 checkbox.checked = false;
                 cell.style.backgroundColor = "inherit";
+                cell.style.fontWeight = "normal";
+                icon.style.visibility = "hidden";
               } else {
                 checkbox.checked = true;
-                cell.style.backgroundColor = "blue";
+                cell.style.backgroundColor = "#e7d1ff";
+                cell.style.fontWeight = "bold";
+                icon.style.visibility = "visible";
               }
             };
           }
         </script>  
 
         <tr>
+          <th class="headcol">FLAGS</th>
           <% @section_titles.each do |title| %>
             <% flag_hash = @flags[title] %>
 
             <td class="no_padding">
               <div class="flag_flexbox">
-                <% ["accessibility", "usability", "traceability"].each do |flag_field| %>            
+                <% ["Accessibility", "Usability", "Traceability"].each do |flag_field| %>            
                   <% cell_id = "flag_" + flag_field + "_" +  title %>
                   <% check_id = "flag_" + flag_field + "_check_" +  title %>
-                  <div class="flag_flex_cell" id="<%= cell_id %>">
-                  <input type="checkbox" id="<%= check_id %>" name="<%= check_id %>" form="field_form">
-                  <p><%= flag_field %></p>
+                  <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
+                  <% flag_cell_border = ((flag_field == "Usability")? "flag_middle_border": "") %>
+                  <div class="flag_flex_cell <%= flag_cell_border %>" id="<%= cell_id %>">
+                    <input type="checkbox" id="<%= check_id %>" name="<%= check_id %>" form="field_form">
+                    <p class="flag_flex_text">
+                      <%= flag_field %>
+                      <i id="<%= icon_id %>" class="eui-icon eui-check-o flag_icon"></i>
+                    </p>
                   </div>
                   <script type="text/javascript">
-                    add_flag_click_handler("<%= cell_id %>","<%= check_id %>");
+                    add_flag_click_handler("<%= cell_id %>","<%= check_id %>", "<%= icon_id %>");
                     <% flag_hash = @flags[title] %>
                     <% if flag_hash.include? flag_field %>
-                      document.getElementById("<%= cell_id %>").style.backgroundColor = "blue";
+                      document.getElementById("<%= cell_id %>").style.backgroundColor = "#e7d1ff";
+                      document.getElementById("<%= cell_id %>").style.fontWeight = "bold";
                       document.getElementById("<%= check_id %>").checked = true;
+                      document.getElementById("<%= icon_id %>").style.visibility = "visible";
                     <% end %>
                   </script>
                 <% end %>
@@ -190,25 +172,28 @@
 
 
         <tr>
+        <th class="headcol">RECOMMENDATION</th>
           <% @section_titles.each do |title| %>
-            <td>
+            <td class="recommendation_cell">
               <textarea name="recommendation_<%= title %>" form="field_form"><%=@recommendations[title]%></textarea>
             </td>
           <% end %>
         </tr>
 
         <script type="text/javascript">
-          function add_opinion_click_handler(cell_id, check_id, p_id) {
+          function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
               let check = document.getElementById(check_id);
               if (check.checked == true) {
                 document.getElementById(cell_id).style.backgroundColor = "inherit";
-                check.checked = false;
-                document.getElementById(p_id).style.visibility = "hidden";
+                check.checked = false;;
+                document.getElementById(p_id).style.fontWeight = "normal";
+                document.getElementById(icon_id).style.visibility = "hidden";
               } else {
-                document.getElementById(cell_id).style.backgroundColor = "blue";
+                document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
                 check.checked = true;
-                document.getElementById(p_id).style.visibility = "visible";
+                document.getElementById(p_id).style.fontWeight = "bold";
+                document.getElementById(icon_id).style.visibility = "visible";
               }
             }; 
           }
@@ -216,20 +201,25 @@
 
 
         <tr>
+        <th class="headcol second_to_final_headcol">2ND OPINION</th>
           <% @section_titles.each do |title| %>
-            <td>
+            <td class="no_padding">
               <div id="opinion_cell_<%= title %>" class="opinion_cell">
                 <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion_check_<%= title %>" form="field_form">
-                <p style="visibility: hidden;" id="opinion_text_<%= title %>">REQUIRES 2ND OPINION</p>
+                <p id="opinion_text_<%= title %>">
+                  Requires 2nd Opinion
+                  <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
+                </p>
               </div>  
             </td>
 
             <script type="text/javascript">
-              add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>");
+              add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
               <% if @second_opinions[title] == true %>
-                document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "blue";
+                document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
                 document.getElementById("opinion_check_<%= title %>").checked = true;
-                document.getElementById("opinion_text_<%= title %>").style.visibility = "visible";
+                document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
+                document.getElementById("opinion_icon_<%= title %>").style.visibility = "visible";
               <% end %>
             </script>
           <% end %>
@@ -237,19 +227,24 @@
 
 
         <tr>
+        <th class="headcol second_to_final_headcol">COLOR CODE</th>
           <% @section_titles.each do |title| %>
             <td class="color_code_cell">
-              <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code_<%= title %>" id="color_code_<%= title %>" form="field_form" >
-              <% selected = color_selected_list(@color_codes[title]) %>
+              <div class="styled-select blue semi-square">
+                <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code_<%= title %>" id="color_code_<%= title %>" form="field_form" >
+                <% selected = color_selected_list(@color_codes[title]) %>
 
-                <option <%= selected[0] %> value="">Select Flag</option>
-                <option <%= selected[1] %> value="green">Green</option>
-                <option <%= selected[2] %> value="yellow">Yellow</option>
-                <option <%= selected[3] %> value="red">Red</option>
-              </select></td>
+                  <option <%= selected[0] %> value="">Select Color</option>
+                  <option <%= selected[1] %> value="green">Green</option>
+                  <option <%= selected[2] %> value="yellow">Yellow</option>
+                  <option <%= selected[3] %> value="red">Red</option>
+                </select>
+              </div>
+            </td>
           <% end %>
         </tr>
         <tr>
+        <th class="headcol final_headcol">DISCUSSION &amp; JUSTIFICATION</th>
           <% @section_titles.each do |title| %>
             <td>TITLE</td>
           <% end %>
@@ -269,6 +264,11 @@
     while (counter < color_selects.length) {
       let color = color_selects[counter].value
       color_cells[counter].style.backgroundColor = color;
+      if (color == "green" || color == "red") {
+        color_selects[counter].style.color = "white";
+      } else {
+        color_selects[counter].style.color = "black";
+      }
       counter++;
     }
   }

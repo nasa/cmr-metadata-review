@@ -111,23 +111,42 @@
   height:75px;
   background-color: #d1cdcd;
   padding-top: 25px;
+
+  .nav_button {
+    border:none;
+    display: inline-block;
+    float:left;
+    background-color: inherit;
+    margin-left:16px;
+  }
+
+  .collection_back_button {
+    border:none;
+    display: inline-block;
+    float:left;
+    background-color: inherit;
+    margin-left: 40px;
+  }
 }
 
-.record_nav .nav_button {
-  border:none;
-  display: inline-block;
-  float:left;
-  background-color: inherit;
-
-  margin-left:20px;
-
-}
 
 .record_title .complete_buttons {
-  margin-right: 5%;
+  margin-right: 47px;
   display: inline-block;
   font-size: 0.9em;
   float:right;
+
+  .review_complete_button {
+    background-color: #7ab5da;
+  }
+
+  .mark_complete_button {
+    background-color: #20ce6f;
+  }
+
+  .complete_symbol {
+    margin-left: 20px;
+  }
 }
 
 .record_title .complete_buttons button {
@@ -151,7 +170,7 @@
 .record_nav .nav_info {
   display: inline-block;
   font-size: 0.7em;
-  margin-right:18%;
+  margin-right:163px;
   float:right;
 }
 
@@ -169,19 +188,29 @@
 .record_title .title_buttons {
   display: inline-block;
   float: right;
-  margin-right: 10%;
+  margin-right: 129px;
 }
 
 .record_title .title_buttons button {
   width: 110px;
 }
 
-.record_title .nav_details {
-  float:left;
-  display: inline-block;
-  font-size: 0.8em;
-  margin-left: 46px;
-  margin-top: -7px;
+.record_title {
+  .nav_details {
+    float:left;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 66px;
+    margin-top: -7px;
+  }
+
+  .nav_review_details {
+    float:left;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 44px;
+    margin-top: -7px;
+  }
 }
 
 .section_display {
