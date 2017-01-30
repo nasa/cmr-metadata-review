@@ -10,6 +10,11 @@
       <% script_class = bubble[:script] ? "script" : "no_script" %>
 
       <div class="bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+          <% if bubble[:second_opinion] %>
+            2
+          <% else %>
+            <!-- <div class="bubble_second_opinion">&nbsp;</div> -->
+          <% end %>
       </div>
     <% end %>
   </div>
