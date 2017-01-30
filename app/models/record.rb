@@ -165,10 +165,20 @@ class Record < ActiveRecord::Base
     # adding the automated script results to each bubble
     binary_script_values = self.binary_script_values
     if binary_script_values.empty?
-      bubble_set = bubble_set.map { |bubble| bubble[:script] = true }
+      bubble_set = bubble_set.map { |bubble| bubble[:script] = false }
     else
       bubble_set = bubble_set.map do |bubble| 
         bubble[:script] = binary_script_values[bubble[:field_name]]
+        bubble
+      end 
+    end
+
+    second_opinion_values = self.second_opinion_values
+    if second_opinion_values.empty?
+      bubble_set = bubble_set.map { |bubble| bubble[:second_opinion] = false }
+    else
+      bubble_set = bubble_set.map do |bubble| 
+        bubble[:second_opinion] = second_opinion_values[bubble[:field_name]]
         bubble
       end 
     end
