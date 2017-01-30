@@ -1,5 +1,9 @@
 <nav class="record_nav">
-  <button class="nav_button">
+  <% if page == "navigation" %>
+    <button class="collection_back_button" id="nav_back_button">
+  <% else %>
+    <button class="nav_button" id="nav_back_button">
+  <% end %>
     <!-- arrow link -->
     <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
     <% if page == "navigation" %>
@@ -9,10 +13,21 @@
     <% end %>
   </button>
 
-  
+  <% if page == "navigation" %>
+
+  <% else %>
+  <script type="text/javascript">
+    document.getElementById("nav_back_button").onclick = function() {
+      document.location.href = "<%= record_path(id: params["id"]) %>"
+    }
+  </script>
+    
+  <% end %>
+
+    
 
   <div class="nav_info">
-    <p>REVIEWER: X</p>
+    <p>REVIEWER: <%= user_email %></p>
     <p>Last Updated: X</p>
   </div>
 </nav>
@@ -20,32 +35,44 @@
 
 <!-- record title and info -->
 <div class="record_title">
-  <div class="nav_details">
-    <p><strong>LONG NAME: </strong></p>
-    <p>SHORT NAME: </p>
+  <% if page == "navigation" %>
+      <div class="nav_details">
+    <% else %>
+      <div class="nav_review_details">
+    <% end %>
+  
+    <p><strong>LONG NAME : </strong><%= long_name %></p>
+    <p>SHORT NAME : <%= short_name %></p>
   </div>
 
-<!--   <div class="title_buttons">
-    <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
-      <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
-      PREVIOUS
-    </button>
-    <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
-      NEXT
-      <i class="eui-icon eui-fa-arrow-circle-right button_symbol"></i>
-    </button>    
-  </div> -->
+  <% if page == "review" %>
 
-  <div class="complete_buttons">
-    <!-- review complete button -->
-    <button type="button" class="eui-btn eui-btn--round eui-btn--sm eui-btn--green">
-      <p class="button_text">REVIEW COMPLETE</p>
-      <i class="eui-icon eui-check-o button_symbol"></i>
-    </button>
-    <!-- close record button -->
-    <button type="button" class="eui-btn eui-btn--round eui-btn--sm eui-btn--red">
-      <p class="button_text">MARK AS DONE</p>
-      <i class="eui-icon eui-fa-times-circle button_symbol"></i>
-    </button>    
-  </div>
+      <div class="title_buttons">
+        <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
+          <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
+          PREVIOUS
+        </button>
+        <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
+          NEXT
+          <i class="eui-icon eui-fa-arrow-circle-right button_symbol"></i>
+        </button>    
+      </div>
+
+  <% else %>
+
+      <div class="complete_buttons">
+        <!-- review complete button -->
+        <button type="button" class="eui-btn eui-btn--round eui-btn--sm review_complete_button">
+          <p class="button_text">REVIEW COMPLETE</p>
+          <i class="eui-icon eui-check-o button_symbol"></i>
+        </button>
+        <!-- close record button -->
+        <button type="button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
+          <p class="button_text">MARK AS DONE</p>
+          <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
+        </button>    
+      </div>
+
+  <% end %>
+
 </div>
