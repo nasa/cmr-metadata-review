@@ -95,14 +95,20 @@
 
 .no_script {
     border: 1px solid #d9d9d9;
-    height: 17px;
-    width: 17px;
+    min-height: 22px;
+    min-width: 17px;
+    font-size:0.8em;
+    padding-right:4px;
+    font-weight: bold;
 }
 
 .script {
     border: 3px solid #000;
-    height: 17px;
-    width: 17px;
+    min-height: 22px;
+    min-width: 17px;
+    font-size:0.8em;
+    padding-right:4px;
+    font-weight: bold;
 }
 
 
