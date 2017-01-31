@@ -276,9 +276,11 @@
   update_color_backgrounds();
 </script>
 
-  <%= form_tag(review_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
-  <%= hidden_field_tag(:section_index, params["section_index"]) %>
-  <%= submit_tag("Save Review", class: "form_save_button") %>
+  <% if !@marked_done && !@user_has_closed_review %>
+    <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
+    <%= hidden_field_tag(:section_index, params["section_index"]) %>
+    <%= submit_tag("Save Review", class: "form_save_button") %>
+    <% end %>
   <% end %>
 
 <section class="detail_footer">

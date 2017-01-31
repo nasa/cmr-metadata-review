@@ -19,6 +19,19 @@
 
   .outer_flex_item_right {
       width: 40%;
+
+      .review_comments {
+        padding-left:15px;
+        padding-right: 15px
+      }
+
+      .single_comment {
+        margin-top: 20px;
+      }
+
+      .completed_notice {
+        margin-top: 15px;
+      }
   }
 
   .section_header {
@@ -167,6 +180,13 @@
       margin-left: 20px;
     }
 
+    button[disabled=disabled], button:disabled {
+      background-color: #D1D1D1;
+      p {
+        color: #DDDDDD;
+      }
+    }
+
     button {
       padding: 5px;
       width: 150px;
@@ -182,6 +202,11 @@
         display: inline-block;
         text-align: right;
       }
+
+      :disabled {
+        
+      }
+
     }
   }
 }

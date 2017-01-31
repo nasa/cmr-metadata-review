@@ -59,18 +59,41 @@
       </div>
 
   <% else %>
+      <%= form_tag( review_path ,  {method: "put", id: "review_form"}) do %>
+        <%= hidden_field_tag(:record_id, params["id"]) %>
+        <%= hidden_field_tag(:user_id, current_user.id) %>
+      <% end %>
 
       <div class="complete_buttons">
-        <!-- review complete button -->
-        <button type="button" class="eui-btn eui-btn--round eui-btn--sm review_complete_button">
+  
+        <button id="review_complete_button" type="button" disabled class="eui-btn eui-btn--round eui-btn--sm review_complete_button">
           <p class="button_text">REVIEW COMPLETE</p>
           <i class="eui-icon eui-check-o button_symbol"></i>
         </button>
+        <script type="text/javascript">
+          document.getElementById("review_complete_button").onclick = function() {
+            document.getElementById("review_form").submit();
+          };
+        </script>
+
+        <%# checking to make sure that two reviews are completed on pageload %>
+        <% if @completed_records > 1 && !@marked_done %>
+          <% is_disabled = "" %>
+        <% else %>
+          <% is_disabled = "disabled" %>
+        <% end %>
+
+
         <!-- close record button -->
-        <button type="button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
+        <button type="button" <%= is_disabled %> id="done_button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
           <p class="button_text">MARK AS DONE</p>
           <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
         </button>    
+        <script type="text/javascript">
+          document.getElementById("done_button").onclick = function() {
+            document.location.href = "<%= record_complete_path(id: params["id"]) %>"
+          };
+        </script>
       </div>
 
   <% end %>

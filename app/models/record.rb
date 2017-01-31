@@ -177,6 +177,32 @@ class Record < ActiveRecord::Base
   end
 
 
+  def color_coding_complete
+    colors = JSON.parse(self.flags.first.rawJSON)
+
+    colors.each do |key, value|
+      if value == nil || value == ""
+        return false
+      end
+    end
+
+    return true
+  end
+
+  def close
+    self.closed = true
+    self.save
+  end
+
+  def review(user_id)
+    review = Review.where(record: self, user_id: user_id).first
+    if review.nil?
+      review = Review.new(record: self, user_id: user_id, review_state: 0)
+    end
+
+    review
+  end
+
   def binary_script_values
     script_values = self.script_values
     # replaces the values in the hash with true/false depending on the script test helper
