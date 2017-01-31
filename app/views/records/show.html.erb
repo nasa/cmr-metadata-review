@@ -1,7 +1,7 @@
 <%= render(partial: 'reviews/navbar', locals: {page: "navigation", long_name: @long_name, short_name: @short_name, user_email: current_user.email }) %>
 
 <!-- everything below the nav -->
-<section class="record_show_navigation">
+<section class="record_review_data">
   <div class="outer_flexbox">
     <!-- container of metadata sections -->
     <div class="section_container outer_flex_item_left">
@@ -14,21 +14,21 @@
       <div class="flex_container">
         <!-- left column of section details -->
         <div class="flex_column">
-          <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "SPATIAL INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "DATA IDENTIFICATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "DATA CENTERS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "DISTRIBUTION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "DATA CONTACTS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "COLLECTION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "SPATIAL INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "DATA IDENTIFICATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "DATA CENTERS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "DISTRIBUTION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "DATA CONTACTS", bubble_data: @bubble_data}) %>
         </div>
 
         <!-- right column of section details -->
         <div class="flex_column">
-          <%= render(partial: 'navigation_section_details', locals: {title: "DESCRIPTIVE KEYWORDS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION CITATIONS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "ACQUISITION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "METADATA INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'navigation_section_details', locals: {title: "TEMPORAL INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "DESCRIPTIVE KEYWORDS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "COLLECTION CITATIONS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "ACQUISITION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "METADATA INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'collection_section_details', locals: {title: "TEMPORAL INFORMATION", bubble_data: @bubble_data}) %>
         </div>
       </div>
 
