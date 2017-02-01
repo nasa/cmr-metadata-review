@@ -12,4 +12,13 @@ class User < ActiveRecord::Base
 
   # has_many :granule_records, through: :granule_reviews    
      
+
+  def records_not_reviewed
+    Collection.all_records.select do |record| 
+      (record.reviews.select do |review| 
+        (review.user == self && review.review_state == 1)
+      end).empty? 
+    end
+  end
+
 end
