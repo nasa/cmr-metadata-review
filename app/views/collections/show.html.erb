@@ -69,6 +69,10 @@
               </table>
 
           <p>Ingest Script Score: <%= record.script_score %></p>
+
+
+
+          <p>Final Record Review Status: <%= record.status_string %></p>
           <%= link_to "Start or Continue Review on This Record", record_path(id:record.id) %> 
         </td>
       </tr>

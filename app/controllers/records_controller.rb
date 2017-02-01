@@ -5,6 +5,7 @@ class RecordsController < ApplicationController
 
     @long_name = record.long_name
     @short_name = record.short_name
+    @concept_id = record.concept_id
 
     @reviews = record.reviews.sort_by(&:review_completion_date)
     @user_review = record.review(current_user.id)

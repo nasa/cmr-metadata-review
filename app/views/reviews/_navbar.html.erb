@@ -14,7 +14,11 @@
   </button>
 
   <% if page == "navigation" %>
-
+    <script type="text/javascript">
+      document.getElementById("nav_back_button").onclick = function() {
+        document.location.href = "<%= collection_path(id: params["id"], concept_id: @concept_id) %>"
+      }
+    </script>
   <% else %>
   <script type="text/javascript">
     document.getElementById("nav_back_button").onclick = function() {
