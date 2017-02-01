@@ -29,6 +29,17 @@ class Record < ActiveRecord::Base
     JSON.parse(self.rawJSON)["ShortName"]
   end
 
+  def status_string
+    if self.closed
+      "Completed"
+    else
+      "In Process"
+    end
+  end
+
+  def concept_id
+    self.recordable.concept_id
+  end
 
   def evaluate_script
     collection_data = JSON.parse(rawJSON)
