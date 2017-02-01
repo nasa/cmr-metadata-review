@@ -69,7 +69,7 @@
               </table>
 
           <p>Ingest Script Score: <%= record.script_score %></p>
-          <%= link_to "Start or Continue Review on This Record", review_path(id:1, concept_id: @concept_id, revision_id: record.revision_id) %> 
+          <%= link_to "Start or Continue Review on This Record", record_path(id:record.id) %> 
         </td>
       </tr>
 

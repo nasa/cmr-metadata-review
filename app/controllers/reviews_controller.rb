@@ -1,15 +1,16 @@
 class ReviewsController < ApplicationController
 
   def show
-    @concept_id = params["concept_id"]
-    @revision_id = params["revision_id"]
+    record = Record.find_by id: params[:id]
+    # @concept_id = params["concept_id"]
+    # @revision_id = params["revision_id"]
 
-    if !(@concept_id || @revision_id)
-      flash[:error] = "Missing the concept_id or revision_id to Locate review"
-      redirect_to curation_home_path
-    end
-
-    @collection_record = Collection.find_record(@concept_id, @revision_id)
+    # if !(@concept_id || @revision_id)
+    #   flash[:error] = "Missing the concept_id or revision_id to Locate review"
+    #   redirect_to site_home_path
+    # end
+    # @collection_record = Collection.find_record(@concept_id, @revision_id)
+    @collection_record = Record.find_by id: params[:id]
     @record_comments = @collection_record.comments
     @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
 
@@ -48,6 +49,8 @@ class ReviewsController < ApplicationController
     @user_flag = JSON.parse(@user_flag.rawJSON)
 
     @display_list = []
+
+    @bubble_data = record.section_bubble_data(Record::COLLECTION_INFORMATION_FIELDS)
 
     JSON.parse(@collection_record.rawJSON).each do |key, value|
       if value.is_a?(String) 

@@ -1,49 +1,47 @@
 <%= render(partial: 'reviews/navbar', locals: {page: "navigation"}) %>
 
 <!-- everything below the nav -->
-<section>
-  <!-- container of metadata sections -->
-  <div>
-    <!-- header for sections -->
-    <h3>
-      METADATA FIELDS
-    </h3>
-
-    <!-- two coulmns holder -->
-    <div>
-      <!-- left column of section details -->
-      <div>
-        <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION INFORMATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "SPATIAL INFORMATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "DATA IDENTIFICATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "DATA CENTERS"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "DISTRIBUTION INFORMATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "DATA CONTACTS"}) %>
+<section class="record_show_navigation">
+  <div class="outer_flexbox">
+    <!-- container of metadata sections -->
+    <div class="section_container outer_flex_item_left">
+      <!-- header for sections -->
+      <div class="section_header">
+        <h3>METADATA FIELDS</h3>
       </div>
 
-      <!-- right column of section details -->
-      <div>
-        <%= render(partial: 'navigation_section_details', locals: {title: "DESCRIPTIVE KEYWORDS"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION CITATIONS"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "ACQUISITION INFORMATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "METADATA INFORMATION"}) %>
-        <%= render(partial: 'navigation_section_details', locals: {title: "TEMPORAL INFORMATION"}) %>
+      <!-- two coulmns holder -->
+      <div class="flex_container">
+        <!-- left column of section details -->
+        <div class="flex_column">
+          <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "SPATIAL INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "DATA IDENTIFICATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "DATA CENTERS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "DISTRIBUTION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "DATA CONTACTS", bubble_data: @bubble_data}) %>
+        </div>
+
+        <!-- right column of section details -->
+        <div class="flex_column">
+          <%= render(partial: 'navigation_section_details', locals: {title: "DESCRIPTIVE KEYWORDS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "COLLECTION CITATIONS", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "ACQUISITION INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "METADATA INFORMATION", bubble_data: @bubble_data}) %>
+          <%= render(partial: 'navigation_section_details', locals: {title: "TEMPORAL INFORMATION", bubble_data: @bubble_data}) %>
+        </div>
       </div>
+
+    </div>
+
+    <!-- right side completion/reviewers metrics -->
+    <div class="outer_flex_item_right">
+      
     </div>
 
   </div>
 
-  <!-- right side completion/reviewers metrics -->
-  <div>
-    
-  </div>
 
-  <!-- legend area -->
-  <div>
-    <h3>LEGEND</h3>
-    <div><div></div><p>NEEDS REVIEW</p></div>
-    <div><div></div><p>NEEDS REVIEW, FLAGGED BY SCRIPT</p></div>
-    <div><div></div><p>2ND OPINION REQUESTED</p></div>
-    <div><div></div><p>REVIEWED, COLOR CODED</p></div>
-  </div>
+  <%= render(partial: 'reviews/legend') %>
+  
 </section>
