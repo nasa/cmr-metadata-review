@@ -16,8 +16,21 @@
 
 body {
    font-family: 'Open Sans', sans-serif !important;
-   padding-left: 20px;
+   /*padding-left: 20px;*/
    background-color: #ebebeb;
+}
+
+p {
+     margin: 0px;
+}
+
+
+.notice {
+  position:absolute;
+}
+
+.alert {
+  position:absolute;
 }
 
 .page_header {

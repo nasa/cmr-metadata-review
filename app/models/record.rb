@@ -6,6 +6,13 @@ class Record < ActiveRecord::Base
   has_one :ingest
   has_many :flags
 
+  COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
+                         "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",
+                         "TEMPORAL INFORMATION"]
+  COLLECTION_INFORMATION_FIELDS = ['ShortName', 'VersionId', 'InsertTime', 'LastUpdate', 'LongName', 'DatasetId', 'CollectionState',
+                                   'Description', 'CollectionDataType', 'Orderable', 'Visible', 'RevisionDate', 'SuggestedUsage' ]
+
+
   def is_collection?
     self.recordable_type == "Collection"
   end
@@ -66,6 +73,15 @@ class Record < ActiveRecord::Base
     empty_hash.to_json
   end
 
+  def script_values
+    script_comment = self.comments.where(user_id: -1).first
+    if script_comment.nil?
+      nil
+    else 
+      JSON.parse(script_comment.rawJSON)
+    end
+  end
+
   def script_score
     script_comment = self.comments.where(user_id: -1).first
     if script_comment.nil?
@@ -113,5 +129,51 @@ class Record < ActiveRecord::Base
     new_review.review_state = 0
     new_review.save!
   end
+
+  def section_bubble_data(field_set)
+    record_set = JSON.parse(self.rawJSON)
+    included_field_set = field_set.select { |field| !(record_set[field].nil?) }
+    bubble_set = []
+
+    # setting flag data
+    record_flags = self.flags
+    if record_flags.empty?
+      bubble_set = included_field_set.map { |field| {"field_name": field, "color": "white"} }
+    else
+      flagset = JSON.parse(record_flags.first.rawJSON)
+      bubble_set = included_field_set.map do |field| 
+        if flagset[field] == ""
+          bubble_color = "white"
+        else
+          bubble_color = flagset[field]
+        end
+
+        { "field_name": field, "color": bubble_color } 
+      end
+    end
+
+    # adding the automated script results to each bubble
+    binary_script_values = self.binary_script_values
+    if binary_script_values.empty?
+      bubble_set = bubble_set.map { |bubble| bubble[:script] = true }
+    else
+      bubble_set = bubble_set.map do |bubble| 
+        bubble[:script] = binary_script_values[bubble[:field_name]]
+        bubble
+      end 
+    end
+
+    bubble_set
+  end
+
+
+  def binary_script_values
+    script_values = self.script_values
+    # replaces the values in the hash with true/false depending on the script test helper
+    binary_script_values = script_values.map { |key, val| [key, script_test(val)] }.to_h
+    binary_script_values
+  end
+
+
 
 end
