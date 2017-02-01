@@ -15,12 +15,13 @@ class CollectionsController < ApplicationController
   end
 
   def search
+    @free_text = params["free_text"]
+    @provider = params["provider"]
+    @curr_page = params["curr_page"]
+    @provider_select_list = provider_select_list
+
     begin
       @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
-      @free_text = params["free_text"]
-      @provider = params["provider"]
-      @curr_page = params["curr_page"]
-      @provider_select_list = provider_select_list
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout
@@ -31,6 +32,8 @@ class CollectionsController < ApplicationController
   end
 
   def new
+    #setting value in case of cmr error
+    @granule_count = 0
     begin
       collection_data = Cmr.get_collection(params["concept_id"])
       @concept_id = collection_data["concept_id"]
