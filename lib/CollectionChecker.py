@@ -216,7 +216,7 @@ class Checker():
             # except KeyError:
             #     result += 'np' + ', '
             # ================
-            
+            resultFields += 'SpatialKeywords/Keyword' + ', '
             try:
                 result += self.checkSpatialKey(metadata['SpatialKeywords']['Keyword']) + ', , , , , , , '
             except KeyError:
@@ -231,6 +231,7 @@ class Checker():
             #     else:
             #         result += 'np' + ', , , , , , '
             # ================
+            resultFields += 'Temporal/SingleDateTime' + ', '
             try:
                 result += self.checkSingleDateTime(metadata['Temporal']['SingleDateTime']) + ', '
             except KeyError:

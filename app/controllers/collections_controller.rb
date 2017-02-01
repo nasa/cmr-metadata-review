@@ -34,13 +34,13 @@ class CollectionsController < ApplicationController
   def new
     #setting value in case of cmr error
     @granule_count = 0
+    @concept_id = params["concept_id"]
+    @revision_id = params["revision_id"]
+    @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
+
     begin
       collection_data = Cmr.get_collection(params["concept_id"])
-      @concept_id = collection_data["concept_id"]
-      @revision_id = collection_data["revision_id"]
-      @short_name = collection_data["Collection"]["ShortName"]
-
-      @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
+      @short_name = collection_data["ShortName"]  
       @granule_count = Cmr.collection_granule_count(@concept_id)
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
@@ -66,7 +66,7 @@ class CollectionsController < ApplicationController
 
     begin 
       collection_data = Cmr.get_collection(concept_id)
-      short_name = collection_data["Collection"]["ShortName"]
+      short_name = collection_data["ShortName"]
       ingest_time = DateTime.now
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
