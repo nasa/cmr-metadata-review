@@ -114,7 +114,15 @@ p {
     border-width:1px;
     border-style:solid;
     padding-top:10px;
-    padding-left:20px;
+    padding-left:15px;
+
+    input[type=email] {
+      width:325px;
+    }
+
+    input[type=password] {
+      width:325px;
+    }
 
     .form_buttons {
       display: inline-block;
@@ -138,6 +146,86 @@ p {
 
   }
 
+}
+
+.curation_box {
+  background-color:white;
+  width:600px;
+  margin: auto;
+  padding-left:20px;
+}
+
+.search_page_box {
+  background-color:white;
+  width:900px;
+  margin: auto;
+  padding-left:40px;  
+
+  .space_box {
+    height:15px; 
+    width:80px;
+  }
+
+  select {
+    width:150px;
+    padding-left:10px;
+  }
+
+  .results_box {
+
+    width:645px;
+    padding-bottom:30px;
+    margin-top: 15px;
+
+    .search_phrase {
+      width:320px;
+      background-color: #ebebeb;
+      display: inline-block;
+      padding-left:20px;
+      padding-top:3px;
+      padding-bottom:3px;
+    }
+
+    .total_results {
+      width:320px;
+      background-color: #ebebeb;
+      display: inline-block;
+      padding-left:20px;
+      padding-top:3px;
+      padding-bottom:3px;
+    }
+
+    table {
+      margin-top: 15px;
+      font-size: 0.6em;
+    }
+
+    .bottom_row {
+      margin-top: 10px;
+
+      .select_collection {
+        display: inline-block;
+      }
+      .direction_links {
+        float: right;
+        padding-top:6px;
+
+        button {
+          height:37px;
+          color: white;
+          background-color:#2276ac;
+          border: none;
+          i {
+            display: inline-block;
+          }
+          p{
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+  }
 }
 
 
