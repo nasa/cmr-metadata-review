@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'site#index'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
 
   get '/home', to: 'site#home'
   
