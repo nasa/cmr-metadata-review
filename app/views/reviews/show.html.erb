@@ -58,110 +58,152 @@
 
 <!-- Data/review area -->
 <section class="flex_table_container">
-  
-  <!-- row title information -->
-  <div class="flex_table_fixed">
-    <table>
-      <tr>
-        <td>FLAGGED BY SCRIPT</td>
-      </tr>
-      <tr>
-        <td>SCRIPT RESULT</td>
-      </tr>
-      <tr>
-        <td>PREVIOUS VALUE</td>
-      </tr>
-      <tr>
-        <td>
-          CURRENT VALUE
-        </td>
-      </tr>
-      <tr>
-        <td>
-          FLAGS
-        </td>
-      </tr>
-      <tr>
-        <td>
-          RECOMMENDATION
-        </td>
-      </tr>
-      <tr>
-        <td>
-          2ND OPINION
-        </td>
-      </tr>
-      <tr>
-        <td>
-          COLOR CODE
-        </td>
-      </tr>
-      <tr>
-        <td>
-        DISCUSSION &amp; JUSTIFICATION
-        </td>
-      </tr>
-    </table>    
-  </div>
+    <!-- row title information -->
+    <div class="flex_table_fixed">
+      <table>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td>FLAGGED BY SCRIPT</td>
+        </tr>
+        <tr>
+          <td>SCRIPT RESULT</td>
+        </tr>
+        <tr>
+          <td>PREVIOUS VALUE</td>
+        </tr>
+        <tr>
+          <td>
+            CURRENT VALUE
+          </td>
+        </tr>
+        <tr>
+          <td>
+            FLAGS
+          </td>
+        </tr>
+        <tr>
+          <td>
+            RECOMMENDATION
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2ND OPINION
+          </td>
+        </tr>
+        <tr>
+          <td>
+            COLOR CODE
+          </td>
+        </tr>
+        <tr>
+          <td>
+          DISCUSSION &amp; JUSTIFICATION
+          </td>
+        </tr>
+      </table>    
+    </div>
 
-  <!-- horizontal scroll information -->
-  <div class="flex_table_details">
-    <div style="overflow-x: scroll;">
-    <% counter = (0..10).to_a %> 
+    <!-- horizontal scroll information -->
+    <div class="flex_table_details">
+      <div style="overflow-x: scroll;">
+      <% counter = (0..10).to_a %> 
 
-    <table style="width:2000px;">
-      <tr>
-        <!-- for each of shown value list, create td for value -->
-        <% counter.each do |num| %>
-          <td style="width:500px;">TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-      <tr>
-        <% counter.each do |num| %>
-          <td>TITLE</td>
-        <% end %>
-      </tr>
-    </table>  
+      <table style="width:2000px;">
+        <tr>
+          <!-- for each of shown value list, create td for value -->
+          <% @section_titles.each do |title| %>
+            <td style="width:500px;"><%= title %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <!-- for each of shown value list, create td for value -->
+          <% @section_titles.each do |title| %>
+            <td style="width:500px;"><%= @flagged_by_script[title] %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td><div><%= @script_values[title] %></div></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td>Prev</td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td>
+              <div>
+              <%= @current_values[title] %>    
+              </div>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td><%=@flags[title]%></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td>
+              <textarea name="recommendation_<%= title %>" form="field_form"><%=@recommendations[title]%></textarea>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td><%=@second_opinions[title]%></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td class="color_code_cell">
+              <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code_<%= title %>" id="color_code_<%= title %>" form="field_form" >
+              <% selected = color_selected_list(@color_codes[title]) %>
 
-    </div>  
-  </div>
+                <option <%= selected[0] %> value="">Select Flag</option>
+                <option <%= selected[1] %> value="green">Green</option>
+                <option <%= selected[2] %> value="yellow">Yellow</option>
+                <option <%= selected[3] %> value="red">Red</option>
+              </select></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @section_titles.each do |title| %>
+            <td>TITLE</td>
+          <% end %>
+        </tr>
+      </table>  
+
+      </div>  
+    </div>
 
 </section>
+
+<script type="text/javascript">
+  function update_color_backgrounds() {
+    let color_selects = document.getElementsByClassName("color_code_select");
+    let color_cells = document.getElementsByClassName("color_code_cell");
+    let counter = 0;
+    while (counter < color_selects.length) {
+      let color = color_selects[counter].value
+      color_cells[counter].style.backgroundColor = color;
+      counter++;
+    }
+  }
+
+  update_color_backgrounds();
+</script>
+
+  <%= form_tag(review_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
+  <%= hidden_field_tag(:section_index, params["section_index"]) %>
+  <%= submit_tag("Save Review", class: "form_save_button") %>
+  <% end %>
 
 <section class="detail_footer">
 
