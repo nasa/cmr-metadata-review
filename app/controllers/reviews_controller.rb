@@ -50,7 +50,7 @@ class ReviewsController < ApplicationController
     @previous_values = nil
     @current_values = record.values
     @flags = record.flag_values
-    @recommendations = record.recommendation_values
+    @recommendations, @recommendations_users = record.recommendation_values
     @second_opinions = record.second_opinion_values
 
     @color_codes = record.color_codes

@@ -99,7 +99,9 @@
         <tr>
         <th class="headcol">PREVIOUS VALUE</th>
           <% @section_titles.each do |title| %>
-            <td>Prev</td>
+            <td>
+              <div></div>
+            </td>
           <% end %>
         </tr>
         <tr>
@@ -150,8 +152,8 @@
                   <div class="flag_flex_cell <%= flag_cell_border %>" id="<%= cell_id %>">
                     <input type="checkbox" id="<%= check_id %>" name="<%= check_id %>" form="field_form">
                     <p class="flag_flex_text">
+                      <%= flag_field %>                    
                       <i id="<%= icon_id %>" class="eui-icon eui-check-o flag_icon"></i>
-                      <%= flag_field %>
                     </p>
                   </div>
                   <script type="text/javascript">
@@ -176,6 +178,14 @@
           <% @section_titles.each do |title| %>
             <td class="recommendation_cell">
               <textarea name="recommendation_<%= title %>" form="field_form"><%=@recommendations[title]%></textarea>
+              <div class="recommendation_user">
+                <p><%=@recommendations_users[title][0]%></p>
+                <% if @recommendations_users[title][1] %>
+                  <p><%=@recommendations_users[title][1].in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p")%></p>
+                <% else %>
+                  <p></p>
+                <% end %>
+              </div>
             </td>
           <% end %>
         </tr>
@@ -207,8 +217,8 @@
               <div id="opinion_cell_<%= title %>" class="opinion_cell">
                 <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion_check_<%= title %>" form="field_form">
                 <p id="opinion_text_<%= title %>">
-                  <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
                   Requires 2nd Opinion
+                  <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
                 </p>
               </div>  
             </td>
@@ -246,7 +256,7 @@
         <tr>
         <th class="headcol final_headcol">DISCUSSION &amp; JUSTIFICATION</th>
           <% @section_titles.each do |title| %>
-            <td>TITLE</td>
+            <td>Discussion</td>
           <% end %>
         </tr>
       </table>  

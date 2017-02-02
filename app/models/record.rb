@@ -5,6 +5,7 @@ class Record < ActiveRecord::Base
   has_many :comments
   has_one :ingest
   has_many :flags
+  has_many :recommendations
 
   COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
                          "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",
@@ -278,20 +279,21 @@ class Record < ActiveRecord::Base
   end
 
   def recommendation_values
-    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation")
+    recommendation = Recommendation.where(record_id: self.id)
     if recommendation.empty?
-      recommendation = RecordRow.new(record_id: self.id, row_name: "recommendation", rawJSON: self.blank_comment_JSON)
+      recommendation = Recommendation.new(record_id: self.id, rawJSON: self.blank_comment_JSON, usersRawJSON: self.blank_comment_JSON)
       recommendation.save
     else
       recommendation = recommendation.first
     end
 
-    JSON.parse(recommendation.rawJSON)
+    return JSON.parse(recommendation.rawJSON), JSON.parse(recommendation.usersRawJSON)
   end
 
-  def update_recommendation(value_hash)
-    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation").first
+  def update_recommendation(value_hash, users_hash)
+    recommendation = Recommendation.where(record_id: self.id).first
     recommendation.rawJSON = value_hash.to_json
+    recommendation.usersRawJSON = users_hash.to_json
     recommendation.save
   end
 

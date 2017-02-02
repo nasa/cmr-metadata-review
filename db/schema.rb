@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131170527) do
+ActiveRecord::Schema.define(version: 20170202203444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,18 @@ ActiveRecord::Schema.define(version: 20170131170527) do
 
   add_index "ingests", ["record_id"], name: "index_ingests_on_record_id", using: :btree
   add_index "ingests", ["user_id"], name: "index_ingests_on_user_id", using: :btree
+
+  create_table "recommendations", force: :cascade do |t|
+    t.integer "record_id"
+    t.integer "user_id"
+    t.string  "row_name"
+    t.integer "record_info_count"
+    t.string  "rawJSON"
+    t.string  "usersRawJSON"
+  end
+
+  add_index "recommendations", ["record_id"], name: "index_recommendations_on_record_id", using: :btree
+  add_index "recommendations", ["user_id"], name: "index_recommendations_on_user_id", using: :btree
 
   create_table "record_rows", force: :cascade do |t|
     t.integer "record_id"

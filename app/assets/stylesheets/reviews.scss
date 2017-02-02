@@ -122,12 +122,25 @@
     padding-left: 10px;
   }
 
+  tr td select {
+    width: 100%;
+  }
+
+  tr td div {
+    min-height: 20px;
+  }
+
   .title_text {
     font-weight: bold;
   }
 
+  .recommendation_user {
+    height: 38px;
+    padding-left: 10px;
+  }
+
   textarea {
-    border: none;
+    // border: none;
     background-color: transparent;
     resize: none;
     outline: none;

@@ -35,13 +35,18 @@ class RecordsController < ApplicationController
 
     section_index = params["section_index"]
 
-    recommendations = record.recommendation_values
+    recommendations, recommendations_users = record.recommendation_values
     params.each do |key, value|
       if key =~ /recommendation_(.*)/
-        recommendations[$1] = value
+        if recommendations[$1] != value
+          recommendations[$1] = value
+          recommendations_users[$1] = []
+          recommendations_users[$1].push(current_user.email)
+          recommendations_users[$1].push(DateTime.now)
+        end
       end
     end
-    record.update_recommendation(recommendations)
+    record.update_recommendation(recommendations, recommendations_users)
 
     color_codes = record.color_codes
     params.each do |key, value|
