@@ -1,0 +1,74 @@
+.record_show_box {
+  background-color:white;
+  width:900px;
+  margin: auto;
+  padding-left:40px;
+  padding-right:40px;
+  padding-bottom:40px;
+
+  .space_box {
+    height:15px; 
+    width:80px;
+  }
+
+  .collection_title {
+    font-size:0.8em;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #95a5a6;
+
+    h3 {
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+
+  .left_box {
+    margin-right:15px;
+  }
+
+  .group_box {
+    display: inline-block;
+    width:400px;
+
+    h3 {
+      font-size:1em;
+    }
+
+    h4 {
+      color: black;
+      font-size: 0.9em;
+      margin-top: 0px;
+    }
+
+    table table {
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+
+    .review_actions {
+      .ingest_score {
+        font-size: 0.9em;
+        padding-left:4px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #95a5a6;
+        background-color: white;
+        margin-bottom: 10px;
+      }
+
+      button {
+        font-size:0.9em;
+        color:white;
+        background-color: #20ce6f;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #189c54;
+      }
+    }
+
+  }
+
+}
