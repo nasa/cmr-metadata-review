@@ -4,16 +4,12 @@
   </div>
 
   <div class="header_button_box">
-      <div class="header_icon_button">
-        <i class="eui-icon eui-fa-external-link-square"></i>
-        <p>LOGOUT</p>
-      </div>
-      <div class="header_icon_button">
-        <i class="eui-icon eui-fa-question-circle"></i>
-        <p>HELP</p>
-      </div>
+      <%= render(partial: 'shared/logout_button') %>
+
+      <%= render(partial: 'shared/help_button') %>
   </div>
 </div>
+
 
 <div class="header_image">
 
@@ -21,13 +17,21 @@
 
 <div class="curation_box">
 
-    <p>Current User: <%= current_user.email %></p>
+<!--     <p>Current User: <%= current_user.email %></p>
     <%= link_to "Search the CMR Database For Data Ingest", collections_search_path %>
 
     <br>
 
+ -->
 
+    <p>Search the CMR:</p>
 
+    <%= form_tag(collections_search_path, method: "get") do %>
+      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
+      <%= text_field_tag(:free_text) %>
+      <%= hidden_field_tag(:curr_page, "1") %>
+      <%= submit_tag("Search") %>
+    <% end %>
 
 
 

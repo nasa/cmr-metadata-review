@@ -60,6 +60,9 @@ p {
     .header_icon_button {
       display: inline-block;
       margin-right:20px;
+      background-color: #2276ac;
+      border:none;
+
       i {
         margin-top:2px;
         display: inline-block;
@@ -197,7 +200,7 @@ p {
 
     table {
       margin-top: 15px;
-      font-size: 0.6em;
+      font-size: 0.7em;
     }
 
     .bottom_row {
