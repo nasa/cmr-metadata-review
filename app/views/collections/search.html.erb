@@ -19,13 +19,18 @@
 <div class="search_page_box">
   <div class="space_box"></div>
 
-    <p>Search the CMR:</p>
+    <div class="search_title">
+      <p><strong>Search the CMR:</strong></p>
+    </div>
 
     <%= form_tag(collections_search_path, method: "get") do %>
       <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
-      <%= text_field_tag(:free_text) %>
+      <%= text_field_tag(:free_text, @free_text) %>
       <%= hidden_field_tag(:curr_page, "1") %>
-      <%= submit_tag("Search") %>
+      <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>
+      <button class="search_button">
+        <i class="eui-icon eui-fa-search"></i>
+      </button>
     <% end %>
 
     <br>

@@ -1,74 +1,86 @@
 <div class="page_header">
-  <h1>Metadata Curation: Data Ingest</h1>
+  <div class="header_title"> 
+    <h3>METADATA CURATION : DATA INGEST</h3>
+  </div>
+
+  <div class="header_button_box">
+      <%= render(partial: 'shared/curation_home_button') %>
+
+      <%= render(partial: 'shared/logout_button') %>
+
+      <%= render(partial: 'shared/help_button') %>
+  </div>
 </div>
 
-<br><br>
+<div class="header_image">
+  
+</div> 
 
-<table cellpadding="5" border="1">
-      <tr>
-          <td>Concept_ID</td>
-          <td>Revision_ID</td>
-          <td>ShortName</td>
-      </tr>
-      <tr>
-          <td><%= @concept_id %></td>
-          <td><%= @revision_id %></td>
-          <td><%= @short_name %></td>
-      </tr>
-</table>
+<div class="ingest_box">
 
-<% unless @already_ingested %>
-  <% if @granule_count < 3 %>
-    <% if @granule_count < 1 %>
-      <p>No Granules Associated with This Collection</p>
-      <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
-        <%= hidden_field_tag(:concept_id, @concept_id) %>
-        <%= hidden_field_tag(:revision_id, @revision_id) %>
-        <%= submit_tag("Ingest Collection Without Granules", id: 'ingest_submit') %>
-      <% end %>
-    <% else %>
-      <p>Total Granules in this Collection: <%= @granule_count %></p>
-      <p>Select Number of Granules to Ingest With This Collection</p>
-      <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
-        <%= hidden_field_tag(:concept_id, @concept_id) %>
-        <%= hidden_field_tag(:revision_id, @revision_id) %>
-        <%= select_tag(:granulesCount, options_for_select([['1', 1]])) %>
-        <%= submit_tag("Ingest Collection With Granules", id: 'ingest_submit') %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>Total Granules in this Collection: <%= @granule_count %></p>
-    <p>Select Number of Granules to Ingest With This Collection</p>
-    <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
-        <%= hidden_field_tag(:concept_id, @concept_id) %>
-        <%= hidden_field_tag(:revision_id, @revision_id) %>
-        <%= select_tag(:granulesCount, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]])) %>
-        <%= submit_tag("Ingest Collection With Granules", id: 'ingest_submit') %>
-    <% end %>
-  <% end %>
-<% else %>
-  <p>This record has already been ingested into the system for review</p>
-<% end %>  
+  <div class="space_box"></div>
 
-<!-- Static Modal -->
-<div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true" style="visibility: hidden;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="text-center">
-                    <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
-                    <h4>Saving CMR Data and Running Auto Scripts</h4>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="box_title">
+    <p><strong>New Collection Data:</strong></p>
+  </div>
+
+    <table cellpadding="5" border="1">
+          <tr>
+              <td>Concept_ID</td>
+              <td>Revision_ID</td>
+              <td>ShortName</td>
+          </tr>
+          <tr>
+              <td><%= @concept_id %></td>
+              <td><%= @revision_id %></td>
+              <td><%= @short_name %></td>
+          </tr>
+    </table>
+
+    <div class="ingest_state">
+      <% unless @already_ingested %>
+        <% if @granule_count < 3 %>
+          <% if @granule_count < 1 %>
+            <p>No Granules Associated with This Collection</p>
+            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+              <%= hidden_field_tag(:concept_id, @concept_id) %>
+              <%= hidden_field_tag(:revision_id, @revision_id) %>
+              <%= submit_tag("Ingest Collection Without Granule", id: 'ingest_submit') %>
+            <% end %>
+          <% else %>
+            <p>Total Granules in this Collection: <%= @granule_count %></p>
+            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+              <%= hidden_field_tag(:concept_id, @concept_id) %>
+              <%= hidden_field_tag(:revision_id, @revision_id) %>
+              <%= hidden_field_tag(:granulesCount, '1') %>
+              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit') %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p>Total Granules in this Collection: <%= @granule_count %></p>
+          <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+              <%= hidden_field_tag(:concept_id, @concept_id) %>
+              <%= hidden_field_tag(:revision_id, @revision_id) %>
+              <%= hidden_field_tag(:granulesCount, '1') %>
+              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit') %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p>This record has already been ingested into the system for review</p>
+      <% end %>  
+    </div>  
+
 </div>
+
+
+
 
 
 <script type="text/javascript">
   document.getElementById('ingest_submit').onclick = function() {
 
-    document.getElementById('processing-modal').style.visibility = "visible";
+    // document.getElementById('processing-modal').style.visibility = "visible";
+    document.getElementById('ingest_submit').value = "Processing Record Ingest";
     document.getElementById('ingest_submit').disabled = true;
     document.forms["collection_form"].submit();
   };
