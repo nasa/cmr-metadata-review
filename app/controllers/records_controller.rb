@@ -87,6 +87,15 @@ class RecordsController < ApplicationController
 
     record.update_opinion_values(opinion_values)
 
+    params.each do |key, value|
+      if key =~ /discussion_(.*)/
+        if value != ""
+          message = Discussion.new(record: record, user: current_user, column_name: $1, date: DateTime.now, comment: value)
+          message.save
+        end
+      end
+    end
+
   #   @collection_record = Collection.find_record(params["concept_id"], params["revision_id"])
 
   #   #updating comment text
