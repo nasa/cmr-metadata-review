@@ -26,6 +26,8 @@ class ReviewsController < ApplicationController
       @script_comment = JSON.parse(@script_comment.rawJSON)
     end
 
+
+    @discussions = record.discussions
     # #a boolean test to determine if any review exists (should replace with review??)
     # if @user_comment.empty?
     #   @collection_record.add_review(current_user.id)

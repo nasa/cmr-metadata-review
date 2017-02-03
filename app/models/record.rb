@@ -5,6 +5,7 @@ class Record < ActiveRecord::Base
   has_many :comments
   has_one :ingest
   has_many :flags
+  has_many :discussions
 
   COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
                          "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",

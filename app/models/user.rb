@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   has_many :flags
   has_many :ingests
   has_many :comments
-  has_many :reviews   
+  has_many :reviews 
+  has_many :discussions  
   # has_many :collection_records, through: :collection_reviews  
 
   # has_many :granule_records, through: :granule_reviews    
