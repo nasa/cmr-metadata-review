@@ -28,6 +28,14 @@
   padding-right: 10px;
   display: flex;
   align-items: center;
+
+  label {
+    margin-top: 5px;
+  }
+  p {
+    position: relative;
+    bottom:5px;
+  }
 }
 
 .filter_dropdown {
@@ -79,6 +87,10 @@
   border-right-style: solid;
   border-right-width: 1px;
 
+  table {
+    width: auto;
+  }
+
   [type="checkbox"] {
   
     position: absolute;
@@ -115,7 +127,9 @@
 
   tr div {
     max-height:130px;
+    min-height: 19px;
     overflow: auto;
+    max-width: 400px;
   }
 
   tr td {
