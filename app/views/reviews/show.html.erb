@@ -69,7 +69,6 @@
       }
 
 
-
       function toggleCells() {
         unhideAllCells();
 
@@ -107,6 +106,14 @@
           }
         }
 
+        //checking if all the table cells are hideen
+        uniqueHidden = hiddenCells.filter(function(item, pos) {
+            return hiddenCells.indexOf(item) == pos;
+        });
+
+        if (uniqueHidden.length == titleList.length) {
+          document.getElementById("scroll_table").style.display = "none";
+        }
 
         //hiding each column
         for (let columnNum of hiddenCells) {
@@ -121,6 +128,8 @@
       }
 
       function unhideAllCells() {
+          document.getElementById("scroll_table").style.display = "block";
+
           for (let index in titleList) {
             var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
             for (let cell of showCells) {
@@ -216,7 +225,7 @@
 <section >
 
     <div >
-      <div class="scroll_table">
+      <div class="scroll_table" id="scroll_table">
 
       <table >
         <tr>
