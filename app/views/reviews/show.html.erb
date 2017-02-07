@@ -79,7 +79,7 @@
           var scriptCells = document.getElementsByClassName("script_check_cell");
           //finding all the script_cells which have the check icon.
           for (let index in scriptCells) {
-            if (scriptCells[parseInt(index)] && scriptCells[parseInt(index)].innerHTML.includes("<i")){
+            if (scriptIsChecked(scriptCells[parseInt(index)])) {
               hiddenCells.push(parseInt(index));
             }
           }
@@ -129,6 +129,18 @@
               }
             }
           }
+      }
+
+      function scriptIsChecked(script_div) {
+        if (!script_div) {
+          return false;
+        }
+
+        if(script_div.innerHTML.includes("<i")) {
+          return false;
+        } else {
+          return true;
+        }
       }
 
       function opinionIsChecked(opinion_div) {
@@ -209,6 +221,7 @@
       <table >
         <tr>
         <th class="headcol"></th>
+          
 
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
