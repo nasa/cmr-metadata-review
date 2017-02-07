@@ -79,13 +79,14 @@
 
 .scroll_table {
   margin-top: 25px;
-  width: 85%;
-  overflow-x:scroll;  
-  margin-left:17em;
-  overflow-y:visible;
+  max-width: 85%;
+  // background-color: white;
+  overflow-x: auto;  
+  margin-left: 17em;
+  overflow-y: visible;
   font-size: 0.8em;
-  border-right-style: solid;
-  border-right-width: 1px;
+  // border-right-style: solid;
+  // border-right-width: 1px;
 
   table {
     width: auto;
@@ -117,7 +118,7 @@
   }
 
   .final_headcol {
-    height: 200px;
+    height: 76px;
     // max-height: 350px;
   }      
 
