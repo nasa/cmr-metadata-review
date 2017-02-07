@@ -116,7 +116,7 @@
           }
         }
 
-
+        adjustDiscussionCellHeight();
           
       }
 
@@ -221,7 +221,6 @@
       <table >
         <tr>
         <th class="headcol"></th>
-          
 
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
@@ -464,3 +463,21 @@
 <%= render(partial: 'legend') %>
 
 </section>
+
+
+<script type="text/javascript">
+//resizing the discussion header div
+
+function adjustDiscussionCellHeight() {
+  var discussionCell = document.getElementsByClassName("discussion_td column_ShortName")[0];
+  var headerCellHeight = window.getComputedStyle(discussionCell).height;
+  if (headerCellHeight == "auto") {
+    headerCellHeight = "76px";
+  }
+  var headerCell = document.getElementsByClassName("final_headcol")[0];
+  headerCell.style.height = headerCellHeight;
+}
+
+adjustDiscussionCellHeight();
+
+</script>
