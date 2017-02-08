@@ -51,15 +51,13 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
     @previous_values = nil
     @current_values = record.values
-    @flags = record.flag_values
-    @recommendations = record.recommendation_values
-    @second_opinions = record.second_opinion_values
+    @flags = record.get_row("flag").values
+    @recommendations = record.get_row("recommendation").values
+    @second_opinions = record.get_row("second_opinion").values
 
     @color_codes = record.color_codes
 
   end
-
-
 
 
   def update
@@ -68,15 +66,13 @@ class ReviewsController < ApplicationController
       #add redirect here with error in final version
     end
 
-    review = Review.where(user: current_user, record_id: params["id"])
+    review = Review.where(user: current_user, record_id: params["id"]).first
     comment = params["review_comment"]
-    if review.empty?
-      review = [Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)]
+    if review.nil?
+      review = Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)
     end
 
-    review = review.first
     review.comment = comment
-
     review.save
 
     redirect_to record_path(id: params["id"])

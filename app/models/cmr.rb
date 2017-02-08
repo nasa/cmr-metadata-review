@@ -2,11 +2,18 @@ class Cmr
   include ApplicationHelper
   include CmrHelper
 
+  TIMEOUT_MARGIN = 10
+
+
+  def self.cmr_request(url)
+    HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+  end
+
   #cmr api auto returns only the most recent revision of a collection
   # &all_revisions=true&pretty=true" params can be used to find specific revision
   #we should only need to ingest the most recent versions.
   def self.get_collection(concept_id)
-    collection_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
+    collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     collection_results = Hash.from_xml(collection_xml)["results"]
     flatten_collection(collection_results["result"]["Collection"])
   end
@@ -17,7 +24,7 @@ class Cmr
   end
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
-    granule_xml = HTTParty.get("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
+    granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
     Hash.from_xml(granule_xml)["results"]
   end
 
@@ -73,12 +80,12 @@ class Cmr
         query_text_first_char = query_text_first_char + "&provider=#{provider}"
       end
 
-      raw_xml = HTTParty.get(query_text).parsed_response
+      raw_xml = Cmr.cmr_request(query_text).parsed_response
       search_results = Hash.from_xml(raw_xml)["results"]
 
       #rerun query with first wildcard removed
       if search_results["hits"].to_i == 0
-        raw_xml = HTTParty.get(query_text_first_char).parsed_response
+        raw_xml = Cmr.cmr_request(query_text_first_char).parsed_response
         search_results = Hash.from_xml(raw_xml)["results"]
       end
 
