@@ -489,7 +489,7 @@ adjustDiscussionCellHeight();
 
 
 function recommendationMonitor(textarea) {
-  if (textarea.value.match(/^(ok|Ok)|OK$/)) {
+  if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
     let columnName = textarea.name.match(/recommendation_(.*)/)[1];
     turnColumnGreen(columnName);
   }
