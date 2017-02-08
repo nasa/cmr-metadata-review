@@ -52,6 +52,7 @@
   <% if page == "review" %>
 
       <div class="title_buttons">
+
         <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
           <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
           PREVIOUS
@@ -61,6 +62,7 @@
           <i class="eui-icon eui-fa-arrow-circle-right button_symbol"></i>
         </button>    
       </div>
+      <div class="clearfix"></div>
 
   <% else %>
       <%= form_tag( review_path ,  {method: "put", id: "review_form"}) do %>
