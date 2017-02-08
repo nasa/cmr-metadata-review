@@ -49,15 +49,13 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
     @previous_values = nil
     @current_values = record.values
-    @flags = record.flag_values
-    @recommendations = record.recommendation_values
-    @second_opinions = record.second_opinion_values
+    @flags = record.get_row("flag").values
+    @recommendations = record.get_row("recommendation").values
+    @second_opinions = record.get_row("second_opinion").values
 
     @color_codes = record.color_codes
 
   end
-
-
 
 
   def update

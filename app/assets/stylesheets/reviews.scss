@@ -37,7 +37,6 @@
 
 .filter_select {
   width: 180px;
-  /*background-color: #d9d9d9;*/
   font-size: 0.7em;
 
 }
@@ -141,9 +140,6 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      /*height: 250px;*/
-      /*background-color: white;*/
-      /*font-size: 0.8em;*/
   }
 
   .flag_middle_border {
@@ -162,15 +158,28 @@
     padding-left: 10px;
   }
 
+  .flag_flex_cell {
+    cursor: pointer;
+
+    :hover {
+      font-weight: bold;
+    }
+  }
+
   .recommendation_cell {
     background-color: white;
   }
 
   .opinion_cell {
-    width: 100%;
+    cursor: pointer;
+    width:100%;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+
+    :hover {
+      font-weight: bold;
+    }
   }
 
   .flag_icon {
