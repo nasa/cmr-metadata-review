@@ -85,16 +85,16 @@
   height:80px;
 }
 .flex_table_container tr:nth-child(7) {
-  height:110px;
+  height:80px;
 }
 .flex_table_container tr:nth-child(8) {
-  height:40px;
+  height:80px;
 }
 .flex_table_container tr:nth-child(9) {
-  height:40px;
+  height:0px;
 }
 .flex_table_container tr:nth-child(10) {
-  height:100px;
+  height:80px;
 }
 
 
@@ -140,8 +140,49 @@
   outline:none;border:0px;
 }
 
+.flag_flexbox {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    /*padding-left: 46px;
+    padding-right: 46px;
+    padding-top: 15px;*/
+    /*height: 250px;*/
+    /*background-color: white;*/
+    /*font-size: 0.8em;*/
+}
+
+.flag_flex_cell {
+    /*width:80%;*/
+    /*overflow-x: auto;*/
+    height:26px;
+}
+
+.no_padding {
+  padding: 0px 0px 0px 0px !important;
+}
+
+.opinion_cell {
+  width:100%;
+  height:100px;
+
+}
 
 
+[type="checkbox"] {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+
+}
 
 /*code for the toggle sliders*/
 /*http://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch*/
