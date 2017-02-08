@@ -66,15 +66,13 @@ class ReviewsController < ApplicationController
       #add redirect here with error in final version
     end
 
-    review = Review.where(user: current_user, record_id: params["id"])
+    review = Review.where(user: current_user, record_id: params["id"]).first
     comment = params["review_comment"]
-    if review.empty?
-      review = [Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)]
+    if review.nil?
+      review = Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)
     end
 
-    review = review.first
     review.comment = comment
-
     review.save
 
     redirect_to record_path(id: params["id"])
