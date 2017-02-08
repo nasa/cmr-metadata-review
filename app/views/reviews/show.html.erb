@@ -372,8 +372,9 @@
 
                   <option <%= selected[0] %> value="">Select Color</option>
                   <option <%= selected[1] %> value="green">Green</option>
-                  <option <%= selected[2] %> value="yellow">Yellow</option>
-                  <option <%= selected[3] %> value="red">Red</option>
+                  <option <%= selected[2] %> value="blue">Blue</option>
+                  <option <%= selected[3] %> value="yellow">Yellow</option>
+                  <option <%= selected[4] %> value="red">Red</option>
                 </select>
               </div>
             </td>
@@ -419,7 +420,7 @@
     while (counter < color_selects.length) {
       let color = color_selects[counter].value
       color_cells[counter].style.backgroundColor = color;
-      if (color == "green" || color == "red") {
+      if (color == "green" || color == "red" || color == "blue") {
         color_selects[counter].style.color = "white";
       } else {
         color_selects[counter].style.color = "black";
