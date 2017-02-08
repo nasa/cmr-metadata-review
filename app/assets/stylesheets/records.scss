@@ -33,8 +33,7 @@
     .flex_container {
         display: -webkit-flex;
         display: flex;
-        /*width: 400px;*/
-        /*height: 250px;*/
+
         background-color: white;
         font-size: 0.7em;
         width: 100%;
@@ -45,9 +44,7 @@
         display: flex;
         -webkit-flex-direction: column;
         flex-direction: column;
-        /*height: 250px;*/
         width:50%;
-        /*background-color: lightgrey;*/
     }
 
     .flex_item {
@@ -137,12 +134,14 @@
 .record_title {
   padding-top: 25px;
   background-color: #e3e1e1;
-  height: 75px;
+  min-height: 75px;
 
   .title_buttons {
     display: inline-block;
     float: right;
     margin-right: 129px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
     button {
       width: 110px;
