@@ -5,7 +5,13 @@ class ReviewsController < ApplicationController
     record = Record.find_by id: params[:id]
     section_index = params["section_index"]
 
-    @collection_record = Record.find_by id: params[:id]
+    @collection_record = Record.find_by id: params[:id] 
+    @long_name = @collection_record.long_name
+    @short_name = @collection_record.short_name
+
+    @navigation_list = Record::COLLECTION_SECTIONS
+
+
     @record_comments = @collection_record.comments
     # @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
 

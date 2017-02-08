@@ -21,6 +21,15 @@ class Record < ActiveRecord::Base
     self.recordable_type == "Granule"
   end
 
+  def long_name 
+    JSON.parse(self.rawJSON)["LongName"]
+  end 
+
+  def short_name
+    JSON.parse(self.rawJSON)["ShortName"]
+  end
+
+
   def evaluate_script
     collection_data = JSON.parse(rawJSON)
     comment_JSON = blank_comment_JSON
