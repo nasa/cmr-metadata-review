@@ -185,6 +185,13 @@ class Record < ActiveRecord::Base
       end 
     end
 
+    #adding the second opinions
+    opinion_values = self.get_row("second_opinion").values
+    bubble_set = bubble_set.map do |bubble| 
+      bubble[:opinion] = opinion_values[bubble[:field_name]]
+      bubble
+    end 
+
     bubble_set
   end
 
