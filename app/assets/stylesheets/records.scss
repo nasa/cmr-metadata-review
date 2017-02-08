@@ -1,0 +1,244 @@
+.record_review_data {
+  padding-left: 70px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  background-color: white;
+
+
+  .outer_flexbox {
+      display: -webkit-flex;
+      display: flex;
+      background-color: white;
+      width: 100%;
+      margin-bottom:30px;
+  }
+
+  .outer_flex_item_left {
+      width: 60%;
+  }
+
+  .outer_flex_item_right {
+      width: 40%;
+  }
+
+  .section_header {
+    border-bottom: thin solid #d9d9d9;
+    width:90%;
+  }
+
+  .section_container {
+    border-right: thin solid #d9d9d9;
+    width: 60%;
+
+    .flex_container {
+        display: -webkit-flex;
+        display: flex;
+
+        background-color: white;
+        font-size: 0.7em;
+        width: 100%;
+    }
+
+    .flex_column {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        width:50%;
+    }
+
+    .flex_item {
+        width: 90%;
+        border-bottom: thin solid #d9d9d9;
+    }
+
+
+  }
+
+
+}
+
+
+.bubble {
+    display: inline-block;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    /*This is to hold the 2 text content for second opinion*/
+    padding-left: 5px;
+}
+
+/*the unique flag background colors*/
+.flag_white {
+    background-color: white;
+}
+
+.flag_green {
+    background-color: green;
+}
+
+.flag_yellow {
+    background-color: yellow;
+}
+
+.flag_red {
+    background-color: red;
+}
+
+.no_script {
+    border: 1px solid #d9d9d9;
+    height: 17px;
+    width: 17px;
+}
+
+.script {
+    border: 3px solid #000;
+    height: 17px;
+    width: 17px;
+}
+
+
+.record_nav {
+  height:75px;
+  background-color: #d1cdcd;
+  padding-top: 25px;
+
+  .nav_info {
+    display: inline-block;
+    font-size: 0.7em;
+    margin-right:163px;
+    float:right;
+  }
+
+  .nav_button {
+    border:none;
+    display: inline-block;
+    float:left;
+    background-color: inherit;
+    margin-left:16px;
+
+    .button_symbol {
+      display:inline-block;
+    }
+  }
+
+  .collection_back_button {
+    border:none;
+    display: inline-block;
+    float:left;
+    background-color: inherit;
+    margin-left: 40px;
+  }
+}
+
+
+.record_title {
+  padding-top: 25px;
+  background-color: #e3e1e1;
+  min-height: 75px;
+
+  .title_buttons {
+    display: inline-block;
+    float: right;
+    margin-right: 129px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    button {
+      width: 110px;
+    }
+  }
+
+  .complete_buttons {
+    margin-right: 47px;
+    display: inline-block;
+    font-size: 0.9em;
+    float:right;
+
+    .review_complete_button {
+      background-color: #7ab5da;
+    }
+
+    .mark_complete_button {
+      background-color: #20ce6f;
+    }
+
+    .complete_symbol {
+      margin-left: 20px;
+    }
+
+    button {
+      padding: 5px;
+      width: 150px;
+      text-align: left;
+
+      .button_text{
+        display: inline-block;
+        text-align: left;
+        margin-right: 10px;
+      }
+
+      .button_symbol{
+        display: inline-block;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.record_title {
+  .nav_details {
+    float:left;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 66px;
+    margin-top: -7px;
+  }
+
+  .nav_review_details {
+    float:left;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 44px;
+    margin-top: -7px;
+  }
+}
+
+.section_display {
+  padding-top: 15px;
+  padding-bottom:15px;
+
+  .section_button {
+    border:none;
+    display: inline-block;
+    padding-left: 0px;
+    margin-bottom: 5px;
+    background-color: inherit;
+  }
+}
+
+
+.legend {
+  font-size: 0.7em;
+}
+
+.legend_title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.legend_flexbox {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+
+    .legend_flex_item {
+      height:30px;
+
+      .legend_text {
+        display: inline-block;
+        padding-left: 5px;
+        margin-top: -5px;
+      }
+    }
+}
