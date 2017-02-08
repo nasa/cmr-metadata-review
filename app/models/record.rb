@@ -160,7 +160,7 @@ class Record < ActiveRecord::Base
     # setting flag data
     record_flags = self.flags
     if record_flags.empty?
-      bubble_set = included_field_set.map { |field| {"field_name": field, "color": "white"} }
+      bubble_set = included_field_set.map { |field| {"field_name" => field, "color" => "white"} }
     else
       flagset = JSON.parse(record_flags.first.rawJSON)
       bubble_set = included_field_set.map do |field| 
@@ -170,7 +170,7 @@ class Record < ActiveRecord::Base
           bubble_color = flagset[field]
         end
 
-        { "field_name": field, "color": bubble_color } 
+        { "field_name" => field, "color" => bubble_color } 
       end
     end
 
@@ -190,7 +190,12 @@ class Record < ActiveRecord::Base
 
 
   def color_coding_complete
-    colors = JSON.parse(self.flags.first.rawJSON)
+    flag_data = self.flags.first
+    if flag_data.nil?
+      return false
+    end
+
+    colors = JSON.parse(flag_data.rawJSON)
 
     colors.each do |key, value|
       if value == nil || value == ""
@@ -254,64 +259,15 @@ class Record < ActiveRecord::Base
     color_codes.save
   end
 
-  def flag_values
-    flag = RecordRow.where(record_id: self.id, row_name: "flag")
-    if flag.empty?
-      flag = RecordRow.new(record_id: self.id, row_name: "flag", rawJSON: self.blank_comment_JSON)
-      flag.save
+  def get_row(row_name) 
+    row = RecordRow.where(record_id: self.id, row_name: row_name)
+    if row.empty?
+      row = RecordRow.new(record_id: self.id, row_name: row_name, rawJSON: self.blank_comment_JSON)
+      row.save
     else
-      flag = flag.first
+      row = row.first
     end
-
-    JSON.parse(flag.rawJSON)
-  end
-
-  def update_flag_values(flag_hash)
-    flag_object = RecordRow.where(record_id: self.id, row_name: "flag")
-    if flag_object.empty?
-      flag_object = RecordRow.new(record_id: self.id, row_name: "flag", rawJSON: self.blank_comment_JSON)
-      flag_object.save
-    else
-      flag_object = flag_object.first
-    end
-    flag_object.rawJSON = flag_hash.to_json
-    flag_object.save
-  end
-
-  def recommendation_values
-    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation")
-    if recommendation.empty?
-      recommendation = RecordRow.new(record_id: self.id, row_name: "recommendation", rawJSON: self.blank_comment_JSON)
-      recommendation.save
-    else
-      recommendation = recommendation.first
-    end
-
-    JSON.parse(recommendation.rawJSON)
-  end
-
-  def update_recommendation(value_hash)
-    recommendation = RecordRow.where(record_id: self.id, row_name: "recommendation").first
-    recommendation.rawJSON = value_hash.to_json
-    recommendation.save
-  end
-
-  def second_opinion_values
-    second_opinion = RecordRow.where(record_id: self.id, row_name: "second_opinion")
-    if second_opinion.empty?
-      second_opinion = RecordRow.new(record_id: self.id, row_name: "second_opinion", rawJSON: self.blank_comment_JSON)
-      second_opinion.save
-    else
-      second_opinion = second_opinion.first
-    end
-
-    JSON.parse(second_opinion.rawJSON)
-  end
-
-  def update_opinion_values(opinion_values)
-    opinion = RecordRow.where(record_id: self.id, row_name: "second_opinion").first
-    opinion.rawJSON = opinion_values.to_json
-    opinion.save
+    row
   end
 
 end
