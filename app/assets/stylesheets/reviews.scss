@@ -1,6 +1,6 @@
 .toggle_area {
   background-color: white;
-  padding-left:46px;
+  padding-left: 46px;
   padding-top: 10px;
   padding-bottom: 10px;
 
@@ -37,14 +37,13 @@
 
 .filter_select {
   width: 180px;
-  /*background-color: #d9d9d9;*/
   font-size: 0.7em;
 
 }
 
 .flex_table_container td {
   padding-left: 20px;
-  vertical-align:top;
+  vertical-align: top;
 }
 
 
@@ -61,7 +60,8 @@
 }
 
 .color_code_select {
-  outline:none;border:0px;
+  outline: none;
+  border: 0px;
 }
 
 .no_padding {
@@ -72,9 +72,9 @@
 .scroll_table {
   margin-top: 25px;
   width: 85%;
-  overflow-x:scroll;  
-  margin-left:17em;
-  overflow-y:visible;
+  overflow-x: scroll;  
+  margin-left: 17em;
+  overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
   border-right-width: 1px;
@@ -92,10 +92,10 @@
   }
 
   .headcol {
-    position:absolute;
-    width:14em;
-    left:3em;
-    top:auto;
+    position: absolute;
+    width: 14em;
+    left: 3em;
+    top: auto;
     height: 200px;
     padding-left: 2em;
   }
@@ -114,7 +114,7 @@
   }
 
   tr div {
-    max-height:130px;
+    max-height: 130px;
     overflow: auto;
   }
 
@@ -141,9 +141,6 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      /*height: 250px;*/
-      /*background-color: white;*/
-      /*font-size: 0.8em;*/
   }
 
   .flag_middle_border {
@@ -162,15 +159,28 @@
     padding-left: 10px;
   }
 
+  .flag_flex_cell {
+    cursor: pointer;
+
+    :hover {
+      font-weight: bold;
+    }
+  }
+
   .recommendation_cell {
     background-color: white;
   }
 
   .opinion_cell {
+    cursor: pointer;
     width:100%;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+
+    :hover {
+      font-weight: bold;
+    }
   }
 
   .flag_icon {

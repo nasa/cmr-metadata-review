@@ -56,6 +56,8 @@
     </div>
 
   </div>
+
+  <div class="clearfix"></div>
 </div>
 
 <!-- Data/review area -->
@@ -117,18 +119,17 @@
         <script type="text/javascript">
           function add_flag_click_handler(cell_id, check_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
-              let cell = document.getElementById(cell_id);
               let checkbox = document.getElementById(check_id);
               let icon = document.getElementById(icon_id);
               if (checkbox.checked == true) {
                 checkbox.checked = false;
-                cell.style.backgroundColor = "inherit";
-                cell.style.fontWeight = "normal";
+                this.style.backgroundColor = "inherit";
+                this.style.fontWeight = "normal";
                 icon.style.visibility = "hidden";
               } else {
                 checkbox.checked = true;
-                cell.style.backgroundColor = "#e7d1ff";
-                cell.style.fontWeight = "bold";
+                this.style.backgroundColor = "#e7d1ff";
+                this.style.fontWeight = "bold";
                 icon.style.visibility = "visible";
               }
             };
