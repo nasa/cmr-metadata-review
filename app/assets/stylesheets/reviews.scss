@@ -70,6 +70,7 @@
 .color_code_select {
   outline: none;
   border: 0px;
+  width: 100%;
 }
 
 .no_padding {
@@ -120,10 +121,6 @@
     height: 76px;
     // max-height: 350px;
   }      
-
-  select {
-    width: inherit;
-  }
 
   tr div {
     max-height:130px;
