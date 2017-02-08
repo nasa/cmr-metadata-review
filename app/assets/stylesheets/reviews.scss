@@ -9,8 +9,17 @@
   }
 }
 
+.bubble_opinion {
+  font-size: 0.7em;
+}
+
 .bubble_title {
   display: inline-block;
+  margin-bottom: 6px;
+  .bubble_title_text {
+    position: relative;
+    top: 3px;
+  }
 
 }
 

@@ -4,14 +4,20 @@
   <!-- bubbles and drop down navigation -->
   <div>
     <div class="bubble_title">
-      <p>METADATA INFORMATION</p>
+      <p class="bubble_title_text">METADATA INFORMATION</p>
     </div>
     <!-- bubbles -->
     <div class="bubble_title">
       <% @bubble_data.each_with_index do | bubble, index | %>
         <% script_class = bubble[:script] ? "script" : "no_script" %>
+        <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
 
         <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+          <% if bubble[:opinion] %>
+            <div class="<%= script_text_class %> bubble_opinion">2</div>
+            <% else %>
+            <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
+          <% end %>
         </div>
       <% end %>
     </div>
