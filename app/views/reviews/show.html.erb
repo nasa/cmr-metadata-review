@@ -51,18 +51,15 @@
         titleList.push("column_" + "<%=title%>");
       <% end %>
 
-      //toggling the script elements
+      //creating vars and setting the onchange for each toggle element.
       var scriptToggle = document.getElementById("script_toggle");
       scriptToggle.onchange = function() {
         toggleCells();
       }
-
-      //toggling the script elements
       var opinionToggle = document.getElementById("opinion_toggle");
       opinionToggle.onchange = function() {
         toggleCells();
       }
-
       var colorToggle = document.getElementById("color_toggle");
       colorToggle.onchange = function() {
         toggleCells();
@@ -74,6 +71,7 @@
 
         var hiddenCells = [];
 
+        //assembling list of cells to be hidden based on iterating over the cells in each row.
         if (scriptToggle.checked == true) {
           var scriptCells = document.getElementsByClassName("script_check_cell");
           //finding all the script_cells which have the check icon.
@@ -106,16 +104,16 @@
           }
         }
 
-        //checking if all the table cells are hideen
+        //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
         uniqueHidden = hiddenCells.filter(function(item, pos) {
             return hiddenCells.indexOf(item) == pos;
         });
-
         if (uniqueHidden.length == titleList.length) {
           document.getElementById("scroll_table").style.display = "none";
         }
 
-        //hiding each column
+
+        //hiding each column individually
         for (let columnNum of hiddenCells) {
           var hideCells = document.getElementsByClassName(titleList[columnNum]);
           for (let cell of hideCells) {
@@ -123,6 +121,7 @@
           }
         }
 
+        //resetting the discussion <th> field height manually.
         adjustDiscussionCellHeight();
           
       }
@@ -140,6 +139,7 @@
           }
       }
 
+      //functions to abstract the boolean checking of cells, these caluclations may change based on style.
       function scriptIsChecked(script_div) {
         if (!script_div) {
           return false;
@@ -175,36 +175,6 @@
           return true;
         }
       }
-
-      function toggleScript() {
-        if (scriptToggle.checked == true) {
-          var scriptCells = document.getElementsByClassName("script_check_cell");
-
-          hiddenScriptCells = [];
-
-          
-
-          //hiding each column
-          for (let columnNum of hiddenScriptCells) {
-            var hideCells = document.getElementsByClassName(titleList[columnNum]);
-            for (let cell of hideCells) {
-              cell.style.display = "none";
-            }
-          }
-        } else {
-          for (let columnNum of hiddenScriptCells) {
-            var hideCells = document.getElementsByClassName(titleList[columnNum]);
-            for (let cell of hideCells) {
-              cell.style.display = "table-cell";
-            }
-            hiddenScriptCells = [];
-          }
-        }
-      };
-
-
-
-
     </script>
 
 
@@ -512,6 +482,7 @@ function pxHigher(px1, px2) {
 
 }
 
+//setting the height of the discussion <th> element on page load.
 adjustDiscussionCellHeight();
 
 </script>
