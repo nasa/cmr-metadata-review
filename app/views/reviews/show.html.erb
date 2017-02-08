@@ -148,14 +148,13 @@
         <script type="text/javascript">
           function add_flag_click_handler(cell_id, check_id) {
             document.getElementById(cell_id).onclick = function() {
-              let cell = document.getElementById(cell_id);
               let checkbox = document.getElementById(check_id);
               if (checkbox.checked == true) {
                 checkbox.checked = false;
-                cell.style.backgroundColor = "inherit";
+                this.style.backgroundColor = "inherit";
               } else {
                 checkbox.checked = true;
-                cell.style.backgroundColor = "blue";
+                this.style.backgroundColor = "blue";
               }
             };
           }
