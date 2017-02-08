@@ -10,7 +10,7 @@
       display: flex;
       background-color: white;
       width: 100%;
-      margin-bottom:30px;
+      margin-bottom: 30px;
   }
 
   .outer_flex_item_left {
@@ -21,8 +21,8 @@
       width: 40%;
 
       .review_comments {
-        padding-left:15px;
-        padding-right: 15px
+        padding-left: 15px;
+        padding-right: 15px;
       }
 
       .single_comment {
@@ -36,7 +36,7 @@
 
   .section_header {
     border-bottom: thin solid #d9d9d9;
-    width:90%;
+    width: 90%;
   }
 
   .section_container {
@@ -46,8 +46,7 @@
     .flex_container {
         display: -webkit-flex;
         display: flex;
-        /*width: 400px;*/
-        /*height: 250px;*/
+
         background-color: white;
         font-size: 0.7em;
         width: 100%;
@@ -58,9 +57,7 @@
         display: flex;
         -webkit-flex-direction: column;
         flex-direction: column;
-        /*height: 250px;*/
         width:50%;
-        /*background-color: lightgrey;*/
     }
 
     .flex_item {
@@ -114,33 +111,33 @@
 
 
 .record_nav {
-  height:75px;
+  height: 75px;
   background-color: #d1cdcd;
   padding-top: 25px;
 
   .nav_info {
     display: inline-block;
     font-size: 0.7em;
-    margin-right:163px;
-    float:right;
+    margin-right: 163px;
+    float: right;
   }
 
   .nav_button {
-    border:none;
+    border: none;
     display: inline-block;
-    float:left;
+    float: left;
     background-color: inherit;
-    margin-left:16px;
+    margin-left: 16px;
 
     .button_symbol {
-      display:inline-block;
+      display: inline-block;
     }
   }
 
   .collection_back_button {
-    border:none;
+    border: none;
     display: inline-block;
-    float:left;
+    float: left;
     background-color: inherit;
     margin-left: 40px;
   }
@@ -150,12 +147,14 @@
 .record_title {
   padding-top: 25px;
   background-color: #e3e1e1;
-  height: 75px;
+  min-height: 75px;
 
   .title_buttons {
     display: inline-block;
     float: right;
     margin-right: 129px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
     button {
       width: 110px;
@@ -166,7 +165,7 @@
     margin-right: 47px;
     display: inline-block;
     font-size: 0.9em;
-    float:right;
+    float: right;
 
     .review_complete_button {
       background-color: #7ab5da;
@@ -213,7 +212,7 @@
 
 .record_title {
   .nav_details {
-    float:left;
+    float: left;
     display: inline-block;
     font-size: 0.8em;
     margin-left: 66px;
@@ -221,7 +220,7 @@
   }
 
   .nav_review_details {
-    float:left;
+    float: left;
     display: inline-block;
     font-size: 0.8em;
     margin-left: 44px;
@@ -231,10 +230,10 @@
 
 .section_display {
   padding-top: 15px;
-  padding-bottom:15px;
+  padding-bottom: 15px;
 
   .section_button {
-    border:none;
+    border: none;
     display: inline-block;
     padding-left: 0px;
     margin-bottom: 5px;
@@ -259,7 +258,7 @@
     flex-direction: column;
 
     .legend_flex_item {
-      height:30px;
+      height: 30px;
 
       .legend_text {
         display: inline-block;
