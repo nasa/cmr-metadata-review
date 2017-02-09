@@ -173,7 +173,7 @@ class Record < ActiveRecord::Base
 
     # adding the automated script results to each bubble
     binary_script_values = self.binary_script_values
-    
+
     if binary_script_values.empty?
       bubble_set = bubble_set.map { |bubble| bubble[:script] = false }
     else
@@ -302,9 +302,14 @@ class Record < ActiveRecord::Base
     contacts = self.get_section("Contacts/Contact")
     platforms = self.get_section("Platforms/Platform")
     campaigns = self.get_section("Campaigns/Campaign")
+    temporal = self.get_section("Temporal")
+    scienceKeywords = self.get_section("ScienceKeywords/ScienceKeyword")
     spatial = self.get_section("Spatial")
+    online = self.get_section("OnlineResources/OnlineResource")
+    csdt = self.get_section("CSDTDescriptions")
+    additional = self.get_section("AdditionalAttributes/AdditionalAttribute")
 
-    section_list = section_list + contacts + platforms + campaigns + spatial
+    section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + csdt + additional
     #finding the entries not in other sections
     used_titles = (section_list.map {|section| section[1]}).flatten
     all_titles = JSON.parse(self.rawJSON).keys
