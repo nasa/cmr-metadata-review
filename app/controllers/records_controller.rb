@@ -1,7 +1,9 @@
 class RecordsController < ApplicationController
   def show
     record = Record.find_by id: params["id"]
-    @bubble_data = record.section_bubble_data(0)
+
+    @record_sections = record.sections
+    @bubble_data = record.bubble_map
 
     @long_name = record.long_name
     @short_name = record.short_name
@@ -33,7 +35,7 @@ class RecordsController < ApplicationController
       return 
     end
 
-    section_index = params["section_index"]
+    section_index = params["section_index"].to_i
 
     recommendations = record.get_row("recommendation").values
     params.each do |key, value|
@@ -56,7 +58,7 @@ class RecordsController < ApplicationController
     #each value is a list containing the string names of each checked flag for that key
     #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
     flags_hash = record.get_row("flag").values
-    section_titles = record.section_titles(section_index)
+    section_titles = record.sections[section_index][1]
     section_titles.each do |title|
       flags_hash[title] = [];
     end
@@ -71,7 +73,7 @@ class RecordsController < ApplicationController
     record.get_row("flag").update_values(flags_hash)
 
     opinion_values = record.get_row("second_opinion").values
-    section_titles = record.section_titles(section_index)
+    section_titles = record.sections[section_index][1]
     section_titles.each do |title|
       opinion_values[title] = false
     end

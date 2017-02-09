@@ -3,7 +3,9 @@ class ReviewsController < ApplicationController
 
   def show
     record = Record.find_by id: params[:id]
-    section_index = params["section_index"]
+    section_index = params["section_index"].to_i
+
+
 
     @marked_done = record.closed
     @user_has_closed_review = record.reviews.where(user_id: current_user.id, review_state: 1).any?
@@ -16,10 +18,6 @@ class ReviewsController < ApplicationController
 
 
     @record_comments = @collection_record.comments
-    # @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
-
-    # @other_users_comments = @record_comments.select { |comment| (comment.user_id != current_user.id && comment.user_id != -1) }
-    # @other_users_comments_count = @other_users_comments.length
 
     @script_comment = @record_comments.select { |comment| comment.user_id == -1 }.first
     if @script_comment
@@ -28,25 +26,15 @@ class ReviewsController < ApplicationController
 
 
     @discussions = record.discussions
-    # #a boolean test to determine if any review exists (should replace with review??)
-    # if @user_comment.empty?
-    #   @collection_record.add_review(current_user.id)
-    #   @collection_record.add_flag(current_user.id)
-    #   @collection_record.add_comment(current_user.id)
-    # end
 
-    # @user_flag = Flag.where(user: current_user, record: @collection_record).first
-    # @user_review = Review.where(user: current_user, record: @collection_record).first
+    @section_titles = record.sections[section_index][1]
 
-    # if @user_review.review_state == 1
-    #   @review_complete = "checked"
-    # else 
-    #   @review_complete = ""
-    # end
+    @bubble_data = []
+    bubble_map = record.bubble_map
+    @section_titles.each do |title|
+        @bubble_data.push(bubble_map[title])
+    end
 
-    @bubble_data = record.section_bubble_data(0)
-
-    @section_titles = record.section_titles(section_index)
     @flagged_by_script = record.binary_script_values
     @script_values = record.script_values
     @previous_values = nil
