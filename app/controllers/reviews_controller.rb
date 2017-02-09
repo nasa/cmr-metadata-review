@@ -14,7 +14,7 @@ class ReviewsController < ApplicationController
     @long_name = @collection_record.long_name
     @short_name = @collection_record.short_name
 
-    @navigation_list = Record::COLLECTION_SECTIONS
+    @navigation_list = record.sections.map {|section| section[0] }
 
 
     @record_comments = @collection_record.comments
