@@ -1,0 +1,147 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+   font-family: 'Open Sans', sans-serif !important;
+   /*padding-left: 20px;*/
+   background-color: #ebebeb;
+}
+
+p {
+     margin: 0px;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.notice {
+  position: absolute;
+}
+
+.alert {
+  position: absolute;
+}
+
+.page_header {
+  color: white;
+  background-color: #2276ac;
+  width:100%;
+  height: 80px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: white;
+  padding-top: 25px;
+  margin-bottom:50px;
+
+  .header_title {
+    display: inline-block;
+    font-size: 0.6em;
+    padding-left: 40px;
+  }
+
+  .header_button_box {
+    float: right;
+    margin-right: 50px;
+    font-size: 1em;
+    height:30px;
+    padding-top:1px;
+
+    .header_icon_button {
+      display: inline-block;
+      margin-right:20px;
+      background-color: #2276ac;
+      border:none;
+
+      i {
+        margin-top:2px;
+        display: inline-block;
+      }
+      p {
+        position:relative;
+        bottom: 1px;
+        font-size: 0.8em;
+        display: inline-block;
+      }
+    }
+  }
+
+  h3 {
+    margin: 0px 0px 0px 0px;
+  }
+} 
+
+.header_image {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  top:80px;
+  height: 300px;
+  background-image: url("/yellow-sea-swirls.jpg");
+}
+
+
+
+h1 {
+  margin: 0px;
+}
+
+table {
+    border: 1px solid #323232;
+    background: white;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table th {
+    padding: 0.5em;
+    border: 1px solid #989898;
+    background-color: #cbcbcb;
+    text-align: left;
+}
+
+tr:nth-child(even) {background: #ebebeb}
+tr:nth-child(odd) {background: #FFF}
+
+
+input[type=submit] {
+    color: white;
+    border: 1px solid rgba(50, 50, 50, 0.15);
+    background: #2276ac;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-align: center;
+    vertical-align: middle;
+    transition: background 0.15s ease-in-out;
+    outline: none;
+}
+
+input[type=submit]:disabled {
+    /*color: white;*/
+    border: 1px solid rgba(50, 50, 50, 0.15);
+    background: #ebebeb;
+    color: #323232;
+    opacity: 0.65;
+    background: #ebebeb;
+}
+
+.record_review_text {
+  font-size: 0.7em;
+  max-height: 150px;
+  overflow: auto;
+}
