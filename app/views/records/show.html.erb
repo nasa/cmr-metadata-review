@@ -14,21 +14,22 @@
       <div class="flex_container">
         <!-- left column of section details -->
         <div class="flex_column">
-          <%= render(partial: 'collection_section_details', locals: {title: "COLLECTION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "SPATIAL INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "DATA IDENTIFICATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "DATA CENTERS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "DISTRIBUTION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "DATA CONTACTS", bubble_data: @bubble_data}) %>
+        <% @record_sections.each_with_index do |section, index_count| %>
+          <% if index_count.to_i % 2 == 0 %>
+          <%= render(partial: 'collection_section_details', locals: {section: section, index_count: index_count, bubble_data: @bubble_data}) %>
+          <% end %>
+        <% end %>
+
+          
         </div>
 
         <!-- right column of section details -->
         <div class="flex_column">
-          <%= render(partial: 'collection_section_details', locals: {title: "DESCRIPTIVE KEYWORDS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "COLLECTION CITATIONS", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "ACQUISITION INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "METADATA INFORMATION", bubble_data: @bubble_data}) %>
-          <%= render(partial: 'collection_section_details', locals: {title: "TEMPORAL INFORMATION", bubble_data: @bubble_data}) %>
+          <% @record_sections.each_with_index do |section, index_count| %>
+            <% if index_count.to_i % 2 != 0 %>
+            <%= render(partial: 'collection_section_details', locals: {section: section, index_count: index_count, bubble_data: @bubble_data}) %>
+            <% end %>
+          <% end %>
         </div>
       </div>
 
