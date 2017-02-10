@@ -8,7 +8,6 @@ class ReviewsController < ApplicationController
 
 
     @marked_done = record.closed
-    @user_has_closed_review = record.reviews.where(user_id: current_user.id, review_state: 1).any?
 
     @collection_record = Record.find_by id: params[:id] 
     @long_name = @collection_record.long_name
@@ -50,9 +49,6 @@ class ReviewsController < ApplicationController
 
   def update
     record = Record.find_by id: params["id"]
-    if !record.color_coding_complete
-      #add redirect here with error in final version
-    end
 
     review = Review.where(user: current_user, record_id: params["id"]).first
     comment = params["review_comment"]

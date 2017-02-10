@@ -447,7 +447,7 @@
   update_color_backgrounds();
 </script>
 
-  <% if !@marked_done && !@user_has_closed_review %>
+  <% if !@marked_done %>
     <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
     <%= submit_tag("Save Review", class: "form_save_button") %>
