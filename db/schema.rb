@@ -68,18 +68,6 @@ ActiveRecord::Schema.define(version: 20170203194520) do
   add_index "ingests", ["record_id"], name: "index_ingests_on_record_id", using: :btree
   add_index "ingests", ["user_id"], name: "index_ingests_on_user_id", using: :btree
 
-  create_table "recommendations", force: :cascade do |t|
-    t.integer "record_id"
-    t.integer "user_id"
-    t.string  "row_name"
-    t.integer "record_info_count"
-    t.string  "rawJSON"
-    t.string  "usersRawJSON"
-  end
-
-  add_index "recommendations", ["record_id"], name: "index_recommendations_on_record_id", using: :btree
-  add_index "recommendations", ["user_id"], name: "index_recommendations_on_user_id", using: :btree
-
   create_table "record_rows", force: :cascade do |t|
     t.integer "record_id"
     t.integer "user_id"
