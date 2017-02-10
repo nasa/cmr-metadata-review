@@ -1,86 +1,115 @@
-<h2>Review Details for Collection Record</h2>
-<h3>Concept ID: <%= @concept_id %></h3>
-<h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
+<div class="page_header">
+  <div class="header_title"> 
+    <h3>COLLECTION RECORD REVIEWS</h3>
+  </div>
+
+  <div class="header_button_box">
+      <%= render(partial: 'shared/curation_home_button') %>
+
+      <%= render(partial: 'shared/logout_button') %>
+
+      <%= render(partial: 'shared/help_button') %>
+  </div>
+</div>
+
+<div class="header_image">
+  
+</div> 
+
+<div class="record_show_box">
+  <div class="space_box"></div>
+
+  <div class="collection_title">
+    <h3>Concept ID: <%= @concept_id %></h3>
+    <h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>  
+  </div>
+  
+  <div class="space_box"></div>
+
+  <div class="group_box left_box">
+
+      <h3>Collection Revisions</h3>
+      <% @collection_records.each do |record| %>
+
+      <table cellpadding="5" border="1">
+
+        <tr>
+          <th>
+            <h4>Revision ID: <%= record.revision_id %></h4>
+          </th>
+        </tr>
+
+        <tr>
+          <td>
+                <table cellpadding="5" border="1">
+                    <tr>
+                        <td>Reviewer</td>
+                        <td>Status</td>
+                        <td>Completion Date</td>
+                    </tr>
 
 
-<% if current_user && current_user.curator%>
-  <%= link_to "Return to Curation Home Page", home_path %>
-<% end %>
+                  <% record.reviews.each do |review| %>
+                    <tr>
+                        <td><%= review.user.email %></td>
+                        <td><%= review.state_string %></td>
+                        <td><%= review.formatted_date %></td>
+                    </tr>
 
-<br><br>
+                  <% end %>
+                </table>
 
-<div style="float:right; margin-right:40px;">
-  <h3>Granules</h3>
-    <% @granule_objects.each do |granule| %>
+            <div class="review_actions">
+              <div class="ingest_score">
+                <p>Ingest Script Score: <%= record.script_score %></p>  
+              </div>
 
-    <table cellpadding="5" border="1">
+              <button id="review_details_button">
+                <p>See Record Review Details</p>
+              </button>
+              <script type="text/javascript">
+                document.getElementById("review_details_button").onclick = function() {
+                  document.location.href = "<%= record_path(id:record.id) %>"
+                };
+              </script>
+            </div>    
+ 
+          </td>
+        </tr>
 
-      <tr>
-        <th>
-          <h4>Revision ID: <%= granule.concept_id %></h4>
-        </th>
-      </tr>
+      </table>
+      <% end %>
 
-      <tr>
-        <td>
-          <a href="/granule_show?concept_id=<%= granule.concept_id %>">Granule Review Page</a>
+  </div>
 
+  <div class="group_box">
+    <h3>Granules</h3>
+      <% @granule_objects.each do |granule| %>
 
-        </td>
-      </tr>
+      <table cellpadding="5" border="1">
 
-    </table>
-    <% end %>
+        <tr>
+          <th>
+            <h4>Revision ID: <%= granule.concept_id %></h4>
+          </th>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="review_actions">
+              <button id="review_details_button">
+                  <p>See Granule Review Details</p>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+      </table>
+      <% end %>
+
+  </div>
 
 </div>
 
-<div style="float:left;">
-
-    <h3>Collection Revisions</h3>
-    <% @collection_records.each do |record| %>
-
-    <table cellpadding="5" border="1">
-
-      <tr>
-        <th>
-          <h4>Revision ID: <%= record.revision_id %></h4>
-        </th>
-      </tr>
-
-      <tr>
-        <td>
-          <p>Reviews:</p>
-              <table cellpadding="5" border="1">
-                  <tr>
-                      <td>Reviewer</td>
-                      <td>Status</td>
-                      <td>Completion Date</td>
-                  </tr>
 
 
-                <% record.reviews.each do |review| %>
-                  <tr>
-                      <td><%= review.user.email %></td>
-                      <td><%= review.state_string %></td>
-                      <td><%= review.formatted_date %></td>
-                  </tr>
-
-                <% end %>
-              </table>
-
-          <p>Ingest Script Score: <%= record.script_score %></p>
-
-
-
-          <p>Final Record Review Status: <%= record.status_string %></p>
-          <%= link_to "Start or Continue Review on This Record", record_path(id:record.id) %> 
-        </td>
-      </tr>
-
-    </table>
-    <% end %>
-
-</div>
-
-
-<br>

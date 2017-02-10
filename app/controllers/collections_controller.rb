@@ -102,7 +102,7 @@ class CollectionsController < ApplicationController
         record.evaluate_script
       end
 
-      flash[:notice] = "The selected collection has been successfully ingested into the system"
+      # flash[:notice] = "The selected collection has been successfully ingested into the system"
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout

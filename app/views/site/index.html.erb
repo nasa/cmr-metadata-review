@@ -1,5 +1,22 @@
 <div class="page_header">
-  <h1>Welcome to the CMR MetaData Dashboard!!</h1>
+  <div class="header_title"> 
+    <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD</h3>
+  </div>
+
+  <div class="header_button_box">
+      <div class="header_icon_button">
+        <i class="eui-icon eui-fa-globe"></i>
+        <p>CURATION HOME</p>
+      </div>
+      <div class="header_icon_button">
+        <i class="eui-icon eui-fa-question-circle"></i>
+        <p>HELP</p>
+      </div>
+  </div>
+</div>
+
+<div class="header_image">
+  
 </div>
 <% if current_user && current_user.admin? %>
   <%= link_to "Create User", new_user_registration_path %>

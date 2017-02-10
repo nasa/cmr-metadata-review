@@ -1,52 +1,87 @@
 <div class="page_header">
-  <h1>Curation Home Page</h1>  
+  <div class="header_title"> 
+    <h3>CURATION HOME</h3>
+  </div>
+
+  <div class="header_button_box">
+      <%= render(partial: 'shared/logout_button') %>
+
+      <%= render(partial: 'shared/help_button') %>
+  </div>
 </div>
 
 
-<p>Current User: <%= current_user.email %></p>
-<%= link_to "Search the CMR Database For Data Ingest", collections_search_path %>
+<div class="header_image">
 
-<br>
+</div>
 
+<div class="curation_box">
 
+  <div class="space_box"></div>
 
+<!--     <p>Current User: <%= current_user.email %></p>
+    <%= link_to "Search the CMR Database For Data Ingest", collections_search_path %>
 
+    <br>
 
+ -->
 
-<br>
+  <div class="searchbox_area">
+    <p><strong>Search the CMR Database for Data Ingest:</strong></p>
 
-
-
-<p>All Records Available For Review:</p>
-
-<table cellpadding="5" border="1">
-    <tr>
-        <th>Concept_ID</th>
-        <th>Revision_ID</th>
-        <th>ShortName</th>
-        <th>Selection</th>
-    </tr>
-
-
-  <% @user_available_collection_reviews.each_with_index do |record, index| %>
-    <tr>
-        <td id="availableConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-        <td><%= record.revision_id %></td>
-        <td><%= record.recordable.short_name %></td>
-        <td><input type="radio" id="available<%= index.to_s %>" name="availableSelection" value="<%= index.to_s %>"/></td>
-    </tr>
-  <% end %>
-</table>
+    <%= form_tag(collections_search_path, method: "get") do %>
+      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
+      <%= text_field_tag(:free_text) %>
+      <%= hidden_field_tag(:curr_page, "1") %>
+      <%#= submit_tag("Search") %>
+      <button class="search_button">
+        <i class="eui-icon eui-fa-search"></i>
+      </button>
+    <% end %>
 
 
-<br>
+  </div>
 
-<%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'available_form'}) do %>
-  <%= hidden_field_tag(:concept_id, "", id: "availableConceptId") %>
-  <%= submit_tag("See Collection Review Detail", id: 'availableSubmit') %>
-<% end %>
+  <div class="results_area">
+
+    <div class="results_title">
+      <p><strong>All Records Available For Review:</strong></p>
+    </div>
+
+    <div class="results_table">
+
+      <table cellpadding="5" border="1">
+          <tr>
+              <th>Concept_ID</th>
+              <th>Revision_ID</th>
+              <th>ShortName</th>
+              <th>Selection</th>
+          </tr>
 
 
+          <% @user_available_collection_reviews.each_with_index do |record, index| %>
+            <tr>
+                <td id="availableConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                <td><%= record.revision_id %></td>
+                <td><%= record.recordable.short_name %></td>
+                <td><input type="radio" id="available<%= index.to_s %>" name="availableSelection" value="<%= index.to_s %>"/></td>
+            </tr>
+          <% end %>
+        </table>
+
+
+        <br>
+
+        <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'available_form'}) do %>
+          <%= hidden_field_tag(:concept_id, "", id: "availableConceptId") %>
+          <%= submit_tag("See Collection Review Detail", id: 'availableSubmit') %>
+        <% end %>
+
+      </div>
+
+  </div>
+
+</div>
 
 
 <script type="text/javascript">

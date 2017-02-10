@@ -1,0 +1,11 @@
+<button id="logout_button" class="header_icon_button">
+  <i class="eui-icon eui-fa-external-link-square"></i>
+  <p>LOGOUT</p>
+</button>
+
+
+<script type="text/javascript">
+  document.getElementById("logout_button").onclick = function() {
+    document.location.href = "<%= destroy_user_session_path %>"
+  };
+</script>
