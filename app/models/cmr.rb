@@ -15,7 +15,28 @@ class Cmr
   def self.get_collection(concept_id)
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     collection_results = Hash.from_xml(collection_xml)["results"]
-    flatten_collection(collection_results["result"]["Collection"])
+    results_hash = flatten_collection(collection_results["result"]["Collection"])
+    Cmr.add_required_collection_fields(results_hash)
+  end
+
+  def self.add_required_collection_fields(collection_hash)
+    required_fields = ["ShortName", "VersionId", "InsertTime", "LastUpdate", "LongName", "DatasetId", "Description", "Orderable", "Visible",
+                        "ProcessingLevelId", "ArchiveCenter", "DataFormat", "Temporal/Range/DateTime/BeginningDateTime", "Contacts/Contact/Role"]
+    keys = collection_hash.keys
+    required_fields.each do |field|
+      unless Cmr.keyset_has_field?(keys, field)
+        collection_hash[field] = ""
+      end
+    end
+
+    collection_hash
+  end
+
+  def self.keyset_has_field?(keys, field)
+    byebug
+    split_field = field.split("/")
+    regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
+    return (keys.select {|key| key =~ /#{regex}/}).any?
   end
 
   def self.collection_granule_count(collection_concept_id)
