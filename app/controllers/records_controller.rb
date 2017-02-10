@@ -97,7 +97,7 @@ class RecordsController < ApplicationController
       end
     end
     
-    redirect_to review_path(id: params["id"], section_index: params["section_index"])
+    redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
   end
 
 end

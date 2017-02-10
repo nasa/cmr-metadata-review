@@ -182,17 +182,26 @@
         }
       }
     </script>
+      
+      <div class="filter_dropdown">
+        <i class="eui-icon eui-fa-unsorted"></i>
+        <p>SAVE AND GO TO:</p> 
+        <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
+          <% @navigation_list.each_with_index do |data_section, index_count| %>
+            <option value="<%=index_count%>"><%= data_section %></option>
+          <% end %>
+        </select>  
+      </div>
 
 
-    <div class="filter_dropdown">
-      <i class="eui-icon eui-fa-unsorted"></i>
-      <p>SAVE AND GO TO:</p> 
-      <select class="filter_select">
-        <% @navigation_list.each do |data_section| %>
-          <option><%= data_section %></option>
-        <% end %>
-      </select>  
-    </div>
+
+    <script type="text/javascript">
+      let section_select = document.getElementById("section_select");
+      section_select.options[<%=params["section_index"].to_i %>].selected = true;
+      section_select.onchange = function () {
+        document.getElementById("field_form").submit();  
+      };
+    </script>
 
   </div>
 
