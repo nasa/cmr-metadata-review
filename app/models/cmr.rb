@@ -20,8 +20,34 @@ class Cmr
   end
 
   def self.add_required_collection_fields(collection_hash)
-    required_fields = ["ShortName", "VersionId", "InsertTime", "LastUpdate", "LongName", "DatasetId", "Description", "Orderable", "Visible",
-                        "ProcessingLevelId", "ArchiveCenter", "DataFormat", "Temporal/Range/DateTime/BeginningDateTime", "Contacts/Contact/Role"]
+    required_fields = ["ShortName", 
+                        "VersionId", 
+                        "InsertTime", 
+                        "LastUpdate", 
+                        "LongName", 
+                        "DatasetId", 
+                        "Description", 
+                        "Orderable", 
+                        "Visible",
+                        "ProcessingLevelId", 
+                        "ArchiveCenter", 
+                        "DataFormat", 
+                        "Temporal/Range/DateTime/BeginningDateTime", 
+                        "Contacts/Contact/Role",
+                        "ScienceKeywords/ScienceKeyword/CategoryKeyword",
+                        "ScienceKeywords/ScienceKeyword/TopicKeyword",
+                        "ScienceKeywords/ScienceKeyword/TermKeyword", 
+                        "Platforms/Platform/ShortName", 
+                        "Platforms/Platform/Instruments/Instrument/ShortName",
+                        "Campaigns/Campaign/ShortName", 
+                        "OnlineAccessURLs/OnlineAccessURL/URL", 
+                        "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                        "Spatial/GranuleSpatialRepresentation"]
+
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
