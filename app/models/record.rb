@@ -306,10 +306,11 @@ class Record < ActiveRecord::Base
     scienceKeywords = self.get_section("ScienceKeywords/ScienceKeyword")
     spatial = self.get_section("Spatial")
     online = self.get_section("OnlineResources/OnlineResource")
+    accessURLs = self.get_section("OnlineAccessURLs")
     csdt = self.get_section("CSDTDescriptions")
     additional = self.get_section("AdditionalAttributes/AdditionalAttribute")
 
-    section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + csdt + additional
+    section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + accessURLs + csdt + additional
     #finding the entries not in other sections
     used_titles = (section_list.map {|section| section[1]}).flatten
     all_titles = JSON.parse(self.rawJSON).keys

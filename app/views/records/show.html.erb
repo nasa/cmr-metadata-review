@@ -15,7 +15,7 @@
         <!-- left column of section details -->
         <div class="flex_column">
         <% @record_sections.each_with_index do |section, index_count| %>
-          <% if index_count.to_i % 2 == 0 %>
+          <% if index_count.to_i % 3 == 0 %>
           <%= render(partial: 'collection_section_details', locals: {section: section, index_count: index_count, bubble_data: @bubble_data}) %>
           <% end %>
         <% end %>
@@ -26,7 +26,17 @@
         <!-- right column of section details -->
         <div class="flex_column">
           <% @record_sections.each_with_index do |section, index_count| %>
-            <% if index_count.to_i % 2 != 0 %>
+            <% if index_count.to_i % 3 == 1 %>
+            <%= render(partial: 'collection_section_details', locals: {section: section, index_count: index_count, bubble_data: @bubble_data}) %>
+            <% end %>
+          <% end %>
+        </div>
+
+
+        <!-- right column of section details -->
+        <div class="flex_column">
+          <% @record_sections.each_with_index do |section, index_count| %>
+            <% if index_count.to_i % 3 == 2 %>
             <%= render(partial: 'collection_section_details', locals: {section: section, index_count: index_count, bubble_data: @bubble_data}) %>
             <% end %>
           <% end %>
