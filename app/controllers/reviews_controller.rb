@@ -6,7 +6,6 @@ class ReviewsController < ApplicationController
     section_index = params["section_index"]
 
     @marked_done = record.closed
-    @user_has_closed_review = record.reviews.where(user_id: current_user.id, review_state: 1).any?
 
     @collection_record = Record.find_by id: params[:id] 
     @long_name = @collection_record.long_name
@@ -22,7 +21,7 @@ class ReviewsController < ApplicationController
       @script_comment = JSON.parse(@script_comment.rawJSON)
     end
 
-
+    @discussions = record.discussions
 
     @bubble_data = record.section_bubble_data(0)
 
@@ -41,6 +40,7 @@ class ReviewsController < ApplicationController
 
 
   def update
+
     review = Review.find_by id: params["review"]["id"]
 
     review.review_completion_date = DateTime.now
