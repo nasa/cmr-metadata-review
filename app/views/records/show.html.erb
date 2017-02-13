@@ -36,7 +36,57 @@
 
     <!-- right side completion/reviewers metrics -->
     <div class="outer_flex_item_right">
-      
+      <div class="review_comments">
+        <!-- header for sections -->
+        <div class="section_header">
+          <h3>Review Comments</h3>
+        </div>
+
+        <% if @user_review.review_state == 0  && !@marked_done %>
+          <br>
+          <p>
+            <strong>Complete Review Comment:</strong>
+          </p>
+
+          <%= form_for @review, html: {id: :review_form} do |f| %>
+            <%= f.hidden_field :record_id, { :value => @review.record_id } %>
+            <%= f.hidden_field :id, { :value => @review.id } %>
+            <% if @review.review_state == 0 %>
+              <%= f.text_area :comment, html: {id: :review_comment} %>
+
+              <script type="text/javascript">
+                function check_comment_box() {
+                  var new_value = document.getElementById("review_comment").value;
+                  if (!(new_value == "")) {
+                    document.getElementById("review_complete_button").disabled = false;
+                  }
+                }
+                
+                //checking the text box for an entry to enable button
+                setInterval(check_comment_box, 250);
+              </script>
+            <% end %>
+          <% end %>
+
+
+
+        <% end %>
+
+        <% if @marked_done %>
+          <p class="completed_notice">
+            <strong>Review Has Been Completed and Closed</strong>
+          </p>
+        <% end %>
+
+        <% @reviews.each do |review| %>
+          <div class="single_comment">
+            <p><strong>Reviewer: <%=review.user.email%></strong></p>
+            <p><%=review.formatted_date%></p>
+            <p><%=review.comment%></p>
+          </div>
+        <% end %>
+
+      </div>
     </div>
 
   </div>

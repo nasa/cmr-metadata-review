@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :reviews
 
   resources :records
+  get '/record_complete', to: 'records#complete'
 
 
 

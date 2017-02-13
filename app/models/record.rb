@@ -5,6 +5,7 @@ class Record < ActiveRecord::Base
   has_many :comments
   has_one :ingest
   has_many :flags
+  has_many :discussions
 
   COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
                          "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",
@@ -29,6 +30,17 @@ class Record < ActiveRecord::Base
     JSON.parse(self.rawJSON)["ShortName"]
   end
 
+  def status_string
+    if self.closed
+      "Completed"
+    else
+      "In Process"
+    end
+  end
+
+  def concept_id
+    self.recordable.concept_id
+  end
 
   def evaluate_script
     collection_data = JSON.parse(rawJSON)
@@ -148,7 +160,7 @@ class Record < ActiveRecord::Base
     # setting flag data
     record_flags = self.flags
     if record_flags.empty?
-      bubble_set = included_field_set.map { |field| {"field_name": field, "color": "white"} }
+      bubble_set = included_field_set.map { |field| {:field_name => field, :color => "white"} }
     else
       flagset = JSON.parse(record_flags.first.rawJSON)
       bubble_set = included_field_set.map do |field| 
@@ -158,7 +170,7 @@ class Record < ActiveRecord::Base
           bubble_color = flagset[field]
         end
 
-        { "field_name": field, "color": bubble_color } 
+        { :field_name => field, :color => bubble_color } 
       end
     end
 
@@ -176,6 +188,45 @@ class Record < ActiveRecord::Base
     bubble_set
   end
 
+
+  def color_coding_complete?
+    flag_data = self.flags.first
+    if flag_data.nil?
+      return false
+    end
+
+    colors = JSON.parse(flag_data.rawJSON)
+
+    colors.each do |key, value|
+      if value == nil || value == ""
+        return false
+      end
+    end
+
+    return true
+  end
+
+  def has_enough_reviews?
+    return self.reviews.where(review_state: 1).count > 1
+  end
+
+  def no_second_opinions?
+    return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
+  end
+
+  def close
+    self.closed = true
+    self.save
+  end
+
+  def review(user_id)
+    review = Review.where(record: self, user_id: user_id).first
+    if review.nil?
+      review = Review.new(record: self, user_id: user_id, review_state: 0)
+    end
+
+    review
+  end
 
   def binary_script_values
     script_values = self.script_values
