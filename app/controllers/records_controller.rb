@@ -21,17 +21,7 @@ class RecordsController < ApplicationController
   def complete
     record = Record.find_by id: params["id"]
     #checking that all bubbles are filled in
-    if !record.color_coding_complete?
-      redirect_to record_path(record)
-      return
-    end
-
-    if !record.has_enough_reviews?
-      redirect_to record_path(record)
-      return
-    end
-
-    if !record.no_second_opinions?
+    if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions?
       redirect_to record_path(record)
       return
     end
