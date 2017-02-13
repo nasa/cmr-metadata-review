@@ -1,16 +1,20 @@
 module ReviewsHelper
 
   def color_selected_list(color)
+    select_list = ["","","","",""]
     case color
     when "green"
-      ["", "selected", "", ""]
+      select_list[1] = "selected"
+    when "blue"
+      select_list[2] = "selected"
     when "yellow"
-      ["", "", "selected", ""]
+      select_list[3] = "selected"
     when "red"
-      ["", "", "", "selected"]
+      select_list[4] = "selected"
     else
-      ["selected", "", "", ""]
+      select_list[0] = "selected"
     end
+    select_list
   end
 
   #formats the titles from ShortName -> SHORT NAME
