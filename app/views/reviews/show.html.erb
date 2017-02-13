@@ -247,7 +247,26 @@
         <tr>
         <th class="headcol final_headcol">DISCUSSION &amp; JUSTIFICATION</th>
           <% @section_titles.each do |title| %>
-            <td>TITLE</td>
+            <td class="discussion_td">
+              <div class="discussion_holder">
+                <div class="new_discussion">
+                  <textarea placeholder="New Comment..." name="discussion_<%= title %>" form="field_form"></textarea>  
+                </div>
+                
+                <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
+                <% messages.each do |message| %>
+                  <div class="discussion_comment">
+                    <div class="discussion_title">
+                      <p><%= message.formatted_date %></p>
+                      <p><%= message.user.email %> says:</p>
+                    </div>
+                    <div class="discussion_text">
+                      <p><%= message.comment %></p>
+                    </div>
+                  </div>
+                <% end %>
+              </div>  
+            </td>
           <% end %>
         </tr>
       </table>  
