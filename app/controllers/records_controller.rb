@@ -3,6 +3,12 @@ class RecordsController < ApplicationController
     record = Record.find_by id: params["id"]
     @bubble_data = record.section_bubble_data(0)
 
+    @review = Review.where(user: current_user, record_id: params["id"]).first
+    if @review.nil?
+        @review = Review.new(user: current_user, record_id: params["id"], review_state: 0)
+        @review.save
+    end
+
     @long_name = record.long_name
     @short_name = record.short_name
     @concept_id = record.concept_id
