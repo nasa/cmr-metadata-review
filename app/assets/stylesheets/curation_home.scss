@@ -1,3 +1,5 @@
+@import "variables";
+
 .curation_box {
   background-color:white;
   width:900px;
@@ -15,7 +17,7 @@
     font-size: 0.8em;
     border-bottom: solid;
     border-bottom-width: 1px;
-    border-bottom-color: #95a5a6;
+    border-bottom-color: $gray-dark;
     padding-bottom: 20px;
 
     .search_button {
@@ -31,13 +33,13 @@
     }  
 
     button {
-      background-color:#20ce6f;
+      background-color:$green-light;
       border:none;
       color: white;
     } 
 
     input[type=submit] {
-      background-color:#20ce6f;
+      background-color:$green-light;
     }
     input[type=text] {
       height:38px;
@@ -66,11 +68,11 @@
     }
 
     input[type=submit] {
-      background-color:#20ce6f;
+      background-color:$green-light;
     }
 
     input[type=submit]:disabled {
-      background-color:#ebebeb;
+      background-color:$gray-light;
     }
   }
 
