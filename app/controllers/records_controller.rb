@@ -91,6 +91,15 @@ class RecordsController < ApplicationController
 
     record.get_row("second_opinion").update_values(opinion_values)
 
+    params.each do |key, value|
+      if key =~ /discussion_(.*)/
+        if value != ""
+          message = Discussion.new(record: record, user: current_user, column_name: $1, date: DateTime.now, comment: value)
+          message.save
+        end
+      end
+    end
+    
     redirect_to review_path(id: params["id"], section_index: params["section_index"])
   end
 
