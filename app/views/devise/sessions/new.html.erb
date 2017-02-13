@@ -5,14 +5,11 @@
 
   <div class="header_button_box">
       <div class="header_icon_button">
-        <i class="eui-icon eui-fa-globe"></i>
-        <p>CURATION HOME</p>
-      </div>
-      <div class="header_icon_button">
         <i class="eui-icon eui-fa-question-circle"></i>
         <p>HELP</p>
       </div>
   </div>
+  <div class="clear_box"></div>
 </div>
 
 <div class="header_image">
@@ -27,27 +24,27 @@
   </div>
 
   <div class="form_box">
-                        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                          <div class="" style="width:200px;">
-                            <%= f.email_field :email, autofocus: true, placeholder: "Username or Email" %>
-                          </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="">
+        <%= f.email_field :email, autofocus: true, placeholder: "Username or Email" %>
+      </div>
 
-                          <div >
-                            <%= f.password_field :password, autocomplete: "off", placeholder: "Password"  %>
-                          </div>
+      <div >
+        <%= f.password_field :password, autocomplete: "off", placeholder: "Password"  %>
+      </div>
 
-                          <div class="form_buttons">
-                            <div class="remember_button">
-                            <% if devise_mapping.rememberable? -%>
-                                <%= f.label :remember_me %>
-                                <%= f.check_box :remember_me %>
-                            <% end -%>
-                            </div>
-                            <div class="form_buttons">
-                              <%= f.submit "Log in" %>
-                            </div>
-                          </div>
-                        <% end %>
+      <div class="form_buttons">
+        <div class="remember_button">
+        <% if devise_mapping.rememberable? -%>
+            <%= f.label :remember_me %>
+            <%= f.check_box :remember_me %>
+        <% end -%>
+        </div>
+        <div class="form_buttons">
+          <%= f.submit "Log in" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
 

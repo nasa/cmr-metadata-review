@@ -1,3 +1,5 @@
+@import "variables";
+
 .search_page_box {
   background-color:white;
   width:900px;
@@ -22,13 +24,13 @@
   }
 
   button {
-    background-color:#20ce6f;
+    background-color: $green-light;
     border:none;
     color: white;
   } 
 
   input[type=submit] {
-    background-color:#20ce6f;
+    background-color: $green-light;
   }
 
   input[type=text] {
@@ -57,7 +59,7 @@
 
     .search_phrase {
       width:410px;
-      background-color: #ebebeb;
+      background-color: $blue-light;
       display: inline-block;
       padding-left:20px;
       padding-top:3px;
@@ -66,7 +68,7 @@
 
     .total_results {
       width:405px;
-      background-color: #ebebeb;
+      background-color: $blue-light;
       display: inline-block;
       padding-left:20px;
       padding-top:3px;
@@ -91,7 +93,7 @@
         button {
           height:37px;
           color: white;
-          background-color:#20ce6f;
+          background-color:$green-light;
           border: none;
           i {
             display: inline-block;

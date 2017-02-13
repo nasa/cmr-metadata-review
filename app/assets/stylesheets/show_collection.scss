@@ -1,3 +1,5 @@
+@import "variables";
+
 .record_show_box {
   background-color:white;
   width:900px;
@@ -15,7 +17,7 @@
     font-size:0.8em;
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    border-bottom-color: #95a5a6;
+    border-bottom-color: $gray-dark;
 
     h3 {
       margin-bottom: 5px;
@@ -54,7 +56,7 @@
         padding-bottom: 5px;
         border-style: solid;
         border-width: 1px;
-        border-color: #95a5a6;
+        border-color: $gray-dark;
         background-color: white;
         margin-bottom: 10px;
       }
@@ -62,10 +64,10 @@
       button {
         font-size:0.9em;
         color:white;
-        background-color: #20ce6f;
+        background-color: $green-light;
         border-style: solid;
         border-width: 1px;
-        border-color: #189c54;
+        border-color: $green-dark;
       }
     }
 

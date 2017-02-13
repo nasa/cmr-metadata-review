@@ -1,3 +1,5 @@
+@import "variables";
+
 .ingest_box {
   background-color:white;
   width:700px;
@@ -20,16 +22,16 @@
   }
 
   input[type=submit] {
-    background-color:#20ce6f;
+    background-color:$green-light;
   }
 
   .ingest_state {
     p {
-      background-color: #ebebeb;
+      background-color: $gray-light;
       margin-top: 15px;
       border-style: solid;
       border-width:1px;
-      border-color:#95a5a6;
+      border-color:$gray-dark;
       padding-left:8px;
       font-size: 0.9em;
       margin-bottom:10px;
