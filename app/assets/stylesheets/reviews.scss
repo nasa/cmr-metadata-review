@@ -1,6 +1,6 @@
 .toggle_area {
   background-color: white;
-  padding-left:46px;
+  padding-left: 46px;
   padding-top: 10px;
   padding-bottom: 10px;
 
@@ -43,7 +43,7 @@
 
 .flex_table_container td {
   padding-left: 20px;
-  vertical-align:top;
+  vertical-align: top;
 }
 
 
@@ -60,7 +60,8 @@
 }
 
 .color_code_select {
-  outline:none;border:0px;
+  outline: none;
+  border: 0px;
 }
 
 .no_padding {
@@ -71,9 +72,9 @@
 .scroll_table {
   margin-top: 25px;
   width: 85%;
-  overflow-x:scroll;  
-  margin-left:17em;
-  overflow-y:visible;
+  overflow-x: scroll;  
+  margin-left: 17em;
+  overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
   border-right-width: 1px;
@@ -91,10 +92,10 @@
   }
 
   .headcol {
-    position:absolute;
-    width:14em;
-    left:3em;
-    top:auto;
+    position: absolute;
+    width: 14em;
+    left: 3em;
+    top: auto;
     height: 200px;
     padding-left: 2em;
   }
@@ -104,7 +105,7 @@
   }
 
   .final_headcol {
-    height: inherit;
+    height: 200px;
   }      
 
   select {
@@ -112,7 +113,7 @@
   }
 
   tr div {
-    max-height:130px;
+    max-height: 130px;
     overflow: auto;
   }
 
@@ -183,6 +184,53 @@
 
   .flag_icon {
     visibility: hidden;
+  }
+
+  .new_discussion {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color:black;
+
+    textarea {
+      background-color:white;
+      -webkit-box-shadow: inset 2px 2px 2px 2px #dddddd;
+      -moz-box-shadow: inset 2px 2px 2px 2px #dddddd;
+      box-shadow: inset 2px 2px 2px 2px #dddddd;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+
+  }
+
+
+
+  .discussion_td {
+    background-color:white;
+    vertical-align: top;
+    max-height: 300px;
+  }
+
+  .discussion_holder {
+    max-height: 350px;
+  }
+
+  .discussion_comment {
+    background-color: white;
+
+    .discussion_title {
+      padding: 5px;
+      
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+
+    .discussion_text {
+      padding: 0 0 5px 25px;
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      border-bottom-color:black;
+    }
   }
 
 }
