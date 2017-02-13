@@ -65,10 +65,6 @@
       <div class="clearfix"></div>
 
   <% else %>
-      <%= form_tag( review_path ,  {method: "put", id: "review_form"}) do %>
-        <%= hidden_field_tag(:record_id, params["id"]) %>
-        <%= hidden_field_tag(:user_id, current_user.id) %>
-      <% end %>
 
       <div class="complete_buttons">
   
