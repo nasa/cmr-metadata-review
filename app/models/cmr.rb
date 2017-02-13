@@ -16,7 +16,31 @@ class Cmr
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     collection_results = Hash.from_xml(collection_xml)["results"]
     results_hash = flatten_collection(collection_results["result"]["Collection"])
-    Cmr.add_required_collection_fields(results_hash)
+    nil_replaced_hash = Cmr.remove_nil_values(required_fields_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(results_hash)
+    required_fields_hash
+  end
+
+  def self.remove_nil_values(collection_element)
+
+    if collection_element.is_a?(Hash)
+      delete_list = []
+      collection_element.each do |key, value|
+        if value.nil?
+          #moved this out of the loop, because I think the deletes were affecting the count of the each loop
+          delete_list.push(key)
+        else
+          collection_element[key] = Cmr.remove_nil_values(value)
+        end
+      end
+      delete_list.each {|element| collection_element.delete(element) }
+    elsif collection_element.is_a?(Array)
+      #removing nils
+      collection_element = collection_element.select {|element| element }
+      #removing sub nils
+      collection_element = collection_element.map {|element| Cmr.remove_nil_values(element)}
+    end
+    collection_element
   end
 
   def self.add_required_collection_fields(collection_hash)
