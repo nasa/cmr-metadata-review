@@ -127,7 +127,7 @@
           }
         }
 
-        //resetting the discussion <th> field height manually.
+        //resetting the discussion <th> field height;
         adjustDiscussionCellHeight();
           
       }
@@ -438,7 +438,7 @@
   update_color_backgrounds();
 </script>
 
-  <% if !@marked_done && !@user_has_closed_review %>
+  <% if !@marked_done %>
     <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
     <%= submit_tag("Save Review", class: "form_save_button") %>
@@ -456,38 +456,10 @@
 //resizing the discussion header div
 
 function adjustDiscussionCellHeight() {
-  //setting minimum height
-  var headerCellHeight = "76px";
-
-  // iterating through discussioncells finding the tallest
-  var allDiscussionCells = document.getElementsByClassName("discussion_td");
-  for (let cell of allDiscussionCells) {
-    let cellHeight = window.getComputedStyle(cell).height;
-    headerCellHeight = pxHigher(headerCellHeight, cellHeight);
-  }
-
-  //setting header to tallest found height
-  var headerCell = document.getElementsByClassName("final_headcol")[0];
-  headerCell.style.height = headerCellHeight;
-}
-
-//comparing values of type "80px" or "auto"
-function pxHigher(px1, px2) {
-  if (px2 == "auto") {
-    if (px1 == "auto") {
-      return "76px";
-    } else {
-      return px1;
-    }
-  }
-  let val1 = parseInt(px1.replace("px", ""));
-  let val2 = parseInt(px2.replace("px", ""));
-  if (val1 < val2) {
-    return px2;
-  } else {
-    return px1;
-  }
-
+    //resetting the discussion <th> field height;
+    $(".headcol").each(function() { 
+      $(this).css("height", $(this).siblings().outerHeight()); 
+    });
 }
 
 //setting the height of the discussion <th> element on page load.
