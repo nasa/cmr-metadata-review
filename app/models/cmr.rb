@@ -16,8 +16,8 @@ class Cmr
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     collection_results = Hash.from_xml(collection_xml)["results"]
     results_hash = flatten_collection(collection_results["result"]["Collection"])
-    nil_replaced_hash = Cmr.remove_nil_values(required_fields_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(results_hash)
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
     required_fields_hash
   end
 
