@@ -49,6 +49,10 @@
                 <p>Ingest Script Score: <%= record.script_score %></p>  
               </div>
 
+              <div class="ingest_score">
+                <p>Collection Review Status: <%= record.closed ? "Closed" : "In Process" %></p>  
+              </div>
+
               <button id="review_details_button">
                 <p>See Record Review Details</p>
               </button>

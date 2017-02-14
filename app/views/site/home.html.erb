@@ -30,7 +30,7 @@
   <div class="results_area">
 
     <div class="results_title">
-      <p><strong>All Records Available For Review:</strong></p>
+      <p><strong>All Records:</strong></p>
     </div>
 
     <div class="results_table">
@@ -44,7 +44,7 @@
           </tr>
 
 
-          <% @user_available_collection_reviews.each_with_index do |record, index| %>
+          <% @collection_reviews.each_with_index do |record, index| %>
             <tr>
                 <td id="availableConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                 <td><%= record.revision_id %></td>
