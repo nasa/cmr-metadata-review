@@ -1,0 +1,41 @@
+<div class="page_header">
+  <div class="header_title"> 
+    <h3>METADATA CURATION : SEARCH</h3>
+  </div>
+
+  <div class="header_button_box">
+      <button id="curation_home_button" class="header_icon_button">
+        <i class="eui-icon eui-fa-globe"></i>
+        <p>CURATION HOME</p>
+      </button>
+
+      <script type="text/javascript">
+        document.getElementById("curation_home_button").onclick = function() {
+          document.location.href = "<%= home_path %>"
+        };
+      </script>
+
+      <button id="logout_button" class="header_icon_button">
+        <i class="eui-icon eui-fa-external-link-square"></i>
+        <p>LOGOUT</p>
+      </button>
+
+
+      <script type="text/javascript">
+        document.getElementById("logout_button").onclick = function() {
+          document.location.href = "<%= destroy_user_session_path %>"
+        };
+      </script>
+
+      <button class="header_icon_button">
+        <i class="eui-icon eui-fa-question-circle"></i>
+        <p>HELP</p>
+      </button>
+  </div>
+  <div class="clear_box"></div>
+</div>
+
+
+<div class="header_image">
+  
+</div> 

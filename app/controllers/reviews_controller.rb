@@ -8,7 +8,6 @@ class ReviewsController < ApplicationController
 
 
     @marked_done = record.closed
-    @user_has_closed_review = record.reviews.where(user_id: current_user.id, review_state: 1).any?
 
     @collection_record = Record.find_by id: params[:id] 
     @long_name = @collection_record.long_name
@@ -23,7 +22,6 @@ class ReviewsController < ApplicationController
     if @script_comment
       @script_comment = JSON.parse(@script_comment.rawJSON)
     end
-
 
     @discussions = record.discussions
 
@@ -49,21 +47,15 @@ class ReviewsController < ApplicationController
 
 
   def update
-    record = Record.find_by id: params["id"]
-    if !record.color_coding_complete
-      #add redirect here with error in final version
-    end
 
-    review = Review.where(user: current_user, record_id: params["id"]).first
-    comment = params["review_comment"]
-    if review.nil?
-      review = Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)
-    end
+    review = Review.find_by id: params["review"]["id"]
 
-    review.comment = comment
+    review.review_completion_date = DateTime.now
+    review.comment = params["review"]["comment"]
+    review.review_state = 1
     review.save
 
-    redirect_to record_path(id: params["id"])
+    redirect_to record_path(id: params["review"]["record_id"])
   end
 
 
