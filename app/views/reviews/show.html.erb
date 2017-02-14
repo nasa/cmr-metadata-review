@@ -251,7 +251,11 @@
         <tr>
         <th class="headcol">PREVIOUS VALUE</th>
           <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">Prev</td>
+            <td class="column_<%=title%>">
+              <div>
+                
+              </div>
+            </td>
           <% end %>
         </tr>
         <tr>
@@ -466,8 +470,9 @@
 
 function adjustDiscussionCellHeight() {
     //resetting the discussion <th> field height;
-    $(".headcol").each(function() { 
-      $(this).css("height", $(this).siblings().outerHeight()); 
+    $(".final_headcol").each(function() { 
+      var siblings = $(this).siblings();
+      $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
     });
 }
 
