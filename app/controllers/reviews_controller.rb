@@ -6,7 +6,6 @@ class ReviewsController < ApplicationController
     section_index = params["section_index"]
 
     @marked_done = record.closed
-    @user_has_closed_review = record.reviews.where(user_id: current_user.id, review_state: 1).any?
 
     @collection_record = Record.find_by id: params[:id] 
     @long_name = @collection_record.long_name
@@ -16,33 +15,13 @@ class ReviewsController < ApplicationController
 
 
     @record_comments = @collection_record.comments
-    # @user_comment = @record_comments.select { |comment| comment.user_id == current_user.id }
-
-    # @other_users_comments = @record_comments.select { |comment| (comment.user_id != current_user.id && comment.user_id != -1) }
-    # @other_users_comments_count = @other_users_comments.length
 
     @script_comment = @record_comments.select { |comment| comment.user_id == -1 }.first
     if @script_comment
       @script_comment = JSON.parse(@script_comment.rawJSON)
     end
 
-
     @discussions = record.discussions
-    # #a boolean test to determine if any review exists (should replace with review??)
-    # if @user_comment.empty?
-    #   @collection_record.add_review(current_user.id)
-    #   @collection_record.add_flag(current_user.id)
-    #   @collection_record.add_comment(current_user.id)
-    # end
-
-    # @user_flag = Flag.where(user: current_user, record: @collection_record).first
-    # @user_review = Review.where(user: current_user, record: @collection_record).first
-
-    # if @user_review.review_state == 1
-    #   @review_complete = "checked"
-    # else 
-    #   @review_complete = ""
-    # end
 
     @bubble_data = record.section_bubble_data(0)
 
@@ -61,21 +40,15 @@ class ReviewsController < ApplicationController
 
 
   def update
-    record = Record.find_by id: params["id"]
-    if !record.color_coding_complete
-      #add redirect here with error in final version
-    end
 
-    review = Review.where(user: current_user, record_id: params["id"]).first
-    comment = params["review_comment"]
-    if review.nil?
-      review = Review.new(user: current_user, record_id: params["id"], review_completion_date: DateTime.now, review_state: 1, comment: comment)
-    end
+    review = Review.find_by id: params["review"]["id"]
 
-    review.comment = comment
+    review.review_completion_date = DateTime.now
+    review.comment = params["review"]["comment"]
+    review.review_state = 1
     review.save
 
-    redirect_to record_path(id: params["id"])
+    redirect_to record_path(id: params["review"]["record_id"])
   end
 
 

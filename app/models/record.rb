@@ -196,7 +196,7 @@ class Record < ActiveRecord::Base
   end
 
 
-  def color_coding_complete
+  def color_coding_complete?
     flag_data = self.flags.first
     if flag_data.nil?
       return false
@@ -211,6 +211,14 @@ class Record < ActiveRecord::Base
     end
 
     return true
+  end
+
+  def has_enough_reviews?
+    return self.reviews.where(review_state: 1).count > 1
+  end
+
+  def no_second_opinions?
+    return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
   end
 
   def close
