@@ -1,0 +1,41 @@
+@import "variables";
+
+.ingest_box {
+  background-color:white;
+  width:700px;
+  margin: auto;
+  padding-left:40px;
+  padding-right:40px;
+  padding-bottom:40px;
+
+  .space_box {
+    height:15px; 
+    width:80px;
+  }
+
+  .box_title {
+    margin-bottom: 20px;
+  }
+
+  table {
+    font-size: 0.9em;
+  }
+
+  input[type=submit] {
+    background-color:$green-light;
+  }
+
+  .ingest_state {
+    p {
+      background-color: $gray-light;
+      margin-top: 15px;
+      border-style: solid;
+      border-width:1px;
+      border-color:$gray-dark;
+      padding-left:8px;
+      font-size: 0.9em;
+      margin-bottom:10px;
+    }
+  }
+
+}
