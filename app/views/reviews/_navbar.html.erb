@@ -88,10 +88,6 @@
       </script>
 
   <% else %>
-      <%= form_tag( review_path ,  {method: "put", id: "review_form"}) do %>
-        <%= hidden_field_tag(:record_id, params["id"]) %>
-        <%= hidden_field_tag(:user_id, current_user.id) %>
-      <% end %>
 
       <div class="complete_buttons">
   
@@ -120,6 +116,19 @@
         </button>    
         <script type="text/javascript">
           document.getElementById("done_button").onclick = function() {
+            if (!<%=@color_coding_complete%>) {
+              alert("Not all columns have been flagged with a color, can not close review");
+              return false;
+            }
+            if (!<%=@has_enough_reviews%>) {
+              alert("A review needs two completed reviews to be closed, can not close review");
+              return false;
+            }
+            if (!<%=@no_second_opinions%>) {
+              alert("Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags.");
+              return false;
+            }
+
             document.location.href = "<%= record_complete_path(id: params["id"]) %>"
           };
         </script>

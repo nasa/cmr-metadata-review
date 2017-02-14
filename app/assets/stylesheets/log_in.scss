@@ -1,0 +1,75 @@
+@import "variables";
+
+.log_in_box {
+  background-color:white;
+  height:300px;
+  width:500px;
+  margin: auto;
+  padding-left:40px;
+
+  .space_box {
+    height:22px; 
+    width:80px;
+  }
+
+  .box_tab {
+    height:40px;
+    width: 100px;
+    background-color:#20ce6f;
+    color:white;
+    padding-left:22px;
+    padding-top:10px;
+  }
+
+  .form_box {
+    height:200px;
+    width:415px;
+    border-width:1px;
+    border-style:solid;
+    padding-top:27px;
+    padding-left:42px;
+
+    input[type=email] {
+      width:325px;
+    }
+
+    input[type=password] {
+      width:325px;
+    }
+
+    .form_buttons {
+      display: inline-block;
+      background-color: white;
+      color:white;
+      height:55px;
+      margin-left: 50px;
+      padding-left:3px;
+
+      .remember_button {
+        background-color: #2276ac;
+        display:inline-block;
+        height: 36px;
+        position: relative;
+        left:50px;
+        bottom:2px;
+        padding-top: 5px;
+        padding-left: 5px;
+        font-size: 0.9em;
+
+        label {
+          position: relative;
+          left: 2px;
+          top: 2px;
+        }
+
+        input {
+          position: relative;
+          left: 2px;
+          top:2px;
+        }
+      }
+    }
+
+  }
+
+}

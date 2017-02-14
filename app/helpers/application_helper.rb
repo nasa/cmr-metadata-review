@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  ANY_KEYWORD = 'Any'
+  ANY_KEYWORD = 'DAAC: ANY'
   PROVIDERS = [ANY_KEYWORD, 'PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
               'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
               ]
