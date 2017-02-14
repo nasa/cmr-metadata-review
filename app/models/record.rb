@@ -160,7 +160,7 @@ class Record < ActiveRecord::Base
     # setting flag data
     record_flags = self.flags
     if record_flags.empty?
-      bubble_set = included_field_set.map { |field| {"field_name" => field, "color" => "white"} }
+      bubble_set = included_field_set.map { |field| {:field_name => field, :color => "white"} }
     else
       flagset = JSON.parse(record_flags.first.rawJSON)
       bubble_set = included_field_set.map do |field| 
@@ -170,7 +170,7 @@ class Record < ActiveRecord::Base
           bubble_color = flagset[field]
         end
 
-        { "field_name" => field, "color" => bubble_color } 
+        { :field_name => field, :color => bubble_color } 
       end
     end
 
@@ -189,7 +189,7 @@ class Record < ActiveRecord::Base
   end
 
 
-  def color_coding_complete
+  def color_coding_complete?
     flag_data = self.flags.first
     if flag_data.nil?
       return false
@@ -204,6 +204,14 @@ class Record < ActiveRecord::Base
     end
 
     return true
+  end
+
+  def has_enough_reviews?
+    return self.reviews.where(review_state: 1).count > 1
+  end
+
+  def no_second_opinions?
+    return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
   end
 
   def close

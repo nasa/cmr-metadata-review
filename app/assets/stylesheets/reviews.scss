@@ -117,7 +117,6 @@
 
   .final_headcol {
     height: 76px;
-    // max-height: 350px;
   }      
 
   select {
@@ -231,12 +230,8 @@
 
   .discussion_comment {
     background-color: white;
-    // border-style: solid;
-    // border-width: 1px;
-    // border-color:black;
 
     .discussion_title {
-      // background-color:#ebebeb;
       padding: 5px;
       
       font-size: 0.8em;
@@ -244,13 +239,10 @@
     }
 
     .discussion_text {
-      padding-left:5px;
-      padding-bottom:5px;
-      padding-left:20px;
+      padding: 0 0 5px 25px;
       border-bottom-style: solid;
       border-bottom-width: 1px;
       border-bottom-color:black;
-      // font-style: italic;
     }
   }
 
