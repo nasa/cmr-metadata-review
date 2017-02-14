@@ -5,6 +5,12 @@ class RecordsController < ApplicationController
     @record_sections = record.sections
     @bubble_data = record.bubble_map
 
+    @review = Review.where(user: current_user, record_id: params["id"]).first
+    if @review.nil?
+        @review = Review.new(user: current_user, record_id: params["id"], review_state: 0)
+        @review.save
+    end
+
     @long_name = record.long_name
     @short_name = record.short_name
     @concept_id = record.concept_id
@@ -14,10 +20,20 @@ class RecordsController < ApplicationController
 
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
     @marked_done = record.closed
+
+    @color_coding_complete = record.color_coding_complete?
+    @has_enough_reviews = record.has_enough_reviews?
+    @no_second_opinions = record.no_second_opinions?
   end
 
   def complete
     record = Record.find_by id: params["id"]
+    #checking that all bubbles are filled in
+    if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions?
+      redirect_to record_path(record)
+      return
+    end
+
     record.close
 
     redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
@@ -26,11 +42,6 @@ class RecordsController < ApplicationController
   def update
     record = Record.find_by id: params[:id]
     if record.closed?
-      redirect_to review_path(id: params["id"], section_index: params["section_index"])
-      return 
-    end
-
-    if record.reviews.where(user_id: current_user.id, review_state: 1).any?
       redirect_to review_path(id: params["id"], section_index: params["section_index"])
       return 
     end

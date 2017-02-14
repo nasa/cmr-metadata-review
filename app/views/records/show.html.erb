@@ -59,19 +59,28 @@
             <strong>Complete Review Comment:</strong>
           </p>
 
-          <textarea id="review_comment" form="review_form" name="review_comment"></textarea>
+          <%= form_for @review, html: {id: :review_form} do |f| %>
+            <%= f.hidden_field :record_id, { :value => @review.record_id } %>
+            <%= f.hidden_field :id, { :value => @review.id } %>
+            <% if @review.review_state == 0 %>
+              <%= f.text_area :comment, html: {id: :review_comment} %>
 
-          <script type="text/javascript">
-            function check_comment_box() {
-              var new_value = document.getElementById("review_comment").value;
-              if (!(new_value == "")) {
-                document.getElementById("review_complete_button").disabled = false;
-              }
-            }
-            
-            //checking the text box for an entry to enable button
-            setInterval(check_comment_box, 250);
-          </script>
+              <script type="text/javascript">
+                function check_comment_box() {
+                  var new_value = document.getElementById("review_comment").value;
+                  if (!(new_value == "")) {
+                    document.getElementById("review_complete_button").disabled = false;
+                  }
+                }
+                
+                //checking the text box for an entry to enable button
+                setInterval(check_comment_box, 250);
+              </script>
+            <% end %>
+          <% end %>
+
+
+
         <% end %>
 
         <% if @marked_done %>

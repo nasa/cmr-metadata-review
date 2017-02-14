@@ -1,26 +1,57 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div class="page_header">
+  <div class="header_title"> 
+    <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD</h3>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+  <div class="header_button_box">
+      <div class="header_icon_button">
+        <i class="eui-icon eui-fa-question-circle"></i>
+        <p>HELP</p>
+      </div>
+  </div>
+  <div class="clear_box"></div>
+</div>
+
+<div class="header_image">
+  
+</div>  
+
+<div class="log_in_box">
+  <div class="space_box"></div>
+
+  <div class="box_tab">
+    LOG IN
   </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
+  <div class="form_box">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="">
+        <%= f.email_field :email, autofocus: true, placeholder: "Username or Email" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+      <div >
+        <%= f.password_field :password, autocomplete: "off", placeholder: "Password"  %>
+      </div>
+
+      <div class="form_buttons">
+        <div class="remember_button">
+        <% if devise_mapping.rememberable? -%>
+            <%= f.label :remember_me %>
+            <%= f.check_box :remember_me %>
+        <% end -%>
+        </div>
+        <div class="form_buttons">
+          <%= f.submit "Log in" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+
+
+
+
+</div>
+
+
 
 <%= render "devise/shared/links" %>
