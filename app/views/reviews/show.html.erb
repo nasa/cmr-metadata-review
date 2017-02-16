@@ -20,29 +20,162 @@
   <div class="filter_row">
     <p><strong>FILTERS:</strong></p>
     <!-- slider toggles -->
-    <div>
+    <div class="filter_switches">
       <div class="filter_switch">
         <p>FLAGGED BY SCRIPT</p>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="script_toggle">
           <div class="slider round"></div>
         </label>
       </div>
       <div class="filter_switch">
         <p>REQUIRES 2ND OPINION</p>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="opinion_toggle">
           <div class="slider round"></div>
         </label>
       </div>
       <div class="filter_switch">
-        <p>NOT CODED</p>
+        <p>NOT COLOR CODED</p>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" id="color_toggle">
           <div class="slider round"></div>
         </label>
       </div>
     </div>
+
+    <script type="text/javascript">
+      //each column cells are marked with a title class so that a row can be grabbed together
+      var titleList = [];
+      <% @section_titles.each do |title| %>
+        titleList.push("column_" + "<%=title%>");
+      <% end %>
+
+      //creating vars and setting the onchange for each toggle element.
+      var scriptToggle = document.getElementById("script_toggle");
+      scriptToggle.onchange = function() {
+        toggleCells();
+      }
+      var opinionToggle = document.getElementById("opinion_toggle");
+      opinionToggle.onchange = function() {
+        toggleCells();
+      }
+      var colorToggle = document.getElementById("color_toggle");
+      colorToggle.onchange = function() {
+        toggleCells();
+      }
+
+
+      function toggleCells() {
+        unhideAllCells();
+
+        var hiddenCells = [];
+
+        //assembling list of cells to be hidden based on iterating over the cells in each row.
+        if (scriptToggle.checked == true) {
+          var scriptCells = document.getElementsByClassName("script_check_cell");
+          //finding all the script_cells which have the check icon.
+          for (var index in scriptCells) {
+            if (scriptIsChecked(scriptCells[parseInt(index)])) {
+              hiddenCells.push(parseInt(index));
+            }
+          }
+        }
+
+        var opinionToggle = document.getElementById("opinion_toggle");
+        if (opinionToggle.checked == true) {
+          var opinionCells = document.getElementsByClassName("opinion_cell");
+          //finding all the script_cells which have the check icon.
+          for (var index in opinionCells) {
+            if (opinionIsChecked(opinionCells[parseInt(index)])) {
+              hiddenCells.push(parseInt(index));
+            }
+          }
+        }
+
+        var colorToggle = document.getElementById("color_toggle");
+        if (colorToggle.checked == true) {
+          var colorCells = document.getElementsByClassName("color_code_cell");
+          //finding all the script_cells which have the check icon.
+          for (var index in colorCells) {
+            if (colorIsChecked(colorCells[parseInt(index)])) {
+              hiddenCells.push(parseInt(index));
+            }
+          }
+        }
+
+        //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
+        uniqueHidden = hiddenCells.filter(function(item, pos) {
+            return hiddenCells.indexOf(item) == pos;
+        });
+        if (uniqueHidden.length == titleList.length) {
+          document.getElementById("scroll_table").style.display = "none";
+        }
+
+
+        //hiding each column individually
+        for (var columnNum in hiddenCells) {
+          var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
+          for (var cell in hideCells) {
+            hideCells[parseInt(cell)].style.display = "none";
+          }
+        }
+
+        //resetting the discussion <th> field height;
+        adjustDiscussionCellHeight();
+          
+      }
+
+      function unhideAllCells() {
+          document.getElementById("scroll_table").style.display = "block";
+
+          for (var index in titleList) {
+            var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
+            for (var cell in showCells) {
+              if (showCells[parseInt(cell)]) {
+                showCells[parseInt(cell)].style.display = "table-cell";  
+              }
+            }
+          }
+      }
+
+      //functions to abstract the boolean checking of cells, these caluclations may change based on style.
+      function scriptIsChecked(script_div) {
+        if (!script_div) {
+          return false;
+        }
+
+        if(script_div.innerHTML.includes("<i")) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function opinionIsChecked(opinion_div) {
+        if (!opinion_div) {
+          return false;
+        }
+        if (opinion_div.childNodes[3].childNodes[1].style.visibility == "visible") {
+          return false;
+        } else {
+          return true;
+        }
+
+      }
+
+      function colorIsChecked(color_div) {
+        if (!color_div) {
+          return false;
+        }
+
+        if (!color_div.style.backgroundColor) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    </script>
 
 
     <div class="filter_dropdown">
@@ -64,7 +197,7 @@
 <section >
 
     <div >
-      <div class="scroll_table">
+      <div class="scroll_table" id="scroll_table">
 
       <table >
         <tr>
@@ -72,7 +205,7 @@
 
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
-            <td>
+            <td class="column_<%=title%>">
               <div class="title_text">
                 <%= split_on_capitals(title) %>
               </div>
@@ -83,7 +216,7 @@
         <th class="headcol">FLAGGED BY SCRIPT</th>
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
-            <td>
+            <td class="column_<%=title%>">
               <div class="script_check_cell">
                 <% if @flagged_by_script[title] %>
                   <i class="eui-icon eui-check-o"></i>
@@ -95,19 +228,21 @@
         <tr>
         <th class="headcol">SCRIPT RESULT</th>
           <% @section_titles.each do |title| %>
-            <td><div><%= @script_values[title] %></div></td>
+            <td class="column_<%=title%>">
+              <div><%= @script_values[title] %></div>
+            </td>
           <% end %>
         </tr>
         <tr>
         <th class="headcol">PREVIOUS VALUE</th>
           <% @section_titles.each do |title| %>
-            <td>Prev</td>
+            <td class="column_<%=title%>">Prev</td>
           <% end %>
         </tr>
         <tr>
         <th class="headcol">CURRENT VALUE</th>
           <% @section_titles.each do |title| %>
-            <td>
+            <td class="column_<%=title%>">
               <div>
               <%= @current_values[title] %>    
               </div>
@@ -119,8 +254,8 @@
         <script type="text/javascript">
           function add_flag_click_handler(cell_id, check_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
-              let checkbox = document.getElementById(check_id);
-              let icon = document.getElementById(icon_id);
+              var checkbox = document.getElementById(check_id);
+              var icon = document.getElementById(icon_id);
               if (checkbox.checked == true) {
                 checkbox.checked = false;
                 this.style.backgroundColor = "inherit";
@@ -141,13 +276,13 @@
           <% @section_titles.each do |title| %>
             <% flag_hash = @flags[title] %>
 
-            <td class="no_padding">
+            <td class="no_padding column_<%=title%>">
               <div class="flag_flexbox">
-                <% ["Accessibility", "Usability", "Traceability"].each do |flag_field| %>            
+                <% ["Accessibility", "Usability", "Traceability", "Curation", "UMM Required"].each do |flag_field| %>            
                   <% cell_id = "flag_" + flag_field + "_" +  title %>
                   <% check_id = "flag_" + flag_field + "_check_" +  title %>
                   <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
-                  <% flag_cell_border = ((flag_field == "Usability")? "flag_middle_border": "") %>
+                  <% flag_cell_border = ((flag_field == "Usability" || flag_field == "Curation")? "flag_middle_border": "") %>
                   <div class="flag_flex_cell <%= flag_cell_border %>" id="<%= cell_id %>">
                     <input type="checkbox" id="<%= check_id %>" name="<%= check_id %>" form="field_form">
                     <p class="flag_flex_text">
@@ -175,8 +310,8 @@
         <tr>
         <th class="headcol">RECOMMENDATION</th>
           <% @section_titles.each do |title| %>
-            <td class="recommendation_cell">
-              <textarea name="recommendation_<%= title %>" form="field_form"><%=@recommendations[title]%></textarea>
+            <td class="recommendation_cell column_<%=title%>">
+              <textarea name="recommendation_<%= title %>" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
             </td>
           <% end %>
         </tr>
@@ -184,7 +319,7 @@
         <script type="text/javascript">
           function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
-              let check = document.getElementById(check_id);
+              var check = document.getElementById(check_id);
               if (check.checked == true) {
                 document.getElementById(cell_id).style.backgroundColor = "inherit";
                 check.checked = false;;
@@ -204,7 +339,7 @@
         <tr>
         <th class="headcol second_to_final_headcol">2ND OPINION</th>
           <% @section_titles.each do |title| %>
-            <td class="no_padding">
+            <td class="no_padding column_<%=title%>">
               <div id="opinion_cell_<%= title %>" class="opinion_cell">
                 <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion_check_<%= title %>" form="field_form">
                 <p id="opinion_text_<%= title %>">
@@ -230,15 +365,16 @@
         <tr>
         <th class="headcol second_to_final_headcol">COLOR CODE</th>
           <% @section_titles.each do |title| %>
-            <td class="color_code_cell">
+            <td class="color_code_cell column_<%=title%>">
               <div class="styled-select blue semi-square">
                 <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code_<%= title %>" id="color_code_<%= title %>" form="field_form" >
                 <% selected = color_selected_list(@color_codes[title]) %>
 
                   <option <%= selected[0] %> value="">Select Color</option>
                   <option <%= selected[1] %> value="green">Green</option>
-                  <option <%= selected[2] %> value="yellow">Yellow</option>
-                  <option <%= selected[3] %> value="red">Red</option>
+                  <option <%= selected[2] %> value="blue">Blue</option>
+                  <option <%= selected[3] %> value="yellow">Yellow</option>
+                  <option <%= selected[4] %> value="red">Red</option>
                 </select>
               </div>
             </td>
@@ -247,7 +383,7 @@
         <tr>
         <th class="headcol final_headcol">DISCUSSION &amp; JUSTIFICATION</th>
           <% @section_titles.each do |title| %>
-            <td class="discussion_td">
+            <td class="discussion_td column_<%=title%>">
               <div class="discussion_holder">
                 <div class="new_discussion">
                   <textarea placeholder="New Comment..." name="discussion_<%= title %>" form="field_form"></textarea>  
@@ -278,13 +414,13 @@
 
 <script type="text/javascript">
   function update_color_backgrounds() {
-    let color_selects = document.getElementsByClassName("color_code_select");
-    let color_cells = document.getElementsByClassName("color_code_cell");
-    let counter = 0;
+    var color_selects = document.getElementsByClassName("color_code_select");
+    var color_cells = document.getElementsByClassName("color_code_cell");
+    var counter = 0;
     while (counter < color_selects.length) {
-      let color = color_selects[counter].value
+      var color = color_selects[counter].value
       color_cells[counter].style.backgroundColor = color;
-      if (color == "green" || color == "red") {
+      if (color == "green" || color == "red" || color == "blue") {
         color_selects[counter].style.color = "white";
       } else {
         color_selects[counter].style.color = "black";
@@ -308,3 +444,36 @@
 <%= render(partial: 'legend') %>
 
 </section>
+
+
+<script type="text/javascript">
+//resizing the discussion header div
+
+function adjustDiscussionCellHeight() {
+    //resetting the discussion <th> field height;
+    $(".final_headcol").each(function() { 
+      var siblings = $(this).siblings();
+      $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
+    });
+}
+
+//setting the height of the discussion <th> element on page load.
+adjustDiscussionCellHeight();
+
+
+function recommendationMonitor(textarea) {
+  if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
+    var columnName = textarea.name.match(/recommendation_(.*)/)[1];
+    turnColumnGreen(columnName);
+  }
+}
+
+function turnColumnGreen(columnName) {
+  var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
+  //chaning the select value
+  colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
+  update_color_backgrounds();
+}
+
+
+</script>

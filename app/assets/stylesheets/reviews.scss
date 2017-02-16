@@ -22,13 +22,25 @@
   display: inline-block;
 }
 
-.filter_switch {
-  border: thin solid #d9d9d9;
-  padding-left: 10px;
-  padding-right: 10px;
+.filter_switches {
   display: flex;
-  align-items: center;
+
+  .filter_switch {
+    border: thin solid #d9d9d9;
+    padding-left: 10px;
+    padding-right: 10px;
+
+
+    label {
+      vertical-align: middle;
+    }
+    p {
+      vertical-align: middle;
+    }
+  }
 }
+
+
 
 .filter_dropdown {
   float: right;
@@ -62,6 +74,7 @@
 .color_code_select {
   outline: none;
   border: 0px;
+  width: 100%;
 }
 
 .no_padding {
@@ -71,13 +84,17 @@
 
 .scroll_table {
   margin-top: 25px;
-  width: 85%;
-  overflow-x: scroll;  
+  max-width: 85%;
+  overflow-x: auto;  
   margin-left: 17em;
   overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
   border-right-width: 1px;
+
+  table {
+    width: auto;
+  }
 
   [type="checkbox"] {
   
@@ -96,7 +113,6 @@
     width: 14em;
     left: 3em;
     top: auto;
-    height: 200px;
     padding-left: 2em;
   }
 
@@ -105,16 +121,14 @@
   }
 
   .final_headcol {
-    height: 200px;
+    height: 76px;
   }      
 
-  select {
-    width: inherit;
-  }
-
   tr div {
-    max-height: 130px;
+    max-height:130px;
+    min-height: 19px;
     overflow: auto;
+    max-width: 400px;
   }
 
   tr td {
