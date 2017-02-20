@@ -4,10 +4,18 @@ class CollectionsController < ApplicationController
     @concept_id = params["concept_id"]
     if !@concept_id
       flash[:error] = "No concept_id provided to find record details"
-      redirect_to curation_home_path
+      redirect_to home_path
+      return
     end
 
     collection = Collection.find_by(concept_id: @concept_id)
+
+    if collection.nil?
+      flash[:error] = "No Collection Could be Found With Concept Id"
+      redirect_to home_path
+      return
+    end
+
     @collection_records = collection.records.order(:revision_id).reverse_order
 
     @granule_objects = Granule.where(collection: collection)
