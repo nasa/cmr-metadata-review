@@ -85,7 +85,7 @@ class Cmr
   def self.keyset_has_field?(keys, field)
     split_field = field.split("/")
     regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
-    return (keys.select {|key| key =~ /#{regex}/}).any?
+    return (keys.select {|key| key =~ /^#{regex}/}).any?
   end
 
   def self.collection_granule_count(collection_concept_id)

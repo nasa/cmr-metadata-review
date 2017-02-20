@@ -149,6 +149,8 @@ class Record < ActiveRecord::Base
     new_review.user_id = user_id
     new_review.review_state = 0
     new_review.save!
+
+    return new_review
   end
 
   def bubble_data
@@ -254,7 +256,7 @@ class Record < ActiveRecord::Base
     colors = JSON.parse(flag_data.rawJSON)
 
     colors.each do |key, value|
-      if value == nil || value == ""
+      if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
         return false
       end
     end
@@ -269,6 +271,11 @@ class Record < ActiveRecord::Base
   def no_second_opinions?
     return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
   end
+
+  def second_opinions
+    self.get_row("second_opinion")
+  end
+
 
   def close
     self.closed = true
