@@ -251,7 +251,11 @@
         <tr>
         <th class="headcol">PREVIOUS VALUE</th>
           <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">Prev</td>
+            <td class="column_<%=title%>">
+              <div>
+                
+              </div>
+            </td>
           <% end %>
         </tr>
         <tr>
@@ -293,7 +297,7 @@
 
             <td class="no_padding column_<%=title%>">
               <div class="flag_flexbox">
-                <% ["Accessibility", "Usability", "Traceability", "Curation", "UMM Required"].each do |flag_field| %>            
+                <% ["Accessibility", "Usability", "Traceability", "Curation"].each do |flag_field| %>            
                   <% cell_id = "flag_" + flag_field + "_" +  title %>
                   <% check_id = "flag_" + flag_field + "_check_" +  title %>
                   <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
@@ -338,7 +342,7 @@
               if (check.checked == true) {
                 document.getElementById(cell_id).style.backgroundColor = "inherit";
                 check.checked = false;;
-                document.getElementById(p_id).style.fontWeight = "normal";
+                document.getElementById(p_id).style.fontWeight = "";
                 document.getElementById(icon_id).style.visibility = "hidden";
               } else {
                 document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
@@ -466,8 +470,9 @@
 
 function adjustDiscussionCellHeight() {
     //resetting the discussion <th> field height;
-    $(".headcol").each(function() { 
-      $(this).css("height", $(this).siblings().outerHeight()); 
+    $(".final_headcol").each(function() { 
+      var siblings = $(this).siblings();
+      $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
     });
 }
 
