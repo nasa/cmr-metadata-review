@@ -13,7 +13,7 @@
         <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
 
         <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
-          <% if bubble[:opinion] %>
+          <% if bubble[:opinion] && bubble[:opinion] != "" %>
             <div class="<%= script_text_class %> bubble_opinion">2</div>
             <% else %>
             <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
