@@ -40,15 +40,24 @@ class RecordsController < ApplicationController
   end
 
   def update
-
-
     record = Record.find_by id: params[:id]
+    if record.nil?
+      redirect_to home_path
+      return
+    end
+
     if record.closed?
       redirect_to review_path(id: params["id"], section_index: params["section_index"])
       return 
     end
 
     section_index = params["section_index"].to_i
+
+    if section_index.nil?
+      redirect_to home_path
+      return
+    end
+
     section_titles = record.sections[section_index][1]
 
     recommendations = record.get_row("recommendation").values
