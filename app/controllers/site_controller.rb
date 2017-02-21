@@ -7,11 +7,14 @@ class SiteController < ApplicationController
     #unfinished review records
     @user_open_collection_reviews = []
 
-    # @user_open_collection_reviews = Curation.user_open_collection_reviews(current_user)
-    #all records that do not have a completed review by the user
-    # @user_available_collection_reviews = Curation.user_available_collection_review(current_user)
-    @collection_reviews = Collection.all_records
-    # @search_results = Curation.homepage_collection_search_results(params["provider"], params["free_text"], current_user)
+    #unreviewed by user, record not closed
+    @unreviewed_records = (Record.all.select {|record| record.is_collection? && !record.closed}).select {|record| !record.reviews.where(user: current_user).any?}
+    #reviewed by user, record not closed
+    @in_process_records = (Record.all.select {|record| record.is_collection? && !record.closed}).select {|record| record.reviews.where(user: current_user).any?}
+
+    #record closed
+    @closed_records = Record.all.select {|record| record.is_collection? && record.closed}
+
     @search_results = []
     @provider_select_list = provider_select_list
   end
