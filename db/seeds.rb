@@ -32,6 +32,11 @@ record.rawJSON = '{"ShortName":"gailong","VersionId":"1","InsertTime":"1996-07-1
 
 record.save
 
+ingest = Ingest.new
+ingest.user = user
+ingest.record = record
+ingest.date_ingested = DateTime.now
+ingest.save
 
 comment = Comment.new
 comment.record = record
