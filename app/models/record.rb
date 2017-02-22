@@ -290,7 +290,7 @@ class Record < ActiveRecord::Base
 
   def second_opinion_count
     opinion_values = self.second_opinions.values
-    return opinion_values.values.reduce(0) {|sum, value| value ? (sum + 1): sum }
+    return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }
   end
 
 
