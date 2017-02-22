@@ -6,7 +6,6 @@ class SiteController < ApplicationController
     @user_collection_ingests = []
     #unfinished review records
     @user_open_collection_reviews = []
-
     #unreviewed by user, record not closed
     @unreviewed_records = (Record.all.select {|record| record.is_collection? && !record.closed}).select {|record| !record.reviews.where(user: current_user).any?}
     #reviewed by user, record not closed

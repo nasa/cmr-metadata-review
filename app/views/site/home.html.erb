@@ -38,23 +38,23 @@
       <table cellpadding="5" border="1">
         <tr>
             <th>Concept_ID</th>
-            <th>Revision_ID</th>
+            <th class="center_text">Revision_ID</th>
             <th>ShortName</th>
-            <th>Version</th>
+            <th class="center_text">Version</th>
             <th>Ingested By</th>
-            <th># Script Flags</th>
+            <th class="center_text"># Script Flags</th>
             <th>Selection</th>
         </tr>
 
         <% @unreviewed_records.each_with_index do |record, index| %>
           <tr>
               <td id="table1Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td><%= record.revision_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
-              <td><%= record.version_id %></td>
+              <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
-              <td><%= record.script_score %></td>
-              <td><input type="radio" id="table1<%= index.to_s %>" name="table1Selection" value="<%= index.to_s %>"/></td>
+              <td class="center_text"><%= record.script_score %></td>
+              <td class="center_text"><input type="radio" id="table1<%= index.to_s %>" name="table1Selection" value="<%= index.to_s %>"/></td>
           </tr>
         <% end %>
       </table>
@@ -82,27 +82,27 @@
       <table cellpadding="5" border="1">
         <tr>
             <th>Concept_ID</th>
-            <th>Revision_ID</th>
+            <th class="center_text">Revision_ID</th>
             <th>ShortName</th>
-            <th>Version</th>
+            <th class="center_text">Version</th>
             <th>Ingested By</th>
-            <th># Script Flags</th>
-            <th># Completed Reviews</th>
-            <th># Second Reviews Requested</th>
+            <th class="center_text"># Script Flags</th>
+            <th class="center_text"># Completed Reviews</th>
+            <th class="center_text"># Second Reviews Requested</th>
             <th>Selection</th>
         </tr>
 
         <% @in_process_records.each_with_index do |record, index| %>
           <tr>
               <td id="table2Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td><%= record.revision_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
-              <td><%= record.version_id %></td>
+              <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
-              <td><%= record.script_score %></td>
-              <td><%= record.completed_review_count %></td>
-              <td><%= record.second_opinion_count %></td>
-              <td><input type="radio" id="table2<%= index.to_s %>" name="table2Selection" value="<%= index.to_s %>"/></td>
+              <td class="center_text"><%= record.script_score %></td>
+              <td class="center_text"><%= record.completed_review_count %></td>
+              <td class="center_text"><%= record.second_opinion_count %></td>
+              <td class="center_text"><input type="radio" id="table2<%= index.to_s %>" name="table2Selection" value="<%= index.to_s %>"/></td>
           </tr>
         <% end %>
       </table>
@@ -131,7 +131,7 @@
       <table cellpadding="5" border="1">
         <tr>
             <th>Concept_ID</th>
-            <th>Revision_ID</th>
+            <th class="center_text">Revision_ID</th>
             <th>ShortName</th>
             <th>Version</th>
             <th>Ingested By</th>
@@ -142,12 +142,12 @@
         <% @closed_records.each_with_index do |record, index| %>
           <tr>
               <td id="table3Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td><%= record.revision_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <td><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
               <td><%= record.formatted_closed_date %></td>
-              <td><input type="radio" id="table3<%= index.to_s %>" name="table3Selection" value="<%= index.to_s %>"/></td>
+              <td class="center_text"><input type="radio" id="table3<%= index.to_s %>" name="table3Selection" value="<%= index.to_s %>"/></td>
           </tr>
         <% end %>
       </table>
