@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203194520) do
+ActiveRecord::Schema.define(version: 20170222193942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,11 +92,12 @@ ActiveRecord::Schema.define(version: 20170203194520) do
   add_index "record_rows", ["user_id"], name: "index_record_rows_on_user_id", using: :btree
 
   create_table "records", force: :cascade do |t|
-    t.integer "recordable_id"
-    t.string  "recordable_type"
-    t.string  "revision_id"
-    t.boolean "closed"
-    t.string  "rawJSON"
+    t.integer  "recordable_id"
+    t.string   "recordable_type"
+    t.string   "revision_id"
+    t.boolean  "closed"
+    t.string   "rawJSON"
+    t.datetime "closed_date"
   end
 
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree

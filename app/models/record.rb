@@ -30,6 +30,14 @@ class Record < ActiveRecord::Base
     JSON.parse(self.rawJSON)["ShortName"]
   end
 
+  def version_id
+    JSON.parse(self.rawJSON)["VersionId"]
+  end
+
+  def ingested_by
+    self.ingest.user.email
+  end
+
   def status_string
     if self.closed
       "Completed"
@@ -264,8 +272,12 @@ class Record < ActiveRecord::Base
     return true
   end
 
+  def completed_review_count
+    return (self.reviews.select {|review| review.completed?}).count
+  end
+
   def has_enough_reviews?
-    return self.reviews.where(review_state: 1).count > 1
+    return self.completed_review_count > 1
   end
 
   def no_second_opinions?
@@ -276,10 +288,25 @@ class Record < ActiveRecord::Base
     self.get_row("second_opinion")
   end
 
+  def second_opinion_count
+    opinion_values = self.second_opinions.values
+    return opinion_values.values.reduce(0) {|sum, value| value ? (sum + 1): sum }
+  end
+
 
   def close
     self.closed = true
+    self.closed_date = DateTime.now
     self.save
+  end
+
+  def formatted_closed_date
+    #01/19/2017 at 01:55PM (example format)
+    if self.closed_date.nil?
+      return ""
+    else
+      return self.closed_date.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p")
+    end
   end
 
   def review(user_id)
