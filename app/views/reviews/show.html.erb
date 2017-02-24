@@ -299,11 +299,12 @@
               <div class="flag_flexbox">
                 <% ["Accessibility", "Usability", "Traceability", "Curation"].each do |flag_field| %>            
                   <% cell_id = "flag_" + flag_field + "_" +  title %>
+                  <% check_name = "flag["+ title +"][" + flag_field + "]" %>
                   <% check_id = "flag_" + flag_field + "_check_" +  title %>
                   <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
                   <% flag_cell_border = ((flag_field == "Usability" || flag_field == "Curation")? "flag_middle_border": "") %>
                   <div class="flag_flex_cell <%= flag_cell_border %>" id="<%= cell_id %>">
-                    <input type="checkbox" id="<%= check_id %>" name="<%= check_id %>" form="field_form">
+                    <input type="checkbox" id="<%= check_id %>" name="<%= check_name %>" form="field_form">
                     <p class="flag_flex_text">
                       <i id="<%= icon_id %>" class="eui-icon eui-check-o flag_icon"></i>
                       <%= flag_field %>
@@ -330,7 +331,7 @@
         <th class="headcol">RECOMMENDATION</th>
           <% @section_titles.each do |title| %>
             <td class="recommendation_cell column_<%=title%>">
-              <textarea name="recommendation_<%= title %>" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+              <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
             </td>
           <% end %>
         </tr>
@@ -360,7 +361,7 @@
           <% @section_titles.each do |title| %>
             <td class="no_padding column_<%=title%>">
               <div id="opinion_cell_<%= title %>" class="opinion_cell">
-                <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion_check_<%= title %>" form="field_form">
+                <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
                 <p id="opinion_text_<%= title %>">
                   <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
                   Requires 2nd Opinion
@@ -386,7 +387,7 @@
           <% @section_titles.each do |title| %>
             <td class="color_code_cell column_<%=title%>">
               <div class="styled-select blue semi-square">
-                <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code_<%= title %>" id="color_code_<%= title %>" form="field_form" >
+                <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code[<%= title %>]" id="color_code_<%= title %>" form="field_form" >
                 <% selected = color_selected_list(@color_codes[title]) %>
 
                   <option <%= selected[0] %> value="">Select Color</option>
@@ -405,7 +406,7 @@
             <td class="discussion_td column_<%=title%>">
               <div class="discussion_holder">
                 <div class="new_discussion">
-                  <textarea placeholder="New Comment..." name="discussion_<%= title %>" form="field_form"></textarea>  
+                  <textarea placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
                 </div>
                 
                 <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
@@ -482,7 +483,7 @@ adjustDiscussionCellHeight();
 
 function recommendationMonitor(textarea) {
   if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
-    let columnName = textarea.name.match(/recommendation_(.*)/)[1];
+    let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
     turnColumnGreen(columnName);
   }
 }
