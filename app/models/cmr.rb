@@ -24,16 +24,12 @@ class Cmr
   def self.remove_nil_values(collection_element)
 
     if collection_element.is_a?(Hash)
-      delete_list = []
+      #removing nil values from hash
+      collection_element.delete_if {|key,value| value.nil? }
+      #recurring through remaining values
       collection_element.each do |key, value|
-        if value.nil?
-          #moved this out of the loop, because I think the deletes were affecting the count of the each loop
-          delete_list.push(key)
-        else
           collection_element[key] = Cmr.remove_nil_values(value)
-        end
       end
-      delete_list.each {|element| collection_element.delete(element) }
     elsif collection_element.is_a?(Array)
       #removing nils
       collection_element = collection_element.select {|element| element }
