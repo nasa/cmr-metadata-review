@@ -1,6 +1,10 @@
 class RecordsController < ApplicationController
   def show
     record = Record.find_by id: params["id"]
+    if record.nil?
+      redirect_to home_path
+      return
+    end
 
     @record_sections = record.sections
     @bubble_data = record.bubble_map
@@ -28,6 +32,11 @@ class RecordsController < ApplicationController
 
   def complete
     record = Record.find_by id: params["id"]
+    if record.nil?
+      redirect_to home_path
+      return
+    end
+    
     #checking that all bubbles are filled in
     if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions?
       redirect_to record_path(record)
@@ -41,6 +50,11 @@ class RecordsController < ApplicationController
 
   def update
     record = Record.find_by id: params[:id]
+    if record.nil?
+      redirect_to home_path
+      return
+    end
+
     if record.closed?
       redirect_to review_path(id: params["id"], section_index: params["section_index"])
       return 
