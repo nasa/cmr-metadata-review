@@ -2,6 +2,10 @@ class Review < ActiveRecord::Base
   belongs_to :record
   belongs_to :user
 
+  def completed?
+    return (self.review_state == 1 && !self.review_completion_date.nil?)
+  end
+
   def state_string
     if self.review_state == 0
       "In Process"
