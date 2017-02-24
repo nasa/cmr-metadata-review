@@ -19,7 +19,7 @@ class RecordsController < ApplicationController
     @short_name = record.short_name
     @concept_id = record.concept_id
 
-    @reviews = record.reviews.sort_by(&:review_completion_date)
+    @reviews = (record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
     @user_review = record.review(current_user.id)
 
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
