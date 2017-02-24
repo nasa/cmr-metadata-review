@@ -30,7 +30,9 @@ class ReviewsController < ApplicationController
     @bubble_data = []
     bubble_map = record.bubble_map
     @section_titles.each do |title|
-        @bubble_data.push(bubble_map[title])
+        unless bubble_map[title].nil?
+            @bubble_data.push(bubble_map[title])
+        end
     end
 
     @flagged_by_script = record.binary_script_values
