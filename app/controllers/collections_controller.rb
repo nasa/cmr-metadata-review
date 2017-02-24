@@ -30,12 +30,22 @@ class CollectionsController < ApplicationController
 
     begin
       @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
+    rescue Cmr::CmrError
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      redirect_to home_path
+      return
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      redirect_to home_path
+      return
     rescue Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      redirect_to home_path
+      return
     rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
+      redirect_to home_path
+      return
     end
   end
 
@@ -50,12 +60,22 @@ class CollectionsController < ApplicationController
       collection_data = Cmr.get_collection(params["concept_id"])
       @short_name = collection_data["ShortName"]  
       @granule_count = Cmr.collection_granule_count(@concept_id)
+    rescue Cmr::CmrError
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      redirect_to home_path
+      return
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      redirect_to home_path
+      return
     rescue Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-    rescue
+      redirect_to home_path
+      return
+    rescue Exception => ex
       flash[:alert] = 'There was an error ingesting the record into the system'
+      redirect_to home_path
+      return
     end
   end
 
@@ -111,6 +131,8 @@ class CollectionsController < ApplicationController
       end
 
       # flash[:notice] = "The selected collection has been successfully ingested into the system"
+    rescue Cmr::CmrError
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::OpenTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout
