@@ -174,16 +174,19 @@
 
   function setUpTable(table) {
     var tableButton = document.getElementById(table + "Submit");
-    tableButton.disabled = true;
-    var tableSelector = document.getElementsByName(table + "Selection");
-    setOnClick(table, tableButton, tableSelector);
+    var tableSelector = document.getElementsByName(table + "Selection");    
+    tableButton.disabled = setOnClick(table, tableButton, tableSelector);
   }
 
 
   function setOnClick(table, tableButton, tableSelector) {
+      var shouldDisable = true;
       for (var i = 0, length = tableSelector.length; i < length; i++) {
           (function(index) {
               var temp = document.getElementById(table + i);
+              if (temp && temp.checked) {
+                shouldDisable = false;
+              }
               temp.onclick = function() {
                                     var count = index;
                                     updateTableValues(count, table);
@@ -191,6 +194,7 @@
                                     }
           })(i);
       }
+      return shouldDisable;
   }
   
 
