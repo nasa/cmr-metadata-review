@@ -1,4 +1,4 @@
-class Flag < ActiveRecord::Base
+class Color < ActiveRecord::Base
   include Datable
   
   belongs_to :record

@@ -1,4 +1,4 @@
-class Flag < ActiveRecord::Base
+class Opinion < ActiveRecord::Base
   include Datable
   
   belongs_to :record
