@@ -4,7 +4,6 @@ class CreateRecords < ActiveRecord::Migration
       t.references :recordable, polymorphic: true, index: true
       t.string    :revision_id
       t.boolean  :closed
-      t.string   :rawJSON
     end
   end
 end

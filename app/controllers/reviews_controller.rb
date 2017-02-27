@@ -5,8 +5,6 @@ class ReviewsController < ApplicationController
     record = Record.find_by id: params[:id]
     section_index = params["section_index"].to_i
 
-
-
     @marked_done = record.closed
 
     @collection_record = Record.find_by id: params[:id] 
@@ -16,12 +14,7 @@ class ReviewsController < ApplicationController
     @navigation_list = record.sections.map {|section| section[0] }
 
 
-    @record_comments = @collection_record.comments
-
-    @script_comment = @record_comments.select { |comment| comment.user_id == -1 }.first
-    if @script_comment
-      @script_comment = JSON.parse(@script_comment.rawJSON)
-    end
+    @script_comment = @collection_record.get_script_comments.values
 
     @discussions = record.discussions
 
@@ -37,9 +30,9 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
     @previous_values = nil
     @current_values = record.values
-    @flags = record.get_row("flag").values
-    @recommendations = record.get_row("recommendation").values
-    @second_opinions = record.get_row("second_opinion").values
+    @flags = record.get_flags.values
+    @recommendations = record.get_recommendations.values
+    @second_opinions = record.get_opinions.values
 
     @color_codes = record.color_codes
 
