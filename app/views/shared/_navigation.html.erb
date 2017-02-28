@@ -15,6 +15,19 @@
         };
       </script>
 
+      <% if current_user.admin %>
+          <button id="create_user_button" class="header_icon_button">
+            <i class="eui-icon eui-fa-circle-o"></i>
+            <p>CREATE USER</p>
+          </button>
+
+          <script type="text/javascript">
+            document.getElementById("create_user_button").onclick = function() {
+              document.location.href = "<%= new_user_registration_path %>"
+            };
+          </script>
+      <% end %>
+
       <button id="logout_button" class="header_icon_button">
         <i class="eui-icon eui-fa-external-link-square"></i>
         <p>LOGOUT</p>

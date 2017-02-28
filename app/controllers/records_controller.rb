@@ -1,4 +1,8 @@
 class RecordsController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :ensure_curation
+
+
   def show
     record = Record.find_by id: params["id"]
     if record.nil?

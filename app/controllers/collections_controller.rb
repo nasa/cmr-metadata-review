@@ -1,5 +1,9 @@
 class CollectionsController < ApplicationController
 
+  before_filter :authenticate_user!
+  before_filter :ensure_curation
+
+
   def show
     @concept_id = params["concept_id"]
     if !@concept_id
