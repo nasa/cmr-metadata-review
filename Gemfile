@@ -50,6 +50,9 @@ group :development, :test do
   gem 'byebug'
 end
 
+#coverage map for testing
+gem 'simplecov', :require => false, :group => :test
+
 #using puma server instead of webBrick
 gem 'puma', '~> 3.6.2'
 #base authentication gem
