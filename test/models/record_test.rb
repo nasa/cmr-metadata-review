@@ -11,6 +11,8 @@ class RecordTest < ActiveSupport::TestCase
     assert_equal(record.short_name, "A2_DySno_NRT")
     assert_equal(record.status_string, "In Process")
     assert_equal(record.concept_id, "C1000000020-LANCEAMSR2")
+    assert_equal(record.version_id, "0")
+    assert_equal(record.ingested_by, "abaker@element84.com")
 
   end
 
@@ -86,6 +88,19 @@ class RecordTest < ActiveSupport::TestCase
     opinion_values["ShortName"] = false
     second_opinions.update_values(opinion_values)
     assert_equal(record.no_second_opinions?, true)
+  end
+
+  it "closes a record" do
+    record = Record.find_by id: 1
+    record.close
+
+    assert_equal(record.closed, true)
+    #testing that the time is not null and within range
+    assert_equal((record.closed_date && (record.closed_date < DateTime.now) && (record.closed_date > (DateTime.now - 5000))), true)
+    record.closed_date = "Tue, 28 Feb 2017 16:25:04 UTC +00:00"
+    record.save
+    record.reload
+    assert_equal(record.formatted_closed_date, "02/28/2017 at 11:25AM")
   end
 
 end
