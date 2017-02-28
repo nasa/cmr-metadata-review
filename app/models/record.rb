@@ -169,7 +169,6 @@ class Record < ActiveRecord::Base
   def add_script_comment(script_JSON, score)
     new_comment = ScriptComment.new
     new_comment.record = self
-    new_comment.user_id = -1
     new_comment.total_comment_count = score
     if script_JSON.nil?
       new_comment.update_values(JSON.parse(self.blank_comment_JSON))

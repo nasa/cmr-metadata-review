@@ -12,22 +12,22 @@ class RecordsControllerTest < ActionController::TestCase
     #all positive tests, making sure that desired additions appear
 
     #"flag"=>{"ShortName"=>{"Usability"=>"on", "Traceability"=>"on"}, "InsertTime"=>{"Accessibility"=>"on"}, "LastUpdate"=>{"Usability"=>"on"}}
-    assert_equal(record.get_row("flag").values["ShortName"], ["Usability", "Traceability"])
-    assert_equal(record.get_row("flag").values["InsertTime"], ["Accessibility"])
-    assert_equal(record.get_row("flag").values["LastUpdate"], ["Usability"])
+    assert_equal(record.get_flags.values["ShortName"], ["Usability", "Traceability"])
+    assert_equal(record.get_flags.values["InsertTime"], ["Accessibility"])
+    assert_equal(record.get_flags.values["LastUpdate"], ["Usability"])
 
     #"recommendation"=>{"ShortName"=>"", "VersionId"=>"not ok", "InsertTime"=>"ok", "LastUpdate"=>"ok", "LongName"=>"", "DataSetId"=>"", "Description"=>"", "CollectionDataType"=>"", "Orderable"=>"", "Visible"=>"", "ProcessingLevelId"=>"", "ArchiveCenter"=>"", "CitationForExternalPublication"=>"", "Price"=>"", "SpatialKeywords/Keyword"=>"", "TemporalKeywords/Keyword"=>"", "AssociatedDIFs/DIF/EntryId"=>"", "MetadataStandardName"=>"", "MetadataStandardVersion"=>"", "DatasetId"=>"", "DataFormat"=>""}
-    assert_equal(record.get_row("recommendation").values["VersionId"], "not ok")
-    assert_equal(record.get_row("recommendation").values["InsertTime"], "ok")
-    assert_equal(record.get_row("recommendation").values["LastUpdate"], "ok")
+    assert_equal(record.get_recommendations.values["VersionId"], "not ok")
+    assert_equal(record.get_recommendations.values["InsertTime"], "ok")
+    assert_equal(record.get_recommendations.values["LastUpdate"], "ok")
 
     #"opinion"=>{"InsertTime"=>"on"}
-    assert_equal(record.get_row("second_opinion").values["InsertTime"], true)      
+    assert_equal(record.get_opinions.values["InsertTime"], true)      
 
     #"color_code"=>{"ShortName"=>"", "VersionId"=>"red", "InsertTime"=>"green", "LastUpdate"=>"green", "LongName"=>"", "DataSetId"=>"", "Description"=>"", "CollectionDataType"=>"", "Orderable"=>"", "Visible"=>"", "ProcessingLevelId"=>"", "ArchiveCenter"=>"", "CitationForExternalPublication"=>"", "Price"=>"", "SpatialKeywords/Keyword"=>"", "TemporalKeywords/Keyword"=>"", "AssociatedDIFs/DIF/EntryId"=>"", "MetadataStandardName"=>"", "MetadataStandardVersion"=>"", "DatasetId"=>"", "DataFormat"=>""}
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["VersionId"], "red")
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["InsertTime"], "green")
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["LastUpdate"], "green")
+    assert_equal(record.get_flags.values["VersionId"], "red")
+    assert_equal(record.get_flags.values["InsertTime"], "green")
+    assert_equal(record.get_flags.values["LastUpdate"], "green")
 
     #"discussion"=>{"ShortName"=>"", "VersionId"=>"", "InsertTime"=>"", "LastUpdate"=>"", "LongName"=>"new comment", "DataSetId"=>"", "Description"=>"", "CollectionDataType"=>"", "Orderable"=>"", "Visible"=>"", "ProcessingLevelId"=>"", "ArchiveCenter"=>"", "CitationForExternalPublication"=>"", "Price"=>"", "SpatialKeywords/Keyword"=>"", "TemporalKeywords/Keyword"=>"", "AssociatedDIFs/DIF/EntryId"=>"", "MetadataStandardName"=>"", "MetadataStandardVersion"=>"", "DatasetId"=>"", "DataFormat"=>""}
     assert_equal(record.discussions.where(column_name: "LongName").sort_by(&:date).first.comment, "new comment")      
@@ -49,19 +49,19 @@ class RecordsControllerTest < ActionController::TestCase
     #broken out sections of params below to compare to tests
     #all positive tests, making sure that desired additions appear
 
-    assert_equal(record.get_row("flag").values["ShortName"], [])
-    assert_equal(record.get_row("flag").values["InsertTime"], [])
-    assert_equal(record.get_row("flag").values["LastUpdate"], [])
+    assert_equal(record.get_flags.values["ShortName"], [])
+    assert_equal(record.get_flags.values["InsertTime"], [])
+    assert_equal(record.get_flags.values["LastUpdate"], [])
 
-    assert_equal(record.get_row("recommendation").values["VersionId"], "")
-    assert_equal(record.get_row("recommendation").values["InsertTime"], "")
-    assert_equal(record.get_row("recommendation").values["LastUpdate"], "")
+    assert_equal(record.get_recommendations.values["VersionId"], "")
+    assert_equal(record.get_recommendations.values["InsertTime"], "")
+    assert_equal(record.get_recommendations.values["LastUpdate"], "")
 
-    assert_equal(record.get_row("second_opinion").values["InsertTime"], false)      
+    assert_equal(record.get_opinions.values["InsertTime"], false)      
 
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["VersionId"], "")
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["InsertTime"], "")
-    assert_equal(JSON.parse(record.flags.first.rawJSON)["LastUpdate"], "")
+    assert_equal(record.get_flags.values["VersionId"], "")
+    assert_equal(record.get_flags.values["InsertTime"], "")
+    assert_equal(record.get_flags.values["LastUpdate"], "")
 
 
     #discussion should not be changed, checking to ensure its still there.
