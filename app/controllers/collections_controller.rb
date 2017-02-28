@@ -115,7 +115,7 @@ class CollectionsController < ApplicationController
         new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
         granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
         granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-        [ granule_object, new_granule_record, granule_ingest ]
+        [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
       end 
 
       #saving all the related collection and granule data in a combined transaction

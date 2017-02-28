@@ -29,9 +29,9 @@ class RecordsControllerTest < ActionController::TestCase
         assert_equal(record.get_opinions.values["InsertTime"], true)      
 
         #"color_code"=>{"ShortName"=>"", "VersionId"=>"red", "InsertTime"=>"green", "LastUpdate"=>"green", "LongName"=>"", "DataSetId"=>"", "Description"=>"", "CollectionDataType"=>"", "Orderable"=>"", "Visible"=>"", "ProcessingLevelId"=>"", "ArchiveCenter"=>"", "CitationForExternalPublication"=>"", "Price"=>"", "SpatialKeywords/Keyword"=>"", "TemporalKeywords/Keyword"=>"", "AssociatedDIFs/DIF/EntryId"=>"", "MetadataStandardName"=>"", "MetadataStandardVersion"=>"", "DatasetId"=>"", "DataFormat"=>""}
-        assert_equal(record.get_flags.values["VersionId"], "red")
-        assert_equal(record.get_flags.values["InsertTime"], "green")
-        assert_equal(record.get_flags.values["LastUpdate"], "green")
+        assert_equal(record.get_colors.values["VersionId"], "red")
+        assert_equal(record.get_colors.values["InsertTime"], "green")
+        assert_equal(record.get_colors.values["LastUpdate"], "green")
 
 
         #"discussion"=>{"ShortName"=>"", "VersionId"=>"", "InsertTime"=>"", "LastUpdate"=>"", "LongName"=>"new comment", "DataSetId"=>"", "Description"=>"", "CollectionDataType"=>"", "Orderable"=>"", "Visible"=>"", "ProcessingLevelId"=>"", "ArchiveCenter"=>"", "CitationForExternalPublication"=>"", "Price"=>"", "SpatialKeywords/Keyword"=>"", "TemporalKeywords/Keyword"=>"", "AssociatedDIFs/DIF/EntryId"=>"", "MetadataStandardName"=>"", "MetadataStandardVersion"=>"", "DatasetId"=>"", "DataFormat"=>""}
@@ -64,9 +64,9 @@ class RecordsControllerTest < ActionController::TestCase
 
         assert_equal(record.get_opinions.values["InsertTime"], false)      
 
-        assert_equal(record.get_flags.values["VersionId"], "")
-        assert_equal(record.get_flags.values["InsertTime"], "")
-        assert_equal(record.get_flags.values["LastUpdate"], "")
+        assert_equal(record.get_colors.values["VersionId"], "")
+        assert_equal(record.get_colors.values["InsertTime"], "")
+        assert_equal(record.get_colors.values["LastUpdate"], "")
 
         #discussion should not be changed, checking to ensure its still there.
         assert_equal(record.discussions.where(column_name: "LongName").sort_by(&:date).first.comment, "new comment")      

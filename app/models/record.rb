@@ -236,7 +236,7 @@ class Record < ActiveRecord::Base
   end
 
   def color_coding_complete?
-    colors = self.colors.values
+    colors = self.get_colors.values
 
     colors.each do |key, value|
       if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
