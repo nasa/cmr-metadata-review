@@ -8,7 +8,7 @@ module Datable
       new_raw_JSON = self.blank_JSON
       new_data = RecordData.new(datable: self, rawJSON: new_raw_JSON)
       new_data.save
-      new_raw_JSON
+      JSON.parse(new_raw_JSON)
     end
   end 
 

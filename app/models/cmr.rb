@@ -146,11 +146,7 @@ class Cmr
     return granule_data_list
   end
 
-  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page)
-    unless curr_page
-      curr_page = "1"
-    end
-
+  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1")
     page_size = 10
     search_iterator = []
 
