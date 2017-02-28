@@ -227,7 +227,11 @@ class Record < ActiveRecord::Base
   def bubble_map
     bubble_set = self.bubble_data
     bubble_map = {}
-    bubble_set.each {|bubble| bubble_map[bubble[:field_name]] = bubble}
+    begin
+      bubble_set.each {|bubble| bubble_map[bubble[:field_name]] = bubble}
+    rescue
+      bubble_map = {}
+    end
     bubble_map
   end
 
