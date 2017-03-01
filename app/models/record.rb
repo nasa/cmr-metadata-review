@@ -1,3 +1,7 @@
+#Record is the ActiveRecord representation of a record retrieved from the CMR
+#An individual record can be identified by a unique concept-id and revision-id combination
+#Record is a child of both Collection and Granule
+
 class Record < ActiveRecord::Base
   include RecordHelper
   include Datable
@@ -13,10 +17,14 @@ class Record < ActiveRecord::Base
   has_many :flags
   has_many :discussions
 
+  #Checks if parent is a Collection   
+  #returns boolean
   def is_collection?
     self.recordable_type == "Collection"
   end
 
+  #Checks if parent is a Granule   
+  #returns boolean
   def is_granule?
     self.recordable_type == "Granule"
   end

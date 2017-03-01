@@ -204,6 +204,7 @@ DEPENDENCIES
   pg (~> 0.17.1)
   puma (~> 3.6.2)
   rails (= 4.2.7.1)
+  rdoc
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   simplecov
