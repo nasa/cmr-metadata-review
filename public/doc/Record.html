@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Record - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">ActiveRecord::Base
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">RecordHelper</span>
+  
+  
+  
+    <li><a class="include" href="Datable.html">Datable</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-add_review">#add_review</a>
+    
+    <li ><a href="#method-i-add_script_comment">#add_script_comment</a>
+    
+    <li ><a href="#method-i-binary_script_values">#binary_script_values</a>
+    
+    <li ><a href="#method-i-blank_comment_JSON">#blank_comment_JSON</a>
+    
+    <li ><a href="#method-i-bubble_data">#bubble_data</a>
+    
+    <li ><a href="#method-i-bubble_map">#bubble_map</a>
+    
+    <li ><a href="#method-i-close">#close</a>
+    
+    <li ><a href="#method-i-color_codes">#color_codes</a>
+    
+    <li ><a href="#method-i-color_coding_complete-3F">#color_coding_complete?</a>
+    
+    <li ><a href="#method-i-completed_review_count">#completed_review_count</a>
+    
+    <li ><a href="#method-i-concept_id">#concept_id</a>
+    
+    <li ><a href="#method-i-evaluate_script">#evaluate_script</a>
+    
+    <li ><a href="#method-i-formatted_closed_date">#formatted_closed_date</a>
+    
+    <li ><a href="#method-i-get_colors">#get_colors</a>
+    
+    <li ><a href="#method-i-get_flags">#get_flags</a>
+    
+    <li ><a href="#method-i-get_opinions">#get_opinions</a>
+    
+    <li ><a href="#method-i-get_recommendations">#get_recommendations</a>
+    
+    <li ><a href="#method-i-get_script_comments">#get_script_comments</a>
+    
+    <li ><a href="#method-i-get_section">#get_section</a>
+    
+    <li ><a href="#method-i-has_enough_reviews-3F">#has_enough_reviews?</a>
+    
+    <li ><a href="#method-i-ingested_by">#ingested_by</a>
+    
+    <li ><a href="#method-i-is_collection-3F">#is_collection?</a>
+    
+    <li ><a href="#method-i-is_granule-3F">#is_granule?</a>
+    
+    <li ><a href="#method-i-long_name">#long_name</a>
+    
+    <li ><a href="#method-i-no_second_opinions-3F">#no_second_opinions?</a>
+    
+    <li ><a href="#method-i-review">#review</a>
+    
+    <li ><a href="#method-i-score_script_hash">#score_script_hash</a>
+    
+    <li ><a href="#method-i-script_score">#script_score</a>
+    
+    <li ><a href="#method-i-script_values">#script_values</a>
+    
+    <li ><a href="#method-i-second_opinion_count">#second_opinion_count</a>
+    
+    <li ><a href="#method-i-sections">#sections</a>
+    
+    <li ><a href="#method-i-short_name">#short_name</a>
+    
+    <li ><a href="#method-i-status_string">#status_string</a>
+    
+    <li ><a href="#method-i-version_id">#version_id</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Record">
+  <h1 id="class-Record" class="class">
+    class Record
+  </h1>
+
+  <section class="description">
+    
+<p><a href="Record.html">Record</a> is the ActiveRecord representation of a
+record retrieved from the CMR An individual record can be identified by a
+unique concept-id and revision-id combination <a
+href="Record.html">Record</a> is a child of both <a
+href="Collection.html">Collection</a> and <a
+href="Granule.html">Granule</a></p>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add_review" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_review</span><span
+            class="method-args">(user_id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_review-source">
+            <pre><span class="ruby-comment"># File record.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_review</span>(<span class="ruby-identifier">user_id</span>)
+  <span class="ruby-identifier">new_review</span> = <span class="ruby-constant">Review</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">new_review</span>.<span class="ruby-identifier">record</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-identifier">new_review</span>.<span class="ruby-identifier">user_id</span> = <span class="ruby-identifier">user_id</span>
+  <span class="ruby-identifier">new_review</span>.<span class="ruby-identifier">review_state</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">new_review</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">new_review</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-add_script_comment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_script_comment</span><span
+            class="method-args">(script_JSON, score)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_script_comment-source">
+            <pre><span class="ruby-comment"># File record.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_script_comment</span>(<span class="ruby-identifier">script_JSON</span>, <span class="ruby-identifier">score</span>)
+  <span class="ruby-identifier">new_comment</span> = <span class="ruby-constant">ScriptComment</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">new_comment</span>.<span class="ruby-identifier">record</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-identifier">new_comment</span>.<span class="ruby-identifier">total_comment_count</span> = <span class="ruby-identifier">score</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">script_JSON</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">new_comment</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">blank_comment_JSON</span>))
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">new_comment</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">script_JSON</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">new_comment</span>.<span class="ruby-identifier">save!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-binary_script_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">binary_script_values</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="binary_script_values-source">
+            <pre><span class="ruby-comment"># File record.rb, line 300</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">binary_script_values</span>
+  <span class="ruby-identifier">script_values</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">script_values</span>
+  <span class="ruby-comment"># replaces the values in the hash with true/false depending on the script test helper</span>
+  <span class="ruby-identifier">binary_script_values</span> = <span class="ruby-identifier">script_values</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">key</span>, <span class="ruby-identifier">script_test</span>(<span class="ruby-identifier">val</span>)] }.<span class="ruby-identifier">to_h</span>
+  <span class="ruby-identifier">binary_script_values</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-blank_comment_JSON" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">blank_comment_JSON</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="blank_comment_JSON-source">
+            <pre><span class="ruby-comment"># File record.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">blank_comment_JSON</span>
+  <span class="ruby-identifier">record_hash</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">empty_hash</span> = <span class="ruby-identifier">empty_contents</span>(<span class="ruby-identifier">record_hash</span>)
+  <span class="ruby-identifier">empty_hash</span>.<span class="ruby-identifier">to_json</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-bubble_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bubble_data</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="bubble_data-source">
+            <pre><span class="ruby-comment"># File record.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bubble_data</span>
+  <span class="ruby-identifier">bubble_set</span> = []
+  <span class="ruby-comment"># setting flag data</span>
+  <span class="ruby-identifier">record_colors</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_colors</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">bubble_set</span> = <span class="ruby-identifier">record_colors</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> 
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">record_colors</span>[<span class="ruby-identifier">field</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&quot;</span>
+      <span class="ruby-identifier">bubble_color</span> = <span class="ruby-string">&quot;white&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">bubble_color</span> = <span class="ruby-identifier">record_colors</span>[<span class="ruby-identifier">field</span>]
+    <span class="ruby-keyword">end</span>
+
+    { <span class="ruby-value">:field_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">field</span>, <span class="ruby-value">:color</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">bubble_color</span> } 
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># adding the automated script results to each bubble</span>
+  <span class="ruby-identifier">binary_script_values</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">binary_script_values</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">binary_script_values</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">bubble_set</span> = <span class="ruby-identifier">bubble_set</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">bubble</span><span class="ruby-operator">|</span> <span class="ruby-identifier">bubble</span>[<span class="ruby-value">:script</span>] = <span class="ruby-keyword">false</span> }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">bubble_set</span> = <span class="ruby-identifier">bubble_set</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">bubble</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">bubble</span>[<span class="ruby-value">:script</span>] = <span class="ruby-identifier">binary_script_values</span>[<span class="ruby-identifier">bubble</span>[<span class="ruby-value">:field_name</span>]]
+      <span class="ruby-identifier">bubble</span>
+    <span class="ruby-keyword">end</span> 
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#adding the second opinions</span>
+  <span class="ruby-identifier">opinion_values</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_opinions</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">bubble_set</span> = <span class="ruby-identifier">bubble_set</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">bubble</span><span class="ruby-operator">|</span> 
+    <span class="ruby-identifier">bubble</span>[<span class="ruby-value">:opinion</span>] = <span class="ruby-identifier">opinion_values</span>[<span class="ruby-identifier">bubble</span>[<span class="ruby-value">:field_name</span>]]
+    <span class="ruby-identifier">bubble</span>
+  <span class="ruby-keyword">end</span> 
+
+  <span class="ruby-identifier">bubble_set</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-bubble_map" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bubble_map</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="bubble_map-source">
+            <pre><span class="ruby-comment"># File record.rb, line 235</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bubble_map</span>
+  <span class="ruby-identifier">bubble_set</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">bubble_data</span>
+  <span class="ruby-identifier">bubble_map</span> = {}
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">bubble_set</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">bubble</span><span class="ruby-operator">|</span> <span class="ruby-identifier">bubble_map</span>[<span class="ruby-identifier">bubble</span>[<span class="ruby-value">:field_name</span>]] = <span class="ruby-identifier">bubble</span>}
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">bubble_map</span> = {}
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">bubble_map</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-close" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">close</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="close-source">
+            <pre><span class="ruby-comment"># File record.rb, line 276</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">closed</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">closed_date</span> = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">save</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-color_codes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">color_codes</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="color_codes-source">
+            <pre><span class="ruby-comment"># File record.rb, line 349</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">color_codes</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_colors</span>.<span class="ruby-identifier">values</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-color_coding_complete-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">color_coding_complete?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="color_coding_complete-3F-source">
+            <pre><span class="ruby-comment"># File record.rb, line 246</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">color_coding_complete?</span>
+  <span class="ruby-identifier">colors</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_colors</span>.<span class="ruby-identifier">values</span>
+
+  <span class="ruby-identifier">colors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;green&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;blue&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;yellow&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;red&quot;</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-completed_review_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">completed_review_count</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="completed_review_count-source">
+            <pre><span class="ruby-comment"># File record.rb, line 258</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">completed_review_count</span>
+  <span class="ruby-keyword">return</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">reviews</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">review</span><span class="ruby-operator">|</span> <span class="ruby-identifier">review</span>.<span class="ruby-identifier">completed?</span>}).<span class="ruby-identifier">count</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-concept_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">concept_id</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="concept_id-source">
+            <pre><span class="ruby-comment"># File record.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">concept_id</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recordable</span>.<span class="ruby-identifier">concept_id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-evaluate_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">evaluate_script</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="evaluate_script-source">
+            <pre><span class="ruby-comment"># File record.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_script</span>
+  <span class="ruby-identifier">collection_data</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">comment_JSON</span> = <span class="ruby-identifier">blank_comment_JSON</span>
+  <span class="ruby-identifier">comment_hash</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">comment_JSON</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_collection?</span>
+    <span class="ruby-comment">#escaping json for passing to python</span>
+    <span class="ruby-identifier">collection_json</span> = <span class="ruby-identifier">collection_data</span>.<span class="ruby-identifier">to_json</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;\&quot;&quot;</span>, <span class="ruby-string">&quot;\\\&quot;&quot;</span>)
+    <span class="ruby-comment">#running collection script in python</span>
+    <span class="ruby-identifier">script_results</span> = <span class="ruby-node">%x`python lib/CollectionChecker.py &quot;#{collection_json}&quot;`</span>
+
+    <span class="ruby-comment">#parsing the prints from the script into sections</span>
+    <span class="ruby-identifier">script_results</span> = <span class="ruby-identifier">script_results</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+
+    <span class="ruby-comment">#removing any of the script results that have no text, ie &quot;, &quot; or &quot;,  &quot;</span>
+    <span class="ruby-identifier">script_results</span>[<span class="ruby-value">1</span>] = <span class="ruby-identifier">script_results</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>).<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> (<span class="ruby-operator">!</span>(<span class="ruby-identifier">entry</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/[a-zA-Z0-9]/</span>).<span class="ruby-identifier">nil?</span>) }
+
+    <span class="ruby-comment">#splitting the row headers into a list</span>
+    <span class="ruby-identifier">script_results</span>[<span class="ruby-value">3</span>] = (<span class="ruby-identifier">script_results</span>[<span class="ruby-value">3</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>).<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> (<span class="ruby-operator">!</span>(<span class="ruby-identifier">entry</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/[a-zA-Z0-9]/</span>).<span class="ruby-identifier">nil?</span>) }).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s+/</span>, <span class="ruby-string">&quot;&quot;</span>) }
+
+    <span class="ruby-comment">#creating a hash with values { row_header =&gt; result_string }</span>
+    <span class="ruby-identifier">comment_hash</span> = <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">script_results</span>[<span class="ruby-value">3</span>].<span class="ruby-identifier">zip</span>(<span class="ruby-identifier">script_results</span>[<span class="ruby-value">1</span>])]
+
+
+    <span class="ruby-identifier">score</span> = <span class="ruby-identifier">score_script_hash</span>(<span class="ruby-identifier">comment_hash</span>)
+
+    <span class="ruby-identifier">add_script_comment</span>(<span class="ruby-identifier">comment_hash</span>.<span class="ruby-identifier">to_json</span>, <span class="ruby-identifier">score</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment">#run granule script</span>
+
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-formatted_closed_date" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">formatted_closed_date</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="formatted_closed_date-source">
+            <pre><span class="ruby-comment"># File record.rb, line 282</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">formatted_closed_date</span>
+  <span class="ruby-comment">#01/19/2017 at 01:55PM (example format)</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">closed_date</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">closed_date</span>.<span class="ruby-identifier">in_time_zone</span>(<span class="ruby-string">&quot;Eastern Time (US &amp; Canada)&quot;</span>).<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&quot;%m/%d/%Y at %I:%M%p&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_colors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_colors</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_colors-source">
+            <pre><span class="ruby-comment"># File record.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_colors</span>
+  <span class="ruby-identifier">colors</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">colors</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">colors</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">colors</span> = <span class="ruby-constant">Color</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">colors</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">colors</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">blank_comment_JSON</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">colors</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">colors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_flags" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_flags</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_flags-source">
+            <pre><span class="ruby-comment"># File record.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_flags</span>
+  <span class="ruby-identifier">flags</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">flags</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">flags</span> = <span class="ruby-constant">Flag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">save</span>      
+    <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">blank_comment_JSON</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">flags</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_opinions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_opinions</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_opinions-source">
+            <pre><span class="ruby-comment"># File record.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_opinions</span>
+  <span class="ruby-identifier">opinions</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">opinions</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">opinions</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">opinions</span> = <span class="ruby-constant">Opinion</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">opinions</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">new_opinion_hash</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">blank_comment_JSON</span>)
+    <span class="ruby-identifier">new_opinion_hash</span> = <span class="ruby-identifier">new_opinion_hash</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">key</span>, <span class="ruby-keyword">false</span>] }.<span class="ruby-identifier">to_h</span>
+    <span class="ruby-identifier">opinions</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-identifier">new_opinion_hash</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">opinions</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">opinions</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_recommendations" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_recommendations</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_recommendations-source">
+            <pre><span class="ruby-comment"># File record.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_recommendations</span>
+  <span class="ruby-identifier">recommendations</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recommendations</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">recommendations</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">recommendations</span> = <span class="ruby-constant">Recommendation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">recommendations</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">recommendations</span>.<span class="ruby-identifier">update_values</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">blank_comment_JSON</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">recommendations</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">recommendations</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_script_comments" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_script_comments</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_script_comments-source">
+            <pre><span class="ruby-comment"># File record.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_script_comments</span>
+  <span class="ruby-identifier">script_comments</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">script_comments</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">script_comments</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">evaluate_script</span>
+    <span class="ruby-identifier">script_comments</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">script_comments</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span> 
+  <span class="ruby-identifier">script_comments</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">script_comments</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_section" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_section</span><span
+            class="method-args">(section_name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_section-source">
+            <pre><span class="ruby-comment"># File record.rb, line 332</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_section</span>(<span class="ruby-identifier">section_name</span>)
+  <span class="ruby-identifier">section_list</span> = []
+  <span class="ruby-identifier">all_titles</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">keys</span>
+  <span class="ruby-identifier">one_section</span> = <span class="ruby-identifier">all_titles</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">match</span> <span class="ruby-node">/#{section_name}\//</span>}
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">one_section</span>.<span class="ruby-identifier">any?</span>
+    <span class="ruby-keyword">return</span> [[<span class="ruby-identifier">section_name</span>, <span class="ruby-identifier">one_section</span>]]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword">while</span> (<span class="ruby-identifier">all_titles</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">match</span> <span class="ruby-node">/#{section_name}#{count.to_s}\//</span>}).<span class="ruby-identifier">any?</span>
+      <span class="ruby-identifier">next_section</span> = <span class="ruby-identifier">all_titles</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">match</span> <span class="ruby-node">/#{section_name}#{count.to_s}\//</span>}
+      <span class="ruby-identifier">section_list</span>.<span class="ruby-identifier">push</span>([<span class="ruby-identifier">section_name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">next_section</span>])
+      <span class="ruby-identifier">count</span> = <span class="ruby-identifier">count</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">section_list</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-has_enough_reviews-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">has_enough_reviews?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="has_enough_reviews-3F-source">
+            <pre><span class="ruby-comment"># File record.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">has_enough_reviews?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">completed_review_count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ingested_by" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ingested_by</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ingested_by-source">
+            <pre><span class="ruby-comment"># File record.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ingested_by</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">ingest</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_collection-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_collection?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Checks if parent is a <a href="Collection.html">Collection</a></p>
+
+<p>returns boolean</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_collection-3F-source">
+            <pre><span class="ruby-comment"># File record.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_collection?</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recordable_type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Collection&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_granule-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_granule?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Checks if parent is a <a href="Granule.html">Granule</a></p>
+
+<p>returns boolean</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_granule-3F-source">
+            <pre><span class="ruby-comment"># File record.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_granule?</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recordable_type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Granule&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-long_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">long_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="long_name-source">
+            <pre><span class="ruby-comment"># File record.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">long_name</span> 
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>[<span class="ruby-string">&quot;LongName&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-no_second_opinions-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">no_second_opinions?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="no_second_opinions-3F-source">
+            <pre><span class="ruby-comment"># File record.rb, line 266</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">no_second_opinions?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-operator">!</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_opinions</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>}).<span class="ruby-identifier">any?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-review" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">review</span><span
+            class="method-args">(user_id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="review-source">
+            <pre><span class="ruby-comment"># File record.rb, line 291</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">review</span>(<span class="ruby-identifier">user_id</span>)
+  <span class="ruby-identifier">review</span> = <span class="ruby-constant">Review</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user_id</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">review</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">review</span> = <span class="ruby-constant">Review</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">record</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">review_state</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">review</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-score_script_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">score_script_hash</span><span
+            class="method-args">(script_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="score_script_hash-source">
+            <pre><span class="ruby-comment"># File record.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">score_script_hash</span>(<span class="ruby-identifier">script_hash</span>) 
+  <span class="ruby-identifier">score</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">script_hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">sub_value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">script_hash</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+      <span class="ruby-keyword">if</span> (<span class="ruby-identifier">sub_value</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;OK&quot;</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">sub_value</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;ok&quot;</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">sub_value</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;Ok&quot;</span>)
+        <span class="ruby-identifier">score</span> = <span class="ruby-identifier">score</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">score</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-script_score" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">script_score</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="script_score-source">
+            <pre><span class="ruby-comment"># File record.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">script_score</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_script_comments</span>.<span class="ruby-identifier">total_comment_count</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-script_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">script_values</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="script_values-source">
+            <pre><span class="ruby-comment"># File record.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">script_values</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_script_comments</span>.<span class="ruby-identifier">values</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-second_opinion_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">second_opinion_count</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="second_opinion_count-source">
+            <pre><span class="ruby-comment"># File record.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">second_opinion_count</span>
+  <span class="ruby-identifier">opinion_values</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_opinions</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">opinion_values</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-value">0</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">?</span> (<span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">:</span> <span class="ruby-identifier">sum</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-sections" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sections</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>should return a list where each entry is a (<a
+href="title_list">title,</a>)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sections-source">
+            <pre><span class="ruby-comment"># File record.rb, line 308</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sections</span>
+  <span class="ruby-identifier">section_list</span> = []
+  
+  <span class="ruby-identifier">contacts</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;Contacts/Contact&quot;</span>)
+  <span class="ruby-identifier">platforms</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;Platforms/Platform&quot;</span>)
+  <span class="ruby-identifier">campaigns</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;Campaigns/Campaign&quot;</span>)
+  <span class="ruby-identifier">temporal</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;Temporal&quot;</span>)
+  <span class="ruby-identifier">scienceKeywords</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;ScienceKeywords/ScienceKeyword&quot;</span>)
+  <span class="ruby-identifier">spatial</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;Spatial&quot;</span>)
+  <span class="ruby-identifier">online</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;OnlineResources/OnlineResource&quot;</span>)
+  <span class="ruby-identifier">accessURLs</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;OnlineAccessURLs&quot;</span>)
+  <span class="ruby-identifier">csdt</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;CSDTDescriptions&quot;</span>)
+  <span class="ruby-identifier">additional</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_section</span>(<span class="ruby-string">&quot;AdditionalAttributes/AdditionalAttribute&quot;</span>)
+
+  <span class="ruby-identifier">section_list</span> = <span class="ruby-identifier">section_list</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">contacts</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">platforms</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">campaigns</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">spatial</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">temporal</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">scienceKeywords</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">online</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">accessURLs</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">csdt</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">additional</span>
+  <span class="ruby-comment">#finding the entries not in other sections</span>
+  <span class="ruby-identifier">used_titles</span> = (<span class="ruby-identifier">section_list</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">section</span><span class="ruby-operator">|</span> <span class="ruby-identifier">section</span>[<span class="ruby-value">1</span>]}).<span class="ruby-identifier">flatten</span>
+  <span class="ruby-identifier">all_titles</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">keys</span>
+
+  <span class="ruby-identifier">others</span> = [[<span class="ruby-string">&quot;Collection Info&quot;</span>, <span class="ruby-identifier">all_titles</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">used_titles</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">title</span> }]]
+
+  <span class="ruby-identifier">section_list</span> = <span class="ruby-identifier">others</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">section_list</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-short_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">short_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="short_name-source">
+            <pre><span class="ruby-comment"># File record.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">short_name</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>[<span class="ruby-string">&quot;ShortName&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-status_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">status_string</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="status_string-source">
+            <pre><span class="ruby-comment"># File record.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status_string</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">closed</span>
+    <span class="ruby-string">&quot;Completed&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;In Process&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-version_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">version_id</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="version_id-source">
+            <pre><span class="ruby-comment"># File record.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">version_id</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>[<span class="ruby-string">&quot;VersionId&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
