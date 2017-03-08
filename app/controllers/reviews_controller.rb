@@ -1,6 +1,9 @@
 class ReviewsController < ApplicationController
   include ReviewsHelper
 
+  before_filter :authenticate_user!
+  before_filter :ensure_curation
+
   def show
     record = Record.find_by id: params[:id]
     section_index = params["section_index"].to_i
