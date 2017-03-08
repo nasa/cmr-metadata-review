@@ -32,11 +32,11 @@ p {
 }
 
 .notice {
-  position: absolute;
+
 }
 
 .alert {
-  position: absolute;
+
 }
 
 .clear_box {
@@ -70,6 +70,7 @@ p {
     padding-top:1px;
 
     .header_icon_button {
+      color: white;
       display: inline-block;
       margin-right:20px;
       background-color: $blue-dark;
