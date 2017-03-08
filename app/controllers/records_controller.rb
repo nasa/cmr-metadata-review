@@ -69,58 +69,52 @@ class RecordsController < ApplicationController
 
     section_titles = record.sections[section_index][1]
 
-    recommendations = record.get_row("recommendation").values
-    if params["recommendation"]
-      params["recommendation"].each do |key, value|
-          recommendations[key] = value
+
+    begin
+      record.get_recommendations.update_partial_values(params["recommendation"])
+
+      record.get_colors.update_partial_values(params["color_code"])
+
+
+      #flags are stored in a hash => list relationship
+      #each hash key is a column of a record
+      #each value is a list containing the string names of each checked flag for that key
+      #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
+      flags_hash = record.get_flags.values
+      section_titles.each do |title|
+        flags_hash[title] = [];
       end
-      record.get_row("recommendation").update_values(recommendations)
-    end
 
-    color_codes = record.color_codes
-    if params["color_code"]
-      params["color_code"].each do |key, value|
-          color_codes[key] = value
-      end
-      record.update_color_codes(color_codes)
-    end
-
-    #flags are stored in a hash => list relationship
-    #each hash key is a column of a record
-    #each value is a list containing the string names of each checked flag for that key
-    #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
-    flags_hash = record.get_row("flag").values
-    section_titles.each do |title|
-      flags_hash[title] = [];
-    end
-
-    #example structure of the params
-    # "flag"=>{"InsertTime"=>{"Accessibility"=>"on", "Usability"=>"on", "Traceability"=>"on"}, "LastUpdate"=>{"Traceability"=>"on"}}
-    if params["flag"]
-      params["flag"].each do |field, flag_hash|
-        flag_hash.each do |flag, status|
-          if status == "on"
-            flags_hash[field].push(flag)
+      #example structure of the params
+      # "flag"=>{"InsertTime"=>{"Accessibility"=>"on", "Usability"=>"on", "Traceability"=>"on"}, "LastUpdate"=>{"Traceability"=>"on"}}
+      if params["flag"]
+        params["flag"].each do |field, flag_hash|
+          flag_hash.each do |flag, status|
+            if status == "on"
+              flags_hash[field].push(flag)
+            end
           end
         end
       end
-    end
-    record.get_row("flag").update_values(flags_hash)
+      record.get_flags.update_values(flags_hash)
 
 
-    opinion_values = record.get_row("second_opinion").values
-    section_titles.each do |title|
-      opinion_values[title] = false
-    end
-
-    if params["opinion"]
-      params["opinion"].each do |key, value|
-          if value == "on"
-            opinion_values[key] = true
-          end
+      opinion_values = record.get_opinions.values
+      section_titles.each do |title|
+        opinion_values[title] = false
       end
+
+      if params["opinion"]
+        params["opinion"].each do |key, value|
+            if value == "on"
+              opinion_values[key] = true
+            end
+        end
+      end
+      record.get_opinions.update_values(opinion_values)
+    rescue
+      flash[:error] = "Values were not updated in the system.  Please resave changes."
     end
-    record.get_row("second_opinion").update_values(opinion_values)
 
     if params["discussion"]
       params["discussion"].each do |key, value|

@@ -101,7 +101,10 @@ class CollectionsController < ApplicationController
       #finding parent collection
       collection_object = Collection.find_or_create_by(concept_id: concept_id, short_name: short_name)
       #creating collection record related objects
-      new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false, rawJSON: collection_data.to_json)
+      new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
+
+      record_data = RecordData.new(datable: new_collection_record, rawJSON: collection_data.to_json)
+
       ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
 
       #returns a list of granule data
@@ -109,14 +112,16 @@ class CollectionsController < ApplicationController
       #replacing the data with new granule & record & ingest objects
       granules_to_save.map! do |granule_data| 
         granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-        new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], closed: false, rawJSON: granule_data.to_json)
+        new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
+        granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
         granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-        [ granule_object, new_granule_record, granule_ingest ]
+        [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
       end 
 
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
+        record_data.save!
         ingest_record.save!
         granules_to_save.flatten.each { |savable_object| savable_object.save! }
       end
