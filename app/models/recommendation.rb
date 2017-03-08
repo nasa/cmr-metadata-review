@@ -1,4 +1,4 @@
-class Flag < ActiveRecord::Base
+class Recommendation < ActiveRecord::Base
   include Datable
   
   belongs_to :record

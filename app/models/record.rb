@@ -1,18 +1,17 @@
 class Record < ActiveRecord::Base
   include RecordHelper
+  include Datable
+
   belongs_to :recordable, :polymorphic => true
+  has_one :record_data, :as => :datable
   has_many :reviews
-  has_many :comments
+  has_many :script_comments
   has_one :ingest
+  has_many :opinions
+  has_many :recommendations
+  has_many :colors
   has_many :flags
   has_many :discussions
-
-  COLLECTION_SECTIONS = ["COLLECTION INFORMATION", "SPATIAL INFORMATION", "DATA IDENTIFICATION", "DATA CENTERS", "DISTRIBUTION INFORMATION", 
-                         "DATA CONTACTS", "DESCRIPTIVE KEYWORDS", "COLLECTION CITATIONS", "ACQUISITION INFORMATION", "METADATA INFORMATION",
-                         "TEMPORAL INFORMATION"]
-  COLLECTION_FIELDS = [['ShortName', 'VersionId', 'InsertTime', 'LastUpdate', 'LongName', 'DatasetId', 'CollectionState',
-                                   'Description', 'CollectionDataType', 'Orderable', 'Visible', 'RevisionDate', 'SuggestedUsage' ]]
-
 
   def is_collection?
     self.recordable_type == "Collection"
@@ -23,15 +22,15 @@ class Record < ActiveRecord::Base
   end
 
   def long_name 
-    JSON.parse(self.rawJSON)["LongName"]
+    self.values["LongName"]
   end 
 
   def short_name
-    JSON.parse(self.rawJSON)["ShortName"]
+    self.values["ShortName"]
   end
 
   def version_id
-    JSON.parse(self.rawJSON)["VersionId"]
+    self.values["VersionId"]
   end
 
   def ingested_by
@@ -51,7 +50,7 @@ class Record < ActiveRecord::Base
   end
 
   def evaluate_script
-    collection_data = JSON.parse(rawJSON)
+    collection_data = self.values
     comment_JSON = blank_comment_JSON
     comment_hash = JSON.parse(comment_JSON)
 
@@ -84,6 +83,62 @@ class Record < ActiveRecord::Base
 
   end
 
+  def get_colors
+    colors = self.colors.first
+    if colors.nil?
+      colors = Color.new(record: self)
+      colors.save
+      colors.update_values(JSON.parse(self.blank_comment_JSON))
+    end
+    colors.reload
+    colors
+  end
+
+  def get_script_comments
+    script_comments = self.script_comments.first
+    if script_comments.nil?
+      self.evaluate_script
+      script_comments = self.script_comments.first
+    end 
+    script_comments.reload
+    script_comments
+  end
+
+  def get_flags
+    flags = self.flags.first
+    if flags.nil?
+      flags = Flag.new(record: self)
+      flags.save      
+      flags.update_values(JSON.parse(self.blank_comment_JSON))
+    end
+    flags.reload
+    flags
+  end
+
+  def get_recommendations
+    recommendations = self.recommendations.first
+    if recommendations.nil?
+      recommendations = Recommendation.new(record: self)
+      recommendations.save
+      recommendations.update_values(JSON.parse(self.blank_comment_JSON))
+    end
+    recommendations.reload
+    recommendations
+  end
+
+  def get_opinions
+    opinions = self.opinions.first
+    if opinions.nil?
+      opinions = Opinion.new(record: self)
+      opinions.save
+      new_opinion_hash = JSON.parse(self.blank_comment_JSON)
+      new_opinion_hash = new_opinion_hash.map {|key, value| [key, false] }.to_h
+      opinions.update_values(new_opinion_hash)
+    end
+    opinions.reload
+    opinions
+  end
+
   def score_script_hash(script_hash) 
     score = 0
     script_hash.each do |key, sub_value|
@@ -97,58 +152,30 @@ class Record < ActiveRecord::Base
   end
 
   def blank_comment_JSON
-    record_hash = JSON.parse(self.rawJSON)
+    record_hash = self.values
     empty_hash = empty_contents(record_hash)
     empty_hash.to_json
   end
 
   def script_values
-    script_comment = self.comments.where(user_id: -1).first
-    if script_comment.nil?
-      nil
-    else 
-      JSON.parse(script_comment.rawJSON)
-    end
+    self.get_script_comments.values
   end
 
   def script_score
-    script_comment = self.comments.where(user_id: -1).first
-    if script_comment.nil?
-      0
-    else 
-      script_comment.total_comment_count
-    end
-        
+    self.get_script_comments.total_comment_count
   end
+
 
   def add_script_comment(script_JSON, score)
-    add_comment(-1, script_JSON, score)
-  end
-
-  def add_comment(user_id, comment_json=nil, score=0)
-    new_comment = Comment.new
+    new_comment = ScriptComment.new
     new_comment.record = self
-    new_comment.user_id = user_id
     new_comment.total_comment_count = score
-    if comment_json.nil?
-      new_comment.rawJSON = self.blank_comment_JSON
+    if script_JSON.nil?
+      new_comment.update_values(JSON.parse(self.blank_comment_JSON))
     else
-      new_comment.rawJSON = comment_json
+      new_comment.update_values(JSON.parse(script_JSON))
     end
     new_comment.save!
-  end
-
-  def add_flag(user_id, flag_json=nil)
-    new_flag = Flag.new
-    new_flag.record = self
-    new_flag.user_id = user_id
-    new_flag.total_flag_count = 0
-    if flag_json.nil?
-      new_flag.rawJSON = self.blank_comment_JSON
-    else
-      new_flag.rawJSON = comment_json
-    end
-    new_flag.save!
   end
 
   def add_review(user_id)
@@ -163,22 +190,16 @@ class Record < ActiveRecord::Base
 
   def bubble_data
     bubble_set = []
-
     # setting flag data
-    record_flags = self.flags
-    if record_flags.empty?
-      bubble_set = JSON.parse(self.rawJSON).keys.map { |field| {:field_name => field, :color => "white"} }
-    else
-      flagset = JSON.parse(record_flags.first.rawJSON)
-      bubble_set = flagset.keys.map do |field| 
-        if flagset[field] == ""
-          bubble_color = "white"
-        else
-          bubble_color = flagset[field]
-        end
-
-        { :field_name => field, :color => bubble_color } 
+    record_colors = self.get_colors.values
+    bubble_set = record_colors.keys.map do |field| 
+      if record_colors[field] == ""
+        bubble_color = "white"
+      else
+        bubble_color = record_colors[field]
       end
+
+      { :field_name => field, :color => bubble_color } 
     end
 
     # adding the automated script results to each bubble
@@ -194,7 +215,7 @@ class Record < ActiveRecord::Base
     end
 
     #adding the second opinions
-    opinion_values = self.get_row("second_opinion").values
+    opinion_values = self.get_opinions.values
     bubble_set = bubble_set.map do |bubble| 
       bubble[:opinion] = opinion_values[bubble[:field_name]]
       bubble
@@ -214,58 +235,8 @@ class Record < ActiveRecord::Base
     bubble_map
   end
 
-  def section_bubble_data(field_set_index)
-    field_set = Record.get_collection_section_list(field_set_index)
-    record_set = JSON.parse(self.rawJSON)
-    included_field_set = field_set.select { |field| !(record_set[field].nil?) }
-    bubble_set = []
-
-    # setting flag data
-    record_flags = self.flags
-    if record_flags.empty?
-      bubble_set = included_field_set.map { |field| {:field_name => field, :color => "white"} }
-    else
-      flagset = JSON.parse(record_flags.first.rawJSON)
-      bubble_set = included_field_set.map do |field| 
-        if flagset[field] == ""
-          bubble_color = "white"
-        else
-          bubble_color = flagset[field]
-        end
-
-        { :field_name => field, :color => bubble_color } 
-      end
-    end
-
-    # adding the automated script results to each bubble
-    binary_script_values = self.binary_script_values
-    if binary_script_values.empty?
-      bubble_set = bubble_set.map { |bubble| bubble[:script] = true }
-    else
-      bubble_set = bubble_set.map do |bubble| 
-        bubble[:script] = binary_script_values[bubble[:field_name]]
-        bubble
-      end 
-    end
-
-    #adding the second opinions
-    opinion_values = self.get_row("second_opinion").values
-    bubble_set = bubble_set.map do |bubble| 
-      bubble[:opinion] = opinion_values[bubble[:field_name]]
-      bubble
-    end 
-
-    bubble_set
-  end
-
-
   def color_coding_complete?
-    flag_data = self.flags.first
-    if flag_data.nil?
-      return false
-    end
-
-    colors = JSON.parse(flag_data.rawJSON)
+    colors = self.get_colors.values
 
     colors.each do |key, value|
       if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
@@ -285,15 +256,11 @@ class Record < ActiveRecord::Base
   end
 
   def no_second_opinions?
-    return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
-  end
-
-  def second_opinions
-    self.get_row("second_opinion")
+    return !(self.get_opinions.values.select {|key,value| value == true}).any?
   end
 
   def second_opinion_count
-    opinion_values = self.second_opinions.values
+    opinion_values = self.get_opinions.values
     return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }
   end
 
@@ -329,18 +296,6 @@ class Record < ActiveRecord::Base
     binary_script_values
   end
 
-
-  def self.get_collection_section_list(list_index) 
-    return COLLECTION_FIELDS[list_index]
-  end
-
-  def section_titles(section_index) 
-    section_list = Record.get_collection_section_list(section_index.to_i)
-    record_set = JSON.parse(self.rawJSON)
-    included_field_set = section_list.select { |field| !(record_set[field].nil?) }
-    included_field_set
-  end
-
   #should return a list where each entry is a (title,[title_list])
   def sections
     section_list = []
@@ -359,7 +314,7 @@ class Record < ActiveRecord::Base
     section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + accessURLs + csdt + additional
     #finding the entries not in other sections
     used_titles = (section_list.map {|section| section[1]}).flatten
-    all_titles = JSON.parse(self.rawJSON).keys
+    all_titles = self.values.keys
 
     others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
 
@@ -368,7 +323,7 @@ class Record < ActiveRecord::Base
 
   def get_section(section_name)
     section_list = []
-    all_titles = JSON.parse(self.rawJSON).keys
+    all_titles = self.values.keys
     one_section = all_titles.select {|title| title.match /#{section_name}\//}
     if one_section.any?
       return [[section_name, one_section]]
@@ -383,35 +338,9 @@ class Record < ActiveRecord::Base
     end
   end
 
-  def values 
-    JSON.parse(self.rawJSON)
-  end
-
   def color_codes
-    flags = self.flags
-    if flags.empty?
-      self.add_flag(-1)
-      JSON.parse(self.flags.first.rawJSON)
-    else
-      JSON.parse(self.flags.first.rawJSON)
-    end
+    self.get_colors.values
   end
 
-  def update_color_codes(color_code_values)
-    color_codes = self.flags.first
-    color_codes.rawJSON = color_code_values.to_json
-    color_codes.save
-  end
-
-  def get_row(row_name) 
-    row = RecordRow.where(record_id: self.id, row_name: row_name)
-    if row.empty?
-      row = RecordRow.new(record_id: self.id, row_name: row_name, rawJSON: self.blank_comment_JSON)
-      row.save
-    else
-      row = row.first
-    end
-    row
-  end
 
 end
