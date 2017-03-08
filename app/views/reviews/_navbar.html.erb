@@ -9,7 +9,7 @@
     <% if page == "navigation" %>
       MAIN MENU
     <% else %>
-      BACK TO METADATA FIELDS
+      BACK TO METADATA ELEMENTS
     <% end %>
   </button>
 
@@ -32,7 +32,7 @@
 
   <div class="nav_info">
     <p>REVIEWER: <%= user_email %></p>
-    <p>Last Updated: X</p>
+    <p><!-- Last Updated: X --></p>
   </div>
 </nav>
 
@@ -53,16 +53,39 @@
 
       <div class="title_buttons">
 
-        <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
+        <button type="button" id="previousButton" class="eui-btn eui-btn--round eui-btn--sm">
           <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
           PREVIOUS
         </button>
-        <button type="button" class="eui-btn eui-btn--round eui-btn--sm">
+        <button type="button" id="nextButton" class="eui-btn eui-btn--round eui-btn--sm">
           NEXT
           <i class="eui-icon eui-fa-arrow-circle-right button_symbol"></i>
         </button>    
       </div>
       <div class="clearfix"></div>
+
+      <script type="text/javascript">
+        document.getElementById("previousButton").onclick = function() {
+          if (<%=params["section_index"].to_i%> > 0) {
+            let section_select = document.getElementById("section_select");
+            section_select.options[<%=params["section_index"].to_i - 1%>].selected = true;
+            section_select.options[<%=params["section_index"].to_i%>].selected = false;
+
+            section_select.onchange();
+          }
+        };
+
+        document.getElementById("nextButton").onclick = function() {
+          let section_select = document.getElementById("section_select");
+          if (<%=params["section_index"].to_i%> < (section_select.options.length - 1)) {
+            
+            section_select.options[<%=params["section_index"].to_i + 1%>].selected = true;
+            section_select.options[<%=params["section_index"].to_i%>].selected = false;
+
+            section_select.onchange();
+          }
+        };
+      </script>
 
   <% else %>
 

@@ -2,6 +2,16 @@ class Review < ActiveRecord::Base
   belongs_to :record
   belongs_to :user
 
+  def completed?
+    return (self.review_state == 1 && !self.review_completion_date.nil?)
+  end
+
+  def mark_complete
+    self.review_state = 1
+    self.review_completion_date = DateTime.now
+    self.save
+  end
+
   def state_string
     if self.review_state == 0
       "In Process"
