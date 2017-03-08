@@ -2,13 +2,36 @@ class Collection < ActiveRecord::Base
   has_many :records, :as => :recordable
   has_many :granules
 
+  # ====Params   
+  # ====Returns
+  # Record Array
+  # ==== Method
+  # returns all records found in the DB of type collection
+
   def self.all_records
     Record.all.where(recordable_type: "Collection")
   end
 
+  # ====Params   
+  # string concept_id,     
+  # string revision_id
+  # ====Returns
+  # Boolean
+  # ==== Method
+  # Checks the DB and returns boolean if a record with matching concept_id and revision_id is found
+
   def self.record_exists?(concept_id, revision_id) 
     return !(Collection.find_record(concept_id, revision_id).nil?)
   end
+
+  # ====Params   
+  # string concept_id,     
+  # string revision_id
+  # ====Returns
+  # Record || nil
+  # ==== Method
+  # Queries the DB and returns a record matching params    
+  # if no record is found, returns nil.
 
   def self.find_record(concept_id, revision_id) 
     record = nil
@@ -21,28 +44,16 @@ class Collection < ActiveRecord::Base
     return record
   end
 
-  def self.user_collection_ingests(user)
-    CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{user.id}")
-  end
+  # ====Params   
+  # User     
+  # ====Returns
+  # Review Array
+  # ==== Method
+  # Queries the DB and returns all reviews belonging to param User which   
+  # are marked in progress.  In progress determined by "review_state" field being == to 0    
 
   def self.user_open_collection_reviews(user)
     user.collection_reviews.where(review_state: 0)
-  end
-
-  def self.user_available_collection_review(user)
-    CollectionRecord.find_by_sql("with completed_reviews as (select * from collection_reviews where user_id=#{user.id} and review_state=1) select * from collection_records left outer join completed_reviews on collection_records.id = completed_reviews.collection_record_id where completed_reviews.collection_record_id is null")
-  end
-
-  def self.homepage_collection_search_results(provider, free_text, user)
-    if free_text
-      search_results = Curation.user_available_collection_review(user).select { |record| ((record.concept_id.include? free_text) || (record.short_name.include? free_text)) }
-      unless provider.nil? || provider == ANY_KEYWORD
-        search_results = search_results.select { |record| (record.concept_id.include? provider) }
-      end
-      search_results
-    else
-      []
-    end
   end
 
 end

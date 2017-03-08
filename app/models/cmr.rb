@@ -2,20 +2,35 @@ class Cmr
   include ApplicationHelper
   include CmrHelper
 
+  # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
 
+  # A custom error raised when items can not be found in the CMR.
   class CmrError < StandardError
 
   end
 
+  # ====Params   
+  # string url
+  # ====Returns
+  # HTTParty response object
+  # ==== Method
+  # Sends a request to the CMR system and returns the result
+  # throws timeout error after time determined by TIMEOUT_MARGIN
 
   def self.cmr_request(url)
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
-  #cmr api auto returns only the most recent revision of a collection
-  # &all_revisions=true&pretty=true" params can be used to find specific revision
-  #we should only need to ingest the most recent versions.
+  # ====Params   
+  # string concept_id
+  # ====Returns
+  # Hash of the data contained in a CMR collection object
+  # ==== Method
+  # Retrieves the most recent revision of a collection from the CMR
+  # then processes and returns the data   
+  # Automatically returns only the most recent revision of a collection       
+  # can add "&all_revisions=true&pretty=true" params to find specific revision      
   def self.get_collection(concept_id)
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     begin
@@ -35,6 +50,14 @@ class Cmr
     required_fields_hash
   end
 
+
+  # ====Params   
+  # accepts hash or array elements containing collection data
+  # ====Returns
+  # parameter with any nil contents removed
+  # ==== Method
+  # Method recursively travels through elements contained in parameter removing 
+  # any nil values.
   def self.remove_nil_values(collection_element)
 
     if collection_element.is_a?(Hash)
@@ -52,6 +75,14 @@ class Cmr
     end
     collection_element
   end
+
+  # ====Params   
+  # Hash containing collection data
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Iterates through parameter hash adding any UMM required fields    
+  # List of required fields set in hardcoded list within method
 
   def self.add_required_collection_fields(collection_hash)
     required_fields = ["ShortName", 
@@ -92,16 +123,43 @@ class Cmr
     collection_hash
   end
 
+
+  # ====Params   
+  # Array of keys,     
+  # String Field Name
+  # ====Returns
+  # Boolean
+  # ==== Method
+  # Checks a set of keys and returns boolean of keyset containing the string param
+
+
   def self.keyset_has_field?(keys, field)
     split_field = field.split("/")
     regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
     return (keys.select {|key| key =~ /^#{regex}/}).any?
   end
 
+
+  # ====Params   
+  # string concept_id
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Contacts the CMR system and then extracts the # of granules tied to a collection
+
   def self.collection_granule_count(collection_concept_id)
     granule_list = Cmr.granule_list_from_collection(collection_concept_id)
     return granule_list["hits"].to_i
   end
+
+  # ====Params   
+  # string concept_id,     
+  # integer page number
+  # ====Returns
+  # Array of granule data hashes
+  # ==== Method
+  # Contacts the CMR system and pulls granule data related to conecept_id param     
+  # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
     granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
@@ -111,6 +169,16 @@ class Cmr
       raise CmrError
     end
   end
+
+  # ====Params   
+  # string concept_id,     
+  # integer number of granules to download
+  # ====Returns
+  # Array of granule data hashmaps
+  # ==== Method
+  # Contacts the CMR system and pulls granule data related to conecept_id param     
+  # Uses a random number generator to select random granules from the overall list related to a collection
+
 
   def self.random_granules_from_collection(collection_concept_id, granule_count = 1)
     granule_data_list = []
@@ -145,6 +213,19 @@ class Cmr
 
     return granule_data_list
   end
+
+
+  # ====Params   
+  # string free text         
+  # string DAAC provider name    
+  # string page number of results to jump to    
+  # ====Returns
+  # Array of collection search results data     
+  # Integer total collection results found
+  # ==== Method
+  # Contacts the CMR system and uses the free text search API     
+  # parses the results and then returns a group of 10 to show in paginated results.  
+
 
   def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1")
     page_size = 10
