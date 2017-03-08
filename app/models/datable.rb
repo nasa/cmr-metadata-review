@@ -1,4 +1,14 @@
+# Module included with models that reference RecordData object
+# Allows a standard set of commands to communicate with RecordData without having to use direct associations.
 module Datable
+
+  # ====Params   
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Finds the RecordData object related to the parent class     
+  # and extracts the data, returns a hash of the contained data      
+  # Will initialize a new RecordData object if no existing objects found
   def values
     if self.record_data
       if self.record_data.rawJSON
@@ -12,6 +22,14 @@ module Datable
     end
   end 
 
+  # ====Params   
+  # Hash
+  # ====Returns
+  # Void
+  # ==== Method
+  # Queries the DB and returns a record matching params    
+  # if no record is found, returns nil.
+
   def update_values(new_value_hash)
     if self.record_data
       self.record_data.rawJSON = new_value_hash.to_json
@@ -20,6 +38,7 @@ module Datable
       new_data = RecordData.new(datable: self, rawJSON: new_value_hash.to_json)
       new_data.save
     end
+    nil
   end
 
   def update_partial_values(partial_hash)
