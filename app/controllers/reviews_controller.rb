@@ -3,7 +3,9 @@ class ReviewsController < ApplicationController
 
   def show
     record = Record.find_by id: params[:id]
-    section_index = params["section_index"]
+    section_index = params["section_index"].to_i
+
+
 
     @marked_done = record.closed
 
@@ -11,7 +13,7 @@ class ReviewsController < ApplicationController
     @long_name = @collection_record.long_name
     @short_name = @collection_record.short_name
 
-    @navigation_list = Record::COLLECTION_SECTIONS
+    @navigation_list = record.sections.map {|section| section[0] }
 
 
     @record_comments = @collection_record.comments
@@ -23,9 +25,16 @@ class ReviewsController < ApplicationController
 
     @discussions = record.discussions
 
-    @bubble_data = record.section_bubble_data(0)
+    @section_titles = record.sections[section_index][1]
 
-    @section_titles = record.section_titles(section_index)
+    @bubble_data = []
+    bubble_map = record.bubble_map
+    @section_titles.each do |title|
+        unless bubble_map[title].nil?
+            @bubble_data.push(bubble_map[title])
+        end
+    end
+
     @flagged_by_script = record.binary_script_values
     @script_values = record.script_values
     @previous_values = nil

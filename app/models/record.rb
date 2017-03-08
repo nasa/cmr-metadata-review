@@ -149,6 +149,61 @@ class Record < ActiveRecord::Base
     new_review.user_id = user_id
     new_review.review_state = 0
     new_review.save!
+
+    return new_review
+  end
+
+  def bubble_data
+    bubble_set = []
+
+    # setting flag data
+    record_flags = self.flags
+    if record_flags.empty?
+      bubble_set = JSON.parse(self.rawJSON).keys.map { |field| {:field_name => field, :color => "white"} }
+    else
+      flagset = JSON.parse(record_flags.first.rawJSON)
+      bubble_set = flagset.keys.map do |field| 
+        if flagset[field] == ""
+          bubble_color = "white"
+        else
+          bubble_color = flagset[field]
+        end
+
+        { :field_name => field, :color => bubble_color } 
+      end
+    end
+
+    # adding the automated script results to each bubble
+    binary_script_values = self.binary_script_values
+
+    if binary_script_values.empty?
+      bubble_set = bubble_set.map { |bubble| bubble[:script] = false }
+    else
+      bubble_set = bubble_set.map do |bubble| 
+        bubble[:script] = binary_script_values[bubble[:field_name]]
+        bubble
+      end 
+    end
+
+    #adding the second opinions
+    opinion_values = self.get_row("second_opinion").values
+    bubble_set = bubble_set.map do |bubble| 
+      bubble[:opinion] = opinion_values[bubble[:field_name]]
+      bubble
+    end 
+
+    bubble_set
+  end
+
+  def bubble_map
+    bubble_set = self.bubble_data
+    bubble_map = {}
+    begin
+      bubble_set.each {|bubble| bubble_map[bubble[:field_name]] = bubble}
+    rescue
+      bubble_map = {}
+    end
+    bubble_map
   end
 
   def section_bubble_data(field_set_index)
@@ -205,7 +260,7 @@ class Record < ActiveRecord::Base
     colors = JSON.parse(flag_data.rawJSON)
 
     colors.each do |key, value|
-      if value == nil || value == ""
+      if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
         return false
       end
     end
@@ -220,6 +275,11 @@ class Record < ActiveRecord::Base
   def no_second_opinions?
     return !(self.get_row("second_opinion").values.select {|key,value| value == true}).any?
   end
+
+  def second_opinions
+    self.get_row("second_opinion")
+  end
+
 
   def close
     self.closed = true
@@ -252,6 +312,48 @@ class Record < ActiveRecord::Base
     record_set = JSON.parse(self.rawJSON)
     included_field_set = section_list.select { |field| !(record_set[field].nil?) }
     included_field_set
+  end
+
+  #should return a list where each entry is a (title,[title_list])
+  def sections
+    section_list = []
+    
+    contacts = self.get_section("Contacts/Contact")
+    platforms = self.get_section("Platforms/Platform")
+    campaigns = self.get_section("Campaigns/Campaign")
+    temporal = self.get_section("Temporal")
+    scienceKeywords = self.get_section("ScienceKeywords/ScienceKeyword")
+    spatial = self.get_section("Spatial")
+    online = self.get_section("OnlineResources/OnlineResource")
+    accessURLs = self.get_section("OnlineAccessURLs")
+    csdt = self.get_section("CSDTDescriptions")
+    additional = self.get_section("AdditionalAttributes/AdditionalAttribute")
+
+    section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + accessURLs + csdt + additional
+    #finding the entries not in other sections
+    used_titles = (section_list.map {|section| section[1]}).flatten
+    all_titles = JSON.parse(self.rawJSON).keys
+
+    others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
+
+    section_list = others + section_list
+  end
+
+  def get_section(section_name)
+    section_list = []
+    all_titles = JSON.parse(self.rawJSON).keys
+    one_section = all_titles.select {|title| title.match /#{section_name}\//}
+    if one_section.any?
+      return [[section_name, one_section]]
+    else
+      count = 0
+      while (all_titles.select {|title| title.match /#{section_name}#{count.to_s}\//}).any?
+        next_section = all_titles.select {|title| title.match /#{section_name}#{count.to_s}\//}
+        section_list.push([section_name + count.to_s, next_section])
+        count = count + 1
+      end
+      section_list
+    end
   end
 
   def values 

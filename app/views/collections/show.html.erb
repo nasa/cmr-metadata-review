@@ -1,4 +1,4 @@
-<%= render(partial: 'shared/navigation') %>
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: COLLECTION"}) %>
 
 
 <div class="record_show_box">
@@ -47,6 +47,10 @@
             <div class="review_actions">
               <div class="ingest_score">
                 <p>Ingest Script Score: <%= record.script_score %></p>  
+              </div>
+
+              <div class="ingest_score">
+                <p>Collection Review Status: <%= record.closed ? "Closed" : "In Process" %></p>  
               </div>
 
               <button id="review_details_button">

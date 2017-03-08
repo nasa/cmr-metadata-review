@@ -118,6 +118,10 @@
     top: 2px;
 }
 
+.hidden_text {
+  visibility: hidden;
+}
+
 .script_text {
   position: relative;
   bottom: 1px;
@@ -271,6 +275,7 @@
 .section_display {
   padding-top: 15px;
   padding-bottom: 15px;
+  min-height: 106px;
 
   .section_button {
     border: none;
@@ -278,6 +283,7 @@
     padding-left: 0px;
     margin-bottom: 5px;
     background-color: inherit;
+    font-size: 1.4em;
   }
 }
 
