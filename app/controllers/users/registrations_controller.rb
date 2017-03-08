@@ -40,6 +40,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to new_user_registration_path
       return
     else
+      flash[:alert] = 'An error occured while creating new user.'
       clean_up_passwords resource
       set_minimum_password_length
       respond_with resource
