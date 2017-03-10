@@ -4,41 +4,28 @@
   </div>
 
   <div class="header_button_box">
-      <button id="curation_home_button" class="header_icon_button">
-        <i class="eui-icon eui-fa-globe"></i>
-        <p>CURATION HOME</p>
-      </button>
-
-      <script type="text/javascript">
-        document.getElementById("curation_home_button").onclick = function() {
-          document.location.href = "<%= home_path %>"
-        };
-      </script>
+      <a href="<%= home_path %>">
+        <button id="curation_home_button" class="header_icon_button">
+          <i class="eui-icon eui-fa-globe"></i>
+          <p>CURATION HOME</p>
+        </button>
+      </a>
 
       <% if current_user.admin %>
-          <button id="create_user_button" class="header_icon_button">
-            <i class="eui-icon eui-fa-circle-o"></i>
-            <p>CREATE USER</p>
-          </button>
-
-          <script type="text/javascript">
-            document.getElementById("create_user_button").onclick = function() {
-              document.location.href = "<%= new_user_registration_path %>"
-            };
-          </script>
+        <a href="<%= new_user_registration_path %>">
+            <button id="create_user_button" class="header_icon_button">
+              <i class="eui-icon eui-fa-circle-o"></i>
+              <p>CREATE USER</p>
+            </button>
+        </a>
       <% end %>
 
-      <button id="logout_button" class="header_icon_button">
-        <i class="eui-icon eui-fa-external-link-square"></i>
-        <p>LOGOUT</p>
-      </button>
-
-
-      <script type="text/javascript">
-        document.getElementById("logout_button").onclick = function() {
-          document.location.href = "<%= destroy_user_session_path %>"
-        };
-      </script>
+      <a href="<%= destroy_user_session_path %>">
+        <button id="logout_button" class="header_icon_button">
+          <i class="eui-icon eui-fa-external-link-square"></i>
+          <p>LOGOUT</p>
+        </button>
+      </a>
 
       <button class="header_icon_button">
         <i class="eui-icon eui-fa-question-circle"></i>

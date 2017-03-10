@@ -36,13 +36,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.save
     yield resource if block_given?
     if resource.persisted?
-      flash[:notice] = 'new user created'
+      flash[:notice] = "New user \"#{resource.email}\" has been successfully created."
       redirect_to new_user_registration_path
       return
     else
+      flash[:alert] = 'An error occured while creating new user.'
       clean_up_passwords resource
       set_minimum_password_length
-      respond_with resource
+      redirect_to new_user_registration_path
+      return
     end
   end
 
