@@ -9,8 +9,17 @@
   }
 }
 
+.bubble_opinion {
+  font-size: 0.7em;
+}
+
 .bubble_title {
   display: inline-block;
+  margin-bottom: 6px;
+  .bubble_title_text {
+    position: relative;
+    top: 3px;
+  }
 
 }
 
@@ -50,7 +59,6 @@
 .filter_select {
   width: 180px;
   font-size: 0.7em;
-
 }
 
 .flex_table_container td {
@@ -114,6 +122,7 @@
     left: 3em;
     top: auto;
     padding-left: 2em;
+    height: 200px;
   }
 
   .second_to_final_headcol {

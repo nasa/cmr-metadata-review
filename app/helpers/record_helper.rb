@@ -21,6 +21,10 @@ module RecordHelper
   end
 
   def script_test(value)
+    if value.nil? || value == ""
+      return false
+    end
+    
     return !((value.include? "OK") || (value.include? "ok") || (value.include? "Ok"))
   end
 

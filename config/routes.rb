@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
 
   get '/home', to: 'site#home'
+  get '/general_home', to: 'site#general_home'
   
   resources :collections
   get '/collections_search', to: 'collections#search'

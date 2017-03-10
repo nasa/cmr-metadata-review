@@ -4,6 +4,10 @@ class Cmr
 
   TIMEOUT_MARGIN = 10
 
+  class CmrError < StandardError
+
+  end
+
 
   def self.cmr_request(url)
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
@@ -14,8 +18,84 @@ class Cmr
   #we should only need to ingest the most recent versions.
   def self.get_collection(concept_id)
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
-    collection_results = Hash.from_xml(collection_xml)["results"]
-    flatten_collection(collection_results["result"]["Collection"])
+    begin
+      collection_results = Hash.from_xml(collection_xml)["results"]
+    rescue
+      #error raised when no results are found.  CMR returns an error hash instead of xml string
+      raise CmrError
+    end
+
+    if collection_results["hits"].to_i == 0
+      raise CmrError
+    end
+
+    results_hash = flatten_collection(collection_results["result"]["Collection"])
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    required_fields_hash
+  end
+
+  def self.remove_nil_values(collection_element)
+
+    if collection_element.is_a?(Hash)
+      #removing nil values from hash
+      collection_element.delete_if {|key,value| value.nil? }
+      #recurring through remaining values
+      collection_element.each do |key, value|
+          collection_element[key] = Cmr.remove_nil_values(value)
+      end
+    elsif collection_element.is_a?(Array)
+      #removing nils
+      collection_element = collection_element.select {|element| element }
+      #removing sub nils
+      collection_element = collection_element.map {|element| Cmr.remove_nil_values(element)}
+    end
+    collection_element
+  end
+
+  def self.add_required_collection_fields(collection_hash)
+    required_fields = ["ShortName", 
+                        "VersionId", 
+                        "InsertTime", 
+                        "LastUpdate", 
+                        "LongName", 
+                        "DatasetId", 
+                        "Description", 
+                        "Orderable", 
+                        "Visible",
+                        "ProcessingLevelId", 
+                        "ArchiveCenter", 
+                        "DataFormat", 
+                        "Temporal/Range/DateTime/BeginningDateTime", 
+                        "Contacts/Contact/Role",
+                        "ScienceKeywords/ScienceKeyword/CategoryKeyword",
+                        "ScienceKeywords/ScienceKeyword/TopicKeyword",
+                        "ScienceKeywords/ScienceKeyword/TermKeyword", 
+                        "Platforms/Platform/ShortName", 
+                        "Platforms/Platform/Instruments/Instrument/ShortName",
+                        "Campaigns/Campaign/ShortName", 
+                        "OnlineAccessURLs/OnlineAccessURL/URL", 
+                        "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                        "Spatial/GranuleSpatialRepresentation"]
+
+    keys = collection_hash.keys
+    required_fields.each do |field|
+      unless Cmr.keyset_has_field?(keys, field)
+        collection_hash[field] = ""
+      end
+    end
+
+    collection_hash
+  end
+
+  def self.keyset_has_field?(keys, field)
+    split_field = field.split("/")
+    regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
+    return (keys.select {|key| key =~ /^#{regex}/}).any?
   end
 
   def self.collection_granule_count(collection_concept_id)
@@ -25,7 +105,11 @@ class Cmr
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
     granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
-    Hash.from_xml(granule_xml)["results"]
+    begin
+      Hash.from_xml(granule_xml)["results"]
+    rescue
+      raise CmrError
+    end
   end
 
   def self.random_granules_from_collection(collection_concept_id, granule_count = 1)
@@ -62,11 +146,7 @@ class Cmr
     return granule_data_list
   end
 
-  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page)
-    unless curr_page
-      curr_page = "1"
-    end
-
+  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1")
     page_size = 10
     search_iterator = []
 
@@ -80,14 +160,19 @@ class Cmr
         query_text_first_char = query_text_first_char + "&provider=#{provider}"
       end
 
-      raw_xml = Cmr.cmr_request(query_text).parsed_response
-      search_results = Hash.from_xml(raw_xml)["results"]
-
-      #rerun query with first wildcard removed
-      if search_results["hits"].to_i == 0
-        raw_xml = Cmr.cmr_request(query_text_first_char).parsed_response
+      begin
+        raw_xml = Cmr.cmr_request(query_text).parsed_response
         search_results = Hash.from_xml(raw_xml)["results"]
+
+        #rerun query with first wildcard removed
+        if search_results["hits"].to_i == 0
+          raw_xml = Cmr.cmr_request(query_text_first_char).parsed_response
+          search_results = Hash.from_xml(raw_xml)["results"]
+        end
+      rescue
+        raise CmrError
       end
+
 
       collection_count = search_results["hits"].to_i
 
