@@ -19,6 +19,13 @@ user.admin = true
 user.curator = true
 user.save
 
+  user = User.new
+user.email = 'general@element84.com'
+user.password = 'Password101'
+user.admin = false
+user.curator = false
+user.save
+
 # collection = Collection.new
 # collection.concept_id = "C167310-GHRC"
 # collection.short_name = "gailong"
