@@ -70,32 +70,21 @@
               <div class="direction_links">
                 
                 <% if @curr_page.to_i > 1 %>
-                  <button id="prev_button">
-                    <i class="eui-icon eui-fa-chevron-circle-left"></i>
-                    <p>Previous Page</p>    
-                  </button>
-
-                  <script type="text/javascript">
-                    document.getElementById("prev_button").onclick = function() {
-                      document.location.href = "<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>"
-                    }
-                  </script>
-
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>">
+                    <button id="prev_button">
+                      <i class="eui-icon eui-fa-chevron-circle-left"></i>
+                      <p>Previous Page</p>    
+                    </button>
+                  </a>
                 <% end %>
 
                 <% if @curr_page.to_i * 10 < @collection_count %>
-
-                  <button id="next_button">
-                    <p>Next Page</p>    
-                    <i class="eui-icon eui-fa-chevron-circle-right"></i>
-                  </button>
-
-                  <script type="text/javascript">
-                    document.getElementById("next_button").onclick = function() {
-                      document.location.href = "<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>"
-                    }
-                  </script>
-
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>">
+                    <button id="next_button">
+                      <p>Next Page</p>    
+                      <i class="eui-icon eui-fa-chevron-circle-right"></i>
+                    </button>
+                  </a>
                 <% end %>
               </div>
 
