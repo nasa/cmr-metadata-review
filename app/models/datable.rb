@@ -15,10 +15,10 @@ module Datable
   def update_values(new_value_hash)
     if self.record_data
       self.record_data.rawJSON = new_value_hash.to_json
-      self.record_data.save
+      self.record_data.save!
     else
       new_data = RecordData.new(datable: self, rawJSON: new_value_hash.to_json)
-      new_data.save
+      new_data.save!
     end
   end
 
@@ -26,7 +26,6 @@ module Datable
     if partial_hash
       values = self.values
       partial_hash.each do |key, value|
-        
           values[key] = value
       end
       self.update_values(values)
