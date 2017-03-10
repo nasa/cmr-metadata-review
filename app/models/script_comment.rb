@@ -1,3 +1,6 @@
+# ActiveRecord class used to store results of the automated script check for record review fields.     
+# Data is stored using the RecordData model as an attribute of ScriptComment.
+
 class ScriptComment < ActiveRecord::Base
   include Datable
   

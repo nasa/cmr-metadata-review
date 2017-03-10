@@ -21,3 +21,6 @@
 
 #ignore generated doc files as they will be changing constantly
 /public/doc/*
+
+#ignore the coverage map
+/coverage/*
