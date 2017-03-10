@@ -76,8 +76,10 @@
     display: inline-block;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+    border-radius: 10px;
     /*This is to hold the 2 text content for second opinion*/
-    padding-left: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 /*the unique flag background colors*/
@@ -106,16 +108,13 @@
 
 .no_script {
     border: 1px solid #d9d9d9;
-    height: 20px;
-    width: 20px;
+    // height: 20px;
+    // width: 20px;
 }
 
 .script {
-    border: 3px solid #000;
-    height: 20px;
-    width: 20px;
-    position: relative;
-    top: 2px;
+    border: 2px solid #000;
+
 }
 
 .hidden_text {
@@ -124,32 +123,30 @@
 
 .script_text {
   position: relative;
-  bottom: 1px;
-  right: 2px;
 }
 
 .no_script_text {
     position: relative;
-    top: 1px;
-    right: 0.5px;
   }
 
 
 //these are for in the navigation view record#show
 .record_bubbles {
+
+  .single_bubble_container {
+    display: inline-block;
+    min-width: 20px;
+    min-height: 20px;
+  }
   .bubble_opinion {
-    font-size: 1em;
+    font-size: 1.1em;
   }
   .script_text {
-    position: relative;
-    bottom: 1px;
-    right: 1.5px;
+
   }
 
   .no_script_text {
-    position: relative;
-    top: 1px;
-    left: 0.5px;
+
   }
 }
 
@@ -305,11 +302,12 @@
 
     .legend_flex_item {
       height: 30px;
+      display: flex;
+      align-items: center;
 
       .legend_text {
         display: inline-block;
         padding-left: 5px;
-        margin-top: -5px;
       }
     }
 }
