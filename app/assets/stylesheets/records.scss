@@ -76,8 +76,10 @@
     display: inline-block;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+    border-radius: 10px;
     /*This is to hold the 2 text content for second opinion*/
     padding-left: 5px;
+    padding-right: 5px;
 }
 
 /*the unique flag background colors*/
@@ -87,10 +89,12 @@
 
 .flag_blue {
     background-color: blue;
+    color: white;
 }
 
 .flag_green {
     background-color: green;
+    color: white;
 }
 
 .flag_yellow {
@@ -99,20 +103,52 @@
 
 .flag_red {
     background-color: red;
+    color: white;
 }
 
 .no_script {
     border: 1px solid #d9d9d9;
-    height: 17px;
-    width: 17px;
+    // height: 20px;
+    // width: 20px;
 }
 
 .script {
-    border: 3px solid #000;
-    height: 17px;
-    width: 17px;
+    border: 2px solid #000;
+
 }
 
+.hidden_text {
+  visibility: hidden;
+}
+
+.script_text {
+  position: relative;
+}
+
+.no_script_text {
+    position: relative;
+  }
+
+
+//these are for in the navigation view record#show
+.record_bubbles {
+
+  .single_bubble_container {
+    display: inline-block;
+    min-width: 20px;
+    min-height: 20px;
+  }
+  .bubble_opinion {
+    font-size: 1.1em;
+  }
+  .script_text {
+
+  }
+
+  .no_script_text {
+
+  }
+}
 
 .record_nav {
   height: 75px;
@@ -170,6 +206,7 @@
     display: inline-block;
     font-size: 0.9em;
     float: right;
+    margin-bottom: 7px;
 
     .review_complete_button {
       background-color: #7ab5da;
@@ -235,6 +272,7 @@
 .section_display {
   padding-top: 15px;
   padding-bottom: 15px;
+  min-height: 106px;
 
   .section_button {
     border: none;
@@ -242,6 +280,7 @@
     padding-left: 0px;
     margin-bottom: 5px;
     background-color: inherit;
+    font-size: 1.4em;
   }
 }
 
@@ -263,11 +302,12 @@
 
     .legend_flex_item {
       height: 30px;
+      display: flex;
+      align-items: center;
 
       .legend_text {
         display: inline-block;
         padding-left: 5px;
-        margin-top: -5px;
       }
     }
 }

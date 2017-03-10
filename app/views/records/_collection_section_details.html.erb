@@ -1,15 +1,31 @@
 <article class="section_display flex_item">
-  <button class="section_button" onclick="location.href='<%= review_path(id: params["id"], section_index: 0) %>';">
-  <%= title %>
+  <button class="section_button" onclick="location.href='<%= review_path(id: params["id"], section_index: index_count) %>';">
+  <%= space_digits(section[0]) %>
   <!-- arrow to review section -->
   <div class="eui-icon eui-fa-arrow-circle-right"></div>
   </button>
   <!-- dynamically add bubble divs -->
   <div class="record_bubbles">
-    <% bubble_data.each_with_index do | bubble, index | %>
-      <% script_class = bubble[:script] ? "script" : "no_script" %>
-      <div class="bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
-      </div>
+    <% section[1].each_with_index do | field, index | %>
+      <% if bubble_data[field] %>
+        <% script_class = bubble_data[field][:script] ? "script" : "no_script" %>
+        <% script_text_class = bubble_data[field][:script] ? "script_text" : "no_script_text" %>
+        <div class="single_bubble_container">
+          <div class="bubble flag_<%= bubble_data[field][:color] %> <%= script_class %>" title="<%= bubble_data[field][:field_name] %>">
+            <% if bubble_data[field][:opinion] && bubble_data[field][:opinion] != "" %>
+              <div class="<%= script_text_class %> bubble_opinion">2</div>
+              <% else %>
+              <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <%# E is presented in the circle for error. retreiving bubble data.%>
+        <div class="bubble flag_white no_script" title="field">
+            <div class="<%= script_text_class %> bubble_opinion">E</div>
+        </div>
+
+      <% end %>
     <% end %>
   </div>
 </article>  

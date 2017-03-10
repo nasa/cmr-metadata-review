@@ -8,10 +8,22 @@ class ApplicationController < ActionController::Base
 
   #saving error from CanCan for users going beyond allowed pages
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    if current_user
+      redirect_to general_home_path, :alert => exception.message
+    else
+      redirect_to root_url, :alert => exception.message
+    end
   end
 
   def after_sign_in_path_for(resource)
-    home_path
+    if can? :access, :curate
+      home_path
+    else
+      general_home_path
+    end
+  end
+
+  def ensure_curation
+    authorize! :access, :curate
   end
 end

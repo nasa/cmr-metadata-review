@@ -9,8 +9,17 @@ module CmrHelper
         if sub_value.is_a?(Hash)
           new_collection_hash = new_collection_hash.merge(flatten_collection(sub_value, parent_string + "/" + key))
         elsif sub_value.is_a?(Array)
-          sub_value.each_with_index do | array_entry, index |
-            new_collection_hash = new_collection_hash.merge(flatten_collection(array_entry, parent_string + "/" + key + index.to_s))
+          #some keyword groupings are presented as lists of strings, do not want to seperate these
+          if sub_value[0].is_a?(String)
+            new_collection_hash[(parent_string + "/" + key)] = ""
+            sub_value.each_with_index do | array_entry |
+              new_collection_hash[(parent_string + "/" + key)] += (array_entry + " ")
+            end
+            new_collection_hash[(parent_string + "/" + key)].strip
+          else
+            sub_value.each_with_index do | array_entry, index |
+              new_collection_hash = new_collection_hash.merge(flatten_collection(array_entry, parent_string + "/" + key + index.to_s))
+            end
           end
         else
           #if string num or other end value

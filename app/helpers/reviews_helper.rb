@@ -18,10 +18,19 @@ module ReviewsHelper
   end
 
   #formats the titles from ShortName -> SHORT NAME
+  #Platforms/Platform0/ShortName -> PLATFORMS / PLATFORM 0 / SHORT NAME
   def split_on_capitals(title)
-    cap_list = title.split /(?=[A-Z])/
+    cap_list = title.split /(?=[A-Z]+)/
     #strip removes trailing whitespace
-    (cap_list.reduce("") {|final_string, word| final_string + word.upcase + " " }).strip
+    out_title = (cap_list.reduce("") {|final_string, word| final_string + word.upcase + " " }).strip
+    #adds a space before the / and adds a space before digits
+    out_title = out_title.gsub("/", " /")
+    out_title = space_digits(out_title)
+    out_title
+  end
+
+  def space_digits(title)
+    return title.gsub(/([0-9]+)/, " \\1")
   end
 
 end

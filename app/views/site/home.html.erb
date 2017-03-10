@@ -1,4 +1,4 @@
-<%= render(partial: 'shared/navigation') %>
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: HOME"}) %>
 
 <div class="curation_box">
 
@@ -30,39 +30,136 @@
   <div class="results_area">
 
     <div class="results_title">
-      <p><strong>All Records Available For Review:</strong></p>
+      <p><strong>Unreviewed Records:</strong></p>
     </div>
 
     <div class="results_table">
 
       <table cellpadding="5" border="1">
+        <tr>
+            <th>Concept_ID</th>
+            <th class="center_text">Revision_ID</th>
+            <th>ShortName</th>
+            <th class="center_text">Version</th>
+            <th>Ingested By</th>
+            <th class="center_text"># Script Flags</th>
+            <th>Selection</th>
+        </tr>
+
+        <% @unreviewed_records.each_with_index do |record, index| %>
           <tr>
-              <th>Concept_ID</th>
-              <th>Revision_ID</th>
-              <th>ShortName</th>
-              <th>Selection</th>
+              <td id="table1Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
+              <td><%= record.recordable.short_name %></td>
+              <td class="center_text"><%= record.version_id %></td>
+              <td><%= record.ingested_by %></td>
+              <td class="center_text"><%= record.script_score %></td>
+              <td class="center_text"><input type="radio" id="table1<%= index.to_s %>" name="table1Selection" value="<%= index.to_s %>"/></td>
           </tr>
-
-
-          <% @user_available_collection_reviews.each_with_index do |record, index| %>
-            <tr>
-                <td id="availableConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                <td><%= record.revision_id %></td>
-                <td><%= record.recordable.short_name %></td>
-                <td><input type="radio" id="available<%= index.to_s %>" name="availableSelection" value="<%= index.to_s %>"/></td>
-            </tr>
-          <% end %>
-        </table>
-
-
-        <br>
-
-        <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'available_form'}) do %>
-          <%= hidden_field_tag(:concept_id, "", id: "availableConceptId") %>
-          <%= submit_tag("See Collection Review Detail", id: 'availableSubmit') %>
         <% end %>
+      </table>
 
-      </div>
+      <br>
+
+      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table1_form'}) do %>
+        <%= hidden_field_tag(:concept_id, "", id: "table1ConceptId") %>
+        <%= submit_tag("See Collection Review Detail", id: 'table1Submit') %>
+      <% end %>
+
+    </div>
+
+
+
+
+
+
+    <div class="results_title">
+      <p><strong>In Process Records:</strong></p>
+    </div>
+
+    <div class="results_table">
+
+      <table cellpadding="5" border="1">
+        <tr>
+            <th>Concept_ID</th>
+            <th class="center_text">Revision_ID</th>
+            <th>ShortName</th>
+            <th class="center_text">Version</th>
+            <th>Ingested By</th>
+            <th class="center_text"># Script Flags</th>
+            <th class="center_text"># Completed Reviews</th>
+            <th class="center_text"># Second Reviews Requested</th>
+            <th>Selection</th>
+        </tr>
+
+        <% @in_process_records.each_with_index do |record, index| %>
+          <tr>
+              <td id="table2Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
+              <td><%= record.recordable.short_name %></td>
+              <td class="center_text"><%= record.version_id %></td>
+              <td><%= record.ingested_by %></td>
+              <td class="center_text"><%= record.script_score %></td>
+              <td class="center_text"><%= record.completed_review_count %></td>
+              <td class="center_text"><%= record.second_opinion_count %></td>
+              <td class="center_text"><input type="radio" id="table2<%= index.to_s %>" name="table2Selection" value="<%= index.to_s %>"/></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <br>
+
+      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table2_form'}) do %>
+        <%= hidden_field_tag(:concept_id, "", id: "table2ConceptId") %>
+        <%= submit_tag("See Collection Review Detail", id: 'table2Submit') %>
+      <% end %>
+
+    </div>
+
+
+
+
+
+
+
+    <div class="results_title">
+      <p><strong>Closed Records:</strong></p>
+    </div>
+
+    <div class="results_table">
+
+      <table cellpadding="5" border="1">
+        <tr>
+            <th>Concept_ID</th>
+            <th class="center_text">Revision_ID</th>
+            <th>ShortName</th>
+            <th>Version</th>
+            <th>Ingested By</th>
+            <th>Date Review Closed</th>
+            <th>Selection</th>
+        </tr>
+
+        <% @closed_records.each_with_index do |record, index| %>
+          <tr>
+              <td id="table3Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+              <td class="center_text"><%= record.revision_id %></td>
+              <td><%= record.recordable.short_name %></td>
+              <td><%= record.version_id %></td>
+              <td><%= record.ingested_by %></td>
+              <td><%= record.formatted_closed_date %></td>
+              <td class="center_text"><input type="radio" id="table3<%= index.to_s %>" name="table3Selection" value="<%= index.to_s %>"/></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <br>
+
+      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
+        <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
+        <%= submit_tag("See Collection Review Detail", id: 'table3Submit') %>
+      <% end %>
+
+    </div>
 
   </div>
 
@@ -71,25 +168,40 @@
 
 <script type="text/javascript">
 
-  var availableButton = document.getElementById("availableSubmit");
-  availableButton.disabled = true;
+  setUpTable("table1");
+  setUpTable("table2");
+  setUpTable("table3");
 
-  var availableSelector = document.getElementsByName("availableSelection");
-  for (var i = 0, length = availableSelector.length; i < length; i++) {
-      (function(index) {
-          var temp = document.getElementById("available" + i);
-          temp.onclick = function() {
-                                var count = index;
-                                updateAvailable(count);
-                                availableButton.disabled = false;
-                                }
-      })(i);
+  function setUpTable(table) {
+    var tableButton = document.getElementById(table + "Submit");
+    var tableSelector = document.getElementsByName(table + "Selection");    
+    tableButton.disabled = setOnClick(table, tableButton, tableSelector);
   }
 
-  var updateAvailable = function(count) {
-    var rowName = "availableConcept" + count;
+
+  function setOnClick(table, tableButton, tableSelector) {
+      var shouldDisable = true;
+      for (var i = 0, length = tableSelector.length; i < length; i++) {
+          (function(index) {
+              var temp = document.getElementById(table + i);
+              if (temp && temp.checked) {
+                shouldDisable = false;
+              }
+              temp.onclick = function() {
+                                    var count = index;
+                                    updateTableValues(count, table);
+                                    tableButton.disabled = false;
+                                    }
+          })(i);
+      }
+      return shouldDisable;
+  }
+  
+
+  function updateTableValues(count, table) {
+    var rowName = table + "Concept" + count;
     var newConceptId = document.getElementById(rowName).innerHTML;
-    document.getElementById("availableConceptId").value = newConceptId;
+    document.getElementById(table + "ConceptId").value = newConceptId;
   }
 
 
