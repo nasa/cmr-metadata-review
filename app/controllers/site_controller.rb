@@ -1,5 +1,8 @@
 class SiteController < ApplicationController
 
+   before_filter :authenticate_user!
+   before_filter :ensure_curation, :except => [:general_home]
+
    def home
     #ingested records by user
     # @user_collection_ingests = Curation.user_collection_ingests(current_user)
@@ -16,6 +19,10 @@ class SiteController < ApplicationController
 
     @search_results = []
     @provider_select_list = provider_select_list
+  end
+
+  def general_home
+
   end
 
 end
