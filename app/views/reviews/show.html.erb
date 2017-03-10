@@ -26,7 +26,7 @@
   <div class="filter_row">
     <p><strong>FILTERS:</strong></p>
     <!-- slider toggles -->
-    <div>
+    <div class="filter_switches">
       <div class="filter_switch">
         <p>FLAGGED BY SCRIPT</p>
         <label class="switch">
@@ -81,7 +81,7 @@
         if (scriptToggle.checked == true) {
           var scriptCells = document.getElementsByClassName("script_check_cell");
           //finding all the script_cells which have the check icon.
-          for (let index in scriptCells) {
+          for (var index in scriptCells) {
             if (scriptIsChecked(scriptCells[parseInt(index)])) {
               hiddenCells.push(parseInt(index));
             }
@@ -92,7 +92,7 @@
         if (opinionToggle.checked == true) {
           var opinionCells = document.getElementsByClassName("opinion_cell");
           //finding all the script_cells which have the check icon.
-          for (let index in opinionCells) {
+          for (var index in opinionCells) {
             if (opinionIsChecked(opinionCells[parseInt(index)])) {
               hiddenCells.push(parseInt(index));
             }
@@ -103,7 +103,7 @@
         if (colorToggle.checked == true) {
           var colorCells = document.getElementsByClassName("color_code_cell");
           //finding all the script_cells which have the check icon.
-          for (let index in colorCells) {
+          for (var index in colorCells) {
             if (colorIsChecked(colorCells[parseInt(index)])) {
               hiddenCells.push(parseInt(index));
             }
@@ -120,10 +120,10 @@
 
 
         //hiding each column individually
-        for (let columnNum of hiddenCells) {
-          var hideCells = document.getElementsByClassName(titleList[columnNum]);
-          for (let cell of hideCells) {
-            cell.style.display = "none";
+        for (var columnNum in hiddenCells) {
+          var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
+          for (var cell in hideCells) {
+            hideCells[parseInt(cell)].style.display = "none";
           }
         }
 
@@ -135,11 +135,11 @@
       function unhideAllCells() {
           document.getElementById("scroll_table").style.display = "block";
 
-          for (let index in titleList) {
+          for (var index in titleList) {
             var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
-            for (let cell of showCells) {
-              if (cell) {
-                cell.style.display = "table-cell";  
+            for (var cell in showCells) {
+              if (showCells[parseInt(cell)]) {
+                showCells[parseInt(cell)].style.display = "table-cell";  
               }
             }
           }
@@ -273,8 +273,8 @@
         <script type="text/javascript">
           function add_flag_click_handler(cell_id, check_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
-              let checkbox = document.getElementById(check_id);
-              let icon = document.getElementById(icon_id);
+              var checkbox = document.getElementById(check_id);
+              var icon = document.getElementById(icon_id);
               if (checkbox.checked == true) {
                 checkbox.checked = false;
                 this.style.backgroundColor = "inherit";
@@ -339,7 +339,7 @@
         <script type="text/javascript">
           function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
             document.getElementById(cell_id).onclick = function() {
-              let check = document.getElementById(check_id);
+              var check = document.getElementById(check_id);
               if (check.checked == true) {
                 document.getElementById(cell_id).style.backgroundColor = "inherit";
                 check.checked = false;;
@@ -434,11 +434,11 @@
 
 <script type="text/javascript">
   function update_color_backgrounds() {
-    let color_selects = document.getElementsByClassName("color_code_select");
-    let color_cells = document.getElementsByClassName("color_code_cell");
-    let counter = 0;
+    var color_selects = document.getElementsByClassName("color_code_select");
+    var color_cells = document.getElementsByClassName("color_code_cell");
+    var counter = 0;
     while (counter < color_selects.length) {
-      let color = color_selects[counter].value
+      var color = color_selects[counter].value
       color_cells[counter].style.backgroundColor = color;
       if (color == "green" || color == "red" || color == "blue") {
         color_selects[counter].style.color = "white";
