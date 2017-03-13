@@ -60,18 +60,24 @@ class Record < ActiveRecord::Base
       #running collection script in python
       script_results = `python lib/CollectionChecker.py "#{collection_json}"`
 
+      #adding this to move past some errors, need to figure out why they are thrown
+      #must be some difference in json
+      if script_results == ""
+        script_results = "1\n2\n3\n4"
+      end
       #parsing the prints from the script into sections
       script_results = script_results.split("\n")
 
+
       #removing any of the script results that have no text, ie ", " or ",  "
       script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
-
       #splitting the row headers into a list
       script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
 
       #creating a hash with values { row_header => result_string }
       comment_hash = Hash[script_results[3].zip(script_results[1])]
 
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
 
       score = score_script_hash(comment_hash)
 
@@ -81,6 +87,22 @@ class Record < ActiveRecord::Base
 
     end
 
+  end
+
+
+  def self.format_script_comments(comment_hash, values_hash) 
+    value_keys = values_hash.keys
+    comment_keys = comment_hash.keys
+
+    comment_keys.each do |comment_field|
+      value_keys.each do |value_field|
+        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
+          comment_hash[value_field] = comment_hash[comment_field]
+        end
+      end
+    end
+
+    return comment_hash
   end
 
   def get_colors
@@ -99,6 +121,8 @@ class Record < ActiveRecord::Base
     if script_comments.nil?
       self.evaluate_script
       script_comments = self.script_comments.first
+      # script_comments = ScriptComment.new()
+      # script_comments.save
     end 
     script_comments.reload
     script_comments
