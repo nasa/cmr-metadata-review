@@ -84,6 +84,33 @@ class Record < ActiveRecord::Base
       add_script_comment(comment_hash.to_json, score)
     else
       #run granule script
+            #escaping json for passing to python
+      collection_json = collection_data.to_json.gsub("\"", "\\\"")
+      #running collection script in python
+      script_results = `python lib/GranuleChecker.py "#{collection_json}"`
+
+      #adding this to move past some errors, need to figure out why they are thrown
+      #must be some difference in json
+      if script_results == ""
+        script_results = "1\n2\n3\n4"
+      end
+      #parsing the prints from the script into sections
+      script_results = script_results.split("\n")
+
+
+      #removing any of the script results that have no text, ie ", " or ",  "
+      script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
+      #splitting the row headers into a list
+      script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
+
+      #creating a hash with values { row_header => result_string }
+      comment_hash = Hash[script_results[3].zip(script_results[1])]
+
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
+
+      score = score_script_hash(comment_hash)
+
+      add_script_comment(comment_hash.to_json, score)
 
     end
 
