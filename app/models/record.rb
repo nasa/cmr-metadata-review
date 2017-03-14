@@ -49,7 +49,10 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-  def evaluate_script(raw_data)
+  def evaluate_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_data
+      end
       #escaping json for passing to python
       collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
@@ -61,9 +64,23 @@ class Record < ActiveRecord::Base
 
       comment_hash = JSON.parse(script_results)
       comment_hash = Record.format_script_comments(comment_hash, self.values)
+      comment_hash
+  end
 
+  def get_raw_data
+    if is_collection?
+      Cmr.get_raw_collection(concept_id)
+    else
+
+    end
+  end
+
+  def create_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_data
+      end
+      comment_hash = self.evaluate_script(raw_data)
       score = score_script_hash(comment_hash)
-
       add_script_comment(comment_hash.to_json, score)
   end
 
@@ -97,9 +114,9 @@ class Record < ActiveRecord::Base
   def get_script_comments
     script_comments = self.script_comments.first
     if script_comments.nil?
-      self.evaluate_script
+      self.create_script
       script_comments = self.script_comments.first
-      # script_comments = ScriptComment.new()
+      # script_comments = ScriptComment.new(rawJSON: '{"":""}', record: self)
       # script_comments.save
     end 
     script_comments.reload
