@@ -135,9 +135,8 @@ class CollectionsController < ApplicationController
 
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
-
-      granule_records.each_with_index do |record, index|
-        record.create_script(granules_to_save[index]["Granule"])
+      granule_records.each do |record|
+        record.create_script
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
