@@ -297,12 +297,12 @@
 
             <td class="no_padding column_<%=title%>">
               <div class="flag_flexbox">
-                <% ["Accessibility", "Usability", "Traceability", "Curation"].each do |flag_field| %>            
+                <% ["Accessibility", "Usability", "Traceability"].each do |flag_field| %>            
                   <% cell_id = "flag_" + flag_field + "_" +  title %>
                   <% check_name = "flag["+ title +"][" + flag_field + "]" %>
                   <% check_id = "flag_" + flag_field + "_check_" +  title %>
                   <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
-                  <% flag_cell_border = ((flag_field == "Usability" || flag_field == "Curation")? "flag_middle_border": "") %>
+                  <% flag_cell_border = ((flag_field == "Usability")? "flag_middle_border": "") %>
                   <div class="flag_flex_cell <%= flag_cell_border %>" id="<%= cell_id %>">
                     <input type="checkbox" id="<%= check_id %>" name="<%= check_name %>" form="field_form">
                     <p class="flag_flex_text">
