@@ -16,8 +16,11 @@ class Cmr
   #cmr api auto returns only the most recent revision of a collection
   # &all_revisions=true&pretty=true" params can be used to find specific revision
   #we should only need to ingest the most recent versions.
-  def self.get_collection(concept_id)
-    results_hash = flatten_collection(Cmr.get_raw_collection(concept_id))
+  def self.get_collection(concept_id, raw_collection = nil)
+    if raw_collection.nil?
+      raw_collection = Cmr.get_raw_collection(concept_id)
+    end
+    results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
     required_fields_hash

@@ -97,7 +97,8 @@ class CollectionsController < ApplicationController
     end
 
     begin 
-      collection_data = Cmr.get_collection(concept_id)
+      raw_collection = Cmr.get_raw_collection(concept_id)
+      collection_data = Cmr.get_collection(concept_id, raw_collection)
       short_name = collection_data["ShortName"]
       ingest_time = DateTime.now
       #nil gets turned into 0
@@ -130,11 +131,8 @@ class CollectionsController < ApplicationController
         granules_components.flatten.each { |savable_object| savable_object.save! }
       end
 
-      byebug
+      new_collection_record.evaluate_script(raw_collection)
 
-      new_collection_record.evaluate_script(Cmr.get_raw_collection(concept_id))
-
-      byebug
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
 
@@ -143,7 +141,7 @@ class CollectionsController < ApplicationController
         record.evaluate_script(granules_to_save[index]["Granule"])
       end
 
-      # flash[:notice] = "The selected collection has been successfully ingested into the system"
+      flash[:notice] = "The selected collection has been successfully ingested into the system"
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::OpenTimeout
