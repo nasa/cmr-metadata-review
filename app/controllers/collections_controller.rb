@@ -131,14 +131,13 @@ class CollectionsController < ApplicationController
         granules_components.flatten.each { |savable_object| savable_object.save! }
       end
 
-      new_collection_record.evaluate_script(raw_collection)
+      new_collection_record.create_script(raw_collection)
 
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
 
       granule_records.each_with_index do |record, index|
-        #got to fix this case that granules to save is used twice
-        record.evaluate_script(granules_to_save[index]["Granule"])
+        record.create_script(granules_to_save[index]["Granule"])
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
