@@ -10,6 +10,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
 ANY KIND, either express or implied. See the License for the specific language 
 governing permissions and limitations under the License.
 '''
+import json
+import sys
+
 
 import csv
 import urllib2
@@ -24,7 +27,7 @@ ResourcesTypeURL = "http://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/r
 
 
 def fetchAllInstrs():
-    print "Fetch all Instruments ..."
+    #print "Fetch all Instruments ..."
     InstrKeyWords = [[],[],[],[],[],[]]
     # Category, SciTopicKeys, SciTermKeys, SciVarL1Keys, SciVarL2Keys, SciVarL3Keys, SciDetailVar
     response = urllib2.urlopen(InstrumentURL)
@@ -48,6 +51,9 @@ class Checker():
         # result = ", "
         result = ""
         resultFields = ""
+
+        metadata = metadata.replace("\\", "")
+        metadata = json.loads(metadata)
         
         # result += self.checkGranuleUR(metadata['GranuleUR']) + ', '
         # ================
@@ -66,7 +72,7 @@ class Checker():
             result += "np" + ', '
         # ================
 
-        resultFields += 'DeleteTime' + ', '
+        resultFields += 'DeleteTime' + ',,, '
         try:
             result += self.checkDeleteTime(metadata['DeleteTime'], metadata['DataGranule']['ProductionDateTime']) + ', , , '
         except KeyError:
@@ -196,7 +202,7 @@ class Checker():
             result += 'np' + ', , , '
         # ================  
 
-
+        resultFields += 'None' + ',,,,'
         if len(sensorShortResult) == 0:
             result += 'np , , , , '
         else:
@@ -216,7 +222,9 @@ class Checker():
         # ================
 
 
-
+        '''
+        They forgot to put a timeout on the URL call for this method, added by AB
+        '''
         resultFields += 'OnlineAccessURLs/OnlineAccessURL/URL' + ', '
         try:
             result += self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL']['URL'], 1) + ', '
@@ -229,7 +237,6 @@ class Checker():
         except KeyError:
             result += "No Online Access URL is provided" + ', '
         # ================
-
 
         resultFields += 'OnlineAccessURLs/OnlineAccessURL/URLDescription' + ', , '
         try:
@@ -309,7 +316,7 @@ class Checker():
         # ================
 
 
-        resultFields += 'Visible' + ', '
+        resultFields += 'Visible' + ', , , , , , , '
         try:
             result += self.checkVisible(metadata["Visible"]) + ', , , , , , , '
         except KeyError:
@@ -320,14 +327,14 @@ class Checker():
 
 
     def checkGranuleUR(self, val):
-        print "Input of checkGranuleUR() is " + val
+        #print "Input of checkGranuleUR() is " + val
         if val == None:
             return "Provide a granule UR for this granule. This is a required field."
         else:
             return "OK"
 
     def checkInsertTime(self, val):
-        print "Input of checkInsertTime() is " + val
+        #print "Input of checkInsertTime() is " + val
         try:
             if val == None:
                 return "np"
@@ -345,7 +352,7 @@ class Checker():
             return "4-Insert time error"
 
     def checkLastUpdate(self, updateTime, prodTime):
-        print "Input of checkLastUpdate() is " + updateTime + ', ' + prodTime
+        #print "Input of checkLastUpdate() is " + updateTime + ', ' + prodTime
         try:
             if updateTime == None:
                 return "np"
@@ -365,7 +372,7 @@ class Checker():
             return "Last update time error"
 
     def checkDeleteTime(self, deleteTime, prodTime):
-        print "Input of checkDeleteTime() is " + deleteTime + ', ' + prodTime
+        #print "Input of checkDeleteTime() is " + deleteTime + ', ' + prodTime
         try:
             if deleteTime == None:
                 return "np"
@@ -385,7 +392,7 @@ class Checker():
             return "Delete time error"        
 
     def checkShortNameAndVersionID(self, sname, vid):
-        print "Input of checkShortNameAndVersionID() is " + sname + ', ' + vid
+        #print "Input of checkShortNameAndVersionID() is " + sname + ', ' + vid
         if sname == None and vid == None:
             return "np, np"
         elif sname == None or vid == None:
@@ -394,7 +401,7 @@ class Checker():
             return "OK, OK"
 
     def checkDataSetId(set, val):
-        print "Input of checkDataSetId() is " + val
+        #print "Input of checkDataSetId() is " + val
         if val == None:
             return "np"
         elif val.isupper() or val.islower():
@@ -403,14 +410,14 @@ class Checker():
             return "OK"
 
     def checkSizeMBDataGranule(set, val):
-        print "Input of checkSizeMBDataGranule() is " + val
+        #print "Input of checkSizeMBDataGranule() is " + val
         if val == None:
             return "Granule file size not provided. Recommend providing a value for this field in the metadata."
         else:
             return "OK - quality check"
 
     def checkDayNightFlag(set, val):
-        print "Input of checkDayNightFlag() is " + val
+        #print "Input of checkDayNightFlag() is " + val
         DNFlags = ('DAY', 'NIGHT', 'BOTH', 'UNSPECIFIED')
         if val == None:
             return "np"
@@ -420,7 +427,7 @@ class Checker():
             return "OK"
 
     def checkProductionDateTime(self, prodTime, insertTime):
-        print "Input of checkProductionDateTime() is " + prodTime + ', ' + insertTime
+        #print "Input of checkProductionDateTime() is " + prodTime + ', ' + insertTime
         try:
             if prodTime == None:
                 return "np"
@@ -442,7 +449,7 @@ class Checker():
             return "Production date time error"
 
     def checkTemporalSingleTime(self, val):
-        print "Input of checkTemporalSingleTime() is " + val
+        #print "Input of checkTemporalSingleTime() is " + val
         try:
             if val == None:
                 return "np"
@@ -460,7 +467,7 @@ class Checker():
             return "Single date time error"
 
     def checkTemporalBeginningTime(self, val):
-        print "Input of checkTemporalBeginningTime() is " + val
+        #print "Input of checkTemporalBeginningTime() is " + val
         try:
             if val == None:
                 return "np"
@@ -478,7 +485,7 @@ class Checker():
             return "Beginning date time error"
 
     def checkTemporalEndingTime(self, val):
-        print "Input of checkTemporalEndingTime() is " + val
+        #print "Input of checkTemporalEndingTime() is " + val
         try:
             if val == None:
                 return "np"
@@ -496,7 +503,7 @@ class Checker():
             return "Ending date time error"
 
     def checkBoundingRectangle(self, val):
-        print "Input of checkBoundingRectangle() is ..."
+        #print "Input of checkBoundingRectangle() is ..."
 
         if val['WestBoundingCoordinate'] == None or val['NorthBoundingCoordinate'] == None or val['EastBoundingCoordinate'] == None or val['SouthBoundingCoordinate'] == None:
            return "Check for other spatial identifiers (Point; GPolygon; or Line). A spatial extent identifier is required., " + \
@@ -537,7 +544,7 @@ class Checker():
         return msg
 
     def checkEquatorCrossingTime(self, val, length):
-        print "Input of checkEquatorCrossingTime() is ..."
+        #print "Input of checkEquatorCrossingTime() is ..."
         if length == 1:
             try:
                 if val == None:
@@ -573,7 +580,7 @@ class Checker():
                     return "Time error"        
 
     def checkPlatformShortName(self, val, length):
-        print "Input of checkPlatformShortName() is ..."
+        #print "Input of checkPlatformShortName() is ..."
         PlatformKeys = list()
         PlatformLongNames = list()
         response = urllib2.urlopen(PlatformURL)
@@ -676,7 +683,7 @@ class Checker():
     #         return "np"
     
     def checkInstrShortName(self, val, platformNum, instruments):
-        print "Input of checkInstrShortName() is ..."
+        #print "Input of checkInstrShortName() is ..."
         processInstrCount = 0
         InstrumentKeys = instruments[4]
         SensorResult = ''
@@ -735,7 +742,8 @@ class Checker():
                         return "The keyword does not conform to GCMD.", SensorResult
                     processInstrCount += 1
             except KeyError:
-                print "Access Key Error!"
+                temp = 1
+                #print "Access Key Error!"
         else:
             for i in range(0, platformNum):
                 try:
@@ -817,7 +825,7 @@ class Checker():
 
 
     def checkCampaignShortName(self, val, campaignNum):
-        print "Input of checkCampaignShortName() is ..."
+        #print "Input of checkCampaignShortName() is ..."
         CampaignKeys = list()
         CampaignLongNames = list()
         response = urllib2.urlopen(ProjectURL)
@@ -856,7 +864,7 @@ class Checker():
 
 
     def checkOnlineAccessURL(self, val, length):
-        print "Input of checkOnlineAccessURL() is ..."
+        #print "Input of checkOnlineAccessURL() is ..."
         brokenURLcount = 0
         msg = ""
         
@@ -864,7 +872,7 @@ class Checker():
             if val == None:
                 return "np"
             try:
-                connection = urllib2.urlopen(val)
+                connection = urllib2.urlopen(val, timeout = 5)
                 if connection:
                     realURL = connection.geturl()
                     connection.close()
@@ -877,7 +885,7 @@ class Checker():
                 if val[i]['URL'] == None:
                     return "np"
                 try:
-                    connection = urllib2.urlopen(val[i]['URL'])
+                    connection = urllib2.urlopen(val[i]['URL'], timeout = 5)
                     if connection:
                         realURL = connection.geturl()
                         connection.close()
@@ -892,7 +900,7 @@ class Checker():
             return "OK" 
 
     def checkOnlineAccessURLDesc(self, val, length):
-        print "Input of checkOnlineAccessURLDesc() is ..."
+        #print "Input of checkOnlineAccessURLDesc() is ..."
 
         if length == 1:
             if val == None:
@@ -904,7 +912,7 @@ class Checker():
         return "OK - quality check" 
 
     def checkOnlineResourceURL(self, val, length):
-        print "Input of checkOnlineResourceURL() is ..."
+        #print "Input of checkOnlineResourceURL() is ..."
         brokenURLcount = 0
         msg = ""
         if length == 1:
@@ -933,7 +941,7 @@ class Checker():
             return "OK"
 
     def checkOnlineResourceDesc(self, val, length):
-        print "Input of checkOnlineResourceDesc() is ..."
+        #print "Input of checkOnlineResourceDesc() is ..."
         if length == 1:
             if val == None:
                 return "np"
@@ -947,7 +955,7 @@ class Checker():
         return "OK - quality check"
 
     def checkOnlineResourceType(self, val, length):
-        print "Input of checkOnlineResourceType() is ..."
+        #print "Input of checkOnlineResourceType() is ..."
         ResourcesTypes = list()
         response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
@@ -979,21 +987,21 @@ class Checker():
         return "OK"
 
     def checkOrderable(self, val):
-        print "Input of checkOrderable() is " + val
+        #print "Input of checkOrderable() is " + val
         if val == None:
             return "np"
         else:
             return "The Orderable field is being depreciated; and therefore can be removed from the metadata."
 
     def checkDataFormat(self, val):
-        print "Input of checkDataFormat() is " + val
+        #print "Input of checkDataFormat() is " + val
         if val == None:
             return "Recommend providing the data format(s) for this dataset"
         else:
             return "OK " + val
 
     def checkVisible(self, val):
-        print "Input of checkVisible() is " + val
+        #print "Input of checkVisible() is " + val
         if val == None:
             return "np"
         else:
@@ -1009,13 +1017,13 @@ result, resultFields = x.checkAll(sys.argv[1])
 print("result")
 if result:
     print(result)
-else
+else:
     print("none\n")    
 print("resultFields")
 # print(resultFields)
 if resultFields:
     print(resultFields)
-else
+else:
     print("none\n")  
 
 

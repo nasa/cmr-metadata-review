@@ -105,11 +105,9 @@ class Checker():
             result = ""
             resultFields = ""
 
+            metadata = metadata.replace("\\", "")
+
             metadata = json.loads(metadata)
-
-            
-
-
 
             resultFields += 'ShortName' + ', '
             result += self.checkShortName(metadata['ShortName']) + ', '
@@ -146,7 +144,7 @@ class Checker():
                 result += 'Provide a Dataset Id for this dataset. This is a required field.' + ', '
             # ================
 
-            resultFields += 'Description' + ', '
+            resultFields += 'Description' + ', ,'
             try:
                 result += self.checkDesc(metadata['Description']) + ', , '
             except KeyError:
@@ -164,7 +162,7 @@ class Checker():
             except KeyError:
                 result += 'np' + ', '
             # ================
-            resultFields += 'RevisionDate' + ', '
+            resultFields += 'RevisionDate' + ', ,'
             try:
                 result += self.checkRevisionDate(metadata['RevisionDate']) + ', , '
             except KeyError:
@@ -176,13 +174,13 @@ class Checker():
             except KeyError:
                 result += 'np' + ', '
             # ================
-            resultFields += 'ProcessingLevelId' + ', '
+            resultFields += 'ProcessingLevelId' + ', , '
             try:
                 result += self.checkProcLevelID(metadata['ProcessingLevelId']) + ', , '
             except KeyError:
                 result += 'Provide a processing level Id for this dataset. This is a required field.' + ', , '
             # ================
-            resultFields += 'ArchiveCenter' + ', '
+            resultFields += 'ArchiveCenter' + ', ,'
             try:
                 result += self.checkArchiveCenter(metadata['ArchiveCenter']) + ', , '
             except KeyError:
@@ -194,7 +192,7 @@ class Checker():
             except KeyError:
                 result += 'np' + ', '
             # ================
-            resultFields += 'CollectionState' + ', '
+            resultFields += 'CollectionState' + ', , , , , '
             try:
                 result += self.checkCollectionState(metadata['CollectionState']) + ', , , , , '
             except KeyError:
@@ -255,7 +253,9 @@ class Checker():
             except KeyError:
                 result += 'np' + ', , , , , , , , , , , '
             # ================
-            try:                
+
+            resultFields += 'Contacts/Contact/OrganizationEmails/Email' + ', , , , , '
+            try:
                 result += self.checkContactEmail(metadata['Contacts']['Contact']['OrganizationEmails']['Email'], 1) + ', , , , , '
                 resultFields += 'Contacts/Contact/OrganizationEmails/Email' + ', , , , , '
             except KeyError:
@@ -268,6 +268,7 @@ class Checker():
                     result += 'np' + ', , , , , '
             # ================
             ScienceKeywords = fetchAllSciKeyWords()
+
 
             resultFields += 'ScienceKeywords/ScienceKeyword/CategoryKeyword' + ', '
             try:
@@ -396,7 +397,7 @@ class Checker():
             instruments = fetchAllInstrs()
             sensorShortResult = ''
 
-            resultField += 'Platforms/Platform/Instruments/Instrument/ShortName' + ','
+            resultFields += 'Platforms/Platform/Instruments/Instrument/ShortName' + ','
             try:
                 metadata['Platforms']['Platform']['ShortName']
                 platform_num = 1
@@ -414,7 +415,7 @@ class Checker():
             # ================
             sensorLongResult = ''
 
-            resultField += 'Platforms/Platform/Instruments/Instrument/LongName' + ', , , , , , , , '
+            resultFields += 'Platforms/Platform/Instruments/Instrument/LongName' + ', , , , , , , , '
             try:
                 metadata['Platforms']['Platform']['LongName']
                 platform_num = 1
@@ -431,12 +432,14 @@ class Checker():
                 result += 'Recommend providing an instrument long name; since many instrument long names are comprised of acronyms.' + ', , , , , , , , '
             # ================
 
-
+            resultFields += 'None1' + ','
             if len(sensorShortResult) == 0:
                 result += 'np , '
             else:
                 result += sensorShortResult + ', '
             # ================
+
+            resultFields += 'None2' + ', , , , , , , , , , , , , , , , , , , , , , '
             if len(sensorLongResult) == 0:
                 result += 'np , , , , , , , , , , , , , , , , , , , , , , '
             else:
@@ -1675,11 +1678,11 @@ result, resultFields = x.checkAll(sys.argv[1])
 print("result")
 if result:
     print(result)
-else
+else:
     print("none\n")    
 print("resultFields")
 # print(resultFields)
 if resultFields:
     print(resultFields)
-else
+else:
     print("none\n")  
