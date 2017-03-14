@@ -50,70 +50,21 @@ class Record < ActiveRecord::Base
   end
 
   def evaluate_script(raw_data)
-    collection_data = self.values
-    comment_JSON = blank_comment_JSON
-    comment_hash = JSON.parse(comment_JSON)
-
-    if self.is_collection?
       #escaping json for passing to python
       collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
-
-      script_results = `python lib/CollectionChecker.py "#{collection_json}"`
-
-      #adding this to move past some errors, need to figure out why they are thrown
-      #must be some difference in json
-      if script_results == ""
-        script_results = "1\n2\n3\n4"
+      if self.is_collection?  
+        script_results = `python lib/CollectionChecker.py "#{collection_json}"  `
+      else
+        script_results = `python lib/GranuleChecker.py "#{collection_json}"`
       end
-      #parsing the prints from the script into sections
-      script_results = script_results.split("\n")
 
-
-      #removing any of the script results that have no text, ie ", " or ",  "
-      script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
-      #splitting the row headers into a list
-      script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
-
-      #creating a hash with values { row_header => result_string }
-      comment_hash = Hash[script_results[3].zip(script_results[1])]
-
+      comment_hash = JSON.parse(script_results)
       comment_hash = Record.format_script_comments(comment_hash, self.values)
 
       score = score_script_hash(comment_hash)
 
       add_script_comment(comment_hash.to_json, score)
-    else
-      #escaping json for passing to python
-      collection_json = raw_data.to_json.gsub("\"", "\\\"")
-      #running collection script in python
-      script_results = `python lib/GranuleChecker.py "#{collection_json}"`
-
-      #adding this to move past some errors, need to figure out why they are thrown
-      #must be some difference in json
-      if script_results == ""
-        script_results = "1\n2\n3\n4"
-      end
-      #parsing the prints from the script into sections
-      script_results = script_results.split("\n")
-
-
-      #removing any of the script results that have no text, ie ", " or ",  "
-      script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
-      #splitting the row headers into a list
-      script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
-
-      #creating a hash with values { row_header => result_string }
-      comment_hash = Hash[script_results[3].zip(script_results[1])]
-
-      comment_hash = Record.format_script_comments(comment_hash, self.values)
-
-      score = score_script_hash(comment_hash)
-
-      add_script_comment(comment_hash.to_json, score)
-
-    end
-
   end
 
 

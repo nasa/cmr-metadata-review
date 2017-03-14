@@ -50,7 +50,7 @@ class Checker():
     def checkAll(self, metadata):
         # result = ", "
         result = ""
-        resultFields = ""
+        resultFields = {}
 
         metadata = metadata.replace("\\", "")
         metadata = json.loads(metadata)
@@ -58,25 +58,25 @@ class Checker():
         # result += self.checkGranuleUR(metadata['GranuleUR']) + ', '
         # ================
 
-        resultFields += 'InsertTime' + ', '
+        
         try:
-            result += self.checkInsertTime(metadata['InsertTime']) + ', '
+            resultFields['InsertTime']= self.checkInsertTime(metadata['InsertTime'])
         except KeyError:
-            result += "np" + ', '
+            resultFields['InsertTime']= "np"
         # ================
 
-        resultFields += 'LastUpdate' + ', '
+        
         try:
-            result += self.checkLastUpdate(metadata['LastUpdate'], metadata['DataGranule']['ProductionDateTime']) + ', '
+            resultFields['LastUpdate']= self.checkLastUpdate(metadata['LastUpdate'], metadata['DataGranule']['ProductionDateTime'])
         except KeyError:
-            result += "np" + ', '
+            resultFields['LastUpdate']= "np"
         # ================
 
-        resultFields += 'DeleteTime' + ',,, '
+        
         try:
-            result += self.checkDeleteTime(metadata['DeleteTime'], metadata['DataGranule']['ProductionDateTime']) + ', , , '
+            resultFields['DeleteTime']= self.checkDeleteTime(metadata['DeleteTime'], metadata['DataGranule']['ProductionDateTime'])
         except KeyError:
-            result += "np" + ', , , '
+            resultFields['DeleteTime']= "np" 
         # ================
         # try:
         #     result += self.checkShortNameAndVersionID(metadata['Collection']['ShortName'], metadata['Collection']['VersionId']) + ', '
@@ -84,18 +84,18 @@ class Checker():
         #     result += "np, np" + ', '
         # ================
 
-        resultFields += 'Collection/DataSetId' + ',,, '
+        
         try:
-            result += self.checkDataSetId(metadata['Collection']['DataSetId']) + ', , , '
+            resultFields['Collection/DataSetId']= self.checkDataSetId(metadata['Collection']['DataSetId'])
         except KeyError:
-            result += "np" + ', , , '
+            resultFields['Collection/DataSetId']= "np"
         # ================
 
-        resultFields += 'DataGranule/SizeMBDataGranule' + ', ,,,,'
+        
         try:
-            result += self.checkSizeMBDataGranule(metadata['DataGranule']['SizeMBDataGranule']) + ', , , , , '
+            resultFields['DataGranule/SizeMBDataGranule']= self.checkSizeMBDataGranule(metadata['DataGranule']['SizeMBDataGranule']) 
         except KeyError:
-            result += "Granule file size not provided. Recommend providing a value for this field in the metadata" + ', , , , , '
+            resultFields['DataGranule/SizeMBDataGranule']= "Granule file size not provided. Recommend providing a value for this field in the metadata"
         # ================
         # try:
         #     result += self.checkDayNightFlag(metadata['DataGranule']['DayNightFlag']) + ', '
@@ -104,69 +104,69 @@ class Checker():
         # ================
 
 
-        resultFields += 'DataGranule/ProductionDateTime' + ', , , , '
+        
         try:
-            result += self.checkProductionDateTime(metadata['DataGranule']['ProductionDateTime'], metadata['InsertTime']) + ', , , , '
+            resultFields['DataGranule/ProductionDateTime']= self.checkProductionDateTime(metadata['DataGranule']['ProductionDateTime'], metadata['InsertTime'])
         except KeyError:
-            result += "np" + ', , , , '
+            resultFields['DataGranule/ProductionDateTime']= "np"
         # ================
 
-        resultFields += 'Temporal/RangeDateTime/SingleDateTime' + ', '
+        
         try:
-            result += self.checkTemporalSingleTime(metadata['Temporal']['RangeDateTime']['SingleDateTime']) + ', '
+            resultFields['Temporal/RangeDateTime/SingleDateTime']= self.checkTemporalSingleTime(metadata['Temporal']['RangeDateTime']['SingleDateTime']) 
         except KeyError:
-            result += "np" + ', '
+            resultFields['Temporal/RangeDateTime/SingleDateTime']= "np"
         # ================
 
-        resultFields += 'Temporal/RangeDateTime/BeginningDateTime' + ', '
+        
         try:
-            result += self.checkTemporalBeginningTime(metadata['Temporal']['RangeDateTime']['BeginningDateTime']) + ', '
+            resultFields['Temporal/RangeDateTime/BeginningDateTime']= self.checkTemporalBeginningTime(metadata['Temporal']['RangeDateTime']['BeginningDateTime']) 
         except KeyError:
-            result += "np" + ', '
-        # ================
-
-
-        resultFields += 'Temporal/RangeDateTime/EndingDateTime' + ', , , , , , , '
-        try:
-            result += self.checkTemporalEndingTime(metadata['Temporal']['RangeDateTime']['EndingDateTime']) + ', , , , , , , '
-        except KeyError:
-            result += "np" + ', , , , , , , '
+            resultFields['Temporal/RangeDateTime/BeginningDateTime']= "np" 
         # ================
 
 
-        resultFields += 'Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle' + ', , , , , , , , , , , , , , '
+        
         try:
-            result += self.checkBoundingRectangle(metadata['Spatial']['HorizontalSpatialDomain']['Geometry']['BoundingRectangle']) + ', , , , , , , , , , , , , , '
+            resultFields['Temporal/RangeDateTime/EndingDateTime']= self.checkTemporalEndingTime(metadata['Temporal']['RangeDateTime']['EndingDateTime'])
         except KeyError:
-            result += "np, np, np, np" + ', , , , , , , , , , , , , , '
+            resultFields['Temporal/RangeDateTime/EndingDateTime']= "np"
         # ================
 
 
-        resultFields += 'OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime' + ', , , , , , , , , , , , '
+        
         try:
-            result += self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], 1) + ', , , , , , , , , , , , '
+            resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= self.checkBoundingRectangle(metadata['Spatial']['HorizontalSpatialDomain']['Geometry']['BoundingRectangle']) 
+        except KeyError:
+            resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= "np, np, np, np"
+        # ================
+
+
+        
+        try:
+            resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], 1) 
         except TypeError:
             if metadata['OrbitCalculatedSpatialDomains'] != None and metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'] != None:
                 length = len(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'])
-                result += self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], length) + ', , , , , , , , , , , ,'
+                resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], length) 
             else:
-                result += "np" + ', , , , , , , , , , , , '
+                resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= "np"
         except KeyError:
-            result += "np" + ', , , , , , , , , , , , '
+            resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= "np"
         # ================  
 
 
-        resultFields += 'Platforms/Platform/ShortName' + ', '
+        
         try:
-            result += self.checkPlatformShortName(metadata['Platforms']['Platform']['ShortName'], 1) + ', '
+            resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform']['ShortName'], 1) 
         except TypeError:
             if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
                 length = len(metadata['Platforms']['Platform'])
-                result += self.checkPlatformShortName(metadata['Platforms']['Platform'], length) + ', '
+                resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform'], length) 
             else:
-                result += "np" + ', '
+                resultFields['Platforms/Platform/ShortName']= "np" 
         except KeyError:
-            result += "np" + ', '
+            resultFields['Platforms/Platform/ShortName']= "np"
         # ================
         # try:
         #     metadata['Platforms']['Platform']['ShortName']
@@ -185,144 +185,143 @@ class Checker():
         sensorShortResult = ''
 
 
-        resultFields += 'Platforms/Platform' + ',,,'
+        
         try:
             metadata['Platforms']['Platform']['ShortName']
             platform_num = 1
             ret, sensorShortResult = self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num, instruments)
-            result += ret + ', , , '
+            resultFields['Platforms/Platform']= ret 
         except TypeError:
             if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
                 platform_num = len(metadata['Platforms']['Platform'])
                 ret, sensorShortResult = self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num, instruments)
-                result += ret + ', , , '
+                resultFields['Platforms/Platform']= ret 
             else:
-                result += 'np' + ', , , '
+                resultFields['Platforms/Platform']= 'np' 
         except KeyError:
-            result += 'np' + ', , , '
+            resultFields['Platforms/Platform']= 'np'
         # ================  
 
-        resultFields += 'None' + ',,,,'
         if len(sensorShortResult) == 0:
             result += 'np , , , , '
         else:
             result += sensorShortResult + ', , , , '
         # ================
 
-        resultFields += 'Campaigns/Campaign/ShortName' + ', , , , , , , , , , '
+        
         try:
             campaign_num = 1
-            result += self.checkCampaignShortName(metadata['Campaigns']['Campaign']['ShortName'], campaign_num) + ', , , , , , , , , , '
+            resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns']['Campaign']['ShortName'], campaign_num) 
         except TypeError:
             if metadata['Campaigns'] != None and metadata['Campaigns']['Campaign'] != None:
                 campaign_num = len(metadata['Campaigns'])
-                result += self.checkCampaignShortName(metadata['Campaigns'], campaign_num) + ', , , , , , , , , , '
+                resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns'], campaign_num) 
         except KeyError:
-            result += "np" + ', , , , , , , , , , '
+            resultFields['Campaigns/Campaign/ShortName']= "np"
         # ================
 
 
         '''
         They forgot to put a timeout on the URL call for this method, added by AB
         '''
-        resultFields += 'OnlineAccessURLs/OnlineAccessURL/URL' + ', '
+        
         try:
-            result += self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL']['URL'], 1) + ', '
+            resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL']['URL'], 1) 
         except TypeError:
             if metadata['OnlineAccessURLs'] != None:
                 length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
-                result += self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) + ', '
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
             else:
-                result += "No Online Access URL is provided" + ', '
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
         except KeyError:
-            result += "No Online Access URL is provided" + ', '
+            resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
         # ================
 
-        resultFields += 'OnlineAccessURLs/OnlineAccessURL/URLDescription' + ', , '
+        
         try:
-            result += self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'], 1) + ', , '
+            resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'], 1) 
         except TypeError:
             if metadata['OnlineAccessURLs'] != None:
                 length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
-                result += self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) + ', , '
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
             else:
-                result += "Recommend providing a brief URL description" + ', , '
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
         except KeyError:
-            result += "Recommend providing a brief URL description" + ', , '
+            resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
         # ================
         OnlineResourceURL_Cnt = 0
 
 
 
-        resultFields += 'OnlineResources/OnlineResource/URL' + ', '
+        
         try:
-            result += self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource']['URL'], 1) + ', '
+            resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource']['URL'], 1) 
             OnlineResourceURL_Cnt = 1
         except TypeError:
             if metadata['OnlineResources'] != None:
                 length = len(metadata['OnlineResources']['OnlineResource'])
                 OnlineResourceURL_Cnt = length
-                result += self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource'], length) + ', '
+                resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource'], length) 
             else:
-                result += "np" + ', '
+                resultFields['OnlineResources/OnlineResource/URL']= "np" 
         except KeyError:
-            result += "np" + ', '
+            resultFields['OnlineResources/OnlineResource/URL']= "np" 
         # ================
 
 
 
-        resultFields += 'OnlineResources/OnlineResource/Description' + ', '
+        
         try:
-            result += self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource']['Description'], 1) + ', '
+            resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource']['Description'], 1)
         except TypeError:
             if metadata['OnlineResources'] != None:
                 length = len(metadata['OnlineResources']['OnlineResource'])
                 if length < OnlineResourceURL_Cnt:
-                    result += "Recommend providing descriptions for all Online Resource URLs." + ', '
+                    resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs." 
                 else:
-                    result += self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource'], length) + ', '
+                    resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource'], length)
             else:
-                result += "Recommend providing descriptions for all Online Resource URLs." + ', '
+                resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs."
         except KeyError:
-            result += "Recommend providing descriptions for all Online Resource URLs." + ', '
+            resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs."
         # ================
 
 
-        resultFields += 'OnlineResources/OnlineResource/Type' + ', , '
+        
         try:
-            result += self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource']['Type'], 1) + ', , '
+            resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource']['Type'], 1)
         except TypeError:
             if metadata['OnlineResources'] != None:
                 length = len(metadata['OnlineResources']['OnlineResource'])
-                result += self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource'], length) + ', , '
+                resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource'], length)
             else:
-                result += "np" + ', , '
+                resultFields['OnlineResources/OnlineResource/Type']= "np"
         except KeyError:
-            result += "np" + ', , '
+            resultFields['OnlineResources/OnlineResource/Type']= "np"
         # ================
 
-        resultFields += 'Orderable' + ', '
+        
         try:
-            result += self.checkOrderable(metadata["Orderable"]) + ', '
+            resultFields['Orderable']= self.checkOrderable(metadata["Orderable"])
         except KeyError:
-            result += "np" + ', '
+            resultFields['Orderable']= "np"
         # ================
 
-        resultFields += 'DataFormat' + ', '
+        
         try:
-            result += self.checkDataFormat(metadata["DataFormat"]) + ', '
+            resultFields['DataFormat']= self.checkDataFormat(metadata["DataFormat"])
         except KeyError:
-            result += "Recommend providing the data format for the associated granule" + ', '
+            resultFields['DataFormat']= "Recommend providing the data format for the associated granule"
         # ================
 
 
-        resultFields += 'Visible' + ', , , , , , , '
+        
         try:
-            result += self.checkVisible(metadata["Visible"]) + ', , , , , , , '
+            resultFields['Visible']= self.checkVisible(metadata["Visible"])
         except KeyError:
-            result += "np" + ', , , , , , , '
+            resultFields['Visible']= "np"
 
-        return result, resultFields
+        return resultFields
 
 
 
@@ -1012,18 +1011,9 @@ class Checker():
 
 x = Checker()
 # print(sys.argv[1])
-result, resultFields = x.checkAll(sys.argv[1])
+resultFields = x.checkAll(sys.argv[1])
 # result, resultFields = x.checkAll("{\"ShortName\":\"CIESIN_SEDAC_NRMI_NRPCHI15\",\"VersionId\":\"2015.00\",\"InsertTime\":\"2016-11-02T00:00:00.000Z\",\"LastUpdate\":\"2016-11-02T00:00:00.000Z\",\"LongName\":\"Natural Resource Protection and Child Health Indicators, 2015 Release\",\"DataSetId\":\"Natural Resource Protection and Child Health Indicators, 2015 Release\",\"Description\":\"The Natural Resource Protection and Child Health Indicators, 2015 Release, are produced in support of the U.S. Millennium Challenge Corporation as selection criteria for funding eligibility. These indicators are successors to the Natural Resource Management Index (NRMI), which was produced from 2006 to 2011 and was based on the same underlying data. Like the NRMI, the Natural Resource Protection Indicator (NRPI) and Child Health Indicator (CHI) are based on proximity-to-target scores ranging from 0 to 100 (at target). The NRPI covers 221 countries and is calculated based on the weighted average percentage of biomes under protected status. The CHI is a composite index for 188 countries derived from the average of three proximity-to-target scores for access to improved sanitation, access to improved water, and child mortality. The 2015 release includes a consistent time series of NRPIs and CHIs for 2010 to 2015.\",\"CollectionDataType\":\"SCIENCE_QUALITY\",\"Orderable\":\"true\",\"Visible\":\"true\",\"RevisionDate\":\"2016-11-02T00:00:00.000Z\",\"ArchiveCenter\":\"SEDAC\",\"CollectionState\":\"Completed\",\"SpatialKeywords\":{\"Keyword\":[\"AFRICA\",\"ALGERIA\",\"ASIA\",\"AUSTRALIA\",\"BHUTAN\",\"BOTSWANA\",\"BURMA\",\"CAMBODIA\",\"CAMEROON\",\"CANADA\",\"CAPE VERDE\",\"CAYMAN ISLANDS\",\"CENTRAL AFRICAN REPUBLIC\",\"CHAD\",\"CHILE\",\"CHINA\",\"COLOMBIA\",\"COMOROS\",\"CONGO\",\"CONGO, DEMOCRATIC REPUBLIC\",\"COOK ISLANDS\",\"COSTA RICA\",\"COTE D'IVOIRE\",\"CROATIA\",\"CUBA\",\"CURACAO\",\"CYPRUS\",\"CZECH REPUBLIC\",\"DENMARK\",\"DJIBOUTI\",\"DOMINICA\",\"DOMINICAN REPUBLIC\",\"ECUADOR\",\"EGYPT\",\"EL SALVADOR\",\"EQUATORIAL\",\"EQUATORIAL GUINEA\",\"ERITREA\",\"ESTONIA\",\"ETHIOPIA\",\"EUROPE\",\"FAEROE ISLANDS\",\"FALKLAND ISLANDS\",\"FIJI\",\"FINLAND\",\"FRANCE\",\"FRENCH GUIANA\",\"FRENCH POLYNESIA\",\"GABON\",\"GAMBIA\",\"GEORGIA\",\"GERMANY\",\"GHANA\",\"GIBRALTAR\",\"GLOBAL\",\"GREECE\",\"GREENLAND\",\"GRENADA\",\"GUADELOUPE\",\"GUAM\",\"GUATEMALA\",\"GUINEA\",\"GUINEA-BISSAU\",\"GUYANA\",\"HAITI\",\"HONDURAS\",\"HONG KONG\",\"HUNGARY\",\"ICELAND\",\"INDIA\",\"INDONESIA\",\"IRAN\",\"IRAQ\",\"IRELAND\",\"ISLE OF MAN\",\"ISRAEL\",\"ITALY\",\"JAMAICA\",\"JAPAN\",\"JORDAN\",\"KAZAKHSTAN\",\"KENYA\",\"KIRIBATI\",\"KOSOVO\",\"KUWAIT\",\"KYRGYZSTAN\",\"LAO PEOPLE'S DEMOCRATIC REPUBLIC\",\"LATVIA\",\"LEBANON\",\"LESOTHO\",\"LIBERIA\",\"LIBYA\",\"LIECHTENSTEIN\",\"LITHUANIA\",\"LUXEMBOURG\",\"MACAU\",\"MACEDONIA\",\"MADAGASCAR\",\"MALAWI\",\"MALAYSIA\",\"MALDIVES\",\"MALI\",\"MALTA\",\"MARSHALL ISLANDS\",\"MARTINIQUE\",\"MAURITANIA\",\"MAURITIUS\",\"MAYOTTE\",\"MEXICO\",\"MICRONESIA\",\"MID-LATITUDE\",\"MOLDOVA\",\"MONACO\",\"MONGOLIA\",\"MONTENEGRO\",\"MONTSERRAT\",\"MOROCCO\",\"MOZAMBIQUE\",\"NAMIBIA\",\"NAURU\",\"NEPAL\",\"NETHERLANDS\",\"NEW CALEDONIA\",\"NEW ZEALAND\",\"NICARAGUA\",\"NIGER\",\"NIGERIA\",\"NIUE\",\"NORFOLK ISLAND\",\"NORTH AMERICA\",\"NORTH KOREA\",\"NORTHERN MARIANA ISLANDS\",\"NORWAY\",\"OMAN\",\"PAKISTAN\",\"PALAU\",\"PALESTINE\",\"PANAMA\",\"PAPUA NEW GUINEA\",\"PARAGUAY\",\"PERU\",\"PHILIPPINES\",\"PITCAIRN ISLANDS\",\"POLAND\",\"POLAR\",\"PORTUGAL\",\"PUERTO RICO\",\"QATAR\",\"REUNION\",\"ROMANIA\",\"RUSSIAN FEDERATION\",\"RWANDA\",\"SAMOA\",\"SAN MARINO\",\"SAO TOME AND PRINCIPE\",\"SAUDI ARABIA\",\"SENEGAL\",\"SERBIA\",\"SEYCHELLES\",\"SIERRA LEONE\",\"SINGAPORE\",\"SLOVAKIA\",\"SLOVENIA\",\"SOLOMON ISLANDS\",\"SOMALIA\",\"SOUTH AFRICA\",\"SOUTH AMERICA\",\"SOUTH KOREA\",\"SOUTH SUDAN\",\"SPAIN\",\"SRI LANKA\",\"ST HELENA\",\"ST KITTS AND NEVIS\",\"ST LUCIA\",\"ST MAARTEN\",\"ST MARTIN\",\"ST PIERRE AND MIQUELON\",\"ST VINCENT AND THE GRENADINES\",\"SUDAN\",\"SURINAME\",\"SVALBARD AND JAN MAYEN\",\"SWAZILAND\",\"SWEDEN\",\"SWITZERLAND\",\"SYRIAN ARAB REPUBLIC\",\"TAIWAN\",\"TAJIKISTAN\",\"TANZANIA\",\"THAILAND\",\"TIMOR-LESTE\",\"TOGO\",\"TOKELAU\",\"TONGA\",\"TRINIDAD AND TOBAGO\",\"TUNISIA\",\"TURKEY\",\"TURKMENISTAN\",\"TURKS AND CAICOS ISLANDS\",\"TUVALU\",\"UGANDA\",\"UKRAINE\",\"UNITED KINGDOM\",\"UNITED STATES OF AMERICA\",\"URUGUAY\",\"UZBEKISTAN\",\"VANUATU\",\"VENEZUELA\",\"VIETNAM\",\"VIRGIN ISLANDS\",\"WALLIS AND FUTUNA ISLANDS\",\"WESTERN SAHARA\",\"YEMEN\",\"ZAMBIA\",\"ZIMBABWE\"]},\"Temporal\":{\"RangeDateTime\":{\"BeginningDateTime\":\"2010-01-01T00:00:00.000Z\",\"EndingDateTime\":\"2015-12-31T23:59:59.999Z\"}},\"Contacts\":{\"Contact\":[{\"Role\":\"METADATA AUTHOR\",\"OrganizationEmails\":{\"Email\":\"metadata@ciesin.columbia.edu\"},\"ContactPersons\":{\"ContactPerson\":{\"FirstName\":\"unknown\",\"LastName\":\"CIESIN METADATA ADMINISTRATION\"}}},{\"Role\":\"TECHNICAL CONTACT\",\"OrganizationEmails\":{\"Email\":\"ciesin.info@ciesin.columbia.edu\"},\"ContactPersons\":{\"ContactPerson\":{\"FirstName\":\"unknown\",\"LastName\":\"SEDAC USER SERVICES\"}}}]},\"ScienceKeywords\":{\"ScienceKeyword\":[{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"BIOSPHERE\",\"TermKeyword\":\"ECOLOGICAL DYNAMICS\",\"VariableLevel1Keyword\":{\"Value\":\"COMMUNITY DYNAMICS\",\"VariableLevel2Keyword\":{\"Value\":\"BIODIVERSITY FUNCTIONS\"}}},{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"BIOSPHERE\",\"TermKeyword\":\"ECOSYSTEMS\",\"VariableLevel1Keyword\":{\"Value\":\"TERRESTRIAL ECOSYSTEMS\",\"VariableLevel2Keyword\":{\"Value\":\"ALPINE/TUNDRA\",\"VariableLevel3Keyword\":\"ALPINE TUNDRA\"}}},{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"BIOSPHERE\",\"TermKeyword\":\"ECOSYSTEMS\",\"VariableLevel1Keyword\":{\"Value\":\"TERRESTRIAL ECOSYSTEMS\",\"VariableLevel2Keyword\":{\"Value\":\"FORESTS\"}}},{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"HUMAN DIMENSIONS\",\"TermKeyword\":\"ENVIRONMENTAL IMPACTS\",\"VariableLevel1Keyword\":{\"Value\":\"CONSERVATION\"}},{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"HUMAN DIMENSIONS\",\"TermKeyword\":\"SUSTAINABILITY\",\"VariableLevel1Keyword\":{\"Value\":\"ENVIRONMENTAL SUSTAINABILITY\"}}]},\"Platforms\":{\"Platform\":{\"ShortName\":\"NOT APPLICABLE\",\"LongName\":null,\"Type\":\"Not applicable\",\"Instruments\":{\"Instrument\":{\"ShortName\":\"NOT APPLICABLE\"}}}},\"Campaigns\":{\"Campaign\":{\"ShortName\":\"NRMI\",\"LongName\":\"Natural Resources Management Index\"}},\"OnlineAccessURLs\":{\"OnlineAccessURL\":{\"URL\":\"http://sedac.ciesin.columbia.edu/data/set/nrmi-natural-resource-protection-child-health-indicators-2015/data-download\",\"URLDescription\":\"Data landing page\"}},\"Spatial\":{\"HorizontalSpatialDomain\":{\"Geometry\":{\"CoordinateSystem\":\"CARTESIAN\",\"BoundingRectangle\":{\"WestBoundingCoordinate\":\"-180\",\"NorthBoundingCoordinate\":\"90\",\"EastBoundingCoordinate\":\"180\",\"SouthBoundingCoordinate\":\"-55\"}}},\"GranuleSpatialRepresentation\":\"CARTESIAN\"}}")
-print("result")
-if result:
-    print(result)
-else:
-    print("none\n")    
-print("resultFields")
-# print(resultFields)
-if resultFields:
-    print(resultFields)
-else:
-    print("none\n")  
+print(json.dumps(resultFields))
+
 
 
