@@ -42,6 +42,21 @@ class Cmr
     collection_results["result"]["Collection"]
   end
 
+  def self.get_raw_granule(concept_id)
+    granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}").parsed_response
+    begin
+      granule_results = Hash.from_xml(granule_xml)["results"]
+    rescue
+      raise CmrError
+    end
+
+    if granule_results["hits"].to_i == 0
+      raise CmrError
+    end
+
+    granule_results["result"]["Granule"]
+  end
+
   def self.remove_nil_values(collection_element)
 
     if collection_element.is_a?(Hash)

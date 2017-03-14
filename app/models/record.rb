@@ -56,10 +56,11 @@ class Record < ActiveRecord::Base
       #escaping json for passing to python
       collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
+      #W option to silence warnings
       if self.is_collection?  
-        script_results = `python lib/CollectionChecker.py "#{collection_json}"  `
+        script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
       else
-        script_results = `python lib/GranuleChecker.py "#{collection_json}"`
+        script_results = `python -W ignore lib/GranuleChecker.py "#{collection_json}"`
       end
 
       comment_hash = JSON.parse(script_results)
@@ -71,7 +72,7 @@ class Record < ActiveRecord::Base
     if is_collection?
       Cmr.get_raw_collection(concept_id)
     else
-
+      Cmr.get_raw_granule(concept_id)
     end
   end
 
@@ -116,8 +117,6 @@ class Record < ActiveRecord::Base
     if script_comments.nil?
       self.create_script
       script_comments = self.script_comments.first
-      # script_comments = ScriptComment.new(rawJSON: '{"":""}', record: self)
-      # script_comments.save
     end 
     script_comments.reload
     script_comments
