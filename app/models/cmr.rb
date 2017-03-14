@@ -17,6 +17,13 @@ class Cmr
   # &all_revisions=true&pretty=true" params can be used to find specific revision
   #we should only need to ingest the most recent versions.
   def self.get_collection(concept_id)
+    results_hash = flatten_collection(Cmr.get_raw_collection(concept_id))
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    required_fields_hash
+  end
+
+  def self.get_raw_collection(concept_id)
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
@@ -29,10 +36,7 @@ class Cmr
       raise CmrError
     end
 
-    results_hash = flatten_collection(collection_results["result"]["Collection"])
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
-    required_fields_hash
+    collection_results["result"]["Collection"]
   end
 
   def self.remove_nil_values(collection_element)

@@ -49,15 +49,16 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-  def evaluate_script
+  def evaluate_script(raw_data)
     collection_data = self.values
     comment_JSON = blank_comment_JSON
     comment_hash = JSON.parse(comment_JSON)
 
     if self.is_collection?
       #escaping json for passing to python
-      collection_json = collection_data.to_json.gsub("\"", "\\\"")
+      collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
+
       script_results = `python lib/CollectionChecker.py "#{collection_json}"`
 
       #adding this to move past some errors, need to figure out why they are thrown
@@ -83,9 +84,8 @@ class Record < ActiveRecord::Base
 
       add_script_comment(comment_hash.to_json, score)
     else
-      #run granule script
-            #escaping json for passing to python
-      collection_json = collection_data.to_json.gsub("\"", "\\\"")
+      #escaping json for passing to python
+      collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
       script_results = `python lib/GranuleChecker.py "#{collection_json}"`
 
