@@ -48,6 +48,13 @@
           <div class="slider round"></div>
         </label>
       </div>
+      <div class="filter_switch">
+        <p>UMM Required</p>
+        <label class="switch">
+          <input type="checkbox" id="umm_toggle">
+          <div class="slider round"></div>
+        </label>
+      </div>
     </div>
 
     <script type="text/javascript">
@@ -68,6 +75,10 @@
       }
       var colorToggle = document.getElementById("color_toggle");
       colorToggle.onchange = function() {
+        toggleCells();
+      }
+      var ummToggle = document.getElementById("umm_toggle");
+      ummToggle.onchange = function() {
         toggleCells();
       }
 
@@ -102,10 +113,21 @@
         var colorToggle = document.getElementById("color_toggle");
         if (colorToggle.checked == true) {
           var colorCells = document.getElementsByClassName("color_code_cell");
-          //finding all the script_cells which have the check icon.
           for (var index in colorCells) {
             if (colorIsChecked(colorCells[parseInt(index)])) {
               hiddenCells.push(parseInt(index));
+            }
+          }
+        }
+
+        var ummToggle = document.getElementById("umm_toggle");
+        if (ummToggle.checked == true) {
+          var ummCells = document.getElementsByClassName("umm_required_cell");
+          for (var index in ummCells) {
+            if (!(ummCells[parseInt(index)] == undefined)) {
+              if (!ummIsChecked(ummCells[parseInt(index)])) {
+                hiddenCells.push(parseInt(index));
+              }
             }
           }
         }
@@ -123,7 +145,9 @@
         for (var columnNum in hiddenCells) {
           var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
           for (var cell in hideCells) {
-            hideCells[parseInt(cell)].style.display = "none";
+            if (!(hideCells[parseInt(cell)] == undefined)) {
+              hideCells[parseInt(cell)].style.display = "none";
+            }
           }
         }
 
@@ -155,6 +179,18 @@
           return false;
         } else {
           return true;
+        }
+      }
+
+      function ummIsChecked(script_div) {
+        if (script_div == undefined || !script_div) {
+          return true;
+        }
+
+        if(script_div.innerHTML.includes("<i")) {
+          return true;
+        } else {
+          return false;
         }
       }
 
@@ -234,6 +270,18 @@
             <td class="column_<%=title%>">
               <div class="script_check_cell">
                 <% if @flagged_by_script[title] %>
+                  <i class="eui-icon eui-check-o"></i>
+                <% end %>    
+              </div>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+        <th class="headcol">UMM Required</th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+              <div class="umm_required_cell">
+                <% if Cmr.required_collection_field? title %>
                   <i class="eui-icon eui-check-o"></i>
                 <% end %>    
               </div>

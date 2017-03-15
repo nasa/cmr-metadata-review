@@ -3,6 +3,35 @@ class Cmr
   include CmrHelper
 
   TIMEOUT_MARGIN = 10
+  REQUIRED_COLLECTION_FIELDS = ["ShortName", 
+                                "VersionId", 
+                                "InsertTime", 
+                                "LastUpdate", 
+                                "LongName", 
+                                "DatasetId", 
+                                "Description", 
+                                "Orderable", 
+                                "Visible",
+                                "ProcessingLevelId", 
+                                "ArchiveCenter", 
+                                "DataFormat", 
+                                "Temporal/Range/DateTime/BeginningDateTime", 
+                                "Contacts/Contact/Role",
+                                "ScienceKeywords/ScienceKeyword/CategoryKeyword",
+                                "ScienceKeywords/ScienceKeyword/TopicKeyword",
+                                "ScienceKeywords/ScienceKeyword/TermKeyword", 
+                                "Platforms/Platform/ShortName", 
+                                "Platforms/Platform/Instruments/Instrument/ShortName",
+                                "Campaigns/Campaign/ShortName", 
+                                "OnlineAccessURLs/OnlineAccessURL/URL", 
+                                "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                "Spatial/GranuleSpatialRepresentation"]
+
+  REQUIRED_GRANULE_FIELDS = []                                
 
   class CmrError < StandardError
 
@@ -54,33 +83,7 @@ class Cmr
   end
 
   def self.add_required_collection_fields(collection_hash)
-    required_fields = ["ShortName", 
-                        "VersionId", 
-                        "InsertTime", 
-                        "LastUpdate", 
-                        "LongName", 
-                        "DatasetId", 
-                        "Description", 
-                        "Orderable", 
-                        "Visible",
-                        "ProcessingLevelId", 
-                        "ArchiveCenter", 
-                        "DataFormat", 
-                        "Temporal/Range/DateTime/BeginningDateTime", 
-                        "Contacts/Contact/Role",
-                        "ScienceKeywords/ScienceKeyword/CategoryKeyword",
-                        "ScienceKeywords/ScienceKeyword/TopicKeyword",
-                        "ScienceKeywords/ScienceKeyword/TermKeyword", 
-                        "Platforms/Platform/ShortName", 
-                        "Platforms/Platform/Instruments/Instrument/ShortName",
-                        "Campaigns/Campaign/ShortName", 
-                        "OnlineAccessURLs/OnlineAccessURL/URL", 
-                        "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
-                        "Spatial/GranuleSpatialRepresentation"]
+    required_fields = REQUIRED_COLLECTIONS
 
     keys = collection_hash.keys
     required_fields.each do |field|
@@ -186,6 +189,12 @@ class Cmr
     end
 
     return search_iterator, collection_count
+  end
+
+  def self.required_collection_field?(field_string)
+    #removing the numbers added to fields during ingest to seperate platforms/instruments
+    stripped_field = field_string.gsub(/[0-9]/,'')
+    REQUIRED_COLLECTION_FIELDS.include? stripped_field
   end
 
 end
