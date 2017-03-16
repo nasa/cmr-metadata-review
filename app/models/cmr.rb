@@ -31,7 +31,22 @@ class Cmr
                                 "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
                                 "Spatial/GranuleSpatialRepresentation"]
 
-  REQUIRED_GRANULE_FIELDS = []                                
+    REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
+                                "InsertTime",
+                                "LastUpdate",
+                                "Collection/ShortName",
+                                "Collection/VersionId",
+                                "Collection/DataSetId",
+                                "DataGranule/ProductionDateTime",
+                                "Temporal/RangeDateTime/BeginningDateTime",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                "OnlineAccessURLs/OnlineAccessURL/URL",
+                                "Orderable"] 
+
+
 
   class CmrError < StandardError
 
