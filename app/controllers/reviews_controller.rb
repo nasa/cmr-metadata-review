@@ -22,8 +22,6 @@ class ReviewsController < ApplicationController
 
     @section_titles = record.sections[section_index][1]
 
-    p @section_titles
-
     @bubble_data = []
     bubble_map = record.bubble_map
     @section_titles.each do |title|
