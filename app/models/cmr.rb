@@ -8,7 +8,7 @@ class Cmr
                                 "InsertTime", 
                                 "LastUpdate", 
                                 "LongName", 
-                                "DatasetId", 
+                                "DataSetId", 
                                 "Description", 
                                 "Orderable", 
                                 "Visible",
@@ -83,7 +83,7 @@ class Cmr
   end
 
   def self.add_required_collection_fields(collection_hash)
-    required_fields = REQUIRED_COLLECTIONS
+    required_fields = REQUIRED_COLLECTION_FIELDS
 
     keys = collection_hash.keys
     required_fields.each do |field|
