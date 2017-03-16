@@ -97,19 +97,10 @@ class CollectionsController < ApplicationController
     end
 
     begin 
-      collection_data = Cmr.get_collection(concept_id)
-      short_name = collection_data["ShortName"]
-      ingest_time = DateTime.now
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
-      #finding parent collection
-      collection_object = Collection.find_or_create_by(concept_id: concept_id, short_name: short_name)
-      #creating collection record related objects
-      new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
 
-      record_data = RecordData.new(datable: new_collection_record, rawJSON: collection_data.to_json)
-
-      ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
+      collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id)
 
       #returns a list of granule data
       granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)

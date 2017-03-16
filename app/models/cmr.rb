@@ -13,6 +13,10 @@ class Cmr
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
+  def self.collections_updated_since(date_string, page_num = 1)
+    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z")
+  end
+
   #cmr api auto returns only the most recent revision of a collection
   # &all_revisions=true&pretty=true" params can be used to find specific revision
   #we should only need to ingest the most recent versions.

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   resources :records
   get '/record_complete', to: 'records#complete'
+  get '/record_refresh', to: 'records#refresh'
 
 
 
