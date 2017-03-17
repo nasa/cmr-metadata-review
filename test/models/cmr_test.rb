@@ -94,6 +94,22 @@ class CmrTest < ActiveSupport::TestCase
     end
   end
 
+
+  describe "update_collections" do 
+    it "" do
+    end
+  end
+
+  describe "collections_updated_since" do 
+    it "" do
+    end
+  end
+
+  describe "process_updated_collections" do 
+    it "" do
+    end
+  end
+  
 end
 
 
