@@ -3,72 +3,10 @@ class RecordsController < ApplicationController
   before_filter :ensure_curation
 
   def refresh
-    #getting date into format
-    search_date = (DateTime.now - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
-    page_num = 1
-    result_count = 2000
+    RecordsUpdateLock.within_lock {
+      Cmr.update_collections
+    }
 
-    raw_results = Cmr.collections_updated_since(search_date, page_num)
-    total_results = raw_results.parsed_response["results"]["hits"].to_i
-
-    #mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_results.parsed_response["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
-    #doing this eager loading to stop system from making each include? a seperate db call.
-    all_collections = Collection.all.map{|collection| collection.concept_id }
-    #reducing to only the ones in system
-    contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
-
-    #importing the new ones if any
-    contained_collections.each do |data|
-      unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id)
-        #second check to make sure we don't save duplicate revisions
-        unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
-          ActiveRecord::Base.transaction do
-            new_collection_record.save!
-            record_data.save!
-            ingest_record.save!
-          end
-
-          new_collection_record.evaluate_script
-        end
-      end
-    end
-
-    #only 2000 results returned at a time, so have to loop through requests
-    while result_count < total_results
-      raw_results = Cmr.collections_updated_since(search_date, page_num)
-      total_results = raw_results.parsed_response["results"]["hits"].to_i
-
-      #mapping to hashes of concept_id/revision_id
-      updated_collection_data = raw_results.parsed_response["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
-      #doing this eager loading to stop system from making each include? a seperate db call.
-      all_collections = Collection.all.map{|collection| collection.concept_id }
-      #reducing to only the ones in system
-      contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
-
-      #importing the new ones if any
-      contained_collections.each do |data|
-        unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-          collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id)
-          #second check to make sure we don't save duplicate revisions
-          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
-            ActiveRecord::Base.transaction do
-              new_collection_record.save!
-              record_data.save!
-              ingest_record.save!
-            end
-          end
-        end
-      end
-      result_count = result_count + 2000
-      page_num = page_num + 1
-    end
-
-    # total_results = results_hash["results"]["hits"].to_i
-    #check if total_results < 2000
-    # collection_hash = results_hash["results"]["result"]
-    
     redirect_to home_path
   end
 

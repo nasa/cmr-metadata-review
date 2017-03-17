@@ -4,12 +4,23 @@
   </div>
 
   <div class="header_button_box">
-      <a href="<%= record_refresh_path %>">
+      <a id="record_refresh" href="<%= record_refresh_path %>">
         <button id="curation_home_button" class="header_icon_button">
           <i class="eui-icon eui-fa-globe"></i>
           <p>REFRESH RECORDS</p>
         </button>
       </a>
+
+      <script type="text/javascript">
+        document.getElementById("record_refresh").onclick = function() {
+          var processingModal = document.createElement("p");
+          processingModal.innerHTML = "refreshing records";
+          processingModal.style.position = "absolute";
+          processingModal.style.top = "0px";
+          processingModal.style.left = "0px";
+          document.body.append(processingModal);
+        }
+      </script>
 
       <a href="<%= home_path %>">
         <button id="curation_home_button" class="header_icon_button">
