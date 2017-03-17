@@ -25,7 +25,7 @@ class Cmr
     #only 2000 results returned at a time, so have to loop through requests
     while result_count < total_results
       raw_results = Cmr.collections_updated_since(search_date, page_num)
-      total_results = raw_results.parsed_response["results"]["hits"].to_i
+      total_results = raw_results["results"]["hits"].to_i
       Cmr.process_updated_collections(raw_results)
 
       result_count = result_count + 2000
@@ -34,12 +34,12 @@ class Cmr
   end
 
   def self.collections_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z")
+    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
-  def self.process_updated_collections(raw_results)
+  def self.process_updated_collections(raw_results, current_user)
     #mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_results.parsed_response["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
+    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
     #doing this eager loading to stop system from making each include? a seperate db call.
     all_collections = Collection.all.map{|collection| collection.concept_id }
     #reducing to only the ones in system
@@ -48,7 +48,7 @@ class Cmr
     #importing the new ones if any
     contained_collections.each do |data|
       unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id)
+        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
         #second check to make sure we don't save duplicate revisions
         unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
           ActiveRecord::Base.transaction do

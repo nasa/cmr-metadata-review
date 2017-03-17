@@ -27,7 +27,7 @@ class Collection < ActiveRecord::Base
     ingest_time = DateTime.now
 
     #finding parent collection
-    collection_object = Collection.find_or_create_by(concept_id: concept_id, short_name: short_name)
+    collection_object = Collection.find_or_create_by(concept_id: concept_id)
     #creating collection record related objects
     new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
 
