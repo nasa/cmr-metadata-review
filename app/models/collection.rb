@@ -21,7 +21,7 @@ class Collection < ActiveRecord::Base
     return record
   end
 
-  def self.assemble_new_record(concept_id, revision_id) 
+  def self.assemble_new_record(concept_id, revision_id, current_user) 
     collection_data = Cmr.get_collection(concept_id)
     short_name = collection_data["ShortName"]
     ingest_time = DateTime.now
