@@ -3,7 +3,6 @@ class RecordsController < ApplicationController
   before_filter :ensure_curation
 
   def refresh
-    byebug
     #getting date into format
     search_date = (DateTime.now - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
     page_num = 1
@@ -30,6 +29,8 @@ class RecordsController < ApplicationController
             record_data.save!
             ingest_record.save!
           end
+
+          new_collection_record.evaluate_script
         end
       end
     end
