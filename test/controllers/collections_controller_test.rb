@@ -44,7 +44,6 @@ class CollectionsControllerTest < ActionController::TestCase
 
             #collection with rawJSON saved in system
             assert_equal((Collection.where concept_id: "C222702-GHRC").length, 1)
-            byebug
             assert_equal((Collection.where concept_id: "C222702-GHRC").first.records.first.values["ShortName"], "daylightn")
 
             record = (Collection.where concept_id: "C222702-GHRC").first.records.first
