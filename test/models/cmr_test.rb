@@ -96,7 +96,7 @@ class CmrTest < ActiveSupport::TestCase
 
 
   describe "update_collections" do 
-    it "" do
+    it "returns the list of added records" do
       # mocking the updated list
       stub_request(:get, /collections.xml\?page_num\=1\&page_size\=2000\&updated_since\=[0-9]{4}-[0-9]{2}-[0-9]{2}T00\:00\:00.000Z/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => '<results><hits>151</hits><took>10</took><references><reference><name>All-India Monsoon Rainfall Index at LDEO/IRI Climate Data Library</name><id>C1214614350-SCIOPS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/C1214614350-SCIOPS/6</location><revision-id>6</revision-id></reference><reference><name>Annual Mean Global CO2 Growth</name><id>C1214377525-SCIOPS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/C1214377525-SCIOPS/2</location><revision-id>2</revision-id></reference></references></results>', :headers => {"date"=>["Fri, 17 Mar 2017 19:00:27 GMT"], "content-type"=>["application/xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["151"], "cmr-took"=>["24"], "cmr-request-id"=>["7348fbe8-5ef4-417e-969f-01024e4d9ef6"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       raw_response = Cmr.collections_updated_since("2017-03-16")
@@ -126,7 +126,7 @@ class CmrTest < ActiveSupport::TestCase
   end
 
   describe "process_updated_collections" do 
-    it "" do
+    it "finds out of date revisions and adds the new one" do
       # mocking the updated list
       stub_request(:get, "https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=1&page_size=2000&updated_since=2017-03-16T00:00:00.000Z").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => '<results><hits>151</hits><took>10</took><references><reference><name>All-India Monsoon Rainfall Index at LDEO/IRI Climate Data Library</name><id>C1214614350-SCIOPS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/C1214614350-SCIOPS/6</location><revision-id>6</revision-id></reference><reference><name>Annual Mean Global CO2 Growth</name><id>C1214377525-SCIOPS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/C1214377525-SCIOPS/2</location><revision-id>2</revision-id></reference></references></results>', :headers => {"date"=>["Fri, 17 Mar 2017 19:00:27 GMT"], "content-type"=>["application/xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["151"], "cmr-took"=>["24"], "cmr-request-id"=>["7348fbe8-5ef4-417e-969f-01024e4d9ef6"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       raw_response = Cmr.collections_updated_since("2017-03-16")
