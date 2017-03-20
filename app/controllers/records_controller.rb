@@ -3,10 +3,14 @@ class RecordsController < ApplicationController
   before_filter :ensure_curation
 
   def refresh
+    # a list of records added in update in format of
+    # [["concept_id1", "revision_id1"], ["concept_id2", "revision_id2"]]
+    total_added_records = []
     RecordsUpdateLock.within_lock {
-      Cmr.update_collections
+      total_added_records = Cmr.update_collections(current_user)
     }
 
+    flash[:notice] = Cmr.format_added_records_list(total_added_records).html_safe
     redirect_to home_path
   end
 

@@ -13,7 +13,7 @@ class Cmr
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
-  def self.update_collections
+  def self.update_collections(current_user)
     last_date = RecordsUpdateLock.get_last_update
     #getting date into format
     #taking last update and going back a day to give cmr time to update
@@ -21,16 +21,21 @@ class Cmr
     page_num = 1
     result_count = 0
     total_results = Float::INFINITY
+    #will return this list of added records for logging/presentation
+    total_added_records = []
 
     #only 2000 results returned at a time, so have to loop through requests
     while result_count < total_results
       raw_results = Cmr.collections_updated_since(search_date, page_num)
       total_results = raw_results["results"]["hits"].to_i
-      Cmr.process_updated_collections(raw_results)
+      added_records = Cmr.process_updated_collections(raw_results, current_user)
+      total_added_records = total_added_records.concat(added_records)
 
       result_count = result_count + 2000
       page_num = page_num + 1
     end
+
+    return total_added_records
   end
 
   def self.collections_updated_since(date_string, page_num = 1)
@@ -44,6 +49,8 @@ class Cmr
     all_collections = Collection.all.map{|collection| collection.concept_id }
     #reducing to only the ones in system
     contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
+    #will return this list of added records for logging/presentation
+    added_records = []
 
     #importing the new ones if any
     contained_collections.each do |data|
@@ -58,9 +65,11 @@ class Cmr
           end
 
           new_collection_record.evaluate_script
+          added_records.push([data["concept_id"], data["revision_id"]]);
         end
       end
     end
+    return added_records
   end
 
   #cmr api auto returns only the most recent revision of a collection
@@ -236,6 +245,18 @@ class Cmr
     end
 
     return search_iterator, collection_count
+  end
+
+
+  def self.format_added_records_list(list)
+    if list.empty?
+      return "No New Records Were Found"
+    end
+    output_string = "The following records and revision id\'s have been added<br/>"
+    list.each do |record_list|
+      output_string += "#{record_list[0]} - #{record_list[1]}<br/>"
+    end
+    return output_string
   end
 
 end
