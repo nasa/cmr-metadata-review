@@ -4,6 +4,50 @@ class Cmr
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
+  REQUIRED_COLLECTION_FIELDS = ["ShortName", 
+                                "VersionId", 
+                                "InsertTime", 
+                                "LastUpdate", 
+                                "LongName", 
+                                "DataSetId", 
+                                "Description", 
+                                "Orderable", 
+                                "Visible",
+                                "ProcessingLevelId", 
+                                "ArchiveCenter", 
+                                "DataFormat", 
+                                "Temporal/Range/DateTime/BeginningDateTime", 
+                                "Contacts/Contact/Role",
+                                "ScienceKeywords/ScienceKeyword/CategoryKeyword",
+                                "ScienceKeywords/ScienceKeyword/TopicKeyword",
+                                "ScienceKeywords/ScienceKeyword/TermKeyword", 
+                                "Platforms/Platform/ShortName", 
+                                "Platforms/Platform/Instruments/Instrument/ShortName",
+                                "Campaigns/Campaign/ShortName", 
+                                "OnlineAccessURLs/OnlineAccessURL/URL", 
+                                "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                "Spatial/GranuleSpatialRepresentation"]
+
+    REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
+                                "InsertTime",
+                                "LastUpdate",
+                                "Collection/ShortName",
+                                "Collection/VersionId",
+                                "Collection/DataSetId",
+                                "DataGranule/ProductionDateTime",
+                                "Temporal/RangeDateTime/BeginningDateTime",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                "OnlineAccessURLs/OnlineAccessURL/URL",
+                                "Orderable"] 
+
+
 
   # A custom error raised when items can not be found in the CMR.
   class CmrError < StandardError
@@ -172,33 +216,7 @@ class Cmr
   # List of required fields set in hardcoded list within method
 
   def self.add_required_collection_fields(collection_hash)
-    required_fields = ["ShortName", 
-                        "VersionId", 
-                        "InsertTime", 
-                        "LastUpdate", 
-                        "LongName", 
-                        "DatasetId", 
-                        "Description", 
-                        "Orderable", 
-                        "Visible",
-                        "ProcessingLevelId", 
-                        "ArchiveCenter", 
-                        "DataFormat", 
-                        "Temporal/Range/DateTime/BeginningDateTime", 
-                        "Contacts/Contact/Role",
-                        "ScienceKeywords/ScienceKeyword/CategoryKeyword",
-                        "ScienceKeywords/ScienceKeyword/TopicKeyword",
-                        "ScienceKeywords/ScienceKeyword/TermKeyword", 
-                        "Platforms/Platform/ShortName", 
-                        "Platforms/Platform/Instruments/Instrument/ShortName",
-                        "Campaigns/Campaign/ShortName", 
-                        "OnlineAccessURLs/OnlineAccessURL/URL", 
-                        "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                        "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
-                        "Spatial/GranuleSpatialRepresentation"]
+    required_fields = REQUIRED_COLLECTION_FIELDS
 
     keys = collection_hash.keys
     required_fields.each do |field|
@@ -366,6 +384,12 @@ class Cmr
       output_string += "#{record_list[0]} - #{record_list[1]}<br/>"
     end
     return output_string
+  end
+
+  def self.required_collection_field?(field_string)
+    #removing the numbers added to fields during ingest to seperate platforms/instruments
+    stripped_field = field_string.gsub(/[0-9]/,'')
+    REQUIRED_COLLECTION_FIELDS.include? stripped_field
   end
 
 end
