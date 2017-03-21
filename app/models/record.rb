@@ -115,38 +115,57 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method runs the automated script against a record and then saves the result in a new ScriptComment object      
   # The script is run through a shell command which accesses the python scripts in the /lib directory.       
-  def evaluate_script
-    collection_data = self.values
-    comment_JSON = blank_comment_JSON
-    comment_hash = JSON.parse(comment_JSON)
 
-    if self.is_collection?
+  def evaluate_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_data
+      end
       #escaping json for passing to python
-      collection_json = collection_data.to_json.gsub("\"", "\\\"")
+      collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
-      script_results = `python lib/CollectionChecker.py "#{collection_json}"`
+      #W option to silence warnings
+      if self.is_collection?  
+        script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
+      else
+        script_results = `python -W ignore lib/GranuleChecker.py "#{collection_json}"`
+      end
 
-      #parsing the prints from the script into sections
-      script_results = script_results.split("\n")
+      comment_hash = JSON.parse(script_results)
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
+      comment_hash
+  end
 
-      #removing any of the script results that have no text, ie ", " or ",  "
-      script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
-
-      #splitting the row headers into a list
-      script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
-
-      #creating a hash with values { row_header => result_string }
-      comment_hash = Hash[script_results[3].zip(script_results[1])]
-
-
-      score = score_script_hash(comment_hash)
-
-      add_script_comment(comment_hash.to_json, score)
+  def get_raw_data
+    if is_collection?
+      Cmr.get_raw_collection(concept_id)
     else
-      #run granule script
+      Cmr.get_raw_granule(concept_id)
+    end
+  end
 
+  def create_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_data
+      end
+      comment_hash = self.evaluate_script(raw_data)
+      score = score_script_hash(comment_hash)
+      add_script_comment(comment_hash.to_json, score)
+  end
+
+
+  def self.format_script_comments(comment_hash, values_hash) 
+    value_keys = values_hash.keys
+    comment_keys = comment_hash.keys
+
+    comment_keys.each do |comment_field|
+      value_keys.each do |value_field|
+        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
+          comment_hash[value_field] = comment_hash[comment_field]
+        end
+      end
     end
 
+    return comment_hash
   end
 
 
@@ -181,7 +200,7 @@ class Record < ActiveRecord::Base
   def get_script_comments
     script_comments = self.script_comments.first
     if script_comments.nil?
-      self.evaluate_script
+      self.create_script
       script_comments = self.script_comments.first
     end 
     script_comments.reload
