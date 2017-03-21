@@ -108,7 +108,6 @@ class CmrTest < ActiveSupport::TestCase
     end
   end
 
-end
 
   describe "update_collections" do 
     it "returns the list of added records" do
