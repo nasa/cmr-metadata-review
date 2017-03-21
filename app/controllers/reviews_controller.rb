@@ -16,7 +16,6 @@ class ReviewsController < ApplicationController
 
     @navigation_list = record.sections.map {|section| section[0] }
 
-
     @script_comment = @collection_record.get_script_comments.values
 
     @discussions = record.discussions
