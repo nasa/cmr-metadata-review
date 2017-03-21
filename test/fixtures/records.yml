@@ -5,4 +5,11 @@ first:
   recordable_type: "Collection"
   revision_id: "8"
   closed: false
+
+granule:
+  id: 5
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "1"
+  closed: false
   

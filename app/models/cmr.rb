@@ -85,6 +85,7 @@ class Cmr
   # &all_revisions=true&pretty=true" params can be used to find specific revision
   #we should only need to ingest the most recent versions.
 
+
   # ====Params   
   # string concept_id
   # ====Returns
@@ -94,7 +95,18 @@ class Cmr
   # then processes and returns the data   
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
-  def self.get_collection(concept_id)
+
+  def self.get_collection(concept_id, raw_collection = nil)
+    if raw_collection.nil?
+      raw_collection = Cmr.get_raw_collection(concept_id)
+    end
+    results_hash = flatten_collection(raw_collection)
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    required_fields_hash
+  end
+
+  def self.get_raw_collection(concept_id)
     collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
@@ -107,10 +119,22 @@ class Cmr
       raise CmrError
     end
 
-    results_hash = flatten_collection(collection_results["result"]["Collection"])
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
-    required_fields_hash
+    collection_results["result"]["Collection"]
+  end
+
+  def self.get_raw_granule(concept_id)
+    granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}").parsed_response
+    begin
+      granule_results = Hash.from_xml(granule_xml)["results"]
+    rescue
+      raise CmrError
+    end
+
+    if granule_results["hits"].to_i == 0
+      raise CmrError
+    end
+
+    granule_results["result"]["Granule"]
   end
 
 
