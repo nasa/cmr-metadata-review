@@ -30,28 +30,28 @@
       <div class="filter_switch">
         <p>FLAGGED BY SCRIPT</p>
         <label class="switch">
-          <input type="checkbox" id="script_toggle">
+          <input type="checkbox" id="script_toggle" onchange="toggleCells()">
           <div class="slider round"></div>
         </label>
       </div>
       <div class="filter_switch">
         <p>REQUIRES 2ND OPINION</p>
         <label class="switch">
-          <input type="checkbox" id="opinion_toggle">
+          <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
           <div class="slider round"></div>
         </label>
       </div>
       <div class="filter_switch">
         <p>NOT COLOR CODED</p>
         <label class="switch">
-          <input type="checkbox" id="color_toggle">
+          <input type="checkbox" id="color_toggle" onchange="toggleCells()">
           <div class="slider round"></div>
         </label>
       </div>
       <div class="filter_switch">
         <p>UMM Required</p>
         <label class="switch">
-          <input type="checkbox" id="umm_toggle">
+          <input type="checkbox" id="umm_toggle" onchange="toggleCells()">
           <div class="slider round"></div>
         </label>
       </div>
@@ -64,23 +64,6 @@
         titleList.push("column_" + "<%=title%>");
       <% end %>
 
-      //creating vars and setting the onchange for each toggle element.
-      var scriptToggle = document.getElementById("script_toggle");
-      scriptToggle.onchange = function() {
-        toggleCells();
-      }
-      var opinionToggle = document.getElementById("opinion_toggle");
-      opinionToggle.onchange = function() {
-        toggleCells();
-      }
-      var colorToggle = document.getElementById("color_toggle");
-      colorToggle.onchange = function() {
-        toggleCells();
-      }
-      var ummToggle = document.getElementById("umm_toggle");
-      ummToggle.onchange = function() {
-        toggleCells();
-      }
 
 
       function toggleCells() {
@@ -88,52 +71,39 @@
 
         var hiddenCells = [];
 
-        //assembling list of cells to be hidden based on iterating over the cells in each row.
-        if (scriptToggle.checked == true) {
-          var scriptCells = document.getElementsByClassName("script_check_cell");
-          //finding all the script_cells which have the check icon.
-          for (var index in scriptCells) {
-            if (scriptIsChecked(scriptCells[parseInt(index)])) {
-              hiddenCells.push(parseInt(index));
-            }
-          }
-        }
-
-        var opinionToggle = document.getElementById("opinion_toggle");
-        if (opinionToggle.checked == true) {
-          var opinionCells = document.getElementsByClassName("opinion_cell");
-          //finding all the script_cells which have the check icon.
-          for (var index in opinionCells) {
-            if (opinionIsChecked(opinionCells[parseInt(index)])) {
-              hiddenCells.push(parseInt(index));
-            }
-          }
-        }
-
-        var colorToggle = document.getElementById("color_toggle");
-        if (colorToggle.checked == true) {
-          var colorCells = document.getElementsByClassName("color_code_cell");
-          for (var index in colorCells) {
-            if (colorIsChecked(colorCells[parseInt(index)])) {
-              hiddenCells.push(parseInt(index));
-            }
-          }
-        }
-
-        var ummToggle = document.getElementById("umm_toggle");
-        if (ummToggle.checked == true) {
-          var ummCells = document.getElementsByClassName("umm_required_cell");
-          for (var index in ummCells) {
-            if (!(ummCells[parseInt(index)] == undefined)) {
-              if (!ummIsChecked(ummCells[parseInt(index)])) {
+        //checks the toggle, then checks each cell of a row against the check_function
+        function toggleCheck(toggle_name, cell_name, check_function) {
+          var toggle = document.getElementById(toggle_name);
+          if (toggle.checked == true) {
+            var cells = document.getElementsByClassName(cell_name);
+            //finding all the script_cells which have the check icon.
+            for (var index in cells) {
+              if (check_function(cells[parseInt(index)])) {
                 hiddenCells.push(parseInt(index));
               }
             }
           }
         }
 
+        //the statement provided in the anon function in cellCheck is the rule used for each set of hide/don't hide evals
+        toggleCheck("script_toggle", "script_check_cell", cellCheck(function(single_div) {
+          return single_div.children.length > 0;
+        }));
+        //checks if the check icon is visible
+        toggleCheck("opinion_toggle", "opinion_cell", cellCheck(function(single_div) {
+          return single_div.childNodes[3].childNodes[1].style.visibility == "visible";
+        }));
+        //checks if cell has color
+        toggleCheck("color_toggle", "color_code_cell", cellCheck(function(single_div) {
+          return !single_div.style.backgroundColor;
+        }));
+        //checks if check icon is present
+        toggleCheck("umm_toggle", "umm_required_cell", cellCheck(function(single_div) {
+          return single_div.children.length > 0;
+        }));
+
         //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
-        uniqueHidden = hiddenCells.filter(function(item, pos) {
+        var uniqueHidden = hiddenCells.filter(function(item, pos) {
             return hiddenCells.indexOf(item) == pos;
         });
         if (uniqueHidden.length == titleList.length) {
@@ -169,52 +139,17 @@
           }
       }
 
-      //functions to abstract the boolean checking of cells, these caluclations may change based on style.
-      function scriptIsChecked(script_div) {
-        if (!script_div) {
-          return false;
-        }
+      function cellCheck(check_rule) {
+        return function(single_div) {
+          if (single_div == undefined || !single_div) {
+            return false;
+          }
 
-        if(script_div.innerHTML.includes("<i")) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-
-      function ummIsChecked(script_div) {
-        if (script_div == undefined || !script_div) {
-          return true;
-        }
-
-        if(script_div.innerHTML.includes("<i")) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-
-      function opinionIsChecked(opinion_div) {
-        if (!opinion_div) {
-          return false;
-        }
-        if (opinion_div.childNodes[3].childNodes[1].style.visibility == "visible") {
-          return false;
-        } else {
-          return true;
-        }
-
-      }
-
-      function colorIsChecked(color_div) {
-        if (!color_div) {
-          return false;
-        }
-
-        if (!color_div.style.backgroundColor) {
-          return false;
-        } else {
-          return true;
+          if(check_rule(single_div)) {
+            return false;
+          } else {
+            return true;
+          }
         }
       }
     </script>
