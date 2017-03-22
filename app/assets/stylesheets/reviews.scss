@@ -163,16 +163,14 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-  }
 
-  .flag_middle_border {
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: rgb(152,152,152);
-
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: rgb(152,152,152);
+    div:nth-child(even) {
+      border-top: 1px solid rgb(152,152,152);
+      border-bottom: 1px solid rgb(152,152,152);
+    }
+    div:nth-last-child(1) {
+      border-bottom-style: none;
+    }
   }
 
   .flag_flex_text {
