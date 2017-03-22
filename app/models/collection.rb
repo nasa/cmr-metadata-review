@@ -3,6 +3,7 @@ class Collection < ActiveRecord::Base
   has_many :granules
 
   # ====Params   
+  # None
   # ====Returns
   # Record Array
   # ==== Method
