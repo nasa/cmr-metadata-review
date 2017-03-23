@@ -98,33 +98,6 @@ p {
     padding-left: 40px;
   }
 
-  .header_button_box {
-    float: right;
-    margin-right: 50px;
-    font-size: 1em;
-    height:30px;
-    padding-top:1px;
-
-    .header_icon_button {
-      color: white;
-      display: inline-block;
-      margin-right:20px;
-      background-color: $blue-dark;
-      border:none;
-
-      i {
-        margin-top:2px;
-        display: inline-block;
-      }
-      p {
-        position:relative;
-        bottom: 1px;
-        font-size: 0.8em;
-        display: inline-block;
-      }
-    }
-  }
-
   h3 {
     margin: 0px;
   }
