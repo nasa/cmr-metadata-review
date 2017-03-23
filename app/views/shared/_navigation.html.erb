@@ -2,40 +2,36 @@
   <div class="header_title"> 
     <h3><%= title %></h3>
   </div>
-
-  <div class="header_button_box">
-      <a href="<%= home_path %>">
-        <button id="curation_home_button" class="header_icon_button">
-          <i class="eui-icon eui-fa-globe"></i>
-          <p>CURATION HOME</p>
-        </button>
-      </a>
-
-      <% if current_user.admin %>
-        <a href="<%= new_user_registration_path %>">
-            <button id="create_user_button" class="header_icon_button">
-              <i class="eui-icon eui-fa-circle-o"></i>
-              <p>CREATE USER</p>
-            </button>
-        </a>
-      <% end %>
-
-      <a href="<%= destroy_user_session_path %>">
-        <button id="logout_button" class="header_icon_button">
-          <i class="eui-icon eui-fa-external-link-square"></i>
-          <p>LOGOUT</p>
-        </button>
-      </a>
-
-      <button class="header_icon_button">
-        <i class="eui-icon eui-fa-question-circle"></i>
-        <p>HELP</p>
-      </button>
-  </div>
-  <div class="clear_box"></div>
 </div>
 
-
-<div class="header_image">
-  
-</div> 
+<nav class="eui-menu" style="position:absolute;top:25px;right:0;">
+  <ul>
+    <li><a href="#">About</a>
+      <ul class="eui-sub-menu">
+        <li><a href="#">About Earthdata</a></li>
+        <li><a href="#">ESDIS</a></li>
+        <li class="has-children"><a href="#">Next Level <i class="eui-icon eui-fa-chevron-circle-down"></i></a>
+          <ul class="eui-third-menu">
+            <li><a href="#">Option A</a></li>
+            <li><a href="#">Option B</a></li>
+            <li><a href="#">Option C</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#">Data</a>
+      <ul class="eui-sub-menu">
+        <li><a href="#">Option A</a></li>
+        <li><a href="#">Option B</a></li>
+        <li><a href="#">Option C</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Community</a>
+      <ul class="eui-sub-menu">
+        <li><a href="#">Mission Statement</a></li>
+        <li><a href="#">Organization Chart</a></li>
+        <li><a href="#">Earth Science Program</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
