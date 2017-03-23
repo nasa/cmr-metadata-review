@@ -8,12 +8,15 @@ class User < ActiveRecord::Base
   has_many :ingests
   has_many :comments
   has_many :reviews 
-  has_many :discussions  
-  # has_many :collection_records, through: :collection_reviews  
+  has_many :discussions   
 
-  # has_many :granule_records, through: :granule_reviews    
-     
-
+  # ====Params   
+  # None
+  # ====Returns
+  # Array of Records
+  # ==== Method
+  # Iterates through all collection records and returns an Array  
+  # containing only the records for which the user has not attached a completed review. 
   def records_not_reviewed
     Collection.all_records.select do |record| 
       (record.reviews.select do |review| 
