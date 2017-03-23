@@ -97,7 +97,8 @@ class CollectionsController < ApplicationController
     end
 
     begin 
-      collection_data = Cmr.get_collection(concept_id)
+      raw_collection = Cmr.get_raw_collection(concept_id)
+      collection_data = Cmr.get_collection(concept_id, raw_collection)
       short_name = collection_data["ShortName"]
       ingest_time = DateTime.now
       #nil gets turned into 0
@@ -114,32 +115,31 @@ class CollectionsController < ApplicationController
       #returns a list of granule data
       granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
       #replacing the data with new granule & record & ingest objects
-      granules_to_save.map! do |granule_data| 
-        granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-        new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
-        granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
-        granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-        [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
-      end 
+      granules_components =  (granules_to_save.map do |granule_data| 
+                              granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
+                              new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
+                              granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
+                              granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
+                              [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
+                             end) 
 
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
         record_data.save!
         ingest_record.save!
-        granules_to_save.flatten.each { |savable_object| savable_object.save! }
+        granules_components.flatten.each { |savable_object| savable_object.save! }
       end
 
+      new_collection_record.create_script(raw_collection)
 
       #getting list of records for script
-      granule_records = granules_to_save.select { |savable_object| savable_object.is_a?(Record) }
-
-      new_collection_record.evaluate_script
+      granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
       granule_records.each do |record|
-        record.evaluate_script
+        record.create_script
       end
 
-      # flash[:notice] = "The selected collection has been successfully ingested into the system"
+      flash[:notice] = "The selected collection has been successfully ingested into the system"
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::OpenTimeout
