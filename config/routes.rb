@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :records
   get '/record_complete', to: 'records#complete'
 
+  get '/reports/home', to: 'reports#home'
+
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'
     get "/documentation" => redirect("/doc/index.html")

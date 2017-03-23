@@ -4,34 +4,39 @@
   </div>
 </div>
 
-<nav class="eui-menu" style="position:absolute;top:25px;right:0;">
+<nav class="eui-menu">
   <ul>
-    <li><a href="#">About</a>
+    <li>
+      <a href="<%= home_path %>" class="header_button">
+        <i style="display: inline-block;" class="eui-icon eui-fa-globe"></i>
+        <p style="display: inline-block;">Curation Home</p>
+      </a>
+    </li>
+    <li><a href="#">Reports</a>
       <ul class="eui-sub-menu">
-        <li><a href="#">About Earthdata</a></li>
-        <li><a href="#">ESDIS</a></li>
-        <li class="has-children"><a href="#">Next Level <i class="eui-icon eui-fa-chevron-circle-down"></i></a>
-          <ul class="eui-third-menu">
-            <li><a href="#">Option A</a></li>
-            <li><a href="#">Option B</a></li>
-            <li><a href="#">Option C</a></li>
-          </ul>
-        </li>
+        <li><a href="<%=reports_home_path%>">Reports Page 1</a></li>
+        <li><a href="<%=reports_home_path%>">Reports Page 2</a></li>
+        <li><a href="<%=reports_home_path%>">Reports Page 3</a></li>
       </ul>
     </li>
-    <li><a href="#">Data</a>
-      <ul class="eui-sub-menu">
-        <li><a href="#">Option A</a></li>
-        <li><a href="#">Option B</a></li>
-        <li><a href="#">Option C</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Community</a>
-      <ul class="eui-sub-menu">
-        <li><a href="#">Mission Statement</a></li>
-        <li><a href="#">Organization Chart</a></li>
-        <li><a href="#">Earth Science Program</a></li>
-      </ul>
+    <% if current_user.admin %>
+      <li>
+        <a href="<%= new_user_registration_path %>" class="header_button">
+          <i class="eui-icon eui-fa-circle-o"></i>
+          <p>Create User</p>
+        </a>
+      </li>
+    <% end %>
+    <li>
+      <a href="<%= destroy_user_session_path %>" class="header_button">
+        <i class="eui-icon eui-fa-external-link-square"></i>
+        <p>Logout</p>
+      </a>
     </li>
   </ul>
 </nav>
+
+
+<div class="header_image">
+  
+</div> 
