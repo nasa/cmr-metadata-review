@@ -43,6 +43,42 @@ p {
   clear: both;
 }
 
+//overwriting the normal eui menu styles.
+.eui-menu {
+  position:absolute;
+  top:8px;
+  right:25px;
+
+  ul > li > a:hover {
+    background-color: $sky-blue !important;
+  }
+
+  ul > li > a {
+    padding-top:23px !important;
+    min-height: 70px !important;
+  }
+
+  ul > li > ul > li > a {
+    background-color: $blue-dark !important;
+    padding-top:10px !important;
+    min-height: 0px !important;
+  }
+}
+
+.header_button {
+  color: white;
+  display: inline-block;
+  background-color: $blue-dark;
+  border:none;
+
+  i {
+    display: inline-block;
+  }
+  p {
+    display: inline-block;
+  }
+}
+
 .page_header {
   color: white;
 
@@ -52,13 +88,13 @@ p {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: white;
-  padding-top: 25px;
   margin-bottom:50px;
 
   .header_title {
     display: inline-block;
     letter-spacing: 0.5px;
     font-weight: 500;
+    padding-top: 25px;
     padding-left: 40px;
   }
 
