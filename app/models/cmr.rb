@@ -326,4 +326,11 @@ class Cmr
     result.chomp("&")
   end
 
+  def self.total_collection_count
+    url = Cmr.api_url("collections", {"page_size" => 1})
+    total_results = Cmr.cmr_request(url)
+    results_hash = Hash.from_xml(total_results)["results"]
+    results_hash["hits"].to_i
+  end
+
 end
