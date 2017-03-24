@@ -2,3 +2,14 @@
 
 <p>Total Ingested Collections: <%=@collection_ingest_count%></p>
 <p>Total Collections in CMR: <%=@cmr_total_collection_count%></p>
+
+<% @records.each do |record| %>
+  <p>Concept/Revision  <%= record.concept_id %> - <%= record.revision_id %>: </p>
+  <p>Total Fields: <%= record.get_colors.values.length %></p>
+  <p>Blue Fields: <%= record.get_colors.blue_count %></p>
+  <p>Green Fields: <%= record.get_colors.green_count %></p>
+  <p>Yellow Fields: <%= record.get_colors.yellow_count %></p>
+  <p>Red Fields: <%= record.get_colors.red_count %></p>
+  <br>
+  <br>
+<% end %>

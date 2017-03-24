@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227205517) do
+ActiveRecord::Schema.define(version: 20170324182828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(version: 20170227205517) do
     t.integer "record_id"
     t.integer "user_id"
     t.integer "total_flag_count"
+    t.integer "blue_count",       default: 0
+    t.integer "red_count",        default: 0
+    t.integer "yellow_count",     default: 0
+    t.integer "green_count",      default: 0
   end
 
   add_index "colors", ["record_id"], name: "index_colors_on_record_id", using: :btree
@@ -113,6 +117,11 @@ ActiveRecord::Schema.define(version: 20170227205517) do
   end
 
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
+
+  create_table "records_update_locks", force: :cascade do |t|
+    t.datetime "last_update"
+    t.integer  "lock"
+  end
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "record_id"
