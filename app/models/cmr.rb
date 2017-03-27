@@ -6,17 +6,21 @@ class Cmr
   TIMEOUT_MARGIN = 10
   REQUIRED_COLLECTION_FIELDS = ["ShortName", 
                                 "VersionId", 
-                                "InsertTime", 
                                 "LastUpdate", 
                                 "LongName", 
                                 "DataSetId", 
                                 "Description", 
-                                "Orderable", 
-                                "Visible",
                                 "ProcessingLevelId", 
-                                "ArchiveCenter", 
+                                "ArchiveCenter",
+                                "ProcessingCenter",
+                                "CollectionState", 
                                 "DataFormat", 
-                                "Temporal/Range/DateTime/BeginningDateTime", 
+                                  [
+                                    "Temporal/SingleDateTime", 
+                                    "Temporal/RangeDateTime/BeginningDateTime",
+                                    "Temporal/PeriodicDateTime/Name",
+                                    "Temporal/PaleoDateTime"
+                                    ],
                                 "Contacts/Contact/Role",
                                 "ScienceKeywords/ScienceKeyword/CategoryKeyword",
                                 "ScienceKeywords/ScienceKeyword/TopicKeyword",
@@ -158,7 +162,7 @@ class Cmr
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
-        collection_hash[field] = ""
+        collection_hash = Cmr.keyset_add_field(collection_hash, field)
       end
     end
 
@@ -166,19 +170,58 @@ class Cmr
   end
 
 
+  # ====Params
+  # Hash of metadata keys and values    
+  # String Field Name or List of String Field Names
+  # ====Returns
+  # Hash of metadata keys and values
+  # ==== Method
+  # Adds the field name parameter of the first string of the list to the hash
+  # if the first entry of the list is a sub list, then the entire sub list is added to the hash
+
+
+  def self.keyset_add_field(collection_hash, field)
+    if field.is_a?(String)
+      collection_hash[field] = ""
+      return collection_hash
+    elsif field.is_a?(Array)
+      if field[0].is_a?(String)
+        collection_hash[field[0]] = ""
+      elsif field[0].is_a?(Array)
+        field[0].each do |sub_field|
+          collection_hash[sub_field] = ""
+        end
+      end
+      return collection_hash 
+    end
+  end
+
+
   # ====Params   
   # Array of keys,     
-  # String Field Name
+  # String Field Name or List of String Field Names
   # ====Returns
   # Boolean
   # ==== Method
-  # Checks a set of keys and returns boolean of keyset containing the string param
+  # Checks a set of keys and returns boolean of keyset containing the string param or any of the strings in a given list
 
 
   def self.keyset_has_field?(keys, field)
-    split_field = field.split("/")
-    regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
-    return (keys.select {|key| key =~ /^#{regex}/}).any?
+    if field.is_a?(String)
+      split_field = field.split("/")
+      regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
+      return (keys.select {|key| key =~ /^#{regex}/}).any?
+
+    elsif field.is_a?(Array)
+      contains_any = false
+      field.each do |sub_field|
+        if Cmr.keyset_has_field?(keys, single_field)
+          contains_any = true
+        end
+      end
+
+      return contains_any
+    end
   end
 
 
@@ -312,10 +355,23 @@ class Cmr
     return search_iterator, collection_count
   end
 
-  def self.required_collection_field?(field_string)
+  def self.required_collection_field?(field_string, required_fields = REQUIRED_COLLECTION_FIELDS)
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
-    REQUIRED_COLLECTION_FIELDS.include? stripped_field
+    is_required_field = false
+    required_fields.each do |required_field| 
+      if required_field.is_a?(String)
+        if required_field == stripped_field
+          is_required_field = true
+        end
+      elsif required_field.is_a?(Array)
+        if Cmr.required_collection_field?(field_string, required_field)
+          is_required_field = true
+        end
+      end
+    end
+
+    is_required_field
   end
 
   def self.api_url(data_type, options_hash = {})
