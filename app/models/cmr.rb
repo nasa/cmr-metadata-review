@@ -11,8 +11,10 @@ class Cmr
                                 "DataSetId", 
                                 "Description", 
                                 "ProcessingLevelId", 
-                                "ArchiveCenter",
-                                "ProcessingCenter",
+                                  [
+                                    "ArchiveCenter",
+                                    "ProcessingCenter"
+                                    ],
                                 "CollectionState", 
                                 "DataFormat", 
                                   [
