@@ -100,11 +100,11 @@ class Checker():
     def checkAll(self, metadata):
         
 
+        # try:
+        #print("555")
+        result = ""
+        resultFields = {}
         try:
-            #print("555")
-            result = ""
-            resultFields = {}
-
             metadata = metadata.replace("\\", "")
 
             metadata = json.loads(metadata)
@@ -562,7 +562,7 @@ class Checker():
             # except KeyError:
             #     result += 'np'
             return resultFields
-        except:    
+        except:
             return resultFields
 
     def checkShortName(self, val):
