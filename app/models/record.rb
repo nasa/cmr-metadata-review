@@ -120,21 +120,29 @@ class Record < ActiveRecord::Base
     if raw_data.nil?
       raw_data = get_raw_data
     end
+
+    comment_hash = nil
+
     if self.is_collection?
       #escaping json for passing to python
       collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
       #W option to silence warnings
-      if self.is_collection?  
-        script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
-      else
-        script_results = `python -W ignore lib/GranuleChecker.py "#{collection_json}"`
-      end
+      script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
 
       comment_hash = JSON.parse(script_results)
       comment_hash = Record.format_script_comments(comment_hash, self.values)
-      comment_hash
+    elsif self.is_granule?
+      #escaping json for passing to python
+      granule_json = raw_data.to_json.gsub("\"", "\\\"")
+      #W option to silence warnings
+      script_results = `python -W ignore lib/GranuleChecker.py "#{granule_json}"`
+
+      comment_hash = JSON.parse(script_results)
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
     end
+
+    comment_hash
   end
 
   def get_raw_data
