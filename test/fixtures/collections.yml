@@ -2,3 +2,13 @@ first:
   id: 1
   concept_id: "C1000000020-LANCEAMSR2"
   short_name: "A2_DySno_NRT"
+
+completed:
+  id: 100
+  concept_id: "C1000000123-LANCEAMSR2"
+  short_name: "completed_test"
+
+uncompleted:
+  id: 101
+  concept_id: "C1000000456-LANCEAMSR2"
+  short_name: "uncompleted_test"

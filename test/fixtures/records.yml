@@ -6,6 +6,34 @@ first:
   revision_id: "8"
   closed: false
 
+completed:
+  id: 100
+  recordable_id: 100
+  recordable_type: "Collection"
+  revision_id: "8"
+  closed: true
+
+uncompleted_but_old:
+  id: 99
+  recordable_id: 100
+  recordable_type: "Collection"
+  revision_id: "7"
+  closed: false 
+
+uncompleted:
+  id: 101
+  recordable_id: 101
+  recordable_type: "Collection"
+  revision_id: "9"
+  closed: true
+
+completed_but_old:
+  id: 102
+  recordable_id: 101
+  recordable_type: "Collection"
+  revision_id: "10"
+  closed: false 
+
 granule:
   id: 5
   recordable_id: 1

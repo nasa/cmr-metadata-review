@@ -57,4 +57,57 @@ class Collection < ActiveRecord::Base
     user.collection_reviews.where(review_state: 0)
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Record Array 
+  # ==== Method
+  # Queries all records of the param type from DB
+  # Then filters them to return a list of only the newest revision id for each collection in the system.
+
+  def self.all_newest_revisions
+    collection_records = Collection.all_records
+    newest_records = {}
+
+    collection_records.each do |record|
+      if newest_records.key?(record.recordable_id)
+        revision_id = newest_records[record.recordable_id].revision_id.to_i
+        new_revision_id = record.revision_id.to_i
+        #for each collection id, checking if record is a newer revision
+        if new_revision_id > revision_id
+          newest_records[record.recordable_id] = record
+        end
+      else
+        newest_records[record.recordable_id] = record
+      end
+    end
+
+    newest_records.values
+  end
+
+  # ====Params   
+  # None    
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Aggregates the total number of Collections with their most recent revision_id record in a completed state.
+
+  def self.total_completed
+    newest_record_list = Collection.all_newest_revisions
+    (newest_record_list.select {|record| record.closed == true }).count
+  end 
+
+  # ====Params   
+  # None    
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Aggregates the total number of Collections with their most recent revision_id record in the in process state.
+
+  def self.total_in_process
+    newest_record_list = Collection.all_newest_revisions
+    (newest_record_list.select {|record| record.closed == false }).count
+  end 
+
+
 end
