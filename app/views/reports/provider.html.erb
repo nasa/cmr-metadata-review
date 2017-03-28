@@ -1,0 +1,31 @@
+<p>Provider: <%=@daac%></p>
+
+<p>Total Collections in DAAC:  <%=@total_collection_count%></p>
+
+<p>Number of Collections ingested into review tool: <%=@total_ingested%></p>
+<p>% of Collections that have been ingested into review tool: <%=@percent_ingested%>%</p>
+
+<p>Number of Collection reviews with 0 completed reviews: <%= @review_counts.count { |x| x == 0 }%></p>
+<p>Number of Collections reviewed once: <%= @review_counts.count { |x| x == 1 }%></p>
+<p>Number of Collections reviewed 2 or more times, but not "Done": <%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></p>
+<p>Number of Collection reviews marked as "Done": <%= @total_completed %></p>
+
+
+<br>
+<br>
+<br>
+
+
+Quality of Collection Reviews marked as "Done" (high/low/avg)
+Number of Collections that been updated in CMR after a finished review.
+Number of Updated Collection Reviews marked as "Done"
+Quality of Updated Collection Reviews marked as "Done" (high/low/avg)
+
+
+Number of fields checked (total).
+Number (and %) of fields that passed
+Number (and %) of fields that failed (data accessibility)
+Number (and %) of fields that failed (data usability)
+Number (and %) of fields that failed (data traceability)
+Number (and %) of fields with warnings issued.
+Number (and %) of fields with informational notes added.

@@ -58,15 +58,21 @@ class Collection < ActiveRecord::Base
   end
 
   # ====Params   
-  # None
+  # Optional String DAAC short name
   # ====Returns
   # Record Array 
   # ==== Method
   # Queries all records of the param type from DB
-  # Then filters them to return a list of only the newest revision id for each collection in the system.
+  # Then filters them to return a list of only the newest revision id for each collection in the system or by DAAC.
 
-  def self.all_newest_revisions
-    collection_records = Collection.all_records
+  def self.all_newest_revisions(daac_short_name = nil)
+    if daac_short_name.nil?
+      collection_records = Collection.all_records
+    else 
+      collections = Collection.by_daac(daac_short_name)
+      collection_ids = collections.map {|collection| collection.id }
+      collection_records = Record.all.select { |record| record.recordable_type == "Collection" && (collection_ids.include? record.recordable_id) }
+    end
     newest_records = {}
 
     collection_records.each do |record|
@@ -92,8 +98,12 @@ class Collection < ActiveRecord::Base
   # ==== Method
   # Aggregates the total number of Collections with their most recent revision_id record in a completed state.
 
-  def self.total_completed
-    newest_record_list = Collection.all_newest_revisions
+  def self.total_completed(daac_short_name = nil)
+    if daac_short_name.nil?
+      newest_record_list = Collection.all_newest_revisions
+    else
+      newest_record_list = Collection.all_newest_revisions(daac_short_name)
+    end
     (newest_record_list.select {|record| record.closed == true }).count
   end 
 
@@ -109,5 +119,63 @@ class Collection < ActiveRecord::Base
     (newest_record_list.select {|record| record.closed == false }).count
   end 
 
+  # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # Collection list
+  # ==== Method
+  # returns all collections ingested that belong to the daac parameter
+
+  def self.by_daac(daac_short_name)
+    Collection.all.select { |collection| collection.concept_id.include? daac_short_name }
+  end
+
+  # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # Hash of {record id's => completed review counts}
+  # ==== Method
+  # Takes all of the newest revisions for entire system or by DAAC
+  # Then creates a hash of each collection and the corresponding counts of completed reviews
+
+  def self.completed_review_counts(daac_short_name = nil)
+    if daac_short_name.nil?
+      newest_records = Collection.all_newest_revisions
+    else 
+      newest_records = Collection.all_newest_revisions(daac_short_name)
+    end
+
+    review_hash = {}
+    completed_reviews = Review.all.where(review_state: 1)  
+    #setting up review count hash
+    newest_records.each do |record|
+      review_hash[record.id] = 0
+    end
+
+    completed_reviews.each do |review|
+      if review_hash.key?(review.record_id)
+        review_hash[review.record_id] = review_hash[review.record_id] + 1
+      end
+    end
+
+    review_hash.values
+  end  
+
+
+  def self.colors_hash(daac_short_name = nil)
+    newest_revisions = Collection.all_newest_revisions(daac_short_name)
+
+    record_ids = newest_revisions.map { |record| record.id }
+    colors = Color.all
+
+    color_hash = {}
+    colors.each do |color|
+      if record_ids.include? color.record_id
+        color_hash[color.record_id] = [color.blue_count, color.green_count, color.yellow_count, color.red_count]
+      end
+    end
+
+    color_hash.values
+  end
 
 end
