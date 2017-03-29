@@ -3,9 +3,6 @@ require 'test_helper'
 class RecordTest < ActiveSupport::TestCase
 
 
-
-
-
   describe "attribute accessor methods" do
     it "returns correct attribute information for a record" do
       record = Record.find_by id: 1
@@ -90,7 +87,7 @@ class RecordTest < ActiveSupport::TestCase
       color_codes.each do |key, value|
         color_codes[key] = "yellow"
       end
-      record.get_colors.update_values(color_codes)
+      record.update_colors(color_codes)
       assert_equal(record.color_coding_complete?, true)
 
 
@@ -102,10 +99,9 @@ class RecordTest < ActiveSupport::TestCase
 
 
 
-      second_opinions = record.get_opinions
-      opinion_values = second_opinions.values
+      opinion_values = record.get_opinions
       opinion_values["ShortName"] = false
-      second_opinions.update_values(opinion_values)
+      record.update_opinions(opinion_values)
       assert_equal(record.no_second_opinions?, true)
     end
   end

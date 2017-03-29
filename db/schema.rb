@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20170324182828) do
 
   create_table "colors", force: :cascade do |t|
     t.integer "record_id"
-    t.integer "user_id"
     t.integer "total_flag_count"
     t.integer "blue_count",       default: 0
     t.integer "red_count",        default: 0
@@ -32,7 +31,6 @@ ActiveRecord::Schema.define(version: 20170324182828) do
   end
 
   add_index "colors", ["record_id"], name: "index_colors_on_record_id", using: :btree
-  add_index "colors", ["user_id"], name: "index_colors_on_user_id", using: :btree
 
   create_table "discussions", force: :cascade do |t|
     t.integer  "record_id"
@@ -47,12 +45,10 @@ ActiveRecord::Schema.define(version: 20170324182828) do
 
   create_table "flags", force: :cascade do |t|
     t.integer "record_id"
-    t.integer "user_id"
     t.integer "total_flag_count"
   end
 
   add_index "flags", ["record_id"], name: "index_flags_on_record_id", using: :btree
-  add_index "flags", ["user_id"], name: "index_flags_on_user_id", using: :btree
 
   create_table "granules", force: :cascade do |t|
     t.string  "concept_id"
@@ -72,56 +68,42 @@ ActiveRecord::Schema.define(version: 20170324182828) do
 
   create_table "opinions", force: :cascade do |t|
     t.integer "record_id"
-    t.integer "user_id"
     t.integer "total_flag_count"
   end
 
   add_index "opinions", ["record_id"], name: "index_opinions_on_record_id", using: :btree
-  add_index "opinions", ["user_id"], name: "index_opinions_on_user_id", using: :btree
 
   create_table "recommendations", force: :cascade do |t|
     t.integer "record_id"
-    t.integer "user_id"
     t.integer "total_flag_count"
   end
 
   add_index "recommendations", ["record_id"], name: "index_recommendations_on_record_id", using: :btree
-  add_index "recommendations", ["user_id"], name: "index_recommendations_on_user_id", using: :btree
 
   create_table "record_data", force: :cascade do |t|
-    t.integer "datable_id"
-    t.string  "datable_type"
-    t.string  "rawJSON"
+    t.integer  "record_id"
+    t.string   "value",          default: ""
+    t.string   "daac"
+    t.datetime "last_updated"
+    t.string   "column_name"
+    t.string   "color",          default: ""
+    t.string   "script_comment", default: ""
+    t.boolean  "opinion",        default: false
+    t.string   "flag",           default: [],    array: true
+    t.string   "recommendation", default: ""
   end
 
-  add_index "record_data", ["datable_type", "datable_id"], name: "index_record_data_on_datable_type_and_datable_id", using: :btree
-
-  create_table "record_rows", force: :cascade do |t|
-    t.integer "record_id"
-    t.integer "user_id"
-    t.string  "row_name"
-    t.integer "record_info_count"
-    t.string  "rawJSON"
-  end
-
-  add_index "record_rows", ["record_id"], name: "index_record_rows_on_record_id", using: :btree
-  add_index "record_rows", ["user_id"], name: "index_record_rows_on_user_id", using: :btree
+  add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree
 
   create_table "records", force: :cascade do |t|
     t.integer  "recordable_id"
     t.string   "recordable_type"
     t.string   "revision_id"
     t.boolean  "closed"
-    t.string   "rawJSON"
     t.datetime "closed_date"
   end
 
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
-
-  create_table "records_update_locks", force: :cascade do |t|
-    t.datetime "last_update"
-    t.integer  "lock"
-  end
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "record_id"
@@ -136,12 +118,10 @@ ActiveRecord::Schema.define(version: 20170324182828) do
 
   create_table "script_comments", force: :cascade do |t|
     t.integer "record_id"
-    t.integer "user_id"
     t.integer "total_comment_count"
   end
 
   add_index "script_comments", ["record_id"], name: "index_script_comments_on_record_id", using: :btree
-  add_index "script_comments", ["user_id"], name: "index_script_comments_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false

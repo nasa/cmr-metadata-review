@@ -162,6 +162,7 @@ class Collection < ActiveRecord::Base
   end  
 
 
+
   def self.colors_hash(daac_short_name = nil)
     newest_revisions = Collection.all_newest_revisions(daac_short_name)
 
@@ -176,6 +177,12 @@ class Collection < ActiveRecord::Base
     end
 
     color_hash.values
+  end
+
+  def self.color_counts(daac_short_name = nil)
+    color_hash = Collection.colors_hash(daac_short_name)
+    reducedColors = color_hash.reduce([0,0,0,0]) { |countArr, singleArr| [countArr[0] + singleArr[0], countArr[1] + singleArr[1], countArr[2] + singleArr[2], countArr[3] + singleArr[3]] }
+    reducedColors
   end
 
 end

@@ -10,6 +10,18 @@
 <p>Number of Collections reviewed 2 or more times, but not "Done": <%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></p>
 <p>Number of Collection reviews marked as "Done": <%= @total_completed %></p>
 
+<p>Number of fields checked (total): <%=@total_checked%></p>
+<p>Number (and %) of fields that passed: <%=@field_colors[1]%> - <%=(@field_colors[1].to_f / @total_checked * 100).round(2)%>%</p>
+
+<p>Number (and %) of fields that failed (data accessibility)
+Number (and %) of fields that failed (data usability)
+Number (and %) of fields that failed (data traceability)</p>
+
+<p>Number (and %) of fields with warnings issued: <%=@field_colors[2]%> - <%=(@field_colors[2].to_f / @total_checked * 100).round(2)%>%</p>
+<p>Number (and %) of fields with informational notes added: <%=@field_colors[0]%> - <%=(@field_colors[0].to_f / @total_checked * 100).round(2)%>%</p>
+
+
+
 
 <br>
 <br>
@@ -22,10 +34,5 @@ Number of Updated Collection Reviews marked as "Done"
 Quality of Updated Collection Reviews marked as "Done" (high/low/avg)
 
 
-Number of fields checked (total).
-Number (and %) of fields that passed
-Number (and %) of fields that failed (data accessibility)
-Number (and %) of fields that failed (data usability)
-Number (and %) of fields that failed (data traceability)
-Number (and %) of fields with warnings issued.
-Number (and %) of fields with informational notes added.
+
+

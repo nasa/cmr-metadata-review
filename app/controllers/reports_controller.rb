@@ -21,7 +21,9 @@ class ReportsController < ApplicationController
     @review_counts = Collection.completed_review_counts(@daac)
     @total_completed = Collection.total_completed(@daac)
 
-    @fields_checked = 
+    @field_colors = Collection.color_counts(@daac)
+    @total_checked = @field_colors[0] + @field_colors[1] + @field_colors[2] + @field_colors[3]
+    
   end
 
 end

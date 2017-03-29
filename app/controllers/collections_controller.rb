@@ -108,7 +108,16 @@ class CollectionsController < ApplicationController
       #creating collection record related objects
       new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
 
-      record_data = RecordData.new(datable: new_collection_record, rawJSON: collection_data.to_json)
+      record_data_objects = []
+
+      collection_data.each do |key, value|
+        record_data = RecordData.new(record: new_collection_record)
+        record_data.last_updated = DateTime.now
+        record_data.column_name = key
+        record_data.value = value
+        record_data.daac = concept_id.partition('-').last
+        record_data_objects.push(record_data)
+      end
 
       ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
 
@@ -118,16 +127,19 @@ class CollectionsController < ApplicationController
       granules_components =  (granules_to_save.map do |granule_data| 
                               granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
                               new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
-                              granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
+                              # granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
                               granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-                              [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
+                              [ granule_object, new_granule_record, granule_ingest ]
                              end) 
 
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
-        record_data.save!
+        # record_data.save!
         ingest_record.save!
+        record_data_objects.each do |record_data|
+          record_data.save!
+        end
         granules_components.flatten.each { |savable_object| savable_object.save! }
       end
 
@@ -136,7 +148,7 @@ class CollectionsController < ApplicationController
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
       granule_records.each do |record|
-        record.create_script
+        # record.create_script
       end
 
       flash[:notice] = "The selected collection has been successfully ingested into the system"
