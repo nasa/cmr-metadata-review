@@ -1,4 +1,4 @@
-<p>Reports Page 1</p>
+<p>Reports Home Page</p>
 
 <p>Total Collections in CMR: <%=@cmr_total_collection_count%></p>
 
@@ -9,13 +9,19 @@
 <br>
 <br>
 <br>
-<% @records.each do |record| %>
-  <p>Concept/Revision  <%= record.concept_id %> - <%= record.revision_id %>: </p>
-  <p>Total Fields: <%= record.get_colors.values.length %></p>
-  <p>Blue Fields: <%= record.get_colors.blue_count %></p>
-  <p>Green Fields: <%= record.get_colors.green_count %></p>
-  <p>Yellow Fields: <%= record.get_colors.yellow_count %></p>
-  <p>Red Fields: <%= record.get_colors.red_count %></p>
+<% @record_sets.each do |record_set| %>
+  <p>Concept ID: <%=record_set[0].concept_id%></p>
+  <%record_set.each do |record| %>
+    <div style="display: inline-block;border: solid; padding:5px;">
+      <p>RevisionId  - <%= record.revision_id %>: </p>
+      <p>Total Fields: <%= record.get_colors.count %></p>
+      <p>Blue Fields: <%= record.color_count("blue") %></p>
+      <p>Green Fields: <%= record.color_count("green") %></p>
+      <p>Yellow Fields: <%= record.color_count("yellow") %></p>
+      <p>Red Fields: <%= record.color_count("red") %></p>
+    </div>
+  <% end %>
   <br>
   <br>
+  <p>###############################################</p>
 <% end %>

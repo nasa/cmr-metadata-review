@@ -67,13 +67,13 @@ class Collection < ActiveRecord::Base
     end
 
     record_data_sets = collection_records.map { |record|  record.record_datas }
-    scores = record_data_sets.map { |data_list| (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count * 100 }
+    scores = record_data_sets.map { |data_list| (1 - (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count) * 100 }
     scores
   end
 
 
   def self.updated_done_count(daac_short_name = nil)
-    ordered_revisions = Collection.ordered_revisions(daac_short_name)
+    ordered_revisions = Collection.ordered_revisions(daac_short_name).values
     updated_and_done = ordered_revisions.select { |record_list|
       record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
     }
@@ -82,7 +82,7 @@ class Collection < ActiveRecord::Base
   end
 
   def self.updated_count(daac_short_name = nil)
-    ordered_revisions = Collection.ordered_revisions(daac_short_name)
+    ordered_revisions = Collection.ordered_revisions(daac_short_name).values
     updated = ordered_revisions.select { |record_list|
       ((record_list.drop(1).select { |record| record.closed }).count > 0)
     }
@@ -218,7 +218,7 @@ class Collection < ActiveRecord::Base
     record_ids = newest_revisions.map { |record| record.id }
     record_datas = RecordData.all.select { |data| record_ids.include? data.record_id }
 
-    flagged_data = RecordData.all.select { |data| record_ids.includ? data.record_id && !data.flag.empty? && (data.color == "red") }
+    flagged_data = record_datas.select { |data| !data.flag.empty? && (data.color == "red") }
 
     flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
     flagged_data.each do |data|

@@ -1,32 +1,124 @@
-<p>Provider: <%=@daac%></p>
+<p>Provider: <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @daac)) %></p>
 
-<p>Total Collections in DAAC:  <%=@total_collection_count%></p>
+<script type="text/javascript">
+  var selecter = document.getElementById("provider");
+  selecter.onchange = function() {
+    if (!(selecter.value == '<%=@provider_select_list[0][0]%>')) {
+      document.location = '/reports/provider?daac=' + selecter.value;
+    }
+  }
+</script>
 
-<p>Number of Collections ingested into review tool: <%=@total_ingested%></p>
-<p>% of Collections that have been ingested into review tool: <%=@percent_ingested%>%</p>
+<style type="text/css">
+  table td {
+    padding: 5px;
+  }
+</style>
 
-<p>Number of Collection reviews with 0 completed reviews: <%= @review_counts.count { |x| x == 0 }%></p>
-<p>Number of Collections reviewed once: <%= @review_counts.count { |x| x == 1 }%></p>
-<p>Number of Collections reviewed 2 or more times, but not "Done": <%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></p>
-<p>Number of Collection reviews marked as "Done": <%= @total_completed %></p>
+<%if !params["daac"].nil?%>
+  <table style="width:80%; padding:5px;">
 
-<p>Number of fields checked (total): <%=@total_checked%></p>
-<p>Number (and %) of fields that passed: <%=@field_colors[1]%> - <%=(@field_colors[1].to_f / @total_checked * 100).round(2)%>%</p>
+    <tr>
+      <td>Total Collections in DAAC:</td>  
+      <td><%=@total_collection_count%></td>
+    </tr>  
 
-<p>Number (and %) of fields that failed (data accessibility):  <%=@red_flags["Accessibility"]%> - <%=(@red_flags["Accessibility"].to_f / @total_checked * 100).round(2)%>%</p>
+    <tr>
+      <td>Number of Collections ingested into review tool:</td>  
+      <td><%=@total_ingested%></td>
+    </tr>
 
-<p>Number (and %) of fields that failed (data usability): <%=@red_flags["Traceability"]%> - <%=(@red_flags["Traceability"].to_f / @total_checked * 100).round(2)%>%</p>
+    <tr>
+      <td>% of Collections that have been ingested into review tool:</td>  
+      <td><%=@percent_ingested%>%</td>
+    </tr>
 
-<p>Number (and %) of fields that failed (data traceability): <%=@red_flags["Usability"]%> - <%=(@red_flags["Usability"].to_f / @total_checked * 100).round(2)%>%</p>
+    <tr>
+      <td>Number of Collection reviews with 0 completed reviews:</td>  
+      <td><%= @review_counts.count { |x| x == 0 }%></td>
+    </tr>
 
-<p>Number (and %) of fields with warnings issued: <%=@field_colors[2]%> - <%=(@field_colors[2].to_f / @total_checked * 100).round(2)%>%</p>
-<p>Number (and %) of fields with informational notes added: <%=@field_colors[0]%> - <%=(@field_colors[0].to_f / @total_checked * 100).round(2)%>%</p>
+    <tr>
+      <td>Number of Collections reviewed once:</td>  
+      <td><%= @review_counts.count { |x| x == 1 }%></td>
+    </tr>
 
-<p>Number of Collections that been updated in CMR after a finished review: <%=@updated_count%></p>
-<p>Number of Updated Collection Reviews marked as "Done": <%=@updated_done_count%></p>
+    <tr>
+      <td>Number of Collections reviewed 2 or more times, but not "Done":</td>  
+      <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
+    </tr>
 
-<p>Quality of Collection Reviews marked as "Done" (high/low/avg): <%=@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size%></p>
+    <tr>
+      <td>Number of Collection reviews marked as "Done":</td>  
+      <td><%= @total_completed %></td>
+    </tr>
 
+
+    <tr>
+      <td>Number of fields checked (total):</td>  
+      <td><%=@total_checked%></td>
+    </tr>
+
+    <tr>
+      <td>Number (and %) of fields that passed:</td>  
+      <td><%=@field_colors[1]%></td>
+      <td><%=(@field_colors[1].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+    <tr>
+      <td>Number (and %) of fields that failed (data accessibility):</td>  
+      <td><%=@red_flags["Accessibility"]%></td>
+      <td><%=(@red_flags["Accessibility"].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+
+    <tr>
+      <td>Number (and %) of fields that failed (data usability):</td>  
+      <td><%=@red_flags["Traceability"]%></td>
+      <td><%=(@red_flags["Traceability"].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+    <tr>
+      <td>Number (and %) of fields that failed (data traceability):</td>  
+      <td><%=@red_flags["Usability"]%></td>
+      <td><%=(@red_flags["Usability"].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+    <tr>
+      <td>Number (and %) of fields with warnings issued:</td>  
+      <td><%=@field_colors[2]%></td>
+      <td><%=(@field_colors[2].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+    <tr>
+      <td>Number (and %) of fields with informational notes added:</td>  
+      <td><%=@field_colors[0]%></td>
+      <td><%=(@field_colors[0].to_f / @total_checked * 100).round(2)%>%</td>
+    </tr>
+
+
+    <tr>
+      <td>Number of Collections that been updated in CMR after a finished review:</td>  
+      <td><%=@updated_count%></td>
+    </tr>
+
+    <tr>
+      <td>Number of Updated Collection Reviews marked as "Done":</td>  
+      <td><%=@updated_done_count%></td>
+    </tr>
+
+    <tr>
+      <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
+      <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
+    </tr>
+
+    <tr>
+      <td>Quality of Updated Collection Reviews marked as "Done" (high/low/avg)</td>  
+      <td>Np</td>
+    </tr>
+
+  </table>
+<% end %>
 <br>
 <br>
 <br>
@@ -34,7 +126,7 @@
 
 
 
-Quality of Updated Collection Reviews marked as "Done" (high/low/avg)
+
 
 
 
