@@ -13,24 +13,27 @@
 <p>Number of fields checked (total): <%=@total_checked%></p>
 <p>Number (and %) of fields that passed: <%=@field_colors[1]%> - <%=(@field_colors[1].to_f / @total_checked * 100).round(2)%>%</p>
 
-<p>Number (and %) of fields that failed (data accessibility)
-Number (and %) of fields that failed (data usability)
-Number (and %) of fields that failed (data traceability)</p>
+<p>Number (and %) of fields that failed (data accessibility):  <%=@red_flags["Accessibility"]%> - <%=(@red_flags["Accessibility"].to_f / @total_checked * 100).round(2)%>%</p>
+
+<p>Number (and %) of fields that failed (data usability): <%=@red_flags["Traceability"]%> - <%=(@red_flags["Traceability"].to_f / @total_checked * 100).round(2)%>%</p>
+
+<p>Number (and %) of fields that failed (data traceability): <%=@red_flags["Usability"]%> - <%=(@red_flags["Usability"].to_f / @total_checked * 100).round(2)%>%</p>
 
 <p>Number (and %) of fields with warnings issued: <%=@field_colors[2]%> - <%=(@field_colors[2].to_f / @total_checked * 100).round(2)%>%</p>
 <p>Number (and %) of fields with informational notes added: <%=@field_colors[0]%> - <%=(@field_colors[0].to_f / @total_checked * 100).round(2)%>%</p>
 
+<p>Number of Collections that been updated in CMR after a finished review: <%=@updated_count%></p>
+<p>Number of Updated Collection Reviews marked as "Done": <%=@updated_done_count%></p>
 
-
+<p>Quality of Collection Reviews marked as "Done" (high/low/avg): <%=@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size%></p>
 
 <br>
 <br>
 <br>
 
 
-Quality of Collection Reviews marked as "Done" (high/low/avg)
-Number of Collections that been updated in CMR after a finished review.
-Number of Updated Collection Reviews marked as "Done"
+
+
 Quality of Updated Collection Reviews marked as "Done" (high/low/avg)
 
 

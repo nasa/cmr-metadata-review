@@ -57,6 +57,64 @@ class Collection < ActiveRecord::Base
     user.collection_reviews.where(review_state: 0)
   end
 
+  def self.quality_done_records(daac_short_name = nil)
+    if daac_short_name.nil?
+      collection_records = Collection.all_records
+    else 
+      collections = Collection.by_daac(daac_short_name)
+      collection_ids = collections.map {|collection| collection.id }
+      collection_records = Record.all.select { |record| record.recordable_type == "Collection" && record.closed && (collection_ids.include? record.recordable_id) }
+    end
+
+    record_data_sets = collection_records.map { |record|  record.record_datas }
+    scores = record_data_sets.map { |data_list| (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count * 100 }
+    scores
+  end
+
+
+  def self.updated_done_count(daac_short_name = nil)
+    ordered_revisions = Collection.ordered_revisions(daac_short_name)
+    updated_and_done = ordered_revisions.select { |record_list|
+      record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
+    }
+
+    updated_and_done.count
+  end
+
+  def self.updated_count(daac_short_name = nil)
+    ordered_revisions = Collection.ordered_revisions(daac_short_name)
+    updated = ordered_revisions.select { |record_list|
+      ((record_list.drop(1).select { |record| record.closed }).count > 0)
+    }
+
+    updated.count
+  end
+
+  def self.ordered_revisions(daac_short_name = nil)
+    if daac_short_name.nil?
+      collection_records = Collection.all_records
+    else 
+      collections = Collection.by_daac(daac_short_name)
+      collection_ids = collections.map {|collection| collection.id }
+      collection_records = Record.all.select { |record| record.recordable_type == "Collection" && (collection_ids.include? record.recordable_id) }
+    end
+    records_hash = {}
+
+    collection_records.each do |record|
+      if records_hash.key?(record.recordable_id)
+        records_hash[record.recordable_id].push(record)
+      else
+        records_hash[record.recordable_id] = [record]
+      end
+    end
+
+    records_hash.each do |key, list|
+      records_hash[key] = list.sort { |x,y| y.recordable_id.to_i <=> x.recordable_id.to_i } 
+    end
+
+    records_hash
+  end
+
   # ====Params   
   # Optional String DAAC short name
   # ====Returns
@@ -66,29 +124,10 @@ class Collection < ActiveRecord::Base
   # Then filters them to return a list of only the newest revision id for each collection in the system or by DAAC.
 
   def self.all_newest_revisions(daac_short_name = nil)
-    if daac_short_name.nil?
-      collection_records = Collection.all_records
-    else 
-      collections = Collection.by_daac(daac_short_name)
-      collection_ids = collections.map {|collection| collection.id }
-      collection_records = Record.all.select { |record| record.recordable_type == "Collection" && (collection_ids.include? record.recordable_id) }
-    end
-    newest_records = {}
-
-    collection_records.each do |record|
-      if newest_records.key?(record.recordable_id)
-        revision_id = newest_records[record.recordable_id].revision_id.to_i
-        new_revision_id = record.revision_id.to_i
-        #for each collection id, checking if record is a newer revision
-        if new_revision_id > revision_id
-          newest_records[record.recordable_id] = record
-        end
-      else
-        newest_records[record.recordable_id] = record
-      end
-    end
-
-    newest_records.values
+    all_revisions = self.ordered_revisions(daac_short_name)
+    record_lists = all_revisions.values
+    newest_records = record_lists.map { |record_list| record_list[0] }
+    newest_records
   end
 
   # ====Params   
@@ -161,28 +200,35 @@ class Collection < ActiveRecord::Base
     review_hash.values
   end  
 
-
-
-  def self.colors_hash(daac_short_name = nil)
+  def self.color_counts(daac_short_name = nil)
     newest_revisions = Collection.all_newest_revisions(daac_short_name)
-
     record_ids = newest_revisions.map { |record| record.id }
-    colors = Color.all
+    record_datas = RecordData.all.select { |data| record_ids.include? data.record_id }
+    
+    blue_count = (record_datas.select { |data| data.color == "blue"}).count
+    green_count = (record_datas.select { |data| data.color == "green"}).count
+    yellow_count = (record_datas.select { |data| data.color == "yellow"}).count
+    red_count = (record_datas.select { |data| data.color == "red"}).count
 
-    color_hash = {}
-    colors.each do |color|
-      if record_ids.include? color.record_id
-        color_hash[color.record_id] = [color.blue_count, color.green_count, color.yellow_count, color.red_count]
+    [blue_count, green_count, yellow_count, red_count]
+  end
+
+  def self.red_flags(daac_short_name = nil)
+    newest_revisions = Collection.all_newest_revisions(daac_short_name)
+    record_ids = newest_revisions.map { |record| record.id }
+    record_datas = RecordData.all.select { |data| record_ids.include? data.record_id }
+
+    flagged_data = RecordData.all.select { |data| record_ids.includ? data.record_id && !data.flag.empty? && (data.color == "red") }
+
+    flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
+    flagged_data.each do |data|
+      data.flag.each do |flag_name|
+        flag_hash[flag_name] = flag_hash[flag_name] + 1
       end
     end
 
-    color_hash.values
+    flag_hash
   end
 
-  def self.color_counts(daac_short_name = nil)
-    color_hash = Collection.colors_hash(daac_short_name)
-    reducedColors = color_hash.reduce([0,0,0,0]) { |countArr, singleArr| [countArr[0] + singleArr[0], countArr[1] + singleArr[1], countArr[2] + singleArr[2], countArr[3] + singleArr[3]] }
-    reducedColors
-  end
 
 end
