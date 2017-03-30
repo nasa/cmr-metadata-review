@@ -20,8 +20,7 @@ class Cmr
                                   [
                                     "Temporal/SingleDateTime", 
                                     "Temporal/RangeDateTime/BeginningDateTime",
-                                    "Temporal/PeriodicDateTime/Name",
-                                    "Temporal/PaleoDateTime"
+                                    "Temporal/PeriodicDateTime/Name"
                                     ],
                                 "Contacts/Contact/Role",
                                 "ScienceKeywords/ScienceKeyword/CategoryKeyword",
@@ -32,26 +31,40 @@ class Cmr
                                 "Campaigns/Campaign/ShortName", 
                                 "OnlineAccessURLs/OnlineAccessURL/URL", 
                                 "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                [
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLongitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLatitude"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLongitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLatitude"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLatitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLongitude"
+                                  ]
+                                ],
                                 "Spatial/GranuleSpatialRepresentation"]
 
     REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
                                 "InsertTime",
                                 "LastUpdate",
-                                "Collection/ShortName",
-                                "Collection/VersionId",
-                                "Collection/DataSetId",
+                                  [
+                                    [
+                                      "Collection/ShortName",
+                                      "Collection/VersionId"
+                                    ],
+                                    "Collection/DataSetId"
+                                  ],
                                 "DataGranule/ProductionDateTime",
-                                "Temporal/RangeDateTime/BeginningDateTime",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
-                                "OnlineAccessURLs/OnlineAccessURL/URL",
-                                "Orderable"] 
+                                "OnlineAccessURLs/OnlineAccessURL/URL"] 
 
 
 
@@ -160,7 +173,6 @@ class Cmr
 
   def self.add_required_collection_fields(collection_hash)
     required_fields = REQUIRED_COLLECTION_FIELDS
-
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
@@ -217,7 +229,7 @@ class Cmr
     elsif field.is_a?(Array)
       contains_any = false
       field.each do |sub_field|
-        if Cmr.keyset_has_field?(keys, single_field)
+        if Cmr.keyset_has_field?(keys, sub_field)
           contains_any = true
         end
       end
