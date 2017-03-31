@@ -96,7 +96,7 @@ class CollectionsController < ApplicationController
       return
     end
 
-    begin
+    begin 
       raw_collection = Cmr.get_raw_collection(concept_id)
       collection_data = Cmr.get_collection(concept_id, raw_collection)
       short_name = collection_data["ShortName"]

@@ -94,7 +94,6 @@ class CmrTest < ActiveSupport::TestCase
     end
   end
 
-
   describe "required_collection_field?" do
     it "positively identifies a required field from string" do
       assert_equal(true, Cmr.required_collection_field?("Platforms/Platform/Instruments/Instrument0/ShortName"))
