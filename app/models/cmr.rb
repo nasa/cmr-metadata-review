@@ -67,7 +67,8 @@ class Cmr
   end
 
   def self.update_collections(current_user)
-    last_date = RecordsUpdateLock.get_last_update
+    update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
+    last_date = update_lock.get_last_update
     #getting date into format
     #taking last update and going back a day to give cmr time to update
     search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
@@ -87,6 +88,9 @@ class Cmr
       result_count = result_count + 2000
       page_num = page_num + 1
     end
+
+    update_lock.last_update = DateTime.now
+    update_lock.save!
 
     return total_added_records
   end
