@@ -102,7 +102,6 @@ class Cmr
   def self.process_updated_collections(raw_results, current_user)
     #mapping to hashes of concept_id/revision_id
     updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
-    p updated_collection_data
     #doing this eager loading to stop system from making each include? a seperate db call.
     all_collections = Collection.all.map{|collection| collection.concept_id }
     #reducing to only the ones in system
