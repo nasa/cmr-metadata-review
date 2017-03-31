@@ -45,6 +45,28 @@ class Collection < ActiveRecord::Base
     return record
   end
 
+
+  def self.assemble_new_record(concept_id, revision_id, current_user) 
+    collection_data = Cmr.get_collection(concept_id)
+    short_name = collection_data["ShortName"]
+    ingest_time = DateTime.now
+
+    #finding parent collection
+    collection_object = Collection.find_or_create_by(concept_id: concept_id)
+    #creating collection record related objects
+    new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
+
+    record_data = RecordData.new(datable: new_collection_record, rawJSON: collection_data.to_json)
+
+    ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
+
+    return collection_object, new_collection_record, record_data, ingest_record
+  end
+
+  def self.user_collection_ingests(user)
+    CollectionRecord.find_by_sql("select * from collection_ingests inner join collection_records on collection_records.id = collection_ingests.collection_record_id where collection_ingests.user_id=#{user.id}")
+  end
+
   # ====Params   
   # User     
   # ====Returns
@@ -52,6 +74,7 @@ class Collection < ActiveRecord::Base
   # ==== Method
   # Queries the DB and returns all reviews belonging to param User which   
   # are marked in progress.  In progress determined by "review_state" field being == to 0    
+
 
   def self.user_open_collection_reviews(user)
     user.collection_reviews.where(review_state: 0)
