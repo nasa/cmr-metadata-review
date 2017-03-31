@@ -137,7 +137,8 @@ class Cmr
   # Retrieves the most recent revision of a collection from the CMR
   # then processes and returns the data   
   # Automatically returns only the most recent revision of a collection       
-  # can add "&all_revisions=true&pretty=true" params to find specific revision 
+  # can add "&all_revisions=true&pretty=true" params to find specific revision      
+
   def self.get_collection(concept_id, raw_collection = nil)
     if raw_collection.nil?
       raw_collection = Cmr.get_raw_collection(concept_id)
@@ -381,11 +382,10 @@ class Cmr
     end
     output_string = "The following records and revision id\'s have been added<br/>"
     list.each do |record_list|
-      output_string += "#{record_list[0]} - #{record_list[1]}<br/>"
+      output_string += "#{record_list[0]} - #{record_list[1]} "
     end
     return output_string
   end
-
 
   def self.required_collection_field?(field_string)
     #removing the numbers added to fields during ingest to seperate platforms/instruments
