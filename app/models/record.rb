@@ -107,7 +107,6 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-
   # ====Params   
   # None
   # ====Returns
@@ -133,6 +132,7 @@ class Record < ActiveRecord::Base
       comment_hash = JSON.parse(script_results)
       comment_hash = Record.format_script_comments(comment_hash, self.values)
       comment_hash
+    end
   end
 
   def get_raw_data
@@ -152,13 +152,27 @@ class Record < ActiveRecord::Base
       add_script_comment(comment_hash.to_json, score)
   end
 
-
+  # ====Params   
+  # Hash from automated script output,
+  # Hash of recordData values
+  # ====Returns
+  # Hash of recordData values
+  # ==== Method
+  # This method takes the raw output of the automated script, and attaches it 
+  # to a recordData value hash
+  # Method is necessary because automated script will only produce one result for 
+  # "Platforms/Platform/ShortName" etc.
+  # and the recordData hash needs that result connected to all platform keys
+  # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
   def self.format_script_comments(comment_hash, values_hash) 
     value_keys = values_hash.keys
     comment_keys = comment_hash.keys
 
     comment_keys.each do |comment_field|
       value_keys.each do |value_field|
+        #the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
+        #if so, it adds the comment value to the fields.
+        #so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
         if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
           comment_hash[value_field] = comment_hash[comment_field]
         end

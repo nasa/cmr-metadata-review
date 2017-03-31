@@ -67,7 +67,8 @@ class Cmr
   end
 
   def self.update_collections(current_user)
-    last_date = RecordsUpdateLock.get_last_update
+    update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
+    last_date = update_lock.get_last_update
     #getting date into format
     #taking last update and going back a day to give cmr time to update
     search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
@@ -87,6 +88,9 @@ class Cmr
       result_count = result_count + 2000
       page_num = page_num + 1
     end
+
+    update_lock.last_update = DateTime.now
+    update_lock.save!
 
     return total_added_records
   end
@@ -126,11 +130,6 @@ class Cmr
     return added_records
   end
 
-  #cmr api auto returns only the most recent revision of a collection
-  # &all_revisions=true&pretty=true" params can be used to find specific revision
-  #we should only need to ingest the most recent versions.
-
-
   # ====Params   
   # string concept_id
   # ====Returns
@@ -152,7 +151,8 @@ class Cmr
   end
 
   def self.get_raw_collection(concept_id)
-    collection_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.echo10?concept_id=#{concept_id}").parsed_response
+    url = Cmr.api_url("collections", {"concept_id" => concept_id})
+    collection_xml = Cmr.cmr_request(url).parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
     rescue
@@ -168,7 +168,8 @@ class Cmr
   end
 
   def self.get_raw_granule(concept_id)
-    granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}").parsed_response
+    url = Cmr.api_url("granules", {"concept_id" => concept_id})
+    granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       granule_results = Hash.from_xml(granule_xml)["results"]
     rescue
@@ -268,7 +269,8 @@ class Cmr
   # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
-    granule_xml = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.echo10?concept_id=#{concept_id}&page_size=10&page_num=#{page_num}").parsed_response
+    url = Cmr.api_url("granules", {"concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
+    granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       Hash.from_xml(granule_xml)["results"]
     rescue
@@ -338,10 +340,10 @@ class Cmr
     search_iterator = []
 
     if free_text
-      query_text = "https://cmr.earthdata.nasa.gov/search/collections.echo10?keyword=?*#{free_text}?*&page_size=#{page_size}&page_num=#{curr_page}"
+      query_text = Cmr.api_url("collections", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
-      query_text_first_char = "https://cmr.earthdata.nasa.gov/search/collections.echo10?keyword=#{free_text}?*&page_size=#{page_size}&page_num=#{curr_page}"
+      query_text_first_char = Cmr.api_url("collections", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
       unless provider == ANY_KEYWORD
         query_text = query_text + "&provider=#{provider}"
         query_text_first_char = query_text_first_char + "&provider=#{provider}"
@@ -375,7 +377,6 @@ class Cmr
     return search_iterator, collection_count
   end
 
-
   def self.format_added_records_list(list)
     if list.empty?
       return "No New Records Were Found"
@@ -391,6 +392,14 @@ class Cmr
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
     REQUIRED_COLLECTION_FIELDS.include? stripped_field
+  end
+
+  def self.api_url(data_type, options_hash = {})
+    result = "https://cmr.earthdata.nasa.gov/search/" + data_type + ".echo10?"
+    options_hash.each do |key, value| 
+      result += (key.to_s + "=" + value.to_s + "&")
+    end
+    result.chomp("&")
   end
 
 end
