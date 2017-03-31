@@ -45,14 +45,14 @@ class Collection < ActiveRecord::Base
     return record
   end
 
-
   def self.assemble_new_record(concept_id, revision_id, current_user) 
     collection_data = Cmr.get_collection(concept_id)
     short_name = collection_data["ShortName"]
     ingest_time = DateTime.now
-
     #finding parent collection
     collection_object = Collection.find_or_create_by(concept_id: concept_id)
+    collection_object.short_name = short_name
+    collection_object.save
     #creating collection record related objects
     new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
 
@@ -74,7 +74,6 @@ class Collection < ActiveRecord::Base
   # ==== Method
   # Queries the DB and returns all reviews belonging to param User which   
   # are marked in progress.  In progress determined by "review_state" field being == to 0    
-
 
   def self.user_open_collection_reviews(user)
     user.collection_reviews.where(review_state: 0)

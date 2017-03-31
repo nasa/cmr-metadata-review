@@ -6,7 +6,7 @@
   <div class="header_button_box">
       <a id="record_refresh" href="<%= record_refresh_path %>">
         <button id="curation_home_button" class="header_icon_button">
-          <i class="eui-icon eui-fa-globe"></i>
+          <i class="fa fa-refresh" aria-hidden="true"></i>
           <p>REFRESH RECORDS</p>
         </button>
       </a>
@@ -35,7 +35,7 @@
       <% if current_user.admin %>
         <a href="<%= new_user_registration_path %>">
             <button id="create_user_button" class="header_icon_button">
-              <i class="eui-icon eui-fa-circle-o"></i>
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
               <p>CREATE USER</p>
             </button>
         </a>
