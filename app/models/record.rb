@@ -1,3 +1,7 @@
+#Record is the ActiveRecord representation of a record retrieved from the CMR
+#An individual record can be identified by a unique concept-id and revision-id combination
+#Record is a child of both Collection and Granule
+
 class Record < ActiveRecord::Base
   include RecordHelper
   include Datable
@@ -13,30 +17,77 @@ class Record < ActiveRecord::Base
   has_many :flags
   has_many :discussions
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Boolean
+  # ==== Method
+  # Returns true if this record is an attribute of a Collection
   def is_collection?
     self.recordable_type == "Collection"
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Boolean
+  # ==== Method
+  # Returns true if this record is an attribute of a Granule
   def is_granule?
     self.recordable_type == "Granule"
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
     self.values["LongName"]
   end 
 
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
   def short_name
     self.values["ShortName"]
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
   def version_id
     self.values["VersionId"]
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Lookes up the Ingest object related to this record, then returns the email of the user associated with the Ingest
   def ingested_by
     self.ingest.user.email
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Helper to return the state of a record in String form     
+  # Returns "In Process" or "Completed"     
+  # When records are complete, no further reviews or changes to review data can be added
   def status_string
     if self.closed
       "Completed"
@@ -45,44 +96,103 @@ class Record < ActiveRecord::Base
     end
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the Collection or Granule that this record is an attribute of and returns its concept_id
   def concept_id
     self.recordable.concept_id
   end
 
-  def evaluate_script
-    collection_data = self.values
-    comment_JSON = blank_comment_JSON
-    comment_hash = JSON.parse(comment_JSON)
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Void
+  # ==== Method
+  # This method runs the automated script against a record and then saves the result in a new ScriptComment object      
+  # The script is run through a shell command which accesses the python scripts in the /lib directory.       
+  def evaluate_script(raw_data = nil)
+    if raw_data.nil?
+      raw_data = get_raw_data
+    end
     if self.is_collection?
       #escaping json for passing to python
-      collection_json = collection_data.to_json.gsub("\"", "\\\"")
+      collection_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
-      script_results = `python lib/CollectionChecker.py "#{collection_json}"`
+      #W option to silence warnings
+      if self.is_collection?  
+        script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
+      else
+        script_results = `python -W ignore lib/GranuleChecker.py "#{collection_json}"`
+      end
 
-      #parsing the prints from the script into sections
-      script_results = script_results.split("\n")
-
-      #removing any of the script results that have no text, ie ", " or ",  "
-      script_results[1] = script_results[1].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }
-
-      #splitting the row headers into a list
-      script_results[3] = (script_results[3].split(",").select { |entry| (!(entry =~ /[a-zA-Z0-9]/).nil?) }).map { |entry| entry.gsub(/\s+/, "") }
-
-      #creating a hash with values { row_header => result_string }
-      comment_hash = Hash[script_results[3].zip(script_results[1])]
-
-
-      score = score_script_hash(comment_hash)
-
-      add_script_comment(comment_hash.to_json, score)
-    else
-      #run granule script
-
+      comment_hash = JSON.parse(script_results)
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
+      comment_hash
     end
-
   end
 
+  def get_raw_data
+    if is_collection?
+      Cmr.get_raw_collection(concept_id)
+    else
+      Cmr.get_raw_granule(concept_id)
+    end
+  end
+
+  def create_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_data
+      end
+      comment_hash = self.evaluate_script(raw_data)
+      score = score_script_hash(comment_hash)
+      add_script_comment(comment_hash.to_json, score)
+  end
+
+  # ====Params   
+  # Hash from automated script output,
+  # Hash of recordData values
+  # ====Returns
+  # Hash of recordData values
+  # ==== Method
+  # This method takes the raw output of the automated script, and attaches it 
+  # to a recordData value hash
+  # Method is necessary because automated script will only produce one result for 
+  # "Platforms/Platform/ShortName" etc.
+  # and the recordData hash needs that result connected to all platform keys
+  # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
+  def self.format_script_comments(comment_hash, values_hash) 
+    value_keys = values_hash.keys
+    comment_keys = comment_hash.keys
+
+    comment_keys.each do |comment_field|
+      value_keys.each do |value_field|
+        #the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
+        #if so, it adds the comment value to the fields.
+        #so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
+        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
+          comment_hash[value_field] = comment_hash[comment_field]
+        end
+      end
+    end
+
+    return comment_hash
+  end
+
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Color object
+  # ==== Method
+  # This method looks up the record's associated Color objects.    
+  # If any objects are found in the associated array, the first is returned.    
+  # If none are found, then a new empty Color object is instantiated and returned.
   def get_colors
     colors = self.colors.first
     if colors.nil?
@@ -94,16 +204,34 @@ class Record < ActiveRecord::Base
     colors
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # ScriptComment object
+  # ==== Method
+  # This method looks up the record's associated ScriptComment objects.    
+  # If any objects are found in the associated array, the first is returned.    
+  # If none are found, then a new empty ScriptComment object is instantiated and returned.
   def get_script_comments
     script_comments = self.script_comments.first
     if script_comments.nil?
-      self.evaluate_script
+      self.create_script
       script_comments = self.script_comments.first
     end 
     script_comments.reload
     script_comments
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Flag object
+  # ==== Method
+  # This method looks up the record's associated Flag objects.    
+  # If any objects are found in the associated array, the first is returned.    
+  # If none are found, then a new empty Flag object is instantiated and returned.
   def get_flags
     flags = self.flags.first
     if flags.nil?
@@ -115,6 +243,15 @@ class Record < ActiveRecord::Base
     flags
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Recommendation object
+  # ==== Method
+  # This method looks up the record's associated Recommendation objects.    
+  # If any objects are found in the associated array, the first is returned.    
+  # If none are found, then a new empty Recommendation object is instantiated and returned.
   def get_recommendations
     recommendations = self.recommendations.first
     if recommendations.nil?
@@ -126,6 +263,14 @@ class Record < ActiveRecord::Base
     recommendations
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Opinion object
+  # ==== Method
+  # This method looks up the record's associated Opinion objects.    
+  # If any objects are found in the associated array, the first is returned.    
+  # If none are found, then a new empty Opinion object is instantiated and returned.
   def get_opinions
     opinions = self.opinions.first
     if opinions.nil?
@@ -139,6 +284,15 @@ class Record < ActiveRecord::Base
     opinions
   end
 
+
+  # ====Params   
+  # Hash
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Method takes a param of a hash of "field_name" => "script output string" pairs    
+  # Each value of the Hash is checked for containing any variation of the string "ok"    
+  # Each value containing the string is counted as a point, the total points for the whole hash is returned.
   def score_script_hash(script_hash) 
     score = 0
     script_hash.each do |key, sub_value|
@@ -151,19 +305,44 @@ class Record < ActiveRecord::Base
     score
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String, JSON
+  # ==== Method
+  # Returns a new JSON string based on the record's data.    
+  # The record data is in the format of {"field1": "value1", "field2":"value2"}     
+  # And the new returned JSON is in the format of {"field1": "", "field2":""}    
+  # This provides a valueless hash to be filled in with data through the attribute classes (color, opinion, etc) 
   def blank_comment_JSON
     record_hash = self.values
     empty_hash = empty_contents(record_hash)
     empty_hash.to_json
   end
 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Accesses the record's automated script results and then returns the "field_name" => "value" pairs in a hash
   def script_values
     self.get_script_comments.values
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Returns the score originally generated in #score_script_hash method    
+  # No further processing is done as this method accesses the score as a stored attribute
   def script_score
     self.get_script_comments.total_comment_count
   end
+
 
 
   def add_script_comment(script_JSON, score)
