@@ -371,8 +371,6 @@ class Cmr
     return search_iterator, collection_count
   end
 
-<<<<<<< HEAD
-
   def self.format_added_records_list(list)
     if list.empty?
       return "No New Records Were Found"
@@ -382,7 +380,9 @@ class Cmr
       output_string += "#{record_list[0]} - #{record_list[1]}<br/>"
     end
     return output_string
-=======
+  end
+
+
   def self.required_collection_field?(field_string)
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
@@ -395,7 +395,6 @@ class Cmr
       result += (key.to_s + "=" + value.to_s + "&")
     end
     result.chomp("&")
->>>>>>> master
   end
 
 end
