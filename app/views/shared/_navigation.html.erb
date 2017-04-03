@@ -4,28 +4,55 @@
   </div>
 </div>
 
-<nav class="eui-menu">
+
+<nav class="eui-menu menu_override">
   <ul>
     <li>
-      <a href="<%= home_path %>" class="header_button">
-        <i style="display: inline-block;" class="eui-icon eui-fa-globe"></i>
-        <p style="display: inline-block;">Curation Home</p>
+      <a href="<%= home_path %>" class="menu_link header_button">
+        <i class="eui-icon eui-fa-globe"></i>
+        <p>Curation Home</p>
       </a>
     </li>
-    <li><a href="#">Reports</a>
+    <li>
+      <a href="#" class="menu_link header_button">
+        <i class="fa fa-bar-chart"></i>
+        <p>Reports</p>
+      </a>
       <ul class="eui-sub-menu">
-        <li><a href="<%=reports_home_path%>">Reports Page 1</a></li>
-        <li><a href="<%=reports_home_path%>">Reports Page 2</a></li>
-        <li><a href="<%=reports_home_path%>">Reports Page 3</a></li>
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 1</a></li>
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 2</a></li>
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 3</a></li>
       </ul>
     </li>
     <% if current_user.admin %>
       <li>
-        <a href="<%= new_user_registration_path %>" class="header_button">
+        <a href="<%= new_user_registration_path %>" class="menu_link header_button">
           <i class="eui-icon eui-fa-circle-o"></i>
           <p>Create User</p>
         </a>
+      </li>   
+
+      <li>
+        <a href="<%= record_refresh_path %>" id="record_refresh" class="menu_link header_button">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+          <p>Refresh Records</p>
+        </a>
       </li>
+
+      <script type="text/javascript">
+        document.getElementById("record_refresh").onclick = function() {
+          var processingModal = document.createElement("p");
+          processingModal.innerHTML = "Refreshing Records From CMR<br/>";
+          processingModal.innerHTML += "<i class=\"fa fa\-refresh fa\-spin fa\-3x fa\-fw\"><\/i>";
+          processingModal.className += " processing_modal";
+          document.body.append(processingModal);
+
+          var processingModalCover = document.createElement("div");
+          processingModalCover.className += " processing_modal_cover";
+          document.body.append(processingModalCover);
+        }
+      </script>
+
     <% end %>
     <li>
       <a href="<%= destroy_user_session_path %>" class="header_button">

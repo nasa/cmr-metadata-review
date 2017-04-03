@@ -1,0 +1,5 @@
+first:
+  id: 1
+  last_update: <%= DateTime.now %>
+  lock: 0
+  

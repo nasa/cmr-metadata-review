@@ -66,6 +66,69 @@ class Cmr
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
+  def self.update_collections(current_user)
+    update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
+    last_date = update_lock.get_last_update
+    #getting date into format
+    #taking last update and going back a day to give cmr time to update
+    search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
+    page_num = 1
+    result_count = 0
+    total_results = Float::INFINITY
+    #will return this list of added records for logging/presentation
+    total_added_records = []
+
+    #only 2000 results returned at a time, so have to loop through requests
+    while result_count < total_results
+      raw_results = Cmr.collections_updated_since(search_date, page_num)
+      total_results = raw_results["results"]["hits"].to_i
+      added_records = Cmr.process_updated_collections(raw_results, current_user)
+      total_added_records = total_added_records.concat(added_records)
+
+      result_count = result_count + 2000
+      page_num = page_num + 1
+    end
+
+    update_lock.last_update = DateTime.now
+    update_lock.save!
+
+    return total_added_records
+  end
+
+  def self.collections_updated_since(date_string, page_num = 1)
+    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+  end
+
+  def self.process_updated_collections(raw_results, current_user)
+    #mapping to hashes of concept_id/revision_id
+    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
+    #doing this eager loading to stop system from making each include? a seperate db call.
+    all_collections = Collection.all.map{|collection| collection.concept_id }
+    #reducing to only the ones in system
+    contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
+    #will return this list of added records for logging/presentation
+    added_records = []
+
+    #importing the new ones if any
+    contained_collections.each do |data|
+      unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
+        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+        #second check to make sure we don't save duplicate revisions
+        unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
+          ActiveRecord::Base.transaction do
+            new_collection_record.save!
+            record_data.save!
+            ingest_record.save!
+          end
+
+          new_collection_record.evaluate_script
+          added_records.push([data["concept_id"], data["revision_id"]]);
+        end
+      end
+    end
+    return added_records
+  end
+
   # ====Params   
   # string concept_id
   # ====Returns
@@ -74,7 +137,8 @@ class Cmr
   # Retrieves the most recent revision of a collection from the CMR
   # then processes and returns the data   
   # Automatically returns only the most recent revision of a collection       
-  # can add "&all_revisions=true&pretty=true" params to find specific revision 
+  # can add "&all_revisions=true&pretty=true" params to find specific revision      
+
   def self.get_collection(concept_id, raw_collection = nil)
     if raw_collection.nil?
       raw_collection = Cmr.get_raw_collection(concept_id)
@@ -310,6 +374,17 @@ class Cmr
     end
 
     return search_iterator, collection_count
+  end
+
+  def self.format_added_records_list(list)
+    if list.empty?
+      return "No New Records Were Found"
+    end
+    output_string = "The following records and revision id\'s have been added<br/>"
+    list.each do |record_list|
+      output_string += "#{record_list[0]} - #{record_list[1]} "
+    end
+    return output_string
   end
 
   def self.required_collection_field?(field_string)
