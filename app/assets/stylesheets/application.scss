@@ -16,6 +16,8 @@
 
 
 @import "variables";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 body {
    font-family: 'Open Sans', sans-serif !important;
@@ -43,6 +45,41 @@ p {
   clear: both;
 }
 
+//overwriting the normal eui menu styles.
+.eui-menu.menu_override {
+  position:absolute;
+  top:8px;
+  right:25px;
+
+  .menu_link {
+    padding-top:23px;
+    min-height: 70px;
+    &:hover {
+      background-color: $sky-blue;
+    }
+  }
+
+  .menu_sublink {
+    background-color: $blue-dark;
+    padding-top:10px;
+    min-height: 0px;
+  }
+}
+
+.header_button {
+  color: white;
+  display: inline-block;
+  background-color: $blue-dark;
+  border:none;
+
+  i {
+    display: inline-block;
+  }
+  p {
+    display: inline-block;
+  }
+}
+
 .page_header {
   color: white;
 
@@ -52,41 +89,14 @@ p {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: white;
-  padding-top: 25px;
   margin-bottom:50px;
 
   .header_title {
     display: inline-block;
     letter-spacing: 0.5px;
     font-weight: 500;
+    padding-top: 25px;
     padding-left: 40px;
-  }
-
-  .header_button_box {
-    float: right;
-    margin-right: 50px;
-    font-size: 1em;
-    height:30px;
-    padding-top:1px;
-
-    .header_icon_button {
-      color: white;
-      display: inline-block;
-      margin-right:20px;
-      background-color: $blue-dark;
-      border:none;
-
-      i {
-        margin-top:2px;
-        display: inline-block;
-      }
-      p {
-        position:relative;
-        bottom: 1px;
-        font-size: 0.8em;
-        display: inline-block;
-      }
-    }
   }
 
   h3 {
@@ -96,7 +106,7 @@ p {
 
 .header_image {
   position: absolute;
-  z-index: -1;
+  z-index: z("default-behind");
   width: 100%;
   top:80px;
   height: 300px;
