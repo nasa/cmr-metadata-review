@@ -105,7 +105,7 @@ class CollectionsController < ApplicationController
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
       
-      collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
+      collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
       #returns a list of granule data
       granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
@@ -122,7 +122,9 @@ class CollectionsController < ApplicationController
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
-        record_data.save!
+        record_data_list.each do |record_data|
+          record_data.save!
+        end
         ingest_record.save!
         granules_components.flatten.each { |savable_object| savable_object.save! }
       end

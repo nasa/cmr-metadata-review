@@ -16,11 +16,11 @@ class ReviewsController < ApplicationController
 
     @navigation_list = record.sections.map {|section| section[0] }
 
-    @script_comment = @collection_record.get_script_comments.values
+    @script_comment = @collection_record.get_script_comments
 
     @discussions = record.discussions
 
-    @section_titles = record.sections[section_index][1]
+    @section_titles = (record.sections[section_index][1]).sort
 
     @bubble_data = []
     bubble_map = record.bubble_map
@@ -35,9 +35,9 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
     @previous_values = nil
     @current_values = record.values
-    @flags = record.get_flags.values
-    @recommendations = record.get_recommendations.values
-    @second_opinions = record.get_opinions.values
+    @flags = record.get_flags
+    @recommendations = record.get_recommendations
+    @second_opinions = record.get_opinions
 
     @color_codes = record.color_codes
 

@@ -56,11 +56,20 @@ class Collection < ActiveRecord::Base
     #creating collection record related objects
     new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
 
-    record_data = RecordData.new(datable: new_collection_record, rawJSON: collection_data.to_json)
+    record_data_list = []
+
+    collection_data.each do |key, value|
+      record_data = RecordData.new(record: new_collection_record)
+      record_data.last_updated = DateTime.now
+      record_data.column_name = key
+      record_data.value = value
+      record_data.daac = concept_id.partition('-').last
+      record_data_list.push(record_data)
+    end
 
     ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
 
-    return collection_object, new_collection_record, record_data, ingest_record
+    return collection_object, new_collection_record, record_data_list, ingest_record
   end
 
   def self.user_collection_ingests(user)

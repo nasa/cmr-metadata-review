@@ -4,17 +4,11 @@
 
 class Record < ActiveRecord::Base
   include RecordHelper
-  include Datable
 
+  has_many :record_datas
   belongs_to :recordable, :polymorphic => true
-  has_one :record_data, :as => :datable
   has_many :reviews
-  has_many :script_comments
   has_one :ingest
-  has_many :opinions
-  has_many :recommendations
-  has_many :colors
-  has_many :flags
   has_many :discussions
 
   # ====Params   
@@ -45,7 +39,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
-    self.values["LongName"]
+    self.record_datas.where(column_name:"LongName").first.value
   end 
 
   # ====Params   
@@ -55,7 +49,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
   def short_name
-    self.values["ShortName"]
+    self.record_datas.where(column_name:"ShortName").first.value
   end
 
   # ====Params   
@@ -65,7 +59,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
   def version_id
-    self.values["VersionId"]
+    self.record_datas.where(column_name:"VersionId").first.value
   end
 
 
@@ -77,6 +71,22 @@ class Record < ActiveRecord::Base
   # Lookes up the Ingest object related to this record, then returns the email of the user associated with the Ingest
   def ingested_by
     self.ingest.user.email
+  end
+
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Returns a Hash with the key value pairs of "column_name" => "metadata value" for the record
+  def values
+    values_hash = {}
+    self.record_datas.each do |data|
+      values_hash[data.column_name] = data.value
+    end
+
+    values_hash
   end
 
 
@@ -133,7 +143,8 @@ class Record < ActiveRecord::Base
 
     unless script_results.nil?
       comment_hash = JSON.parse(script_results)
-      comment_hash = Record.format_script_comments(comment_hash, self.values)
+      value_keys = self.record_datas.map { |data| data.column_name }
+      comment_hash = Record.format_script_comments(comment_hash, value_keys)
       comment_hash
     else
       {}
@@ -154,12 +165,12 @@ class Record < ActiveRecord::Base
       end
       comment_hash = self.evaluate_script(raw_data)
       score = score_script_hash(comment_hash)
-      add_script_comment(comment_hash.to_json, score)
+      add_script_comment(comment_hash)
   end
 
   # ====Params   
   # Hash from automated script output,
-  # Hash of recordData values
+  # List of keys in record data
   # ====Returns
   # Hash of recordData values
   # ==== Method
@@ -169,8 +180,7 @@ class Record < ActiveRecord::Base
   # "Platforms/Platform/ShortName" etc.
   # and the recordData hash needs that result connected to all platform keys
   # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
-  def self.format_script_comments(comment_hash, values_hash) 
-    value_keys = values_hash.keys
+  def self.format_script_comments(comment_hash, value_keys) 
     comment_keys = comment_hash.keys
 
     comment_keys.each do |comment_field|
@@ -191,19 +201,15 @@ class Record < ActiveRecord::Base
   # ====Params   
   # None
   # ====Returns
-  # Color object
+  # Hash of "column_names" => "color_values"
   # ==== Method
-  # This method looks up the record's associated Color objects.    
-  # If any objects are found in the associated array, the first is returned.    
-  # If none are found, then a new empty Color object is instantiated and returned.
+  # This method looks up the record's associated Color values.    
   def get_colors
-    colors = self.colors.first
-    if colors.nil?
-      colors = Color.new(record: self)
-      colors.save
-      colors.update_values(JSON.parse(self.blank_comment_JSON))
+    record_datas = self.record_datas
+    colors = {}
+    record_datas.each do |data|
+      colors[data.column_name] = data.color
     end
-    colors.reload
     colors
   end
 
@@ -211,18 +217,15 @@ class Record < ActiveRecord::Base
   # ====Params   
   # None
   # ====Returns
-  # ScriptComment object
+  # Hash of "column_names" => "script_values"
   # ==== Method
-  # This method looks up the record's associated ScriptComment objects.    
-  # If any objects are found in the associated array, the first is returned.    
-  # If none are found, then a new empty ScriptComment object is instantiated and returned.
+  # This method looks up the record's associated script_comment values. 
   def get_script_comments
-    script_comments = self.script_comments.first
-    if script_comments.nil?
-      self.create_script
-      script_comments = self.script_comments.first
-    end 
-    script_comments.reload
+    record_datas = self.record_datas
+    script_comments = {}
+    record_datas.each do |data|
+      script_comments[data.column_name] = data.script_comment
+    end
     script_comments
   end
 
@@ -230,19 +233,15 @@ class Record < ActiveRecord::Base
   # ====Params   
   # None
   # ====Returns
-  # Flag object
+  # Hash of "column_names" => "flag_values"
   # ==== Method
-  # This method looks up the record's associated Flag objects.    
-  # If any objects are found in the associated array, the first is returned.    
-  # If none are found, then a new empty Flag object is instantiated and returned.
+  # This method looks up the record's associated flag values. 
   def get_flags
-    flags = self.flags.first
-    if flags.nil?
-      flags = Flag.new(record: self)
-      flags.save      
-      flags.update_values(JSON.parse(self.blank_comment_JSON))
+    record_datas = self.record_datas
+    flags = {}
+    record_datas.each do |data|
+      flags[data.column_name] = data.flag
     end
-    flags.reload
     flags
   end
 
@@ -250,40 +249,30 @@ class Record < ActiveRecord::Base
   # ====Params   
   # None
   # ====Returns
-  # Recommendation object
+  # Hash of "column_names" => "recommendation_values"
   # ==== Method
-  # This method looks up the record's associated Recommendation objects.    
-  # If any objects are found in the associated array, the first is returned.    
-  # If none are found, then a new empty Recommendation object is instantiated and returned.
+  # This method looks up the record's associated recommendation values. 
   def get_recommendations
-    recommendations = self.recommendations.first
-    if recommendations.nil?
-      recommendations = Recommendation.new(record: self)
-      recommendations.save
-      recommendations.update_values(JSON.parse(self.blank_comment_JSON))
+    record_datas = self.record_datas
+    recommendations = {}
+    record_datas.each do |data|
+      recommendations[data.column_name] = data.recommendation
     end
-    recommendations.reload
     recommendations
   end
 
   # ====Params   
   # None
   # ====Returns
-  # Opinion object
+  # Hash of "column_names" => "opinion_values"
   # ==== Method
-  # This method looks up the record's associated Opinion objects.    
-  # If any objects are found in the associated array, the first is returned.    
-  # If none are found, then a new empty Opinion object is instantiated and returned.
+  # This method looks up the record's associated opinion values. 
   def get_opinions
-    opinions = self.opinions.first
-    if opinions.nil?
-      opinions = Opinion.new(record: self)
-      opinions.save
-      new_opinion_hash = JSON.parse(self.blank_comment_JSON)
-      new_opinion_hash = new_opinion_hash.map {|key, value| [key, false] }.to_h
-      opinions.update_values(new_opinion_hash)
+    record_datas = self.record_datas
+    opinions = {}
+    record_datas.each do |data|
+      opinions[data.column_name] = data.opinion
     end
-    opinions.reload
     opinions
   end
 
@@ -309,19 +298,46 @@ class Record < ActiveRecord::Base
   end
 
 
-  # ====Params   
-  # None
-  # ====Returns
-  # String, JSON
-  # ==== Method
-  # Returns a new JSON string based on the record's data.    
-  # The record data is in the format of {"field1": "value1", "field2":"value2"}     
-  # And the new returned JSON is in the format of {"field1": "", "field2":""}    
-  # This provides a valueless hash to be filled in with data through the attribute classes (color, opinion, etc) 
-  def blank_comment_JSON
-    record_hash = self.values
-    empty_hash = empty_contents(record_hash)
-    empty_hash.to_json
+
+  def update_recommendations(partial_hash)
+    if partial_hash
+      partial_hash.each do |key, value|
+          data = RecordData.where(record: self, column_name: key).first
+          data.recommendation = value
+          data.save
+      end
+    end
+  end
+
+
+  def update_colors(partial_hash)
+    if partial_hash
+      partial_hash.each do |key, value|
+          data = RecordData.where(record: self, column_name: key).first
+          data.color = value
+          data.save
+      end
+    end
+  end
+
+  def update_flags(flags_hash)
+    if flags_hash
+      flags_hash.each do |key, value|
+          data = RecordData.where(record: self, column_name: key).first
+          data.flag = value
+          data.save
+      end
+    end
+  end
+
+  def update_opinions(opinions_hash)
+    if opinions_hash
+      opinions_hash.each do |key, value|
+          data = RecordData.where(record: self, column_name: key).first
+          data.opinion = value
+          data.save
+      end
+    end
   end
 
 
@@ -332,7 +348,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's automated script results and then returns the "field_name" => "value" pairs in a hash
   def script_values
-    self.get_script_comments.values
+    self.get_script_comments
   end
 
   # ====Params   
@@ -343,21 +359,19 @@ class Record < ActiveRecord::Base
   # Returns the score originally generated in #score_script_hash method    
   # No further processing is done as this method accesses the score as a stored attribute
   def script_score
-    self.get_script_comments.total_comment_count
+    0
   end
 
 
 
-  def add_script_comment(script_JSON, score)
-    new_comment = ScriptComment.new
-    new_comment.record = self
-    new_comment.total_comment_count = score
-    if script_JSON.nil?
-      new_comment.update_values(JSON.parse(self.blank_comment_JSON))
-    else
-      new_comment.update_values(JSON.parse(script_JSON))
+  def add_script_comment(script_hash)
+    script_hash.each do |key, value|
+      record_data = self.record_datas.where(column_name: key).first
+      if record_data
+        record_data.script_comment = value
+        record_data.save
+      end
     end
-    new_comment.save!
   end
 
   def add_review(user_id)
@@ -373,7 +387,7 @@ class Record < ActiveRecord::Base
   def bubble_data
     bubble_set = []
     # setting flag data
-    record_colors = self.get_colors.values
+    record_colors = self.get_colors
     bubble_set = record_colors.keys.map do |field| 
       if record_colors[field] == ""
         bubble_color = "white"
@@ -397,7 +411,7 @@ class Record < ActiveRecord::Base
     end
 
     #adding the second opinions
-    opinion_values = self.get_opinions.values
+    opinion_values = self.get_opinions
     bubble_set = bubble_set.map do |bubble| 
       bubble[:opinion] = opinion_values[bubble[:field_name]]
       bubble
@@ -418,7 +432,7 @@ class Record < ActiveRecord::Base
   end
 
   def color_coding_complete?
-    colors = self.get_colors.values
+    colors = self.get_colors
 
     colors.each do |key, value|
       if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
@@ -438,11 +452,11 @@ class Record < ActiveRecord::Base
   end
 
   def no_second_opinions?
-    return !(self.get_opinions.values.select {|key,value| value == true}).any?
+    return !(self.get_opinions.select {|key,value| value == true}).any?
   end
 
   def second_opinion_count
-    opinion_values = self.get_opinions.values
+    opinion_values = self.get_opinions
     return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }
   end
 
@@ -496,7 +510,7 @@ class Record < ActiveRecord::Base
     section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + accessURLs + csdt + additional
     #finding the entries not in other sections
     used_titles = (section_list.map {|section| section[1]}).flatten
-    all_titles = self.values.keys
+    all_titles = self.record_datas.map { |data| data.column_name }
 
     others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
 
@@ -505,7 +519,7 @@ class Record < ActiveRecord::Base
 
   def get_section(section_name)
     section_list = []
-    all_titles = self.values.keys
+    all_titles = self.record_datas.map { |data| data.column_name }
     one_section = all_titles.select {|title| title.match /#{section_name}\//}
     if one_section.any?
       return [[section_name, one_section]]
@@ -521,7 +535,7 @@ class Record < ActiveRecord::Base
   end
 
   def color_codes
-    self.get_colors.values
+    self.get_colors
   end
 
 

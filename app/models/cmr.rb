@@ -403,15 +403,20 @@ class Cmr
 
 
   # ====Params   
-  # None 
+  # Optional Sting of DAAC short name
   # ====Returns
   # Integer, total collections in the CMR     
   # ==== Method
   # Contacts CMR and obtains the total number of collections in the system.
+  # If Daac short name provided, only returns the total collections of that Daac.
 
+  def self.total_collection_count(daac = nil)
+    if daac.nil?
+      url = Cmr.api_url("collections", {"page_size" => 1})
+    else 
+      url = Cmr.api_url("collections", {"page_size" => 1, "provider" => daac })
+    end
 
-  def self.total_collection_count
-    url = Cmr.api_url("collections", {"page_size" => 1})
     total_results = Cmr.cmr_request(url)
     results_hash = Hash.from_xml(total_results)["results"]
     results_hash["hits"].to_i
