@@ -48,281 +48,259 @@ def fetchAllInstrs():
 
 class Checker():
     def checkAll(self, metadata):
-        # result = ", "
         result = ""
         resultFields = {}
 
-        metadata = metadata.replace("\\", "")
-        metadata = json.loads(metadata)
-        
-        # result += self.checkGranuleUR(metadata['GranuleUR']) + ', '
-        # ================
-
-        
         try:
-            resultFields['InsertTime']= self.checkInsertTime(metadata['InsertTime'])
-        except KeyError:
-            resultFields['InsertTime']= "np"
-        # ================
+            metadata = metadata.replace("\\", "")
+            metadata = json.loads(metadata)
+            
+            # ================
 
-        
-        try:
-            resultFields['LastUpdate']= self.checkLastUpdate(metadata['LastUpdate'], metadata['DataGranule']['ProductionDateTime'])
-        except KeyError:
-            resultFields['LastUpdate']= "np"
-        # ================
+            
+            try:
+                resultFields['InsertTime']= self.checkInsertTime(metadata['InsertTime'])
+            except KeyError:
+                resultFields['InsertTime']= "np"
+            # ================
 
-        
-        try:
-            resultFields['DeleteTime']= self.checkDeleteTime(metadata['DeleteTime'], metadata['DataGranule']['ProductionDateTime'])
-        except KeyError:
-            resultFields['DeleteTime']= "np" 
-        # ================
-        # try:
-        #     result += self.checkShortNameAndVersionID(metadata['Collection']['ShortName'], metadata['Collection']['VersionId']) + ', '
-        # except KeyError:
-        #     result += "np, np" + ', '
-        # ================
+            
+            try:
+                resultFields['LastUpdate']= self.checkLastUpdate(metadata['LastUpdate'], metadata['DataGranule']['ProductionDateTime'])
+            except KeyError:
+                resultFields['LastUpdate']= "np"
+            # ================
 
-        
-        try:
-            resultFields['Collection/DataSetId']= self.checkDataSetId(metadata['Collection']['DataSetId'])
-        except KeyError:
-            resultFields['Collection/DataSetId']= "np"
-        # ================
+            
+            try:
+                resultFields['DeleteTime']= self.checkDeleteTime(metadata['DeleteTime'], metadata['DataGranule']['ProductionDateTime'])
+            except KeyError:
+                resultFields['DeleteTime']= "np" 
+            # ================
 
-        
-        try:
-            resultFields['DataGranule/SizeMBDataGranule']= self.checkSizeMBDataGranule(metadata['DataGranule']['SizeMBDataGranule']) 
-        except KeyError:
-            resultFields['DataGranule/SizeMBDataGranule']= "Granule file size not provided. Recommend providing a value for this field in the metadata"
-        # ================
-        # try:
-        #     result += self.checkDayNightFlag(metadata['DataGranule']['DayNightFlag']) + ', '
-        # except KeyError:
-        #     result += "np" + ', '
-        # ================
+            
+            try:
+                resultFields['Collection/DataSetId']= self.checkDataSetId(metadata['Collection']['DataSetId'])
+            except KeyError:
+                resultFields['Collection/DataSetId']= "np"
+            # ================
 
+            
+            try:
+                resultFields['DataGranule/SizeMBDataGranule']= self.checkSizeMBDataGranule(metadata['DataGranule']['SizeMBDataGranule']) 
+            except KeyError:
+                resultFields['DataGranule/SizeMBDataGranule']= "Granule file size not provided. Recommend providing a value for this field in the metadata"
+            # ================
 
-        
-        try:
-            resultFields['DataGranule/ProductionDateTime']= self.checkProductionDateTime(metadata['DataGranule']['ProductionDateTime'], metadata['InsertTime'])
-        except KeyError:
-            resultFields['DataGranule/ProductionDateTime']= "np"
-        # ================
+            
+            try:
+                resultFields['DataGranule/ProductionDateTime']= self.checkProductionDateTime(metadata['DataGranule']['ProductionDateTime'], metadata['InsertTime'])
+            except KeyError:
+                resultFields['DataGranule/ProductionDateTime']= "np"
+            # ================
 
-        
-        try:
-            resultFields['Temporal/RangeDateTime/SingleDateTime']= self.checkTemporalSingleTime(metadata['Temporal']['RangeDateTime']['SingleDateTime']) 
-        except KeyError:
-            resultFields['Temporal/RangeDateTime/SingleDateTime']= "np"
-        # ================
+            
+            try:
+                resultFields['Temporal/RangeDateTime/SingleDateTime']= self.checkTemporalSingleTime(metadata['Temporal']['RangeDateTime']['SingleDateTime']) 
+            except KeyError:
+                resultFields['Temporal/RangeDateTime/SingleDateTime']= "np"
+            # ================
 
-        
-        try:
-            resultFields['Temporal/RangeDateTime/BeginningDateTime']= self.checkTemporalBeginningTime(metadata['Temporal']['RangeDateTime']['BeginningDateTime']) 
-        except KeyError:
-            resultFields['Temporal/RangeDateTime/BeginningDateTime']= "np" 
-        # ================
+            
+            try:
+                resultFields['Temporal/RangeDateTime/BeginningDateTime']= self.checkTemporalBeginningTime(metadata['Temporal']['RangeDateTime']['BeginningDateTime']) 
+            except KeyError:
+                resultFields['Temporal/RangeDateTime/BeginningDateTime']= "np" 
+            # ================
 
 
-        
-        try:
-            resultFields['Temporal/RangeDateTime/EndingDateTime']= self.checkTemporalEndingTime(metadata['Temporal']['RangeDateTime']['EndingDateTime'])
-        except KeyError:
-            resultFields['Temporal/RangeDateTime/EndingDateTime']= "np"
-        # ================
+            
+            try:
+                resultFields['Temporal/RangeDateTime/EndingDateTime']= self.checkTemporalEndingTime(metadata['Temporal']['RangeDateTime']['EndingDateTime'])
+            except KeyError:
+                resultFields['Temporal/RangeDateTime/EndingDateTime']= "np"
+            # ================
 
 
-        
-        try:
-            resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= self.checkBoundingRectangle(metadata['Spatial']['HorizontalSpatialDomain']['Geometry']['BoundingRectangle']) 
-        except KeyError:
-            resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= "np, np, np, np"
-        # ================
+            
+            try:
+                resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= self.checkBoundingRectangle(metadata['Spatial']['HorizontalSpatialDomain']['Geometry']['BoundingRectangle']) 
+            except KeyError:
+                resultFields['Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle']= "np, np, np, np"
+            # ================
 
 
-        
-        try:
-            resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], 1) 
-        except TypeError:
-            if metadata['OrbitCalculatedSpatialDomains'] != None and metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'] != None:
-                length = len(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'])
-                resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], length) 
-            else:
+            
+            try:
+                resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], 1) 
+            except TypeError:
+                if metadata['OrbitCalculatedSpatialDomains'] != None and metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'] != None:
+                    length = len(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'])
+                    resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= self.checkEquatorCrossingTime(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain']['EquatorCrossingDateTime'], length) 
+                else:
+                    resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= "np"
+            except KeyError:
                 resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= "np"
-        except KeyError:
-            resultFields['OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime']= "np"
-        # ================  
+            # ================  
 
 
-        
-        try:
-            resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform']['ShortName'], 1) 
-        except TypeError:
-            if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
-                length = len(metadata['Platforms']['Platform'])
-                resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform'], length) 
-            else:
-                resultFields['Platforms/Platform/ShortName']= "np" 
-        except KeyError:
-            resultFields['Platforms/Platform/ShortName']= "np"
-        # ================
-        # try:
-        #     metadata['Platforms']['Platform']['ShortName']
-        #     platform_num = 1
-        #     result += self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num) + ', , , '
-        # except TypeError:
-        #     if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
-        #         platform_num = len(metadata['Platforms']['Platform'])
-        #         result += self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num) + ', , , '
-        #     else:
-        #         result += "np" + ', , , '
-        # except KeyError:
-        #     result += "np" + ', , , '
-        # ================
-        instruments = fetchAllInstrs()
-        sensorShortResult = ''
+            
+            try:
+                resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform']['ShortName'], 1) 
+            except TypeError:
+                if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
+                    length = len(metadata['Platforms']['Platform'])
+                    resultFields['Platforms/Platform/ShortName']= self.checkPlatformShortName(metadata['Platforms']['Platform'], length) 
+                else:
+                    resultFields['Platforms/Platform/ShortName']= "np" 
+            except KeyError:
+                resultFields['Platforms/Platform/ShortName']= "np"
+            # ================
 
 
-        
-        try:
-            metadata['Platforms']['Platform']['ShortName']
-            platform_num = 1
-            ret, sensorShortResult = self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num, instruments)
-            resultFields['Platforms/Platform']= ret 
-        except TypeError:
-            if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
-                platform_num = len(metadata['Platforms']['Platform'])
+            instruments = fetchAllInstrs()
+            sensorShortResult = ''
+
+
+            
+            try:
+                metadata['Platforms']['Platform']['ShortName']
+                platform_num = 1
                 ret, sensorShortResult = self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num, instruments)
                 resultFields['Platforms/Platform']= ret 
-            else:
-                resultFields['Platforms/Platform']= 'np' 
-        except KeyError:
-            resultFields['Platforms/Platform']= 'np'
-        # ================  
-
-        if len(sensorShortResult) == 0:
-            result += 'np , , , , '
-        else:
-            result += sensorShortResult + ', , , , '
-        # ================
-
-        
-        try:
-            campaign_num = 1
-            resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns']['Campaign']['ShortName'], campaign_num) 
-        except TypeError:
-            if metadata['Campaigns'] != None and metadata['Campaigns']['Campaign'] != None:
-                campaign_num = len(metadata['Campaigns'])
-                resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns'], campaign_num) 
-        except KeyError:
-            resultFields['Campaigns/Campaign/ShortName']= "np"
-        # ================
-
-
-        '''
-        They forgot to put a timeout on the URL call for this method, added by AB
-        '''
-        
-        try:
-            resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL']['URL'], 1) 
-        except TypeError:
-            if metadata['OnlineAccessURLs'] != None:
-                length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
-                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
-            else:
-                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
-        except KeyError:
-            resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
-        # ================
-
-        
-        try:
-            resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'], 1) 
-        except TypeError:
-            if metadata['OnlineAccessURLs'] != None:
-                length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
-                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
-            else:
-                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
-        except KeyError:
-            resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
-        # ================
-        OnlineResourceURL_Cnt = 0
-
-
-
-        
-        try:
-            resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource']['URL'], 1) 
-            OnlineResourceURL_Cnt = 1
-        except TypeError:
-            if metadata['OnlineResources'] != None:
-                length = len(metadata['OnlineResources']['OnlineResource'])
-                OnlineResourceURL_Cnt = length
-                resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource'], length) 
-            else:
-                resultFields['OnlineResources/OnlineResource/URL']= "np" 
-        except KeyError:
-            resultFields['OnlineResources/OnlineResource/URL']= "np" 
-        # ================
-
-
-
-        
-        try:
-            resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource']['Description'], 1)
-        except TypeError:
-            if metadata['OnlineResources'] != None:
-                length = len(metadata['OnlineResources']['OnlineResource'])
-                if length < OnlineResourceURL_Cnt:
-                    resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs." 
+            except TypeError:
+                if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
+                    platform_num = len(metadata['Platforms']['Platform'])
+                    ret, sensorShortResult = self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num, instruments)
+                    resultFields['Platforms/Platform']= ret 
                 else:
-                    resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource'], length)
+                    resultFields['Platforms/Platform']= 'np' 
+            except KeyError:
+                resultFields['Platforms/Platform']= 'np'
+            # ================  
+
+            if len(sensorShortResult) == 0:
+                result += 'np , , , , '
             else:
+                result += sensorShortResult + ', , , , '
+            # ================
+
+            
+            try:
+                campaign_num = 1
+                resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns']['Campaign']['ShortName'], campaign_num) 
+            except TypeError:
+                if metadata['Campaigns'] != None and metadata['Campaigns']['Campaign'] != None:
+                    campaign_num = len(metadata['Campaigns'])
+                    resultFields['Campaigns/Campaign/ShortName']= self.checkCampaignShortName(metadata['Campaigns'], campaign_num) 
+            except KeyError:
+                resultFields['Campaigns/Campaign/ShortName']= "np"
+            # ================
+
+
+            '''
+            They forgot to put a timeout on the URL call for this method, added by AB
+            '''
+            
+            try:
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL']['URL'], 1) 
+            except TypeError:
+                if metadata['OnlineAccessURLs'] != None:
+                    length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
+                    resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= self.checkOnlineAccessURL(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
+                else:
+                    resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
+            except KeyError:
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URL']= "No Online Access URL is provided" 
+            # ================
+
+            
+            try:
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'], 1) 
+            except TypeError:
+                if metadata['OnlineAccessURLs'] != None:
+                    length = len(metadata['OnlineAccessURLs']['OnlineAccessURL'])
+                    resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= self.checkOnlineAccessURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL'], length) 
+                else:
+                    resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
+            except KeyError:
+                resultFields['OnlineAccessURLs/OnlineAccessURL/URLDescription']= "Recommend providing a brief URL description" 
+            # ================
+            OnlineResourceURL_Cnt = 0
+
+
+
+            
+            try:
+                resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource']['URL'], 1) 
+                OnlineResourceURL_Cnt = 1
+            except TypeError:
+                if metadata['OnlineResources'] != None:
+                    length = len(metadata['OnlineResources']['OnlineResource'])
+                    OnlineResourceURL_Cnt = length
+                    resultFields['OnlineResources/OnlineResource/URL']= self.checkOnlineResourceURL(metadata['OnlineResources']['OnlineResource'], length) 
+                else:
+                    resultFields['OnlineResources/OnlineResource/URL']= "np" 
+            except KeyError:
+                resultFields['OnlineResources/OnlineResource/URL']= "np" 
+            # ================
+
+
+
+            
+            try:
+                resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource']['Description'], 1)
+            except TypeError:
+                if metadata['OnlineResources'] != None:
+                    length = len(metadata['OnlineResources']['OnlineResource'])
+                    if length < OnlineResourceURL_Cnt:
+                        resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs." 
+                    else:
+                        resultFields['OnlineResources/OnlineResource/Description']= self.checkOnlineResourceDesc(metadata['OnlineResources']['OnlineResource'], length)
+                else:
+                    resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs."
+            except KeyError:
                 resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs."
-        except KeyError:
-            resultFields['OnlineResources/OnlineResource/Description']= "Recommend providing descriptions for all Online Resource URLs."
-        # ================
+            # ================
 
 
-        
-        try:
-            resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource']['Type'], 1)
-        except TypeError:
-            if metadata['OnlineResources'] != None:
-                length = len(metadata['OnlineResources']['OnlineResource'])
-                resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource'], length)
-            else:
+            
+            try:
+                resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource']['Type'], 1)
+            except TypeError:
+                if metadata['OnlineResources'] != None:
+                    length = len(metadata['OnlineResources']['OnlineResource'])
+                    resultFields['OnlineResources/OnlineResource/Type']= self.checkOnlineResourceType(metadata['OnlineResources']['OnlineResource'], length)
+                else:
+                    resultFields['OnlineResources/OnlineResource/Type']= "np"
+            except KeyError:
                 resultFields['OnlineResources/OnlineResource/Type']= "np"
-        except KeyError:
-            resultFields['OnlineResources/OnlineResource/Type']= "np"
-        # ================
+            # ================
 
-        
-        try:
-            resultFields['Orderable']= self.checkOrderable(metadata["Orderable"])
-        except KeyError:
-            resultFields['Orderable']= "np"
-        # ================
+            
+            try:
+                resultFields['Orderable']= self.checkOrderable(metadata["Orderable"])
+            except KeyError:
+                resultFields['Orderable']= "np"
+            # ================
 
-        
-        try:
-            resultFields['DataFormat']= self.checkDataFormat(metadata["DataFormat"])
-        except KeyError:
-            resultFields['DataFormat']= "Recommend providing the data format for the associated granule"
-        # ================
+            
+            try:
+                resultFields['DataFormat']= self.checkDataFormat(metadata["DataFormat"])
+            except KeyError:
+                resultFields['DataFormat']= "Recommend providing the data format for the associated granule"
+            # ================
 
 
-        
-        try:
-            resultFields['Visible']= self.checkVisible(metadata["Visible"])
-        except KeyError:
-            resultFields['Visible']= "np"
+            
+            try:
+                resultFields['Visible']= self.checkVisible(metadata["Visible"])
+            except KeyError:
+                resultFields['Visible']= "np"
 
-        return resultFields
-
+            return resultFields
+        except:
+            return resultFields    
 
 
     def checkGranuleUR(self, val):
@@ -333,7 +311,7 @@ class Checker():
             return "OK"
 
     def checkInsertTime(self, val):
-        #print "Input of checkInsertTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -351,7 +329,7 @@ class Checker():
             return "4-Insert time error"
 
     def checkLastUpdate(self, updateTime, prodTime):
-        #print "Input of checkLastUpdate() is " + updateTime + ', ' + prodTime
+
         try:
             if updateTime == None:
                 return "np"
@@ -371,7 +349,7 @@ class Checker():
             return "Last update time error"
 
     def checkDeleteTime(self, deleteTime, prodTime):
-        #print "Input of checkDeleteTime() is " + deleteTime + ', ' + prodTime
+
         try:
             if deleteTime == None:
                 return "np"
@@ -391,7 +369,7 @@ class Checker():
             return "Delete time error"        
 
     def checkShortNameAndVersionID(self, sname, vid):
-        #print "Input of checkShortNameAndVersionID() is " + sname + ', ' + vid
+
         if sname == None and vid == None:
             return "np, np"
         elif sname == None or vid == None:
@@ -400,7 +378,7 @@ class Checker():
             return "OK, OK"
 
     def checkDataSetId(set, val):
-        #print "Input of checkDataSetId() is " + val
+
         if val == None:
             return "np"
         elif val.isupper() or val.islower():
@@ -409,14 +387,14 @@ class Checker():
             return "OK"
 
     def checkSizeMBDataGranule(set, val):
-        #print "Input of checkSizeMBDataGranule() is " + val
+
         if val == None:
             return "Granule file size not provided. Recommend providing a value for this field in the metadata."
         else:
             return "OK - quality check"
 
     def checkDayNightFlag(set, val):
-        #print "Input of checkDayNightFlag() is " + val
+
         DNFlags = ('DAY', 'NIGHT', 'BOTH', 'UNSPECIFIED')
         if val == None:
             return "np"
@@ -426,7 +404,7 @@ class Checker():
             return "OK"
 
     def checkProductionDateTime(self, prodTime, insertTime):
-        #print "Input of checkProductionDateTime() is " + prodTime + ', ' + insertTime
+
         try:
             if prodTime == None:
                 return "np"
@@ -448,7 +426,7 @@ class Checker():
             return "Production date time error"
 
     def checkTemporalSingleTime(self, val):
-        #print "Input of checkTemporalSingleTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -466,7 +444,7 @@ class Checker():
             return "Single date time error"
 
     def checkTemporalBeginningTime(self, val):
-        #print "Input of checkTemporalBeginningTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -484,7 +462,7 @@ class Checker():
             return "Beginning date time error"
 
     def checkTemporalEndingTime(self, val):
-        #print "Input of checkTemporalEndingTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -502,7 +480,7 @@ class Checker():
             return "Ending date time error"
 
     def checkBoundingRectangle(self, val):
-        #print "Input of checkBoundingRectangle() is ..."
+
 
         if val['WestBoundingCoordinate'] == None or val['NorthBoundingCoordinate'] == None or val['EastBoundingCoordinate'] == None or val['SouthBoundingCoordinate'] == None:
            return "Check for other spatial identifiers (Point; GPolygon; or Line). A spatial extent identifier is required., " + \
@@ -543,7 +521,7 @@ class Checker():
         return msg
 
     def checkEquatorCrossingTime(self, val, length):
-        #print "Input of checkEquatorCrossingTime() is ..."
+
         if length == 1:
             try:
                 if val == None:
@@ -579,7 +557,7 @@ class Checker():
                     return "Time error"        
 
     def checkPlatformShortName(self, val, length):
-        #print "Input of checkPlatformShortName() is ..."
+
         PlatformKeys = list()
         PlatformLongNames = list()
         response = urllib2.urlopen(PlatformURL)
@@ -612,74 +590,6 @@ class Checker():
                         return "The keyword does not conform to GCMD"
         return "OK - quality check"
         
-    # def checkInstrShortName(self, val, platformNum):
-    #     print "Input of checkInstrShortName() is ..."
-    #     processInstrCount = 0
-    #     InstrumentKeys = list()
-    #     InstrumentLongNames = list()
-    #     response = urllib2.urlopen(InstrumentURL)
-    #     data = csv.reader(response)
-    #     next(data)  # Skip the first two line information
-    #     next(data)
-    #     for item in data:
-    #         if len(item) != 0:
-    #             InstrumentKeys += item[4:5]
-    #             InstrumentLongNames += item[5:6]
-    #     InstrumentKeys = list(set(InstrumentKeys))
-    #     InstrumentLongNames = list(set(InstrumentLongNames))
-    #     response.close()
-
-    #     if platformNum == 1:
-    #         try:
-    #             if val['Instruments']['Instrument']['ShortName'] == None:
-    #                 return "np"
-    #             if not any(s.lower() == val['Instruments']['Instrument']['ShortName'].lower() for s in InstrumentKeys):
-    #                 if val['Instruments']['Instrument']['ShortName'] in InstrumentLongNames:
-    #                     return val['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                 else:
-    #                     return "The keyword does not conform to GCMD"
-    #             processInstrCount += 1
-    #         except TypeError:
-    #             instrNum = len(val['Instruments']['Instrument'])
-    #             for instr in range(0, instrNum):
-    #                 if val['Instruments']['Instrument'][instr]['ShortName'] == None:
-    #                     return "np"
-    #                 if not any(s.lower() == val['Instruments']['Instrument'][instr]['ShortName'].lower() for s in InstrumentKeys):
-    #                     if val['Instruments']['Instrument'][instr]['ShortName'] in InstrumentLongNames:
-    #                         return val['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                     else:
-    #                         return "The keyword does not conform to GCMD"
-    #                 processInstrCount += 1
-    #         except KeyError:
-    #             print "Access Key Error!"
-    #     else:
-    #         for i in range(0, platformNum):
-    #             try:
-    #                 if val[i]['Instruments']['Instrument']['ShortName'] == None:
-    #                     return "np"
-    #                 if not any(s.lower() == val[i]['Instruments']['Instrument']['ShortName'].lower() for s in InstrumentKeys):
-    #                     if val[i]['Instruments']['Instrument']['ShortName'] in InstrumentLongNames:
-    #                         return val[i]['Instruments']['Instrument']['ShortName'] + ": incorrect keyword order"
-    #                     else:
-    #                         return "The keyword does not conform to GCMD"
-    #                 processInstrCount += 1
-    #             except TypeError:
-    #                 instrNum = len(val[i]['Instruments']['Instrument'])
-    #                 for instr in range(0, instrNum):
-    #                     if val[i]['Instruments']['Instrument'][instr]['ShortName'] == None:
-    #                         return "np"
-    #                     if not any(s.lower() == val[i]['Instruments']['Instrument'][instr]['ShortName'].lower() for s in InstrumentKeys):
-    #                         if val[i]['Instruments']['Instrument'][instr]['ShortName'] in InstrumentLongNames:
-    #                             return val[i]['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                         else:
-    #                             return "The keyword does not conform to GCMD"
-    #                     processInstrCount += 1
-    #             except KeyError:
-    #                 continue
-    #     if processInstrCount != 0:
-    #         return "OK - quality check"
-    #     else:
-    #         return "np"
     
     def checkInstrShortName(self, val, platformNum, instruments):
         #print "Input of checkInstrShortName() is ..."
