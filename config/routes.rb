@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   resources :reviews
   resources :records
   get '/record_complete', to: 'records#complete'
+  get '/record_refresh', to: 'records#refresh'
+
+  get '/reports/home', to: 'reports#home'
 
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'
