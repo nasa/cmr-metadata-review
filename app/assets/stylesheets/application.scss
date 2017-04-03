@@ -47,9 +47,10 @@ p {
 
 //overwriting the normal eui menu styles.
 .eui-menu.menu_override {
-  position:absolute;
-  top:8px;
-  right:25px;
+  // position:absolute;
+  // top:8px;
+  // right:25px;
+
 
   .menu_link {
     padding-top:23px;
@@ -81,6 +82,11 @@ p {
 }
 
 .page_header {
+  display: -webkit-flex; /* Safari */
+  -webkit-justify-content: space-between; /* Safari 6.1+ */
+  display: flex;
+  justify-content: space-between;
+
   color: white;
 
   background-color: $blue-dark;
@@ -97,6 +103,11 @@ p {
     font-weight: 500;
     padding-top: 25px;
     padding-left: 40px;
+  }
+
+  .header_menu {
+    margin-top: 9px;
+    margin-right: 40px;
   }
 
   h3 {
