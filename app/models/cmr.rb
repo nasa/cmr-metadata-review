@@ -401,4 +401,20 @@ class Cmr
     result.chomp("&")
   end
 
+
+  # ====Params   
+  # None 
+  # ====Returns
+  # Integer, total collections in the CMR     
+  # ==== Method
+  # Contacts CMR and obtains the total number of collections in the system.
+
+
+  def self.total_collection_count
+    url = Cmr.api_url("collections", {"page_size" => 1})
+    total_results = Cmr.cmr_request(url)
+    results_hash = Hash.from_xml(total_results)["results"]
+    results_hash["hits"].to_i
+  end
+
 end
