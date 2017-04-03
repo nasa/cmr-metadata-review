@@ -13,7 +13,6 @@ class RecordsControllerTest < ActionController::TestCase
         #broken out sections of params below to compare to tests
         #all positive tests, making sure that desired additions appear
 
-
         #"flag"=>{"ShortName"=>{"Usability"=>"on", "Traceability"=>"on"}, "InsertTime"=>{"Accessibility"=>"on"}, "LastUpdate"=>{"Usability"=>"on"}}
         assert_equal(record.get_flags["ShortName"], ["Usability", "Traceability"])
         assert_equal(record.get_flags["InsertTime"], ["Accessibility"])

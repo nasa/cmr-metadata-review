@@ -26,22 +26,6 @@ second:
   recommendation: "ok"
 
 
-third:
-  id: 6
-  record_id: 1
-  column_name: "ShortName"
-  value: "A2_DySno_NRT"
-  daac: "PODAAC"
-  last_updated: null
-  color: "green"
-  script_comment: "ok"
-  opinion: false
-  flag: []
-  recommendation: "ok"
-
-
-
-
 fourth:
   id: 7
   record_id: 1
@@ -69,16 +53,3 @@ fifth:
   flag: []
   recommendation: "ok"
 
-
-sixth:
-  id: 9
-  record_id: 1
-  column_name: "LongName"
-  value: "Test_Long_Name"
-  daac: "PODAAC"
-  last_updated: null
-  color: "green"
-  script_comment: "ok"
-  opinion: false
-  flag: []
-  recommendation: "ok"
