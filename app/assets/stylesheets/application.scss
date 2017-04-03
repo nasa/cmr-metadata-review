@@ -46,24 +46,23 @@ p {
 }
 
 //overwriting the normal eui menu styles.
-.eui-menu {
+.eui-menu.menu_override {
   position:absolute;
   top:8px;
   right:25px;
 
-  ul > li > a:hover {
-    background-color: $sky-blue !important;
+  .menu_link {
+    padding-top:23px;
+    min-height: 70px;
+    &:hover {
+      background-color: $sky-blue;
+    }
   }
 
-  ul > li > a {
-    padding-top:23px !important;
-    min-height: 70px !important;
-  }
-
-  ul > li > ul > li > a {
-    background-color: $blue-dark !important;
-    padding-top:10px !important;
-    min-height: 0px !important;
+  .menu_sublink {
+    background-color: $blue-dark;
+    padding-top:10px;
+    min-height: 0px;
   }
 }
 
