@@ -108,12 +108,14 @@ class Record < ActiveRecord::Base
   end
 
   # ====Params   
-  # None
+  # optional Hash
   # ====Returns
-  # Void
+  # Hash
   # ==== Method
   # This method runs the automated script against a record and then saves the result in a new ScriptComment object      
   # The script is run through a shell command which accesses the python scripts in the /lib directory.       
+  # Parameter is optional hash of raw metadata from cmr for one record, if not provided, the raw data is manually retreived
+  # Returns a formatted hash with results from script as values for each record field as keys.
 
   def evaluate_script(raw_data = nil)
     if raw_data.nil?
@@ -129,9 +131,13 @@ class Record < ActiveRecord::Base
       script_results = `python -W ignore lib/GranuleChecker.py "#{record_json}"`
     end
 
-    comment_hash = JSON.parse(script_results)
-    comment_hash = Record.format_script_comments(comment_hash, self.values)
-    comment_hash
+    unless script_results.nil?
+      comment_hash = JSON.parse(script_results)
+      comment_hash = Record.format_script_comments(comment_hash, self.values)
+      comment_hash
+    else
+      {}
+    end
   end
 
   def get_raw_data

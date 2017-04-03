@@ -48,7 +48,6 @@ def fetchAllInstrs():
 
 class Checker():
     def checkAll(self, metadata):
-        # result = ", "
         result = ""
         resultFields = {}
 
@@ -56,7 +55,6 @@ class Checker():
             metadata = metadata.replace("\\", "")
             metadata = json.loads(metadata)
             
-            # result += self.checkGranuleUR(metadata['GranuleUR']) + ', '
             # ================
 
             
@@ -79,11 +77,6 @@ class Checker():
             except KeyError:
                 resultFields['DeleteTime']= "np" 
             # ================
-            # try:
-            #     result += self.checkShortNameAndVersionID(metadata['Collection']['ShortName'], metadata['Collection']['VersionId']) + ', '
-            # except KeyError:
-            #     result += "np, np" + ', '
-            # ================
 
             
             try:
@@ -98,12 +91,6 @@ class Checker():
             except KeyError:
                 resultFields['DataGranule/SizeMBDataGranule']= "Granule file size not provided. Recommend providing a value for this field in the metadata"
             # ================
-            # try:
-            #     result += self.checkDayNightFlag(metadata['DataGranule']['DayNightFlag']) + ', '
-            # except KeyError:
-            #     result += "np" + ', '
-            # ================
-
 
             
             try:
@@ -169,19 +156,8 @@ class Checker():
             except KeyError:
                 resultFields['Platforms/Platform/ShortName']= "np"
             # ================
-            # try:
-            #     metadata['Platforms']['Platform']['ShortName']
-            #     platform_num = 1
-            #     result += self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num) + ', , , '
-            # except TypeError:
-            #     if metadata['Platforms'] != None and metadata['Platforms']['Platform'] != None:
-            #         platform_num = len(metadata['Platforms']['Platform'])
-            #         result += self.checkInstrShortName(metadata['Platforms']['Platform'], platform_num) + ', , , '
-            #     else:
-            #         result += "np" + ', , , '
-            # except KeyError:
-            #     result += "np" + ', , , '
-            # ================
+
+
             instruments = fetchAllInstrs()
             sensorShortResult = ''
 
@@ -335,7 +311,7 @@ class Checker():
             return "OK"
 
     def checkInsertTime(self, val):
-        #print "Input of checkInsertTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -353,7 +329,7 @@ class Checker():
             return "4-Insert time error"
 
     def checkLastUpdate(self, updateTime, prodTime):
-        #print "Input of checkLastUpdate() is " + updateTime + ', ' + prodTime
+
         try:
             if updateTime == None:
                 return "np"
@@ -373,7 +349,7 @@ class Checker():
             return "Last update time error"
 
     def checkDeleteTime(self, deleteTime, prodTime):
-        #print "Input of checkDeleteTime() is " + deleteTime + ', ' + prodTime
+
         try:
             if deleteTime == None:
                 return "np"
@@ -393,7 +369,7 @@ class Checker():
             return "Delete time error"        
 
     def checkShortNameAndVersionID(self, sname, vid):
-        #print "Input of checkShortNameAndVersionID() is " + sname + ', ' + vid
+
         if sname == None and vid == None:
             return "np, np"
         elif sname == None or vid == None:
@@ -402,7 +378,7 @@ class Checker():
             return "OK, OK"
 
     def checkDataSetId(set, val):
-        #print "Input of checkDataSetId() is " + val
+
         if val == None:
             return "np"
         elif val.isupper() or val.islower():
@@ -411,14 +387,14 @@ class Checker():
             return "OK"
 
     def checkSizeMBDataGranule(set, val):
-        #print "Input of checkSizeMBDataGranule() is " + val
+
         if val == None:
             return "Granule file size not provided. Recommend providing a value for this field in the metadata."
         else:
             return "OK - quality check"
 
     def checkDayNightFlag(set, val):
-        #print "Input of checkDayNightFlag() is " + val
+
         DNFlags = ('DAY', 'NIGHT', 'BOTH', 'UNSPECIFIED')
         if val == None:
             return "np"
@@ -428,7 +404,7 @@ class Checker():
             return "OK"
 
     def checkProductionDateTime(self, prodTime, insertTime):
-        #print "Input of checkProductionDateTime() is " + prodTime + ', ' + insertTime
+
         try:
             if prodTime == None:
                 return "np"
@@ -450,7 +426,7 @@ class Checker():
             return "Production date time error"
 
     def checkTemporalSingleTime(self, val):
-        #print "Input of checkTemporalSingleTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -468,7 +444,7 @@ class Checker():
             return "Single date time error"
 
     def checkTemporalBeginningTime(self, val):
-        #print "Input of checkTemporalBeginningTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -486,7 +462,7 @@ class Checker():
             return "Beginning date time error"
 
     def checkTemporalEndingTime(self, val):
-        #print "Input of checkTemporalEndingTime() is " + val
+
         try:
             if val == None:
                 return "np"
@@ -504,7 +480,7 @@ class Checker():
             return "Ending date time error"
 
     def checkBoundingRectangle(self, val):
-        #print "Input of checkBoundingRectangle() is ..."
+
 
         if val['WestBoundingCoordinate'] == None or val['NorthBoundingCoordinate'] == None or val['EastBoundingCoordinate'] == None or val['SouthBoundingCoordinate'] == None:
            return "Check for other spatial identifiers (Point; GPolygon; or Line). A spatial extent identifier is required., " + \
@@ -545,7 +521,7 @@ class Checker():
         return msg
 
     def checkEquatorCrossingTime(self, val, length):
-        #print "Input of checkEquatorCrossingTime() is ..."
+
         if length == 1:
             try:
                 if val == None:
@@ -581,7 +557,7 @@ class Checker():
                     return "Time error"        
 
     def checkPlatformShortName(self, val, length):
-        #print "Input of checkPlatformShortName() is ..."
+
         PlatformKeys = list()
         PlatformLongNames = list()
         response = urllib2.urlopen(PlatformURL)
@@ -614,74 +590,6 @@ class Checker():
                         return "The keyword does not conform to GCMD"
         return "OK - quality check"
         
-    # def checkInstrShortName(self, val, platformNum):
-    #     print "Input of checkInstrShortName() is ..."
-    #     processInstrCount = 0
-    #     InstrumentKeys = list()
-    #     InstrumentLongNames = list()
-    #     response = urllib2.urlopen(InstrumentURL)
-    #     data = csv.reader(response)
-    #     next(data)  # Skip the first two line information
-    #     next(data)
-    #     for item in data:
-    #         if len(item) != 0:
-    #             InstrumentKeys += item[4:5]
-    #             InstrumentLongNames += item[5:6]
-    #     InstrumentKeys = list(set(InstrumentKeys))
-    #     InstrumentLongNames = list(set(InstrumentLongNames))
-    #     response.close()
-
-    #     if platformNum == 1:
-    #         try:
-    #             if val['Instruments']['Instrument']['ShortName'] == None:
-    #                 return "np"
-    #             if not any(s.lower() == val['Instruments']['Instrument']['ShortName'].lower() for s in InstrumentKeys):
-    #                 if val['Instruments']['Instrument']['ShortName'] in InstrumentLongNames:
-    #                     return val['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                 else:
-    #                     return "The keyword does not conform to GCMD"
-    #             processInstrCount += 1
-    #         except TypeError:
-    #             instrNum = len(val['Instruments']['Instrument'])
-    #             for instr in range(0, instrNum):
-    #                 if val['Instruments']['Instrument'][instr]['ShortName'] == None:
-    #                     return "np"
-    #                 if not any(s.lower() == val['Instruments']['Instrument'][instr]['ShortName'].lower() for s in InstrumentKeys):
-    #                     if val['Instruments']['Instrument'][instr]['ShortName'] in InstrumentLongNames:
-    #                         return val['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                     else:
-    #                         return "The keyword does not conform to GCMD"
-    #                 processInstrCount += 1
-    #         except KeyError:
-    #             print "Access Key Error!"
-    #     else:
-    #         for i in range(0, platformNum):
-    #             try:
-    #                 if val[i]['Instruments']['Instrument']['ShortName'] == None:
-    #                     return "np"
-    #                 if not any(s.lower() == val[i]['Instruments']['Instrument']['ShortName'].lower() for s in InstrumentKeys):
-    #                     if val[i]['Instruments']['Instrument']['ShortName'] in InstrumentLongNames:
-    #                         return val[i]['Instruments']['Instrument']['ShortName'] + ": incorrect keyword order"
-    #                     else:
-    #                         return "The keyword does not conform to GCMD"
-    #                 processInstrCount += 1
-    #             except TypeError:
-    #                 instrNum = len(val[i]['Instruments']['Instrument'])
-    #                 for instr in range(0, instrNum):
-    #                     if val[i]['Instruments']['Instrument'][instr]['ShortName'] == None:
-    #                         return "np"
-    #                     if not any(s.lower() == val[i]['Instruments']['Instrument'][instr]['ShortName'].lower() for s in InstrumentKeys):
-    #                         if val[i]['Instruments']['Instrument'][instr]['ShortName'] in InstrumentLongNames:
-    #                             return val[i]['Instruments']['Instrument'][instr]['ShortName'] + ": incorrect keyword order"
-    #                         else:
-    #                             return "The keyword does not conform to GCMD"
-    #                     processInstrCount += 1
-    #             except KeyError:
-    #                 continue
-    #     if processInstrCount != 0:
-    #         return "OK - quality check"
-    #     else:
-    #         return "np"
     
     def checkInstrShortName(self, val, platformNum, instruments):
         #print "Input of checkInstrShortName() is ..."

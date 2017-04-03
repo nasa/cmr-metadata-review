@@ -99,9 +99,6 @@ def fetchAllInstrs():
 class Checker():
     def checkAll(self, metadata):
         
-
-        # try:
-        #print("555")
         result = ""
         resultFields = {}
         try:
