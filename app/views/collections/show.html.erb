@@ -14,7 +14,7 @@
   <div class="group_box left_box">
 
       <h3>Collection Revisions</h3>
-      <% @collection_records.each do |record| %>
+      <% @collection_records.each_with_index do |record, index| %>
 
       <table cellpadding="5" border="1">
 
@@ -53,11 +53,11 @@
                 <p>Collection Review Status: <%= record.closed ? "Closed" : "In Process" %></p>  
               </div>
 
-              <button id="review_details_button">
+              <button id="review_details_button<%=index%>">
                 <p>See Record Review Details</p>
               </button>
               <script type="text/javascript">
-                document.getElementById("review_details_button").onclick = function() {
+                document.getElementById("review_details_button<%=index%>").onclick = function() {
                   document.location.href = "<%= record_path(id:record.id) %>"
                 };
               </script>

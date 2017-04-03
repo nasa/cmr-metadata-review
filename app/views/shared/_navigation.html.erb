@@ -4,6 +4,7 @@
   </div>
 </div>
 
+
 <nav class="eui-menu">
   <ul>
     <li>
@@ -25,7 +26,29 @@
           <i class="eui-icon eui-fa-circle-o"></i>
           <p>Create User</p>
         </a>
+      </li>   
+
+      <li>
+        <a href="<%= record_refresh_path %>" id="record_refresh" class="header_button">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+          <p>Refresh Records</p>
+        </a>
       </li>
+
+      <script type="text/javascript">
+        document.getElementById("record_refresh").onclick = function() {
+          var processingModal = document.createElement("p");
+          processingModal.innerHTML = "Refreshing Records From CMR<br/>";
+          processingModal.innerHTML += "<i class=\"fa fa\-refresh fa\-spin fa\-3x fa\-fw\"><\/i>";
+          processingModal.className += " processing_modal";
+          document.body.append(processingModal);
+
+          var processingModalCover = document.createElement("div");
+          processingModalCover.className += " processing_modal_cover";
+          document.body.append(processingModalCover);
+        }
+      </script>
+
     <% end %>
     <li>
       <a href="<%= destroy_user_session_path %>" class="header_button">

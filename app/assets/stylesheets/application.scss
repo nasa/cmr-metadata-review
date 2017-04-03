@@ -16,6 +16,8 @@
 
 
 @import "variables";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 body {
    font-family: 'Open Sans', sans-serif !important;
@@ -105,7 +107,7 @@ p {
 
 .header_image {
   position: absolute;
-  z-index: -1;
+  z-index: z("default-behind");
   width: 100%;
   top:80px;
   height: 300px;
