@@ -5,3 +5,15 @@ $green-light: #20ce6f;
 $gray-light: #ebebeb;
 $gray-dark: #95a5a6;
 $green-dark: #189c54;
+
+
+@function z($layer) {
+  @return map-get($z-layers, $layer);
+}
+
+
+$z-layers: (
+  "default-behind":  -1,  
+  "modal-base":      20,
+  "modal-cover":     10
+);
