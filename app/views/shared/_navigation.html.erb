@@ -2,14 +2,42 @@
   <div class="header_title"> 
     <h3><%= title %></h3>
   </div>
+</div>
 
-  <div class="header_button_box">
-      <a id="record_refresh" href="<%= record_refresh_path %>">
-        <button id="curation_home_button" class="header_icon_button">
-          <i class="fa fa-refresh" aria-hidden="true"></i>
-          <p>REFRESH RECORDS</p>
-        </button>
+
+<nav class="eui-menu menu_override">
+  <ul>
+    <li>
+      <a href="<%= home_path %>" class="menu_link header_button">
+        <i class="eui-icon eui-fa-globe"></i>
+        <p>Curation Home</p>
       </a>
+    </li>
+    <li>
+      <a href="#" class="menu_link header_button">
+        <i class="fa fa-bar-chart"></i>
+        <p>Reports</p>
+      </a>
+      <ul class="eui-sub-menu">
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 1</a></li>
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 2</a></li>
+        <li><a href="<%=reports_home_path%>" class="menu_sublink">Reports Page 3</a></li>
+      </ul>
+    </li>
+    <% if current_user.admin %>
+      <li>
+        <a href="<%= new_user_registration_path %>" class="menu_link header_button">
+          <i class="eui-icon eui-fa-circle-o"></i>
+          <p>Create User</p>
+        </a>
+      </li>   
+
+      <li>
+        <a href="<%= record_refresh_path %>" id="record_refresh" class="menu_link header_button">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+          <p>Refresh Records</p>
+        </a>
+      </li>
 
       <script type="text/javascript">
         document.getElementById("record_refresh").onclick = function() {
@@ -25,36 +53,15 @@
         }
       </script>
 
-      <a href="<%= home_path %>">
-        <button id="curation_home_button" class="header_icon_button">
-          <i class="eui-icon eui-fa-globe"></i>
-          <p>CURATION HOME</p>
-        </button>
+    <% end %>
+    <li>
+      <a href="<%= destroy_user_session_path %>" class="header_button">
+        <i class="eui-icon eui-fa-external-link-square"></i>
+        <p>Logout</p>
       </a>
-
-      <% if current_user.admin %>
-        <a href="<%= new_user_registration_path %>">
-            <button id="create_user_button" class="header_icon_button">
-              <i class="fa fa-plus-circle" aria-hidden="true"></i>
-              <p>CREATE USER</p>
-            </button>
-        </a>
-      <% end %>
-
-      <a href="<%= destroy_user_session_path %>">
-        <button id="logout_button" class="header_icon_button">
-          <i class="eui-icon eui-fa-external-link-square"></i>
-          <p>LOGOUT</p>
-        </button>
-      </a>
-
-      <button class="header_icon_button">
-        <i class="eui-icon eui-fa-question-circle"></i>
-        <p>HELP</p>
-      </button>
-  </div>
-  <div class="clear_box"></div>
-</div>
+    </li>
+  </ul>
+</nav>
 
 
 <div class="header_image">
