@@ -278,27 +278,34 @@ class Cmr
   # ====Params   
   # Array of keys,     
   # String Field Name or List of String Field Names
+  # Optional Boolean
   # ====Returns
   # Boolean
   # ==== Method
   # Checks a set of keys and returns boolean of keyset containing the string param or any of the strings in a given list
+  # must_contain_all added to recognize that subarrays of arrays in the required fields list represent sets of fields which must occur together
 
 
-  def self.keyset_has_field?(keys, field)
+  def self.keyset_has_field?(keys, field, must_contain_all = false)
     if field.is_a?(String)
       split_field = field.split("/")
       regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
       return (keys.select {|key| key =~ /^#{regex}/}).any?
 
     elsif field.is_a?(Array)
-      contains_any = false
+      contains_field = false
       field.each do |sub_field|
-        if Cmr.keyset_has_field?(keys, sub_field)
-          contains_any = true
+        if must_contain_all
+          contains_field = Cmr.keyset_has_field?(keys, sub_field, true)
+        else
+          if Cmr.keyset_has_field?(keys, sub_field, true)
+            contains_field = true
+          end
         end
+        
       end
 
-      return contains_any
+      return contains_field
     end
   end
 
