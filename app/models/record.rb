@@ -107,33 +107,36 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-
-
   # ====Params   
-  # None
+  # optional Hash
   # ====Returns
-  # Void
+  # Hash
   # ==== Method
   # This method runs the automated script against a record and then saves the result in a new ScriptComment object      
   # The script is run through a shell command which accesses the python scripts in the /lib directory.       
+  # Parameter is optional hash of raw metadata from cmr for one record, if not provided, the raw data is manually retreived
+  # Returns a formatted hash with results from script as values for each record field as keys.
+
   def evaluate_script(raw_data = nil)
     if raw_data.nil?
       raw_data = get_raw_data
     end
-    if self.is_collection?
-      #escaping json for passing to python
-      collection_json = raw_data.to_json.gsub("\"", "\\\"")
-      #running collection script in python
-      #W option to silence warnings
-      if self.is_collection?  
-        script_results = `python -W ignore lib/CollectionChecker.py "#{collection_json}"  `
-      else
-        script_results = `python -W ignore lib/GranuleChecker.py "#{collection_json}"`
-      end
+    #escaping json for passing to python
+    record_json = raw_data.to_json.gsub("\"", "\\\"")
+    #running collection script in python
+    #W option to silence warnings
+    if self.is_collection?  
+      script_results = `python -W ignore lib/CollectionChecker.py "#{record_json}"  `
+    else
+      script_results = `python -W ignore lib/GranuleChecker.py "#{record_json}"`
+    end
 
+    unless script_results.nil?
       comment_hash = JSON.parse(script_results)
       comment_hash = Record.format_script_comments(comment_hash, self.values)
       comment_hash
+    else
+      {}
     end
   end
 

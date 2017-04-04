@@ -39,7 +39,7 @@ module Datable
       new_data = RecordData.new(datable: self, rawJSON: new_value_hash.to_json)
       new_data.save!
     end
-    nil
+    true
   end
 
   # ====Params   
@@ -53,6 +53,8 @@ module Datable
   def update_partial_values(partial_hash)
     if partial_hash
       values = self.values
+      #reload needed because new record_data object could be attached in values
+      self.reload
       partial_hash.each do |key, value|
           values[key] = value
       end

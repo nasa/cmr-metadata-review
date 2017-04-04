@@ -67,6 +67,8 @@ gem 'aws-sdk', '~> 2.2.37'
 #store env vars in the .env file
 gem 'dotenv-rails', '~> 2.1.1'
 
+gem 'font-awesome-sass'
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
