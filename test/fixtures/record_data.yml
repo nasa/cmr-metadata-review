@@ -16,7 +16,7 @@ second:
   id: 5
   record_id: 5
   column_name: "ShortName"
-  value: "A2_DySno_NRT"
+  value: "A2_DySno_NRT2"
   daac: "PODAAC"
   last_updated: null
   color: "green"
@@ -44,12 +44,25 @@ fifth:
   id: 8
   record_id: 5
   column_name: "LongName"
-  value: "Test_Long_Name"
+  value: "Test_Long_Name2"
   daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
   opinion: false
+  flag: []
+  recommendation: "ok"
+
+sixth:
+  id: 9
+  record_id: 1
+  column_name: "VersionId"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
   flag: []
   recommendation: "ok"
 
