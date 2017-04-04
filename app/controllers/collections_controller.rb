@@ -104,7 +104,7 @@ class CollectionsController < ApplicationController
 
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
-      byebug
+
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
       #returns a list of granule data
