@@ -298,13 +298,14 @@ class Record < ActiveRecord::Base
   end
 
 
-
   def update_recommendations(partial_hash)
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
-          data.recommendation = value
-          data.save
+          if data
+            data.recommendation = value
+            data.save
+          end
       end
     end
   end
@@ -314,8 +315,10 @@ class Record < ActiveRecord::Base
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
-          data.color = value
-          data.save
+          if data
+            data.color = value
+            data.save
+          end
       end
     end
   end
@@ -324,8 +327,10 @@ class Record < ActiveRecord::Base
     if flags_hash
       flags_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
-          data.flag = value
-          data.save
+          if data
+            data.flag = value
+           data.save
+         end
       end
     end
   end
@@ -334,8 +339,10 @@ class Record < ActiveRecord::Base
     if opinions_hash
       opinions_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
-          data.opinion = value
-          data.save
+          if data
+            data.opinion = value
+           data.save
+         end
       end
     end
   end
