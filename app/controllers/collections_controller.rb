@@ -104,7 +104,7 @@ class CollectionsController < ApplicationController
 
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
-      
+      byebug
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
       #returns a list of granule data
@@ -114,9 +114,9 @@ class CollectionsController < ApplicationController
       granules_components =  (granules_to_save.map do |granule_data| 
                               granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
                               new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
-                              granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
+                              #granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
                               granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-                              [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
+                              [ granule_object, new_granule_record, granule_ingest ]
                              end) 
 
       #saving all the related collection and granule data in a combined transaction
