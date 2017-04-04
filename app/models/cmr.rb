@@ -112,12 +112,14 @@ class Cmr
     #importing the new ones if any
     contained_collections.each do |data|
       unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+        collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
         #second check to make sure we don't save duplicate revisions
         unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
           ActiveRecord::Base.transaction do
             new_collection_record.save!
-            record_data.save!
+            record_data_list.each do |record_data|
+              record_data.save!
+            end
             ingest_record.save!
           end
 
