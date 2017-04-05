@@ -57,6 +57,15 @@ class Collection < ActiveRecord::Base
     user.collection_reviews.where(review_state: 0)
   end
 
+
+  # ====Params   
+  # String, name of provider     
+  # ====Returns
+  # Float Array
+  # ==== Method
+  # First assembles array of all records marked closed
+  # For each record, calculates the amount of red colored columns as a % of total columns
+
   def self.quality_done_records(daac_short_name = nil)
     if daac_short_name.nil?
       collection_records = Collection.all_records
@@ -71,6 +80,13 @@ class Collection < ActiveRecord::Base
     scores
   end
 
+  # ====Params   
+  # String, name of provider     
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Obtains the ordered revisions list of lists
+  # Iterates through the list summing the count of sublists where the first record is done and there is at least a second revision marked done
 
   def self.updated_done_count(daac_short_name = nil)
     ordered_revisions = Collection.ordered_revisions(daac_short_name).values
@@ -81,14 +97,32 @@ class Collection < ActiveRecord::Base
     updated_and_done.count
   end
 
+  # ====Params   
+  # String, name of provider     
+  # ====Returns
+  # Integer
+  # ==== Method
+  # Obtains the ordered revisions list of lists
+  # Iterates through the list summing count of sublists where there is a revision beyond the original one that is marked done.
+
   def self.updated_count(daac_short_name = nil)
     ordered_revisions = Collection.ordered_revisions(daac_short_name).values
     updated = ordered_revisions.select { |record_list|
-      ((record_list.drop(1).select { |record| record.closed }).count > 0)
+      record_list.drop(1).count > 0
     }
 
     updated.count
   end
+
+  # ====Params   
+  # String, name of provider     
+  # ====Returns
+  # List of record lists, each sub list is all records for a collection in order of ingest
+  # ==== Method
+  # Grabs all records, then maps them to the sublists based on collection id
+  # Sorts the sublists based on record id with the assumption that newer revisions are ingested after older ones.
+  # Do not want to rely on revision ids since they may not be numbers
+
 
   def self.ordered_revisions(daac_short_name = nil)
     if daac_short_name.nil?
@@ -109,7 +143,7 @@ class Collection < ActiveRecord::Base
     end
 
     records_hash.each do |key, list|
-      records_hash[key] = list.sort { |x,y| y.recordable_id.to_i <=> x.recordable_id.to_i } 
+      records_hash[key] = list.sort { |x,y| y.id.to_i <=> x.id.to_i } 
     end
 
     records_hash
@@ -200,6 +234,14 @@ class Collection < ActiveRecord::Base
     review_hash.values
   end  
 
+  # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # List of 4 Integers representing flags
+  # ==== Method
+  # First the method gets a list of all newest revision records, then finds all RecordData that corresponds to any record in the list
+  # Then aggregates the counts of each flag type and returns a list of those values
+
   def self.color_counts(daac_short_name = nil)
     newest_revisions = Collection.all_newest_revisions(daac_short_name)
     record_ids = newest_revisions.map { |record| record.id }
@@ -212,6 +254,14 @@ class Collection < ActiveRecord::Base
 
     [blue_count, green_count, yellow_count, red_count]
   end
+
+  # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # Hash of counts for each flag type
+  # ==== Method
+  # Obtains the complete set of RecordData elements related to the newest revision of each collection
+  # Iterates through that list summing for each flag the number of times a recorddata has that flag and is marked red
 
   def self.red_flags(daac_short_name = nil)
     newest_revisions = Collection.all_newest_revisions(daac_short_name)
