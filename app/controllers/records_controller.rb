@@ -84,16 +84,16 @@ class RecordsController < ApplicationController
 
 
     begin
-      record.get_recommendations.update_partial_values(params["recommendation"])
+      record.update_recommendations(params["recommendation"])
 
-      record.get_colors.update_partial_values(params["color_code"])
+      record.update_colors(params["color_code"])
 
 
       #flags are stored in a hash => list relationship
       #each hash key is a column of a record
       #each value is a list containing the string names of each checked flag for that key
       #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
-      flags_hash = record.get_flags.values
+      flags_hash = record.get_flags
       section_titles.each do |title|
         flags_hash[title] = [];
       end
@@ -109,10 +109,10 @@ class RecordsController < ApplicationController
           end
         end
       end
-      record.get_flags.update_values(flags_hash)
+      record.update_flags(flags_hash)
 
 
-      opinion_values = record.get_opinions.values
+      opinion_values = record.get_opinions
       section_titles.each do |title|
         opinion_values[title] = false
       end
@@ -124,7 +124,7 @@ class RecordsController < ApplicationController
             end
         end
       end
-      record.get_opinions.update_values(opinion_values)
+      record.update_opinions(opinion_values)
     rescue
       flash[:error] = "Values were not updated in the system.  Please resave changes."
     end

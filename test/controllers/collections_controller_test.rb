@@ -63,7 +63,8 @@ class CollectionsControllerTest < ActionController::TestCase
 
             #saves 1 associated granule
             assert_equal((Collection.where concept_id: "C222702-GHRC").first.granules.length, 1)
-            assert_equal((Collection.where concept_id: "C222702-GHRC").first.granules.first.records.first.values["collection_concept_id"], "C222702-GHRC")
+            #needs to match regex since the granule that is taken from the list is random each time
+            assert_equal((Collection.where concept_id: "C222702-GHRC").first.granules.first.records.first.values["GranuleUR"] =~ /Ndaily1988.[0-9]{3}_cum_cglitn_v1.hdf/, 0)
 
             granule_record = (Collection.where concept_id: "C222702-GHRC").first.granules.first.records.first
             #ingest for granule logged
