@@ -38,7 +38,7 @@ class ReportsController < ApplicationController
     end
   end
 
-  def selection
+  def search
     @free_text = params["free_text"]
     @provider = params["provider"]
     @curr_page = params["curr_page"]
@@ -62,6 +62,17 @@ class ReportsController < ApplicationController
       redirect_to home_path
       return
     end
+  end
+
+  def selection
+    records_list = params["records"].split(",")
+    @report_list = []
+    records_list.each_slice(2) {|(concept_id, revision_id)|
+                                  new_record = Collection.find_record(concept_id, revision_id) 
+                                  if new_record
+                                    @report_list.push(new_record)
+                                  end
+                                 }
   end
 
 end
