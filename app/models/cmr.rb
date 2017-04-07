@@ -131,12 +131,14 @@ class Cmr
     #importing the new ones if any
     contained_collections.each do |data|
       unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+        collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
         #second check to make sure we don't save duplicate revisions
         unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
           ActiveRecord::Base.transaction do
             new_collection_record.save!
-            record_data.save!
+            record_data_list.each do |record_data|
+              record_data.save!
+            end
             ingest_record.save!
           end
 
@@ -481,15 +483,20 @@ class Cmr
 
 
   # ====Params   
-  # None 
+  # Optional Sting of DAAC short name
   # ====Returns
   # Integer, total collections in the CMR     
   # ==== Method
   # Contacts CMR and obtains the total number of collections in the system.
+  # If Daac short name provided, only returns the total collections of that Daac.
 
+  def self.total_collection_count(daac = nil)
+    if daac.nil?
+      url = Cmr.api_url("collections", {"page_size" => 1})
+    else 
+      url = Cmr.api_url("collections", {"page_size" => 1, "provider" => daac })
+    end
 
-  def self.total_collection_count
-    url = Cmr.api_url("collections", {"page_size" => 1})
     total_results = Cmr.cmr_request(url)
     results_hash = Hash.from_xml(total_results)["results"]
     results_hash["hits"].to_i

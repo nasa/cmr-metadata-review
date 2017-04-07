@@ -104,8 +104,8 @@ class CollectionsController < ApplicationController
 
       #nil gets turned into 0
       granules_count = params["granulesCount"].to_i
-      
-      collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
+
+      collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
       #returns a list of granule data
       granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
@@ -114,17 +114,38 @@ class CollectionsController < ApplicationController
       granules_components =  (granules_to_save.map do |granule_data| 
                               granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
                               new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
-                              granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
+                              new_granule_record.save
+
+                              granule_record_data_list = []
+                              granule_data["Granule"].each do |key, value|
+                                granule_record_data = RecordData.new(record: new_granule_record)
+                                granule_record_data.last_updated = DateTime.now
+                                granule_record_data.column_name = key
+                                granule_record_data.value = value
+                                granule_record_data.daac = granule_data["concept_id"].partition('-').last
+                                granule_record_data_list.push(granule_record_data)
+                              end
+                              #granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
                               granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-                              [ granule_object, new_granule_record, granule_record_data, granule_ingest ]
+                              [ granule_object, new_granule_record, granule_record_data_list, granule_ingest ]
                              end) 
 
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
-        record_data.save!
+        record_data_list.each do |record_data|
+          record_data.save!
+        end
         ingest_record.save!
-        granules_components.flatten.each { |savable_object| savable_object.save! }
+        granules_components.flatten.each { |savable_object| 
+                                              if savable_object.is_a?(Array)
+                                                savable_object.each do |savable_item|
+                                                  savable_item.save!
+                                                end
+                                              else
+                                                savable_object.save! 
+                                              end
+                                          }
       end
 
       new_collection_record.create_script(raw_collection)
