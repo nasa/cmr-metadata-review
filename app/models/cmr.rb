@@ -375,7 +375,10 @@ class Cmr
     return search_iterator, collection_count
   end
 
-  def self.contained_collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 2000)
+  def self.contained_collection_search(free_text = "", provider = ANY_KEYWORD, curr_page = "1", page_size = 2000)
+    if free_text == ""
+      return [], 0
+    end
     search_iterator, collection_count = Cmr.collection_search(free_text, provider, curr_page, page_size)
     search_iterator = search_iterator.select {|cmr_record| Collection.record_exists?(cmr_record["concept_id"], cmr_record["revision_id"])}
     return search_iterator, search_iterator.length
