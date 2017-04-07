@@ -403,16 +403,27 @@ class Cmr
   def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1")
     page_size = 10
     search_iterator = []
+    collection_count = 0
 
     if free_text
-      query_text = Cmr.api_url("collections", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+      base_options = [["page_size", page_size], ["page_num", curr_page]]
+      #setting the provider params
+      if provider == ANY_KEYWORD
+        PROVIDERS.each do |provider|
+          base_options.push(["provider", provider])
+        end
+      else
+        base_options.push(["provider", provider])
+      end
+
+      #setting the two versions of free text search we want to run (with/without first char wildcard)
+      options = base_options + [["keyword", "?*#{free_text}?*"]]
+      options_first_char = base_options + [["keyword", "#{free_text}?*"]]
+
+      query_text = Cmr.api_url("collections", options)
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
-      query_text_first_char = Cmr.api_url("collections", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-      unless provider == ANY_KEYWORD
-        query_text = query_text + "&provider=#{provider}"
-        query_text_first_char = query_text_first_char + "&provider=#{provider}"
-      end
+      query_text_first_char = Cmr.api_url("collections", options_first_char)
 
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
