@@ -31,6 +31,20 @@ class Record < ActiveRecord::Base
     self.recordable_type == "Granule"
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the param field
+  def get_column(column_name)
+    column = self.record_datas.where(column_name:column_name).first
+    if column
+      column.value
+    else
+      ""
+    end
+  end
 
   # ====Params   
   # None
@@ -39,7 +53,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
-    self.record_datas.where(column_name:"LongName").first.value
+    self.get_column("LongName")
   end 
 
   # ====Params   
@@ -49,7 +63,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
   def short_name
-    self.record_datas.where(column_name:"ShortName").first.value
+    self.get_column("ShortName")
   end
 
   # ====Params   
@@ -59,7 +73,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
   def version_id
-    self.record_datas.where(column_name:"VersionId").first.value
+    self.get_column("VersionId")
   end
 
 
@@ -197,6 +211,20 @@ class Record < ActiveRecord::Base
     return comment_hash
   end
 
+  # ====Params   
+  # String
+  # ====Returns
+  # Hash of "column_names" => "field_values"
+  # ==== Method
+  # The general method for retreiving column => field hashes from a record 
+  def get_field(field_name)
+    record_datas = self.record_datas
+    fields = {}
+    record_datas.each do |data|
+      fields[data.column_name] = data[field_name]
+    end
+    fields
+  end
 
   # ====Params   
   # None
@@ -205,12 +233,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method looks up the record's associated Color values.    
   def get_colors
-    record_datas = self.record_datas
-    colors = {}
-    record_datas.each do |data|
-      colors[data.column_name] = data.color
-    end
-    colors
+    get_field("color")
   end
 
 
@@ -221,12 +244,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method looks up the record's associated script_comment values. 
   def get_script_comments
-    record_datas = self.record_datas
-    script_comments = {}
-    record_datas.each do |data|
-      script_comments[data.column_name] = data.script_comment
-    end
-    script_comments
+    get_field("script_comment")
   end
 
 
@@ -237,12 +255,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method looks up the record's associated flag values. 
   def get_flags
-    record_datas = self.record_datas
-    flags = {}
-    record_datas.each do |data|
-      flags[data.column_name] = data.flag
-    end
-    flags
+    get_field("flag")
   end
 
 
@@ -253,12 +266,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method looks up the record's associated recommendation values. 
   def get_recommendations
-    record_datas = self.record_datas
-    recommendations = {}
-    record_datas.each do |data|
-      recommendations[data.column_name] = data.recommendation
-    end
-    recommendations
+    get_field("recommendation")
   end
 
   # ====Params   
@@ -268,12 +276,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # This method looks up the record's associated opinion values. 
   def get_opinions
-    record_datas = self.record_datas
-    opinions = {}
-    record_datas.each do |data|
-      opinions[data.column_name] = data.opinion
-    end
-    opinions
+    get_field("opinion")
   end
 
 
