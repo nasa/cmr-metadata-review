@@ -1,0 +1,145 @@
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: SEARCH"}) %>
+
+
+<div class="search_page_box">
+  <div class="space_box"></div>
+
+    <div class="search_title">
+      <p><strong>Search the Metadata Review System:</strong></p>
+    </div>
+
+    <%= form_tag(reports_selection_path, method: "get") do %>
+      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
+      <%= text_field_tag(:free_text, @free_text) %>
+      <%= hidden_field_tag(:curr_page, "1") %>
+      <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>
+      <button class="search_button">
+        <i class="eui-icon eui-fa-search"></i>
+      </button>
+    <% end %>
+
+    <br>
+    <p><strong>Search Results:</strong></p>
+
+    <div class="results_box">
+
+      <div class="search_phrase">
+        <p>Search Phrase = <%=@free_text%></p>
+      </div>
+      <div class="total_results">
+        <p>Total Results = <%= @collection_count %></p>
+      </div>
+      
+    
+
+
+      <% unless @search_iterator.nil? %>
+        <% unless @search_iterator.empty? %>
+
+            <table cellpadding="5" border="1">
+                <tr>
+                    <th>Results #</th>
+                    <th>Concept_ID</th>
+                    <th>Revision_ID</th>
+                    <th>ShortName</th>
+                    <th>Selection</th>
+                </tr>
+
+                
+
+              <% @search_iterator.each_with_index do |result, index| %>
+                <tr>
+                    <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
+                    <td id="concept<%= index.to_s %>"><%= result["concept_id"] %></td>
+                    <td id="revision<%= index.to_s %>"><%= result["revision_id"] %></td>
+                    <td><%= result["Collection"]["ShortName"] %></td>
+                    <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+                </tr>
+              <% end %>
+            </table>
+
+            <div class="bottom_row">
+              <div class="select_collection">
+                <%= form_tag( new_collection_path ,  {method: "get", id: 'ingest_form'}) do %>
+                  <%= hidden_field_tag(:concept_id, "") %>
+                  <%= hidden_field_tag(:revision_id, "") %>
+                  <%= submit_tag("Select Collection", id: 'ingest_submit') %>
+                <% end %> 
+              </div>
+
+              <div class="direction_links">
+                
+                <% if @curr_page.to_i > 1 %>
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>">
+                    <button id="prev_button">
+                      <i class="eui-icon eui-fa-chevron-circle-left"></i>
+                      <p>Previous Page</p>    
+                    </button>
+                  </a>
+                <% end %>
+
+                <% if @curr_page.to_i * 10 < @collection_count %>
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>">
+                    <button id="next_button">
+                      <p>Next Page</p>    
+                      <i class="eui-icon eui-fa-chevron-circle-right"></i>
+                    </button>
+                  </a>
+                <% end %>
+              </div>
+
+            </div>
+
+
+
+            <script type="text/javascript">
+                var ingestButton = document.getElementById("ingest_submit");
+                ingestButton.disabled = true;
+
+                var searchSelector = document.getElementsByName("searchSelection");
+
+                for (var i = 0, length = searchSelector.length; i < length; i++) {
+                    (function(index) {
+                        var temp = document.getElementById("search" + i);
+                        temp.onclick = function() {
+                                              var count = index;
+                                              updateSelection(count);
+                                              ingestButton.disabled = false;
+                                              }
+                    })(i);
+                }
+            </script>
+
+
+
+        <% end %>
+
+
+
+      <% end %>
+
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+
+  var updateSelection = function(count) {
+    var rowName = "concept" + count;
+    var newConceptId = document.getElementById(rowName).innerHTML;
+    document.getElementById("concept_id").value = newConceptId;
+
+    var rowNameRevision = "revision" + count;
+    var newRevisionId = document.getElementById(rowNameRevision).innerHTML;
+    document.getElementById("revision_id").value = newRevisionId;
+  }
+
+
+
+</script>
+
+

@@ -334,8 +334,7 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.  
 
 
-  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1")
-    page_size = 10
+  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
     search_iterator = []
 
     if free_text
@@ -374,6 +373,12 @@ class Cmr
     end
 
     return search_iterator, collection_count
+  end
+
+  def self.contained_collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 2000)
+    search_iterator, collection_count = Cmr.collection_search(free_text, provider, curr_page, page_size)
+    search_iterator = search_iterator.select {|cmr_record| Collection.record_exists?(cmr_record["concept_id"], cmr_record["revision_id"])}
+    return search_iterator, search_iterator.length
   end
 
   def self.format_added_records_list(list)
