@@ -473,11 +473,18 @@ class Cmr
     is_required_field
   end
 
-  def self.api_url(data_type, options_hash = {})
+  def self.api_url(data_type, options = {})
     result = "https://cmr.earthdata.nasa.gov/search/" + data_type + ".echo10?"
-    options_hash.each do |key, value| 
-      result += (key.to_s + "=" + value.to_s + "&")
-    end
+    if options.is_a?(Hash)
+      options.each do |key, value| 
+        result += (key.to_s + "=" + value.to_s + "&")
+      end
+    #accessing a list formatted like hash so that keys can have multiple values, supported by cmr  
+    elsif options.is_a?(Array)
+      options.each do |(key, value)| 
+        result += (key.to_s + "=" + value.to_s + "&")
+      end
+    end      
     result.chomp("&")
   end
 
@@ -487,12 +494,16 @@ class Cmr
   # ====Returns
   # Integer, total collections in the CMR     
   # ==== Method
-  # Contacts CMR and obtains the total number of collections in the system.
+  # Contacts CMR and obtains the total number of collections in the system for the EOSDIS daacs.
   # If Daac short name provided, only returns the total collections of that Daac.
 
   def self.total_collection_count(daac = nil)
     if daac.nil?
-      url = Cmr.api_url("collections", {"page_size" => 1})
+      options = [["page_size", 1]]
+      PROVIDERS.each do |provider|
+        options.push(["provider", provider])
+      end
+      url = Cmr.api_url("collections", options)
     else 
       url = Cmr.api_url("collections", {"page_size" => 1, "provider" => daac })
     end
