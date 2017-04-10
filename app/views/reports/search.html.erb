@@ -47,7 +47,7 @@
                 
 
               <% @search_iterator.each_with_index do |result, index| %>
-                <tr concept_id="<%= result["concept_id"] %>" revision_id="<%= result["revision_id"] %>" onclick="appendRecordsList(this)">
+                <tr concept_id="<%= result.concept_id %>" revision_id="<%= result.revision_id %>" onclick="appendRecordsList(this)">
                     <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
                     <td id="concept<%= index.to_s %>"><%= result.concept_id %></td>
                     <td id="revision<%= index.to_s %>"><%= result.revision_id %></td>
