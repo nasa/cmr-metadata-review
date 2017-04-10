@@ -6,17 +6,22 @@ class Cmr
   TIMEOUT_MARGIN = 10
   REQUIRED_COLLECTION_FIELDS = ["ShortName", 
                                 "VersionId", 
-                                "InsertTime", 
                                 "LastUpdate", 
                                 "LongName", 
                                 "DataSetId", 
                                 "Description", 
-                                "Orderable", 
-                                "Visible",
                                 "ProcessingLevelId", 
-                                "ArchiveCenter", 
+                                  [
+                                    "ArchiveCenter",
+                                    "ProcessingCenter"
+                                    ],
+                                "CollectionState", 
                                 "DataFormat", 
-                                "Temporal/Range/DateTime/BeginningDateTime", 
+                                  [
+                                    "Temporal/SingleDateTime", 
+                                    "Temporal/RangeDateTime/BeginningDateTime",
+                                    "Temporal/PeriodicDateTime/Name"
+                                    ],
                                 "Contacts/Contact/Role",
                                 "ScienceKeywords/ScienceKeyword/CategoryKeyword",
                                 "ScienceKeywords/ScienceKeyword/TopicKeyword",
@@ -26,26 +31,40 @@ class Cmr
                                 "Campaigns/Campaign/ShortName", 
                                 "OnlineAccessURLs/OnlineAccessURL/URL", 
                                 "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+                                [
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLongitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLatitude"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLongitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLatitude"
+                                  ],
+                                  [
+                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLatitude",
+                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLongitude"
+                                  ]
+                                ],
                                 "Spatial/GranuleSpatialRepresentation"]
 
     REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
                                 "InsertTime",
                                 "LastUpdate",
-                                "Collection/ShortName",
-                                "Collection/VersionId",
-                                "Collection/DataSetId",
+                                  [
+                                    [
+                                      "Collection/ShortName",
+                                      "Collection/VersionId"
+                                    ],
+                                    "Collection/DataSetId"
+                                  ],
                                 "DataGranule/ProductionDateTime",
-                                "Temporal/RangeDateTime/BeginningDateTime",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                                "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
-                                "OnlineAccessURLs/OnlineAccessURL/URL",
-                                "Orderable"] 
+                                "OnlineAccessURLs/OnlineAccessURL/URL"] 
 
 
 
@@ -112,12 +131,14 @@ class Cmr
     #importing the new ones if any
     contained_collections.each do |data|
       unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+        collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
         #second check to make sure we don't save duplicate revisions
         unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
           ActiveRecord::Base.transaction do
             new_collection_record.save!
-            record_data.save!
+            record_data_list.each do |record_data|
+              record_data.save!
+            end
             ingest_record.save!
           end
 
@@ -218,11 +239,10 @@ class Cmr
 
   def self.add_required_collection_fields(collection_hash)
     required_fields = REQUIRED_COLLECTION_FIELDS
-
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
-        collection_hash[field] = ""
+        collection_hash = Cmr.keyset_add_field(collection_hash, field)
       end
     end
 
@@ -230,19 +250,65 @@ class Cmr
   end
 
 
+  # ====Params
+  # Hash of metadata keys and values    
+  # String Field Name or List of String Field Names
+  # ====Returns
+  # Hash of metadata keys and values
+  # ==== Method
+  # Adds the field name parameter of the first string of the list to the hash
+  # if the first entry of the list is a sub list, then the entire sub list is added to the hash
+
+
+  def self.keyset_add_field(collection_hash, field)
+    if field.is_a?(String)
+      collection_hash[field] = ""
+      return collection_hash
+    elsif field.is_a?(Array)
+      if field[0].is_a?(String)
+        collection_hash[field[0]] = ""
+      elsif field[0].is_a?(Array)
+        field[0].each do |sub_field|
+          collection_hash[sub_field] = ""
+        end
+      end
+      return collection_hash 
+    end
+  end
+
+
   # ====Params   
   # Array of keys,     
-  # String Field Name
+  # String Field Name or List of String Field Names
+  # Optional Boolean
   # ====Returns
   # Boolean
   # ==== Method
-  # Checks a set of keys and returns boolean of keyset containing the string param
+  # Checks a set of keys and returns boolean of keyset containing the string param or any of the strings in a given list
+  # must_contain_all added to recognize that subarrays of arrays in the required fields list represent sets of fields which must occur together
 
 
-  def self.keyset_has_field?(keys, field)
-    split_field = field.split("/")
-    regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
-    return (keys.select {|key| key =~ /^#{regex}/}).any?
+  def self.keyset_has_field?(keys, field, must_contain_all = false)
+    if field.is_a?(String)
+      split_field = field.split("/")
+      regex = split_field.reduce("") {|sum, split_name| sum + split_name + ".*"}
+      return (keys.select {|key| key =~ /^#{regex}/}).any?
+
+    elsif field.is_a?(Array)
+      contains_field = false
+      field.each do |sub_field|
+        if must_contain_all
+          contains_field = Cmr.keyset_has_field?(keys, sub_field, true)
+        else
+          if Cmr.keyset_has_field?(keys, sub_field, true)
+            contains_field = true
+          end
+        end
+        
+      end
+
+      return contains_field
+    end
   end
 
 
@@ -376,6 +442,7 @@ class Cmr
     return search_iterator, collection_count
   end
 
+
   def self.format_added_records_list(list)
     if list.empty?
       return "No New Records Were Found"
@@ -387,10 +454,23 @@ class Cmr
     return output_string
   end
 
-  def self.required_collection_field?(field_string)
+  def self.required_collection_field?(field_string, required_fields = REQUIRED_COLLECTION_FIELDS)
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
-    REQUIRED_COLLECTION_FIELDS.include? stripped_field
+    is_required_field = false
+    required_fields.each do |required_field| 
+      if required_field.is_a?(String)
+        if required_field == stripped_field
+          is_required_field = true
+        end
+      elsif required_field.is_a?(Array)
+        if Cmr.required_collection_field?(field_string, required_field)
+          is_required_field = true
+        end
+      end
+    end
+
+    is_required_field
   end
 
   def self.api_url(data_type, options_hash = {})
