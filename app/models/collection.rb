@@ -58,6 +58,35 @@ class Collection < ActiveRecord::Base
   end
 
 
+  def self.assemble_new_record(concept_id, revision_id, current_user) 
+    collection_data = Cmr.get_collection(concept_id)
+    short_name = collection_data["ShortName"]
+    ingest_time = DateTime.now
+    #finding parent collection
+    collection_object = Collection.find_or_create_by(concept_id: concept_id)
+    collection_object.short_name = short_name
+    collection_object.save
+    #creating collection record related objects
+    new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, closed: false)
+
+    record_data_list = []
+
+    collection_data.each do |key, value|
+      record_data = RecordData.new(record: new_collection_record)
+      record_data.last_updated = DateTime.now
+      record_data.column_name = key
+      record_data.value = value
+      record_data.daac = concept_id.partition('-').last
+      record_data_list.push(record_data)
+    end
+
+    ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
+
+    return collection_object, new_collection_record, record_data_list, ingest_record
+  end
+
+
+
   # ====Params   
   # String, name of provider     
   # ====Returns
