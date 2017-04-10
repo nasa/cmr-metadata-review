@@ -66,13 +66,28 @@ class ReportsController < ApplicationController
 
   def selection
     records_list = params["records"].split(",")
-    @report_list = []
+    report_list = []
     records_list.each_slice(2) {|(concept_id, revision_id)|
                                   new_record = Collection.find_record(concept_id, revision_id) 
                                   if new_record
-                                    @report_list.push(new_record)
+                                    report_list.push(new_record)
                                   end
                                  }
+
+    metric_set = MetricSet.new(report_list)
+
+    @review_counts = metric_set.completed_review_counts
+    @total_completed = metric_set.total_completed
+
+    @field_colors = metric_set.color_counts
+    @total_checked = @field_colors[0] + @field_colors[1] + @field_colors[2] + @field_colors[3]
+
+    @red_flags = metric_set.red_flags
+
+    @updated_count = metric_set.updated_count
+    @updated_done_count = metric_set.updated_done_count
+
+    @quality_done_records = metric_set.quality_done_records                             
   end
 
 end
