@@ -5,6 +5,14 @@ class MetricSet
     @record_set = record_set
   end
 
+  # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # Hash of {record id's => completed review counts}
+  # ==== Method
+  # Takes all of the newest revisions for entire system or by DAAC
+  # Then creates a hash of each collection and the corresponding counts of completed reviews
+
   def completed_review_counts
     review_hash = {}
     completed_reviews = Review.all.where(review_state: 1)  

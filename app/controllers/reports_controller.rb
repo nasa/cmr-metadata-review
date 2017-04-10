@@ -14,27 +14,28 @@ class ReportsController < ApplicationController
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
 
-    if params["daac"].nil?
-      @daac = ANY_KEYWORD
-    else
+    unless params["daac"].nil? || params["daac"] == "Select DAAC"
       @daac = params["daac"]
       @total_collection_count = Cmr.total_collection_count(@daac)
       @total_ingested = Collection.by_daac(@daac).count
 
       @percent_ingested = (@total_ingested.to_f * 100 / @total_collection_count).round(2)
 
-      @review_counts = Collection.completed_review_counts(@daac)
-      @total_completed = Collection.total_completed(@daac)
+      record_set = Collection.all_newest_revisions(params["daac"])
+      metric_set = MetricSet.new(record_set)
 
-      @field_colors = Collection.color_counts(@daac)
+      @review_counts = metric_set.completed_review_counts
+      @total_completed = metric_set.total_completed
+
+      @field_colors = metric_set.color_counts
       @total_checked = @field_colors[0] + @field_colors[1] + @field_colors[2] + @field_colors[3]
 
-      @red_flags = Collection.red_flags(@daac)
+      @red_flags = metric_set.red_flags
 
-      @updated_count = Collection.updated_count(@daac)
-      @updated_done_count = Collection.updated_done_count(@daac)
+      @updated_count = metric_set.updated_count
+      @updated_done_count = metric_set.updated_done_count
 
-      @quality_done_records = Collection.quality_done_records(@daac)
+      @quality_done_records = metric_set.quality_done_records
     end
   end
 
