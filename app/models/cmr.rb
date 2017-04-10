@@ -150,7 +150,7 @@ class Cmr
   end
 
   def self.get_raw_collection(concept_id)
-    url = Cmr.api_url("collections", {"concept_id" => concept_id})
+    url = Cmr.api_url("collections", "echo10", {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
@@ -167,7 +167,7 @@ class Cmr
   end
 
   def self.get_raw_granule(concept_id)
-    url = Cmr.api_url("granules", {"concept_id" => concept_id})
+    url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       granule_results = Hash.from_xml(granule_xml)["results"]
@@ -268,7 +268,7 @@ class Cmr
   # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
-    url = Cmr.api_url("granules", {"concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
+    url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       Hash.from_xml(granule_xml)["results"]
@@ -338,10 +338,10 @@ class Cmr
     search_iterator = []
 
     if free_text
-      query_text = Cmr.api_url("collections", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+      query_text = Cmr.api_url("collections", "echo10", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
-      query_text_first_char = Cmr.api_url("collections", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+      query_text_first_char = Cmr.api_url("collections", "echo10", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
       unless provider == ANY_KEYWORD
         query_text = query_text + "&provider=#{provider}"
         query_text_first_char = query_text_first_char + "&provider=#{provider}"
@@ -375,13 +375,64 @@ class Cmr
     return search_iterator, collection_count
   end
 
+
+  #chose to search json as xml parsing is way too slow when searching whole cmr
+  def self.json_collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
+    search_iterator = []
+
+    if free_text
+      query_text = Cmr.api_url("collections", "json", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+
+      #cmr does not accept first character wildcards for some reason, so remove char and retry query
+      query_text_first_char = Cmr.api_url("collections", "json", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+      unless provider == ANY_KEYWORD
+        query_text = query_text + "&provider=#{provider}"
+        query_text_first_char = query_text_first_char + "&provider=#{provider}"
+      end
+
+      begin
+        raw_json = Cmr.cmr_request(query_text).parsed_response
+        search_results = raw_json["feed"]["entry"]
+
+        #rerun query with first wildcard removed
+        if search_results.length == 0
+          raw_json = Cmr.cmr_request(query_text_first_char).parsed_response
+          search_results = raw_json["feed"]["entry"]
+        end
+      rescue
+        raise CmrError
+      end
+    end
+
+    return search_results, search_results.length
+  end
+
   def self.contained_collection_search(free_text = "", provider = ANY_KEYWORD, curr_page = "1", page_size = 2000)
-    if free_text == ""
+    if free_text.nil?
       return [], 0
     end
-    search_iterator, collection_count = Cmr.collection_search(free_text, provider, curr_page, page_size)
-    search_iterator = search_iterator.select {|cmr_record| Collection.record_exists?(cmr_record["concept_id"], cmr_record["revision_id"])}
-    return search_iterator, search_iterator.length
+
+    if free_text == "" 
+      all_collections = Collection.all_newest_revisions
+      return all_collections, all_collections.length
+    end
+
+    total_search_iterator = []
+    collection_count = 2000
+    #using this loop to fill an array with all cmr collections that match search
+    #2000 is cmr page limit, so there has to be multiple calls if results count over 2000
+    while collection_count == 2000
+      search_iterator, collection_count = Cmr.json_collection_search(free_text, provider, curr_page, page_size)
+      total_search_iterator += search_iterator
+      curr_page = (curr_page.to_i + 1).to_s
+    end
+
+    #changing all results to just the concept_id
+    total_search_iterator.map! {|entry| entry["id"] }
+    #going through all newest revisions in system and selecting those that were returned in the CMR search results
+    total_search_iterator = Collection.all_newest_revisions.select {|record| total_search_iterator.include? record.concept_id }
+
+    return total_search_iterator, total_search_iterator.length
   end
 
   def self.format_added_records_list(list)
@@ -401,8 +452,8 @@ class Cmr
     REQUIRED_COLLECTION_FIELDS.include? stripped_field
   end
 
-  def self.api_url(data_type, options_hash = {})
-    result = "https://cmr.earthdata.nasa.gov/search/" + data_type + ".echo10?"
+  def self.api_url(data_type = "collections", format_type = "echo10", options_hash = {})
+    result = "https://cmr.earthdata.nasa.gov/search/" + data_type + "." + format_type + "?"
     options_hash.each do |key, value| 
       result += (key.to_s + "=" + value.to_s + "&")
     end
@@ -420,9 +471,9 @@ class Cmr
 
   def self.total_collection_count(daac = nil)
     if daac.nil?
-      url = Cmr.api_url("collections", {"page_size" => 1})
+      url = Cmr.api_url("collections", "echo10", {"page_size" => 1})
     else 
-      url = Cmr.api_url("collections", {"page_size" => 1, "provider" => daac })
+      url = Cmr.api_url("collections", "echo10", {"page_size" => 1, "provider" => daac })
     end
 
     total_results = Cmr.cmr_request(url)
