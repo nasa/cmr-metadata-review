@@ -548,5 +548,9 @@ class Record < ActiveRecord::Base
     self.get_colors
   end
 
+  def color_count(color_name)
+    (self.record_datas.select {|data| data.color == color_name }).count
+  end
+
 
 end
