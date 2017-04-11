@@ -406,25 +406,25 @@ class Cmr
     collection_count = 0
 
     if free_text
-      base_options = [["page_size", page_size], ["page_num", curr_page]]
+      base_options = {"page_size" => page_size, "page_num" => curr_page}
       #setting the provider params
       if provider == ANY_KEYWORD
-        PROVIDERS.each do |provider|
-          base_options.push(["provider", provider])
-        end
+        base_options["provider"] = PROVIDERS
       else
-        base_options.push(["provider", provider])
+        base_options["provider"] = provider
       end
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
-      options = base_options + [["keyword", "?*#{free_text}?*"]]
-      options_first_char = base_options + [["keyword", "#{free_text}?*"]]
+      options = base_options.clone
+      options["keyword"] = "?*#{free_text}?*"
+      options_first_char = base_options.clone
+      options_first_char["keyword"] = "#{free_text}?*"
 
       query_text = Cmr.api_url("collections", options)
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
       query_text_first_char = Cmr.api_url("collections", options_first_char)
-
+      
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
         search_results = Hash.from_xml(raw_xml)["results"]
@@ -486,16 +486,12 @@ class Cmr
 
   def self.api_url(data_type, options = {})
     result = "https://cmr.earthdata.nasa.gov/search/" + data_type + ".echo10?"
-    if options.is_a?(Hash)
-      options.each do |key, value| 
-        result += (key.to_s + "=" + value.to_s + "&")
+    options.each do |key, value| 
+      #using list with flatten so that a string and list will both work as values
+      [value].flatten.each do |single_value|
+        result += (key.to_s + "=" + single_value.to_s + "&")
       end
-    #accessing a list formatted like hash so that keys can have multiple values, supported by cmr  
-    elsif options.is_a?(Array)
-      options.each do |(key, value)| 
-        result += (key.to_s + "=" + value.to_s + "&")
-      end
-    end      
+    end
     result.chomp("&")
   end
 
@@ -510,10 +506,8 @@ class Cmr
 
   def self.total_collection_count(daac = nil)
     if daac.nil?
-      options = [["page_size", 1]]
-      PROVIDERS.each do |provider|
-        options.push(["provider", provider])
-      end
+      options = {"page_size" => 1}
+      options["provider"] = PROVIDERS
       url = Cmr.api_url("collections", options)
     else 
       url = Cmr.api_url("collections", {"page_size" => 1, "provider" => daac })
