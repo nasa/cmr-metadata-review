@@ -402,17 +402,28 @@ class Cmr
 
   def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
     search_iterator = []
+    collection_count = 0
 
     if free_text
-      query_text = Cmr.api_url("collections", "echo10", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-
-      #cmr does not accept first character wildcards for some reason, so remove char and retry query
-      query_text_first_char = Cmr.api_url("collections", "echo10", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-      unless provider == ANY_KEYWORD
-        query_text = query_text + "&provider=#{provider}"
-        query_text_first_char = query_text_first_char + "&provider=#{provider}"
+      base_options = {"page_size" => page_size, "page_num" => curr_page}
+      #setting the provider params
+      if provider == ANY_KEYWORD
+        base_options["provider"] = PROVIDERS
+      else
+        base_options["provider"] = provider
       end
 
+      #setting the two versions of free text search we want to run (with/without first char wildcard)
+      options = base_options.clone
+      options["keyword"] = "?*#{free_text}?*"
+      options_first_char = base_options.clone
+      options_first_char["keyword"] = "#{free_text}?*"
+
+      query_text = Cmr.api_url("collections", "echo10", options)
+
+      #cmr does not accept first character wildcards for some reason, so remove char and retry query
+      query_text_first_char = Cmr.api_url("collections", "echo10", options_first_char)
+      
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
         search_results = Hash.from_xml(raw_xml)["results"]
@@ -532,10 +543,14 @@ class Cmr
     is_required_field
   end
 
-  def self.api_url(data_type = "collections", format_type = "echo10", options_hash = {})
+
+  def self.api_url(data_type = "collections", format_type = "echo10", options = {})
     result = "https://cmr.earthdata.nasa.gov/search/" + data_type + "." + format_type + "?"
-    options_hash.each do |key, value| 
-      result += (key.to_s + "=" + value.to_s + "&")
+    options.each do |key, value| 
+      #using list with flatten so that a string and list will both work as values
+      [value].flatten.each do |single_value|
+        result += (key.to_s + "=" + single_value.to_s + "&")
+      end
     end
     result.chomp("&")
   end
@@ -546,12 +561,14 @@ class Cmr
   # ====Returns
   # Integer, total collections in the CMR     
   # ==== Method
-  # Contacts CMR and obtains the total number of collections in the system.
+  # Contacts CMR and obtains the total number of collections in the system for the EOSDIS daacs.
   # If Daac short name provided, only returns the total collections of that Daac.
 
   def self.total_collection_count(daac = nil)
     if daac.nil?
-      url = Cmr.api_url("collections", "echo10", {"page_size" => 1})
+      options = {"page_size" => 1}
+      options["provider"] = PROVIDERS
+      url = Cmr.api_url("collections", "echo10", options)
     else 
       url = Cmr.api_url("collections", "echo10", {"page_size" => 1, "provider" => daac })
     end
