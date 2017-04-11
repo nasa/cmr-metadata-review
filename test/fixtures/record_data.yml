@@ -66,3 +66,54 @@ sixth:
   flag: []
   recommendation: "ok"
 
+metric1:
+  id: 10
+  record_id: 10
+  column_name: "VersionId"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "yellow"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
+metric2:
+  id: 11
+  record_id: 10
+  column_name: "ShortName"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "red"
+  script_comment: "ok"
+  opinion: true
+  flag: ["Usability"]
+  recommendation: "ok"
+
+metric3:
+  id: 12
+  record_id: 11
+  column_name: "VersionId"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "yellow"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
+metric4:
+  id: 13
+  record_id: 11
+  column_name: "ShortName"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "red"
+  script_comment: "ok"
+  opinion: true
+  flag: ["Accessibility"]
+  recommendation: "ok"

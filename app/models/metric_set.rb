@@ -1,27 +1,29 @@
 class MetricSet
+  attr_accessor :record_set, :record_data_set
   @record_set = []
+  @record_data_set = []
 
   def initialize(record_set = [])
     @record_set = record_set
+    record_ids = @record_set.map { |record| record.id }
+    @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
   end
 
   # ====Params   
-  # String, DAAC Short Name  
+  # Array of review objects 
   # ====Returns
-  # Hash of {record id's => completed review counts}
+  # Array of integers
   # ==== Method
-  # Takes all of the newest revisions for entire system or by DAAC
-  # Then creates a hash of each collection and the corresponding counts of completed reviews
+  # Aggregates the number of reviews for each record in the record set, then returns the counts for each record in an Array
 
-  def completed_review_counts
+  def completed_review_counts(reviews)
     review_hash = {}
-    completed_reviews = Review.all.where(review_state: 1)  
     #setting up review count hash
     @record_set.each do |record|
       review_hash[record.id] = 0
     end
 
-    completed_reviews.each do |review|
+    reviews.each do |review|
       if review_hash.key?(review.record_id)
         review_hash[review.record_id] = review_hash[review.record_id] + 1
       end
@@ -31,38 +33,29 @@ class MetricSet
   end  
 
   # ====Params   
-  # String, DAAC Short Name  
+  # None
   # ====Returns
   # List of 4 Integers representing flags
   # ==== Method
-  # First the method gets a list of all newest revision records, then finds all RecordData that corresponds to any record in the list
-  # Then aggregates the counts of each flag type and returns a list of those values
+  # Then aggregates the counts of each flag type in record_data_set and returns a list of those values
 
   def color_counts
-    record_ids = @record_set.map { |record| record.id }
-    record_datas = RecordData.all.select { |data| record_ids.include? data.record_id }
-    
-    blue_count = (record_datas.select { |data| data.color == "blue"}).count
-    green_count = (record_datas.select { |data| data.color == "green"}).count
-    yellow_count = (record_datas.select { |data| data.color == "yellow"}).count
-    red_count = (record_datas.select { |data| data.color == "red"}).count
-
+    blue_count = (@record_data_set.select { |data| data.color == "blue"}).count
+    green_count = (@record_data_set.select { |data| data.color == "green"}).count
+    yellow_count = (@record_data_set.select { |data| data.color == "yellow"}).count
+    red_count = (@record_data_set.select { |data| data.color == "red"}).count
     [blue_count, green_count, yellow_count, red_count]
   end
 
   # ====Params   
-  # String, DAAC Short Name  
+  # None
   # ====Returns
   # Hash of counts for each flag type
   # ==== Method
-  # Obtains the complete set of RecordData elements related to the newest revision of each collection
-  # Iterates through that list summing for each flag the number of times a recorddata has that flag and is marked red
+  # Iterates through record_data_set summing for each flag the number of times a recorddata has that flag and is marked red
 
   def red_flags
-    record_ids = @record_set.map { |record| record.id }
-    record_datas = RecordData.all.select { |data| record_ids.include? data.record_id }
-
-    flagged_data = record_datas.select { |data| !data.flag.empty? && (data.color == "red") }
+    flagged_data = @record_data_set.select { |data| !data.flag.empty? && (data.color == "red") }
 
     flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
     flagged_data.each do |data|
@@ -80,7 +73,7 @@ class MetricSet
   # ====Returns
   # Integer
   # ==== Method
-  # Aggregates the total number of Collections with their most recent revision_id record in a completed state.
+  # Aggregates the total number of records with their most recent revision_id record in a completed state.
 
   def total_completed
     (@record_set.select {|record| record.closed == true }).count
@@ -91,12 +84,19 @@ class MetricSet
   # ====Returns
   # Integer
   # ==== Method
-  # Aggregates the total number of Collections with their most recent revision_id record in the in process state.
+  # Aggregates the total number of records with their most recent revision_id record in the in process state.
 
   def total_in_process
-    newest_record_list = Collection.all_newest_revisions
     (@record_set.select {|record| record.closed == false }).count
   end 
+
+  # ====Params   
+  # None     
+  # ====Returns
+  # Array of Floats
+  # ==== Method
+  # Iterates through record_list and for each done record, stores quality score in an Array
+
 
   def quality_done_records
     collection_records = @record_set.select { |record| record.closed }
@@ -105,6 +105,16 @@ class MetricSet
     scores = record_data_sets.map { |data_list| (1 - (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count) * 100 }
     scores
   end
+
+  # ====Params   
+  # None     
+  # ====Returns
+  # Hash {Integer => [Record]}
+  # ==== Method
+  # Finds the Collection for each record in record_set
+  # Grabs a list of Collections for each record and then reduces to only unique Collections
+  # Maps to each Collection Id, a list of related records, sorted newest to oldest
+
 
   def ordered_revisions
     concept_ids = []
@@ -117,21 +127,21 @@ class MetricSet
     record_hash = {}
 
     collections.map do |collection|
-      record_hash[collection.concept_id] = collection.records.sort_by(&:id)
+      record_hash[collection.concept_id] = collection.records.sort { |x,y| y.id.to_i <=> x.id.to_i } 
     end
 
     record_hash
   end
 
   # ====Params   
-  # String, name of provider     
+  # None     
   # ====Returns
   # Integer
   # ==== Method
   # Obtains the ordered revisions list of lists
   # Iterates through the list summing the count of sublists where the first record is done and there is at least a second revision marked done
 
-  def updated_done_count(daac_short_name = nil)
+  def updated_done_count
     ordered_revisions = self.ordered_revisions.values
     updated_and_done = ordered_revisions.select { |record_list|
       record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
@@ -141,14 +151,14 @@ class MetricSet
   end
 
   # ====Params   
-  # String, name of provider     
+  # None     
   # ====Returns
   # Integer
   # ==== Method
   # Obtains the ordered revisions list of lists
   # Iterates through the list summing count of sublists where there is a revision beyond the original one that is marked done.
 
-  def updated_count(daac_short_name = nil)
+  def updated_count
     ordered_revisions = self.ordered_revisions.values
     updated = ordered_revisions.select { |record_list|
       record_list.drop(1).count > 0

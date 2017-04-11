@@ -478,7 +478,7 @@ class Cmr
       return [], 0
     end
 
-    if free_text == "" 
+    if free_text == "" && provider == ANY_KEYWORD
       all_collections = Collection.all_newest_revisions
       return all_collections, all_collections.length
     end

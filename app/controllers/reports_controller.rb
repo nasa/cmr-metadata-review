@@ -24,7 +24,7 @@ class ReportsController < ApplicationController
       record_set = Collection.all_newest_revisions(params["daac"])
       metric_set = MetricSet.new(record_set)
 
-      @review_counts = metric_set.completed_review_counts
+      @review_counts = metric_set.completed_review_counts(Review.all.where(review_state: 1))
       @total_completed = metric_set.total_completed
 
       @field_colors = metric_set.color_counts
@@ -77,7 +77,7 @@ class ReportsController < ApplicationController
 
     metric_set = MetricSet.new(report_list)
 
-    @review_counts = metric_set.completed_review_counts
+    @review_counts = metric_set.completed_review_counts(Review.all.where(review_state: 1))
     @total_completed = metric_set.total_completed
 
     @field_colors = metric_set.color_counts

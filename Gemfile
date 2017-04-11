@@ -6,7 +6,7 @@ gem 'rails', '4.2.7.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
-gem 'pg', '~> 0.17.1', group: [:development, :production]
+gem 'pg', '~> 0.17.1', group: [:test, :development, :production]
 
 
 # Use SCSS for stylesheets
