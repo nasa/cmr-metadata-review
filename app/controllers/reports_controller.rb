@@ -5,6 +5,8 @@ class ReportsController < ApplicationController
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
+    @metric_set = MetricSet.new(Record.all)
+
     @records = Record.where(recordable_type: "Collection")
 
     @record_sets = Collection.ordered_revisions.values
