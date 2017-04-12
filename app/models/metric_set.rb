@@ -9,6 +9,18 @@ class MetricSet
     @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
   end
 
+  
+
+  def original_metric_set
+    ordered_revisions = self.ordered_revisions
+    original_record_set = []
+    ordered_revisions.each do |key, value|
+      original_record_set.push(value.last)
+    end
+
+    return MetricSet.new(original_record_set)
+  end
+
   # ====Params   
   # Array of review objects 
   # ====Returns
@@ -44,7 +56,18 @@ class MetricSet
     green_count = (@record_data_set.select { |data| data.color == "green"}).count
     yellow_count = (@record_data_set.select { |data| data.color == "yellow"}).count
     red_count = (@record_data_set.select { |data| data.color == "red"}).count
-    [blue_count, green_count, yellow_count, red_count]
+    {"blue" => blue_count, "green" => green_count, "yellow" => yellow_count, "red" => red_count}
+  end
+
+  def flag_counts
+    flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
+    @record_data_set.each do |data|
+      data.flag.each do |flag_name|
+        flag_hash[flag_name] = flag_hash[flag_name] + 1
+      end
+    end
+
+    flag_hash
   end
 
   # ====Params   
@@ -66,7 +89,6 @@ class MetricSet
 
     flag_hash
   end
-
 
   # ====Params   
   # None    
@@ -165,6 +187,25 @@ class MetricSet
     }
 
     updated.count
+  end
+
+  def element_non_green_count
+    element_hash = {}
+    @record_data_set.each do |record_data|
+      if !element_hash.key? record_data.column_name
+        element_hash[record_data.column_name] = {"red" => 0, "blue" => 0, "yellow" => 0}
+      end
+      if element_hash[record_data.column_name].key? record_data.color
+        element_hash[record_data.column_name][record_data.color] = element_hash[record_data.column_name][record_data.color] + 1
+      end
+    end
+
+    column_counts = []
+    element_hash.map do |column_name, counts_hash|
+      column_counts.push([column_name, counts_hash.values.sum])
+    end
+
+    column_counts.sort! { |x,y| y[1] <=> x[1] } 
   end
 
 

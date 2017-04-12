@@ -3,25 +3,151 @@
 <p>Total Collections in CMR: <%=@cmr_total_collection_count%></p>
 
 <p>Total Ingested Collections: <%=@collection_ingest_count%></p>
-<p>Total Collections In Process: <%=@metric_set.total_in_process%></p>
-<p>Total Collections Completed: <%=@metric_set.total_completed%></p>
+<br>
+<br>
+<div style="display:flex;">
+  <div>
 
-<br>
-<br>
-<br>
-<% @record_sets.each do |record_set| %>
-  <p>Concept ID: <%=record_set[0].concept_id%></p>
-  <%record_set.each do |record| %>
-    <div style="display: inline-block;border: solid; padding:5px;">
-      <p>RevisionId  - <%= record.revision_id %>: </p>
-      <p>Total Fields: <%= record.get_colors.count %></p>
-      <p>Blue Fields: <%= record.color_count("blue") %></p>
-      <p>Green Fields: <%= record.color_count("green") %></p>
-      <p>Yellow Fields: <%= record.color_count("yellow") %></p>
-      <p>Red Fields: <%= record.color_count("red") %></p>
-    </div>
-  <% end %>
-  <br>
-  <br>
-  <p>###############################################</p>
-<% end %>
+      <table style="width:100%; padding:5px;">
+          <tr>
+            <td>State of Reviews:</td> 
+            <td>0 Reviews:</td>  
+            <td>1 Review:</td>  
+            <td>2+ Reviews:</td>  
+            <td>Record Complete:</td>  
+            
+          </tr>
+            <td>Record Counts</td>
+            <td><%= @review_counts.count { |x| x == 0 }%></td>
+            <td><%= @review_counts.count { |x| x == 1 }%></td>
+            <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
+            <td><%= @total_completed %></td>
+          <tr>
+            
+
+          </tr>
+      </table>
+
+
+      <br><br>
+
+        <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Stat:</td>
+          <td>Original Set:</td>
+          <td>Current Set:</td>
+        </tr>
+
+          <tr>
+            <td>Number of fields checked (total):</td>  
+            <td><%=@original_total_checked%></td>
+            <td><%=@total_checked%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields that passed:</td>  
+            <td><%=@original_field_colors["green"]%></td>
+            <td><%=@field_colors["green"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields that failed (data accessibility):</td>  
+            <td><%=@original_field_colors["red"]%></td>
+            <td><%=@field_colors["red"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields with warnings issued:</td>  
+            <td><%=@original_field_colors["yellow"]%></td>
+            <td><%=@field_colors["yellow"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields with informational notes added:</td>  
+            <td><%=@original_field_colors["blue"]%></td>
+            <td><%=@field_colors["blue"]%></td>
+          </tr>
+
+        </table>
+
+
+        <br><br>
+
+      <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Stat:</td>
+          <td>Original Set:</td>
+          <td>Current Set:</td>
+        </tr>
+
+          <tr>
+            <td>Number of fields with Accessibility Flag:</td>  
+            <td><%=@original_flag_counts["Accessibility"]%></td>
+            <td><%=@flag_counts["Accessibility"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields with Traceability Flag:</td>  
+            <td><%=@original_flag_counts["Traceability"]%></td>
+            <td><%=@flag_counts["Traceability"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of fields with Usability Flag:</td>  
+            <td><%=@original_flag_counts["Usability"]%></td>
+            <td><%=@flag_counts["Usability"]%></td>
+          </tr>
+
+        </table>
+
+        <br><br>
+
+      <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Top 5 Problem Elements</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Element Name:</td>
+          <td>Non Green Count:</td>
+        </tr>
+
+        <% @failing_elements_five.each do |column_name, non_green_count|%>
+          <tr>
+            <td><%=column_name%></td>
+            <td><%=non_green_count%></td>
+          </tr>
+        <%end%>
+
+        </table>
+
+        <br><br>
+
+        <table style="width:100%; padding:5px;">
+          <tr>
+            <td>Number of Collections that been updated in CMR after a finished review:</td>  
+            <td><%=@updated_count%></td>
+          </tr>
+
+          <tr>
+            <td>Number of Updated Collection Reviews marked as "Done":</td>  
+            <td><%=@updated_done_count%></td>
+          </tr>
+
+          <tr>
+            <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
+            <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
+          </tr>
+
+          <tr>
+            <td>Quality of Updated Collection Reviews marked as "Done" (high/low/avg)</td>  
+            <td>Np</td>
+          </tr>
+
+        </table>
+  </div>
+
+  <div>
+
+  </div>
+</div>
