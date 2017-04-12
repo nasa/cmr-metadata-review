@@ -9,7 +9,29 @@ class ReportsController < ApplicationController
 
     @records = Record.where(recordable_type: "Collection")
 
-    @record_sets = Collection.ordered_revisions.values
+    record_set = Collection.all_newest_revisions
+
+    metric_set = MetricSet.new(record_set)
+    original_metric_set = metric_set.original_metric_set
+
+    @review_counts = metric_set.completed_review_counts(Review.all.where(review_state: 1))
+    @total_completed = metric_set.total_completed
+
+    #stat generation for original and current sets of records
+    @original_field_colors = original_metric_set.color_counts
+    @original_total_checked = @original_field_colors.values.sum
+    @original_flag_counts = original_metric_set.flag_counts
+
+    @field_colors = metric_set.color_counts
+    @total_checked = @field_colors.values.sum
+    @flag_counts = metric_set.flag_counts
+
+    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
+
+    @updated_count = metric_set.updated_count
+    @updated_done_count = metric_set.updated_done_count
+
+    @quality_done_records = metric_set.quality_done_records
   end
 
   def provider
@@ -24,15 +46,23 @@ class ReportsController < ApplicationController
       @percent_ingested = (@total_ingested.to_f * 100 / @total_collection_count).round(2)
 
       record_set = Collection.all_newest_revisions(params["daac"])
+
       metric_set = MetricSet.new(record_set)
+      original_metric_set = metric_set.original_metric_set
 
       @review_counts = metric_set.completed_review_counts(Review.all.where(review_state: 1))
       @total_completed = metric_set.total_completed
 
-      @field_colors = metric_set.color_counts
-      @total_checked = @field_colors[0] + @field_colors[1] + @field_colors[2] + @field_colors[3]
+      #stat generation for original and current sets of records
+      @original_field_colors = original_metric_set.color_counts
+      @original_total_checked = @original_field_colors.values.sum
+      @original_flag_counts = original_metric_set.flag_counts
 
-      @red_flags = metric_set.red_flags
+      @field_colors = metric_set.color_counts
+      @total_checked = @field_colors.values.sum
+      @flag_counts = metric_set.flag_counts
+
+      @failing_elements_five = original_metric_set.element_non_green_count.take(5)
 
       @updated_count = metric_set.updated_count
       @updated_done_count = metric_set.updated_done_count
@@ -69,28 +99,35 @@ class ReportsController < ApplicationController
 
   def selection
     records_list = params["records"].split(",")
-    report_list = []
+    @report_list = []
     records_list.each_slice(2) {|(concept_id, revision_id)|
                                   new_record = Collection.find_record(concept_id, revision_id) 
                                   if new_record
-                                    report_list.push(new_record)
+                                    @report_list.push(new_record)
                                   end
                                  }
 
-    metric_set = MetricSet.new(report_list)
+    metric_set = MetricSet.new(@report_list)
+    original_metric_set = metric_set.original_metric_set
 
     @review_counts = metric_set.completed_review_counts(Review.all.where(review_state: 1))
     @total_completed = metric_set.total_completed
 
-    @field_colors = metric_set.color_counts
-    @total_checked = @field_colors[0] + @field_colors[1] + @field_colors[2] + @field_colors[3]
+    #stat generation for original and current sets of records
+    @original_field_colors = original_metric_set.color_counts
+    @original_total_checked = @original_field_colors.values.sum
+    @original_flag_counts = original_metric_set.flag_counts
 
-    @red_flags = metric_set.red_flags
+    @field_colors = metric_set.color_counts
+    @total_checked = @field_colors.values.sum
+    @flag_counts = metric_set.flag_counts
+
+    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
 
     @updated_count = metric_set.updated_count
     @updated_done_count = metric_set.updated_done_count
 
-    @quality_done_records = metric_set.quality_done_records                             
+    @quality_done_records = metric_set.quality_done_records                          
   end
 
 end
