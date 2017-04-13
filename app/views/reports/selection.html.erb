@@ -4,6 +4,12 @@
   }
 </style>
 
+<%= render(partial: 'shared/navigation', locals: {title: "SELECTION REPORT"}) %>
+<script type="text/javascript">
+  document.getElementsByClassName("header_image")[0].style.display = "none";
+</script>
+
+
 <div style="display:flex;">
   <div>
 
@@ -163,9 +169,11 @@
           <td>
             <%=record.concept_id%>
           </td>
-          <td>
-            <%=record.short_name%>
-          </td>
+          <% if record.short_name != "" %>
+            <td>
+              <%=record.short_name%>
+            </td>
+          <% end %>
         </tr>
       <% end %> 
     </table>
