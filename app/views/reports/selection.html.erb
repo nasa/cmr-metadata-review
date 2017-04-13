@@ -133,14 +133,21 @@
             <td><%=@updated_done_count%></td>
           </tr>
 
+        </table>
+
+        <br><br>
+
+        <table style="width:100%; padding:5px;">
           <tr>
-            <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
-            <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
+            <td>Stat:</td>
+            <td>Original Set:</td>
+            <td>Current Set:</td>
           </tr>
 
           <tr>
-            <td>Quality of Updated Collection Reviews marked as "Done" (high/low/avg)</td>  
-            <td>Np</td>
+            <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
+            <td><%=(@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)%></td>
+            <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
           </tr>
 
         </table>
