@@ -21,6 +21,7 @@ class ReportsController < ApplicationController
     @original_field_colors = original_metric_set.color_counts
     @original_total_checked = @original_field_colors.values.sum
     @original_flag_counts = original_metric_set.flag_counts
+    @original_quality_done_records = original_metric_set.quality_done_records
 
     @field_colors = metric_set.color_counts
     @total_checked = @field_colors.values.sum
@@ -57,6 +58,7 @@ class ReportsController < ApplicationController
       @original_field_colors = original_metric_set.color_counts
       @original_total_checked = @original_field_colors.values.sum
       @original_flag_counts = original_metric_set.flag_counts
+      @original_quality_done_records = original_metric_set.quality_done_records
 
       @field_colors = metric_set.color_counts
       @total_checked = @field_colors.values.sum
@@ -117,6 +119,7 @@ class ReportsController < ApplicationController
     @original_field_colors = original_metric_set.color_counts
     @original_total_checked = @original_field_colors.values.sum
     @original_flag_counts = original_metric_set.flag_counts
+    @original_quality_done_records = original_metric_set.quality_done_records
 
     @field_colors = metric_set.color_counts
     @total_checked = @field_colors.values.sum
