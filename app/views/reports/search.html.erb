@@ -63,7 +63,7 @@
                 var concept_id = tr_element.getAttribute("concept_id");
                 var revision_id = tr_element.getAttribute("revision_id");
                 if (list_contains_record(records, concept_id, revision_id)) {
-                  records = records.filter(function(record_arr) { return ((!record_arr[0] == concept_id) || (!record_arr[1] == revision_id))});
+                  records = records.filter(function(record_arr) { return ((!(record_arr[0] == concept_id)) || (!(record_arr[1] == revision_id)))});
                   tr_element.style.backgroundColor = "white";
                 } else {
                   records.push([concept_id, revision_id]);
