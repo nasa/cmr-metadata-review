@@ -5,6 +5,18 @@ class ReportsController < ApplicationController
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
+    @review_day_counts = []
+    [30,60,180].each do |day_count|
+      total_count = (Review.all.select { |review| 
+                                            if review.review_completion_date
+                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days < day_count.days
+                                            else
+                                              false 
+                                            end
+                                        }).count
+      @review_day_counts.push(total_count)
+    end
+
     @metric_set = MetricSet.new(Record.all)
 
     @records = Record.where(recordable_type: "Collection")
