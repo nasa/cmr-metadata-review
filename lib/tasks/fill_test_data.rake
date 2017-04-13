@@ -24,15 +24,17 @@ task :fill_test_data => :environment do
   added_records = []
 
   added_collections.each do |collection|
+    review_close_date = DateTime.now - (Random.rand(180)).to_i.days
+
     rec = Record.new(recordable: collection, revision_id: "-1")
     if Random.rand(11) > 1
       rec.closed = true
       rec.closed_date = DateTime.now
       rec.save
-      review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+      review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
       review.save
 
-      review2 = Review.new(record: rec, user_id: 2, review_completion_date: DateTime.now, review_state: 1)
+      review2 = Review.new(record: rec, user_id: 2, review_completion_date: review_close_date, review_state: 1)
       review2.save
 
     else
@@ -41,13 +43,13 @@ task :fill_test_data => :environment do
 
       rando = Random.rand(11)
       if rando > 9
-          review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+          review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
           review.save
 
-          review2 = Review.new(record: rec, user_id: 2, review_completion_date: DateTime.now, review_state: 1)
+          review2 = Review.new(record: rec, user_id: 2, review_completion_date: review_close_date, review_state: 1)
           review2.save
       elsif rando > 4
-          review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+          review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
           review.save
       end
     end
@@ -133,6 +135,8 @@ task :fill_test_data => :environment do
 
   added_records.each do |record|
     if record.closed
+      review_close_date = DateTime.now - (Random.rand(180)).to_i.days
+      
       if Random.rand(11) > 3
         rec = record.dup
         rec.revision_id = "2"
@@ -140,10 +144,10 @@ task :fill_test_data => :environment do
           rec.closed = true
           rec.closed_date = DateTime.now
           rec.save
-          review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+          review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
           review.save
 
-          review2 = Review.new(record: rec, user_id: 2, review_completion_date: DateTime.now, review_state: 1)
+          review2 = Review.new(record: rec, user_id: 2, review_completion_date: review_close_date, review_state: 1)
           review2.save
 
         else
@@ -152,13 +156,13 @@ task :fill_test_data => :environment do
 
           rando = Random.rand(11)
           if rando > 9
-              review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+              review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
               review.save
 
-              review2 = Review.new(record: rec, user_id: 2, review_completion_date: DateTime.now, review_state: 1)
+              review2 = Review.new(record: rec, user_id: 2, review_completion_date: review_close_date, review_state: 1)
               review2.save
           elsif rando > 4
-              review = Review.new(record: rec, user_id: 1, review_completion_date: DateTime.now, review_state: 1)
+              review = Review.new(record: rec, user_id: 1, review_completion_date: review_close_date, review_state: 1)
               review.save
           end
         end
