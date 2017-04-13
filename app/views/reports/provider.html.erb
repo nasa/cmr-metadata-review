@@ -1,3 +1,9 @@
+
+<%= render(partial: 'shared/navigation', locals: {title: "REPORTS BY DAAC"}) %>
+<script type="text/javascript">
+  document.getElementsByClassName("header_image")[0].style.display = "none";
+</script>
+
 <p>Provider: <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @daac)) %></p>
 
 <script type="text/javascript">
