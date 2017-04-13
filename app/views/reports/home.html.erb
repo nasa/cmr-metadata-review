@@ -1,12 +1,30 @@
-<p>Reports Home Page</p>
-
-<p>Total Collections in CMR: <%=@cmr_total_collection_count%></p>
-
-<p>Total Ingested Collections: <%=@collection_ingest_count%></p>
-<br>
-<br>
 <div style="display:flex;">
   <div>
+
+      <table style="width:100%; padding:5px;">
+          <tr>
+            <td>Reports Home Page</td> 
+          </tr>
+      </table>
+
+
+<br>
+
+      <table style="width:100%; padding:5px;">
+          <tr>
+            <td>Total Collections in CMR:</td> 
+            <td><%=@cmr_total_collection_count%></td>  
+          </tr>
+          <tr>
+            <td>Total Ingested Collections:</td>
+            <td><%=@collection_ingest_count%></td>
+          <tr>
+            
+
+          </tr>
+      </table>
+
+      <br>
 
       <table style="width:100%; padding:5px;">
           <tr>
@@ -15,8 +33,8 @@
             <td>1 Review:</td>  
             <td>2+ Reviews:</td>  
             <td>Record Complete:</td>  
-            
           </tr>
+          <tr>
             <td>Record Counts</td>
             <td><%= @review_counts.count { |x| x == 0 }%></td>
             <td><%= @review_counts.count { |x| x == 1 }%></td>
@@ -29,7 +47,7 @@
       </table>
 
 
-      <br><br>
+      <br>
 
 
       <table style="width:100%; padding:5px;">
@@ -50,7 +68,7 @@
           </tr>
       </table>
 
-      <br><br>
+      <br>
 
         <table style="width:100%; padding:5px;">
         <tr>
@@ -92,7 +110,7 @@
         </table>
 
 
-        <br><br>
+        <br>
 
       <table style="width:100%; padding:5px;">
         <tr>
@@ -121,7 +139,7 @@
 
         </table>
 
-        <br><br>
+        <br>
 
       <table style="width:100%; padding:5px;">
         <tr>
@@ -142,7 +160,7 @@
 
         </table>
 
-        <br><br>
+        <br>
 
         <table style="width:100%; padding:5px;">
           <tr>
