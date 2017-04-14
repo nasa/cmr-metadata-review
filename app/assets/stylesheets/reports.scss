@@ -1,0 +1,15 @@
+@import "variables";
+
+.report_search_row {
+  cursor: pointer;
+}
+
+.empty_results_phrase {
+  margin-top: 11px;
+  width: 410px;
+  background-color: $blue-light;
+  display: inline-block;
+  padding-left: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

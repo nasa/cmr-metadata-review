@@ -1,3 +1,13 @@
+# Metric Set Class
+#
+# The metric set class serves as an object that can generate predefined metric functions on an arbitrary set of records
+# A MetricSet object is instantiated by providing an array of records as a parameter.
+# Then all metrics are generated based on the given record set.
+#
+# A MetricSet containing the original revision of all records can also be instantiated from an existing MetricSet
+# So a MetricSet with all revision "2" records will output a new MetricSet with all revision "1" records from the "original_record_set_function"
+
+
 class MetricSet
   attr_accessor :record_set, :record_data_set
   @record_set = []
@@ -122,9 +132,13 @@ class MetricSet
 
   def quality_done_records
     collection_records = @record_set.select { |record| record.closed }
-
     record_data_sets = collection_records.map { |record|  record.record_datas }
     scores = record_data_sets.map { |data_list| (1 - (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count) * 100 }
+    #adding at least one entry so that the average can shown if no records are closed.
+    if scores.empty?
+      scores.push(0)
+    end
+
     scores
   end
 
