@@ -2,3 +2,13 @@ first:
   id: 1
   concept_id: "C1000000020-LANCEAMSR2"
   short_name: "A2_DySno_NRT"
+
+metric1:
+  id: 2
+  concept_id: "metric1-PODAAC"
+  short_name: "metric1"
+
+metric2:
+  id: 3
+  concept_id: "metric3-PODAAC"
+  short_name: "metric3"

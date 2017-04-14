@@ -13,3 +13,16 @@ granule:
   revision_id: "1"
   closed: false
   
+metric1:
+  id: 10
+  recordable_id: 2
+  recordable_type: "Collection"
+  revision_id: "8"
+  closed: true
+
+metric2:
+  id: 11
+  recordable_id: 3
+  recordable_type: "Collection"
+  revision_id: "8"
+  closed: false

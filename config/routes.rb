@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
   get '/reports/home', to: 'reports#home'
   get '/reports/provider', to: 'reports#provider'
+  get '/reports/search', to: 'reports#search'
+  get '/reports/selection', to: 'reports#selection'
 
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'

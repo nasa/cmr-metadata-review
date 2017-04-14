@@ -1,38 +1,10 @@
-<p>Provider: <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @daac)) %></p>
-
-<script type="text/javascript">
-  var selecter = document.getElementById("provider");
-  selecter.onchange = function() {
-    if (!(selecter.value == '<%=@provider_select_list[0][0]%>')) {
-      document.location = '/reports/provider?daac=' + selecter.value;
-    }
-  }
-</script>
-
 <style type="text/css">
   table td {
     padding: 5px;
   }
 </style>
 
-<%if !params["daac"].nil?%>
   <table style="width:80%; padding:5px;">
-
-    <tr>
-      <td>Total Collections in DAAC:</td>  
-      <td><%=@total_collection_count%></td>
-    </tr>  
-
-    <tr>
-      <td>Number of Collections ingested into review tool:</td>  
-      <td><%=@total_ingested%></td>
-    </tr>
-
-    <tr>
-      <td>% of Collections that have been ingested into review tool:</td>  
-      <td><%=@percent_ingested%>%</td>
-    </tr>
-
     <tr>
       <td>Number of Collection reviews with 0 completed reviews:</td>  
       <td><%= @review_counts.count { |x| x == 0 }%></td>
@@ -118,4 +90,3 @@
     </tr>
 
   </table>
-<% end %>
