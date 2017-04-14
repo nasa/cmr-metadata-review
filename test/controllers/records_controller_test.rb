@@ -14,9 +14,9 @@ class RecordsControllerTest < ActionController::TestCase
 
         #the results are rendered as strings because the testing suite does not seem to recognize the postgres array data type
         #In the actual app get_flags returns a ruby array
-        assert_equal(record.get_flags["ShortName"], "[\"Usability\", \"Traceability\"]")
-        assert_equal(record.get_flags["VersionId"], "[\"Accessibility\"]")
-        assert_equal(record.get_flags["LongName"], "[\"Usability\"]")
+        assert_equal(record.get_flags["ShortName"], ["Usability", "Traceability"])
+        assert_equal(record.get_flags["VersionId"], ["Accessibility"])
+        assert_equal(record.get_flags["LongName"], ["Usability"])
 
         assert_equal(record.get_recommendations["VersionId"], "not ok")
         assert_equal(record.get_recommendations["ShortName"], "")
@@ -51,9 +51,9 @@ class RecordsControllerTest < ActionController::TestCase
 
         #the results are rendered as strings because the testing suite does not seem to recognize the postgres array data type
         #In the actual app get_flags returns a ruby array
-        assert_equal(record.get_flags["ShortName"], "[]")
-        assert_equal(record.get_flags["LongName"], "[]")
-        assert_equal(record.get_flags["VersionId"], "[]")
+        assert_equal(record.get_flags["ShortName"], [])
+        assert_equal(record.get_flags["LongName"], [])
+        assert_equal(record.get_flags["VersionId"], [])
 
         assert_equal(record.get_recommendations["VersionId"], "")
         assert_equal(record.get_recommendations["ShortName"], "")
