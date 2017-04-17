@@ -16,6 +16,7 @@
 </style>
 
 <%if !params["daac"].nil?%>
+  <%= link_to 'Download CSV version', reports_provider_path(daac: @daac, format: :csv) %>
   <table style="width:80%; padding:5px;">
 
     <tr>

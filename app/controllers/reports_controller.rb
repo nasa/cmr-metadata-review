@@ -39,6 +39,11 @@ class ReportsController < ApplicationController
 
       @quality_done_records = metric_set.quality_done_records
     end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
+    end
   end
 
   def search
