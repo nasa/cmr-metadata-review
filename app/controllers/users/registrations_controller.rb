@@ -54,9 +54,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super {
+        if resource.errors.full_messages[0] && resource.errors.full_messages[0] != ""
+          flash[:alert] = resource.errors.full_messages[0]
+        end
+    }
+  end
 
   # DELETE /resource
   # def destroy
@@ -94,4 +98,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  def after_update_path_for(resource)
+    flash[:notice] = "Your Account has Been Successfully Updated"
+    home_path
+  end
 end
