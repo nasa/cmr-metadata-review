@@ -19,7 +19,14 @@ class MetricSet
     @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
   end
 
-  
+  # ====Params   
+  # None
+  # ====Returns
+  # new MetricSet object
+  # ==== Method
+  # Takes the records in the current MetricSet, then finds the original revision for each record
+  # Returns a new MetricSet made up of these original records so that metrics can be calculated for the original 
+  # revisions of any arbitrary record set.
 
   def original_metric_set
     ordered_revisions = self.ordered_revisions
