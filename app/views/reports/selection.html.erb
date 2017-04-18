@@ -4,89 +4,178 @@
   }
 </style>
 
-  <table style="width:80%; padding:5px;">
-    <tr>
-      <td>Number of Collection reviews with 0 completed reviews:</td>  
-      <td><%= @review_counts.count { |x| x == 0 }%></td>
-    </tr>
-
-    <tr>
-      <td>Number of Collections reviewed once:</td>  
-      <td><%= @review_counts.count { |x| x == 1 }%></td>
-    </tr>
-
-    <tr>
-      <td>Number of Collections reviewed 2 or more times, but not "Done":</td>  
-      <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
-    </tr>
-
-    <tr>
-      <td>Number of Collection reviews marked as "Done":</td>  
-      <td><%= @total_completed %></td>
-    </tr>
+<%= render(partial: 'shared/navigation', locals: {title: "SELECTION REPORT"}) %>
+<script type="text/javascript">
+  document.getElementsByClassName("header_image")[0].style.display = "none";
+</script>
 
 
-    <tr>
-      <td>Number of fields checked (total):</td>  
-      <td><%=@total_checked%></td>
-    </tr>
+<div style="display:flex;">
+  <div>
 
-    <tr>
-      <td>Number (and %) of fields that passed:</td>  
-      <td><%=@field_colors[1]%></td>
-      <td><%=(@field_colors[1].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
+      <table style="width:100%; padding:5px;">
+          <tr>
+            <td>State of Reviews:</td> 
+            <td>0 Reviews:</td>  
+            <td>1 Review:</td>  
+            <td>2+ Reviews:</td>  
+            <td>Record Complete:</td>  
+            
+          </tr>
+            <td>Record Counts</td>
+            <td><%= @review_counts.count { |x| x == 0 }%></td>
+            <td><%= @review_counts.count { |x| x == 1 }%></td>
+            <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
+            <td><%= @total_completed %></td>
+          <tr>
+            
 
-    <tr>
-      <td>Number (and %) of fields that failed (data accessibility):</td>  
-      <td><%=@red_flags["Accessibility"]%></td>
-      <td><%=(@red_flags["Accessibility"].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
-
-
-    <tr>
-      <td>Number (and %) of fields that failed (data usability):</td>  
-      <td><%=@red_flags["Traceability"]%></td>
-      <td><%=(@red_flags["Traceability"].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
-
-    <tr>
-      <td>Number (and %) of fields that failed (data traceability):</td>  
-      <td><%=@red_flags["Usability"]%></td>
-      <td><%=(@red_flags["Usability"].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
-
-    <tr>
-      <td>Number (and %) of fields with warnings issued:</td>  
-      <td><%=@field_colors[2]%></td>
-      <td><%=(@field_colors[2].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
-
-    <tr>
-      <td>Number (and %) of fields with informational notes added:</td>  
-      <td><%=@field_colors[0]%></td>
-      <td><%=(@field_colors[0].to_f / @total_checked * 100).round(2)%>%</td>
-    </tr>
+          </tr>
+      </table>
 
 
-    <tr>
-      <td>Number of Collections that been updated in CMR after a finished review:</td>  
-      <td><%=@updated_count%></td>
-    </tr>
+      <br><br>
 
-    <tr>
-      <td>Number of Updated Collection Reviews marked as "Done":</td>  
-      <td><%=@updated_done_count%></td>
-    </tr>
+        <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Stat:</td>
+          <td>Original Set:</td>
+          <td>Current Set:</td>
+        </tr>
 
-    <tr>
-      <td>Quality of Collection Reviews marked as "Done":</td>  
-      <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
-    </tr>
+          <tr>
+            <td>Number of elements checked (total):</td>  
+            <td><%=@original_total_checked%></td>
+            <td><%=@total_checked%></td>
+          </tr>
 
-    <tr>
-      <td>Quality of Updated Collection Reviews marked as "Done"</td>  
-      <td>Np</td>
-    </tr>
+          <tr>
+            <td>Number of elements that passed:</td>  
+            <td><%=@original_field_colors["green"]%></td>
+            <td><%=@field_colors["green"]%></td>
+          </tr>
 
-  </table>
+          <tr>
+            <td>Number of elements that failed (data accessibility):</td>  
+            <td><%=@original_field_colors["red"]%></td>
+            <td><%=@field_colors["red"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of elements with warnings issued:</td>  
+            <td><%=@original_field_colors["yellow"]%></td>
+            <td><%=@field_colors["yellow"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of elements with informational notes added:</td>  
+            <td><%=@original_field_colors["blue"]%></td>
+            <td><%=@field_colors["blue"]%></td>
+          </tr>
+
+        </table>
+
+
+        <br><br>
+
+      <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Stat:</td>
+          <td>Original Set:</td>
+          <td>Current Set:</td>
+        </tr>
+
+          <tr>
+            <td>Number of elements with Accessibility Flag:</td>  
+            <td><%=@original_flag_counts["Accessibility"]%></td>
+            <td><%=@flag_counts["Accessibility"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of elements with Traceability Flag:</td>  
+            <td><%=@original_flag_counts["Traceability"]%></td>
+            <td><%=@flag_counts["Traceability"]%></td>
+          </tr>
+
+          <tr>
+            <td>Number of elements with Usability Flag:</td>  
+            <td><%=@original_flag_counts["Usability"]%></td>
+            <td><%=@flag_counts["Usability"]%></td>
+          </tr>
+
+        </table>
+
+        <br><br>
+
+      <table style="width:100%; padding:5px;">
+        <tr>
+          <td>Top 5 Problem Elements</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Element Name:</td>
+          <td>Non Green Count:</td>
+        </tr>
+
+        <% @failing_elements_five.each do |column_name, non_green_count|%>
+          <tr>
+            <td><%=column_name%></td>
+            <td><%=non_green_count%></td>
+          </tr>
+        <%end%>
+
+        </table>
+
+        <br><br>
+
+        <table style="width:100%; padding:5px;">
+          <tr>
+            <td>Number of Collections that been updated in CMR after a finished review:</td>  
+            <td><%=@updated_count%></td>
+          </tr>
+
+          <tr>
+            <td>Number of Updated Collection Reviews marked as "Done":</td>  
+            <td><%=@updated_done_count%></td>
+          </tr>
+
+        </table>
+
+        <br><br>
+
+        <table style="width:100%; padding:5px;">
+          <tr>
+            <td>Stat:</td>
+            <td>Original Set:</td>
+            <td>Current Set:</td>
+          </tr>
+
+          <tr>
+            <td>Quality of Collection Reviews marked as "Done":</td>  
+            <td><%=(@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)%></td>
+            <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
+          </tr>
+
+        </table>
+  </div>
+
+  <div>
+    <table style="margin-left: 30px;">
+      <tr>
+        <td>Selected Records</td>
+      </tr>
+      <% @report_list.each do |record| %>
+        <tr>
+          <td>
+            <%=record.concept_id%>
+          </td>
+          <% if record.short_name != "" %>
+            <td>
+              <%=record.short_name%>
+            </td>
+          <% end %>
+        </tr>
+      <% end %> 
+    </table>
+  </div>
+</div>
