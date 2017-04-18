@@ -23,6 +23,8 @@ class ReportsController < ApplicationController
 
     record_set = Collection.all_newest_revisions
 
+    #when views are redone, instantiate these as instance vars, then use directly in the 
+    #view to get some DRY going accross all these views.
     metric_set = MetricSet.new(record_set)
     original_metric_set = metric_set.original_metric_set
 
