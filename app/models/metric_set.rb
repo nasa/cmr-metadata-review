@@ -67,7 +67,7 @@ class MetricSet
   # ====Params   
   # None
   # ====Returns
-  # List of 4 Integers representing flags
+  # Hash {color_string => count}
   # ==== Method
   # Then aggregates the counts of each flag type in record_data_set and returns a list of those values
 
