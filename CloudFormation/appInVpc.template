@@ -293,9 +293,7 @@
       "UpdatePolicy": {
         "AutoScalingRollingUpdate": {
           "MinInstancesInService": "1",
-          "MaxBatchSize": "1",
-          "PauseTime" : "PT15M",
-          "WaitOnResourceSignals": "true"
+          "MaxBatchSize": "1"
         }
       }
     },
@@ -358,7 +356,7 @@
         }
       },
       "Properties" : {
-        "ImageId"        : "ami-5fbba348",
+        "ImageId"        : "ami-abf063bd",
         "SecurityGroups" : [ { "Ref" : "WebServerSecurityGroup" } ],
         "InstanceType"   : { "Ref" : "WebServerInstanceType" },
         "IamInstanceProfile" : { "Ref" : "InstanceProfileARN" },
@@ -381,6 +379,7 @@
           "sh /home/ec2-user/cmr-metadata-review/CloudFormation/test.sh\n",
           "apachectl stop\n",
           "service nginx restart\n",
+          "sudo service awslogs start\n",
           "aws s3 cp s3://$S3BUCKET/env.txt /home/ec2-user/cmr-metadata-review/.env", "\n",
           "chmod a+rw /home/ec2-user/cmr-metadata-review -R\n",
           "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle install )\" - ec2-user", "\n",
