@@ -78,10 +78,10 @@
                 var revision_id = tr_element.getAttribute("revision_id");
                 if (list_contains_record(records, concept_id, revision_id)) {
                   records = records.filter(function(record_arr) { return ((!(record_arr[0] == concept_id)) || (!(record_arr[1] == revision_id)))});
-                  tr_element.style.backgroundColor = "";
+                    tr_element.style.backgroundColor = "";
                 } else {
                   records.push([concept_id, revision_id]);
-                  tr_element.style.backgroundColor = "green";
+                  tr_element.style.backgroundColor = "#CAE4F5";
                 }
               }
 
