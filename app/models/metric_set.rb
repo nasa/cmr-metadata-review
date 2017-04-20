@@ -20,6 +20,28 @@ class MetricSet
   end
 
   # ====Params   
+  # None
+  # ====Returns
+  # new MetricSet object
+  # ==== Method
+  # Takes the records in the current MetricSet, then finds the original revision for each record
+  # Returns a new MetricSet made up of these original records so that metrics can be calculated for the original 
+  # revisions of any arbitrary record set.
+
+  def original_metric_set
+    ordered_revisions = self.ordered_revisions
+    original_record_set = []
+    ordered_revisions.each do |key, value|
+      #for safety resorting the records by revision_id highest to lowest
+      #(lowest revision_id's being the oldest)
+      sorted_revisions = value.sort {|x, y| y.revision_id.to_i <=> x.revision_id.to_i }
+      original_record_set.push(sorted_revisions.last)
+    end
+
+    return MetricSet.new(original_record_set)
+  end
+
+  # ====Params   
   # Array of review objects 
   # ====Returns
   # Array of integers
@@ -45,7 +67,7 @@ class MetricSet
   # ====Params   
   # None
   # ====Returns
-  # List of 4 Integers representing flags
+  # Hash {color_string => count}
   # ==== Method
   # Then aggregates the counts of each flag type in record_data_set and returns a list of those values
 
@@ -54,7 +76,18 @@ class MetricSet
     green_count = (@record_data_set.select { |data| data.color == "green"}).count
     yellow_count = (@record_data_set.select { |data| data.color == "yellow"}).count
     red_count = (@record_data_set.select { |data| data.color == "red"}).count
-    [blue_count, green_count, yellow_count, red_count]
+    {"blue" => blue_count, "green" => green_count, "yellow" => yellow_count, "red" => red_count}
+  end
+
+  def flag_counts
+    flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
+    @record_data_set.each do |data|
+      data.flag.each do |flag_name|
+        flag_hash[flag_name] = flag_hash[flag_name] + 1
+      end
+    end
+
+    flag_hash
   end
 
   # ====Params   
@@ -76,7 +109,6 @@ class MetricSet
 
     flag_hash
   end
-
 
   # ====Params   
   # None    
@@ -179,6 +211,43 @@ class MetricSet
     }
 
     updated.count
+  end
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Array of [column_name, non_green_count] sets.  Double depth array
+  # ==== Method
+  # This method iterates through all the record data objects of the metric set's records
+  # It then created a new hash where each column name is a key and a hash of non green flag counts is the value.
+  # With this hash you can call any column name and it returns a hash of the counts of each non green flag
+  #
+  # The method then iterates through the hash creating set objects of [column_name, all non green counts summed]
+  # The purpose of this list is to tie the total non green count for all record data to each column name.
+  #
+  # Finally the method sorts all of the [column_name, counts] sets to find the column_names with the most non green flags.
+  # This sorted list is returned so the user can grab the top n many column_names sorted by non green flag count
+
+  def element_non_green_count
+    element_hash = {}
+    #creating a hash with keys of each column_name
+    @record_data_set.each do |record_data|
+      if !element_hash.key? record_data.column_name
+        element_hash[record_data.column_name] = {"red" => 0, "blue" => 0, "yellow" => 0}
+      end
+      if element_hash[record_data.column_name].key? record_data.color
+        element_hash[record_data.column_name][record_data.color] = element_hash[record_data.column_name][record_data.color] + 1
+      end
+    end
+
+    #tuning hash into list of [column_name, non_green_count] sets
+    column_counts = []
+    element_hash.map do |column_name, counts_hash|
+      column_counts.push([column_name, counts_hash.values.sum])
+    end
+
+    #sorting in reverse order so highest counts are first
+    column_counts.sort! { |x,y| y[1] <=> x[1] } 
   end
 
 
