@@ -5,7 +5,7 @@ class MetricSetTest < ActiveSupport::TestCase
   describe "color counts" do
     it "checks for color counts of record sets" do
       new_metric_set = MetricSet.new([(Record.find_by id: 10), (Record.find_by id: 11)])
-      assert_equal([0, 0, 2, 2], new_metric_set.color_counts)
+      assert_equal({"blue"=>0, "green"=>0, "yellow"=>2, "red"=>2}, new_metric_set.color_counts)
     end
   end
 
