@@ -160,18 +160,36 @@ class Cmr
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
 
-  def self.get_collection(concept_id, raw_collection = nil)
-    if raw_collection.nil?
-      raw_collection = Cmr.get_raw_collection(concept_id)
-    end
+  def self.get_collection(concept_id)
+    raw_collection = Cmr.get_raw_collection(concept_id)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
     required_fields_hash
   end
 
-  def self.get_raw_collection(concept_id)
-    url = Cmr.api_url("collections", "echo10", {"concept_id" => concept_id})
+  def self.get_dif10_collection(concept_id)
+    raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
+    results_hash = flatten_collection(raw_collection)
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    # required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    nil_replaced_hash
+  end
+
+  def self.get_raw_collection_format(concept_id)
+    url = Cmr.api_url("collections", "native", {"concept_id" => concept_id})
+    collection_xml = Cmr.cmr_request(url).parsed_response
+    collection_results = Hash.from_xml(collection_xml)["results"]
+    raw_format = collection_results["result"]["format"]
+    if raw_format.include? "dif10"
+      return "dif10"
+    else
+      return "echo10"
+    end
+  end
+
+  def self.get_raw_collection(concept_id, type = "echo10")
+    url = Cmr.api_url("collections", type, {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
@@ -184,7 +202,11 @@ class Cmr
       raise CmrError
     end
 
-    collection_results["result"]["Collection"]
+    if type == "echo10"
+      collection_results["result"]["Collection"]
+    elsif type == "dif10"
+      collection_results["result"]["DIF"]
+    end
   end
 
   def self.get_raw_granule(concept_id)
