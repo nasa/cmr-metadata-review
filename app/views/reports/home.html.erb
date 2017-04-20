@@ -4,6 +4,8 @@
   document.getElementsByClassName("header_image")[0].style.display = "none";
 </script>
 
+<%= link_to 'Download CSV version', reports_home_path(format: :csv) %>
+
 <div style="display:flex;">
   <div>
 
@@ -90,7 +92,7 @@
           </tr>
 
           <tr>
-            <td>Number of elements that failed (data accessibility):</td>  
+            <td>Number of elements that failed:</td>  
             <td><%=@original_field_colors["red"]%></td>
             <td><%=@field_colors["red"]%></td>
           </tr>
