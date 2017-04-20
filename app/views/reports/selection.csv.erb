@@ -1,8 +1,13 @@
-<%= CSV.generate_line(["CMR DAAC Report"]) %>  
-<%= CSV.generate_line(["DAAC:", @daac]) %>  
+<%= CSV.generate_line(["CMR Selection Report"]) %>  
 
-<%= CSV.generate_line(["Total Collections in DAAC:", @total_collection_count]) %>  
-<%= CSV.generate_line(["Total Ingested Collections:", @total_ingested]) %>  
+<%= CSV.generate_line(["Selected Records"]) %>
+<% @report_list.each do |record| %>
+  <% if record.short_name != "" %>
+    <%= CSV.generate_line([record.concept_id, record.short_name]) %>
+  <% else %>
+    <%= CSV.generate_line([record.concept_id]) %>
+  <% end %>
+<% end %> 
 
 <%= CSV.generate_line(["State of Reviews:", "0 Reviews:", "1 Review:", "2+ Reviews:", "Record Complete:"]) %>
 <%= CSV.generate_line(["Record Counts", (@review_counts.count { |x| x == 0 }), (@review_counts.count { |x| x == 1 }), ((@review_counts.count { |x| x >= 2 }) - @total_completed), @total_completed]) %>
