@@ -440,11 +440,6 @@ class Record < ActiveRecord::Base
     binary_script_values
   end
 
-  #should return a list where each entry is a (title,[title_list])
-  def sections
-    formatted.sections
-  end
-
   def get_section(section_name)
     section_list = []
     all_titles = self.record_datas.map { |data| data.column_name }
