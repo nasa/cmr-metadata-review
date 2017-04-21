@@ -1,4 +1,36 @@
-class Echo10Record < Record  
+module RecordFormats::Echo10Record
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
+  def long_name 
+    self.get_column("LongName")
+  end 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
+  def short_name
+    self.get_column("ShortName")
+  end
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
+  def version_id
+    self.get_column("VersionId")
+  end
+
+
+
   #should return a list where each entry is a (title,[title_list])
   def sections
     section_list = []

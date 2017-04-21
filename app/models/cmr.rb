@@ -53,6 +53,36 @@ class Cmr
                                 ],
                                 "Spatial/GranuleSpatialRepresentation"]
 
+    REQUIRED_DIF10_FIELDS =    [
+                                  "Entry_ID/Short_Name",
+                                  "Entry_ID/Version",
+                                  "Entry_Title",
+                                  "Science_Keywords/Category",
+                                  "Science_Keywords/Topic",
+                                  "Science_Keywords/Term",
+                                  "Platform/Short_Name",
+                                  "Platform/Instrument/Short_Name",
+                                  "Temporal_Coverage/Range_DateTime/Beginning_Date_Time",
+                                  "Data_Set_Progress",
+                                  "Spatial_Coverage/Granule_Spatial_Representation",
+                                  "Spatial_Coverage/Geometry/Coordinate_System", 
+                                  "Spatial_Coverage/Geometry/Bounding_Rectangle/Southernmost_Latitude",
+                                  "Spatial_Coverage/Geometry/Bounding_Rectangle/Northernmost_Latitude",
+                                  "Spatial_Coverage/Geometry/Bounding_Rectangle/Westernmost_Longitude",
+                                  "Spatial_Coverage/Geometry/Bounding_Rectangle/Easternmost_Longitude",
+                                  "Project/Short_Name",
+                                  "Organization/Organization_Type",
+                                  "Organization/Organization_Name/Short_Name",
+                                  "Summary/Abstract",
+                                  "Related_URL/URL_Content_Type/Type",
+                                  "Related_URL/URL",
+                                  "Product_Level_ID",
+                                  "Metadata_Dates/Metadata_Creation",
+                                  "Metadata_Dates/Metadata_Last_Revision",
+                                  "Metadata_Dates/Data_Creation",
+                                  "Metadata_Dates/Data_Last_Revision"
+                                ]                                
+
     REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
                                 "InsertTime",
                                 "LastUpdate",
@@ -164,7 +194,7 @@ class Cmr
     raw_collection = Cmr.get_raw_collection(concept_id)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_COLLECTION_FIELDS)
     required_fields_hash
   end
 
@@ -172,8 +202,8 @@ class Cmr
     raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    # required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
-    nil_replaced_hash
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_DIF10_FIELDS)
+    required_fields_hash
   end
 
   def self.get_raw_collection_format(concept_id)
@@ -259,8 +289,7 @@ class Cmr
   # Iterates through parameter hash adding any UMM required fields    
   # List of required fields set in hardcoded list within method
 
-  def self.add_required_collection_fields(collection_hash)
-    required_fields = REQUIRED_COLLECTION_FIELDS
+  def self.add_required_collection_fields(collection_hash, required_fields = REQUIRED_COLLECTION_FIELDS)
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)

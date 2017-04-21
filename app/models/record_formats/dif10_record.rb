@@ -1,4 +1,34 @@
-class Dif10Record < Record 
+module RecordFormats::Dif10Record
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
+  def long_name 
+    self.get_column("Entry_Title")
+  end 
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
+  def short_name
+    self.get_column("Entry_ID/Short_Name")
+  end
+
+  # ====Params   
+  # None
+  # ====Returns
+  # String
+  # ==== Method
+  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
+  def version_id
+    self.get_column("Entry_ID/Version")
+  end
+
   #should return a list where each entry is a (title,[title_list])
   def sections
     section_list = []
