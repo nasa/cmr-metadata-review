@@ -4,6 +4,7 @@
 
 class Record < ActiveRecord::Base
   include RecordHelper
+  after_initialize :load_format_module
 
   has_many :record_datas
   belongs_to :recordable, :polymorphic => true
@@ -11,17 +12,11 @@ class Record < ActiveRecord::Base
   has_one :ingest
   has_many :discussions
 
-  @formatted_version
-
-  def formatted
-    if @formatted_version.nil?
-      if self.format == "dif10"
-        @formatted_version = self.becomes(Dif10Record)
-      else
-        @formatted_version = self.becomes(Echo10Record)
-      end
+  def load_format_module
+    if self.format == "dif10"
+      self.extend(RecordFormats::Dif10Record)
     else
-      @formatted_version
+      self.extend(RecordFormats::Echo10Record)
     end
   end
 
@@ -58,36 +53,6 @@ class Record < ActiveRecord::Base
     else
       ""
     end
-  end
-
-  # ====Params   
-  # None
-  # ====Returns
-  # String
-  # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
-  def long_name 
-    self.get_column("LongName")
-  end 
-
-  # ====Params   
-  # None
-  # ====Returns
-  # String
-  # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
-  def short_name
-    self.get_column("ShortName")
-  end
-
-  # ====Params   
-  # None
-  # ====Returns
-  # String
-  # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
-  def version_id
-    self.get_column("VersionId")
   end
 
 
@@ -145,9 +110,6 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-  def evaluate_script(raw_data = nil)
-    formatted.evaluate_script(raw_data)
-  end
 
   def get_raw_data
     if is_collection?
@@ -157,9 +119,6 @@ class Record < ActiveRecord::Base
     end
   end
 
-  def create_script(raw_data = nil)
-      formatted.create_script(raw_data)
-  end
 
   # ====Params   
   # Hash from automated script output,
