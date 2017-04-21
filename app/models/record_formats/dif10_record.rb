@@ -4,7 +4,7 @@ module RecordFormats::Dif10Record
   # ====Returns
   # String
   # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
+  # Accesses the record's RecordData attribute and then returns the value of the "LongName" (equivalent) field
   def long_name 
     self.get_column("Entry_Title")
   end 
@@ -14,7 +14,7 @@ module RecordFormats::Dif10Record
   # ====Returns
   # String
   # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" field
+  # Accesses the record's RecordData attribute and then returns the value of the "ShortName" (equivalent) field
   def short_name
     self.get_column("Entry_ID/Short_Name")
   end
@@ -24,7 +24,7 @@ module RecordFormats::Dif10Record
   # ====Returns
   # String
   # ==== Method
-  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
+  # Accesses the record's RecordData attribute and then returns the value of the "VersionId" (equivalent) field
   def version_id
     self.get_column("Entry_ID/Version")
   end
