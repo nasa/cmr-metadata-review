@@ -448,13 +448,13 @@ class Record < ActiveRecord::Base
   def get_section(section_name)
     section_list = []
     all_titles = self.record_datas.map { |data| data.column_name }
-    one_section = all_titles.select {|title| title.match /#{section_name}\//}
+    one_section = all_titles.select {|title| title.match /^#{section_name}\//}
     if one_section.any?
       return [[section_name, one_section]]
     else
       count = 0
-      while (all_titles.select {|title| title.match /#{section_name}#{count.to_s}\//}).any?
-        next_section = all_titles.select {|title| title.match /#{section_name}#{count.to_s}\//}
+      while (all_titles.select {|title| title.match /^#{section_name}#{count.to_s}\//}).any?
+        next_section = all_titles.select {|title| title.match /^#{section_name}#{count.to_s}\//}
         section_list.push([section_name + count.to_s, next_section])
         count = count + 1
       end
