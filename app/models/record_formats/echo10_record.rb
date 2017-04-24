@@ -1,3 +1,7 @@
+#RecordFormats are modules to be included in record objects upon initialization
+#
+#Since individual record formats have different underlying structures of RecordData objects
+#unique accessors are needed for each format to access commonly requested data.
 module RecordFormats::Echo10Record
   # ====Params   
   # None
