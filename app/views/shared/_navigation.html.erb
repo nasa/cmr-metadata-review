@@ -31,11 +31,20 @@
             </a>
           </li>   
 
-          <li>
-            <a href="<%= record_refresh_path %>" id="record_refresh" class="menu_link header_button">
+          <li id="record_refresh">
+            <a href="<%= record_refresh_path %>" class="menu_link header_button">
               <i class="fa fa-refresh" aria-hidden="true"></i>
               <p>Refresh Records</p>
             </a>
+            <ul class="eui-sub-menu">
+              <li>
+                <a href="<%=record_refresh_path%>">
+                  Last Updated: 
+                  <br>
+                  <%=RecordsUpdateLock.formatted_last_update%>  
+                </a>
+              </li>
+            </ul>
           </li>
 
           <script type="text/javascript">
