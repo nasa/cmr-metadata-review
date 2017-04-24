@@ -150,6 +150,17 @@ class Cmr
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
+  # ====Params   
+  # User object
+  # ====Returns
+  # Array of Records
+  # ==== Method
+  # Takes the date of last update from the RecordsUpdateLock model
+  # Queries the CMR for all records that have been updated since the "last update" minus one day.
+  # checks the updated records list for records which have the same concept_id as as record in our system
+  # Queries CMR again to download and ingest all updated records with matching concept_id
+  # returns all of the updated records which match a concept_id
+
   def self.update_collections(current_user)
     update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
     last_date = update_lock.get_last_update
@@ -179,9 +190,26 @@ class Cmr
     return total_added_records
   end
 
+  # ====Params   
+  # string of date(no time), Integer 
+  # ====Returns
+  # Hash of CMR response
+  # ==== Method
+  # Queries cmr for collections updated since provided data, returns parsed response
+
   def self.collections_updated_since(date_string, page_num = 1)
     raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
+
+
+  # ====Params   
+  # hash of CMR response, User object
+  # ====Returns
+  # Array of records
+  # ==== Method
+  # Filters provided CMR response to only the records that match concept_id's already in system
+  # Ingests and saves all new records
+  # Returns Array of the added record objects. 
 
   def self.process_updated_collections(raw_results, current_user)
     #mapping to hashes of concept_id/revision_id
@@ -233,6 +261,15 @@ class Cmr
     required_fields_hash
   end
 
+  # ====Params   
+  # string 
+  # ====Returns
+  # Hash of {column_name => value}
+  # ==== Method
+  # requests the DIF10 version of a record from CMR
+  # processes the returned data and adds required fields as defined in Cmr.rb
+  # returns post processed hash  
+
   def self.get_dif10_collection(concept_id)
     raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
     results_hash = flatten_collection(raw_collection)
@@ -240,6 +277,15 @@ class Cmr
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_DIF10_FIELDS)
     required_fields_hash
   end
+
+  # ====Params   
+  # string 
+  # ====Returns
+  # string
+  # ==== Method
+  # Queries the CMR for a records "native format"
+  # This tells the user what format a record was uploaded to CMR in.
+  # Currently returns "echo10" by default, or "dif10" if native format is dif10 
 
   def self.get_raw_collection_format(concept_id)
     url = Cmr.api_url("collections", "native", {"concept_id" => concept_id})
@@ -252,6 +298,15 @@ class Cmr
       return "echo10"
     end
   end
+
+  # ====Params   
+  # string, string
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Queries the CMR for a metadata record
+  # returns the response hash without processing
+  # need the raw return format to run automated scripts against
 
   def self.get_raw_collection(concept_id, type = "echo10")
     url = Cmr.api_url("collections", type, {"concept_id" => concept_id})
@@ -273,6 +328,16 @@ class Cmr
       collection_results["result"]["DIF"]
     end
   end
+
+  # ====Params   
+  # string, string
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Queries the CMR for a metadata record
+  # returns the response hash without processing
+  # need the raw return format to run automated scripts against
+
 
   def self.get_raw_granule(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})

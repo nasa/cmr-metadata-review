@@ -49,11 +49,12 @@ module RecordFormats::Dif10Record
     section_list = others + section_list
   end
 
+  #There is currently no script for DIF10 records
   def create_script(raw_data = nil)
     nil 
   end
 
-
+  #There is currently no script for DIF10 records
   def evaluate_script(raw_data = nil)
     nil
   end
