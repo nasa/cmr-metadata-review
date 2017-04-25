@@ -40,7 +40,7 @@
                       "s3:Get*",
                       "s3:List*"
                     ],
-                    "Resource": "*"
+                    "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "S3Bucket" } , "/*" ]]}
                   }
                 ]
               }
