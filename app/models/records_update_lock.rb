@@ -17,8 +17,12 @@ class RecordsUpdateLock < ActiveRecord::Base
   # Takes the raw UTC last_update attribute and returns a string version     
   # of the dateTime in EST Timezone, "03/09/2017 at 4:15pm"
   def self.formatted_last_update
-    last_update = (RecordsUpdateLock.find_by id: 1).get_last_update
-    return last_update.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p")
+    last_update = (RecordsUpdateLock.find_by id: 1)
+    if last_update.nil?
+      "Has not been updated"
+    else
+      last_update.get_last_update.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p")
+    end
   end
 
 end
