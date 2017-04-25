@@ -26,36 +26,34 @@
             <li><a href="<%=reports_search_path%>">Reports By Selection</a></li>
           </ul>
         </li>
-        <% if current_user.admin %>
-          <li>
-            <a href="<%= new_user_registration_path %>" class="menu_link header_button">
-              <i class="eui-icon eui-fa-circle-o"></i>
-              <p>Create User</p>
-            </a>
-          </li>   
 
-          <li id="record_refresh">
-            <a href="<%= record_refresh_path %>" class="menu_link header_button">
-              <i class="fa fa-refresh" aria-hidden="true"></i>
-              <p>Refresh Records</p>
-            </a>
-          </li>
+        <li>
+          <a href="#" class="menu_link header_button">
+            <i class="fa fa-sliders"></i>
+            <p>Account Options</p>
+          </a>
+          <ul class="eui-sub-menu">
+            <li><a href="<%=edit_user_registration_path%>">Change Password</a></li>
+            <% if current_user.admin %>
+              <li><a href="<%=new_user_registration_path%>">Create User</a></li>
+              <li id="record_refresh"><a href="<%=record_refresh_path%>">Refresh Records</a></li>
 
-          <script type="text/javascript">
-            document.getElementById("record_refresh").onclick = function() {
-              var processingModal = document.createElement("p");
-              processingModal.innerHTML = "Refreshing Records From CMR<br/>";
-              processingModal.innerHTML += "<i class=\"fa fa\-refresh fa\-spin fa\-3x fa\-fw\"><\/i>";
-              processingModal.className += " processing_modal";
-              document.body.append(processingModal);
+              <script type="text/javascript">
+                document.getElementById("record_refresh").onclick = function() {
+                  var processingModal = document.createElement("p");
+                  processingModal.innerHTML = "Refreshing Records From CMR<br/>";
+                  processingModal.innerHTML += "<i class=\"fa fa\-refresh fa\-spin fa\-3x fa\-fw\"><\/i>";
+                  processingModal.className += " processing_modal";
+                  document.body.append(processingModal);
 
-              var processingModalCover = document.createElement("div");
-              processingModalCover.className += " processing_modal_cover";
-              document.body.append(processingModalCover);
-            }
-          </script>
-
-        <% end %>
+                  var processingModalCover = document.createElement("div");
+                  processingModalCover.className += " processing_modal_cover";
+                  document.body.append(processingModalCover);
+                }
+              </script>
+            <% end %>
+          </ul>
+        </li>  
         <li>
           <a href="<%= destroy_user_session_path %>" class="menu_link header_button">
             <i class="eui-icon eui-fa-external-link-square"></i>

@@ -2,7 +2,7 @@
 
 .log_in_box {
   background-color:white;
-  height:300px;
+  min-height:300px;
   width:500px;
   margin: auto;
   padding-left:40px;
@@ -74,6 +74,31 @@
       }
     }
 
+  }
+
+  .edit_password_box {
+    min-height:391px;
+    .space_box {
+      height:22px;
+    }
+    .box_tab {
+      width: 200px;
+    }
+    .form_box {
+      height:295px;
+      .form_buttons {
+        margin-top: 3px;
+        margin-left: 79px;
+      }
+      .email_hardcode {
+        border-style: solid;
+        border-width: 1px;
+        border-color: #acadaf;
+        max-width: 325px;
+        min-height: 40px;
+        padding: 7px;
+      }
+    }
   }
 
 }

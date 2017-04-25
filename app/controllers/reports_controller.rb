@@ -47,6 +47,11 @@ class ReportsController < ApplicationController
     @updated_done_count = metric_set.updated_done_count
 
     @quality_done_records = metric_set.quality_done_records
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
+    end
   end
 
   def provider
@@ -84,6 +89,11 @@ class ReportsController < ApplicationController
       @updated_done_count = metric_set.updated_done_count
 
       @quality_done_records = metric_set.quality_done_records
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
     end
   end
 
@@ -144,7 +154,12 @@ class ReportsController < ApplicationController
     @updated_count = metric_set.updated_count
     @updated_done_count = metric_set.updated_done_count
 
-    @quality_done_records = metric_set.quality_done_records                          
+    @quality_done_records = metric_set.quality_done_records
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
+    end                          
   end
 
 end
