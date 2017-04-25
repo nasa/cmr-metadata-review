@@ -1,6 +1,9 @@
 <div class="page_header">
   <div class="header_title"> 
     <h3><%= title %></h3>
+    <% if current_user.admin %>
+      <p>CMR Last Updated: <%=RecordsUpdateLock.formatted_last_update%></p>
+    <% end %>
   </div>
 
   <div class="header_menu">
@@ -36,15 +39,6 @@
               <i class="fa fa-refresh" aria-hidden="true"></i>
               <p>Refresh Records</p>
             </a>
-            <ul class="eui-sub-menu">
-              <li>
-                <a href="<%=record_refresh_path%>">
-                  Last Updated: 
-                  <br>
-                  <%=RecordsUpdateLock.formatted_last_update%>  
-                </a>
-              </li>
-            </ul>
           </li>
 
           <script type="text/javascript">
