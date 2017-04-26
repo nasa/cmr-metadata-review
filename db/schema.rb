@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317152549) do
+ActiveRecord::Schema.define(version: 20170426191451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20170317152549) do
   end
 
   create_table "discussions", force: :cascade do |t|
-    t.integer  "record_id"
-    t.integer  "user_id"
-    t.datetime "date"
-    t.string   "column_name"
+    t.integer  "record_id",   null: false
+    t.integer  "user_id",     null: false
+    t.datetime "date",        null: false
+    t.string   "column_name", null: false
     t.string   "comment"
   end
 
@@ -33,55 +33,56 @@ ActiveRecord::Schema.define(version: 20170317152549) do
   add_index "discussions", ["user_id"], name: "index_discussions_on_user_id", using: :btree
 
   create_table "granules", force: :cascade do |t|
-    t.string  "concept_id"
+    t.string  "concept_id",    null: false
     t.integer "collection_id"
   end
 
   add_index "granules", ["collection_id"], name: "index_granules_on_collection_id", using: :btree
 
   create_table "ingests", force: :cascade do |t|
-    t.integer  "record_id"
-    t.integer  "user_id"
-    t.datetime "date_ingested"
+    t.integer  "record_id",     null: false
+    t.integer  "user_id",       null: false
+    t.datetime "date_ingested", null: false
   end
 
   add_index "ingests", ["record_id"], name: "index_ingests_on_record_id", using: :btree
   add_index "ingests", ["user_id"], name: "index_ingests_on_user_id", using: :btree
 
   create_table "record_data", force: :cascade do |t|
-    t.integer  "record_id"
+    t.integer  "record_id",                      null: false
     t.string   "value",          default: ""
-    t.string   "daac"
+    t.string   "daac",                           null: false
     t.datetime "last_updated"
-    t.string   "column_name"
+    t.string   "column_name",                    null: false
     t.string   "color",          default: ""
     t.string   "script_comment", default: ""
     t.boolean  "opinion",        default: false
-    t.string   "flag",           default: [],    array: true
+    t.string   "flag",           default: [],                 array: true
     t.string   "recommendation", default: ""
   end
 
   add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree
 
   create_table "records", force: :cascade do |t|
-    t.integer  "recordable_id"
-    t.string   "recordable_type"
-    t.string   "revision_id"
-    t.boolean  "closed"
+    t.integer  "recordable_id",                   null: false
+    t.string   "recordable_type",                 null: false
+    t.string   "revision_id",                     null: false
+    t.boolean  "closed",          default: false
     t.datetime "closed_date"
   end
 
+  add_index "records", ["recordable_id", "revision_id"], name: "records_recordable_id_revision_id_key", unique: true, using: :btree
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
 
   create_table "records_update_locks", force: :cascade do |t|
-    t.datetime "last_update"
+    t.datetime "last_update", null: false
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.integer  "record_id"
-    t.integer  "user_id"
+    t.integer  "record_id",                           null: false
+    t.integer  "user_id",                             null: false
     t.datetime "review_completion_date"
-    t.integer  "review_state"
+    t.integer  "review_state",                        null: false
     t.string   "comment",                default: ""
   end
 
