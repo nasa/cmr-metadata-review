@@ -1,7 +1,7 @@
 class CreateGranules < ActiveRecord::Migration
   def up
     create_table :granules do |t|
-      t.string   :concept_id
+      t.string   :concept_id, null: false
       t.belongs_to :collection, index: true
     end
   end

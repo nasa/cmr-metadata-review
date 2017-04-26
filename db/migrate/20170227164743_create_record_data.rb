@@ -1,11 +1,11 @@
 class CreateRecordData < ActiveRecord::Migration
   def change
     create_table :record_data do |t|
-      t.belongs_to :record, index: true
+      t.belongs_to :record, index: true, null: false
       t.string     :value, default: ""
-      t.string     :daac
+      t.string     :daac, null: false
       t.datetime   :last_updated
-      t.string     :column_name
+      t.string     :column_name, null: false
       t.string     :color, default: ""
       t.string     :script_comment, default: ""
       t.boolean    :opinion, default: false
