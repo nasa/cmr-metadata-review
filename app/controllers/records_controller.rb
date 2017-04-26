@@ -13,14 +13,14 @@ class RecordsController < ApplicationController
   end
 
   def show
-    record = Record.find_by id: params["id"]
-    if record.nil?
+    @record = Record.find_by id: params["id"]
+    if @record.nil?
       redirect_to home_path
       return
     end
 
-    @record_sections = record.sections
-    @bubble_data = record.bubble_map
+    @record_sections = @record.sections
+    @bubble_data = @record.bubble_map
 
     @review = Review.where(user: current_user, record_id: params["id"]).first
     if @review.nil?
@@ -28,19 +28,15 @@ class RecordsController < ApplicationController
         @review.save
     end
 
-    @long_name = record.long_name
-    @short_name = record.short_name
-    @concept_id = record.concept_id
-
-    @reviews = (record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
-    @user_review = record.review(current_user.id)
+    @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
+    @user_review = @record.review(current_user.id)
 
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = record.closed
+    @marked_done = @record.closed
 
-    @color_coding_complete = record.color_coding_complete?
-    @has_enough_reviews = record.has_enough_reviews?
-    @no_second_opinions = record.no_second_opinions?
+    @color_coding_complete = @record.color_coding_complete?
+    @has_enough_reviews = @record.has_enough_reviews?
+    @no_second_opinions = @record.no_second_opinions?
   end
 
   def complete

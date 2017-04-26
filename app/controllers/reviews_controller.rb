@@ -11,8 +11,6 @@ class ReviewsController < ApplicationController
     @marked_done = record.closed
 
     @collection_record = Record.find_by id: params[:id] 
-    @long_name = @collection_record.long_name
-    @short_name = @collection_record.short_name
 
     @navigation_list = record.sections.map {|section| section[0] }
 
