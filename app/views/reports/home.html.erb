@@ -4,8 +4,6 @@
   document.getElementsByClassName("header_image")[0].style.display = "none";
 </script>
 
-<%= link_to 'Download CSV version', reports_home_path(format: :csv) %>
-
 <div style="display:flex;">
   <div>
 
@@ -188,7 +186,10 @@
         </table>
   </div>
 
-  <div>
+    <div style="padding-left:30px;">
+        <a href="<%=reports_home_path(format: :csv)%>">
+            <button type="button" class="btn btn-success">Download CSV Report</button>
+        </a>
 
   </div>
 </div>
