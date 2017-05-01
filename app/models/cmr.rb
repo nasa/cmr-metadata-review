@@ -283,19 +283,21 @@ class Cmr
   # ====Returns
   # string
   # ==== Method
-  # Queries the CMR for a records "native format"
+  # Queries the CMR for a record's original format
   # This tells the user what format a record was uploaded to CMR in.
-  # Currently returns "echo10" by default, or "dif10" if native format is dif10 
+  # Uses the cmr internal atom format as this provides a standardized structure to get the "originalFormat" attribute from
 
   def self.get_raw_collection_format(concept_id)
-    url = Cmr.api_url("collections", "native", {"concept_id" => concept_id})
+    url = Cmr.api_url("collections", "atom", {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
-    collection_results = Hash.from_xml(collection_xml)["results"]
-    raw_format = collection_results["result"]["format"]
+    collection_results = Hash.from_xml(collection_xml)["feed"]
+    raw_format = collection_results["entry"]["originalFormat"].downcase
     if raw_format.include? "dif10"
       return "dif10"
-    else
+    elsif raw_format.include? "echo10"
       return "echo10"
+    else
+      return raw_format
     end
   end
 
