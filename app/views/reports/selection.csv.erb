@@ -1,0 +1,39 @@
+<%= CSV.generate_line(["CMR Selection Report"]) %>  
+
+<%= CSV.generate_line(["Selected Records"]) %>
+<% @report_list.each do |record| %>
+  <% if record.short_name != "" %>
+    <%= CSV.generate_line([record.concept_id, record.short_name]) %>
+  <% else %>
+    <%= CSV.generate_line([record.concept_id]) %>
+  <% end %>
+<% end %> 
+
+<%= CSV.generate_line(["State of Reviews:", "0 Reviews:", "1 Review:", "2+ Reviews:", "Record Complete:"]) %>
+<%= CSV.generate_line(["Record Counts", (@review_counts.count { |x| x == 0 }), (@review_counts.count { |x| x == 1 }), ((@review_counts.count { |x| x >= 2 }) - @total_completed), @total_completed]) %>
+
+<%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
+<%= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
+            
+<%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
+<%= CSV.generate_line(["Number of elements checked (total):", @original_total_checked, @total_checked]) %>
+<%= CSV.generate_line(["Number of elements that passed:", @original_field_colors["green"], @field_colors["green"]]) %>
+<%= CSV.generate_line(["Number of elements that failed:", @original_field_colors["red"], @field_colors["red"]]) %>
+<%= CSV.generate_line(["Number of elements with warnings issued:", @original_field_colors["yellow"], @field_colors["yellow"]]) %>
+<%= CSV.generate_line(["Number of elements with informational notes added:", @original_field_colors["blue"], @field_colors["blue"]]) %>
+
+<%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
+<%= CSV.generate_line(["Number of elements with Accessibility Flag:", @original_flag_counts["Accessibility"], @flag_counts["Accessibility"]]) %>    
+<%= CSV.generate_line(["Number of elements with Traceability Flag:", @original_flag_counts["Traceability"], @flag_counts["Traceability"]]) %>    
+<%= CSV.generate_line(["Number of elements with Usability Flag:", @original_flag_counts["Usability"], @flag_counts["Usability"]]) %> 
+
+<%= CSV.generate_line(["Top 5 Problem Elements"]) %>
+<%= CSV.generate_line(["Element Name:", "Non Green Count:"]) %>
+<% @failing_elements_five.each do |column_name, non_green_count|%>
+  <%= CSV.generate_line([column_name, non_green_count]) %>
+<%end%>
+
+<%= CSV.generate_line(["Number of Collections that been updated in CMR after a finished review:", @updated_count]) %>
+<%= CSV.generate_line(["Number of Updated Collection Reviews marked as Done:", @updated_done_count]) %>
+<%= CSV.generate_line(["Quality of Collection Reviews marked as Done (high/low/avg):", (@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)]) %>
+<%= CSV.generate_line(["Quality of Updated Collection Reviews marked as Done (high/low/avg)", (@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)]) %>

@@ -10,6 +10,8 @@
 </script>
 
 
+
+
 <div style="display:flex;">
   <div>
 
@@ -159,8 +161,15 @@
         </table>
   </div>
 
-  <div>
-    <table style="margin-left: 30px;">
+  <div style="padding-left:30px;">
+        <a href="<%=reports_selection_path(records: params["records"], format: :csv)%>">
+            <button type="button" class="btn btn-success">Download CSV Report</button>
+        </a>
+
+        <br>
+        <br>
+
+    <table>
       <tr>
         <td>Selected Records</td>
       </tr>
