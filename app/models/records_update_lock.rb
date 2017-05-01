@@ -21,7 +21,7 @@ class RecordsUpdateLock < ActiveRecord::Base
     if last_update.nil?
       "Has not been updated"
     else
-      last_update.get_last_update.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p")
+      last_update.get_last_update.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p") + " ET"
     end
   end
 
