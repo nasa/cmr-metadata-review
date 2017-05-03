@@ -1,0 +1,14 @@
+cloudwatch ec2 metricname
+CPUUtilization
+
+cloudwatch rds metrics
+CPUUtilization
+DatabaseConnections
+FreeStorageSpace
+
+route53, will have to set manually?
+
+cloudwatch elb metrics
+HealthyHostCount
+HTTPCode_ELB_5XX
+UnHealthyHostCount
