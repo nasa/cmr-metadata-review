@@ -36,7 +36,8 @@
         "EnableDnsHostnames" : "true",
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -49,7 +50,8 @@
         "CidrBlock" : { "Fn::FindInMap" : [ "SubnetConfig", "Public", "CIDR" ]},
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -62,7 +64,8 @@
         "CidrBlock" : { "Fn::FindInMap" : [ "SubnetConfig", "Public2", "CIDR" ]},
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -72,7 +75,8 @@
       "Properties" : {
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -91,7 +95,8 @@
         "VpcId" : { "Ref" : "VPC" },
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -120,7 +125,8 @@
         "VpcId" : { "Ref" : "VPC" },
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
-          { "Key" : "Network", "Value" : "Public" }
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
       }
     },
@@ -201,7 +207,7 @@
     },
     "SubnetIPv6Block" : {
       "Description" : "Subnet IP v6 Block",
-      "Value" : { "Fn::GetAtt" : [ "PublicSubnet", "Ipv6CidrBlocks" ] }
+      "Value" : { "Fn::FindInMap" : [ "SubnetConfig", "Public", "CIDR" ]}
     },
     "SubnetId2" : {
       "Description" : "Subnet value",
