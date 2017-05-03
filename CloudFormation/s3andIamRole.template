@@ -64,8 +64,10 @@
               }
              ]
             }
-        } ]
-
+        } ],
+        "Tags" : [
+              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+        ]
       }
     },
 
@@ -75,14 +77,20 @@
           "Path": "/",
           "Roles": [ {
              "Ref": "S3CommunicationRole"
-          } ]
+          } ],
+          "Tags" : [
+              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          ]
        }
     },
 
     "S3Bucket" : {
       "Type" : "AWS::S3::Bucket",
       "Properties" : {
-        "BucketName": { "Ref": "BucketName"}
+        "BucketName": { "Ref": "BucketName"},
+        "Tags" : [
+              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+        ]
       }
     },
 
@@ -103,7 +111,10 @@
               "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "S3Bucket" } , "/*" ]]}
             }
           ]
-        }
+        },
+        "Tags" : [
+              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+        ]
       }
     }
 

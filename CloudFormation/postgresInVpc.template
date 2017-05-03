@@ -76,7 +76,10 @@
       "Type" : "AWS::RDS::DBSubnetGroup",
       "Properties" : {
         "DBSubnetGroupDescription" : "Subnets available for the RDS DB Instance",
-        "SubnetIds" : { "Ref" : "Subnets" }
+        "SubnetIds" : { "Ref" : "Subnets" },
+        "Tags" : [
+          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+        ]
       }
     },
 
@@ -92,12 +95,16 @@
              "ToPort" : "5432",
              "CidrIp" : { "Ref" : "SubnetIpBlock" }
             }],
-           "VpcId" : { "Ref" : "VpcId" }
+           "VpcId" : { "Ref" : "VpcId" },
+           "Tags" : [
+             {"Key" : "Name", "Value" : "CMR-Dashboard"}
+           ]
         }
     },
 
     "MyDB" : {
       "Type" : "AWS::RDS::DBInstance",
+      "DeletionPolicy" : "Snapshot",
       "Properties" : {
         "DBName" : { "Ref" : "DBName" },
         "AllocatedStorage" : { "Ref" : "DBAllocatedStorage" },
@@ -105,11 +112,15 @@
         "Engine" : "postgres",
         "EngineVersion" : "9.4.7",
         "BackupRetentionPeriod" : "30",
-        "DeletionPolicy" : "Snapshot",
+        "CopyTagsToSnapshot" : "true",
         "MasterUsername" : { "Ref" : "DBUsername" } ,
         "MasterUserPassword" : { "Ref" : "DBPassword" },
         "DBSubnetGroupName" : { "Ref" : "MyDBSubnetGroup" },
-        "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ]
+        "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ],
+        "MultiAZ": "true",
+        "Tags" : [
+          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+        ]
       }
     }
   },
