@@ -104,6 +104,8 @@
         "DBInstanceClass" : { "Ref" : "DBClass" },
         "Engine" : "postgres",
         "EngineVersion" : "9.4.7",
+        "BackupRetentionPeriod" : "30",
+        "DeletionPolicy" : "Snapshot",
         "MasterUsername" : { "Ref" : "DBUsername" } ,
         "MasterUserPassword" : { "Ref" : "DBPassword" },
         "DBSubnetGroupName" : { "Ref" : "MyDBSubnetGroup" },
