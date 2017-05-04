@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424192419) do
+ActiveRecord::Schema.define(version: 20170426191451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170424192419) do
     t.string "short_name", default: ""
   end
 
+  add_index "collections", ["concept_id"], name: "collections_concept_id_key", unique: true, using: :btree
   add_index "collections", ["concept_id"], name: "index_collections_on_concept_id", using: :btree
 
   create_table "discussions", force: :cascade do |t|
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170424192419) do
   end
 
   add_index "granules", ["collection_id"], name: "index_granules_on_collection_id", using: :btree
+  add_index "granules", ["concept_id"], name: "granules_concept_id_key", unique: true, using: :btree
 
   create_table "ingests", force: :cascade do |t|
     t.integer  "record_id"
@@ -71,9 +73,9 @@ ActiveRecord::Schema.define(version: 20170424192419) do
     t.string   "revision_id"
     t.boolean  "closed"
     t.datetime "closed_date"
-    t.string   "format",          default: ""
   end
 
+  add_index "records", ["recordable_id", "revision_id"], name: "records_recordable_id_revision_id_key", unique: true, using: :btree
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
 
   create_table "records_update_locks", force: :cascade do |t|
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(version: 20170424192419) do
     t.string   "comment",                default: ""
   end
 
+  add_index "reviews", ["record_id", "user_id"], name: "reviews_record_id_user_id_key", unique: true, using: :btree
   add_index "reviews", ["record_id"], name: "index_reviews_on_record_id", using: :btree
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
