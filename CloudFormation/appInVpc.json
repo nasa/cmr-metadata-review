@@ -18,12 +18,14 @@
 
     "GitUserName" : {
       "Description" : "Username for CMR Git Directory",
-      "Type" : "String"
+      "Type" : "String",
+      "NoEcho" : "true"
     },
 
     "GitPassword" : {
       "Description" : "Password for CMR Git Directory",
-      "Type" : "String"
+      "Type" : "String",
+      "NoEcho" : "true"
     },
 
     "VPCid" : {
@@ -268,37 +270,6 @@
         "SecurityGroupIngress" : [
           { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupId" : { "Ref" : "PublicLoadBalancerSecurityGroup" } } ,
           { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : { "Ref" : "SSHLocation" } } ]
-      }
-    },
-
-    "AlarmTopic": {
-      "Type": "AWS::SNS::Topic",
-      "Properties": {
-        "DisplayName" : "CMR-Dashboard",
-        "TopicName" : "CMR-Dashboard", 
-        "Subscription": [{
-          "Endpoint": { "Ref": "AlarmEMail" },
-          "Protocol": "email"
-        }]
-      }
-    },
-
-    "AutoScaleCpuUtilAlarm": {
-      "Type": "AWS::CloudWatch::Alarm",
-      "Properties": {
-        "AlarmDescription": "Alarm if autoscale cpu util > 80%",
-        "Namespace": "AWS/EC2",
-        "MetricName": "CPUUtilization",
-        "Dimensions": [{
-          "Name": "AutoScalingGroupName",
-          "Value" : { "Ref": "WebServerFleet" }
-        }],
-        "Statistic": "Average",
-        "Period": "300",
-        "EvaluationPeriods": "1",
-        "Threshold": "80",
-        "ComparisonOperator": "GreaterThanThreshold",
-        "AlarmActions": [{ "Ref": "AlarmTopic" }]
       }
     }
   },
