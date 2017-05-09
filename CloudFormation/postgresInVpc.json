@@ -5,6 +5,11 @@
 
   "Parameters" : {
 
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
+
     "VpcId" : {
       "Type" : "String",
       "Description" : "VpcId of your existing Virtual Private Cloud (VPC)"
@@ -15,7 +20,12 @@
       "Description" : "The list of SubnetIds, for at least two Availability Zones in the region in your Virtual Private Cloud (VPC)"
     },
 
-    "SubnetIpBlock" : {
+    "PrivateSubnetIpBlock" : {
+      "Type" : "String",
+      "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
+    },
+
+    "PublicSubnetIpBlock" : {
       "Type" : "String",
       "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
     },
@@ -78,7 +88,7 @@
         "DBSubnetGroupDescription" : "Subnets available for the RDS DB Instance",
         "SubnetIds" : { "Ref" : "Subnets" },
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     },
@@ -89,15 +99,22 @@
         "Properties" :
         {
            "GroupDescription" : "Security group for RDS DB Instance.",
-           "SecurityGroupIngress" : [{
-             "IpProtocol" : "tcp",
-             "FromPort" : "5432",
-             "ToPort" : "5432",
-             "CidrIp" : { "Ref" : "SubnetIpBlock" }
-            }],
+           "SecurityGroupIngress" : [ {
+                                       "IpProtocol" : "tcp",
+                                       "FromPort" : "5432",
+                                       "ToPort" : "5432",
+                                       "CidrIp" : { "Ref" : "PrivateSubnetIpBlock" }
+                                      },
+                                      {
+                                       "IpProtocol" : "tcp",
+                                       "FromPort" : "5432",
+                                       "ToPort" : "5432",
+                                       "CidrIp" : { "Ref" : "PublicSubnetIpBlock" }
+                                      }
+                                    ],    
            "VpcId" : { "Ref" : "VpcId" },
            "Tags" : [
-             {"Key" : "Name", "Value" : "CMR-Dashboard"}
+             {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
            ]
         }
     },
@@ -107,19 +124,21 @@
       "DeletionPolicy" : "Snapshot",
       "Properties" : {
         "DBName" : { "Ref" : "DBName" },
+        "DBInstanceIdentifier" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] },
         "AllocatedStorage" : { "Ref" : "DBAllocatedStorage" },
         "DBInstanceClass" : { "Ref" : "DBClass" },
         "Engine" : "postgres",
         "EngineVersion" : "9.4.7",
         "BackupRetentionPeriod" : "30",
         "CopyTagsToSnapshot" : "true",
+        "PubliclyAccessible" : "false",
         "MasterUsername" : { "Ref" : "DBUsername" } ,
         "MasterUserPassword" : { "Ref" : "DBPassword" },
         "DBSubnetGroupName" : { "Ref" : "MyDBSubnetGroup" },
         "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ],
         "MultiAZ": "true",
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     }
