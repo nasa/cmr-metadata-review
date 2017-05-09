@@ -1,0 +1,19 @@
+//log into bastion to gain access to rds
+
+//the following commands will successfully copy and restore a live db
+//the --clean option deletes everything in the existing db, before restoring from backup
+
+//logging in 
+psql -h <host> -p 5432 -U <user> <db_name>
+enter password
+
+//pg_dump
+psql -h <host> -p 5432 --format=c --file=<out file name> -U <user> <db_name>
+enter password
+
+//pg_restore
+pg_restore -h <host> -p 5432 -U <user> -d <db_name> --clean <out file name>
+enter password
+
+//notes about scripting
+https://zaiste.net/posts/backup_postgresql_to_amazon_s3/

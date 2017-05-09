@@ -21,8 +21,8 @@
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },
       "Public"  : { "CIDR" : "10.0.0.0/24" },
-      "Public2"  : { "CIDR" : "10.0.1.0/24" }
-
+      "Private2"  : { "CIDR" : "10.0.1.0/24" },
+      "Private"  : { "CIDR" : "10.0.2.0/24" }
     },
   },
 
@@ -56,17 +56,46 @@
       }
     },
 
-    "PublicSubnet2" : {
+    "PrivateSubnet2" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
         "AvailabilityZone" : "us-east-1d",
-        "CidrBlock" : { "Fn::FindInMap" : [ "SubnetConfig", "Public2", "CIDR" ]},
+        "CidrBlock" : { "Fn::FindInMap" : [ "SubnetConfig", "Private2", "CIDR" ]},
         "Tags" : [
           { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
           { "Key" : "Network", "Value" : "Public" },
           { "Key" : "Name", "Value" : "CMR-Dashboard" }
         ]
+      }
+    },
+
+    "PrivateSubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "AvailabilityZone" : "us-east-1a",
+        "CidrBlock" : { "Fn::FindInMap" : [ "SubnetConfig", "Private", "CIDR" ]},
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
+        ]
+      }
+    },
+
+    "EIP" : {
+      "Type" : "AWS::EC2::EIP",
+      "Properties" : {
+        "Domain" : "vpc"
+      }
+    },
+
+    "NAT" : {
+      "Type" : "AWS::EC2::NatGateway",
+      "Properties" : {
+        "AllocationId" : { "Fn::GetAtt" : ["EIP", "AllocationId"]},
+        "SubnetId" : { "Ref" : "PublicSubnet"}
       }
     },
 
@@ -119,6 +148,44 @@
       }
     },
 
+    "PrivateRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
+        ]
+      }
+    },
+
+    "PrivateRoute" : {
+      "Type" : "AWS::EC2::Route",
+      "DependsOn" : "GatewayToInternet",
+      "Properties" : {
+        "RouteTableId" : { "Ref" : "PrivateRouteTable" },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "NatGatewayId" : { "Ref" : "NAT" }
+      }
+    },
+
+    "PrivateSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PrivateSubnet" },
+        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+      }
+    },
+
+    "PrivateSubnet2RouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PrivateSubnet2" },
+        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+      }
+    },
+
     "PublicNetworkAcl" : {
       "Type" : "AWS::EC2::NetworkAcl",
       "Properties" : {
@@ -141,6 +208,19 @@
         "Egress" : "false",
         "CidrBlock" : "0.0.0.0/0",
         "PortRange" : { "From" : "80", "To" : "80" }
+      }
+    },
+
+    "InboundHTTPSPublicNetworkAclEntry" : {
+      "Type" : "AWS::EC2::NetworkAclEntry",
+      "Properties" : {
+        "NetworkAclId" : { "Ref" : "PublicNetworkAcl" },
+        "RuleNumber" : "103",
+        "Protocol" : "6",
+        "RuleAction" : "allow",
+        "Egress" : "false",
+        "CidrBlock" : "0.0.0.0/0",
+        "PortRange" : { "From" : "443", "To" : "443" }
       }
     },
 
@@ -189,6 +269,78 @@
         "SubnetId" : { "Ref" : "PublicSubnet" },
         "NetworkAclId" : { "Ref" : "PublicNetworkAcl" }
       }
+    },
+
+    "PrivateNetworkAcl" : {
+      "Type" : "AWS::EC2::NetworkAcl",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId" } },
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Name", "Value" : "CMR-Dashboard" }
+        ]
+      }
+    },
+
+    "PrivateInboundHTTPNetworkAclEntry" : {
+      "Type" : "AWS::EC2::NetworkAclEntry",
+      "Properties" : {
+        "NetworkAclId" : { "Ref" : "PrivateNetworkAcl" },
+        "RuleNumber" : "113",
+        "Protocol" : "6",
+        "RuleAction" : "allow",
+        "Egress" : "false",
+        "CidrBlock" : "10.0.0.0/24",
+        "PortRange" : { "From" : "80", "To" : "80" }
+      }
+    },
+
+    "PrivateInboundDynamicPortNetworkAclEntry" : {
+      "Type" : "AWS::EC2::NetworkAclEntry",
+      "Properties" : {
+        "NetworkAclId" : { "Ref" : "PrivateNetworkAcl" },
+        "RuleNumber" : "111",
+        "Protocol" : "6",
+        "RuleAction" : "allow",
+        "Egress" : "false",
+        "CidrBlock" : "0.0.0.0/0",
+        "PortRange" : { "From" : "1024", "To" : "65535" }
+      }
+    },
+
+    "PrivateInboundSSHPublicNetworkAclEntry" : {
+      "Type" : "AWS::EC2::NetworkAclEntry",
+      "Properties" : {
+        "NetworkAclId" : { "Ref" : "PrivateNetworkAcl" },
+        "RuleNumber" : "112",
+        "Protocol" : "6",
+        "RuleAction" : "allow",
+        "Egress" : "false",
+        "CidrBlock" : "10.0.0.0/24",
+        "PortRange" : { "From" : "22", "To" : "22" }
+      }
+    },
+
+    "PrivateOutboundPublicNetworkAclEntry" : {
+      "Type" : "AWS::EC2::NetworkAclEntry",
+      "Properties" : {
+        "NetworkAclId" : { "Ref" : "PrivateNetworkAcl" },
+        "RuleNumber" : "113",
+        "Protocol" : "6",
+        "RuleAction" : "allow",
+        "Egress" : "true",
+        "CidrBlock" : "0.0.0.0/0",
+        "PortRange" : { "From" : "0", "To" : "65535" }
+      }
+    },
+
+    "PrivateSubnetNetworkAclAssociation" : {
+      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PrivateSubnet" },
+        "NetworkAclId" : { "Ref" : "PrivateNetworkAcl" }
+      }
     }
   },
 
@@ -201,21 +353,25 @@
       "Description" : "Subnet value",
       "Value" : { "Ref" : "PublicSubnet"}
     },
-    "SubnetZone" : {
+    "PrivateZone" : {
       "Description" : "Subnet zone",
-      "Value" : { "Fn::GetAtt" : [ "PublicSubnet", "AvailabilityZone" ] }
+      "Value" : { "Fn::GetAtt" : [ "PrivateSubnet", "AvailabilityZone" ] }
     },
     "SubnetIPv6Block" : {
       "Description" : "Subnet IP v6 Block",
       "Value" : { "Fn::FindInMap" : [ "SubnetConfig", "Public", "CIDR" ]}
     },
-    "SubnetId2" : {
+    "PrivateSubnetId2" : {
       "Description" : "Subnet value",
-      "Value" : { "Ref" : "PublicSubnet2"}
+      "Value" : { "Ref" : "PrivateSubnet2"}
     },
-    "SubnetZone2" : {
+    "PrivateSubnetId" : {
+      "Description" : "Subnet value",
+      "Value" : { "Ref" : "PrivateSubnet"}
+    },
+    "PrivateZone2" : {
       "Description" : "Subnet zone",
-      "Value" : { "Fn::GetAtt" : [ "PublicSubnet2", "AvailabilityZone" ] }
+      "Value" : { "Fn::GetAtt" : [ "PrivateSubnet2", "AvailabilityZone" ] }
     }
   }
 }
