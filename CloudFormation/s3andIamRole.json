@@ -5,6 +5,11 @@
 
   "Parameters" : {
 
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
+
     "BucketName" : {
       "Description" : "Desired Name for S3 Bucket",
       "Type" : "String"
@@ -64,10 +69,7 @@
               }
              ]
             }
-        } ],
-        "Tags" : [
-              {"Key" : "Name", "Value" : "CMR-Dashboard"}
-        ]
+        } ]
       }
     },
 
@@ -77,10 +79,7 @@
           "Path": "/",
           "Roles": [ {
              "Ref": "S3CommunicationRole"
-          } ],
-          "Tags" : [
-              {"Key" : "Name", "Value" : "CMR-Dashboard"}
-          ]
+          } ]
        }
     },
 
@@ -89,7 +88,7 @@
       "Properties" : {
         "BucketName": { "Ref": "BucketName"},
         "Tags" : [
-              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+              {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     },
@@ -111,10 +110,7 @@
               "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "S3Bucket" } , "/*" ]]}
             }
           ]
-        },
-        "Tags" : [
-              {"Key" : "Name", "Value" : "CMR-Dashboard"}
-        ]
+        }
       }
     }
 
