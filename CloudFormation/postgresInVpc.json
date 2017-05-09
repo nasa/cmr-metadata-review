@@ -5,6 +5,11 @@
 
   "Parameters" : {
 
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
+
     "VpcId" : {
       "Type" : "String",
       "Description" : "VpcId of your existing Virtual Private Cloud (VPC)"
@@ -83,7 +88,7 @@
         "DBSubnetGroupDescription" : "Subnets available for the RDS DB Instance",
         "SubnetIds" : { "Ref" : "Subnets" },
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     },
@@ -109,7 +114,7 @@
                                     ],    
            "VpcId" : { "Ref" : "VpcId" },
            "Tags" : [
-             {"Key" : "Name", "Value" : "CMR-Dashboard"}
+             {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
            ]
         }
     },
@@ -119,6 +124,7 @@
       "DeletionPolicy" : "Snapshot",
       "Properties" : {
         "DBName" : { "Ref" : "DBName" },
+        "DBInstanceIdentifier" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] },
         "AllocatedStorage" : { "Ref" : "DBAllocatedStorage" },
         "DBInstanceClass" : { "Ref" : "DBClass" },
         "Engine" : "postgres",
@@ -132,7 +138,7 @@
         "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ],
         "MultiAZ": "true",
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     }
