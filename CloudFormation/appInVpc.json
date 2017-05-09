@@ -5,6 +5,11 @@
 
   "Parameters" : {
 
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
+
     "KeyName" : {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type" : "AWS::EC2::KeyPair::KeyName",
@@ -95,7 +100,7 @@
           "Timeout" : "15"
         },
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     },
@@ -111,7 +116,7 @@
                                  ],
         "SecurityGroupEgress" : [ { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "0.0.0.0/0"} ],
         "Tags" : [
-          {"Key" : "Name", "Value" : "CMR-Dashboard"}
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ]
       }
     },
@@ -150,7 +155,7 @@
         "LoadBalancerNames" : [ { "Ref" : "PublicElasticLoadBalancer" } ],
         "Tags" : [ 
             { "Key" : "Network", "Value" : "Private", "PropagateAtLaunch" : "true" },
-            { "Key" : "Name", "Value" : "CMR-Dashboard", "PropagateAtLaunch" : "true" }
+            { "Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }, "PropagateAtLaunch" : "true" }
         ]
       },
       "UpdatePolicy": {
@@ -247,7 +252,7 @@
         "GroupDescription" : "Allow access from load balancer and bastion as well as outbound HTTP and HTTPS traffic",
         "VpcId" : { "Ref" : "VPCid" },
         "Tags" : [
-              {"Key" : "Name", "Value" : "CMR-Dashboard"}
+              {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
         ],
         "SecurityGroupIngress" : [
           { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupId" : { "Ref" : "PublicLoadBalancerSecurityGroup" } } ,
