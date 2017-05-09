@@ -253,63 +253,6 @@
         </tr>
 
 
-        <script type="text/javascript">
-          function add_flag_click_handler(cell_id, check_id, icon_id) {
-            document.getElementById(cell_id).onclick = function() {
-              var checkbox = document.getElementById(check_id);
-              var icon = document.getElementById(icon_id);
-              if (checkbox.checked == true) {
-                checkbox.checked = false;
-                this.style.backgroundColor = "inherit";
-                this.style.fontWeight = "normal";
-                icon.style.visibility = "hidden";
-              } else {
-                checkbox.checked = true;
-                this.style.backgroundColor = "#e7d1ff";
-                this.style.fontWeight = "bold";
-                icon.style.visibility = "visible";
-              }
-            };
-          }
-        </script>  
-
-        <tr>
-          <th class="headcol">FLAGS</th>
-          <% @section_titles.each do |title| %>
-            <% flag_hash = @flags[title] %>
-
-            <td class="no_padding column_<%=title%>">
-              <div class="flag_flexbox">
-                <% ["Accessibility", "Usability", "Traceability"].each do |flag_field| %>            
-                  <% cell_id = "flag_" + flag_field + "_" +  title %>
-                  <% check_name = "flag["+ title +"][" + flag_field + "]" %>
-                  <% check_id = "flag_" + flag_field + "_check_" +  title %>
-                  <% icon_id = "flag_" + flag_field + "_icon_" +  title %>
-                  <div class="flag_flex_cell" id="<%= cell_id %>">
-                    <input type="checkbox" id="<%= check_id %>" name="<%= check_name %>" form="field_form">
-                    <p class="flag_flex_text">
-                      <i id="<%= icon_id %>" class="eui-icon eui-check-o flag_icon"></i>
-                      <%= flag_field %>
-                    </p>
-
-                    <script type="text/javascript">
-                      add_flag_click_handler("<%= cell_id %>","<%= check_id %>", "<%= icon_id %>");
-                      <% flag_hash = @flags[title] %>
-                      <% if flag_hash.include? flag_field %>
-                        document.getElementById("<%= cell_id %>").style.backgroundColor = "#e7d1ff";
-                        document.getElementById("<%= cell_id %>").style.fontWeight = "bold";
-                        document.getElementById("<%= check_id %>").checked = true;
-                        document.getElementById("<%= icon_id %>").style.visibility = "visible";
-                      <% end %>
-                    </script>
-                  </div>
-                <% end %>
-              </div>
-            </td>
-          <% end %>
-        </tr>
-
-
         <tr>
         <th class="headcol">RECOMMENDATION</th>
           <% @section_titles.each do |title| %>

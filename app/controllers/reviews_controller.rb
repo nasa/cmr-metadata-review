@@ -35,7 +35,6 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
     @previous_values = nil
     @current_values = record.values
-    @flags = record.get_flags
     @recommendations = record.get_recommendations
     @second_opinions = record.get_opinions
 

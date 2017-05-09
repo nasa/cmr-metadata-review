@@ -9,13 +9,6 @@ class MetricSetTest < ActiveSupport::TestCase
     end
   end
 
-  describe "red flags" do
-    it "returns flag/red color hash" do
-      new_metric_set = MetricSet.new([(Record.find_by id: 10), (Record.find_by id: 11)])
-      assert_equal({"Accessibility"=>1, "Traceability"=>0, "Usability"=>1}, new_metric_set.red_flags)
-    end
-  end
-
   describe "total completed" do
     it "returns total completed number" do
       new_metric_set = MetricSet.new([(Record.find_by id: 10), (Record.find_by id: 11)])
