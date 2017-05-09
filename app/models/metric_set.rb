@@ -79,16 +79,6 @@ class MetricSet
     {"blue" => blue_count, "green" => green_count, "yellow" => yellow_count, "red" => red_count}
   end
 
-  def flag_counts
-    flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
-    @record_data_set.each do |data|
-      data.flag.each do |flag_name|
-        flag_hash[flag_name] = flag_hash[flag_name] + 1
-      end
-    end
-
-    flag_hash
-  end
 
   # ====Params   
   # None
