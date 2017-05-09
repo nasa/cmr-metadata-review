@@ -71,7 +71,7 @@
         "Namespace": "AWS/RDS",
         "MetricName": "CPUUtilization",
         "Dimensions": [{
-          "Name": "RDSName",
+          "Name": "DBInstanceIdentifier",
           "Value" : { "Ref": "RDS" }
         }],
         "Statistic": "Average",
@@ -90,7 +90,7 @@
         "Namespace": "AWS/RDS",
         "MetricName": "FreeStorageSpace",
         "Dimensions": [{
-          "Name": "RDSName",
+          "Name": "DBInstanceIdentifier",
           "Value" : { "Ref": "RDS" }
         }],
         "Statistic": "Average",
@@ -109,10 +109,10 @@
         "Namespace": "AWS/RDS",
         "MetricName": "DatabaseConnections",
         "Dimensions": [{
-          "Name": "RDSName",
+          "Name": "DBInstanceIdentifier",
           "Value" : { "Ref": "RDS" }
         }],
-        "Statistic": "Average",
+        "Statistic": "Minimum",
         "Period": "300",
         "EvaluationPeriods": "1",
         "Threshold": "1",
@@ -124,34 +124,34 @@
       "Type": "AWS::CloudWatch::Alarm",
       "Properties": {
         "AlarmName" : "CMR-Dash-ELB-HealthyHost",
-        "AlarmDescription": "Alarm if elb has under 2 connections every 5 minutes",
+        "AlarmDescription": "Alarm if elb has under 1 connections every 5 minutes",
         "Namespace": "AWS/ELB",
         "MetricName": "HealthyHostCount",
         "Dimensions": [{
-          "Name": "ELBName",
+          "Name": "LoadBalancerName",
           "Value" : { "Ref": "ELB" }
         }],
-        "Statistic": "Minumum",
+        "Statistic": "Minimum",
         "Period": "300",
         "EvaluationPeriods": "1",
-        "Threshold": "2",
+        "Threshold": "1",
         "ComparisonOperator": "LessThanThreshold",
         "AlarmActions": [{ "Ref": "AlarmTopic" }]
       }
     },
-    "ELBConnectionsAlarm": {
+    "ELB500ErrorsAlarm": {
       "Type": "AWS::CloudWatch::Alarm",
       "Properties": {
         "AlarmName" : "CMR-Dash-ELB-500Errors",
-        "AlarmDescription": "Alarm if elb over 20 500 errors in a minute",
+        "AlarmDescription": "Alarm if elb over 20 500 errors in 5 minutes",
         "Namespace": "AWS/ELB",
         "MetricName": "HTTPCode_ELB_5XX_Count",
         "Dimensions": [{
-          "Name": "ELBName",
+          "Name": "LoadBalancerName",
           "Value" : { "Ref": "ELB" }
         }],
         "Statistic": "Sum",
-        "Period": "60",
+        "Period": "300",
         "EvaluationPeriods": "1",
         "Threshold": "20",
         "ComparisonOperator": "GreaterThanThreshold",
