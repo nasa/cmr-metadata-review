@@ -31,7 +31,7 @@ bundle install
 sudo vi /etc/nginx/nginx.conf
 //added in http section of .conf file
 
-    upstream cmrdash {
+    upstream arcdash {
         server 127.0.0.1:3000;
     }
 
@@ -40,7 +40,7 @@ sudo vi /etc/nginx/nginx.conf
 
 
     location / {
-                proxy_pass http://cmrdash;
+                proxy_pass http://arcdash;
                 proxy_set_header Host $host;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             }
