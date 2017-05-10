@@ -10,6 +10,11 @@
       "Description" : "The env of this script Prod or SIT"
     },
 
+    "AMIId" : {
+      "Type" : "String",
+      "Description" : "The alphanumeric ID of the AMI to use"
+    },
+
     "KeyName" : {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type" : "AWS::EC2::KeyPair::KeyName",
@@ -215,7 +220,7 @@
         }
       },
       "Properties" : {
-        "ImageId"        : "ami-abf063bd",
+        "ImageId"        : { "Ref" : "AMIId" },
         "SecurityGroups" : [ { "Ref" : "WebServerSecurityGroup" } ],
         "InstanceType"   : { "Ref" : "WebServerInstanceType" },
         "IamInstanceProfile" : { "Ref" : "InstanceProfileARN" },
@@ -231,7 +236,6 @@
           "rm -rf /home/ec2-user/cmr-metadata-review\n",
           "git clone https://", { "Ref" : "GitUserName" }, ":", { "Ref" : "GitPassword" }, "@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git /home/ec2-user/cmr-metadata-review\n",
           "sh /home/ec2-user/cmr-metadata-review/CloudFormation/test.sh\n",
-          "apachectl stop\n",
           "service nginx restart\n",
           "sudo service awslogs start\n",
           "aws s3 cp s3://$S3BUCKET/env.txt /home/ec2-user/cmr-metadata-review/.env", "\n",
