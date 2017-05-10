@@ -17,3 +17,9 @@ enter password
 
 //notes about scripting
 https://zaiste.net/posts/backup_postgresql_to_amazon_s3/
+
+//adding to ssh agent
+//adds key to local list
+ssh-add <keyname.pem>
+
+ssh -A <endpoint>

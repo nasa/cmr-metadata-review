@@ -5,13 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+if User.where(email: 'abaker@element84.com').first.nil?
   user = User.new
-user.email = 'abaker@element84.com'
-user.password = 'Password101'
-user.admin = true
-user.curator = true
-user.save
+  user.email = 'abaker@element84.com'
+  user.password = 'Password101'
+  user.admin = true
+  user.curator = true
+  user.save
+end
 
+if User.where(email: 'andrew@element84.com').first.nil?
   user = User.new
 user.email = 'andrew@element84.com'
 user.password = 'Password101'
@@ -19,12 +22,14 @@ user.admin = true
 user.curator = true
 user.save
 
+if User.where(email: 'general@element84.com').first.nil?
   user = User.new
-user.email = 'general@element84.com'
-user.password = 'Password101'
-user.admin = false
-user.curator = false
-user.save
+  user.email = 'general@element84.com'
+  user.password = 'Password101'
+  user.admin = false
+  user.curator = false
+  user.save
+end
 
 # collection = Collection.new
 # collection.concept_id = "C167310-GHRC"
