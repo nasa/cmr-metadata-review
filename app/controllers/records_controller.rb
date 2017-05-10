@@ -88,30 +88,6 @@ class RecordsController < ApplicationController
 
       record.update_colors(params["color_code"])
 
-
-      #flags are stored in a hash => list relationship
-      #each hash key is a column of a record
-      #each value is a list containing the string names of each checked flag for that key
-      #ie JSON.parse(flag_example.rawJSON)["shortName"] == ["accessibility", "usability"]
-      flags_hash = record.get_flags
-      section_titles.each do |title|
-        flags_hash[title] = [];
-      end
-
-      #example structure of the params
-      # "flag"=>{"InsertTime"=>{"Accessibility"=>"on", "Usability"=>"on", "Traceability"=>"on"}, "LastUpdate"=>{"Traceability"=>"on"}}
-      if params["flag"]
-        params["flag"].each do |field, flag_hash|
-          flag_hash.each do |flag, status|
-            if status == "on"
-              flags_hash[field].push(flag)
-            end
-          end
-        end
-      end
-      record.update_flags(flags_hash)
-
-
       opinion_values = record.get_opinions
       section_titles.each do |title|
         opinion_values[title] = false

@@ -1,6 +1,9 @@
 <div class="page_header">
   <div class="header_title"> 
     <h3><%= title %></h3>
+    <% if current_user.admin %>
+      <p>CMR Last Update: <%=RecordsUpdateLock.formatted_last_update%></p>
+    <% end %>
   </div>
 
   <div class="header_menu">
@@ -23,6 +26,7 @@
             <li><a href="<%=reports_search_path%>">Reports By Selection</a></li>
           </ul>
         </li>
+
         <li>
           <a href="#" class="menu_link header_button">
             <i class="fa fa-sliders"></i>
