@@ -15,6 +15,12 @@
       "Description" : "The alphanumeric ID of the AMI to use"
     },
 
+    "SSLCertArn" : {
+      "Description" : "The ARN for the ssl certificate to be used for elb",
+      "Type" : "String"
+    },
+
+
     "KeyName" : {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type" : "AWS::EC2::KeyPair::KeyName",
@@ -96,7 +102,14 @@
         "CrossZone" : "true",
         "SecurityGroups" : [ { "Ref" : "PublicLoadBalancerSecurityGroup" } ],
         "Subnets" : [ { "Ref" : "PublicSubnetId" } ],
-        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" } ],
+        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" },
+                        { 
+                          "LoadBalancerPort" : "443", 
+                          "InstancePort" : "80", 
+                          "Protocol" : "HTTPS",
+                          "SSLCertificateId" : { "Ref" : "SSLCertArn" }
+                        }                     
+                      ],
         "HealthCheck" : {
           "Target" : "HTTP:80/",
           "HealthyThreshold" : "3",
