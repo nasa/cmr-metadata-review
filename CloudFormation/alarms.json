@@ -10,6 +10,11 @@
       "Type" : "String"
     },
 
+    "AlarmEMail2" : {
+      "Description" : "Email to receive cloudwatch alarms",
+      "Type" : "String"
+    },
+
     "RDS" : {
       "Description" : "ID of the RDS arn to set up alarms for",
       "Type" : "String"
@@ -23,10 +28,6 @@
     "ELB" : {
       "Description" : "ID of the elb arn to set up alarms for",
       "Type" : "String"
-    },
-    "Route53" : {
-      "Description" : "ID of the route53 arn to set up alarms for",
-      "Type" : "String"
     }
   },
 
@@ -39,6 +40,10 @@
         "TopicName" : "CMR-Dashboard", 
         "Subscription": [{
           "Endpoint": { "Ref": "AlarmEMail" },
+          "Protocol": "email"
+        },
+        {
+          "Endpoint": { "Ref": "AlarmEMail2" },
           "Protocol": "email"
         }]
       }
@@ -157,26 +162,6 @@
         "ComparisonOperator": "GreaterThanThreshold",
         "AlarmActions": [{ "Ref": "AlarmTopic" }]
       }
-    },
-    "Route53Alarm": {
-      "Type": "AWS::CloudWatch::Alarm",
-      "Properties": {
-        "AlarmName" : "CMR-Dash-Route53",
-        "AlarmDescription": "Alarm if route53 Healthcheck fails every 1 min",
-        "Namespace": "AWS/Route53",
-        "MetricName": "HealthCheckStatus",
-        "Dimensions": [{
-          "Name": "Route53Name",
-          "Value" : { "Ref": "Route53" }
-        }],
-        "Statistic": "Minimum",
-        "Period": "60",
-        "EvaluationPeriods": "1",
-        "Threshold": "1",
-        "ComparisonOperator": "LessThanThreshold",
-        "AlarmActions": [{ "Ref": "AlarmTopic" }]
-      }
     }
-
   }
 }
