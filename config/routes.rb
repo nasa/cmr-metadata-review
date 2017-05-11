@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get '/reports/search', to: 'reports#search'
   get '/reports/selection', to: 'reports#selection'
 
+  get '/elb_status', to: 'site#elb_status'
+
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'
     get "/documentation" => redirect("/doc/index.html")
