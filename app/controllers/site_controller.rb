@@ -1,7 +1,7 @@
 class SiteController < ApplicationController
 
-   before_filter :authenticate_user!
-   before_filter :ensure_curation, :except => [:general_home]
+   before_filter :authenticate_user!, :except => [:elb_status]
+   before_filter :ensure_curation, :except => [:general_home, :elb_status]
 
    def home
     #ingested records by user

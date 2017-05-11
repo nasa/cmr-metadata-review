@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/elb_status', to: 'site#elb_status'
+
   Rails.application.routes.draw do
       devise_for :users, controllers: {
         registrations: 'users/registrations'
@@ -28,8 +30,6 @@ Rails.application.routes.draw do
   get '/reports/provider', to: 'reports#provider'
   get '/reports/search', to: 'reports#search'
   get '/reports/selection', to: 'reports#selection'
-
-  get '/elb_status', to: 'site#elb_status'
 
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'
