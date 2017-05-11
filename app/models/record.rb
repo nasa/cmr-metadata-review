@@ -5,6 +5,7 @@
 class Record < ActiveRecord::Base
   include RecordHelper
   after_initialize :load_format_module
+  attr_accessor :format
 
   has_many :record_datas
   belongs_to :recordable, :polymorphic => true
