@@ -96,7 +96,7 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'This collection has already been ingested into the system'
       return
     end
-    byebug
+
     begin
       #guard against bringing in an unsupported format
       native_format = Cmr.get_raw_collection_format(concept_id)
@@ -122,7 +122,6 @@ class CollectionsController < ApplicationController
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
-        byebug
         record_data_list.each do |record_data|
           record_data.save!
         end
