@@ -25,4 +25,8 @@ class SiteController < ApplicationController
 
   end
 
+  def elb_status
+    render :json => {"elb_status" => "ok" }
+  end
+
 end
