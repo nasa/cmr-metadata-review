@@ -16,11 +16,12 @@ end
 
 if User.where(email: 'andrew@element84.com').first.nil?
   user = User.new
-user.email = 'andrew@element84.com'
-user.password = 'Password101'
-user.admin = true
-user.curator = true
-user.save
+  user.email = 'andrew@element84.com'
+  user.password = 'Password101'
+  user.admin = true
+  user.curator = true
+  user.save
+end
 
 if User.where(email: 'general@element84.com').first.nil?
   user = User.new
