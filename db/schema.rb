@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426191451) do
+ActiveRecord::Schema.define(version: 20170419182354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170426191451) do
     t.string   "revision_id",                     null: false
     t.boolean  "closed",          default: false
     t.datetime "closed_date"
+    t.string   "format",          default: ""
   end
 
   add_index "records", ["recordable_id", "revision_id"], name: "records_recordable_id_revision_id_key", unique: true, using: :btree

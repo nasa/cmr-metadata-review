@@ -53,6 +53,71 @@ class Cmr
                                 ],
                                 "Spatial/GranuleSpatialRepresentation"]
 
+    REQUIRED_DIF10_FIELDS =    [
+                                  "Entry_ID/Short_Name",
+                                  "Entry_ID/Version",
+                                  "Entry_Title",
+                                  "Science_Keywords/Category",
+                                  "Science_Keywords/Topic",
+                                  "Science_Keywords/Term",
+                                  "Platform/Short_Name",
+                                  "Platform/Instrument/Short_Name",
+                                  [
+                                    "Temporal_Coverage/Range_DateTime/Beginning_Date_Time",
+                                    "Temporal_Coverage/Single_Date_Time",
+                                    [
+                                      "Temporal_Coverage/Periodic_DateTime/Name",
+                                      "Temporal_Coverage/Periodic_DateTime/Start_Date",
+                                      "Temporal_Coverage/Periodic_DateTime/End_Date",
+                                      "Temporal_Coverage/Periodic_DateTime/Duration_Unit",
+                                      "Temporal_Coverage/Periodic_DateTime/Duration_Value",
+                                      "Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Unit",
+                                      "Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Value"
+                                    ],
+                                    [
+                                      "Temporal_Coverage/Paleo_DateTime/Paleo_Start_Date",
+                                      "Temporal_Coverage/Paleo_DateTime/Paleo_Stop_Date"
+                                    ]
+                                  ],
+                                  "Data_Set_Progress",
+                                  "Spatial_Coverage/Granule_Spatial_Representation",
+                                  "Spatial_Coverage/Geometry/Coordinate_System", 
+                                  [
+                                    [
+                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Southernmost_Latitude",
+                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Northernmost_Latitude",
+                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Westernmost_Longitude",
+                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Easternmost_Longitude"
+                                    ],
+                                    [
+                                      "Spatial_Coverage/Geometry/Point/Point_Longitude",
+                                      "Spatial_Coverage/Geometry/Point/Point_Latitude"
+                                    ],
+                                    [
+                                      "Spatial_Coverage/Geometry/Line/Point/Point_Longitude",
+                                      "Spatial_Coverage/Geometry/Line/Point/Point_Latitude",
+                                    ],
+                                    [
+                                      "Spatial_Coverage/Geometry/Polygon/Boundary/Point/Point_Longitude",
+                                      "Spatial_Coverage/Geometry/Polygon/Boundary/Point/Point_Latitude"
+                                    ]
+                                  ],
+                                  "Project/Short_Name",
+                                  "Organization/Organization_Type",
+                                  "Organization/Organization_Name/Short_Name",
+                                  "Summary/Abstract",
+                                  "Related_URL/URL_Content_Type/Type",
+                                  "Related_URL/URL",
+                                  "Product_Level_ID",
+                                  "Metadata_Dates/Metadata_Creation",
+                                  "Metadata_Dates/Metadata_Last_Revision",
+                                  "Metadata_Dates/Data_Creation",
+                                  "Metadata_Dates/Data_Last_Revision",
+                                  "Dataset_Citation/Persistent_Identifier/Type",
+                                  "Dataset_Citation/Persistent_Identifier/Identifier"
+                                ]               
+
+
     REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
                                 "InsertTime",
                                 "LastUpdate",
@@ -85,6 +150,17 @@ class Cmr
     HTTParty.get(url, timeout: TIMEOUT_MARGIN)
   end
 
+  # ====Params   
+  # User object
+  # ====Returns
+  # Array of Records
+  # ==== Method
+  # Takes the date of last update from the RecordsUpdateLock model
+  # Queries the CMR for all records that have been updated since the "last update" minus one day.
+  # checks the updated records list for records which have the same concept_id as as record in our system
+  # Queries CMR again to download and ingest all updated records with matching concept_id
+  # returns all of the updated records which match a concept_id
+
   def self.update_collections(current_user)
     update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
     last_date = update_lock.get_last_update
@@ -114,9 +190,26 @@ class Cmr
     return total_added_records
   end
 
+  # ====Params   
+  # string of date(no time), Integer 
+  # ====Returns
+  # Hash of CMR response
+  # ==== Method
+  # Queries cmr for collections updated since provided data, returns parsed response
+
   def self.collections_updated_since(date_string, page_num = 1)
     raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
+
+
+  # ====Params   
+  # hash of CMR response, User object
+  # ====Returns
+  # Array of records
+  # ==== Method
+  # Filters provided CMR response to only the records that match concept_id's already in system
+  # Ingests and saves all new records
+  # Returns Array of the added record objects. 
 
   def self.process_updated_collections(raw_results, current_user)
     #mapping to hashes of concept_id/revision_id
@@ -160,18 +253,63 @@ class Cmr
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
 
-  def self.get_collection(concept_id, raw_collection = nil)
-    if raw_collection.nil?
-      raw_collection = Cmr.get_raw_collection(concept_id)
-    end
+  def self.get_collection(concept_id)
+    raw_collection = Cmr.get_raw_collection(concept_id)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_COLLECTION_FIELDS)
     required_fields_hash
   end
 
-  def self.get_raw_collection(concept_id)
-    url = Cmr.api_url("collections", "echo10", {"concept_id" => concept_id})
+  # ====Params   
+  # string 
+  # ====Returns
+  # Hash of {column_name => value}
+  # ==== Method
+  # requests the DIF10 version of a record from CMR
+  # processes the returned data and adds required fields as defined in Cmr.rb
+  # returns post processed hash  
+
+  def self.get_dif10_collection(concept_id)
+    raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
+    results_hash = flatten_collection(raw_collection)
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_DIF10_FIELDS)
+    required_fields_hash
+  end
+
+  # ====Params   
+  # string 
+  # ====Returns
+  # string
+  # ==== Method
+  # Queries the CMR for a records "native format"
+  # This tells the user what format a record was uploaded to CMR in.
+  # Currently returns "echo10" by default, or "dif10" if native format is dif10 
+
+  def self.get_raw_collection_format(concept_id)
+    url = Cmr.api_url("collections", "native", {"concept_id" => concept_id})
+    collection_xml = Cmr.cmr_request(url).parsed_response
+    collection_results = Hash.from_xml(collection_xml)["results"]
+    raw_format = collection_results["result"]["format"]
+    if raw_format.include? "dif10"
+      return "dif10"
+    else
+      return "echo10"
+    end
+  end
+
+  # ====Params   
+  # string, string
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Queries the CMR for a metadata record
+  # returns the response hash without processing
+  # need the raw return format to run automated scripts against
+
+  def self.get_raw_collection(concept_id, type = "echo10")
+    url = Cmr.api_url("collections", type, {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]
@@ -184,8 +322,22 @@ class Cmr
       raise CmrError
     end
 
-    collection_results["result"]["Collection"]
+    if type == "echo10"
+      collection_results["result"]["Collection"]
+    elsif type == "dif10"
+      collection_results["result"]["DIF"]
+    end
   end
+
+  # ====Params   
+  # string, string
+  # ====Returns
+  # Hash
+  # ==== Method
+  # Queries the CMR for a metadata record
+  # returns the response hash without processing
+  # need the raw return format to run automated scripts against
+
 
   def self.get_raw_granule(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
@@ -237,8 +389,7 @@ class Cmr
   # Iterates through parameter hash adding any UMM required fields    
   # List of required fields set in hardcoded list within method
 
-  def self.add_required_collection_fields(collection_hash)
-    required_fields = REQUIRED_COLLECTION_FIELDS
+  def self.add_required_collection_fields(collection_hash, required_fields = REQUIRED_COLLECTION_FIELDS)
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)

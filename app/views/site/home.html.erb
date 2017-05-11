@@ -42,7 +42,6 @@
             <th>ShortName</th>
             <th class="center_text">Version</th>
             <th>Ingested By</th>
-            <th class="center_text"># Script Flags</th>
             <th>Selection</th>
         </tr>
 
@@ -53,7 +52,6 @@
               <td><%= record.recordable.short_name %></td>
               <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
-              <td class="center_text"><%= record.script_score %></td>
               <td class="center_text"><input type="radio" id="table1<%= index.to_s %>" name="table1Selection" value="<%= index.to_s %>"/></td>
           </tr>
         <% end %>
@@ -86,7 +84,6 @@
             <th>ShortName</th>
             <th class="center_text">Version</th>
             <th>Ingested By</th>
-            <th class="center_text"># Script Flags</th>
             <th class="center_text"># Completed Reviews</th>
             <th class="center_text"># Second Reviews Requested</th>
             <th>Selection</th>
@@ -99,7 +96,6 @@
               <td><%= record.recordable.short_name %></td>
               <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
-              <td class="center_text"><%= record.script_score %></td>
               <td class="center_text"><%= record.completed_review_count %></td>
               <td class="center_text"><%= record.second_opinion_count %></td>
               <td class="center_text"><input type="radio" id="table2<%= index.to_s %>" name="table2Selection" value="<%= index.to_s %>"/></td>
