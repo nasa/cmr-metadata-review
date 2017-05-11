@@ -102,7 +102,7 @@
         "CrossZone" : "true",
         "SecurityGroups" : [ { "Ref" : "PublicLoadBalancerSecurityGroup" } ],
         "Subnets" : [ { "Ref" : "PublicSubnetId" } ],
-        "Listeners" : [ 
+        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" },
                         { 
                           "LoadBalancerPort" : "443", 
                           "InstancePort" : "80", 
