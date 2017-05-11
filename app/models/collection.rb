@@ -49,13 +49,16 @@ class Collection < ActiveRecord::Base
 
   def self.assemble_new_record(concept_id, revision_id, current_user)
     native_format = Cmr.get_raw_collection_format(concept_id)
-    #the default here is echo10
+
     if native_format == "dif10"
       collection_data = Cmr.get_dif10_collection(concept_id)
       short_name = collection_data["Entry_ID/Short_Name"]
-    else 
+    elsif native_format == "echo10"
       collection_data = Cmr.get_collection(concept_id)
       short_name = collection_data["ShortName"]
+    else 
+      #Guard against records that come in with unsupported types
+      return
     end
 
 
