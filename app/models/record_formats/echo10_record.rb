@@ -3,6 +3,13 @@
 #Since individual record formats have different underlying structures of RecordData objects
 #unique accessors are needed for each format to access commonly requested data.
 module RecordFormats::Echo10Record
+  SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
+
+
+  def get_section_titles
+    SECTION_TITLES
+  end
+
   # ====Params   
   # None
   # ====Returns
@@ -31,33 +38,6 @@ module RecordFormats::Echo10Record
   # Accesses the record's RecordData attribute and then returns the value of the "VersionId" field
   def version_id
     self.get_column("VersionId")
-  end
-
-
-
-  #should return a list where each entry is a (title,[title_list])
-  def sections
-    section_list = []
-    
-    contacts = self.get_section("Contacts/Contact")
-    platforms = self.get_section("Platforms/Platform")
-    campaigns = self.get_section("Campaigns/Campaign")
-    temporal = self.get_section("Temporal")
-    scienceKeywords = self.get_section("ScienceKeywords/ScienceKeyword")
-    spatial = self.get_section("Spatial")
-    online = self.get_section("OnlineResources/OnlineResource")
-    accessURLs = self.get_section("OnlineAccessURLs")
-    csdt = self.get_section("CSDTDescriptions")
-    additional = self.get_section("AdditionalAttributes/AdditionalAttribute")
-
-    section_list = section_list + contacts + platforms + campaigns + spatial + temporal + scienceKeywords + online + accessURLs + csdt + additional
-    #finding the entries not in other sections
-    used_titles = (section_list.map {|section| section[1]}).flatten
-    all_titles = self.record_datas.map { |data| data.column_name }
-
-    others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
-
-    section_list = others + section_list
   end
 
 

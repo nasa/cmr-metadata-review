@@ -416,6 +416,22 @@ class Record < ActiveRecord::Base
     binary_script_values
   end
 
+  #should return a list where each entry is a (title,[title_list])
+  def sections
+    section_list = []
+    
+    get_section_titles.each do |title|
+      section_list += self.get_section(title)
+    end
+
+    used_titles = (section_list.map {|section| section[1]}).flatten
+    all_titles = self.record_datas.map { |data| data.column_name }
+
+    others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
+
+    section_list = others + section_list
+  end
+
   def get_section(section_name)
     section_list = []
     all_titles = self.record_datas.map { |data| data.column_name }

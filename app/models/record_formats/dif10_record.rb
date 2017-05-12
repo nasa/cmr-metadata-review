@@ -3,6 +3,13 @@
 #Since individual record formats have different underlying structures of RecordData objects
 #unique accessors are needed for each format to access commonly requested data.
 module RecordFormats::Dif10Record
+  SECTION_TITLES = ["Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Related_URL", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
+
+  def get_section_titles
+    SECTION_TITLES
+  end
+
+
   # ====Params   
   # None
   # ====Returns
@@ -31,32 +38,6 @@ module RecordFormats::Dif10Record
   # Accesses the record's RecordData attribute and then returns the value of the "VersionId" (equivalent) field
   def version_id
     self.get_column("Entry_ID/Version")
-  end
-
-  #should return a list where each entry is a (title,[title_list])
-  def sections
-    section_list = []
-    platform = self.get_section("Platform")
-    science_keywords = self.get_section("Science_Keywords")
-    dataset_citation = self.get_section("Dataset_Citation")
-    organization = self.get_section("Organization")
-    personnel = self.get_section("Personnel")
-    related_url = self.get_section("Related_URL")
-    additional = self.get_section("Additional_Attributes")
-    temporal_coverage = self.get_section("Temporal_Coverage")
-    spatial_coverage = self.get_section("Spatial_Coverage")
-    project = self.get_section("Project")
-    metadata_dates = self.get_section("Metadata_Dates")
-
-    section_list = section_list + platform + science_keywords + dataset_citation + organization + personnel + related_url + additional + temporal_coverage + spatial_coverage + project + metadata_dates
-
-
-    used_titles = (section_list.map {|section| section[1]}).flatten
-    all_titles = self.record_datas.map { |data| data.column_name }
-
-    others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
-
-    section_list = others + section_list
   end
 
   #There is currently no script for DIF10 records
