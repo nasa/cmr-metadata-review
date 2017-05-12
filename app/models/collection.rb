@@ -2,6 +2,9 @@ class Collection < ActiveRecord::Base
   has_many :records, :as => :recordable
   has_many :granules
 
+  SUPPORTED_FORMATS = ["dif10", "echo10"]
+  INCLUDE_GRANULE_FORMATS = ["echo10"]
+
   # ====Params   
   # None
   # ====Returns
@@ -51,10 +54,10 @@ class Collection < ActiveRecord::Base
     native_format = Cmr.get_raw_collection_format(concept_id)
 
     if native_format == "dif10"
-      collection_data = Cmr.get_dif10_collection(concept_id)
+      collection_data = Cmr.get_collection(concept_id, native_format)
       short_name = collection_data["Entry_ID/Short_Name"]
     elsif native_format == "echo10"
-      collection_data = Cmr.get_collection(concept_id)
+      collection_data = Cmr.get_collection(concept_id, native_format)
       short_name = collection_data["ShortName"]
     else 
       #Guard against records that come in with unsupported types
