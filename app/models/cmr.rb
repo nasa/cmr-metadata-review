@@ -162,7 +162,11 @@ class Cmr
   # returns all of the updated records which match a concept_id
 
   def self.update_collections(current_user)
-    update_lock = (RecordsUpdateLock.find_or_create_by id: 1).lock!
+    update_lock = RecordsUpdateLock.find_by id: 1
+    if update_lock.nil?
+      update_lock = RecordsUpdateLock.new(id: 1, last_update: DateTime.now)
+    end
+    
     last_date = update_lock.get_last_update
     #getting date into format
     #taking last update and going back a day to give cmr time to update
