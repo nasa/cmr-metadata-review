@@ -244,7 +244,7 @@ class Cmr
   end
 
   # ====Params   
-  # string concept_id
+  # string concept_id, string data_type
   # ====Returns
   # Hash of the data contained in a CMR collection object
   # ==== Method
@@ -253,28 +253,19 @@ class Cmr
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
 
-  def self.get_collection(concept_id)
-    raw_collection = Cmr.get_raw_collection(concept_id)
+  def self.get_collection(concept_id, data_format = "echo10")
+    if data_format == "echo10"
+      required_fields = REQUIRED_COLLECTION_FIELDS
+    elsif data_format == "dif10"
+      required_fields = REQUIRED_DIF10_FIELDS 
+    else
+      required_fields = []
+    end
+          
+    raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_COLLECTION_FIELDS)
-    required_fields_hash
-  end
-
-  # ====Params   
-  # string 
-  # ====Returns
-  # Hash of {column_name => value}
-  # ==== Method
-  # requests the DIF10 version of a record from CMR
-  # processes the returned data and adds required fields as defined in Cmr.rb
-  # returns post processed hash  
-
-  def self.get_dif10_collection(concept_id)
-    raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
-    results_hash = flatten_collection(raw_collection)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_DIF10_FIELDS)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
     required_fields_hash
   end
 
@@ -283,19 +274,21 @@ class Cmr
   # ====Returns
   # string
   # ==== Method
-  # Queries the CMR for a records "native format"
+  # Queries the CMR for a record's original format
   # This tells the user what format a record was uploaded to CMR in.
-  # Currently returns "echo10" by default, or "dif10" if native format is dif10 
+  # Uses the cmr internal atom format as this provides a standardized structure to get the "originalFormat" attribute from
 
   def self.get_raw_collection_format(concept_id)
-    url = Cmr.api_url("collections", "native", {"concept_id" => concept_id})
+    url = Cmr.api_url("collections", "atom", {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
-    collection_results = Hash.from_xml(collection_xml)["results"]
-    raw_format = collection_results["result"]["format"]
+    collection_results = Hash.from_xml(collection_xml)["feed"]
+    raw_format = collection_results["entry"]["originalFormat"].downcase
     if raw_format.include? "dif10"
       return "dif10"
-    else
+    elsif raw_format.include? "echo10"
       return "echo10"
+    else
+      return raw_format
     end
   end
 
