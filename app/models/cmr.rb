@@ -244,7 +244,7 @@ class Cmr
   end
 
   # ====Params   
-  # string concept_id
+  # string concept_id, string data_type
   # ====Returns
   # Hash of the data contained in a CMR collection object
   # ==== Method
@@ -253,28 +253,19 @@ class Cmr
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
 
-  def self.get_collection(concept_id)
-    raw_collection = Cmr.get_raw_collection(concept_id)
+  def self.get_collection(concept_id, data_format = "echo10")
+    if data_format == "echo10"
+      required_fields = REQUIRED_COLLECTION_FIELDS
+    elsif data_format == "dif10"
+      required_fields = REQUIRED_DIF10_FIELDS 
+    else
+      required_fields = []
+    end
+          
+    raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_COLLECTION_FIELDS)
-    required_fields_hash
-  end
-
-  # ====Params   
-  # string 
-  # ====Returns
-  # Hash of {column_name => value}
-  # ==== Method
-  # requests the DIF10 version of a record from CMR
-  # processes the returned data and adds required fields as defined in Cmr.rb
-  # returns post processed hash  
-
-  def self.get_dif10_collection(concept_id)
-    raw_collection = Cmr.get_raw_collection(concept_id, "dif10")
-    results_hash = flatten_collection(raw_collection)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, REQUIRED_DIF10_FIELDS)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
     required_fields_hash
   end
 

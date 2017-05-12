@@ -100,7 +100,7 @@ class CollectionsController < ApplicationController
     begin
       #guard against bringing in an unsupported format
       native_format = Cmr.get_raw_collection_format(concept_id)
-      if (native_format != "dif10") && (native_format != "echo10") 
+      if !(Collection::SUPPORTED_FORMATS.include? native_format) 
         redirect_to home_path
         flash[:alert] = "The system could not ingest the selected record, #{native_format} format records are not currently supported"
         return
@@ -109,9 +109,9 @@ class CollectionsController < ApplicationController
       #creating all the collection related objects
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
-      #only selecting granules for echo10 records per business rules
-      if native_format == "echo10"
-          granules_components = []
+      granules_components = []
+      #only selecting granules for certain formats per business rules
+      if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
           #nil gets turned into 0
           granules_count = params["granulesCount"].to_i
           #creating all the Granule related objects
