@@ -70,6 +70,9 @@ log_stream_name = {instance_id}
 initial_position = end_of_file
 log_group_name = /aws/cmr/prod_rails_log
 
+//add to user data
+service awslogs start
+
 
 //set up DB connection
 

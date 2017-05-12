@@ -16,7 +16,7 @@
   <% if page == "navigation" %>
     <script type="text/javascript">
       document.getElementById("nav_back_button").onclick = function() {
-        document.location.href = "<%= collection_path(id: params["id"], concept_id: @concept_id) %>"
+        document.location.href = "<%= collection_path(id: params["id"], concept_id: record.concept_id) %>"
       }
     </script>
   <% else %>
@@ -45,8 +45,9 @@
       <div class="nav_review_details">
     <% end %>
   
-    <p><strong>LONG NAME : </strong><%= long_name %></p>
-    <p>SHORT NAME : <%= short_name %></p>
+    <p><strong>LONG NAME : </strong><%= record.long_name %></p>
+    <p>SHORT NAME : <%= record.short_name %></p>
+    <p>FORMAT : <%= record.format %></p>
   </div>
 
   <% if page == "review" %>

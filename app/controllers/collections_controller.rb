@@ -90,45 +90,33 @@ class CollectionsController < ApplicationController
     concept_id = params["concept_id"]
     revision_id = params["revision_id"]
 
+    #guard against creating a duplicate record
     if Collection.record_exists?(concept_id, revision_id)
       redirect_to home_path
       flash[:alert] = 'This collection has already been ingested into the system'
       return
     end
 
-    begin 
-      raw_collection = Cmr.get_raw_collection(concept_id)
-      collection_data = Cmr.get_collection(concept_id, raw_collection)
-      short_name = collection_data["ShortName"]
-      ingest_time = DateTime.now
+    begin
+      #guard against bringing in an unsupported format
+      native_format = Cmr.get_raw_collection_format(concept_id)
+      if !(Collection::SUPPORTED_FORMATS.include? native_format) 
+        redirect_to home_path
+        flash[:alert] = "The system could not ingest the selected record, #{native_format} format records are not currently supported"
+        return
+      end
 
-      #nil gets turned into 0
-      granules_count = params["granulesCount"].to_i
-
+      #creating all the collection related objects
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
-      #returns a list of granule data
-      granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
-      #replacing the data with new granule & record & ingest objects
-
-      granules_components =  (granules_to_save.map do |granule_data| 
-                              granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-                              new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
-                              new_granule_record.save
-
-                              granule_record_data_list = []
-                              granule_data["Granule"].each do |key, value|
-                                granule_record_data = RecordData.new(record: new_granule_record)
-                                granule_record_data.last_updated = DateTime.now
-                                granule_record_data.column_name = key
-                                granule_record_data.value = value
-                                granule_record_data.daac = granule_data["concept_id"].partition('-').last
-                                granule_record_data_list.push(granule_record_data)
-                              end
-                              #granule_record_data = RecordData.new(datable: new_granule_record, rawJSON: granule_data.to_json)
-                              granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
-                              [ granule_object, new_granule_record, granule_record_data_list, granule_ingest ]
-                             end) 
+      granules_components = []
+      #only selecting granules for certain formats per business rules
+      if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
+          #nil gets turned into 0
+          granules_count = params["granulesCount"].to_i
+          #creating all the Granule related objects
+          granules_components = Granule.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
+      end
 
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
@@ -148,14 +136,14 @@ class CollectionsController < ApplicationController
                                           }
       end
 
-      new_collection_record.create_script(raw_collection)
+      new_collection_record.create_script
 
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
       granule_records.each do |record|
         record.create_script
       end
-
+  
       flash[:notice] = "The selected collection has been successfully ingested into the system"
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
