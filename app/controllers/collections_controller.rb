@@ -136,7 +136,11 @@ class CollectionsController < ApplicationController
                                           }
       end
 
-      new_collection_record.create_script
+      #In production there is an egress issue with certain link types given in metadata
+      #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+      Timeout::timeout(12) {
+        new_collection_record.create_script
+      }
 
       #getting list of records for script
       granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
@@ -151,6 +155,8 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue Timeout::error
+      flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
     rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
     end
