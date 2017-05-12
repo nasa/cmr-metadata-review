@@ -1,9 +1,14 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "AWS CloudFormation Sample Template VPC_RDS_DB_Instance: Sample template showing how to create an RDS DBInstance in an existing Virtual Private Cloud (VPC). **WARNING** This template creates an Amazon Relational Database Service database instance. You will be billed for the AWS resources used if you create a stack from this template.",
+  "Description" : "This template sets up an rds instance within the vpc specified in the params, output is the rds address",
 
   "Parameters" : {
+
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
 
     "VpcId" : {
       "Type" : "String",
@@ -15,7 +20,12 @@
       "Description" : "The list of SubnetIds, for at least two Availability Zones in the region in your Virtual Private Cloud (VPC)"
     },
 
-    "SubnetIpBlock" : {
+    "PrivateSubnetIpBlock" : {
+      "Type" : "String",
+      "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
+    },
+
+    "PublicSubnetIpBlock" : {
       "Type" : "String",
       "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
     },
@@ -76,7 +86,10 @@
       "Type" : "AWS::RDS::DBSubnetGroup",
       "Properties" : {
         "DBSubnetGroupDescription" : "Subnets available for the RDS DB Instance",
-        "SubnetIds" : { "Ref" : "Subnets" }
+        "SubnetIds" : { "Ref" : "Subnets" },
+        "Tags" : [
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ]
       }
     },
 
@@ -86,28 +99,47 @@
         "Properties" :
         {
            "GroupDescription" : "Security group for RDS DB Instance.",
-           "SecurityGroupIngress" : [{
-             "IpProtocol" : "tcp",
-             "FromPort" : "5432",
-             "ToPort" : "5432",
-             "CidrIp" : { "Ref" : "SubnetIpBlock" }
-            }],
-           "VpcId" : { "Ref" : "VpcId" }
+           "SecurityGroupIngress" : [ {
+                                       "IpProtocol" : "tcp",
+                                       "FromPort" : "5432",
+                                       "ToPort" : "5432",
+                                       "CidrIp" : { "Ref" : "PrivateSubnetIpBlock" }
+                                      },
+                                      {
+                                       "IpProtocol" : "tcp",
+                                       "FromPort" : "5432",
+                                       "ToPort" : "5432",
+                                       "CidrIp" : { "Ref" : "PublicSubnetIpBlock" }
+                                      }
+                                    ],    
+           "VpcId" : { "Ref" : "VpcId" },
+           "Tags" : [
+             {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+           ]
         }
     },
 
     "MyDB" : {
       "Type" : "AWS::RDS::DBInstance",
+      "DeletionPolicy" : "Snapshot",
       "Properties" : {
         "DBName" : { "Ref" : "DBName" },
+        "DBInstanceIdentifier" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] },
         "AllocatedStorage" : { "Ref" : "DBAllocatedStorage" },
         "DBInstanceClass" : { "Ref" : "DBClass" },
         "Engine" : "postgres",
         "EngineVersion" : "9.4.7",
+        "BackupRetentionPeriod" : "30",
+        "CopyTagsToSnapshot" : "true",
+        "PubliclyAccessible" : "false",
         "MasterUsername" : { "Ref" : "DBUsername" } ,
         "MasterUserPassword" : { "Ref" : "DBPassword" },
         "DBSubnetGroupName" : { "Ref" : "MyDBSubnetGroup" },
-        "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ]
+        "VPCSecurityGroups" : [ { "Ref" : "myVPCSecurityGroup" }  ],
+        "MultiAZ": "true",
+        "Tags" : [
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ]
       }
     }
   },

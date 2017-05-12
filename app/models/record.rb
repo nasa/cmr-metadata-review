@@ -185,18 +185,6 @@ class Record < ActiveRecord::Base
     get_field("script_comment")
   end
 
-
-  # ====Params   
-  # None
-  # ====Returns
-  # Hash of "column_names" => "flag_values"
-  # ==== Method
-  # This method looks up the record's associated flag values. 
-  def get_flags
-    get_field("flag")
-  end
-
-
   # ====Params   
   # None
   # ====Returns
@@ -263,19 +251,7 @@ class Record < ActiveRecord::Base
       end
     end
   end
-
-  def update_flags(flags_hash)
-    if flags_hash
-      flags_hash.each do |key, value|
-          data = RecordData.where(record: self, column_name: key).first
-          if data
-            data.flag = value
-           data.save
-         end
-      end
-    end
-  end
-
+  
   def update_opinions(opinions_hash)
     if opinions_hash
       opinions_hash.each do |key, value|

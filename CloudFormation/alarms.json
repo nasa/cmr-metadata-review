@@ -1,0 +1,167 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This template adds alarms to CMR Dashboard Resources",
+
+  "Parameters" : {
+
+    "AlarmEMail" : {
+      "Description" : "Email to receive cloudwatch alarms",
+      "Type" : "String"
+    },
+
+    "AlarmEMail2" : {
+      "Description" : "Email to receive cloudwatch alarms",
+      "Type" : "String"
+    },
+
+    "RDS" : {
+      "Description" : "ID of the RDS arn to set up alarms for",
+      "Type" : "String"
+    },
+
+    "AutoScale" : {
+      "Description" : "ID of the autoscale arn to set up alarms for",
+      "Type" : "String"
+    },
+
+    "ELB" : {
+      "Description" : "ID of the elb arn to set up alarms for",
+      "Type" : "String"
+    }
+  },
+
+  "Resources" : {
+
+    "AlarmTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "DisplayName" : "CMR-Dashboard",
+        "TopicName" : "CMR-Dashboard", 
+        "Subscription": [{
+          "Endpoint": { "Ref": "AlarmEMail" },
+          "Protocol": "email"
+        },
+        {
+          "Endpoint": { "Ref": "AlarmEMail2" },
+          "Protocol": "email"
+        }]
+      }
+    },
+
+    "AutoScaleCpuUtilAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-AutoScaleCPU",
+        "AlarmDescription": "Alarm if autoscale cpu util > 80% for 5 min",
+        "Namespace": "AWS/EC2",
+        "MetricName": "CPUUtilization",
+        "Dimensions": [{
+          "Name": "AutoScalingGroupName",
+          "Value" : { "Ref": "AutoScale" }
+        }],
+        "Statistic": "Average",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "80",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    },
+    "RDSCpuUtilAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-RDS-CPU",
+        "AlarmDescription": "Alarm if rds cpu util > 80% for 15min",
+        "Namespace": "AWS/RDS",
+        "MetricName": "CPUUtilization",
+        "Dimensions": [{
+          "Name": "DBInstanceIdentifier",
+          "Value" : { "Ref": "RDS" }
+        }],
+        "Statistic": "Average",
+        "Period": "900",
+        "EvaluationPeriods": "1",
+        "Threshold": "80",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    },
+    "RDSStorageAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-RDS-Storage",
+        "AlarmDescription": "Alarm if rds has under 1GB of storage, every 15 min",
+        "Namespace": "AWS/RDS",
+        "MetricName": "FreeStorageSpace",
+        "Dimensions": [{
+          "Name": "DBInstanceIdentifier",
+          "Value" : { "Ref": "RDS" }
+        }],
+        "Statistic": "Average",
+        "Period": "900",
+        "EvaluationPeriods": "1",
+        "Threshold": "1000000000",
+        "ComparisonOperator": "LessThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    },
+    "RDSConnectionsAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-RDS-Connections",
+        "AlarmDescription": "Alarm if rds has under 1 connection every 5 minutes",
+        "Namespace": "AWS/RDS",
+        "MetricName": "DatabaseConnections",
+        "Dimensions": [{
+          "Name": "DBInstanceIdentifier",
+          "Value" : { "Ref": "RDS" }
+        }],
+        "Statistic": "Minimum",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "1",
+        "ComparisonOperator": "LessThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    },
+    "ELBConnectionsAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-ELB-HealthyHost",
+        "AlarmDescription": "Alarm if elb has under 1 connections every 5 minutes",
+        "Namespace": "AWS/ELB",
+        "MetricName": "HealthyHostCount",
+        "Dimensions": [{
+          "Name": "LoadBalancerName",
+          "Value" : { "Ref": "ELB" }
+        }],
+        "Statistic": "Minimum",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "1",
+        "ComparisonOperator": "LessThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    },
+    "ELB500ErrorsAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName" : "CMR-Dash-ELB-500Errors",
+        "AlarmDescription": "Alarm if elb over 20 500 errors in 5 minutes",
+        "Namespace": "AWS/ELB",
+        "MetricName": "HTTPCode_ELB_5XX_Count",
+        "Dimensions": [{
+          "Name": "LoadBalancerName",
+          "Value" : { "Ref": "ELB" }
+        }],
+        "Statistic": "Sum",
+        "Period": "300",
+        "EvaluationPeriods": "1",
+        "Threshold": "20",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "AlarmActions": [{ "Ref": "AlarmTopic" }]
+      }
+    }
+  }
+}
