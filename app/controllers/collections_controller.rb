@@ -155,7 +155,7 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-    rescue Timeout::error
+    rescue Timeout::Error
       flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
     rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
