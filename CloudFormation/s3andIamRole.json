@@ -5,6 +5,11 @@
 
   "Parameters" : {
 
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script Prod or SIT"
+    },
+
     "BucketName" : {
       "Description" : "Desired Name for S3 Bucket",
       "Type" : "String"
@@ -40,7 +45,7 @@
                       "s3:Get*",
                       "s3:List*"
                     ],
-                    "Resource": "*"
+                    "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "S3Bucket" } , "/*" ]]}
                   }
                 ]
               }
@@ -65,7 +70,6 @@
              ]
             }
         } ]
-
       }
     },
 
@@ -82,7 +86,10 @@
     "S3Bucket" : {
       "Type" : "AWS::S3::Bucket",
       "Properties" : {
-        "BucketName": { "Ref": "BucketName"}
+        "BucketName": { "Ref": "BucketName"},
+        "Tags" : [
+              {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ]
       }
     },
 

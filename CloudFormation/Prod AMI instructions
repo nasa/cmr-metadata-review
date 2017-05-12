@@ -31,19 +31,29 @@ bundle install
 sudo vi /etc/nginx/nginx.conf
 //added in http section of .conf file
 
-    upstream cmrdash {
+    upstream arcdash {
         server 127.0.0.1:3000;
     }
 
     //change root in server area to public for assets
     root         /home/ec2-user/cmr-metadata-review/public;
 
+    #adding this for elb checks
+    location /elb_status {
+        proxy_pass http://arcdash;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 
     location / {
-                proxy_pass http://cmrdash;
-                proxy_set_header Host $host;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            #redirecting all traffic to https for elb to terminate
+            if ($http_x_forwarded_proto = 'http') {
+                return 301 https://arc-review.clients.element84.com$request_uri;
             }
+            proxy_pass http://arcdash;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 
 
 
@@ -58,7 +68,7 @@ file = /home/ec2-user/cmr-metadata-review/log/production.log
 buffer_duration = 5000
 log_stream_name = {instance_id}
 initial_position = end_of_file
-log_group_name = /aws/cmr/rails_log
+log_group_name = /aws/cmr/prod_rails_log
 
 //add to user data
 service awslogs start

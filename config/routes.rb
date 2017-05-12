@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/elb_status', to: 'site#elb_status'
+
   Rails.application.routes.draw do
       devise_for :users, controllers: {
         registrations: 'users/registrations'
