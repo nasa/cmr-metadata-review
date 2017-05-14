@@ -6,7 +6,7 @@
   </button>
   <!-- dynamically add bubble divs -->
   <div class="record_bubbles">
-    <% section[1].each_with_index do | field, index | %>
+    <% section[1].sort.each_with_index do | field, index | %>
       <% if bubble_data[field] %>
         <% script_class = bubble_data[field][:script] ? "script" : "no_script" %>
         <% script_text_class = bubble_data[field][:script] ? "script_text" : "no_script_text" %>
