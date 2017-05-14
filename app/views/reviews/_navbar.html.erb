@@ -11,6 +11,9 @@
     <% else %>
       BACK TO METADATA ELEMENTS
     <% end %>
+    <% if ENV['SIT_ENV'] == 'true' %> 
+       (SIT Environment)
+    <% end %>
   </button>
 
   <% if page == "navigation" %>

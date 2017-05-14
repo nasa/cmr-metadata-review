@@ -1,6 +1,10 @@
 <div class="page_header">
-  <div class="header_title"> 
-    <h3><%= title %></h3>
+  <div class="header_title">
+    <% if ENV['SIT_ENV'] == 'true' %> 
+      <h3><%= title %> (SIT Environment)</h3>
+    <% else %>
+      <h3><%= title %></h3>
+    <% end %>
     <% if current_user.admin %>
       <p>CMR Last Update: <%=RecordsUpdateLock.formatted_last_update%></p>
     <% end %>
