@@ -34,9 +34,15 @@ class RecordsController < ApplicationController
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
     @marked_done = @record.closed
 
-    @color_coding_complete = @record.color_coding_complete?
-    @has_enough_reviews = @record.has_enough_reviews?
-    @no_second_opinions = @record.no_second_opinions?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      @color_coding_complete = true
+      @has_enough_reviews = true
+      @no_second_opinions = true
+    else
+      @color_coding_complete = @record.color_coding_complete?
+      @has_enough_reviews = @record.has_enough_reviews?
+      @no_second_opinions = @record.no_second_opinions?
+    end
   end
 
   def complete
