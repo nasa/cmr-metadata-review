@@ -62,6 +62,7 @@ class RecordsController < ApplicationController
 
     record.close
 
+    flash[:notice] = "Record has been successfully marked as done"
     redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
   end
 
