@@ -25,7 +25,7 @@ module RecordHelper
       return false
     end
     
-    return !((value.include? "OK") || (value.include? "ok") || (value.include? "Ok"))
+    return !(value.start_with?("OK", "ok", "Ok"))
   end
 
 end
