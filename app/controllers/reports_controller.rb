@@ -6,16 +6,17 @@ class ReportsController < ApplicationController
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_day_counts = []
-    [30,60,180].each do |day_count|
+    [150, 120, 90, 60, 30, 0].each do |day_count|
       total_count = (Review.all.select { |review| 
                                             if review.review_completion_date
-                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days < day_count.days
+                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days > day_count.days
                                             else
                                               false 
                                             end
                                         }).count
       @review_day_counts.push(total_count)
     end
+    @display_months = [-6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
 
     @metric_set = MetricSet.new(Record.all)
 
@@ -40,13 +41,21 @@ class ReportsController < ApplicationController
     @field_colors = metric_set.color_counts
     @total_checked = @field_colors.values.sum
 
-
-    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
+    #maybe use the points chart
+    @failing_elements_five = original_metric_set.element_non_green_count.select {|element| element[1] > 0}
 
     @updated_count = metric_set.updated_count
     @updated_done_count = metric_set.updated_done_count
 
     @quality_done_records = metric_set.quality_done_records
+
+
+    #test numbers for the graphs
+    @review_day_counts = [0,20,30,50,75,82] 
+    @original_field_colors = {"blue" => 7, "green" => 200, "yellow" => 12, "red" => 50}
+    @field_colors = {"blue" => 7, "green" => 240, "yellow" => 12, "red" => 10}
+    @collection_ingest_count = 245
+
 
     respond_to do |format|
       format.html

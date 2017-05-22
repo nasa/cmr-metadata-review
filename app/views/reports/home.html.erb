@@ -1,5 +1,9 @@
 
 <%= render(partial: 'shared/navigation', locals: {title: "REPORTS HOME PAGE"}) %>
+
+<%# charts library %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+
 <script type="text/javascript">
   document.getElementsByClassName("header_image")[0].style.display = "none";
 </script>
@@ -7,24 +11,100 @@
 <div style="display:flex;">
   <div>
 
+      <div class="graph_container">
+        <canvas id="Chart1"></canvas>
+      </div>
 
 
-
-      <table style="width:100%; padding:5px;">
-          <tr>
-            <td>Total Collections in CMR:</td> 
-            <td><%=@cmr_total_collection_count%></td>  
-          </tr>
-          <tr>
-            <td>Total Ingested Collections:</td>
-            <td><%=@collection_ingest_count%></td>
-          <tr>
+      <script type="text/javascript">
+        var barOptions_stacked = {
+            tooltips: {
+                enabled: false
+            },
+            hover :{
+                animationDuration:0
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        fontFamily: "'Open Sans Bold', sans-serif",
+                        fontSize:11
+                    },
+                    scaleLabel:{
+                        display:false
+                    },
+                    gridLines: {
+                    }, 
+                    stacked: true
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display:false,
+                        color: "#fff",
+                        zeroLineColor: "#fff",
+                        zeroLineWidth: 0
+                    },
+                    ticks: {
+                        fontFamily: "'Open Sans Bold', sans-serif",
+                        fontSize:11
+                    },
+                    stacked: true,
+                    barThickness: 50
+                }]
+            },
+            legend:{
+                display:true
+            },
+            maintainAspectRatio: false,
             
+            animation: {
+                onComplete: function () {
+                    var chartInstance = this.chart;
+                    var ctx = chartInstance.ctx;
+                    ctx.textAlign = "left";
+                    ctx.font = "20px Open Sans";
+                    ctx.fillStyle = "#fff";
 
-          </tr>
-      </table>
+                    Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                            data = dataset.data[index];
+                            if(i==0){
+                                ctx.fillText(data, 20, bar._model.y);
+                            } else {
+                                ctx.fillText(data, bar._model.x-50, bar._model.y);
+                            }
+                        }),this)
+                    }),this);
+                }
+            },
+            pointLabelFontFamily : "Quadon Extra Bold",
+            scaleFontFamily : "Quadon Extra Bold",
+        };
 
-      <br>
+        var ctx = document.getElementById("Chart1");
+        var myChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: [""],
+
+                datasets: [{
+                    label: "Number of Ingested Collections",
+                    data: [<%= @collection_ingest_count %>],
+                    backgroundColor: "rgba(63,103,126,1)",
+                    hoverBackgroundColor: "rgba(50,90,100,1)"
+                },{
+                    label: "Total Number of Collections in CMR",
+                    data: [<%= @cmr_total_collection_count %>],
+                    backgroundColor: "rgba(163,103,126,1)",
+                    hoverBackgroundColor: "rgba(140,85,100,1)"
+                }]
+            },
+
+            options: barOptions_stacked
+        });
+      </script>
 
       <table style="width:100%; padding:5px;">
           <tr>
@@ -50,64 +130,153 @@
       <br>
 
 
-      <table style="width:100%; padding:5px;">
-          <tr>
-            <td>Review Velocity:</td> 
-            <td>Closed in Last 30 Days:</td>  
-            <td>Last 90 Days:</td>  
-            <td>Last 180 Days:</td>  
-            
-          </tr>
-            <td>Review Counts</td>
-            <td><%= @review_day_counts[0] %></td>
-            <td><%= @review_day_counts[1] %></td>
-            <td><%= @review_day_counts[2] %></td>
-          <tr>
-            
+      <div class="graph_container">
+        <canvas id="ChartVelocity"></canvas>
+      </div>
 
-          </tr>
-      </table>
 
-      <br>
+      <script type="text/javascript">
 
-        <table style="width:100%; padding:5px;">
-        <tr>
-          <td>Stat:</td>
-          <td>Original Set:</td>
-          <td>Current Set:</td>
-        </tr>
+        var ctx = document.getElementById("ChartVelocity");
 
-          <tr>
-            <td>Number of elements checked (total):</td>  
-            <td><%=@original_total_checked%></td>
-            <td><%=@total_checked%></td>
-          </tr>
+        var data = {
+            labels: <%= raw @display_months %>,
+            datasets: [
+                {
+                    label: "Completed Reviews",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: <%= @review_day_counts %>,
+                    spanGaps: false,
+                }
+            ]
+        };
 
-          <tr>
-            <td>Number of elements that passed:</td>  
-            <td><%=@original_field_colors["green"]%></td>
-            <td><%=@field_colors["green"]%></td>
-          </tr>
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
 
-          <tr>
-            <td>Number of elements that failed:</td>  
-            <td><%=@original_field_colors["red"]%></td>
-            <td><%=@field_colors["red"]%></td>
-          </tr>
+            options: {}
+        });
+      </script>
 
-          <tr>
-            <td>Number of elements with warnings issued:</td>  
-            <td><%=@original_field_colors["yellow"]%></td>
-            <td><%=@field_colors["yellow"]%></td>
-          </tr>
 
-          <tr>
-            <td>Number of elements with informational notes added:</td>  
-            <td><%=@original_field_colors["blue"]%></td>
-            <td><%=@field_colors["blue"]%></td>
-          </tr>
+ 
+        <div class="flex-container">
+          <div class="flex-item">
+            <p>Original Set</p>
+            <p>Total Elements Flagged: <%= @original_total_checked %></p>
+            <div class="graph_container_flag">
+              <canvas id="ChartFlagOriginal"></canvas>
+            </div>
+          </div>
 
-        </table>
+          <div class="flex-item">
+            <p>Current Set</p>
+            <p>Total Elements Flagged: <%= @total_checked %></p>
+            <div class="graph_container_flag">
+              <canvas id="ChartFlag"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+      <script type="text/javascript">
+
+        var ctx = document.getElementById("ChartFlagOriginal");
+
+        var data = {
+          labels: [
+              "Red",
+              "Blue",
+              "Yellow",
+              "Green"
+          ],
+          datasets: [
+              {
+                  data: [<%=@original_field_colors["red"]%>, <%=@original_field_colors["blue"]%>, <%=@original_field_colors["yellow"]%>, <%=@original_field_colors["green"]%>],
+                  backgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56",
+                      "#00ff00"
+                  ],
+                  hoverBackgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56",
+                      "#00ff00"
+                  ]
+              }]
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+
+            options: {
+                        legend:{
+                          display:false
+                        }
+                     }
+          });
+
+
+
+        var ctx = document.getElementById("ChartFlag");
+
+        var data = {
+          labels: [
+              "Red",
+              "Blue",
+              "Yellow",
+              "Green"
+          ],
+          datasets: [
+              {
+                  data: [<%=@field_colors["red"]%>, <%=@field_colors["blue"]%>, <%=@field_colors["yellow"]%>, <%=@field_colors["green"]%>],
+                  backgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56",
+                      "#00ff00"
+                  ],
+                  hoverBackgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56",
+                      "#00ff00"
+                  ]
+              }]
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+
+            options: {
+                        legend:{
+                          display:false
+                        }
+                     }
+          });
+      </script>
+
 
 
         <br>
