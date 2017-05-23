@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  include ReportsHelper
+
   before_filter :authenticate_user!
   
   def home
@@ -6,17 +8,22 @@ class ReportsController < ApplicationController
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_day_counts = []
-    [150, 120, 90, 60, 30, 0].each do |day_count|
+    #this should be optimized to bucket all the reviews in one run through
+    [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0].each do |month_count|
       total_count = (Review.all.select { |review| 
                                             if review.review_completion_date
-                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days > day_count.days
+                                              (DateTime.now.month - review.review_completion_date.month) >= month_count
                                             else
                                               false 
                                             end
                                         }).count
       @review_day_counts.push(total_count)
     end
-    @display_months = [-6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
+
+    # negative numbers represent previous months
+    # then Date::MONTHNAMES[1..12] converts them into strings
+    # the % 12 then wraps negative numbers around to the end months of the year
+    @display_months = [-11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
 
     @metric_set = MetricSet.new(Record.all)
 
@@ -41,8 +48,8 @@ class ReportsController < ApplicationController
     @field_colors = metric_set.color_counts
     @total_checked = @field_colors.values.sum
 
-    #maybe use the points chart
-    @failing_elements_five = original_metric_set.element_non_green_count.select {|element| element[1] > 0}
+    #taking the top 10 elements with the most issues
+    @failing_elements_five = original_metric_set.element_non_green_count.take(10)
 
     @updated_count = metric_set.updated_count
     @updated_done_count = metric_set.updated_done_count
@@ -51,11 +58,16 @@ class ReportsController < ApplicationController
 
 
     #test numbers for the graphs
-    @review_day_counts = [0,20,30,50,75,82] 
+    @review_day_counts = [2,10,20,30,50,75,82, 99, 110, 124, 143] 
     @original_field_colors = {"blue" => 7, "green" => 200, "yellow" => 12, "red" => 50}
     @field_colors = {"blue" => 7, "green" => 240, "yellow" => 12, "red" => 10}
     @collection_ingest_count = 245
-
+    @failing_elements_five[0][1] = 72
+    @failing_elements_five[1][1] = 50
+    @failing_elements_five[2][1] = 45
+    @failing_elements_five[3][1] = 12
+    @failing_elements_five[4][1] = 10
+    @collection_ingest_count = 2000
 
     respond_to do |format|
       format.html

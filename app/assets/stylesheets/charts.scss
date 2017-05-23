@@ -1,6 +1,20 @@
+@import "variables";
+
 .graph_container{
   display:block;
   width:600px;
+}
+
+.velocity_graph_container{
+  display:block;
+  width:400px;
+  height:300px;
+}
+
+.doughnut_graph_container {
+  display: block;
+  width: 200px;
+  height: 200px;
 }
 
 .graph_container_flag{
@@ -15,4 +29,153 @@
 
 .flex-item {
     margin: 10px;
+}
+
+.reports_box {
+  background-color:white;
+  width: 90%;
+  margin: auto;
+  padding: 40px;
+}
+
+.report_top {
+  min-height: 50px;
+  border-bottom-style: solid; 
+  border-bottom-width: 1px;
+  border-bottom-color: $gray-dark;
+}
+
+.report_sub_title {
+  min-height: 25px;
+  display: flex;
+  margin-bottom: 15px;
+
+  .title_box {
+    text-align: center;
+    background-color: $gray-dark;
+    color: white;
+    font-size: 14px;
+    max-width: 170px;
+    padding: 7px;
+  }
+
+}
+
+.title_holder {
+  border-bottom-style: solid; 
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  margin-bottom: 10px;
+  p {
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    // max-width: 170px;
+    padding: 5px;
+  }
+}
+
+.title_bottom_holder {
+  margin-bottom: 10px;
+  p {
+    position:relative;
+    bottom:11px;
+    right: 10px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    background-color: black;
+    color: white;
+    font-size: 11px;
+    // max-width: 170px;
+    padding: 5px;
+  }
+}
+
+.stats_area {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 25px;
+}
+
+.surrounding_box {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 10px;
+}
+
+.ingest_section {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.velocity_section {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.quality_section {
+  display: flex;
+  margin-bottom: 20px;
+  .quality_box {
+    margin-right: 20px;
+  }
+
+  .data_area {
+    display: flex;
+    .checked_num {
+      font-size: 64px;
+    }
+  }  
+}
+
+
+
+.legend_area {
+  .legend_row {
+    display: flex;
+  }
+
+  .first_item {
+    width: 170px;
+  }
+
+  .legend_item {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .color_box {
+      width:15px;
+      height:15px;
+      margin-right: 10px;
+    }
+
+    .red {
+      background-color: #e84a34;
+    }
+
+    .blue {
+      background-color: #1b75ae;
+    }
+
+    .yellow {
+      background-color: #ffce00;
+    }
+
+    .green {
+      background-color: #3ab841;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
 }
