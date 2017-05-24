@@ -67,7 +67,9 @@ class ReportsController < ApplicationController
     @failing_elements_five[2][1] = 45
     @failing_elements_five[3][1] = 12
     @failing_elements_five[4][1] = 10
-    @collection_ingest_count = 2000
+    @collection_ingest_count = 4000
+    @updated_done_count = 25
+    @updated_count = 66
 
     respond_to do |format|
       format.html
