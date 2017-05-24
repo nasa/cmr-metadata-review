@@ -48,6 +48,7 @@
   width: 90%;
   margin: auto;
   padding: 40px;
+  padding-top: 20px;
 }
 
 .report_top {
@@ -56,13 +57,23 @@
   border-bottom-style: solid; 
   border-bottom-width: 1px;
   border-bottom-color: $gray-dark;
+  padding-bottom: 10px;
   .report_drop_down {
     width: 50%;
+    p {
+      font-size: 14px;
+    }
+    select {
+      width: 150px;
+      padding-left:10px;
+      height:38px;
+    }  
   }
 
   .report_buttons {
     text-align: right;
     width: 50%;
+    padding-top: 30px;
   }
 
   .report_button {
@@ -179,13 +190,23 @@
   display: inline-block;
   margin-bottom: 20px;
   width: 38%;
+  margin-right: 20px;
 }
 
 .update_section {
   display: inline-block;
   margin-bottom: 20px; 
-  padding-left:30px;
-  width: 60%;
+  width: 55%;
+}
+
+.selection_section {
+  display: inline-block;
+  margin-bottom: 20px; 
+  width: 35%;
+  padding-left:15px;
+  tr:nth-child(n) {
+    background-color: white;
+  }
 }
 
 .quality_section {
@@ -206,9 +227,17 @@
 .score_section {
   display: flex;
   margin-bottom: 20px;
+
   .score_box {
     width:400px;
     margin-right: 20px;
+  }
+}
+
+.in_process_section {
+  width: 820px;
+  tr:nth-child(n) {
+    background-color: white;
   }
 }
 
