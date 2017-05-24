@@ -6,9 +6,17 @@
 
 <div class="reports_box">
   <div class="report_top">
-    <div style="padding-left:30px;">
-      <a href="<%=reports_home_path(format: :csv)%>">
-          <button type="button" class="btn btn-success">Download CSV Report</button>
+    <div class="report_drop_down">
+    TEST HOLDER
+    </div>
+    <div class="report_buttons">
+      <a href="<%=reports_home_path(format: :csv)%>" class="report_button">
+          <p>EXPORT METRICS</p>
+          <i class="fa fa-file-excel-o"></i>
+      </a>
+      <a href="<%=reports_home_path(format: :csv)%>" class="report_button">
+          <p>PRINT-READY PDF</p>
+          <i class="fa fa-file-pdf-o"></i>
       </a>
     </div>
   </div>
@@ -17,25 +25,30 @@
     <div class="title_box">
       COLLECTIONS VIEW
     </div>
-    <div>
-      DAAC NAME
+    <div class="title_text">
+      FULL SYSTEM REPORT
     </div>
   </div>
 
   <div class="stats_area">
     
+    <div class="sub_section_title">
+      OVERALL DAAC METRICS
+    </div>
 
     <div class="ingest_section">
-        <%= render(partial: 'title_bar', locals: {title: "COLLECTIONS"}) %>
-        <div class="graph_container">
-          <canvas id="Chart1"></canvas>
+        <%= render(partial: 'title_bar', locals: {title: "INGESTED COLLECTIONS PROGRESS"}) %>
+        <div class="surrounding_box">
+          <div class="graph_container">
+            <canvas id="Chart1"></canvas>
+          </div>
         </div>
     </div>
 
     <br>
 
     <div class="velocity_section">
-          <%= render(partial: 'title_bar', locals: {title: "COLLECTIONS QUANTITY PROGRESS"}) %>
+          <%= render(partial: 'title_bar', locals: {title: "COMPLETED REVIEW PROGRESS"}) %>
           <div class="surrounding_box">
             <div class="velocity_graph_container">
               <canvas id="ChartVelocity"></canvas>
@@ -43,7 +56,24 @@
           </div>
     </div>
 
+    <div class="update_section">
+        <%= render(partial: 'title_bar', locals: {title: "UPDATED COLLECTIONS PROGRESS"}) %>
+        <div class="surrounding_box">
+          <div class="updates_graph_container">
+            <canvas id="ChartUpdate"></canvas>
+          </div>
+        </div>
+    </div>
+
     <br>
+
+    <div class="section_break">
+    </div>
+
+    <div class="sub_section_title">
+      METADATA QUALITY
+    </div>
+
 
     <div class="quality_section">
       <div class="surrounding_box quality_box">
@@ -126,13 +156,36 @@
             </div>
           </div>
         </div>
-        </div>
       </div>
     </div>
 
 
+    <br>
 
-          <table style="width:100%; padding:5px;">
+    <div class="problem_section">
+          <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
+          <div class="surrounding_box">
+            <div class="problem_graph_container">
+              <canvas id="ChartErrors"></canvas>
+            </div>
+          </div>
+    </div>
+
+    <br>
+
+
+    <div class="section_break">
+    </div>
+
+    <div class="sub_section_title">
+      REVIEW METRICS
+    </div>
+
+    <div class="in_process_section">
+      <%= render(partial: 'title_bar', locals: {title: "IN PROCESS REVIEWS"}) %>
+
+    </div>
+              <table style="width:100%; padding:5px;">
               <tr>
                 <td>State of Reviews:</td> 
                 <td>0 Reviews:</td>  
@@ -152,52 +205,28 @@
               </tr>
           </table>
 
-
             <br>
 
-          <table style="width:100%; padding:5px;">
-            <tr>
-              <td>Top 5 Problem Elements</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Element Name:</td>
-              <td>Non Green Count:</td>
-            </tr>
 
-            <% @failing_elements_five.each do |column_name, non_green_count|%>
-              <tr>
-                <td><p style="font-size: <%=problem_font_size(@failing_elements_five, non_green_count)%>px"><%=column_name%></p></td>
-                <td><%=non_green_count%></td>
-              </tr>
-            <%end%>
 
-            </table>
+    <div class="score_section">
+      <div class="surrounding_box score_box">
+        <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
+        <div class="data_area">
+          <div id="ChartGuageOriginal"></div>
+        </div>
+      </div>
 
-            <br>
+      <div class="surrounding_box score_box">
+        <%= render(partial: 'title_bottom_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
+        <div class="data_area">
+            <div id="ChartGuageUpdated"></div>
+        </div>
+      </div>
+    </div>
 
-            <table style="width:100%; padding:5px;">
-              <tr>
-                <td>Number of Collections that been updated in CMR after a finished review:</td>  
-                <td><%=@updated_count%></td>
-              </tr>
 
-              <tr>
-                <td>Number of Updated Collection Reviews marked as "Done":</td>  
-                <td><%=@updated_done_count%></td>
-              </tr>
-
-              <tr>
-                <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
-                <td><%=(@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)%></td>
-              </tr>
-
-              <tr>
-                <td>Quality of Updated Collection Reviews marked as "Done" (high/low/avg)</td>  
-                <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
-              </tr>
-
-            </table>
+    
   </div>
 </div>
 
@@ -454,4 +483,207 @@
                   }
                }
     });
+</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var barOptions_stacked = {
+      tooltips: {
+          enabled: false
+      },
+      hover :{
+          animationDuration:0
+      },
+      scales: {
+          xAxes: [{
+              ticks: {
+                  beginAtZero:true,
+                  fontFamily: "'Open Sans Bold', sans-serif",
+                  fontSize:11
+              },
+              scaleLabel:{
+                  display:false
+              },
+              gridLines: {
+              }, 
+              stacked: false
+          }],
+          yAxes: [{
+              gridLines: {
+                  display:false,
+                  color: "#fff",
+                  zeroLineColor: "#fff",
+                  zeroLineWidth: 0
+              },
+              ticks: {
+                  fontFamily: "'Open Sans Bold', sans-serif",
+                  fontSize:11
+              },
+              stacked: false,
+              barThickness: 30
+          }]
+      },
+      legend:{
+          display:true,
+          position: "bottom"
+      },
+      maintainAspectRatio: false,
+      
+      animation: {
+          onComplete: function () {
+              var chartInstance = this.chart;
+              var ctx = chartInstance.ctx;
+              ctx.textAlign = "left";
+              
+
+              Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                      data = dataset.data[index];
+                      if(i==0){
+                          ctx.fillStyle = "#3e3e40";
+                          ctx.font = "20px Open Sans";
+                          ctx.fillText(data, bar._model.x - 30, bar._model.y-38);
+                      } else {
+                          ctx.font = "20px Open Sans";
+                          ctx.fillStyle = "#3e3e40";
+                          ctx.fillText(data,  bar._model.x - 30, bar._model.y-38);
+                      }
+                  }),this)
+              }),this);
+          }
+      },
+      pointLabelFontFamily : "Quadon Extra Bold",
+      scaleFontFamily : "Quadon Extra Bold",
+  };
+
+  var ctx = document.getElementById("ChartUpdate");
+  var myChart = new Chart(ctx, {
+      type: 'horizontalBar',
+      data: {
+          labels: [""],
+
+          datasets: [{
+              label: "Updated Collections Re-Reviewed",
+              data: [<%= @updated_done_count %>],
+              backgroundColor: "rgba(58, 184, 65, 0.6)",
+              hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
+          },{
+              label: "Collections Updated in CMR After Review",
+              data: [<%= @updated_count %>],
+              backgroundColor: "rgba(58, 184, 65, 1)",
+              hoverBackgroundColor: "rgba(58, 184, 65, 1)"
+          }]
+      },
+
+      options: barOptions_stacked
+  });
+</script>
+
+
+
+
+<script type="text/javascript">
+  var ctx = document.getElementById("ChartErrors");
+
+  var data = {
+      labels: <%= raw (@failing_elements_five.map {|data_set| data_set[0]}) %>,
+      datasets: [
+          {
+              label: "",
+              backgroundColor: [
+                  'rgba(58, 184, 65, 1)',
+                  'rgba(58, 184, 65, 0.9)',
+                  'rgba(58, 184, 65, 0.8)',
+                  'rgba(58, 184, 65, 0.7)',
+                  'rgba(58, 184, 65, 0.6)',
+                  'rgba(58, 184, 65, 0.5)',
+                  'rgba(58, 184, 65, 0.4)',
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.3)'
+              ],
+              data: <%= (@failing_elements_five.map {|data_set| data_set[1]}) %>,
+          }
+      ]
+  };
+
+  var myChart = new Chart(ctx, {
+      type: 'horizontalBar',
+      data: data,
+
+      options: {
+        legend:{
+          display:false
+        },
+        scales: {
+          xAxes: [{
+              barThickness: 20,
+              scaleLabel: {
+                display: true,
+                labelString: 'Number of Non Green Flags Per Element'
+              }
+          }],
+          yAxes: [{
+            position: "right"
+          }]
+        },
+        maintainAspectRatio: false
+      }
+  });
+</script>
+
+
+
+
+
+<script>
+  var chart = c3.generate({
+      bindto: '#ChartGuageOriginal',
+      data: {
+          columns: [
+              ['data', <%= @original_quality_done_records %>]
+          ],
+          type: 'gauge'
+      },
+      color: {
+          pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+          threshold: {
+              values: [30, 60, 80, 100]
+          }
+      },
+      size: {
+          height: 180
+      }
+  });
+
+</script>
+
+
+<script>
+  var chart = c3.generate({
+      bindto: '#ChartGuageUpdated',
+      data: {
+          columns: [
+              ['data', <%= @quality_done_records %>]
+          ],
+          type: 'gauge'
+      },
+      color: {
+          pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+          threshold: {
+              values: [30, 60, 80, 100]
+          }
+      },
+      size: {
+          height: 180
+      }
+  });
+
 </script>
