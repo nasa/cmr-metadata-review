@@ -4,6 +4,9 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
   
   def home
+    @report_title = "OVERALL VIEW"
+    @show_charts = true
+
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
@@ -78,15 +81,40 @@ class ReportsController < ApplicationController
   end
 
   def provider
+    @report_title = "BY DAAC VIEW"
+
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
 
     unless params["daac"].nil? || params["daac"] == "Select DAAC"
+      @show_charts = true
       @daac = params["daac"]
-      @total_collection_count = Cmr.total_collection_count(@daac)
-      @total_ingested = Collection.by_daac(@daac).count
+      @cmr_total_collection_count = Cmr.total_collection_count(@daac)
+      @collection_ingest_count = Collection.by_daac(@daac).count
 
-      @percent_ingested = (@total_ingested.to_f * 100 / @total_collection_count).round(2)
+      daac_records = (Collection.by_daac(@daac).map {|collection| collection.records.to_a}).flatten
+      daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
+
+      @review_day_counts = []
+      #this should be optimized to bucket all the reviews in one run through
+      [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0].each do |month_count|
+        total_count = (daac_reviews.select { |review| 
+                                              if review.review_completion_date
+                                                (DateTime.now.month - review.review_completion_date.month) >= month_count
+                                              else
+                                                false 
+                                              end
+                                          }).count
+        @review_day_counts.push(total_count)
+      end
+
+      # negative numbers represent previous months
+      # then Date::MONTHNAMES[1..12] converts them into strings
+      # the % 12 then wraps negative numbers around to the end months of the year
+      @display_months = [-11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
+
+
+      @percent_ingested = (@collection_ingest_count.to_f * 100 / @cmr_total_collection_count).round(2)
 
       record_set = Collection.all_newest_revisions(params["daac"])
 
@@ -115,7 +143,7 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
     end
   end
@@ -147,6 +175,9 @@ class ReportsController < ApplicationController
   end
 
   def selection
+    @show_charts = true
+    @report_title = "SELECTION VIEW"
+
     records_list = params["records"].split(",")
     @report_list = []
     records_list.each_slice(2) {|(concept_id, revision_id)|
@@ -180,7 +211,7 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end                          
   end
