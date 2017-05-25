@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170426191451) do
   create_table "record_data", force: :cascade do |t|
     t.integer  "record_id",                      null: false
     t.string   "value",          default: ""
-    t.string   "daac",                           null: false
+    t.string   "daac"
     t.datetime "last_updated"
     t.string   "column_name",                    null: false
     t.string   "color",          default: ""

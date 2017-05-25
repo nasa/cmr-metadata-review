@@ -61,18 +61,18 @@ class ReportsController < ApplicationController
 
 
     #test numbers for the graphs
-    @review_day_counts = [2,10,20,30,50,75,82, 99, 110, 124, 143] 
-    @original_field_colors = {"blue" => 7, "green" => 200, "yellow" => 12, "red" => 50}
-    @field_colors = {"blue" => 7, "green" => 240, "yellow" => 12, "red" => 10}
-    @collection_ingest_count = 245
-    @failing_elements_five[0][1] = 72
-    @failing_elements_five[1][1] = 50
-    @failing_elements_five[2][1] = 45
-    @failing_elements_five[3][1] = 12
-    @failing_elements_five[4][1] = 10
-    @collection_ingest_count = 4000
-    @updated_done_count = 25
-    @updated_count = 66
+    # @review_day_counts = [2,10,20,30,50,75,82, 99, 110, 124, 143] 
+    # @original_field_colors = {"blue" => 7, "green" => 200, "yellow" => 12, "red" => 50}
+    # @field_colors = {"blue" => 7, "green" => 240, "yellow" => 12, "red" => 10}
+    # @collection_ingest_count = 245
+    # @failing_elements_five[0][1] = 72
+    # @failing_elements_five[1][1] = 50
+    # @failing_elements_five[2][1] = 45
+    # @failing_elements_five[3][1] = 12
+    # @failing_elements_five[4][1] = 10
+    # @collection_ingest_count = 4000
+    # @updated_done_count = 25
+    # @updated_count = 66
 
     respond_to do |format|
       format.html
