@@ -131,24 +131,24 @@
               <div class="legend_item first_item">
                 <div class="color_box green">
                 </div>
-                <p>ELEMENTS PASSED</p>
+                <p>ELEMENTS PASSED (<%=@original_field_colors["green"]%>)</p>
               </div>
               <div class="legend_item">
                 <div class="color_box yellow">
                 </div>
-                <p>ELEMENTS WITH WARNINGS</p>
+                <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
               </div>
             </div>
             <div class="legend_row">
               <div class="legend_item first_item">
                 <div class="color_box blue">
                 </div>
-                <p>ELEMENTS NOTED</p>
+                <p>ELEMENTS NOTED (<%=@original_field_colors["blue"]%>)</p>
               </div>
               <div class="legend_item">
                 <div class="color_box red">
                 </div>
-                <p>ELEMENTS FAILED</p>
+                <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
               </div>
             </div>
           </div>
@@ -173,24 +173,24 @@
               <div class="legend_item first_item">
                 <div class="color_box green">
                 </div>
-                <p>ELEMENTS PASSED</p>
+                <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
               </div>
               <div class="legend_item">
                 <div class="color_box yellow">
                 </div>
-                <p>ELEMENTS WITH WARNINGS</p>
+                <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
               </div>
             </div>
             <div class="legend_row">
               <div class="legend_item first_item">
                 <div class="color_box blue">
                 </div>
-                <p>ELEMENTS NOTED</p>
+                <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
               </div>
               <div class="legend_item">
                 <div class="color_box red">
                 </div>
-                <p>ELEMENTS FAILED</p>
+                <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
               </div>
             </div>
           </div>
@@ -633,16 +633,16 @@
             {
                 label: "",
                 backgroundColor: [
-                    'rgba(58, 184, 65, 1)',
-                    'rgba(58, 184, 65, 0.9)',
-                    'rgba(58, 184, 65, 0.8)',
-                    'rgba(58, 184, 65, 0.7)',
-                    'rgba(58, 184, 65, 0.6)',
-                    'rgba(58, 184, 65, 0.5)',
-                    'rgba(58, 184, 65, 0.4)',
-                    'rgba(58, 184, 65, 0.3)',
-                    'rgba(58, 184, 65, 0.3)',
-                    'rgba(58, 184, 65, 0.3)'
+                    'rgba(105, 105, 105, 1)',
+                    'rgba(105, 105, 105, 0.9)',
+                    'rgba(105, 105, 105, 0.8)',
+                    'rgba(105, 105, 105, 0.7)',
+                    'rgba(105, 105, 105, 0.6)',
+                    'rgba(105, 105, 105, 0.5)',
+                    'rgba(105, 105, 105, 0.4)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
                 ],
                 data: <%= (@failing_elements_five.map {|data_set| data_set[1]}) %>,
             }
