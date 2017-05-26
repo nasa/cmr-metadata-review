@@ -6,22 +6,12 @@ class ReportsController < ApplicationController
   def home
     @report_title = "OVERALL VIEW"
     @show_charts = true
+    @csv_path = reports_home_path
 
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
-    @review_day_counts = []
-    #this should be optimized to bucket all the reviews in one run through
-    [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0].each do |month_count|
-      total_count = (Review.all.select { |review| 
-                                            if review.review_completion_date
-                                              (DateTime.now.month - review.review_completion_date.month) >= month_count
-                                            else
-                                              false 
-                                            end
-                                        }).count
-      @review_day_counts.push(total_count)
-    end
+    @review_month_counts = list_past_months
 
     # negative numbers represent previous months
     # then Date::MONTHNAMES[1..12] converts them into strings
@@ -59,21 +49,6 @@ class ReportsController < ApplicationController
 
     @quality_done_records = metric_set.quality_done_records
 
-
-    #test numbers for the graphs
-    # @review_day_counts = [2,10,20,30,50,75,82, 99, 110, 124, 143] 
-    # @original_field_colors = {"blue" => 7, "green" => 200, "yellow" => 12, "red" => 50}
-    # @field_colors = {"blue" => 7, "green" => 240, "yellow" => 12, "red" => 10}
-    # @collection_ingest_count = 245
-    # @failing_elements_five[0][1] = 72
-    # @failing_elements_five[1][1] = 50
-    # @failing_elements_five[2][1] = 45
-    # @failing_elements_five[3][1] = 12
-    # @failing_elements_five[4][1] = 10
-    # @collection_ingest_count = 4000
-    # @updated_done_count = 25
-    # @updated_count = 66
-
     respond_to do |format|
       format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
@@ -82,6 +57,7 @@ class ReportsController < ApplicationController
 
   def provider
     @report_title = "BY DAAC VIEW"
+    @csv_path = reports_provider_path
 
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
@@ -95,24 +71,12 @@ class ReportsController < ApplicationController
       daac_records = (Collection.by_daac(@daac).map {|collection| collection.records.to_a}).flatten
       daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
 
-      @review_day_counts = []
-      #this should be optimized to bucket all the reviews in one run through
-      [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0].each do |month_count|
-        total_count = (daac_reviews.select { |review| 
-                                              if review.review_completion_date
-                                                (DateTime.now.month - review.review_completion_date.month) >= month_count
-                                              else
-                                                false 
-                                              end
-                                          }).count
-        @review_day_counts.push(total_count)
-      end
+      @review_month_counts = list_past_months
 
       # negative numbers represent previous months
       # then Date::MONTHNAMES[1..12] converts them into strings
       # the % 12 then wraps negative numbers around to the end months of the year
       @display_months = [-11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
-
 
       @percent_ingested = (@collection_ingest_count.to_f * 100 / @cmr_total_collection_count).round(2)
 
@@ -177,6 +141,7 @@ class ReportsController < ApplicationController
   def selection
     @show_charts = true
     @report_title = "SELECTION VIEW"
+    @csv_path = reports_selection_path
 
     records_list = params["records"].split(",")
     @report_list = []
