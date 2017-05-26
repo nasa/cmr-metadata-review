@@ -19,11 +19,11 @@
       <% end %>
     </div>
     <div class="report_buttons">
-      <a href="<%=reports_home_path(format: :csv)%>" class="report_button">
+      <a href="<%= @csv_path + ".csv"%>" class="report_button">
           <p>EXPORT METRICS</p>
           <i class="fa fa-file-excel-o"></i>
       </a>
-      <a href="<%=reports_home_path(format: :csv)%>" class="report_button">
+      <a href="#" class="report_button">
           <p>PRINT-READY PDF</p>
           <i class="fa fa-file-pdf-o"></i>
       </a>
@@ -391,7 +391,7 @@
                       'rgba(58, 184, 65, 0.9)',
                       'rgba(58, 184, 65, 1)'
                   ],
-                  data: <%= @review_day_counts %>,
+                  data: <%= @review_month_counts %>,
               }
           ]
       };
