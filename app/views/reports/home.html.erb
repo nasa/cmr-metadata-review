@@ -52,7 +52,7 @@
             <%= render(partial: 'title_bar', locals: {title: "INGESTED COLLECTIONS PROGRESS"}) %>
             <div class="surrounding_box">
               <div class="graph_container">
-                <canvas id="Chart1"></canvas>
+                <canvas id="ChartIngest"></canvas>
               </div>
             </div>
         </div>
@@ -273,6 +273,7 @@
 
   <% if @cmr_total_collection_count %>
 
+    <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
     <script type="text/javascript">
       var barOptions_stacked = {
           tooltips: {
@@ -344,7 +345,7 @@
           scaleFontFamily : "Quadon Extra Bold",
       };
 
-      var ctx = document.getElementById("Chart1");
+      var ctx = document.getElementById("ChartIngest");
       var myChart = new Chart(ctx, {
           type: 'horizontalBar',
           data: {
@@ -369,7 +370,7 @@
 
 
 
-
+    <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
     <script type="text/javascript">
       var ctx = document.getElementById("ChartVelocity");
 
@@ -422,7 +423,7 @@
   <% end %>  
 
 
-
+  <%# ChartFlagOriginal - pie chart of flag colors %>
   <script type="text/javascript">
 
             var ctx = document.getElementById("ChartFlagOriginal");
@@ -471,7 +472,7 @@
 
 
 
-
+  <%# ChartFlag - pie chart of current flag colors %>
   <script type="text/javascript">
 
 
@@ -526,7 +527,7 @@
 
 
 
-
+  <%# ChartUpdate - chart of collection updates in cmr and their re reviews%>
   <script type="text/javascript">
     var barOptions_stacked = {
         tooltips: {
@@ -623,7 +624,7 @@
 
 
 
-
+  <%# ChartErrors - chart showing the overall elements with the most errors found%>
   <script type="text/javascript">
     var ctx = document.getElementById("ChartErrors");
 
@@ -677,7 +678,7 @@
 
 
 
-
+  <%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
   <script>
     var chart = c3.generate({
         bindto: '#ChartGuageOriginal',
@@ -701,6 +702,8 @@
   </script>
 
 
+
+  <%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
   <script>
     var chart = c3.generate({
         bindto: '#ChartGuageUpdated',
