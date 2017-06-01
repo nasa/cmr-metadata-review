@@ -26,6 +26,10 @@ body {
       width: 1000px;
       height: 10px;
     }
+    .overall_section, .first_sub_title, .report_top {
+      position: relative;
+      bottom: 120px;
+    }
 }
 
 
@@ -38,7 +42,7 @@ body {
 .velocity_graph_container{
   display:block;
   width:100%;
-  height:200px;
+  height:300px;
 }
 
 .doughnut_graph_container {
@@ -223,7 +227,7 @@ body {
 .update_section {
   display: inline-block;
   margin-bottom: 20px; 
-  width: 300px;
+  width: 350px;
 }
 
 .selection_section {
