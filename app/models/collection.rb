@@ -150,6 +150,8 @@ class Collection < ActiveRecord::Base
     Collection.all.select { |collection| collection.concept_id.include? daac_short_name }
   end
 
-
+  def get_records
+    self.records.where(hidden: false)
+  end
 
 end

@@ -20,7 +20,7 @@ class CollectionsController < ApplicationController
       return
     end
 
-    @collection_records = collection.records.order(:revision_id).reverse_order
+    @collection_records = collection.get_records.order(:revision_id).reverse_order
 
     @granule_objects = Granule.where(collection: collection)
     # @granule_records = granule_objects.map { |granule|}
@@ -161,6 +161,28 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'There was an error ingesting the record into the system'
     end
       
+    redirect_to home_path
+  end
+
+  def hide
+    if !current_user.admin
+      flash[:alert] = "User not authorized to delete records"
+      redirect_to home_path
+      return
+    end
+
+    record = Collection.find_record(params["concept_id"], params["revision_id"])
+
+    if record.nil?
+      flash[:alert] = "Record not deleted"
+      redirect_to home_path
+      return
+    end
+
+    record.hidden = true
+    record.save
+
+    flash[:notice] = "Record Deleted"
     redirect_to home_path
   end
 
