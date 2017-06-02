@@ -13,7 +13,7 @@ class Collection < ActiveRecord::Base
   # returns all records found in the DB of type collection
 
   def self.all_records
-    Record.all.where(recordable_type: "Collection")
+    Record.all.where(recordable_type: "Collection", hidden: false)
   end
 
   # ====Params   
@@ -25,7 +25,8 @@ class Collection < ActiveRecord::Base
   # Checks the DB and returns boolean if a record with matching concept_id and revision_id is found
 
   def self.record_exists?(concept_id, revision_id) 
-    return !(Collection.find_record(concept_id, revision_id).nil?)
+    record = Collection.find_record(concept_id, revision_id)
+    return (!record.nil?) && (!record.hidden)
   end
 
   # ====Params   

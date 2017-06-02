@@ -89,7 +89,7 @@ class CollectionsController < ApplicationController
   def create
     concept_id = params["concept_id"]
     revision_id = params["revision_id"]
-
+    byebug
     #guard against creating a duplicate record
     if Collection.record_exists?(concept_id, revision_id)
       redirect_to home_path

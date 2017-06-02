@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20170601203012) do
     t.boolean  "hidden",          default: false
   end
 
-  add_index "records", ["recordable_id", "revision_id"], name: "records_recordable_id_revision_id_key", unique: true, using: :btree
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
 
   create_table "records_update_locks", force: :cascade do |t|
