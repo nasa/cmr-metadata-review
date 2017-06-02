@@ -59,4 +59,14 @@ class Review < ActiveRecord::Base
     end
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Review Array
+  # ==== Method
+  # Returns all reviews that are associated with non hidden records
+  def get_reviews
+    Reviews.all.select {|review| !review.record.hidden }
+  end
+
 end

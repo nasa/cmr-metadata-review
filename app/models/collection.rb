@@ -148,7 +148,7 @@ class Collection < ActiveRecord::Base
   # returns all collections ingested that belong to the daac parameter
 
   def self.by_daac(daac_short_name)
-    Collection.all.select { |collection| collection.concept_id.include? daac_short_name }
+    Collection.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
   end
 
   def get_records
