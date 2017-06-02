@@ -102,7 +102,7 @@
         <% @in_process_records.each_with_index do |record, index| %>
           <tr>
               <td id="table2Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td class="center_text"><%= record.revision_id %></td>
+              <td id="table2Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
@@ -157,7 +157,7 @@
         <% @closed_records.each_with_index do |record, index| %>
           <tr>
               <td id="table3Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td class="center_text"><%= record.revision_id %></td>
+              <td id="table3Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <td><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
@@ -173,6 +173,12 @@
         <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
           <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
           <%= submit_tag("See Collection Review Detail", id: 'table3Submit', class: "detailButton") %>
+        <% end %>
+
+        <%= form_tag( reports_single_path ,  {method: "get", id: 'table3report_form'}) do %>
+          <%= hidden_field_tag(:concept_id, "", id: "table3ReportConceptId") %>
+          <%= hidden_field_tag(:revision_id, "", id: "table3ReportRevisionId") %>
+          <%= submit_tag("Get Collection Review Report", id: 'table3ReportSubmit', class: "reportButton") %>
         <% end %>
 
         <% if current_user.admin %>
@@ -200,13 +206,19 @@
   function setUpTable(table) {
     var tableButton = document.getElementById(table + "Submit");
     var tableDeleteButton = document.getElementById(table + "DeleteSubmit");
+    var tableReportButton = document.getElementById(table + "ReportSubmit");
+
     var tableSelector = document.getElementsByName(table + "Selection");    
-    tableButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableSelector);
-    tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableSelector);
+    //setting the buttons manually here because sometimes the page is loaded with something already selected
+    tableButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton,tableSelector);
+    tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
+    if (tableReportButton != null) {
+      tableReportButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
+    }
   }
 
 
-  function setOnClick(table, tableButton, tableDeleteButton, tableSelector) {
+  function setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector) {
       var shouldDisable = true;
       for (var i = 0, length = tableSelector.length; i < length; i++) {
           (function(index) {
@@ -218,8 +230,11 @@
                                     var count = index;
                                     updateTableValues(count, table);
                                     tableButton.disabled = false;
-                                    tableDeleteButton.disabled = false
+                                    tableDeleteButton.disabled = false;
+                                    if (tableReportButton != null) {
+                                      tableReportButton.disabled = false;
                                     }
+                                  }
           })(i);
       }
       return shouldDisable;
@@ -234,6 +249,15 @@
     document.getElementById(table + "ConceptId").value = newConceptId;
     document.getElementById(table + "DeleteConceptId").value = newConceptId;
     document.getElementById(table + "DeleteRevisionId").value = newRevisionId;
+
+    var reportConceptId = document.getElementById(table + "ReportConceptId");
+    var reportRevisionId = document.getElementById(table + "ReportRevisionId");
+    if (reportConceptId != null) {
+      reportConceptId.value = newConceptId;  
+    }
+    if (reportRevisionId != null) {
+      reportRevisionId.value = newRevisionId;
+    }
   }
 
 
