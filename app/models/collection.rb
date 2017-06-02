@@ -43,7 +43,7 @@ class Collection < ActiveRecord::Base
 
     collection = Collection.find_by concept_id: concept_id
     unless collection.nil?
-      record = collection.records.where(revision_id: revision_id).first
+      record = collection.records.where(revision_id: revision_id, hidden: false).first
     end
 
     return record
