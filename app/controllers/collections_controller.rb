@@ -89,7 +89,7 @@ class CollectionsController < ApplicationController
   def create
     concept_id = params["concept_id"]
     revision_id = params["revision_id"]
-    byebug
+
     #guard against creating a duplicate record
     if Collection.record_exists?(concept_id, revision_id)
       redirect_to home_path
@@ -174,7 +174,7 @@ class CollectionsController < ApplicationController
     record = Collection.find_record(params["concept_id"], params["revision_id"])
 
     if record.nil?
-      flash[:alert] = "Record not deleted"
+      flash[:alert] = "Error: Record was not Deleted"
       redirect_to home_path
       return
     end
@@ -182,7 +182,7 @@ class CollectionsController < ApplicationController
     record.hidden = true
     record.save
 
-    flash[:notice] = "Record Deleted"
+    flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} Deleted"
     redirect_to home_path
   end
 
