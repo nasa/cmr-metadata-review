@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
 
     @discussions = record.discussions
 
-    @section_titles = (record.sections[section_index][1]).sort
+    @section_titles = (record.sections[section_index][1])
 
     @bubble_data = []
     bubble_map = record.bubble_map
