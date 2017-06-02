@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
 
     @metric_set = MetricSet.new(Record.all)
 
-    @records = Record.where(recordable_type: "Collection")
+    @records = Collection.all_records
 
     record_set = Collection.all_newest_revisions
 

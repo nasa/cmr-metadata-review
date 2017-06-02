@@ -118,6 +118,12 @@
         <%= submit_tag("See Collection Review Detail", id: 'table2Submit') %>
       <% end %>
 
+      <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
+        <%= hidden_field_tag(:concept_id, "", id: "table2DeleteConceptId") %>
+        <%= hidden_field_tag(:revision_id, "", id: "table2DeleteRevisionId") %>
+        <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit') %>
+      <% end %>
+
     </div>
 
 
@@ -161,6 +167,12 @@
       <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
         <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
         <%= submit_tag("See Collection Review Detail", id: 'table3Submit') %>
+      <% end %>
+
+      <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
+        <%= hidden_field_tag(:concept_id, "", id: "table3DeleteConceptId") %>
+        <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
+        <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit') %>
       <% end %>
 
     </div>
