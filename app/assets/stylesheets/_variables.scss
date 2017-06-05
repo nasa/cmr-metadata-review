@@ -6,6 +6,9 @@ $gray-light: #ebebeb;
 $gray-dark: #95a5a6;
 $green-dark: #189c54;
 
+$report-gray-light: #dbdcdd;
+$report-gray-dark: #3e3e40;
+$report-green-dark: #3ab841;
 
 @function z($layer) {
   @return map-get($z-layers, $layer);

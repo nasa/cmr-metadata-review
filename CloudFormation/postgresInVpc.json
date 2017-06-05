@@ -7,27 +7,27 @@
 
     "EnvironmentName" : {
       "Type" : "String",
-      "Description" : "The env of this script Prod or SIT"
+      "Description" : "The env of this script (Prod or SIT)"
     },
 
     "VpcId" : {
       "Type" : "String",
-      "Description" : "VpcId of your existing Virtual Private Cloud (VPC)"
+      "Description" : "[A] VpcId of your existing Virtual Private Cloud (VPC)"
     },
 
     "Subnets" : {
       "Type" : "CommaDelimitedList",
-      "Description" : "The list of SubnetIds, for at least two Availability Zones in the region in your Virtual Private Cloud (VPC)"
+      "Description" : "[B,C] The list of SubnetIds, for at least two Availability Zones in the region in your Virtual Private Cloud (VPC)"
     },
 
     "PrivateSubnetIpBlock" : {
       "Type" : "String",
-      "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
+      "Description" : "[D] The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
     },
 
     "PublicSubnetIpBlock" : {
       "Type" : "String",
-      "Description" : "The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
+      "Description" : "[E] The CIDR format IP block of the vpc for the DB to allow ingress from.  (Subnet mapping of app)"
     },
 
     "DBName": {
@@ -145,14 +145,9 @@
   },
 
   "Outputs" : {
-    "JDBCConnectionString": {
-      "Description" : "JDBC connection string for database",
-      "Value" : { "Fn::Join": [ "", [ "postgres://",
-                                      { "Fn::GetAtt": [ "MyDB", "Endpoint.Address" ] },
-                                      ":",
-                                      { "Fn::GetAtt": [ "MyDB", "Endpoint.Port" ] },
-                                      "/",
-                                      { "Ref": "DBName" }]]}
+    "ConnectionString": {
+      "Description" : "address for database",
+      "Value" : { "Fn::Join": [ "", [ { "Fn::GetAtt": [ "MyDB", "Endpoint.Address" ] }]]}
     }
   }
 }
