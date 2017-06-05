@@ -1,0 +1,292 @@
+@import "variables";
+
+.graph_container{
+  display:block;
+  width:600px;
+}
+
+.velocity_graph_container{
+  display:block;
+  width:100%;
+  height:300px;
+}
+
+.doughnut_graph_container {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+.updates_graph_container {
+  display: block;
+  width: 100%;
+  height: 300px;
+}
+
+.problem_graph_container {
+  display: block;
+  width: 100%;
+  height: 400px;
+}
+
+.graph_container_flag{
+  display:block;
+  width:200px;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex-item {
+    margin: 10px;
+}
+
+.reports_box {
+  background-color:white;
+  width: 90%;
+  margin: auto;
+  padding: 40px;
+  padding-top: 20px;
+}
+
+.report_top {
+  display: flex;
+  min-height: 50px;
+  border-bottom-style: solid; 
+  border-bottom-width: 1px;
+  border-bottom-color: $gray-dark;
+  padding-bottom: 10px;
+  .report_drop_down {
+    width: 50%;
+    p {
+      font-size: 14px;
+    }
+    select {
+      width: 150px;
+      padding-left:10px;
+      height:38px;
+    }  
+  }
+
+  .report_buttons {
+    text-align: right;
+    width: 50%;
+    padding-top: 30px;
+  }
+
+  .report_button {
+    color: white;
+    display: inline-block;
+    background-color: #5abdf3;
+    border: none;
+    padding: 5px;
+
+
+    i {
+      display: inline-block;
+    }
+    p {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+}
+
+.report_sub_title {
+  min-height: 25px;
+  display: flex;
+  margin-bottom: 15px;
+
+  .title_box {
+    text-align: center;
+    background-color: $gray-dark;
+    color: white;
+    font-size: 14px;
+    max-width: 170px;
+    padding: 7px;
+  }
+
+  .title_text {
+    font-size: 20px;
+    font-weight: 700;
+    margin-left: 25px;
+    margin-top: 5px;
+  }
+
+}
+
+.title_holder {
+  border-bottom-style: solid; 
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  margin-bottom: 10px;
+  p {
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    // max-width: 170px;
+    padding: 5px;
+  }
+}
+
+.title_bottom_holder {
+  margin-bottom: 10px;
+  p {
+    position:relative;
+    bottom:11px;
+    right: 10px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    background-color: black;
+    color: white;
+    font-size: 11px;
+    // max-width: 170px;
+    padding: 5px;
+  }
+}
+
+.stats_area {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 25px;
+}
+
+.sub_section_title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.section_break {
+  width:95%;
+  border-bottom-color: black;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+
+.surrounding_box {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  padding: 10px;
+}
+
+.ingest_section {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.velocity_section {
+  display: inline-block;
+  margin-bottom: 20px;
+  width: 38%;
+  margin-right: 20px;
+}
+
+.update_section {
+  display: inline-block;
+  margin-bottom: 20px; 
+  width: 55%;
+}
+
+.selection_section {
+  display: inline-block;
+  margin-bottom: 20px; 
+  width: 35%;
+  padding-left:15px;
+  tr:nth-child(n) {
+    background-color: white;
+  }
+}
+
+.quality_section {
+  display: flex;
+  margin-bottom: 20px;
+  .quality_box {
+    margin-right: 20px;
+  }
+
+  .data_area {
+    display: flex;
+    .checked_num {
+      font-size: 64px;
+    }
+  }  
+}
+
+.score_section {
+  display: flex;
+  margin-bottom: 20px;
+
+  .score_box {
+    width:400px;
+    margin-right: 20px;
+  }
+}
+
+.in_process_section {
+  width: 820px;
+  tr:nth-child(n) {
+    background-color: white;
+  }
+}
+
+.problem_section {
+  width: 80%;
+}
+
+
+
+.legend_area {
+  .legend_row {
+    display: flex;
+  }
+
+  .first_item {
+    width: 170px;
+  }
+
+  .legend_item {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .color_box {
+      width:15px;
+      height:15px;
+      margin-right: 10px;
+    }
+
+    .red {
+      background-color: #e84a34;
+    }
+
+    .blue {
+      background-color: #1b75ae;
+    }
+
+    .yellow {
+      background-color: #ffce00;
+    }
+
+    .green {
+      background-color: #3ab841;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+}

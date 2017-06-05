@@ -1,166 +1,728 @@
-
 <%= render(partial: 'shared/navigation', locals: {title: "REPORTS HOME PAGE"}) %>
-<script type="text/javascript">
-  document.getElementsByClassName("header_image")[0].style.display = "none";
-</script>
 
-<div style="display:flex;">
-  <div>
+<div class="reports_box">
+  <div class="report_top">
+    <div class="report_drop_down">
+      <% if @provider_select_list %>
+        <p>SELECT METRICS BY DAAC: </p>
+        <p><%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @daac)) %></p>
 
+        <script type="text/javascript">
+          var selecter = document.getElementById("provider");
+          selecter.onchange = function() {
+            if (!(selecter.value == '<%=@provider_select_list[0][0]%>')) {
+              document.location = '/reports/provider?daac=' + selecter.value;
+            }
+          }
+        </script>
+      <% end %>
+    </div>
+    <div class="report_buttons">
+      <a href="<%= @csv_path + ".csv"%>" class="report_button">
+          <p>EXPORT METRICS</p>
+          <i class="fa fa-file-excel-o"></i>
+      </a>
+      <a href="#" class="report_button">
+          <p>PRINT-READY PDF</p>
+          <i class="fa fa-file-pdf-o"></i>
+      </a>
+    </div>
+  </div>
 
+  <% if @show_charts %>
 
+    <div class="report_sub_title">
+      <div class="title_box">
+        <%= @report_title %>
+      </div>
+      <div class="title_text">
 
-      <table style="width:100%; padding:5px;">
-          <tr>
-            <td>Total Collections in CMR:</td> 
-            <td><%=@cmr_total_collection_count%></td>  
-          </tr>
-          <tr>
-            <td>Total Ingested Collections:</td>
-            <td><%=@collection_ingest_count%></td>
-          <tr>
-            
+      </div>
+    </div>
 
-          </tr>
-      </table>
+    <div class="stats_area">
+      
+      <div class="sub_section_title">
+        OVERALL DAAC METRICS
+      </div>
 
-      <br>
-
-      <table style="width:100%; padding:5px;">
-          <tr>
-            <td>State of Reviews:</td> 
-            <td>0 Reviews:</td>  
-            <td>1 Review:</td>  
-            <td>2+ Reviews:</td>  
-            <td>Record Complete:</td>  
-          </tr>
-          <tr>
-            <td>Record Counts</td>
-            <td><%= @review_counts.count { |x| x == 0 }%></td>
-            <td><%= @review_counts.count { |x| x == 1 }%></td>
-            <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
-            <td><%= @total_completed %></td>
-          <tr>
-            
-
-          </tr>
-      </table>
-
-
-      <br>
-
-
-      <table style="width:100%; padding:5px;">
-          <tr>
-            <td>Review Velocity:</td> 
-            <td>Closed in Last 30 Days:</td>  
-            <td>Last 90 Days:</td>  
-            <td>Last 180 Days:</td>  
-            
-          </tr>
-            <td>Review Counts</td>
-            <td><%= @review_day_counts[0] %></td>
-            <td><%= @review_day_counts[1] %></td>
-            <td><%= @review_day_counts[2] %></td>
-          <tr>
-            
-
-          </tr>
-      </table>
-
-      <br>
-
-        <table style="width:100%; padding:5px;">
-        <tr>
-          <td>Stat:</td>
-          <td>Original Set:</td>
-          <td>Current Set:</td>
-        </tr>
-
-          <tr>
-            <td>Number of elements checked (total):</td>  
-            <td><%=@original_total_checked%></td>
-            <td><%=@total_checked%></td>
-          </tr>
-
-          <tr>
-            <td>Number of elements that passed:</td>  
-            <td><%=@original_field_colors["green"]%></td>
-            <td><%=@field_colors["green"]%></td>
-          </tr>
-
-          <tr>
-            <td>Number of elements that failed:</td>  
-            <td><%=@original_field_colors["red"]%></td>
-            <td><%=@field_colors["red"]%></td>
-          </tr>
-
-          <tr>
-            <td>Number of elements with warnings issued:</td>  
-            <td><%=@original_field_colors["yellow"]%></td>
-            <td><%=@field_colors["yellow"]%></td>
-          </tr>
-
-          <tr>
-            <td>Number of elements with informational notes added:</td>  
-            <td><%=@original_field_colors["blue"]%></td>
-            <td><%=@field_colors["blue"]%></td>
-          </tr>
-
-        </table>
-
+      <% if @cmr_total_collection_count %>
+        <div class="ingest_section">
+            <%= render(partial: 'title_bar', locals: {title: "INGESTED COLLECTIONS PROGRESS"}) %>
+            <div class="surrounding_box">
+              <div class="graph_container">
+                <canvas id="ChartIngest"></canvas>
+              </div>
+            </div>
+        </div>
 
         <br>
 
-      <table style="width:100%; padding:5px;">
-        <tr>
-          <td>Top 5 Problem Elements</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Element Name:</td>
-          <td>Non Green Count:</td>
-        </tr>
+        <div class="velocity_section">
+              <%= render(partial: 'title_bar', locals: {title: "COMPLETED REVIEW PROGRESS"}) %>
+              <div class="surrounding_box">
+                <div class="velocity_graph_container">
+                  <canvas id="ChartVelocity"></canvas>
+                </div>
+              </div>
+        </div>
+      <% end %>
 
-        <% @failing_elements_five.each do |column_name, non_green_count|%>
-          <tr>
-            <td><%=column_name%></td>
-            <td><%=non_green_count%></td>
-          </tr>
-        <%end%>
+      <div class="update_section">
+          <%= render(partial: 'title_bar', locals: {title: "UPDATED COLLECTIONS PROGRESS"}) %>
+          <div class="surrounding_box">
+            <div class="updates_graph_container">
+              <canvas id="ChartUpdate"></canvas>
+            </div>
+          </div>
+      </div>
 
-        </table>
+      <% if @report_list %>
+        <div class="selection_section">
+          <%= render(partial: 'title_bar', locals: {title: "SELECTED RECORDS"}) %>
+          <table>
+            <tr>
+              <td>Concept Id</td>
+              <td>Short Name</td>
+            </tr>
+            <% @report_list.each do |record| %>
+              <tr>
+                <td>
+                  <%=record.concept_id%>
+                </td>
+                <% if record.short_name != "" %>
+                  <td>
+                    <%=record.short_name%>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %> 
+          </table>
+          
+        </div>
+      <% end %>
 
-        <br>
+      <br>
 
-        <table style="width:100%; padding:5px;">
-          <tr>
-            <td>Number of Collections that been updated in CMR after a finished review:</td>  
-            <td><%=@updated_count%></td>
-          </tr>
+      <div class="section_break">
+      </div>
 
-          <tr>
-            <td>Number of Updated Collection Reviews marked as "Done":</td>  
-            <td><%=@updated_done_count%></td>
-          </tr>
+      <div class="sub_section_title">
+        METADATA QUALITY
+      </div>
 
-          <tr>
-            <td>Quality of Collection Reviews marked as "Done" (high/low/avg):</td>  
-            <td><%=(@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)%></td>
-          </tr>
 
-          <tr>
-            <td>Quality of Updated Collection Reviews marked as "Done" (high/low/avg)</td>  
-            <td><%=(@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)%></td>
-          </tr>
+      <div class="quality_section">
+        <div class="surrounding_box quality_box">
+          <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL REVIEW"}) %>
+          <div class="data_area">
+            <div class="data_text">
+              <p>NUMBER OF COLLECTION</p>
+              <p>ELEMENTS REVIEWED</p>
+              <p class="checked_num"><%=@original_total_checked%></p>
+            </div>
+            <div class="doughnut_graph_container">
+              <canvas id="ChartFlagOriginal"></canvas>
+            </div>
+          </div>
+          <div class="legend_area" id="original_quality_legend">
+            <div class="legend_row">
+              <div class="legend_item first_item">
+                <div class="color_box green">
+                </div>
+                <p>ELEMENTS PASSED (<%=@original_field_colors["green"]%>)</p>
+              </div>
+              <div class="legend_item">
+                <div class="color_box yellow">
+                </div>
+                <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+              </div>
+            </div>
+            <div class="legend_row">
+              <div class="legend_item first_item">
+                <div class="color_box blue">
+                </div>
+                <p>ELEMENTS NOTED (<%=@original_field_colors["blue"]%>)</p>
+              </div>
+              <div class="legend_item">
+                <div class="color_box red">
+                </div>
+                <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        </table>
-  </div>
 
-    <div style="padding-left:30px;">
-        <a href="<%=reports_home_path(format: :csv)%>">
-            <button type="button" class="btn btn-success">Download CSV Report</button>
-        </a>
 
-  </div>
+        <div class="surrounding_box quality_box">
+          <%= render(partial: 'title_bottom_bar', locals: {title: "CURRENT STATUS"}) %>
+          <div class="data_area">
+            <div class="data_text">
+              <p>NUMBER OF COLLECTION</p>
+              <p>ELEMENTS REVIEWED</p>
+              <p class="checked_num"><%=@original_total_checked%></p>
+            </div>
+            <div class="doughnut_graph_container">
+              <canvas id="ChartFlag"></canvas>
+            </div>
+          </div>
+          <div class="legend_area" id="original_quality_legend">
+            <div class="legend_row">
+              <div class="legend_item first_item">
+                <div class="color_box green">
+                </div>
+                <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
+              </div>
+              <div class="legend_item">
+                <div class="color_box yellow">
+                </div>
+                <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+              </div>
+            </div>
+            <div class="legend_row">
+              <div class="legend_item first_item">
+                <div class="color_box blue">
+                </div>
+                <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
+              </div>
+              <div class="legend_item">
+                <div class="color_box red">
+                </div>
+                <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <br>
+
+      <div class="problem_section">
+            <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
+            <div class="surrounding_box">
+              <div class="problem_graph_container">
+                <canvas id="ChartErrors"></canvas>
+              </div>
+            </div>
+      </div>
+
+      <br>
+
+
+      <div class="section_break">
+      </div>
+
+      <div class="sub_section_title">
+        REVIEW METRICS
+      </div>
+
+      <div class="in_process_section">
+        <%= render(partial: 'title_bar', locals: {title: "IN PROGRESS COLLECTIONS"}) %>
+            <table>
+                <tr>
+                  <td>State of Reviews:</td> 
+                  <td>0 Reviews:</td>  
+                  <td>1 Review:</td>  
+                  <td>2+ Reviews:</td>  
+                </tr>
+                <tr>
+                  <td>Record Counts</td>
+                  <td><%= @review_counts.count { |x| x == 0 }%></td>
+                  <td><%= @review_counts.count { |x| x == 1 }%></td>
+                  <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
+                </tr>
+            </table>
+      </div>
+
+
+      <br>
+
+
+
+      <div class="score_section">
+        <div class="surrounding_box score_box">
+          <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
+          <div class="data_area">
+            <div id="ChartGuageOriginal"></div>
+          </div>
+        </div>
+
+        <div class="surrounding_box score_box">
+          <%= render(partial: 'title_bottom_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
+          <div class="data_area">
+              <div id="ChartGuageUpdated"></div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>
+  <% end %>  
 </div>
+
+
+
+
+
+
+<% if @show_charts %>
+
+  <% if @cmr_total_collection_count %>
+
+    <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
+    <script type="text/javascript">
+      var barOptions_stacked = {
+          tooltips: {
+              enabled: false
+          },
+          hover :{
+              animationDuration:0
+          },
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      beginAtZero:true,
+                      fontFamily: "'Open Sans Bold', sans-serif",
+                      fontSize:11
+                  },
+                  scaleLabel:{
+                      display:false
+                  },
+                  gridLines: {
+                  }, 
+                  stacked: true
+              }],
+              yAxes: [{
+                  gridLines: {
+                      display:false,
+                      color: "#fff",
+                      zeroLineColor: "#fff",
+                      zeroLineWidth: 0
+                  },
+                  ticks: {
+                      fontFamily: "'Open Sans Bold', sans-serif",
+                      fontSize:11
+                  },
+                  stacked: true,
+                  barThickness: 50
+              }]
+          },
+          legend:{
+              display:true,
+              position: "bottom"
+          },
+          maintainAspectRatio: false,
+          
+          animation: {
+              onComplete: function () {
+                  var chartInstance = this.chart;
+                  var ctx = chartInstance.ctx;
+                  ctx.textAlign = "left";
+                  
+
+                  Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                          data = dataset.data[index];
+                          if(i==0){
+                              ctx.fillStyle = "#3ab841";
+                              ctx.font = "20px Open Sans";
+                              ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
+                          } else {
+                              ctx.font = "25px Open Sans";
+                              ctx.fillStyle = "#3e3e40";
+                              ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x+5, bar._model.y -15);
+                          }
+                      }),this)
+                  }),this);
+              }
+          },
+          pointLabelFontFamily : "Quadon Extra Bold",
+          scaleFontFamily : "Quadon Extra Bold",
+      };
+
+      var ctx = document.getElementById("ChartIngest");
+      var myChart = new Chart(ctx, {
+          type: 'horizontalBar',
+          data: {
+              labels: [""],
+
+              datasets: [{
+                  label: "Number of Ingested Collections",
+                  data: [<%= @collection_ingest_count %>],
+                  backgroundColor: "#3ab841",
+                  hoverBackgroundColor: "#3ab841"
+              },{
+                  label: "Total Number of Collections in CMR",
+                  data: [<%= @cmr_total_collection_count - @collection_ingest_count %>],
+                  backgroundColor: "#dbdcdd",
+                  hoverBackgroundColor: "#dbdcdd"
+              }]
+          },
+
+          options: barOptions_stacked
+      });
+    </script>
+
+
+
+    <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
+    <script type="text/javascript">
+      var ctx = document.getElementById("ChartVelocity");
+
+      var data = {
+          labels: <%= raw @display_months %>,
+          datasets: [
+              {
+                  label: "Completed Reviews",
+                  backgroundColor: [
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.4)',
+                      'rgba(58, 184, 65, 0.5)',
+                      'rgba(58, 184, 65, 0.6)',
+                      'rgba(58, 184, 65, 0.7)',
+                      'rgba(58, 184, 65, 0.8)',
+                      'rgba(58, 184, 65, 0.9)',
+                      'rgba(58, 184, 65, 1)'
+                  ],
+                  data: <%= @review_month_counts %>,
+              }
+          ]
+      };
+
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: data,
+
+          options: {
+            legend:{
+              display:false
+            },
+            scales: {
+              xAxes: [{
+                  barThickness: 20
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Number of Completed Reviews'
+                }
+              }]
+            },
+            maintainAspectRatio: false
+          }
+      });
+    </script>
+  <% end %>  
+
+
+  <%# ChartFlagOriginal - pie chart of flag colors %>
+  <script type="text/javascript">
+
+            var ctx = document.getElementById("ChartFlagOriginal");
+
+            var data = {
+              labels: [
+                  "Red",
+                  "Blue",
+                  "Yellow",
+                  "Green"
+              ],
+              datasets: [
+                  {
+                      data: [<%=@original_field_colors["red"]%>, <%=@original_field_colors["blue"]%>, <%=@original_field_colors["yellow"]%>, <%=@original_field_colors["green"]%>],
+                      backgroundColor: [
+                          "#e84a34",
+                          "#1b75ae",
+                          "#ffce00",
+                          "#3ab841"
+                      ],
+                      hoverBackgroundColor: [
+                          "#e84a34",
+                          "#1b75ae",
+                          "#ffce00",
+                          "#3ab841"
+                      ]
+                  }]
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                  legend:{
+                    display:false
+                  },
+                  maintainAspectRatio: false,
+                  pieceLabel: {
+                    mode: 'value',
+                    fontStyle: 'bold'
+                  }
+                }
+              });
+
+  </script>
+
+
+
+  <%# ChartFlag - pie chart of current flag colors %>
+  <script type="text/javascript">
+
+
+
+    var ctx = document.getElementById("ChartFlag");
+
+    var data = {
+      labels: [
+          "Red",
+          "Blue",
+          "Yellow",
+          "Green"
+      ],
+      datasets: [
+          {
+              data: [<%=@field_colors["red"]%>, <%=@field_colors["blue"]%>, <%=@field_colors["yellow"]%>, <%=@field_colors["green"]%>],
+              backgroundColor: [
+                  "#e84a34",
+                  "#1b75ae",
+                  "#ffce00",
+                  "#3ab841"
+              ],
+              hoverBackgroundColor: [
+                  "#e84a34",
+                  "#1b75ae",
+                  "#ffce00",
+                  "#3ab841"
+              ]
+          }]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+
+        options: {
+                    legend:{
+                      display:false
+                    },
+                    maintainAspectRatio: false,
+                    pieceLabel: {
+                      mode: 'value',
+                      fontStyle: 'bold'
+                    }
+                 }
+      });
+  </script>
+
+
+
+
+
+
+
+  <%# ChartUpdate - chart of collection updates in cmr and their re reviews%>
+  <script type="text/javascript">
+    var barOptions_stacked = {
+        tooltips: {
+            enabled: false
+        },
+        hover :{
+            animationDuration:0
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    fontFamily: "'Open Sans Bold', sans-serif",
+                    fontSize:11
+                },
+                scaleLabel:{
+                    display:false
+                },
+                gridLines: {
+                }, 
+                stacked: false
+            }],
+            yAxes: [{
+                gridLines: {
+                    display:false,
+                    color: "#fff",
+                    zeroLineColor: "#fff",
+                    zeroLineWidth: 0
+                },
+                ticks: {
+                    fontFamily: "'Open Sans Bold', sans-serif",
+                    fontSize:11
+                },
+                stacked: false,
+                barThickness: 30
+            }]
+        },
+        legend:{
+            display:true,
+            position: "bottom"
+        },
+        maintainAspectRatio: false,
+        
+        animation: {
+            onComplete: function () {
+                var chartInstance = this.chart;
+                var ctx = chartInstance.ctx;
+                ctx.textAlign = "left";
+                
+
+                Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                    var meta = chartInstance.controller.getDatasetMeta(i);
+                    Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                        data = dataset.data[index];
+                        if(i==0){
+                            ctx.fillStyle = "#3e3e40";
+                            ctx.font = "20px Open Sans";
+                            ctx.fillText(data, bar._model.x - 30, bar._model.y-38);
+                        } else {
+                            ctx.font = "20px Open Sans";
+                            ctx.fillStyle = "#3e3e40";
+                            ctx.fillText(data,  bar._model.x - 30, bar._model.y-38);
+                        }
+                    }),this)
+                }),this);
+            }
+        },
+        pointLabelFontFamily : "Quadon Extra Bold",
+        scaleFontFamily : "Quadon Extra Bold",
+    };
+
+    var ctx = document.getElementById("ChartUpdate");
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [""],
+
+            datasets: [{
+                label: "Updated Collections Re-Reviewed",
+                data: [<%= @updated_done_count %>],
+                backgroundColor: "rgba(58, 184, 65, 0.6)",
+                hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
+            },{
+                label: "Collections Updated in CMR After Review",
+                data: [<%= @updated_count %>],
+                backgroundColor: "rgba(58, 184, 65, 1)",
+                hoverBackgroundColor: "rgba(58, 184, 65, 1)"
+            }]
+        },
+
+        options: barOptions_stacked
+    });
+  </script>
+
+
+
+  <%# ChartErrors - chart showing the overall elements with the most errors found%>
+  <script type="text/javascript">
+    var ctx = document.getElementById("ChartErrors");
+
+    var data = {
+        labels: <%= raw (@failing_elements_five.map {|data_set| data_set[0]}) %>,
+        datasets: [
+            {
+                label: "",
+                backgroundColor: [
+                    'rgba(105, 105, 105, 1)',
+                    'rgba(105, 105, 105, 0.9)',
+                    'rgba(105, 105, 105, 0.8)',
+                    'rgba(105, 105, 105, 0.7)',
+                    'rgba(105, 105, 105, 0.6)',
+                    'rgba(105, 105, 105, 0.5)',
+                    'rgba(105, 105, 105, 0.4)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
+                ],
+                data: <%= (@failing_elements_five.map {|data_set| data_set[1]}) %>,
+            }
+        ]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: data,
+
+        options: {
+          legend:{
+            display:false
+          },
+          scales: {
+            xAxes: [{
+                barThickness: 20,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Number of Non Green Flags Per Element'
+                }
+            }],
+            yAxes: [{
+              position: "right"
+            }]
+          },
+          maintainAspectRatio: false
+        }
+    });
+  </script>
+
+
+
+
+  <%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
+  <script>
+    var chart = c3.generate({
+        bindto: '#ChartGuageOriginal',
+        data: {
+            columns: [
+                ['data', <%= @original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size %>]
+            ],
+            type: 'gauge'
+        },
+        color: {
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 80, 100]
+            }
+        },
+        size: {
+            height: 180
+        }
+    });
+
+  </script>
+
+
+
+  <%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
+  <script>
+    var chart = c3.generate({
+        bindto: '#ChartGuageUpdated',
+        data: {
+            columns: [
+                ['data', <%= @quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size %>]
+            ],
+            type: 'gauge'
+        },
+        color: {
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 80, 100]
+            }
+        },
+        size: {
+            height: 180
+        }
+    });
+
+  </script>
+
+<% end %>  

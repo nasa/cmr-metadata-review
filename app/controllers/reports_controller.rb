@@ -1,21 +1,19 @@
 class ReportsController < ApplicationController
+  include ReportsHelper
+
   before_filter :authenticate_user!
   
   def home
+    @report_title = "OVERALL VIEW"
+    @show_charts = true
+    @csv_path = reports_home_path
+
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
-    @review_day_counts = []
-    [30,60,180].each do |day_count|
-      total_count = (Review.all.select { |review| 
-                                            if review.review_completion_date
-                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days < day_count.days
-                                            else
-                                              false 
-                                            end
-                                        }).count
-      @review_day_counts.push(total_count)
-    end
+    @review_month_counts = list_past_months
+
+    @display_months = get_month_list
 
     @metric_set = MetricSet.new(Record.all)
 
@@ -40,8 +38,8 @@ class ReportsController < ApplicationController
     @field_colors = metric_set.color_counts
     @total_checked = @field_colors.values.sum
 
-
-    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
+    #taking the top 10 elements with the most issues
+    @failing_elements_five = original_metric_set.element_non_green_count.take(10)
 
     @updated_count = metric_set.updated_count
     @updated_done_count = metric_set.updated_done_count
@@ -49,21 +47,32 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => 'reports' }
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
     end
   end
 
   def provider
+    @report_title = "BY DAAC VIEW"
+    @csv_path = reports_provider_path
+
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
 
     unless params["daac"].nil? || params["daac"] == "Select DAAC"
+      @show_charts = true
       @daac = params["daac"]
-      @total_collection_count = Cmr.total_collection_count(@daac)
-      @total_ingested = Collection.by_daac(@daac).count
+      @cmr_total_collection_count = Cmr.total_collection_count(@daac)
+      @collection_ingest_count = Collection.by_daac(@daac).count
 
-      @percent_ingested = (@total_ingested.to_f * 100 / @total_collection_count).round(2)
+      daac_records = (Collection.by_daac(@daac).map {|collection| collection.records.to_a}).flatten
+      daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
+
+      @review_month_counts = list_past_months
+
+      @display_months = get_month_list
+      
+      @percent_ingested = (@collection_ingest_count.to_f * 100 / @cmr_total_collection_count).round(2)
 
       record_set = Collection.all_newest_revisions(params["daac"])
 
@@ -92,7 +101,7 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html { render :template => "reports/home", :layout => "reports" }
       format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
     end
   end
@@ -124,6 +133,10 @@ class ReportsController < ApplicationController
   end
 
   def selection
+    @show_charts = true
+    @report_title = "SELECTION VIEW"
+    @csv_path = reports_selection_path
+
     records_list = params["records"].split(",")
     @report_list = []
     records_list.each_slice(2) {|(concept_id, revision_id)|
@@ -157,9 +170,18 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html
+      format.html { render :template => "reports/home", :layout => "reports" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end                          
+  end
+
+  private
+
+  def get_month_list
+    # negative numbers represent previous months
+    # then Date::MONTHNAMES[1..12] converts them into strings
+    # the % 12 then wraps negative numbers around to the end months of the year
+    (-11).upto(-1).to_a.map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
   end
 
 end

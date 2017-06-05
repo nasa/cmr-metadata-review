@@ -7,7 +7,7 @@
 
     "EnvironmentName" : {
       "Type" : "String",
-      "Description" : "The env of this script Prod or SIT"
+      "Description" : "The env of this script (Prod or SIT)"
     },
 
     "BucketName" : {
@@ -119,11 +119,11 @@
   "Outputs" : {
     "BucketName": {
       "Value": { "Ref": "S3Bucket" },
-      "Description": "Name of the sample Amazon S3 bucket with CORS enabled."
+      "Description": "Name of the sample Amazon S3 bucket with CORS enabled. AppInVpc[E]"
     },
     "InstanceProfileArn": {
       "Value": { "Fn::GetAtt" : ["S3InstanceProfile", "Arn"] },
-      "Description": "The ARN of the instance profile"
+      "Description": "The ARN of the instance profile AppInVpc [D]"
     }
   }
 }
