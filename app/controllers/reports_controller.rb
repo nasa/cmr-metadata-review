@@ -11,23 +11,9 @@ class ReportsController < ApplicationController
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
-<<<<<<< HEAD
-    @review_day_counts = []
-    [30,60,180].each do |day_count|
-      total_count = (Review.get_reviews.select { |review| 
-                                            if review.review_completion_date
-                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days < day_count.days
-                                            else
-                                              false 
-                                            end
-                                        }).count
-      @review_day_counts.push(total_count)
-    end
-=======
     @review_month_counts = list_past_months
 
     @display_months = get_month_list
->>>>>>> master
 
     @metric_set = MetricSet.new(Collection.all_records)
 
@@ -190,27 +176,23 @@ class ReportsController < ApplicationController
   end
 
   def single 
-
-    record = Collection.find_record(params["concept_id"], params["revision_id"])
+    @csv_path = reports_single_path
+    @report_title = "SINGLE RECORD VIEW"
     
-    @concept_id = record.concept_id
-    @short_name = record.short_name
-    @reviews = record.reviews
+    @record = Collection.find_record(params["concept_id"], params["revision_id"])
 
+    @reviews = @record.reviews
 
-    record_data = record.record_datas
-    reds = record_data.select{|data| data.color == "red"}
-    yellows = record_data.select{|data| data.color == "yellow"}
-    blues = record_data.select{|data| data.color == "blue"}
+    record_data = @record.record_datas
+    @reds = record_data.select{|data| data.color == "red"}
+    @yellows = record_data.select{|data| data.color == "yellow"}
+    @blues = record_data.select{|data| data.color == "blue"}
 
-    byebug
-# Should be formatted for 8.5x11 (portrait) multi-page report.
-# Record Name, Review Date (when marked 'Done')
-# Reviewer names (all)
-# Metrics Summary (number elements reviewed, color breakdown)
-# Red Elements: Value, Recommendation
-# Yellow Elements: Value, Recommendation
-# Blue Elements: Value, Recommendation
+    @metric_set = MetricSet.new([@record])
+    #stat generation for original and current sets of records
+    @field_colors = @metric_set.color_counts
+    @total_checked = @field_colors.values.sum
+
     respond_to do |format|
       format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
