@@ -50,7 +50,7 @@
     <div class="stats_area">
       
       <%# This div grouped to be moved up for the display when printed %>
-      <div class="overall_section">
+      <section class="report_overall">
         <div class="sub_section_title">
           OVERALL DAAC METRICS
         </div>
@@ -99,7 +99,7 @@
                   <td>
                     <%=record.concept_id%>
                   </td>
-                  <% if record.short_name != "" %>
+                  <% if record.has_short_name? %>
                     <td>
                       <%=record.short_name%>
                     </td>
@@ -116,163 +116,167 @@
         <div class="section_break">
         </div>
 
-      </div>
-
-      <div class="sub_section_title">
-        METADATA QUALITY
-      </div>
+      </section>
 
 
-      <div class="quality_section">
-        <div class="surrounding_box quality_box">
-          <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL REVIEW"}) %>
-          <div class="data_area">
-            <div class="data_text">
-              <p>NUMBER OF COLLECTION</p>
-              <p>ELEMENTS REVIEWED</p>
-              <p class="checked_num"><%=@original_total_checked%></p>
+      <section class="quality_section">
+        <div class="sub_section_title">
+          METADATA QUALITY
+        </div>
+
+
+        <div class="quality_row">
+          <div class="surrounding_box quality_box">
+            <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL REVIEW"}) %>
+            <div class="data_area">
+              <div class="data_text">
+                <p>NUMBER OF COLLECTION</p>
+                <p>ELEMENTS REVIEWED</p>
+                <p class="checked_num"><%=@original_total_checked%></p>
+              </div>
+              <div class="doughnut_graph_container">
+                <canvas id="ChartFlagOriginal"></canvas>
+              </div>
             </div>
-            <div class="doughnut_graph_container">
-              <canvas id="ChartFlagOriginal"></canvas>
+            <div class="legend_area" id="original_quality_legend">
+              <div class="legend_row">
+                <div class="legend_item first_item">
+                  <div class="color_box green">
+                  </div>
+                  <p>ELEMENTS PASSED (<%=@original_field_colors["green"]%>)</p>
+                </div>
+                <div class="legend_item">
+                  <div class="color_box yellow">
+                  </div>
+                  <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+                </div>
+              </div>
+              <div class="legend_row">
+                <div class="legend_item first_item">
+                  <div class="color_box blue">
+                  </div>
+                  <p>ELEMENTS NOTED (<%=@original_field_colors["blue"]%>)</p>
+                </div>
+                <div class="legend_item">
+                  <div class="color_box red">
+                  </div>
+                  <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="legend_area" id="original_quality_legend">
-            <div class="legend_row">
-              <div class="legend_item first_item">
-                <div class="color_box green">
-                </div>
-                <p>ELEMENTS PASSED (<%=@original_field_colors["green"]%>)</p>
+
+
+
+          <div class="surrounding_box quality_box">
+            <%= render(partial: 'title_bottom_bar', locals: {title: "CURRENT STATUS"}) %>
+            <div class="data_area">
+              <div class="data_text">
+                <p>NUMBER OF COLLECTION</p>
+                <p>ELEMENTS REVIEWED</p>
+                <p class="checked_num"><%=@original_total_checked%></p>
               </div>
-              <div class="legend_item">
-                <div class="color_box yellow">
-                </div>
-                <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+              <div class="doughnut_graph_container">
+                <canvas id="ChartFlag"></canvas>
               </div>
             </div>
-            <div class="legend_row">
-              <div class="legend_item first_item">
-                <div class="color_box blue">
+            <div class="legend_area" id="original_quality_legend">
+              <div class="legend_row">
+                <div class="legend_item first_item">
+                  <div class="color_box green">
+                  </div>
+                  <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
                 </div>
-                <p>ELEMENTS NOTED (<%=@original_field_colors["blue"]%>)</p>
+                <div class="legend_item">
+                  <div class="color_box yellow">
+                  </div>
+                  <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+                </div>
               </div>
-              <div class="legend_item">
-                <div class="color_box red">
+              <div class="legend_row">
+                <div class="legend_item first_item">
+                  <div class="color_box blue">
+                  </div>
+                  <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
                 </div>
-                <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+                <div class="legend_item">
+                  <div class="color_box red">
+                  </div>
+                  <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <br>
 
-
-        <div class="surrounding_box quality_box">
-          <%= render(partial: 'title_bottom_bar', locals: {title: "CURRENT STATUS"}) %>
-          <div class="data_area">
-            <div class="data_text">
-              <p>NUMBER OF COLLECTION</p>
-              <p>ELEMENTS REVIEWED</p>
-              <p class="checked_num"><%=@original_total_checked%></p>
-            </div>
-            <div class="doughnut_graph_container">
-              <canvas id="ChartFlag"></canvas>
-            </div>
-          </div>
-          <div class="legend_area" id="original_quality_legend">
-            <div class="legend_row">
-              <div class="legend_item first_item">
-                <div class="color_box green">
+        <div class="problem_section">
+              <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
+              <div class="surrounding_box">
+                <div class="problem_graph_container">
+                  <canvas id="ChartErrors"></canvas>
                 </div>
-                <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
               </div>
-              <div class="legend_item">
-                <div class="color_box yellow">
-                </div>
-                <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
-              </div>
-            </div>
-            <div class="legend_row">
-              <div class="legend_item first_item">
-                <div class="color_box blue">
-                </div>
-                <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
-              </div>
-              <div class="legend_item">
-                <div class="color_box red">
-                </div>
-                <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
 
+        <br>
 
-      <br>
-
-      <div class="problem_section">
-            <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
-            <div class="surrounding_box">
-              <div class="problem_graph_container">
-                <canvas id="ChartErrors"></canvas>
-              </div>
-            </div>
-      </div>
-
-      <br>
+      </section>
 
 
       <div class="section_break">
       </div>
 
-      <div class="sub_section_title">
-        REVIEW METRICS
-      </div>
+      <section class="review_section">
+        <div class="sub_section_title">
+          REVIEW METRICS
+        </div>
 
-      <div class="in_process_section">
-        <%= render(partial: 'title_bar', locals: {title: "IN PROGRESS COLLECTIONS"}) %>
-            <table>
-                <tr>
-                  <td>State of Reviews:</td> 
-                  <td>0 Reviews:</td>  
-                  <td>1 Review:</td>  
-                  <td>2+ Reviews:</td>  
-                </tr>
-                <tr>
-                  <td>Record Counts</td>
-                  <td><%= @review_counts.count { |x| x == 0 }%></td>
-                  <td><%= @review_counts.count { |x| x == 1 }%></td>
-                  <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
-                </tr>
-            </table>
-      </div>
-
-
-      <br>
+        <div class="in_process_section">
+          <%= render(partial: 'title_bar', locals: {title: "IN PROGRESS COLLECTIONS"}) %>
+              <table>
+                  <tr>
+                    <td>State of Reviews:</td> 
+                    <td>0 Reviews:</td>  
+                    <td>1 Review:</td>  
+                    <td>2+ Reviews:</td>  
+                  </tr>
+                  <tr>
+                    <td>Record Counts</td>
+                    <td><%= @review_counts.count { |x| x == 0 }%></td>
+                    <td><%= @review_counts.count { |x| x == 1 }%></td>
+                    <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
+                  </tr>
+              </table>
+        </div>
 
 
+        <br>
 
-      <div class="score_section">
-        <div class="surrounding_box score_box">
-          <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
-          <div class="data_area">
-            <div id="ChartGuageOriginal"></div>
+
+
+        <div class="score_section">
+          <div class="surrounding_box score_box">
+            <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
+            <div class="data_area">
+              <div id="ChartGuageOriginal"></div>
+            </div>
+          </div>
+
+          <div class="surrounding_box score_box">
+            <%= render(partial: 'title_bottom_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
+            <div class="data_area">
+                <div id="ChartGuageUpdated"></div>
+            </div>
           </div>
         </div>
 
-        <div class="surrounding_box score_box">
-          <%= render(partial: 'title_bottom_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
-          <div class="data_area">
-              <div id="ChartGuageUpdated"></div>
-          </div>
+        <div class="print_width">
+          
         </div>
-      </div>
 
-      <div class="print_width">
-        
-      </div>
-
-      
+      </section>  
     </div>
   <% end %>  
 </div>

@@ -1,20 +1,15 @@
 @import "variables";
 
-body {
-  -webkit-print-color-adjust:exact;
-}
-
 @media print {
-    .section_break {page-break-after: always;}
-    @page { margin: 0; }
-    body { margin: 1.6cm; }
+    section {page-break-after: always;}
+
     .sub_section_title {
       &:not(:first-child) {
         margin-top: 100px;
       }
     }
     .page_header {
-      visibility: hidden;
+      display: none !important;
     }
     .header_image {
       display: none;
@@ -22,16 +17,35 @@ body {
     .report_buttons {
       display: none;
     }
+    .title_holder {
+      p {
+        color: black !important;
+      }
+    }
+    .title_bottom_holder {
+      p {
+        color: black !important;
+      }
+    }
     .print_width {
       width: 1000px;
       height: 10px;
     }
-    .overall_section, .first_sub_title, .report_top {
-      position: relative;
-      bottom: 120px;
+    .report_sub_title {
+      .title_box {
+        color: black !important;
+      }
     }
 }
 
+section {
+  width:95%;
+  border-bottom-color: black;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
 
 
 .graph_container{
@@ -132,7 +146,6 @@ body {
 .report_sub_title {
   min-height: 25px;
   display: flex;
-  margin-bottom: 15px;
 
   .title_box {
     text-align: center;
@@ -196,15 +209,6 @@ body {
   margin-bottom: 15px;
 }
 
-.section_break {
-  width:95%;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  margin-top: 25px;
-  margin-bottom: 40px;
-}
-
 .surrounding_box {
   border-style: solid;
   border-color: black;
@@ -240,7 +244,7 @@ body {
   }
 }
 
-.quality_section {
+.quality_row {
   display: flex;
   margin-bottom: 20px;
   .quality_box {
@@ -301,22 +305,24 @@ body {
       width:15px;
       height:15px;
       margin-right: 10px;
+      border-style: solid;
+      border-width: 8px;
     }
 
     .red {
-      background-color: #e84a34;
+      border-color: #e84a34;
     }
 
     .blue {
-      background-color: #1b75ae;
+      border-color: #1b75ae;
     }
 
     .yellow {
-      background-color: #ffce00;
+      border-color: #ffce00;
     }
 
     .green {
-      background-color: #3ab841;
+      border-color: #3ab841;
     }
 
     p {
