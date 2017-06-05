@@ -1,8 +1,8 @@
-//take base vpc template and setup on empty ec2
+//take base vpc template and setup on empty ec2 with aws linux
 
 sudo yum -y update
 sudo yum remove ruby 
-//removing the ruby gems, so run again
+//removing the ruby gems, so need to run same command again
 sudo yum remove ruby
 
 sudo yum install ruby23-devel.x86_64
@@ -12,6 +12,7 @@ sudo yum install postgresql8-devel.x86_64
 yum -y install gcc zlib-devel.x86_64  
 sudo yum install sqlite-devel
 sudo yum install gcc-c++
+sudo yum install -y awslogs
 
 //installing node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
@@ -19,16 +20,17 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | b
 nvm install 4.4.5
 
 //creating working dir
-git clone -b abaker_working_branch https://abaker:Mcgladrey1@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git
+git clone https://USER:PASSWORD@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git
 
-//enter dir
+//enter directory
 cd cmr-metadata-review
 gem install bundler --no-rdoc --no-ri
-
 bundle install
 
-//setting up the nginx settings for rails
+//open this file to set up the nginx settings for rails
 sudo vi /etc/nginx/nginx.conf
+
+//In the nginx.conf file, add the text block below
 //added in http section of .conf file
 
     upstream arcdash {
@@ -38,7 +40,7 @@ sudo vi /etc/nginx/nginx.conf
     //change root in server area to public for assets
     root         /home/ec2-user/cmr-metadata-review/public;
 
-    #adding this for elb checks
+    //adding this for elb checks
     location /elb_status {
         proxy_pass http://arcdash;
         proxy_set_header Host $host;
@@ -46,7 +48,7 @@ sudo vi /etc/nginx/nginx.conf
     }
 
     location / {
-            #redirecting all traffic to https for elb to terminate
+            //redirecting all traffic to https for elb to terminate
             if ($http_x_forwarded_proto = 'http') {
                 return 301 https://arc-review.sit.clients.element84.com$request_uri;
             }
@@ -57,11 +59,12 @@ sudo vi /etc/nginx/nginx.conf
 
 
 
-//added to ec2
-sudo yum install -y awslogs
 
-//aws log config file
-/etc/awslogs/awslogs.conf
+//Setting up the AWS Logging
+//go into the file below
+sudo vi /etc/awslogs/awslogs.conf
+
+//paste the text block below over the preexisting config
 //aws log config:
 datetime_format = %Y-%m-%dT%H:%M:%S
 file = /home/ec2-user/cmr-metadata-review/log/production.log
@@ -71,12 +74,4 @@ initial_position = end_of_file
 log_group_name = /aws/cmr/sit_rails_log
 
 
-//set up DB connection
-
-//stopping apache
-sudo apachectl stop
-//starting nginx
-sudo service nginx restart 
-
-//starting server if desired manually
-bundle exec puma --debug --bind tcp://127.0.0.1:3000
+//Finally save an image from this server to be used in the CF scripts

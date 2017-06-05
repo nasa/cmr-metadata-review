@@ -133,7 +133,16 @@ class MetricSet
   def quality_done_records
     collection_records = @record_set.select { |record| record.closed }
     record_data_sets = collection_records.map { |record|  record.record_datas }
-    scores = record_data_sets.map { |data_list| (1 - (data_list.select { |data| data.color == "red" }).count.to_f / (data_list.select { |data| data.color != "" }).count) * 100 }
+    scores = record_data_sets.map do |data_list| 
+      reds = (data_list.select { |data| data.color == "red" }).count.to_f
+      flagged = (data_list.select { |data| data.color != "" }).count
+      if flagged == 0
+        score = 100
+      else
+        score = (1 - (reds/flagged)) * 100
+      end
+      score
+    end
     #adding at least one entry so that the average can shown if no records are closed.
     if scores.empty?
       scores.push(0)
@@ -223,17 +232,17 @@ class MetricSet
     #creating a hash with keys of each column_name
     @record_data_set.each do |record_data|
       if !element_hash.key? record_data.column_name
-        element_hash[record_data.column_name] = {"red" => 0, "blue" => 0, "yellow" => 0}
+        element_hash[record_data.column_name] = {"green" => 0, "red" => 0, "blue" => 0, "yellow" => 0}
       end
       if element_hash[record_data.column_name].key? record_data.color
         element_hash[record_data.column_name][record_data.color] = element_hash[record_data.column_name][record_data.color] + 1
       end
     end
 
-    #tuning hash into list of [column_name, non_green_count] sets
+    #tuning hash into list of [column_name, non_green_count, green_count] sets
     column_counts = []
     element_hash.map do |column_name, counts_hash|
-      column_counts.push([column_name, counts_hash.values.sum])
+      column_counts.push([column_name, (counts_hash.values.sum - counts_hash["green"]), counts_hash["green"]])
     end
 
     #sorting in reverse order so highest counts are first
