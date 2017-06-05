@@ -457,5 +457,9 @@ class Record < ActiveRecord::Base
     (self.record_datas.select {|data| data.color == color_name }).count
   end
 
+  def has_short_name? 
+    self.short_name != ""
+  end
+
 
 end

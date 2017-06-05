@@ -19,7 +19,9 @@
 #ingore env vars
 .env
 
-<<<<<<< HEAD
+#ignore compiled assets
+/public/assets
+
 #ignore generated doc files as they will be changing constantly
 /public/doc/*
 
