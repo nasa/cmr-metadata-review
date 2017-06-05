@@ -461,5 +461,9 @@ class Record < ActiveRecord::Base
     self.short_name != ""
   end
 
+  def daac
+    self.concept_id.partition('-').last
+  end
+
 
 end

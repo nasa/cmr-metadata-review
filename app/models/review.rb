@@ -69,4 +69,8 @@ class Review < ActiveRecord::Base
     Review.all.select {|review| !review.record.hidden }
   end
 
+  def reviewer_email
+    self.user.email
+  end
+
 end
