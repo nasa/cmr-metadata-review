@@ -1,5 +1,53 @@
 @import "variables";
 
+@media print {
+    section {page-break-after: always;}
+
+    .sub_section_title {
+      &:not(:first-child) {
+        margin-top: 100px;
+      }
+    }
+    .page_header {
+      display: none !important;
+    }
+    .header_image {
+      display: none;
+    }
+    .report_buttons {
+      display: none;
+    }
+    .title_holder {
+      p {
+        color: black !important;
+      }
+    }
+    .title_bottom_holder {
+      p {
+        color: black !important;
+      }
+    }
+    .print_width {
+      width: 1000px;
+      height: 10px;
+    }
+    .report_sub_title {
+      .title_box {
+        color: black !important;
+      }
+    }
+}
+
+section {
+  width:95%;
+  border-bottom-color: black;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+
+
 .graph_container{
   display:block;
   width:600px;
@@ -13,19 +61,19 @@
 
 .doughnut_graph_container {
   display: block;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 .updates_graph_container {
   display: block;
   width: 100%;
-  height: 300px;
+  height: 200px;
 }
 
 .problem_graph_container {
   display: block;
-  width: 100%;
+  width: 500px;
   height: 400px;
 }
 
@@ -98,7 +146,6 @@
 .report_sub_title {
   min-height: 25px;
   display: flex;
-  margin-bottom: 15px;
 
   .title_box {
     text-align: center;
@@ -153,25 +200,13 @@
 }
 
 .stats_area {
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
   padding: 25px;
 }
 
 .sub_section_title {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 20px;
   margin-bottom: 15px;
-}
-
-.section_break {
-  width:95%;
-  border-bottom-color: black;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  margin-top: 25px;
-  margin-bottom: 40px;
 }
 
 .surrounding_box {
@@ -189,14 +224,14 @@
 .velocity_section {
   display: inline-block;
   margin-bottom: 20px;
-  width: 38%;
+  width: 350px;
   margin-right: 20px;
 }
 
 .update_section {
   display: inline-block;
   margin-bottom: 20px; 
-  width: 55%;
+  width: 350px;
 }
 
 .selection_section {
@@ -209,7 +244,7 @@
   }
 }
 
-.quality_section {
+.quality_row {
   display: flex;
   margin-bottom: 20px;
   .quality_box {
@@ -218,8 +253,11 @@
 
   .data_area {
     display: flex;
+    p {
+      font-size: 13px;
+    }
     .checked_num {
-      font-size: 64px;
+      font-size: 45px;
     }
   }  
 }
@@ -229,20 +267,20 @@
   margin-bottom: 20px;
 
   .score_box {
-    width:400px;
+    width:300px;
     margin-right: 20px;
   }
 }
 
 .in_process_section {
-  width: 820px;
+  width: 600px;
   tr:nth-child(n) {
     background-color: white;
   }
 }
 
 .problem_section {
-  width: 80%;
+  width: 600px;
 }
 
 
@@ -267,26 +305,28 @@
       width:15px;
       height:15px;
       margin-right: 10px;
+      border-style: solid;
+      border-width: 8px;
     }
 
     .red {
-      background-color: #e84a34;
+      border-color: #e84a34;
     }
 
     .blue {
-      background-color: #1b75ae;
+      border-color: #1b75ae;
     }
 
     .yellow {
-      background-color: #ffce00;
+      border-color: #ffce00;
     }
 
     .green {
-      background-color: #3ab841;
+      border-color: #3ab841;
     }
 
     p {
-      font-size: 12px;
+      font-size: 11px;
     }
   }
 }
