@@ -165,58 +165,25 @@ class ReportsController < ApplicationController
   def single 
 
     record = Collection.find_record(params["concept_id"], params["revision_id"])
+    
+    @concept_id = record.concept_id
+    @short_name = record.short_name
+    @reviews = record.reviews
+
+
     record_data = record.record_datas
-
-
     reds = record_data.select{|data| data.color == "red"}
     yellows = record_data.select{|data| data.color == "yellow"}
     blues = record_data.select{|data| data.color == "blue"}
 
     byebug
-
-    @review_day_counts = []
-    [30,60,180].each do |day_count|
-      total_count = (Review.get_reviews.select { |review| 
-                                            if review.review_completion_date
-                                              (DateTime.now - review.review_completion_date.to_datetime).to_i.days < day_count.days
-                                            else
-                                              false 
-                                            end
-                                        }).count
-      @review_day_counts.push(total_count)
-    end
-
-    @metric_set = MetricSet.new(Collection.all_records)
-
-    @records = Collection.all_records
-
-    record_set = Collection.all_newest_revisions
-
-    #when views are redone, instantiate these as instance vars, then use directly in the 
-    #view to get some DRY going accross all these views.
-    metric_set = MetricSet.new(record_set)
-    original_metric_set = metric_set.original_metric_set
-
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select {|review| review.review_state == 1})
-    @total_completed = metric_set.total_completed
-
-    #stat generation for original and current sets of records
-    @original_field_colors = original_metric_set.color_counts
-    @original_total_checked = @original_field_colors.values.sum
-
-    @original_quality_done_records = original_metric_set.quality_done_records
-
-    @field_colors = metric_set.color_counts
-    @total_checked = @field_colors.values.sum
-
-
-    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
-
-    @updated_count = metric_set.updated_count
-    @updated_done_count = metric_set.updated_done_count
-
-    @quality_done_records = metric_set.quality_done_records
-
+# Should be formatted for 8.5x11 (portrait) multi-page report.
+# Record Name, Review Date (when marked 'Done')
+# Reviewer names (all)
+# Metrics Summary (number elements reviewed, color breakdown)
+# Red Elements: Value, Recommendation
+# Yellow Elements: Value, Recommendation
+# Blue Elements: Value, Recommendation
     respond_to do |format|
       format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
