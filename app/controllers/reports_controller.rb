@@ -13,10 +13,7 @@ class ReportsController < ApplicationController
 
     @review_month_counts = list_past_months
 
-    # negative numbers represent previous months
-    # then Date::MONTHNAMES[1..12] converts them into strings
-    # the % 12 then wraps negative numbers around to the end months of the year
-    @display_months = [-11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
+    @display_months = get_month_list
 
     @metric_set = MetricSet.new(Record.all)
 
@@ -73,11 +70,8 @@ class ReportsController < ApplicationController
 
       @review_month_counts = list_past_months
 
-      # negative numbers represent previous months
-      # then Date::MONTHNAMES[1..12] converts them into strings
-      # the % 12 then wraps negative numbers around to the end months of the year
-      @display_months = [-11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1].map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
-
+      @display_months = get_month_list
+      
       @percent_ingested = (@collection_ingest_count.to_f * 100 / @cmr_total_collection_count).round(2)
 
       record_set = Collection.all_newest_revisions(params["daac"])
@@ -179,6 +173,15 @@ class ReportsController < ApplicationController
       format.html { render :template => "reports/home", :layout => "reports" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end                          
+  end
+
+  private
+
+  def get_month_list
+    # negative numbers represent previous months
+    # then Date::MONTHNAMES[1..12] converts them into strings
+    # the % 12 then wraps negative numbers around to the end months of the year
+    (-11).upto(-1).to_a.map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
   end
 
 end
