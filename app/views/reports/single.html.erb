@@ -18,7 +18,7 @@
       <% end %>
     </div>
     <div class="report_buttons">
-      <a href="<%= @csv_path + ".csv"%>" class="report_button">
+      <a href="<%= @csv_path + ".csv" + @csv_params %>" class="report_button">
           <p>EXPORT METRICS</p>
           <i class="fa fa-file-excel-o"></i>
       </a>
@@ -248,6 +248,7 @@
           maintainAspectRatio: false,
           pieceLabel: {
             mode: 'value',
+            fontSize: 18,
             fontStyle: 'bold'
           }
         }

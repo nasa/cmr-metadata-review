@@ -1,0 +1,276 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This template sets up the elb, autoscaling group, and user data for the CMR application in the specified vpc",
+
+  "Parameters" : {
+
+    "EnvironmentName" : {
+      "Type" : "String",
+      "Description" : "The env of this script (Prod or SIT)"
+    },
+
+    "AMIId" : {
+      "Type" : "String",
+      "Description" : "The alphanumeric ID of the AMI to use"
+    },
+
+    "KeyName" : {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "Type" : "AWS::EC2::KeyPair::KeyName",
+      "ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
+    },
+
+    "GitUserName" : {
+      "Description" : "Username for CMR Git Directory",
+      "Type" : "String",
+      "NoEcho" : "true"
+    },
+
+    "GitPassword" : {
+      "Description" : "Password for CMR Git Directory",
+      "Type" : "String",
+      "NoEcho" : "true"
+    },
+
+    "VPCid" : {
+      "Description" : "[A] ID of the VPC to be used",
+      "Type" : "String"
+    },
+
+    "PublicSubnetId" : {
+      "Description": "[B] id of the public subnet",
+      "Type" : "String"
+    },
+
+    "PrivateSubnetId" : {
+      "Description": "[C] id of the private subnet",
+      "Type" : "String"
+    },
+
+    "SSHLocation" : {
+      "Description" : "Lockdown SSH access to the bastion host (default can be accessed from anywhere)",
+      "Type" : "String",
+      "MinLength": "9",
+      "MaxLength": "18",
+      "Default" : "0.0.0.0/0",
+      "AllowedPattern" : "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+      "ConstraintDescription" : "must be a valid CIDR range of the form x.x.x.x/x."
+    },
+
+    "WebServerInstanceType" : {
+      "Description" : "WebServer Server EC2 instance type",
+      "Type" : "String",
+      "Default" : "t2.small",
+      "AllowedValues" : [ "t2.micro", "t2.small"],
+      "ConstraintDescription" : "must be a valid EC2 instance type."
+    },
+
+    "WebServerCount" : {
+      "Description" : "Number of EC2 instances to launch for the WebServer server",
+      "Type" : "Number",
+      "Default" : "1"
+    },
+
+    "InstanceProfileARN": {
+      "Description": "[D] ARN of instance IAM profile to be associated with the EC2s",
+      "Type": "String"
+    },
+
+    "S3BucketName": {
+      "Description": "[E] The name of the S3 bucket the program will access",
+      "Type": "String"
+    },
+
+    "SubnetRegion" : {
+      "Description": "[F] The region of the subnet to be used",
+      "Type": "String"
+    }
+  },
+
+  "Resources" : {
+
+    "PublicElasticLoadBalancer" : {
+      "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties" : {
+        "CrossZone" : "true",
+        "SecurityGroups" : [ { "Ref" : "PublicLoadBalancerSecurityGroup" } ],
+        "Subnets" : [ { "Ref" : "PublicSubnetId" } ],
+        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" }],
+        "HealthCheck" : {
+          "Target" : "HTTP:80/elb_status",
+          "HealthyThreshold" : "3",
+          "UnhealthyThreshold" : "5",
+          "Interval" : "30",
+          "Timeout" : "15"
+        },
+        "Tags" : [
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ]
+      }
+    },
+
+    "PublicLoadBalancerSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Public ELB Security Group with HTTP access on port 80 from the internet",
+        "VpcId" : { "Ref" : "VPCid" },
+        "SecurityGroupIngress" : [ 
+                                    { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "0.0.0.0/0"},
+                                    { "IpProtocol" : "tcp", "FromPort" : "443", "ToPort" : "443", "CidrIp" : "0.0.0.0/0"}
+                                 ],
+        "SecurityGroupEgress" : [ { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "0.0.0.0/0"} ],
+        "Tags" : [
+          {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ]
+      }
+    },
+
+    "ScaleUpByOnePolicy": {
+      "Type" : "AWS::AutoScaling::ScalingPolicy",
+      "Properties" : {
+        "AdjustmentType" : "ChangeInCapacity",
+        "PolicyType" : "SimpleScaling", 
+        "Cooldown" : "60",
+        "AutoScalingGroupName" : { "Ref" : "WebServerFleet" },
+        "ScalingAdjustment" : 1
+      }
+    },   
+
+    "ScaleDownByOnePolicy": {
+      "Type" : "AWS::AutoScaling::ScalingPolicy",
+      "Properties" : {
+        "AdjustmentType" : "ChangeInCapacity",
+        "PolicyType" : "SimpleScaling", 
+        "Cooldown" : "60",
+        "AutoScalingGroupName" : { "Ref" : "WebServerFleet" },
+        "ScalingAdjustment" : -1
+      }
+    },   
+
+    "WebServerFleet" : {
+      "Type" : "AWS::AutoScaling::AutoScalingGroup",
+      "Properties" : {
+        "AvailabilityZones" : [{ "Ref" : "SubnetRegion" }],
+        "VPCZoneIdentifier" : [{ "Ref" : "PrivateSubnetId" }],
+        "LaunchConfigurationName" : { "Ref" : "WebServerLaunchConfig"  },
+        "MinSize" : "1",
+        "MaxSize" : "10",
+        "DesiredCapacity" : { "Ref" : "WebServerCount" },
+        "LoadBalancerNames" : [ { "Ref" : "PublicElasticLoadBalancer" } ],
+        "Tags" : [ 
+            { "Key" : "Network", "Value" : "Private", "PropagateAtLaunch" : "true" },
+            { "Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }, "PropagateAtLaunch" : "true" }
+        ]
+      },
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {
+          "MinInstancesInService": "1",
+          "MaxBatchSize": "1"
+        }
+      }
+    },
+
+    "WebServerLaunchConfig"  : {
+      "Type" : "AWS::AutoScaling::LaunchConfiguration",
+      "Metadata" : {
+        "AWS::CloudFormation::Init" : {
+          "config" : {
+            "packages" : {
+              "yum" : {
+                "httpd" : []
+              }
+            },
+
+            "files" : {
+              "/etc/cfn/cfn-hup.conf" : {
+                "content" : { "Fn::Join" : ["", [
+                  "[main]\n",
+                  "stack=", { "Ref" : "AWS::StackId" }, "\n",
+                  "region=", { "Ref" : "AWS::Region" }, "\n"
+                ]]},
+                "mode"    : "000400",
+                "owner"   : "root",
+                "group"   : "root"
+              },
+
+              "/etc/cfn/hooks.d/cfn-auto-reloader.conf" : {
+                "content": { "Fn::Join" : ["", [
+                  "[cfn-auto-reloader-hook]\n",
+                  "triggers=post.update\n",
+                  "path=Resources.WebServerLaunchConfig.Metadata.AWS::CloudFormation::Init\n",
+                  "action=/opt/aws/bin/cfn-init -v ",
+                  "         --stack ", { "Ref" : "AWS::StackName" },
+                  "         --resource WebServerLaunchConfig ",
+                  "         --region ", { "Ref" : "AWS::Region" }, "\n",
+                  "runas=root\n"
+                ]]}
+              }
+            },
+
+            "services" : {
+              "sysvinit" : {
+                "httpd" : { "enabled" : "true", "ensureRunning" : "true", 
+                              "files" : [ "/etc/httpd/conf.d/aptobackend.conf", "/var/www/html/index.html" ]},
+                "cfn-hup" : { "enabled" : "true", "ensureRunning" : "true",
+                              "files" : ["/etc/cfn/cfn-hup.conf", "/etc/cfn/hooks.d/cfn-auto-reloader.conf"]}
+              }
+            }
+          }
+        }
+      },
+      "Properties" : {
+        "ImageId"        : { "Ref" : "AMIId" },
+        "SecurityGroups" : [ { "Ref" : "WebServerSecurityGroup" } ],
+        "InstanceType"   : { "Ref" : "WebServerInstanceType" },
+        "IamInstanceProfile" : { "Ref" : "InstanceProfileARN" },
+        "KeyName"        : { "Ref" : "KeyName" },
+        "AssociatePublicIpAddress" : "true",
+        "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
+          "#!/bin/bash -xe\n",
+          "yum update -y aws-cfn-bootstrap\n",
+          "# Install the sample application\n",
+
+          "export S3BUCKET=", { "Ref" : "S3BucketName" }, "\n",
+
+          "rm -rf /home/ec2-user/cmr-metadata-review\n",
+          "git clone https://", { "Ref" : "GitUserName" }, ":", { "Ref" : "GitPassword" }, "@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git /home/ec2-user/cmr-metadata-review\n",
+          "sh /home/ec2-user/cmr-metadata-review/CloudFormation/test.sh\n",
+          "service nginx restart\n",
+          "sudo service awslogs start\n",
+          "aws s3 cp s3://$S3BUCKET/env.txt /home/ec2-user/cmr-metadata-review/.env", "\n",
+          "chmod a+rw /home/ec2-user/cmr-metadata-review -R\n",
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle install )\" - ec2-user", "\n",
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && rake db:create RAILS_ENV=production )\" - ec2-user", "\n",
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && rake db:migrate RAILS_ENV=production )\" - ec2-user", "\n",
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && RAILS_ENV=production bundle exec rake assets:precompile )\" - ec2-user", "\n",
+          "runuser -c \"(cd /home/ec2-user/cmr-metadata-review && bundle exec puma --debug --bind tcp://127.0.0.1:3000 -e production )\" - ec2-user", "\n"
+
+        ]]}}
+      }
+    },
+
+    "WebServerSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Allow access from load balancer and bastion as well as outbound HTTP and HTTPS traffic",
+        "VpcId" : { "Ref" : "VPCid" },
+        "Tags" : [
+              {"Key" : "Name", "Value" : { "Fn::Join": [ "", [ "CMR-Dashboard-", { "Ref": "EnvironmentName" } ] ] }}
+        ],
+        "SecurityGroupIngress" : [
+          { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupId" : { "Ref" : "PublicLoadBalancerSecurityGroup" } } ,
+          { "IpProtocol" : "tcp", "FromPort" : "443", "ToPort" : "443", "SourceSecurityGroupId" : { "Ref" : "PublicLoadBalancerSecurityGroup" } } ,
+          { "IpProtocol" : "tcp", "FromPort" : "1024", "ToPort" : "65535", "CidrIp" : "10.0.0.0/24" } ,
+          { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "10.0.0.0/24" } ]
+      }
+    }
+  },
+
+  "Outputs" : {
+    "WebSite" : {
+      "Description" : "URL of the website",
+      "Value" :  { "Fn::Join" : [ "", [ "http://", { "Fn::GetAtt" : [ "PublicElasticLoadBalancer", "DNSName" ]}]]}
+    }
+  }
+}

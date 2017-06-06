@@ -185,7 +185,7 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table3DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton") %>
+            <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" } ) %>
           <% end %>
         <% end %>
       </div>

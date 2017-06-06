@@ -7,6 +7,7 @@ class ReportsController < ApplicationController
     @report_title = "OVERALL VIEW"
     @show_charts = true
     @csv_path = reports_home_path
+    @csv_params = ""
 
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
@@ -26,7 +27,7 @@ class ReportsController < ApplicationController
     metric_set = MetricSet.new(record_set)
     original_metric_set = metric_set.original_metric_set
 
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1)})
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
@@ -55,6 +56,7 @@ class ReportsController < ApplicationController
   def provider
     @report_title = "BY DAAC VIEW"
     @csv_path = reports_provider_path
+    @csv_params = params["daac"].nil? ? "" : "?daac=#{params["daac"]}"
 
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
@@ -68,7 +70,7 @@ class ReportsController < ApplicationController
       daac_records = (Collection.by_daac(@daac).map {|collection| collection.records.to_a}).flatten
       daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
 
-      @review_month_counts = list_past_months
+      @review_month_counts = list_past_months(daac_reviews)
 
       @display_months = get_month_list
       
@@ -79,7 +81,7 @@ class ReportsController < ApplicationController
       metric_set = MetricSet.new(record_set)
       original_metric_set = metric_set.original_metric_set
 
-      @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+      @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1) && (review.record.daac == @daac)})
       @total_completed = metric_set.total_completed
 
       #stat generation for original and current sets of records
@@ -149,7 +151,7 @@ class ReportsController < ApplicationController
     metric_set = MetricSet.new(@report_list)
     original_metric_set = metric_set.original_metric_set
 
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| review.review_state == 1 })
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
@@ -177,6 +179,7 @@ class ReportsController < ApplicationController
 
   def single 
     @csv_path = reports_single_path
+    @csv_params = "?concept_id=#{params["concept_id"]}&revision_id=#{params["revision_id"]}"
     @report_title = "SINGLE RECORD VIEW"
     
     @record = Collection.find_record(params["concept_id"], params["revision_id"])
@@ -195,7 +198,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
+      format.csv { send_data(render_to_string, filename: "dashboard_#{params["concept_id"]}_#{params["revision_id"]}.csv") }
     end
   end
 
