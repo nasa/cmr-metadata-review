@@ -1,11 +1,11 @@
 <%= CSV.generate_line(["CMR DAAC Report"]) %>  
 <%= CSV.generate_line(["DAAC:", @daac]) %>  
 
-<%= CSV.generate_line(["Total Collections in DAAC:", @total_collection_count]) %>  
-<%= CSV.generate_line(["Total Ingested Collections:", @total_ingested]) %>  
+<%= CSV.generate_line(["Total Collections in DAAC:", @cmr_total_collection_count]) %>  
+<%= CSV.generate_line(["Total Ingested Collections:", @collection_ingest_count]) %>  
 
 <%= CSV.generate_line(["State of Reviews:", "0 Reviews:", "1 Review:", "2+ Reviews:", "Record Complete:"]) %>
-<%= CSV.generate_line(["Record Counts", (@review_counts.count { |x| x == 0 }), (@review_counts.count { |x| x == 1 }), ((@review_counts.count { |x| x >= 2 }) - @total_completed), @total_completed]) %>
+<%#= CSV.generate_line(["Record Counts", (@review_counts.count { |x| x == 0 }), (@review_counts.count { |x| x == 1 }), ((@review_counts.count { |x| x >= 2 }) - @total_completed), @total_completed]) %>
 
 <%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
 <%= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
