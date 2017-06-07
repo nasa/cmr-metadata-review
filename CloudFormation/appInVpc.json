@@ -7,7 +7,7 @@
 
     "EnvironmentName" : {
       "Type" : "String",
-      "Description" : "The env of this script Prod or SIT"
+      "Description" : "The env of this script (Prod or SIT)"
     },
 
     "AMIId" : {
@@ -19,7 +19,6 @@
       "Description" : "The ARN for the ssl certificate to be used for elb",
       "Type" : "String"
     },
-
 
     "KeyName" : {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
@@ -40,17 +39,17 @@
     },
 
     "VPCid" : {
-      "Description" : "ID of the VPC to be used",
+      "Description" : "[A] ID of the VPC to be used",
       "Type" : "String"
     },
 
     "PublicSubnetId" : {
-      "Description": "id of the public subnet",
+      "Description": "[B] id of the public subnet",
       "Type" : "String"
     },
 
     "PrivateSubnetId" : {
-      "Description": "id of the private subnet",
+      "Description": "[C] id of the private subnet",
       "Type" : "String"
     },
 
@@ -79,17 +78,17 @@
     },
 
     "InstanceProfileARN": {
-      "Description": "ARN of instance IAM profile to be associated with the EC2s",
+      "Description": "[D] ARN of instance IAM profile to be associated with the EC2s",
       "Type": "String"
     },
 
     "S3BucketName": {
-      "Description": "The name of the S3 bucket the program will access",
+      "Description": "[E] The name of the S3 bucket the program will access",
       "Type": "String"
     },
 
     "SubnetRegion" : {
-      "Description": "The region of the subnet to be used",
+      "Description": "[F] The region of the subnet to be used",
       "Type": "String"
     }
   },

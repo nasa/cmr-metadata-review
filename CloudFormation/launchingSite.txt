@@ -1,0 +1,28 @@
+Launching the website on AWS
+To launch the website from scratch, the CloudFormation scripts & actions can be run in the following order.
+
+1. spin up new EC2 instance.  SSH in and run the steps shown in "SIT AMI Instructions.txt"  file.  This prepares the AMI to be included as a parameter in "AppInVPC.json"
+
+2. run CF script S3andIamRole.json
+
+3. run CF script vpcCreation.json
+
+4. run CF script postgresInVpc.json (db name, user, and password can be chosen freely)
+
+5. Create file named "env.txt" containing the template below (using the newly created DB password, address, user, and db name)
+
+PROD_DB_USER='cmrdash'
+PROD_DB_PASSWORD='dashpassword'
+PROD_DB_HOST='cm9niqdsfdsjaj.cnsdffdplraz.us-east-1.rds.amazonaws.com'
+PROD_DB_PORT='5432'
+PROD_DB_DATABASE='cmrdash'
+
+6. Upload env.txt to the S3 bucket created in step 1
+
+7. Obtain SSL certification in Route 53 for end url to be used, use Route 53 certification ARN in step 8
+
+8. run CF script appInVpc.json
+
+The first two scripts require no parameters.  The second two scripts require parameters from the outputs of the vpc & S3 scripts.  Additionally the appInVpc template requires credentials to the git repository for the project as it needs to pull down the latest code upon launching.  
+
+I have put markers such as "[A]" and "[B]" on parameters to match them to other scripts outputs.  For example the "BucketName" output of s3andIamRole.json show the string "AppInVpc[E]".  This means that output will tie to the parameter in AppInVpc.json labeled "[E]"
