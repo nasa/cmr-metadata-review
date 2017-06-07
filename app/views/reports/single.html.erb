@@ -128,81 +128,41 @@
       </section>
 
 
-      <section class="red_section">
+      <%# templating the 3 sections using a short 2d array %>
+      <%[
+          ["red_section", "RED", @reds],
+          ["yellow_section", "YELLOW", @yellows],
+          ["blue_section", "BLUE", @blues]
+        ].each do |section_name, color, elements| %>
 
-        <div class="ingest_section">
-          <%= render(partial: 'title_bar', locals: {title: "RED FLAGGED ELEMENTS"}) %>
-          <div class="surrounding_box">
-            <table>
-              <tr>
-                <td>Element</td>
-                <td>Value</td>
-                <td>Recommendation</td>
-              </tr>
-              <% @reds.each do |element| %>
+        <section class="<%=section_name%>">
+
+          <div class="single_color_table_holder">
+            <%= render(partial: 'title_bar', locals: {title: "#{color} FLAGGED ELEMENTS"}) %>
+            <div class="surrounding_box">
+              <table>
                 <tr>
-                  <td><%= element.column_name %></td>
-                  <td><%= element.value %></td>
-                  <td><%= element.recommendation %></td>
+                  <td>Element</td>
+                  <td>Value</td>
+                  <td>Recommendation</td>
                 </tr>
-              <% end %>
-            </table>
+                <% elements.each do |element| %>
+                  <tr>
+                    <td><%= element.column_name %></td>
+                    <td><%= element.value %></td>
+                    <td><%= element.recommendation %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
           </div>
-        </div>
 
-      </section>
+        </section>
 
-      <section class="yellow_section">
+      <% end %>
 
-        <div class="ingest_section">
-          <%= render(partial: 'title_bar', locals: {title: "YELLOW FLAGGED ELEMENTS"}) %>
-          <div class="surrounding_box">
-            <table>
-              <tr>
-                <td>Element</td>
-                <td>Value</td>
-                <td>Recommendation</td>
-              </tr>
-              <% @yellows.each do |element| %>
-                <tr>
-                  <td><%= element.column_name %></td>
-                  <td><%= element.value %></td>
-                  <td><%= element.recommendation %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </div>
-
-      </section>
-
-      <section class="blue_section">
-
-        <div class="ingest_section">
-          <%= render(partial: 'title_bar', locals: {title: "BLUE FLAGGED ELEMENTS"}) %>
-          <div class="surrounding_box">
-            <table>
-              <tr>
-                <td>Element</td>
-                <td>Value</td>
-                <td>Recommendation</td>
-              </tr>
-              <% @blues.each do |element| %>
-                <tr>
-                  <td><%= element.column_name %></td>
-                  <td><%= element.value %></td>
-                  <td><%= element.recommendation %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </div>
-
-      </section>
-
-        <div class="print_width">
-          
-        </div>
+      <div class="print_width">   
+      </div>
 
     </div>
 </div>

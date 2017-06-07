@@ -69,7 +69,7 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table1DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table1DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton") %>
+            <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
           <% end %>
         <% end %>
       </div>
@@ -125,7 +125,7 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table2DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table2DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton") %>
+            <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
           <% end %>
         <% end %>
       </div>
