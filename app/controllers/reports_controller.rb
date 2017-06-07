@@ -193,7 +193,7 @@ class ReportsController < ApplicationController
     @blues = record_data.select{|data| data.color == "blue"}
 
     @metric_set = MetricSet.new([@record])
-    #stat generation for original and current sets of records
+
     @field_colors = @metric_set.color_counts
     @total_checked = @field_colors.values.sum
 
