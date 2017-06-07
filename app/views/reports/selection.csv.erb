@@ -22,7 +22,7 @@
 <%= CSV.generate_line(["Number of elements with warnings issued:", @original_field_colors["yellow"], @field_colors["yellow"]]) %>
 <%= CSV.generate_line(["Number of elements with informational notes added:", @original_field_colors["blue"], @field_colors["blue"]]) %>
 
-<%= CSV.generate_line(["Top 5 Problem Elements"]) %>
+<%= CSV.generate_line(["Element Error Frequency"]) %>
 <%= CSV.generate_line(["Element Name:", "Non Green Count:"]) %>
 <% @failing_elements_five.each do |column_name, non_green_count|%>
   <%= CSV.generate_line([column_name, non_green_count]) %>

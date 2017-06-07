@@ -138,6 +138,7 @@ class ReportsController < ApplicationController
     @show_charts = true
     @report_title = "SELECTION VIEW"
     @csv_path = reports_selection_path
+    @csv_params = "?records=#{params["records"].to_s}"
 
     records_list = params["records"].split(",")
     @report_list = []
