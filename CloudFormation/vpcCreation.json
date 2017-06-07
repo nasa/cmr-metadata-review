@@ -17,7 +17,7 @@
 
     "EnvironmentName" : {
       "Type" : "String",
-      "Description" : "The env of this script Prod or SIT"
+      "Description" : "The env of this script (Prod or SIT)"
     },
 
   },
@@ -359,27 +359,31 @@
 
   "Outputs" : {
     "VPCid" : {
-      "Description" : "ID of VPC",
+      "Description" : "ID of VPC AppInVPC [A], postgresInVPC [A]",
       "Value" :  { "Ref" : "VPC" }
     },
     "SubnetId" : {
-      "Description" : "Subnet value",
+      "Description" : "Subnet value AppInVPC [B]",
       "Value" : { "Ref" : "PublicSubnet"}
     },
     "PrivateZone" : {
-      "Description" : "Subnet zone",
+      "Description" : "Subnet zone AppInVPC [F]",
       "Value" : { "Fn::GetAtt" : [ "PrivateSubnet", "AvailabilityZone" ] }
     },
     "SubnetIPv6Block" : {
-      "Description" : "Subnet IP v6 Block",
+      "Description" : "Subnet IP v6 Block postgresInVPC [E]",
       "Value" : { "Fn::FindInMap" : [ "SubnetConfig", "Public", "CIDR" ]}
     },
+    "PrivateSubnetIPv6Block" : {
+      "Description" : "PrivateSubnet IP v6 Block postgresInVPC [D]",
+      "Value" : { "Fn::FindInMap" : [ "SubnetConfig", "Private", "CIDR" ]}
+    },
     "PrivateSubnetId2" : {
-      "Description" : "Subnet value",
+      "Description" : "Subnet value postgresInVPC[C]",
       "Value" : { "Ref" : "PrivateSubnet2"}
     },
     "PrivateSubnetId" : {
-      "Description" : "Subnet value",
+      "Description" : "Subnet value AppInVPC [C], postgresInVPC[B]",
       "Value" : { "Ref" : "PrivateSubnet"}
     },
     "PrivateZone2" : {
