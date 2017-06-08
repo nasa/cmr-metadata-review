@@ -156,7 +156,7 @@ class Record < ActiveRecord::Base
   # ==== Method
   # The general method for retreiving column => field hashes from a record 
   def get_field(field_name)
-    record_datas = self.record_datas
+    record_datas = self.sorted_record_datas
     fields = {}
     record_datas.each do |data|
       fields[data.column_name] = data[field_name]
@@ -425,7 +425,7 @@ class Record < ActiveRecord::Base
     end
 
     used_titles = (section_list.map {|section| section[1]}).flatten
-    all_titles = self.record_datas.map { |data| data.column_name }
+    all_titles = self.sorted_record_datas.map { |data| data.column_name }
 
     others = [["Collection Info", all_titles.select {|title| !used_titles.include? title }]]
 
@@ -434,7 +434,7 @@ class Record < ActiveRecord::Base
 
   def get_section(section_name)
     section_list = []
-    all_titles = self.record_datas.map { |data| data.column_name }
+    all_titles = self.sorted_record_datas.map { |data| data.column_name }
     one_section = all_titles.select {|title| title.match /^#{section_name}\//}
     if one_section.any?
       return [[section_name, one_section]]
@@ -457,9 +457,12 @@ class Record < ActiveRecord::Base
     (self.record_datas.select {|data| data.color == color_name }).count
   end
 
+  def sorted_record_datas
+    self.record_datas.sort_by { |data| data.order_count }
+  end
+
   def has_short_name? 
     self.short_name != ""
   end
-
 
 end

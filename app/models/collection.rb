@@ -64,7 +64,6 @@ class Collection < ActiveRecord::Base
       return
     end
 
-
     ingest_time = DateTime.now
     #finding parent collection
     collection_object = Collection.find_or_create_by(concept_id: concept_id)
@@ -75,11 +74,12 @@ class Collection < ActiveRecord::Base
 
     record_data_list = []
 
-    collection_data.each do |key, value|
+    collection_data.each_with_index do |(key, value), i|
       record_data = RecordData.new(record: new_collection_record)
       record_data.last_updated = DateTime.now
       record_data.column_name = key
       record_data.value = value
+      record_data.order_count = i
       record_data.daac = concept_id.partition('-').last
       record_data_list.push(record_data)
     end
