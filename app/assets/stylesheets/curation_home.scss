@@ -95,13 +95,27 @@
       font-size: 0.8em;
     }
 
-    input[type=submit] {
+    .detailButton {
       background-color:$green-light;
     }
 
-    input[type=submit]:disabled {
-      background-color:$gray-light;
+    .deleteButton {
+      background-color: red;
     }
+
+    .detailButton, .deleteButton {
+      &:disabled {
+        background-color:$gray-light;
+      }
+    }
+  }
+
+  .form_buttons {
+    display: flex;
+    form {
+      margin-right: 10px;
+    }
+
   }
 
   

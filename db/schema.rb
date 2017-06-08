@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602153227) do
+ActiveRecord::Schema.define(version: 20170601203012) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 20170602153227) do
     t.boolean  "closed",          default: false
     t.datetime "closed_date"
     t.string   "format",          default: ""
+    t.boolean  "hidden",          default: false
   end
 
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
