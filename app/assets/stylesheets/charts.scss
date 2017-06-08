@@ -61,8 +61,8 @@ section {
 
 .doughnut_graph_container {
   display: block;
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
 }
 
 .updates_graph_container {
@@ -221,6 +221,11 @@ section {
   margin-bottom: 20px;
 }
 
+.single_color_table_holder {
+  margin-bottom: 20px;
+  width:100%;
+}
+
 .velocity_section {
   display: inline-block;
   margin-bottom: 20px;
@@ -329,4 +334,9 @@ section {
       font-size: 11px;
     }
   }
+}
+
+.metrics_spacing {
+  width: 200px;
+  height: 50px;
 }
