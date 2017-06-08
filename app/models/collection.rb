@@ -13,7 +13,7 @@ class Collection < ActiveRecord::Base
   # returns all records found in the DB of type collection
 
   def self.all_records
-    Record.all.where(recordable_type: "Collection")
+    Record.all.where(recordable_type: "Collection", hidden: false)
   end
 
   # ====Params   
@@ -25,7 +25,8 @@ class Collection < ActiveRecord::Base
   # Checks the DB and returns boolean if a record with matching concept_id and revision_id is found
 
   def self.record_exists?(concept_id, revision_id) 
-    return !(Collection.find_record(concept_id, revision_id).nil?)
+    record = Collection.find_record(concept_id, revision_id)
+    return (!record.nil?) && (!record.hidden)
   end
 
   # ====Params   
@@ -42,7 +43,7 @@ class Collection < ActiveRecord::Base
 
     collection = Collection.find_by concept_id: concept_id
     unless collection.nil?
-      record = collection.records.where(revision_id: revision_id).first
+      record = collection.records.where(revision_id: revision_id, hidden: false).first
     end
 
     return record
@@ -147,9 +148,11 @@ class Collection < ActiveRecord::Base
   # returns all collections ingested that belong to the daac parameter
 
   def self.by_daac(daac_short_name)
-    Collection.all.select { |collection| collection.concept_id.include? daac_short_name }
+    Collection.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
   end
 
-
+  def get_records
+    self.records.where(hidden: false)
+  end
 
 end
