@@ -461,5 +461,8 @@ class Record < ActiveRecord::Base
     self.record_datas.sort_by { |data| data.order_count }
   end
 
+  def has_short_name? 
+    self.short_name != ""
+  end
 
 end
