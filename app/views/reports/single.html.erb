@@ -71,11 +71,13 @@
               <tr>
                 <td>Reviewer</td>
                 <td>Date of Review</td>
+                <td>Review Comment</td>
               </tr>
               <% @reviews.each do |review| %>
                 <tr>
                   <td><%= review.reviewer_email %></td>
                   <td><%= review.formatted_date %></td>
+                  <td><%= review.comment %></td>
                 </tr>
               <% end %>
             </table>
