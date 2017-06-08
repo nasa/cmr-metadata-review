@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170602153227) do
   create_table "record_data", force: :cascade do |t|
     t.integer  "record_id",                      null: false
     t.string   "value",          default: ""
-    t.string   "daac",                           null: false
+    t.string   "daac"
     t.datetime "last_updated"
     t.string   "column_name",                    null: false
     t.string   "color",          default: ""
@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20170602153227) do
     t.string   "format",          default: ""
   end
 
-  add_index "records", ["recordable_id", "revision_id"], name: "records_recordable_id_revision_id_key", unique: true, using: :btree
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
 
   create_table "records_update_locks", force: :cascade do |t|
