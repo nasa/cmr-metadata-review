@@ -142,6 +142,7 @@ class ReportsController < ApplicationController
 
     records_list = params["records"].split(",")
     @report_list = []
+
     records_list.each_slice(2) {|(concept_id, revision_id)|
                                   new_record = Collection.find_record(concept_id, revision_id) 
                                   if new_record
