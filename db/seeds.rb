@@ -28,7 +28,7 @@ if User.where(email: 'general@element84.com').first.nil?
   user.email = 'general@element84.com'
   user.password = 'Password101'
   user.admin = false
-  user.curator = false
+  user.curator = true
   user.save
 end
 
