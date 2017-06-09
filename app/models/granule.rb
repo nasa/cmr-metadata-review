@@ -15,11 +15,12 @@ class Granule < ActiveRecord::Base
 
       granule_record_data_list = []
       #creating all the recordData values for the granule
-      granule_data["Granule"].each do |key, value|
+      granule_data["Granule"].each_with_index do |(key, value), i|
         granule_record_data = RecordData.new(record: new_granule_record)
         granule_record_data.last_updated = DateTime.now
         granule_record_data.column_name = key
         granule_record_data.value = value
+        granule_record_data.order_count = i
         granule_record_data.daac = granule_data["concept_id"].partition('-').last
         granule_record_data_list.push(granule_record_data)
       end
