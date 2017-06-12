@@ -22,7 +22,10 @@ class SiteController < ApplicationController
   end
 
   def general_home
-
+    if current_user
+      sign_out current_user
+    end
+    redirect_to home_path
   end
 
   def elb_status
