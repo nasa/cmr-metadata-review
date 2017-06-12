@@ -164,7 +164,7 @@ class Cmr
   def self.update_collections(current_user)
     update_lock = RecordsUpdateLock.find_by id: 1
     if update_lock.nil?
-      update_lock = RecordsUpdateLock.new(id: 1, last_update: DateTime.now)
+      update_lock = RecordsUpdateLock.new(id: 1, last_update: DateTime.now - 365.days)
     end
     
     last_date = update_lock.get_last_update
