@@ -211,7 +211,9 @@
     var tableSelector = document.getElementsByName(table + "Selection");    
     //setting the buttons manually here because sometimes the page is loaded with something already selected
     tableButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton,tableSelector);
-    tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
+    if (tableDeleteButton != null) {
+      tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
+    }
     if (tableReportButton != null) {
       tableReportButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
     }
@@ -230,7 +232,9 @@
                                     var count = index;
                                     updateTableValues(count, table);
                                     tableButton.disabled = false;
-                                    tableDeleteButton.disabled = false;
+                                    if (tableDeleteButton != null) {
+                                      tableDeleteButton.disabled = false;
+                                    }
                                     if (tableReportButton != null) {
                                       tableReportButton.disabled = false;
                                     }
@@ -247,8 +251,15 @@
     var rowRevisionName = table + "Revision" + count;
     var newRevisionId = document.getElementById(rowRevisionName).innerHTML;
     document.getElementById(table + "ConceptId").value = newConceptId;
-    document.getElementById(table + "DeleteConceptId").value = newConceptId;
-    document.getElementById(table + "DeleteRevisionId").value = newRevisionId;
+
+    var deleteConceptId = document.getElementById(table + "DeleteConceptId");
+    var deleteRevisionId = document.getElementById(table + "DeleteRevisionId");
+    if (deleteConceptId != null) {
+      deleteConceptId.value = newConceptId;  
+    }
+    if (deleteRevisionId != null) {
+      deleteRevisionId.value = newRevisionId;
+    }
 
     var reportConceptId = document.getElementById(table + "ReportConceptId");
     var reportRevisionId = document.getElementById(table + "ReportRevisionId");
