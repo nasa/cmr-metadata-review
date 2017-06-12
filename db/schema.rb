@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602153227) do
-
+ActiveRecord::Schema.define(version: 20170612013938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "collections", force: :cascade do |t|
-    t.string "concept_id",              null: false
-    t.string "short_name", default: ""
+    t.string  "concept_id",                null: false
+    t.string  "short_name", default: ""
+    t.boolean "cmr_update", default: true
   end
 
   create_table "discussions", force: :cascade do |t|

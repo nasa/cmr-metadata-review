@@ -186,4 +186,13 @@ class CollectionsController < ApplicationController
     redirect_to home_path
   end
 
+  def stop_updates
+    collection = Collection.find_by concept_id: params["concept_id"]
+    if !collection.nil?
+      collection.cmr_update = false;
+    end
+
+    flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} has Been Removed from Future CMR Updates"
+    redirect_to home_path
+  end
 end
