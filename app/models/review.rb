@@ -65,8 +65,8 @@ class Review < ActiveRecord::Base
   # Review Array
   # ==== Method
   # Returns all reviews that are associated with non hidden records
-  def get_reviews
-    Reviews.all.select {|review| !review.record.hidden }
+  def self.get_reviews
+    Review.all.select {|review| !review.record.hidden }
   end
 
 end
