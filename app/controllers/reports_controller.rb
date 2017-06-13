@@ -48,7 +48,7 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html { render :layout => 'reports' }
+      format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
     end
   end
@@ -103,7 +103,7 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :template => "reports/home", :layout => "reports" }
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
     end
   end
@@ -174,7 +174,7 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html { render :template => "reports/home", :layout => "reports" }
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end                          
   end
