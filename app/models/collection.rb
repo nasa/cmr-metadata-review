@@ -101,11 +101,11 @@ class Collection < ActiveRecord::Base
 
   def self.ordered_revisions(daac_short_name = nil)
     if daac_short_name.nil?
-      collection_records = Collection.all_records
+      collection_records = Collection.all_records.where(closed: true)
     else 
       collections = Collection.by_daac(daac_short_name)
       collection_ids = collections.map {|collection| collection.id }
-      collection_records = Record.all.select { |record| record.recordable_type == "Collection" && (collection_ids.include? record.recordable_id) }
+      collection_records = Record.all.select { |record| record.closed && (record.recordable_type == "Collection") && (collection_ids.include? record.recordable_id) }
     end
     records_hash = {}
 
