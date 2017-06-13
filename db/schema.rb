@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20170602153227) do
     t.boolean  "closed",          default: false
     t.datetime "closed_date"
     t.string   "format",          default: ""
+    t.boolean  "hidden",          default: false
   end
 
   add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
