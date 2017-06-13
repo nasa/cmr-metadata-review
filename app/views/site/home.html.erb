@@ -48,7 +48,7 @@
         <% @unreviewed_records.each_with_index do |record, index| %>
           <tr>
               <td id="table1Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-              <td class="center_text"><%= record.revision_id %></td>
+              <td id="table1Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <td class="center_text"><%= record.version_id %></td>
               <td><%= record.ingested_by %></td>
@@ -59,10 +59,20 @@
 
       <br>
 
-      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table1_form'}) do %>
-        <%= hidden_field_tag(:concept_id, "", id: "table1ConceptId") %>
-        <%= submit_tag("See Collection Review Detail", id: 'table1Submit') %>
-      <% end %>
+      <div class="form_buttons">
+        <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table1_form'}) do %>
+          <%= hidden_field_tag(:concept_id, "", id: "table1ConceptId") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table1Submit', class: "detailButton") %>
+        <% end %>
+
+        <% if current_user.admin %>
+          <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
+            <%= hidden_field_tag(:concept_id, "", id: "table1DeleteConceptId") %>
+            <%= hidden_field_tag(:revision_id, "", id: "table1DeleteRevisionId") %>
+            <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton") %>
+          <% end %>
+        <% end %>
+      </div>
 
     </div>
 
@@ -105,11 +115,20 @@
 
       <br>
 
-      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table2_form'}) do %>
-        <%= hidden_field_tag(:concept_id, "", id: "table2ConceptId") %>
-        <%= submit_tag("See Collection Review Detail", id: 'table2Submit') %>
-      <% end %>
+      <div class="form_buttons">
+        <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table2_form'}) do %>
+          <%= hidden_field_tag(:concept_id, "", id: "table2ConceptId") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table2Submit', class: "detailButton") %>
+        <% end %>
 
+        <% if current_user.admin %>
+          <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
+            <%= hidden_field_tag(:concept_id, "", id: "table2DeleteConceptId") %>
+            <%= hidden_field_tag(:revision_id, "", id: "table2DeleteRevisionId") %>
+            <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton") %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
 
 
@@ -150,10 +169,20 @@
 
       <br>
 
-      <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
-        <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
-        <%= submit_tag("See Collection Review Detail", id: 'table3Submit') %>
-      <% end %>
+      <div class="form_buttons">
+        <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
+          <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table3Submit', class: "detailButton") %>
+        <% end %>
+
+        <% if current_user.admin %>
+          <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
+            <%= hidden_field_tag(:concept_id, "", id: "table3DeleteConceptId") %>
+            <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
+            <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton") %>
+          <% end %>
+        <% end %>
+      </div>
 
     </div>
 
@@ -170,12 +199,14 @@
 
   function setUpTable(table) {
     var tableButton = document.getElementById(table + "Submit");
+    var tableDeleteButton = document.getElementById(table + "DeleteSubmit");
     var tableSelector = document.getElementsByName(table + "Selection");    
-    tableButton.disabled = setOnClick(table, tableButton, tableSelector);
+    tableButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableSelector);
+    tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableSelector);
   }
 
 
-  function setOnClick(table, tableButton, tableSelector) {
+  function setOnClick(table, tableButton, tableDeleteButton, tableSelector) {
       var shouldDisable = true;
       for (var i = 0, length = tableSelector.length; i < length; i++) {
           (function(index) {
@@ -187,6 +218,7 @@
                                     var count = index;
                                     updateTableValues(count, table);
                                     tableButton.disabled = false;
+                                    tableDeleteButton.disabled = false
                                     }
           })(i);
       }
@@ -197,7 +229,11 @@
   function updateTableValues(count, table) {
     var rowName = table + "Concept" + count;
     var newConceptId = document.getElementById(rowName).innerHTML;
+    var rowRevisionName = table + "Revision" + count;
+    var newRevisionId = document.getElementById(rowRevisionName).innerHTML;
     document.getElementById(table + "ConceptId").value = newConceptId;
+    document.getElementById(table + "DeleteConceptId").value = newConceptId;
+    document.getElementById(table + "DeleteRevisionId").value = newRevisionId;
   }
 
 
