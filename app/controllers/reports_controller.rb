@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
     metric_set = MetricSet.new(record_set)
     original_metric_set = metric_set.original_metric_set
 
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select {|review| review_state == 1 })
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
@@ -80,7 +80,7 @@ class ReportsController < ApplicationController
       metric_set = MetricSet.new(record_set)
       original_metric_set = metric_set.original_metric_set
 
-      @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+      @review_counts = metric_set.completed_review_counts(Review.get_reviews.select {|review| review_state == 1 })
       @total_completed = metric_set.total_completed
 
       #stat generation for original and current sets of records
@@ -150,7 +150,7 @@ class ReportsController < ApplicationController
     metric_set = MetricSet.new(@report_list)
     original_metric_set = metric_set.original_metric_set
 
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.where(review_state: 1))
+    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select {|review| review_state == 1 })
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
