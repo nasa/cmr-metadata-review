@@ -5,10 +5,12 @@ class RecordsController < ApplicationController
   def refresh
     # a list of records added in update in format of
     # [["concept_id1", "revision_id1"], ["concept_id2", "revision_id2"]]
-    total_added_records = []
-    total_added_records = Cmr.update_collections(current_user)
+    total_added_records, total_failed_records = Cmr.update_collections(current_user)
 
     flash[:notice] = Cmr.format_added_records_list(total_added_records).html_safe
+    if !total_failed_records.empty?
+      flash[:alert] = Cmr.format_failed_records_list(total_failed_records).html_safe
+    end
     redirect_to (request.referrer || home_path)
   end
 
