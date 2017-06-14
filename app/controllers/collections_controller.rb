@@ -118,6 +118,10 @@ class CollectionsController < ApplicationController
           granules_components = Granule.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
       end
 
+
+      
+
+      save_success = false
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
         new_collection_record.save!
@@ -134,18 +138,28 @@ class CollectionsController < ApplicationController
                                                 savable_object.save! 
                                               end
                                           }
+
+        begin
+          #In production there is an egress issue with certain link types given in metadata
+          #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+          Timeout::timeout(12) {
+            new_collection_record.create_script
+
+            #getting list of records for script
+            granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
+            granule_records.each do |record|
+              record.create_script
+            end
+          }
+          save_success = true
+        rescue Timeout::Error
+          flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
+          raise ActiveRecord::Rollback
+        end
       end
 
-      #In production there is an egress issue with certain link types given in metadata
-      #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-      Timeout::timeout(12) {
-        new_collection_record.create_script
-      }
-
-      #getting list of records for script
-      granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
-      granule_records.each do |record|
-        record.create_script
+      if !save_success
+        raise Timeout::Error
       end
   
       flash[:notice] = "The selected collection has been successfully ingested into the system"
@@ -156,7 +170,7 @@ class CollectionsController < ApplicationController
     rescue Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Timeout::Error
-      flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
+      flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
     rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
     end

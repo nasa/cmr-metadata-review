@@ -239,7 +239,14 @@ class Cmr
             ingest_record.save!
           end
 
-          new_collection_record.evaluate_script
+          #for now, not stopping the import if there is a script timeout
+          begin
+            Timeout::timeout(12) {
+              new_collection_record.create_script
+            }
+          rescue Timeout::Error
+          end
+          
           added_records.push([data["concept_id"], data["revision_id"]]);
         end
       end
