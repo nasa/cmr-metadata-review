@@ -244,11 +244,13 @@ class Cmr
                 record_data.save!
               end
               ingest_record.save!
-              save_success = true
+              
               begin
-                Timeout::timeout(12) {
+                Timeout::timeout(0.5) {
                   new_collection_record.create_script
                 }
+
+                save_success = true
               rescue Timeout::Error
                 raise ActiveRecord::Rollback
               end
@@ -688,7 +690,7 @@ class Cmr
     if list.empty?
       return "No New Records Were Found"
     end
-    output_string = "The following records and revision id\'s have been added<br/>"
+    output_string = "The following records and revision id\'s have been added "
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end
@@ -699,7 +701,7 @@ class Cmr
     if list.empty?
       return ""
     end
-    output_string = "The following records and revision id\'s failed ingest due to pyCMR failure<br/>"
+    output_string = "The following records and revision id\'s failed ingest due to pyCMR failure "
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end
