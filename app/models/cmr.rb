@@ -246,7 +246,7 @@ class Cmr
               ingest_record.save!
               
               begin
-                Timeout::timeout(0.5) {
+                Timeout::timeout(12) {
                   new_collection_record.create_script
                 }
 
