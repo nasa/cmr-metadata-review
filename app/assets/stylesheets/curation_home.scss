@@ -4,6 +4,11 @@
   text-align: center;
 }
 
+.table_scroll {
+   max-height: 300px; 
+   overflow-y: auto;
+}
+
 .processing_modal {
   position: absolute;
   top: 20%;

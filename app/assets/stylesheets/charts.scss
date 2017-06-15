@@ -201,6 +201,19 @@ section {
 
 .stats_area {
   padding: 25px;
+
+  table {
+    :nth-child(1) {
+      td {
+        background-color: $gray-light
+      }
+    }
+    :nth-child(n+2) {
+      td {
+        background-color: white;
+      }
+    }
+  }
 }
 
 .sub_section_title {
@@ -224,6 +237,20 @@ section {
 .single_color_table_holder {
   margin-bottom: 20px;
   width:100%;
+
+  .flag_table {
+    tr {
+      :nth-child(1) {
+        width: 20%;
+      }
+      :nth-child(2) {
+        width: 40%;
+      }
+      :nth-child(3) {
+        width: 40%;
+      }
+    }
+  }
 }
 
 .velocity_section {
