@@ -191,6 +191,12 @@
             <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
             <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" } ) %>
           <% end %>
+
+          <%= form_tag( collections_stop_updates_path ,  {method: "get", id: 'table3finished_form'}) do %>
+            <%= hidden_field_tag(:concept_id, "", id: "table3FinishedConceptId") %>
+            <%= hidden_field_tag(:revision_id, "", id: "table3FinishedRevisionId") %>
+            <%= submit_tag("Exclude Record from Updates", id: 'table3FinishedSubmit', class: "finishedButton") %>
+          <% end %>
         <% end %>
       </div>
 
@@ -211,20 +217,20 @@
     var tableButton = document.getElementById(table + "Submit");
     var tableDeleteButton = document.getElementById(table + "DeleteSubmit");
     var tableReportButton = document.getElementById(table + "ReportSubmit");
+    var tableFinishedButton = document.getElementById(table + "FinishedSubmit");
+    var buttonArr = [tableButton, tableDeleteButton, tableReportButton, tableFinishedButton];
 
     var tableSelector = document.getElementsByName(table + "Selection");    
     //setting the buttons manually here because sometimes the page is loaded with something already selected
-    tableButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton,tableSelector);
-    if (tableDeleteButton != null) {
-      tableDeleteButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
-    }
-    if (tableReportButton != null) {
-      tableReportButton.disabled = setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector);
+    for (var k=0; k < buttonArr.length; k++) {
+      if (buttonArr[k] != null) {
+        buttonArr[k].disabled = setOnClick(table, buttonArr,tableSelector);
+      }  
     }
   }
 
 
-  function setOnClick(table, tableButton, tableDeleteButton, tableReportButton, tableSelector) {
+  function setOnClick(table, tableArr, tableSelector) {
       var shouldDisable = true;
       for (var i = 0, length = tableSelector.length; i < length; i++) {
           (function(index) {
@@ -235,12 +241,10 @@
               temp.onclick = function() {
                                     var count = index;
                                     updateTableValues(count, table);
-                                    tableButton.disabled = false;
-                                    if (tableDeleteButton != null) {
-                                      tableDeleteButton.disabled = false;
-                                    }
-                                    if (tableReportButton != null) {
-                                      tableReportButton.disabled = false;
+                                    for (var k=0; k < tableArr.length; k++) {
+                                      if (tableArr[k] != null) {
+                                        tableArr[k].disabled = false;
+                                      }  
                                     }
                                   }
           })(i);
@@ -272,6 +276,15 @@
     }
     if (reportRevisionId != null) {
       reportRevisionId.value = newRevisionId;
+    }
+
+    var finishedConceptId = document.getElementById(table + "FinishedConceptId");
+    var finishedRevisionId = document.getElementById(table + "FinishedRevisionId");
+    if (finishedConceptId != null) {
+      finishedConceptId.value = newConceptId;  
+    }
+    if (finishedRevisionId != null) {
+      finishedRevisionId.value = newRevisionId;
     }
   }
 
