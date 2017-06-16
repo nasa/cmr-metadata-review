@@ -1,0 +1,34 @@
+<%= CSV.generate_line(["CMR Single Record Report"]) %>  
+
+<%= CSV.generate_line(["Concept Id", "Short Name", "DAAC", "Review Close Date"]) %>
+<%= CSV.generate_line([@record.concept_id.partition('-').first, @record.short_name, @record.daac, @record.formatted_closed_date]) %>
+<%= CSV.generate_line(["Reviewer", "Date of Review"]) %>
+<% @reviews.each do |review| %>
+  <%= CSV.generate_line([review.reviewer_email, review.formatted_date]) %>
+<% end %> 
+
+<%= CSV.generate_line(["Stat:", "Current Set:"]) %>
+<%= CSV.generate_line(["Number of elements checked (total):", @total_checked]) %>
+<%= CSV.generate_line(["Number of elements that passed:", @field_colors["green"]]) %>
+<%= CSV.generate_line(["Number of elements that failed:", @field_colors["red"]]) %>
+<%= CSV.generate_line(["Number of elements with warnings issued:", @field_colors["yellow"]]) %>
+<%= CSV.generate_line(["Number of elements with informational notes added:", @field_colors["blue"]]) %>
+
+<%= CSV.generate_line(["Red Flagged Elements"]) %>
+<%= CSV.generate_line(["Element", "Value", "Recommendation"]) %>
+<% @reds.each do |element| %>
+  <%= CSV.generate_line([element.column_name, element.value, element.recommendation.gsub(',', ';')]) %>
+<% end %>
+
+<%= CSV.generate_line(["Yellow Flagged Elements"]) %>
+<%= CSV.generate_line(["Element", "Value", "Recommendation"]) %>
+<% @yellows.each do |element| %>
+  <%= CSV.generate_line([element.column_name, element.value, element.recommendation]) %>
+<% end %>
+
+<%= CSV.generate_line(["Blue Flagged Elements"]) %>
+<%= CSV.generate_line(["Element", "Value", "Recommendation"]) %>
+<% @blues.each do |element| %>
+  <%= CSV.generate_line([element.column_name, element.value, element.recommendation]) %>
+<% end %>
+

@@ -23,6 +23,7 @@ if User.where(email: 'andrew@element84.com').first.nil?
   user.save
 end
 
+
 if User.where(email: 'general@element84.com').first.nil?
   user = User.new
   user.email = 'general@element84.com'
