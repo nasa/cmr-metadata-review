@@ -32,6 +32,8 @@ class ReviewsController < ApplicationController
     @flagged_by_script = record.binary_script_values
     @script_values = record.script_values
     @previous_values = nil
+
+    @previous_values = record.previous_values
     @current_values = record.values
     @recommendations = record.get_recommendations
     @second_opinions = record.get_opinions
