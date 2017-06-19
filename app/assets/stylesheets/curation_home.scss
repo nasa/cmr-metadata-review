@@ -9,30 +9,6 @@
    overflow-y: auto;
 }
 
-.processing_modal {
-  position: absolute;
-  top: 20%;
-  left: 40%;
-  background-color: $gray-light;
-  min-height: 150px;
-  min-width: 20%;
-  text-align: center;
-  padding-top: 20px;
-  border-style: solid;
-  border-width: 1px;
-  line-height: 2.5;
-  z-index: z("modal-base");
-}
-
-.processing_modal_cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: z("modal-cover");
-}
-
 .curation_box {
   background-color:white;
   width:1000px;

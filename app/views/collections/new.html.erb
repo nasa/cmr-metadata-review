@@ -58,8 +58,6 @@
 
 
 
-
-
 <script type="text/javascript">
   document.getElementById('ingest_submit').onclick = function() {
 
@@ -67,6 +65,8 @@
     document.getElementById('ingest_submit').value = "Processing Record Ingest";
     document.getElementById('ingest_submit').disabled = true;
     document.forms["collection_form"].submit();
+
+    showLoading("Processing Record Ingest");
   };
 </script>
 
