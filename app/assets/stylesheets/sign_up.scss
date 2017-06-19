@@ -47,7 +47,7 @@
 
       .remember_button {
         cursor: pointer;
-            background-color: #20ce6f;
+        color: black;
         display:inline-block;
         height: 36px;
         position: relative;
@@ -67,8 +67,8 @@
         input {
           cursor: pointer;
           position: relative;
-          left: 2px;
-          top:2px;
+          left: 4px;
+          top: 3px;
         }
       }
     }
