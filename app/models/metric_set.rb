@@ -172,7 +172,7 @@ class MetricSet
     record_hash = {}
 
     collections.map do |collection|
-      record_hash[collection.concept_id] = collection.get_records.sort { |x,y| y.id.to_i <=> x.id.to_i } 
+      record_hash[collection.concept_id] = collection.get_records.where(closed: true).sort { |x,y| y.id.to_i <=> x.id.to_i } 
     end
 
     record_hash
