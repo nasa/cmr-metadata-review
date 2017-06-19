@@ -1,7 +1,9 @@
 @import "variables";
 
 @media print {
-    section {page-break-after: always;}
+    .report_overall {
+      page-break-after: always;
+    }
 
     .sub_section_title {
       &:not(:first-child) {
@@ -366,4 +368,10 @@ section {
 .metrics_spacing {
   width: 200px;
   height: 50px;
+}
+
+.header_row {
+  td {
+    font-weight: 600;
+  }
 }
