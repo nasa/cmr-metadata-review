@@ -71,11 +71,13 @@
               <tr class="header_row">
                 <td>Reviewer</td>
                 <td>Date of Review</td>
+                <td>Review Comment</td>
               </tr>
               <% @reviews.each do |review| %>
                 <tr>
                   <td><%= review.reviewer_email %></td>
                   <td><%= review.formatted_date %></td>
+                  <td><%= review.comment %></td>
                 </tr>
               <% end %>
             </table>
@@ -86,7 +88,7 @@
 
         <div class="quality_row">
           <div class="surrounding_box quality_box">
-            <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL REVIEW"}) %>
+            <%= render(partial: 'title_bottom_bar', locals: {title: "QUALITY OVERVIEW"}) %>
             <div class="data_area">
               <div class="data_text">
                 <p>NUMBER OF COLLECTION</p>
@@ -102,7 +104,7 @@
                 <div class="legend_item first_item">
                   <div class="color_box green">
                   </div>
-                  <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
+                  <p>ELEMENTS PASSED <br>(<%=@field_colors["green"]%>)</p>
                 </div>
                 <div class="legend_item">
                   <div class="color_box yellow">
@@ -114,7 +116,7 @@
                 <div class="legend_item first_item">
                   <div class="color_box blue">
                   </div>
-                  <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
+                  <p>ELEMENTS NOTED <br>(<%=@field_colors["blue"]%>)</p>
                 </div>
                 <div class="legend_item">
                   <div class="color_box red">
@@ -140,7 +142,7 @@
           <div class="single_color_table_holder">
             <%= render(partial: 'title_bar', locals: {title: "#{color} FLAGGED ELEMENTS"}) %>
             <div class="surrounding_box">
-              <table>
+              <table class="flag_table">
                 <tr class="header_row">
                   <td>Element</td>
                   <td>Value</td>
