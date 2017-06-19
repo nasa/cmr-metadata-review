@@ -105,8 +105,9 @@ p {
     padding-top: 25px;
     padding-left: 40px;
     p {
+      position: relative;
+      bottom: 5px;
       padding-top: 0px;
-      margin-top: 5px;
       font-size: 11px;
       font-weight: 100;
     }
