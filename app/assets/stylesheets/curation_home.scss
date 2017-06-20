@@ -100,19 +100,6 @@
       font-size: 0.8em;
     }
 
-    .detailButton {
-      background-color:$green-light;
-    }
-
-    .deleteButton {
-      background-color: $red;
-    }
-
-    .detailButton, .deleteButton {
-      &:disabled {
-        background-color:$gray-light;
-      }
-    }
   }
 
   .form_buttons {
