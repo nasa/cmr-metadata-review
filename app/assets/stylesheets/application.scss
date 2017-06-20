@@ -156,11 +156,37 @@ table th {
 tr:nth-child(even) {background: $gray-light}
 tr:nth-child(odd) {background: #FFF}
 
+.record_review_text {
+  font-size: 0.7em;
+  max-height: 150px;
+  overflow: auto;
+}
+
+
+.selectButton {
+  background-color:$green-light;
+}
+
+.deleteButton {
+  background-color: $red;
+}
+
+.reportButton {
+  background-color: $blue-dark;
+}
+
+.detailButton {
+  &:disabled {
+    background-color:$gray-light;
+    color: $disabled-gray-light;
+  }
+}
+
+
 
 input[type=submit] {
     color: white;
     border: 1px solid rgba(50, 50, 50, 0.15);
-    background: $blue-dark;
     display: inline-block;
     padding: 0.5em 1em;
     text-align: center;
@@ -169,17 +195,3 @@ input[type=submit] {
     outline: none;
 }
 
-input[type=submit]:disabled {
-    /*color: white;*/
-    border: 1px solid rgba(50, 50, 50, 0.15);
-    background: $gray-light;
-    color: #323232;
-    opacity: 0.65;
-    background: $gray-light;
-}
-
-.record_review_text {
-  font-size: 0.7em;
-  max-height: 150px;
-  overflow: auto;
-}
