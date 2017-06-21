@@ -191,7 +191,7 @@
           <%= form_tag( collections_stop_updates_path ,  {method: "get", id: 'table3finished_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table3FinishedConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table3FinishedRevisionId") %>
-            <%= submit_tag("Exclude Record from Updates", id: 'table3FinishedSubmit', class: "finishedButton") %>
+            <%= submit_tag("Exclude Record from Updates", id: 'table3FinishedSubmit', class: "finishedButton", data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
           <% end %>
         <% end %>
       </div>
