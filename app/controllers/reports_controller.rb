@@ -28,6 +28,7 @@ class ReportsController < ApplicationController
     original_metric_set = metric_set.original_metric_set
 
     @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1)})
+
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
@@ -48,7 +49,7 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html { render :layout => 'reports' }
+      format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
     end
   end
@@ -82,6 +83,7 @@ class ReportsController < ApplicationController
       original_metric_set = metric_set.original_metric_set
 
       @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1) && (review.record.daac == @daac)})
+
       @total_completed = metric_set.total_completed
 
       #stat generation for original and current sets of records
@@ -103,7 +105,7 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :template => "reports/home", :layout => "reports" }
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
     end
   end
@@ -142,6 +144,7 @@ class ReportsController < ApplicationController
 
     records_list = params["records"].split(",")
     @report_list = []
+
     records_list.each_slice(2) {|(concept_id, revision_id)|
                                   new_record = Collection.find_record(concept_id, revision_id) 
                                   if new_record
@@ -152,7 +155,9 @@ class ReportsController < ApplicationController
     metric_set = MetricSet.new(@report_list)
     original_metric_set = metric_set.original_metric_set
 
+
     @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| review.review_state == 1 })
+
     @total_completed = metric_set.total_completed
 
     #stat generation for original and current sets of records
@@ -173,7 +178,7 @@ class ReportsController < ApplicationController
     @quality_done_records = metric_set.quality_done_records
 
     respond_to do |format|
-      format.html { render :template => "reports/home", :layout => "reports" }
+      format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end                          
   end
