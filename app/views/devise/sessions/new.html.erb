@@ -34,8 +34,8 @@
       <div class="form_buttons">
         <div class="remember_button">
         <% if devise_mapping.rememberable? -%>
-            <%= f.label :remember_me %>
             <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
         <% end -%>
         </div>
         <div class="form_buttons">
