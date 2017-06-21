@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :collections
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
+  get '/collections_stop_updates', to: 'collections#stop_updates'
 
   resources :granules
   resources :comments
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   get '/reports/provider', to: 'reports#provider'
   get '/reports/search', to: 'reports#search'
   get '/reports/selection', to: 'reports#selection'
+  get '/reports/single', to: 'reports#single'
 
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'

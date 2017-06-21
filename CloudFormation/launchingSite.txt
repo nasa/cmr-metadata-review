@@ -23,6 +23,17 @@ PROD_DB_DATABASE='cmrdash'
 
 8. run CF script appInVpc.json
 
+9. Create a bastion server in the public subnet of the vpc.  Ssh into this new server so that you can ssh into the app server within the private subnet.  To ssh from the bastion to the app server use the command "ssh [the aws private ip]". 
+
+If in SIT, once in the app server, run "rake:db seed RAILS_ENV=production" to set up the initial admin users.
+In Production, the passwords must be unique and set by hand!
+
+The commands to use ssh forwarding are
+ssh-add keyFile.pem
+ssh -A ssh_ip_address
+
+Additional Notes:
+
 The first two scripts require no parameters.  The second two scripts require parameters from the outputs of the vpc & S3 scripts.  Additionally the appInVpc template requires credentials to the git repository for the project as it needs to pull down the latest code upon launching.  
 
 I have put markers such as "[A]" and "[B]" on parameters to match them to other scripts outputs.  For example the "BucketName" output of s3andIamRole.json show the string "AppInVpc[E]".  This means that output will tie to the parameter in AppInVpc.json labeled "[E]"
