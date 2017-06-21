@@ -9,7 +9,7 @@ sudo yum install ruby23-devel.x86_64
 sudo yum install git
 sudo yum install nginx
 sudo yum install postgresql8-devel.x86_64
-yum -y install gcc zlib-devel.x86_64  
+sudo yum -y install gcc zlib-devel.x86_64  
 sudo yum install sqlite-devel
 sudo yum install gcc-c++
 sudo yum install -y awslogs
