@@ -11,6 +11,7 @@ task :old_revision, [:concept_id, :revision_id, :collectionFormat]  => :environm
   def ingest_old_revision(concept_id, revision_id, collectionFormat)
     #guard against creating a duplicate record
     if Collection.record_exists?(concept_id, revision_id)
+      puts "Desired Record has been previously ingested into system, new ingest stopped."
       return
     end
 
@@ -31,8 +32,7 @@ task :old_revision, [:concept_id, :revision_id, :collectionFormat]  => :environm
       #guard against bringing in an unsupported format
       native_format = Cmr.get_raw_collection_format(concept_id)
       if !(Collection::SUPPORTED_FORMATS.include? native_format) 
-        redirect_to home_path
-        flash[:alert] = "The system could not ingest the selected record, #{native_format} format records are not currently supported"
+        puts "The system could not ingest the selected record, #{native_format} format records are not currently supported"
         return
       end
 
@@ -47,7 +47,12 @@ task :old_revision, [:concept_id, :revision_id, :collectionFormat]  => :environm
         end
         ingest_record.save!
       end
+    rescue
+      puts "Desired Record was not Ingested, Error occured"
+      return
     end
+
+    puts "Concept Id: #{concept_id}, Revision Id: #{revision_id}, Ingested Successfully"
   end
 
   def assemble_old_record(concept_id, revision_id, collection_data)
@@ -59,6 +64,7 @@ task :old_revision, [:concept_id, :revision_id, :collectionFormat]  => :environm
       short_name = collection_data["ShortName"]
     else 
       #Guard against records that come in with unsupported types
+      puts "Record Format is unsupported type"
       return
     end
 
