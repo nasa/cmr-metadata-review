@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :collections
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
+  get '/collections_stop_updates', to: 'collections#stop_updates'
 
   resources :granules
   resources :comments

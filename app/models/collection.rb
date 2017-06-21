@@ -155,4 +155,17 @@ class Collection < ActiveRecord::Base
     self.records.where(hidden: false)
   end
 
+  def update?
+    self.cmr_update
+  end
+
+  def self.update?(concept_id)
+    collection = Collection.find_by concept_id: concept_id
+    if collection.nil?
+      return false
+    else
+      collection.cmr_update
+    end
+  end
+
 end
