@@ -154,6 +154,7 @@ class CollectionsController < ApplicationController
           save_success = true
         rescue Timeout::Error
           flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
+          Rails.logger.error("PyCMR Error: On Ingest Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error") 
           raise ActiveRecord::Rollback
         end
       end
