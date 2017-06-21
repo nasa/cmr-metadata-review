@@ -59,6 +59,9 @@ class CollectionsController < ApplicationController
     @concept_id = params["concept_id"]
     @revision_id = params["revision_id"]
     @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
+    if @already_ingested
+      @cmr_update = (Collection.find_by concept_id: @concept_id).update?
+    end
 
     begin
       collection_data = Cmr.get_collection(params["concept_id"])
@@ -191,6 +194,7 @@ class CollectionsController < ApplicationController
     if !collection.nil?
       collection.cmr_update = false;
     end
+    collection.save
 
     flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} has Been Removed from Future CMR Updates"
     redirect_to home_path
