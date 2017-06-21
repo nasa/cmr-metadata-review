@@ -54,6 +54,10 @@
 .filter_dropdown {
   float: right;
   padding-right: 62px;
+  i {
+    position: relative;
+    top: 2px;
+  }
 }
 
 .filter_select {
@@ -131,6 +135,10 @@
 
   .final_headcol {
     height: 76px;
+  }
+
+  .headcol_subtitle {
+    font-size: 11px;
   }      
 
   tr div {
