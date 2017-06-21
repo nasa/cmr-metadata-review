@@ -253,6 +253,7 @@ class Cmr
                 save_success = true
               rescue Timeout::Error
                 raise ActiveRecord::Rollback
+                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error") 
               end
             end
             
