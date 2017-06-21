@@ -19,91 +19,93 @@
     <% end %>
 
     <br>
-    <p><strong>Search Results:</strong></p>
+    <% if @free_text %>
+      <p><strong>Search Results:</strong></p>
 
-    <div class="results_box">
+      <div class="results_box">
 
-      <div class="search_phrase">
-        <p>Search Phrase = <%=@free_text%></p>
-      </div>
-      <div class="total_results">
-        <p>Total Results = <%= @collection_count %></p>
-      </div>
-
-
-      <div class="bottom_row">
-        <div class="select_collection">
-          <%= form_tag( reports_selection_path ,  {method: "get", id: 'select_form'}) do %>
-            <%= hidden_field_tag(:records, "", id: "records_holder") %>
-            <%= button_tag("Select Records", id: 'select_submit') %>
-          <% end %> 
+        <div class="search_phrase">
+          <p>Search Phrase = <%=@free_text%></p>
         </div>
-      </div>
-      
-      <% if @free_text && @search_iterator.empty? %>
-        <div class="empty_results_phrase">
-          <p>No ingested records were found matching your query</p>
+        <div class="total_results">
+          <p>Total Results = <%= @collection_count %></p>
         </div>
-      <% end %>
 
 
-      <% unless @search_iterator.nil? %>
-        <% unless @search_iterator.empty? %>
-
-            <table cellpadding="5" border="1">
-                <tr>
-                    <th>Results #</th>
-                    <th>Concept_ID</th>
-                    <th>Revision_ID</th>
-                    <th>ShortName</th>
-                </tr>
-
-                
-
-              <% @search_iterator.each_with_index do |result, index| %>
-                <tr concept_id="<%= result.concept_id %>" revision_id="<%= result.revision_id %>" onclick="appendRecordsList(this)" class="report_search_row">
-                    <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
-                    <td id="concept<%= index.to_s %>"><%= result.concept_id %></td>
-                    <td id="revision<%= index.to_s %>"><%= result.revision_id %></td>
-                    <td><%= result.short_name %></td>
-                </tr>
-              <% end %>
-            </table>
-
-            <script type="text/javascript">
-              var records = [];
-
-              function appendRecordsList(tr_element) {
-                var concept_id = tr_element.getAttribute("concept_id");
-                var revision_id = tr_element.getAttribute("revision_id");
-                if (list_contains_record(records, concept_id, revision_id)) {
-                  records = records.filter(function(record_arr) { return ((!(record_arr[0] == concept_id)) || (!(record_arr[1] == revision_id)))});
-                    tr_element.style.backgroundColor = "";
-                } else {
-                  records.push([concept_id, revision_id]);
-                  tr_element.style.backgroundColor = "#CAE4F5";
-                }
-              }
-
-              function list_contains_record(list, concept_id, revision_id) {
-                var temp_records = list.filter(function(record_arr) { return record_arr[0] == concept_id })
-                temp_records = temp_records.filter(function(record_arr) { return record_arr[1] == revision_id })
-                return temp_records.length > 0
-              }
-            </script>
-
-
-
-            <script type="text/javascript">
-                var selectButton = document.getElementById("select_submit");
-                selectButton.onclick = function() {
-                  document.getElementById("records_holder").value = records;
-                  document.getElementById("select_form").submit();
-                }
-            </script>
+        <div class="bottom_row">
+          <div class="select_collection">
+            <%= form_tag( reports_selection_path ,  {method: "get", id: 'select_form'}) do %>
+              <%= hidden_field_tag(:records, "", id: "records_holder") %>
+              <%= button_tag("Select Records", id: 'select_submit') %>
+            <% end %> 
+          </div>
+        </div>
+        
+        <% if @free_text && @search_iterator.empty? %>
+          <div class="empty_results_phrase">
+            <p>No ingested records were found matching your query</p>
+          </div>
         <% end %>
-      <% end %>
-    </div>
+
+
+        <% unless @search_iterator.nil? %>
+          <% unless @search_iterator.empty? %>
+
+              <table cellpadding="5" border="1">
+                  <tr>
+                      <th>Results #</th>
+                      <th>Concept_ID</th>
+                      <th>Revision_ID</th>
+                      <th>ShortName</th>
+                  </tr>
+
+                  
+
+                <% @search_iterator.each_with_index do |result, index| %>
+                  <tr concept_id="<%= result.concept_id %>" revision_id="<%= result.revision_id %>" onclick="appendRecordsList(this)" class="report_search_row">
+                      <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
+                      <td id="concept<%= index.to_s %>"><%= result.concept_id %></td>
+                      <td id="revision<%= index.to_s %>"><%= result.revision_id %></td>
+                      <td><%= result.short_name %></td>
+                  </tr>
+                <% end %>
+              </table>
+
+              <script type="text/javascript">
+                var records = [];
+
+                function appendRecordsList(tr_element) {
+                  var concept_id = tr_element.getAttribute("concept_id");
+                  var revision_id = tr_element.getAttribute("revision_id");
+                  if (list_contains_record(records, concept_id, revision_id)) {
+                    records = records.filter(function(record_arr) { return ((!(record_arr[0] == concept_id)) || (!(record_arr[1] == revision_id)))});
+                      tr_element.style.backgroundColor = "";
+                  } else {
+                    records.push([concept_id, revision_id]);
+                    tr_element.style.backgroundColor = "#CAE4F5";
+                  }
+                }
+
+                function list_contains_record(list, concept_id, revision_id) {
+                  var temp_records = list.filter(function(record_arr) { return record_arr[0] == concept_id })
+                  temp_records = temp_records.filter(function(record_arr) { return record_arr[1] == revision_id })
+                  return temp_records.length > 0
+                }
+              </script>
+
+
+
+              <script type="text/javascript">
+                  var selectButton = document.getElementById("select_submit");
+                  selectButton.onclick = function() {
+                    document.getElementById("records_holder").value = records;
+                    document.getElementById("select_form").submit();
+                  }
+              </script>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
 </div>
 
 

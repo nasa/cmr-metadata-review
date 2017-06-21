@@ -15,14 +15,17 @@ class SiteController < ApplicationController
     @in_process_records = (Record.all.select {|record| record.is_collection? && !record.closed && !record.hidden}).select {|record| record.reviews.where(user: current_user).any?}
 
     #record closed
-    @closed_records = Record.all.select {|record| record.is_collection? && !record.hidden && record.closed}
+    @closed_records = Record.all.select {|record| record.is_collection? && !record.hidden && record.closed && record.cmr_update? }
 
     @search_results = []
     @provider_select_list = provider_select_list
   end
 
   def general_home
-
+    if current_user
+      sign_out current_user
+    end
+    redirect_to home_path
   end
 
   def elb_status

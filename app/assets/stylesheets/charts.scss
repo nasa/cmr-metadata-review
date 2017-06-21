@@ -1,7 +1,9 @@
 @import "variables";
 
 @media print {
-    section {page-break-after: always;}
+    .report_overall {
+      page-break-after: always;
+    }
 
     .sub_section_title {
       &:not(:first-child) {
@@ -61,8 +63,8 @@ section {
 
 .doughnut_graph_container {
   display: block;
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
 }
 
 .updates_graph_container {
@@ -201,6 +203,19 @@ section {
 
 .stats_area {
   padding: 25px;
+
+  table {
+    :nth-child(1) {
+      td {
+        background-color: $gray-light
+      }
+    }
+    :nth-child(n+2) {
+      td {
+        background-color: white;
+      }
+    }
+  }
 }
 
 .sub_section_title {
@@ -219,6 +234,25 @@ section {
 .ingest_section {
   display: inline-block;
   margin-bottom: 20px;
+}
+
+.single_color_table_holder {
+  margin-bottom: 20px;
+  width:100%;
+
+  .flag_table {
+    tr {
+      :nth-child(1) {
+        width: 20%;
+      }
+      :nth-child(2) {
+        width: 40%;
+      }
+      :nth-child(3) {
+        width: 40%;
+      }
+    }
+  }
 }
 
 .velocity_section {
@@ -328,5 +362,16 @@ section {
     p {
       font-size: 11px;
     }
+  }
+}
+
+.metrics_spacing {
+  width: 200px;
+  height: 50px;
+}
+
+.header_row {
+  td {
+    font-weight: 600;
   }
 }

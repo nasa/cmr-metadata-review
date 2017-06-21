@@ -164,7 +164,8 @@ class Cmr
   def self.update_collections(current_user)
     update_lock = RecordsUpdateLock.find_by id: 1
     if update_lock.nil?
-      update_lock = RecordsUpdateLock.new(id: 1, last_update: DateTime.now - 365.days)
+      #subtracting a year so that any older records picked up from an artificially setup starting set of records
+      update_lock = RecordsUpdateLock.new(id: 1, last_update: (DateTime.now - 365.days))
     end
     
     last_date = update_lock.get_last_update
@@ -227,7 +228,7 @@ class Cmr
 
     #importing the new ones if any
     contained_collections.each do |data|
-      unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
+      unless Collection.record_exists?(data["concept_id"], data["revision_id"]) && Collection.update?(data["concept_id"])
         collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
         #second check to make sure we don't save duplicate revisions
         unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
@@ -267,6 +268,7 @@ class Cmr
     end
           
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
+
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
@@ -307,6 +309,7 @@ class Cmr
 
   def self.get_raw_collection(concept_id, type = "echo10")
     url = Cmr.api_url("collections", type, {"concept_id" => concept_id})
+
     collection_xml = Cmr.cmr_request(url).parsed_response
     begin
       collection_results = Hash.from_xml(collection_xml)["results"]

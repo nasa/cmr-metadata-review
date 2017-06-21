@@ -63,10 +63,10 @@
     },
 
     "DBClass" : {
-      "Default" : "db.m1.small",
+      "Default" : "db.t2.small",
       "Description" : "Database instance class",
       "Type" : "String",
-      "AllowedValues" : [ "db.m1.small", "db.m1.large", "db.m1.xlarge", "db.m2.xlarge", "db.m2.2xlarge", "db.m2.4xlarge" ],
+      "AllowedValues" : [ "db.t2.small"],
       "ConstraintDescription" : "must select a valid database instance type."
     },
 
