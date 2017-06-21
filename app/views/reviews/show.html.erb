@@ -236,7 +236,7 @@
           <% @section_titles.each do |title| %>
             <td class="column_<%=title%>">
               <div>
-                
+                <%= @previous_values[title] %>
               </div>
             </td>
           <% end %>
@@ -254,7 +254,10 @@
 
 
         <tr>
-        <th class="headcol">RECOMMENDATION</th>
+        <th class="headcol">
+          <p>RECOMMENDATION</p>
+          <p class="headcol_subtitle">(Visible on Reports)</p>
+        </th>
           <% @section_titles.each do |title| %>
             <td class="recommendation_cell column_<%=title%>">
               <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
@@ -327,7 +330,10 @@
           <% end %>
         </tr>
         <tr>
-        <th class="headcol final_headcol">DISCUSSION &amp; JUSTIFICATION</th>
+        <th class="headcol final_headcol">
+          <p>DISCUSSION &amp; JUSTIFICATION</p>
+          <p class="headcol_subtitle">(Visible to All)</p>
+        </th>
           <% @section_titles.each do |title| %>
             <td class="discussion_td column_<%=title%>">
               <div class="discussion_holder">

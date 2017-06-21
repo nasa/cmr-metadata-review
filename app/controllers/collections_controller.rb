@@ -178,6 +178,7 @@ class CollectionsController < ApplicationController
 
     if record.nil?
       flash[:alert] = "Error: Record was not Deleted"
+      Rails.logger.error("Delete Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Deleted") 
       redirect_to home_path
       return
     end
