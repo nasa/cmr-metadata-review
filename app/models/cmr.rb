@@ -177,22 +177,26 @@ class Cmr
     total_results = Float::INFINITY
     #will return this list of added records for logging/presentation
     total_added_records = []
+    total_failed_records = []
 
     #only 2000 results returned at a time, so have to loop through requests
     while result_count < total_results
       raw_results = Cmr.collections_updated_since(search_date, page_num)
       total_results = raw_results["results"]["hits"].to_i
-      added_records = Cmr.process_updated_collections(raw_results, current_user)
+      added_records, failed_records = Cmr.process_updated_collections(raw_results, current_user)
       total_added_records = total_added_records.concat(added_records)
+      total_failed_records = total_failed_records.concat(failed_records)
 
       result_count = result_count + 2000
       page_num = page_num + 1
     end
 
-    update_lock.last_update = DateTime.now
-    update_lock.save!
+    if total_failed_records.empty?
+      update_lock.last_update = DateTime.now
+      update_lock.save!
+    end
 
-    return total_added_records
+    return total_added_records, total_failed_records
   end
 
   # ====Params   
@@ -225,27 +229,49 @@ class Cmr
     contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
     #will return this list of added records for logging/presentation
     added_records = []
+    failed_records = []
 
     #importing the new ones if any
     contained_collections.each do |data|
-      unless Collection.record_exists?(data["concept_id"], data["revision_id"]) 
-        collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
-        #second check to make sure we don't save duplicate revisions
-        unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
-          ActiveRecord::Base.transaction do
-            new_collection_record.save!
-            record_data_list.each do |record_data|
-              record_data.save!
-            end
-            ingest_record.save!
-          end
+      begin
+        unless Collection.record_exists?(data["concept_id"], data["revision_id"]) && Collection.update?(data["concept_id"])
+          collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+          #second check to make sure we don't save duplicate revisions
+          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
+            save_success = false
+            ActiveRecord::Base.transaction do
+              new_collection_record.save!
+              record_data_list.each do |record_data|
+                record_data.save!
+              end
+              ingest_record.save!
+              
+              begin
+                Timeout::timeout(12) {
+                  new_collection_record.create_script
+                }
 
-          new_collection_record.evaluate_script
-          added_records.push([data["concept_id"], data["revision_id"]]);
+                save_success = true
+              rescue Timeout::Error
+                raise ActiveRecord::Rollback
+                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error") 
+              end
+            end
+            
+            if save_success
+              added_records.push([data["concept_id"], data["revision_id"]]);
+            else
+              failed_records.push([data["concept_id"], data["revision_id"]]);
+            end
+          end
         end
+      rescue
+        failed_records.push([data["concept_id"], data["revision_id"]]);
       end
     end
-    return added_records
+
+
+    return added_records, failed_records
   end
 
   # ====Params   
@@ -668,7 +694,18 @@ class Cmr
     if list.empty?
       return "No New Records Were Found"
     end
-    output_string = "The following records and revision id\'s have been added<br/>"
+    output_string = "The following records and revision id\'s have been added "
+    list.each do |record_list|
+      output_string += "#{record_list[0]} - #{record_list[1]} "
+    end
+    return output_string
+  end
+
+  def self.format_failed_records_list(list)
+    if list.empty?
+      return ""
+    end
+    output_string = "The following records and revision id\'s failed ingest due to pyCMR failure "
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end

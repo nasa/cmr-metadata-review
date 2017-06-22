@@ -54,6 +54,10 @@
 .filter_dropdown {
   float: right;
   padding-right: 62px;
+  i {
+    position: relative;
+    top: 2px;
+  }
 }
 
 .filter_select {

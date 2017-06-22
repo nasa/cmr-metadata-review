@@ -14,6 +14,7 @@ class MetricSet
   @record_data_set = []
 
   def initialize(record_set = [])
+    #only selecting closed records
     @record_set = record_set
     record_ids = @record_set.map { |record| record.id }
     @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
@@ -35,7 +36,9 @@ class MetricSet
       #for safety resorting the records by revision_id highest to lowest
       #(lowest revision_id's being the oldest)
       sorted_revisions = value.sort {|x, y| y.revision_id.to_i <=> x.revision_id.to_i }
-      original_record_set.push(sorted_revisions.last)
+      unless sorted_revisions.empty?
+        original_record_set.push(sorted_revisions.last)
+      end
     end
 
     return MetricSet.new(original_record_set)
@@ -188,11 +191,16 @@ class MetricSet
 
   def updated_done_count
     ordered_revisions = self.ordered_revisions.values
-    updated_and_done = ordered_revisions.select { |record_list|
-      record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
-    }
+    ordered_revisions = ordered_revisions.select { |record_list| !record_list.empty? }
+    unless ordered_revisions.empty?
+      updated_and_done = ordered_revisions.select { |record_list|
+        record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
+      }
 
-    updated_and_done.count
+      updated_and_done.count
+    else
+      0
+    end
   end
 
   # ====Params   

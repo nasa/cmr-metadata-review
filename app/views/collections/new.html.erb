@@ -51,6 +51,9 @@
         <% end %>
       <% else %>
         <p>This record has already been ingested into the system for review</p>
+        <% if !@cmr_update %>
+          <p>This record has been set to receive no further updates from CMR</p>
+        <% end %>
       <% end %>  
     </div>  
 
