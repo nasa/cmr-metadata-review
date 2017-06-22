@@ -78,6 +78,12 @@
             <%= hidden_field_tag(:revision_id, "", id: "table1DeleteRevisionId") %>
             <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
           <% end %>
+
+          <script type="text/javascript">
+            document.getElementById("table1DeleteSubmit").onclick = function() {
+              showLoading("Deleting Record");
+            }
+          </script>
         <% end %>
       </div>
 
@@ -135,6 +141,12 @@
             <%= hidden_field_tag(:revision_id, "", id: "table2DeleteRevisionId") %>
             <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
           <% end %>
+
+          <script type="text/javascript">
+            document.getElementById("table2DeleteSubmit").onclick = function() {
+              showLoading("Deleting Record");
+            }
+          </script>
         <% end %>
       </div>
     </div>
@@ -196,6 +208,12 @@
             <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
             <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" } ) %>
           <% end %>
+
+          <script type="text/javascript">
+            document.getElementById("table3DeleteSubmit").onclick = function() {
+              showLoading("Deleting Record");
+            }
+          </script>
         <% end %>
       </div>
 
