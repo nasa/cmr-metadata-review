@@ -480,4 +480,8 @@ class Record < ActiveRecord::Base
     self.concept_id.partition('-').last
   end
 
+  def cmr_update?
+    self.recordable.update?
+  end
+
 end

@@ -30,7 +30,7 @@ class ReportsControllerTest < ActionController::TestCase
     it "gets selection csv without error" do
         @tester = User.find_by_email("abaker@element84.com")
         sign_in(@tester)
-        
+
         get :selection, records: "C1000000020-LANCEAMSR2,8", format: :csv
 
         assert_equal((response.body.include? "CMR Selection Report"), true)

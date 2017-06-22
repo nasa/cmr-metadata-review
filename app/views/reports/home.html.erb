@@ -233,28 +233,6 @@
           REVIEW METRICS
         </div>
 
-        <div class="in_process_section">
-          <%= render(partial: 'title_bar', locals: {title: "IN PROGRESS COLLECTIONS"}) %>
-              <table>
-                  <tr>
-                    <td>State of Reviews:</td> 
-                    <td>0 Reviews:</td>  
-                    <td>1 Review:</td>  
-                    <td>2+ Reviews:</td>  
-                  </tr>
-                  <tr>
-                    <td>Record Counts</td>
-                    <td><%= @review_counts.count { |x| x == 0 }%></td>
-                    <td><%= @review_counts.count { |x| x == 1 }%></td>
-                    <td><%= (@review_counts.count { |x| x >= 2 }) - @total_completed %></td>
-                  </tr>
-              </table>
-        </div>
-
-
-        <br>
-
-
 
         <div class="score_section">
           <div class="surrounding_box score_box">
