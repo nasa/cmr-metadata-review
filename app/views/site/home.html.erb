@@ -19,11 +19,16 @@
       <%= text_field_tag(:free_text) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("Search") %>
-      <button class="search_button">
+      <button class="search_button" id="search_button">
         <i class="eui-icon eui-fa-search"></i>
       </button>
     <% end %>
 
+    <script type="text/javascript">
+      document.getElementById("search_button").onclick = function() {
+        showLoading("Searing CMR System");
+      }
+    </script>
 
   </div>
 

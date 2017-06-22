@@ -170,7 +170,8 @@
       let section_select = document.getElementById("section_select");
       section_select.options[<%=params["section_index"].to_i %>].selected = true;
       section_select.onchange = function () {
-        document.getElementById("field_form").submit();  
+        document.getElementById("field_form").submit();
+        showLoading("Saving and Moving to Selected Section");  
       };
     </script>
 
@@ -387,8 +388,14 @@
   <% if !@marked_done %>
     <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
-    <%= submit_tag("Save Review", class: "form_save_button") %>
+    <%= submit_tag("Save Review", id: "save_review_button", class: "form_save_button") %>
     <% end %>
+
+    <script type="text/javascript">
+      document.getElementById("save_review_button").onclick = function() {
+        showLoading("Saving Record Review");
+      }
+    </script>
   <% end %>
 
 <section class="detail_footer">

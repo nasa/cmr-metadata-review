@@ -186,7 +186,7 @@ input[type=submit]:disabled {
 
 
 .processing_modal {
-  position: absolute;
+  position: fixed;
   top: 20%;
   left: 40%;
   background-color: $gray-light;
