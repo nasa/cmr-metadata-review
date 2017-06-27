@@ -147,7 +147,11 @@ class Cmr
   # throws timeout error after time determined by TIMEOUT_MARGIN
 
   def self.cmr_request(url)
-    HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+    begin
+      HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+    rescue Net::ReadTimeout
+      nil
+    end
   end
 
   # ====Params   
@@ -762,7 +766,12 @@ class Cmr
     end
 
     total_results = Cmr.cmr_request(url)
-    results_hash = Hash.from_xml(total_results)["results"]
+    begin
+      results_hash = Hash.from_xml(total_results)["results"]
+    rescue
+      Rails.logger.error("CMR Connection Error: Collection Count")
+      return 0
+    end
     results_hash["hits"].to_i
   end
 
