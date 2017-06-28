@@ -1,10 +1,22 @@
 @import "variables";
 
+.review_background {
+  background-color: white;
+}
+
 .review_table {
   td {
     border-width: 1px;
     border-style: solid;
     border-color: $report-line;
+  }
+  tr {
+      &:nth-child(1), &:nth-child(4), &:nth-child(6) {background: $review-blue-light}
+      &:nth-child(9), &:nth-child(13) {background: $review-yellow-dark}
+      &:nth-child(12), &:nth-child(14) {background: $review-green-light}
+  }
+  th {
+    background-color: inherit;
   }
 }
 
@@ -106,7 +118,7 @@
 
 .scroll_table {
   margin-top: 25px;
-  max-width: 85%;
+  max-width: 78%;
   overflow-x: auto;  
   margin-left: 19em;
   overflow-y: visible;
@@ -137,6 +149,11 @@
     top: auto;
     padding-left: 2em;
     height: 200px;
+  }
+
+  .first_headcol {
+    background-color: white;
+    border: none;
   }
 
   .autolabelcol {
@@ -196,6 +213,7 @@
     }
   }
 
+
   .second_to_final_headcol {
     height: 60px;
   }
@@ -207,6 +225,24 @@
   .headcol_subtitle {
     font-size: 11px;
   }      
+
+  .auto_title {
+    position: absolute;
+    transform: rotate(270deg);
+    top: 30em;
+    left: -2em;
+    z-index: 100;
+    color: white;
+  }
+
+  .input_title {
+    position: absolute;
+    transform: rotate(270deg);
+    top: 58em;
+    left: -0.3em;
+    z-index: 100;
+    color: white;
+  }
 
   tr div {
     max-height:130px;
@@ -263,7 +299,7 @@
   }
 
   .recommendation_cell {
-    background-color: white;
+
   }
 
   .opinion_cell {
@@ -302,7 +338,6 @@
 
 
   .discussion_td {
-    background-color:white;
     vertical-align: top;
     max-height: 300px;
   }
@@ -312,7 +347,6 @@
   }
 
   .discussion_comment {
-    background-color: white;
 
     .discussion_title {
       padding: 5px;

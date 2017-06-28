@@ -1,194 +1,197 @@
-<%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
+<div class="review_background">
+  <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
 
-<div class="toggle_area">
-  <!-- bubbles and drop down navigation -->
-  <div>
-    <div class="bubble_title">
-      <p class="bubble_title_text">METADATA INFORMATION</p>
+  <div class="toggle_area">
+    <!-- bubbles and drop down navigation -->
+    <div>
+      <div class="bubble_title">
+        <p class="bubble_title_text">METADATA INFORMATION</p>
+      </div>
+      <!-- bubbles -->
+      <div class="bubble_title">
+        <% @bubble_data.each_with_index do | bubble, index | %>
+          <% script_class = bubble[:script] ? "script" : "no_script" %>
+          <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
+
+          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+            <% if bubble[:opinion] && bubble[:opinion] != "" %>
+              <div class="<%= script_text_class %> bubble_opinion">2</div>
+              <% else %>
+              <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <!-- bubbles -->
-    <div class="bubble_title">
-      <% @bubble_data.each_with_index do | bubble, index | %>
-        <% script_class = bubble[:script] ? "script" : "no_script" %>
-        <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
 
-        <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
-          <% if bubble[:opinion] && bubble[:opinion] != "" %>
-            <div class="<%= script_text_class %> bubble_opinion">2</div>
-            <% else %>
-            <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
-          <% end %>
+    <div class="filter_row">
+      <p><strong>FILTERS:</strong></p>
+      <!-- slider toggles -->
+      <div class="filter_switches">
+        <div class="filter_switch">
+          <p>FLAGGED BY SCRIPT</p>
+          <label class="switch">
+            <input type="checkbox" id="script_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
         </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="filter_row">
-    <p><strong>FILTERS:</strong></p>
-    <!-- slider toggles -->
-    <div class="filter_switches">
-      <div class="filter_switch">
-        <p>FLAGGED BY SCRIPT</p>
-        <label class="switch">
-          <input type="checkbox" id="script_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
+        <div class="filter_switch">
+          <p>REQUIRES 2ND OPINION</p>
+          <label class="switch">
+            <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <div class="filter_switch">
+          <p>NOT COLOR CODED</p>
+          <label class="switch">
+            <input type="checkbox" id="color_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <div class="filter_switch">
+          <p>UMM Required</p>
+          <label class="switch">
+            <input type="checkbox" id="umm_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
       </div>
-      <div class="filter_switch">
-        <p>REQUIRES 2ND OPINION</p>
-        <label class="switch">
-          <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-      <div class="filter_switch">
-        <p>NOT COLOR CODED</p>
-        <label class="switch">
-          <input type="checkbox" id="color_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-      <div class="filter_switch">
-        <p>UMM Required</p>
-        <label class="switch">
-          <input type="checkbox" id="umm_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-    </div>
 
-    <script type="text/javascript">
-      //each column cells are marked with a title class so that a row can be grabbed together
-      var titleList = [];
-      <% @section_titles.each do |title| %>
-        titleList.push("column_" + "<%=title%>");
-      <% end %>
+      <script type="text/javascript">
+        //each column cells are marked with a title class so that a row can be grabbed together
+        var titleList = [];
+        <% @section_titles.each do |title| %>
+          titleList.push("column_" + "<%=title%>");
+        <% end %>
 
 
 
-      function toggleCells() {
-        unhideAllCells();
+        function toggleCells() {
+          unhideAllCells();
 
-        var hiddenCells = [];
+          var hiddenCells = [];
 
-        //checks the toggle, then checks each cell of a row against the check_function
-        function toggleCheck(toggle_name, cell_name, check_function) {
-          var toggle = document.getElementById(toggle_name);
-          if (toggle.checked == true) {
-            var cells = document.getElementsByClassName(cell_name);
-            //finding all the script_cells which have the check icon.
-            for (var index in cells) {
-              if (check_function(cells[parseInt(index)])) {
-                hiddenCells.push(parseInt(index));
+          //checks the toggle, then checks each cell of a row against the check_function
+          function toggleCheck(toggle_name, cell_name, check_function) {
+            var toggle = document.getElementById(toggle_name);
+            if (toggle.checked == true) {
+              var cells = document.getElementsByClassName(cell_name);
+              //finding all the script_cells which have the check icon.
+              for (var index in cells) {
+                if (check_function(cells[parseInt(index)])) {
+                  hiddenCells.push(parseInt(index));
+                }
               }
             }
           }
-        }
 
-        //the statement provided in the anon function in cellCheck is the rule used for each set of hide/don't hide evals
-        toggleCheck("script_toggle", "script_check_cell", cellCheck(function(single_div) {
-          return single_div.children.length > 0;
-        }));
-        //checks if the check icon is visible
-        toggleCheck("opinion_toggle", "opinion_cell", cellCheck(function(single_div) {
-          return single_div.childNodes[3].childNodes[1].style.visibility == "visible";
-        }));
-        //checks if cell has color
-        toggleCheck("color_toggle", "color_code_cell", cellCheck(function(single_div) {
-          return !single_div.style.backgroundColor;
-        }));
-        //checks if check icon is present
-        toggleCheck("umm_toggle", "umm_required_cell", cellCheck(function(single_div) {
-          return single_div.children.length > 0;
-        }));
+          //the statement provided in the anon function in cellCheck is the rule used for each set of hide/don't hide evals
+          toggleCheck("script_toggle", "script_check_cell", cellCheck(function(single_div) {
+            return single_div.children.length > 0;
+          }));
+          //checks if the check icon is visible
+          toggleCheck("opinion_toggle", "opinion_cell", cellCheck(function(single_div) {
+            return single_div.childNodes[3].childNodes[1].style.visibility == "visible";
+          }));
+          //checks if cell has color
+          toggleCheck("color_toggle", "color_code_cell", cellCheck(function(single_div) {
+            return !single_div.style.backgroundColor;
+          }));
+          //checks if check icon is present
+          toggleCheck("umm_toggle", "umm_required_cell", cellCheck(function(single_div) {
+            return single_div.children.length > 0;
+          }));
 
-        //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
-        var uniqueHidden = hiddenCells.filter(function(item, pos) {
-            return hiddenCells.indexOf(item) == pos;
-        });
-        if (uniqueHidden.length == titleList.length) {
-          document.getElementById("scroll_table").style.display = "none";
-        }
-
-
-        //hiding each column individually
-        for (var columnNum in hiddenCells) {
-          var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
-          for (var cell in hideCells) {
-            if (!(hideCells[parseInt(cell)] == undefined)) {
-              hideCells[parseInt(cell)].style.display = "none";
-            }
+          //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
+          var uniqueHidden = hiddenCells.filter(function(item, pos) {
+              return hiddenCells.indexOf(item) == pos;
+          });
+          if (uniqueHidden.length == titleList.length) {
+            document.getElementById("scroll_table").style.display = "none";
           }
-        }
 
-        //resetting the discussion <th> field height;
-        adjustDiscussionCellHeight();
-          
-      }
 
-      function unhideAllCells() {
-          document.getElementById("scroll_table").style.display = "block";
-
-          for (var index in titleList) {
-            var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
-            for (var cell in showCells) {
-              if (showCells[parseInt(cell)]) {
-                showCells[parseInt(cell)].style.display = "table-cell";  
+          //hiding each column individually
+          for (var columnNum in hiddenCells) {
+            var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
+            for (var cell in hideCells) {
+              if (!(hideCells[parseInt(cell)] == undefined)) {
+                hideCells[parseInt(cell)].style.display = "none";
               }
             }
           }
-      }
 
-      function cellCheck(check_rule) {
-        return function(single_div) {
-          if (single_div == undefined || !single_div) {
-            return false;
-          }
+          //resetting the discussion <th> field height;
+          adjustDiscussionCellHeight();
+            
+        }
 
-          if(check_rule(single_div)) {
-            return false;
-          } else {
-            return true;
+        function unhideAllCells() {
+            document.getElementById("scroll_table").style.display = "block";
+
+            for (var index in titleList) {
+              var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
+              for (var cell in showCells) {
+                if (showCells[parseInt(cell)]) {
+                  showCells[parseInt(cell)].style.display = "table-cell";  
+                }
+              }
+            }
+        }
+
+        function cellCheck(check_rule) {
+          return function(single_div) {
+            if (single_div == undefined || !single_div) {
+              return false;
+            }
+
+            if(check_rule(single_div)) {
+              return false;
+            } else {
+              return true;
+            }
           }
         }
-      }
-    </script>
-      
-      <div class="filter_dropdown">
-        <i class="eui-icon eui-fa-unsorted"></i>
-        <p>SAVE AND GO TO:</p> 
-        <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
-          <% @navigation_list.each_with_index do |data_section, index_count| %>
-            <option value="<%=index_count%>"><%= data_section %></option>
-          <% end %>
-        </select>  
-      </div>
+      </script>
+        
+        <div class="filter_dropdown">
+          <i class="eui-icon eui-fa-unsorted"></i>
+          <p>SAVE AND GO TO:</p> 
+          <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
+            <% @navigation_list.each_with_index do |data_section, index_count| %>
+              <option value="<%=index_count%>"><%= data_section %></option>
+            <% end %>
+          </select>  
+        </div>
 
 
 
-    <script type="text/javascript">
-      let section_select = document.getElementById("section_select");
-      section_select.options[<%=params["section_index"].to_i %>].selected = true;
-      section_select.onchange = function () {
-        document.getElementById("field_form").submit();  
-      };
-    </script>
+      <script type="text/javascript">
+        let section_select = document.getElementById("section_select");
+        section_select.options[<%=params["section_index"].to_i %>].selected = true;
+        section_select.onchange = function () {
+          document.getElementById("field_form").submit();  
+        };
+      </script>
 
+    </div>
+
+    <div class="clearfix"></div>
   </div>
 
-  <div class="clearfix"></div>
-</div>
+  <!-- Data/review area -->
+  <section >
 
-<!-- Data/review area -->
-<section >
+      <div >
+        <div class="scroll_table" id="scroll_table">
 
-    <div >
-      <div class="scroll_table" id="scroll_table">
+        <p class="auto_title">AUTO-GENERATED DATA</p>
+        <p class="input_title">REVIEWER INPUT</p>
 
-      <table class="review_table">
-        <div class="auto_rows">
+        <table class="review_table">
           <tr>
-          <th class="headcol"></th>
+          <th class="headcol first_headcol"></th>
 
             <!-- for each of shown value list, create td for value -->
             <% @section_titles.each do |title| %>
@@ -206,10 +209,11 @@
             <th class="headcol">
             </th>
             <% @section_titles.each do |title| %>
-              <td>
+              <td class="column_<%=title%>">
               </td>
             <% end %>
           </tr>
+
 
 
 
@@ -271,18 +275,14 @@
               </td>
             <% end %>
           </tr>
-        </div>
 
-
-
-        <div class="input_rows">
 
           <tr class="input_line_row line_row">
             <th class="inputlabelcol"></th>
             <th class="headcol">
             </th>
             <% @section_titles.each do |title| %>
-              <td>
+              <td class="column_<%=title%>"> 
               </td>
             <% end %>
           </tr>
@@ -326,7 +326,7 @@
             <th class="headcol">
             </th>
             <% @section_titles.each do |title| %>
-              <td>
+              <td class="column_<%=title%>">
               </td>
             <% end %>
           </tr>
@@ -408,77 +408,76 @@
                 </div>  
               </td>
             <% end %>
-          </tr>  
-        </div>               
-      </table>  
+          </tr>
+        </table>  
 
-      </div>  
-    </div>
+        </div>  
+      </div>
 
-</section>
+  </section>
 
-<script type="text/javascript">
-  function update_color_backgrounds() {
-    var color_selects = document.getElementsByClassName("color_code_select");
-    var color_cells = document.getElementsByClassName("color_code_cell");
-    var counter = 0;
-    while (counter < color_selects.length) {
-      var color = color_selects[counter].value
-      color_cells[counter].style.backgroundColor = color;
-      if (color == "green" || color == "red" || color == "blue") {
-        color_selects[counter].style.color = "white";
-      } else {
-        color_selects[counter].style.color = "black";
+  <script type="text/javascript">
+    function update_color_backgrounds() {
+      var color_selects = document.getElementsByClassName("color_code_select");
+      var color_cells = document.getElementsByClassName("color_code_cell");
+      var counter = 0;
+      while (counter < color_selects.length) {
+        var color = color_selects[counter].value
+        color_cells[counter].style.backgroundColor = color;
+        if (color == "green" || color == "red" || color == "blue") {
+          color_selects[counter].style.color = "white";
+        } else {
+          color_selects[counter].style.color = "black";
+        }
+        counter++;
       }
-      counter++;
     }
-  }
 
-  update_color_backgrounds();
-</script>
+    update_color_backgrounds();
+  </script>
 
-  <% if !@marked_done %>
-    <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
-    <%= hidden_field_tag(:section_index, params["section_index"]) %>
-    <%= submit_tag("Save Review", class: "form_save_button") %>
+    <% if !@marked_done %>
+      <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
+      <%= hidden_field_tag(:section_index, params["section_index"]) %>
+      <%= submit_tag("Save Review", class: "form_save_button") %>
+      <% end %>
     <% end %>
-  <% end %>
 
-<section class="detail_footer">
+  <section class="detail_footer">
 
-<%= render(partial: 'legend') %>
+  <%= render(partial: 'legend') %>
 
-</section>
-
-
-<script type="text/javascript">
-//resizing the discussion header div
-
-function adjustDiscussionCellHeight() {
-    //resetting the discussion <th> field height;
-    $(".final_headcol").each(function() { 
-      var siblings = $(this).siblings();
-      $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
-    });
-}
-
-//setting the height of the discussion <th> element on page load.
-adjustDiscussionCellHeight();
+  </section>
 
 
-function recommendationMonitor(textarea) {
-  if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
-    let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
-    turnColumnGreen(columnName);
-  }
-}
+  <script type="text/javascript">
+    //resizing the discussion header div
 
-function turnColumnGreen(columnName) {
-  var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
-  //chaning the select value
-  colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
-  update_color_backgrounds();
-}
+    function adjustDiscussionCellHeight() {
+        //resetting the discussion <th> field height;
+        $(".final_headcol").each(function() { 
+          var siblings = $(this).siblings();
+          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
+        });
+    }
+
+    //setting the height of the discussion <th> element on page load.
+    adjustDiscussionCellHeight();
 
 
-</script>
+    function recommendationMonitor(textarea) {
+      if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
+        let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
+        turnColumnGreen(columnName);
+      }
+    }
+
+    function turnColumnGreen(columnName) {
+      var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
+      //chaning the select value
+      colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
+      update_color_backgrounds();
+    }
+  </script>
+
+</div>
