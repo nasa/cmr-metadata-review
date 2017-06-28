@@ -76,6 +76,10 @@
             section_select.options[<%=params["section_index"].to_i%>].selected = false;
 
             section_select.onchange();
+          } else {
+            //sending a nil next section so user is redirected to record overview
+            section_select.selectedIndex = -1;
+            section_select.onchange();
           }
         };
 
@@ -86,6 +90,10 @@
             section_select.options[<%=params["section_index"].to_i + 1%>].selected = true;
             section_select.options[<%=params["section_index"].to_i%>].selected = false;
 
+            section_select.onchange();
+          } else {
+            //sending a nil next section so user is redirected to record overview
+            section_select.selectedIndex = -1;
             section_select.onchange();
           }
         };
