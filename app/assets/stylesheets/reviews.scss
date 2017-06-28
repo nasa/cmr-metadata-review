@@ -1,3 +1,13 @@
+@import "variables";
+
+.review_table {
+  td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: $report-line;
+  }
+}
+
 .toggle_area {
   background-color: white;
   padding-left: 46px;
@@ -98,7 +108,7 @@
   margin-top: 25px;
   max-width: 85%;
   overflow-x: auto;  
-  margin-left: 17em;
+  margin-left: 19em;
   overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
@@ -123,10 +133,67 @@
   .headcol {
     position: absolute;
     width: 14em;
-    left: 3em;
+    left: 5em;
     top: auto;
     padding-left: 2em;
     height: 200px;
+  }
+
+  .autolabelcol {
+    position: absolute;
+    width: 2em;
+    left: 3em;
+    top: auto;
+    background-color: $review-blue-dark;
+    // padding-left: 2em;
+    height: 200px;
+    border: none;
+  }
+
+  .inputlabelcol {
+    position: absolute;
+    width: 2em;
+    left: 3em;
+    top: auto;
+    background-color: $review-gray-dark;
+    // padding-left: 2em;
+    height: 90px;
+    border: none; 
+  }
+
+  .input_line_row {
+    td {
+      background-color: $review-gray-dark;
+    }
+    th {
+      background-color: $review-gray-dark;
+    }
+  }
+
+  .auto_line_row {
+    td {
+      background-color: $review-blue-dark;
+    }
+    th {
+      background-color: $review-blue-dark;
+    }
+  }
+
+  .line_row {
+    th {
+      border: none;
+      position: absolute;
+      width: 14em;
+      top: auto;
+      padding-left: 2em;
+      height: 5px;
+    }
+
+    td {
+      border: none;
+      padding: 0px;
+      height: 5px;
+    }
   }
 
   .second_to_final_headcol {
