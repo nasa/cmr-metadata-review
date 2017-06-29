@@ -484,4 +484,8 @@ class Record < ActiveRecord::Base
     self.recordable.update?
   end
 
+  def umm_json_link
+    "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
+  end
+
 end
