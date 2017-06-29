@@ -239,37 +239,52 @@ class Record < ActiveRecord::Base
 
 
   def update_recommendations(partial_hash)
+    any_data_changed = false
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.recommendation != value
+              any_data_changed = true
+            end
             data.recommendation = value
             data.save
           end
       end
     end
+
+    any_data_changed
   end
 
 
   def update_colors(partial_hash)
+    any_data_changed = false
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.color != value
+              any_data_changed = true
+            end
             data.color = value
             data.save
           end
       end
     end
+    any_data_changed
   end
   
   def update_opinions(opinions_hash)
+    any_data_changed = false
     if opinions_hash
       opinions_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.opinion != value
+              any_data_changed = true
+            end
             data.opinion = value
-           data.save
+            data.save
          end
       end
     end

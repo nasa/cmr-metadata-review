@@ -24,12 +24,6 @@ class RecordsController < ApplicationController
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
-    @review = Review.where(user: current_user, record_id: params["id"]).first
-    if @review.nil?
-        @review = Review.new(user: current_user, record_id: params["id"], review_state: 0)
-        @review.save
-    end
-
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
     @user_review = @record.review(current_user.id)
 
@@ -89,11 +83,17 @@ class RecordsController < ApplicationController
 
     section_titles = record.sections[section_index][1]
 
-
     begin
-      record.update_recommendations(params["recommendation"])
+      #this is so that no review is created unless the input some data into the review
+      any_data_changed = false
 
-      record.update_colors(params["color_code"])
+      if record.update_recommendations(params["recommendation"])
+        any_data_changed = true
+      end
+
+      if record.update_colors(params["color_code"])
+        any_data_changed = true
+      end
 
       opinion_values = record.get_opinions
       section_titles.each do |title|
@@ -107,7 +107,9 @@ class RecordsController < ApplicationController
             end
         end
       end
+      
       record.update_opinions(opinion_values)
+      
     rescue
       flash[:error] = "Values were not updated in the system.  Please resave changes."
     end
@@ -115,11 +117,21 @@ class RecordsController < ApplicationController
     if params["discussion"]
       params["discussion"].each do |key, value|
         if value != ""
+          any_data_changed = true
           message = Discussion.new(record: record, user: current_user, column_name: key, date: DateTime.now, comment: value)
           message.save
         end
       end
     end 
+
+    if any_data_changed
+      #creating a review is one is not yet recorded
+      @review = Review.where(user: current_user, record_id: params["id"]).first
+      if @review.nil?
+          @review = Review.new(user: current_user, record_id: params["id"], review_state: 0)
+          @review.save
+      end
+    end
 
     redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
   end
