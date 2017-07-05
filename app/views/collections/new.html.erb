@@ -29,7 +29,7 @@
             <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
-              <%= submit_tag("Ingest Collection Without Granule", id: 'ingest_submit') %>
+              <%= submit_tag("Ingest Collection Without Granule", id: 'ingest_submit', class: 'selectButton') %>
             <% end %>
           <% else %>
             <p>Total Granules in this Collection: <%= @granule_count %></p>
@@ -37,7 +37,7 @@
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
-              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit') %>
+              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit', class: 'selectButton') %>
             <% end %>
           <% end %>
         <% else %>
@@ -46,7 +46,7 @@
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
-              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit') %>
+              <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit', class: 'selectButton') %>
           <% end %>
         <% end %>
       <% else %>
@@ -61,8 +61,6 @@
 
 
 
-
-
 <script type="text/javascript">
   document.getElementById('ingest_submit').onclick = function() {
 
@@ -70,6 +68,8 @@
     document.getElementById('ingest_submit').value = "Processing Record Ingest";
     document.getElementById('ingest_submit').disabled = true;
     document.forms["collection_form"].submit();
+
+    showLoading("Processing Record Ingest");
   };
 </script>
 
