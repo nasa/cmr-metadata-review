@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
       document.getElementById("search_button").onclick = function() {
-        showLoading("Searing CMR System");
+        showLoading("Searching CMR System");
       }
     </script>
 
@@ -76,14 +76,8 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table1DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table1DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
+            <%= submit_tag("Delete Collection", id: 'table1DeleteSubmit', class: "deleteButton") %>
           <% end %>
-
-          <script type="text/javascript">
-            document.getElementById("table1DeleteSubmit").onclick = function() {
-              showLoading("Deleting Record");
-            }
-          </script>
         <% end %>
       </div>
 
@@ -139,14 +133,8 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table2DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table2DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" }) %>
+            <%= submit_tag("Delete Collection", id: 'table2DeleteSubmit', class: "deleteButton") %>
           <% end %>
-
-          <script type="text/javascript">
-            document.getElementById("table2DeleteSubmit").onclick = function() {
-              showLoading("Deleting Record");
-            }
-          </script>
         <% end %>
       </div>
     </div>
@@ -206,14 +194,8 @@
           <%= form_tag( collections_hide_path ,  {method: "get", id: 'table1delete_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table3DeleteConceptId") %>
             <%= hidden_field_tag(:revision_id, "", id: "table3DeleteRevisionId") %>
-            <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton", data: { confirm: "Delete this Record from the System?" } ) %>
+            <%= submit_tag("Delete Collection", id: 'table3DeleteSubmit', class: "deleteButton") %>
           <% end %>
-
-          <script type="text/javascript">
-            document.getElementById("table3DeleteSubmit").onclick = function() {
-              showLoading("Deleting Record");
-            }
-          </script>
 
           <%= form_tag( collections_stop_updates_path ,  {method: "get", id: 'table3finished_form'}) do %>
             <%= hidden_field_tag(:concept_id, "", id: "table3FinishedConceptId") %>
@@ -231,6 +213,17 @@
 
 
 <script type="text/javascript">
+
+  var deleteButtons = document.getElementsByClassName("deleteButton")
+  for (var i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].onclick = function() {
+      if (confirm("Delete this Record from the System?")) {
+        showLoading("Deleting Record");
+      } else {
+        return false;
+      }
+    };
+  }
 
   setUpTable("table1");
   setUpTable("table2");

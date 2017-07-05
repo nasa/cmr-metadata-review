@@ -179,8 +179,7 @@ tr:nth-child(odd) {background: #FFF}
   min-width: 20%;
   text-align: center;
   padding-top: 20px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid;
   line-height: 2.5;
   z-index: z("modal-base");
 }
@@ -248,6 +247,13 @@ tr:nth-child(odd) {background: #FFF}
 }
 
 .reportButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
+}
+
+.finishedButton {
   @include button_attributes;
   @include normal_button_sizing;
   @include button_disabled;
