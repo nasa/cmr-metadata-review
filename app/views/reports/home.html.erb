@@ -126,83 +126,85 @@
 
 
         <div class="quality_row">
-          <div class="surrounding_box quality_box">
-            <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL REVIEW"}) %>
-            <div class="data_area">
-              <div class="data_text">
-                <p>NUMBER OF COLLECTION</p>
-                <p>ELEMENTS REVIEWED</p>
-                <p class="checked_num"><%=@original_total_checked%></p>
-              </div>
-              <div class="doughnut_graph_container">
-                <canvas id="ChartFlagOriginal"></canvas>
-              </div>
-            </div>
-            <div class="legend_area" id="original_quality_legend">
-              <div class="legend_row">
-                <div class="legend_item first_item">
-                  <div class="color_box green">
-                  </div>
-                  <p>ELEMENTS PASSED <br>(<%=@original_field_colors["green"]%>)</p>
+          <div>
+            <%= render(partial: 'title_bar', locals: {title: "ORIGINAL REVIEW"}) %>
+            <div class="surrounding_box quality_box chart_padding">
+              <div class="data_area">
+                <div class="data_text">
+                  <p>NUMBER OF COLLECTION</p>
+                  <p>ELEMENTS REVIEWED</p>
+                  <p class="checked_num"><%=@original_total_checked%></p>
                 </div>
-                <div class="legend_item">
-                  <div class="color_box yellow">
-                  </div>
-                  <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+                <div class="doughnut_graph_container">
+                  <canvas id="ChartFlagOriginal"></canvas>
                 </div>
               </div>
-              <div class="legend_row">
-                <div class="legend_item first_item">
-                  <div class="color_box blue">
+              <div class="legend_area" id="original_quality_legend">
+                <div class="legend_row">
+                  <div class="legend_item first_item">
+                    <div class="color_box green">
+                    </div>
+                    <p>ELEMENTS PASSED <br>(<%=@original_field_colors["green"]%>)</p>
                   </div>
-                  <p>ELEMENTS NOTED <br>(<%=@original_field_colors["blue"]%>)</p>
+                  <div class="legend_item">
+                    <div class="color_box yellow">
+                    </div>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+                  </div>
                 </div>
-                <div class="legend_item">
-                  <div class="color_box red">
+                <div class="legend_row">
+                  <div class="legend_item first_item">
+                    <div class="color_box blue">
+                    </div>
+                    <p>ELEMENTS NOTED <br>(<%=@original_field_colors["blue"]%>)</p>
                   </div>
-                  <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+                  <div class="legend_item">
+                    <div class="color_box red">
+                    </div>
+                    <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-
-
-          <div class="surrounding_box quality_box">
-            <%= render(partial: 'title_bottom_bar', locals: {title: "CURRENT STATUS"}) %>
-            <div class="data_area">
-              <div class="data_text">
-                <p>NUMBER OF COLLECTION</p>
-                <p>ELEMENTS REVIEWED</p>
-                <p class="checked_num"><%=@original_total_checked%></p>
-              </div>
-              <div class="doughnut_graph_container">
-                <canvas id="ChartFlag"></canvas>
-              </div>
-            </div>
-            <div class="legend_area" id="original_quality_legend">
-              <div class="legend_row">
-                <div class="legend_item first_item">
-                  <div class="color_box green">
-                  </div>
-                  <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
+          <div>
+            <%= render(partial: 'title_bar', locals: {title: "CURRENT STATUS"}) %>
+            <div class="surrounding_box quality_box chart_padding">
+              <div class="data_area">
+                <div class="data_text">
+                  <p>NUMBER OF COLLECTION</p>
+                  <p>ELEMENTS REVIEWED</p>
+                  <p class="checked_num"><%=@original_total_checked%></p>
                 </div>
-                <div class="legend_item">
-                  <div class="color_box yellow">
-                  </div>
-                  <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+                <div class="doughnut_graph_container">
+                  <canvas id="ChartFlag"></canvas>
                 </div>
               </div>
-              <div class="legend_row">
-                <div class="legend_item first_item">
-                  <div class="color_box blue">
+              <div class="legend_area" id="original_quality_legend">
+                <div class="legend_row">
+                  <div class="legend_item first_item">
+                    <div class="color_box green">
+                    </div>
+                    <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
                   </div>
-                  <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
+                  <div class="legend_item">
+                    <div class="color_box yellow">
+                    </div>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+                  </div>
                 </div>
-                <div class="legend_item">
-                  <div class="color_box red">
+                <div class="legend_row">
+                  <div class="legend_item first_item">
+                    <div class="color_box blue">
+                    </div>
+                    <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
                   </div>
-                  <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+                  <div class="legend_item">
+                    <div class="color_box red">
+                    </div>
+                    <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -235,17 +237,22 @@
 
 
         <div class="score_section">
-          <div class="surrounding_box score_box">
-            <%= render(partial: 'title_bottom_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
-            <div class="data_area">
-              <div id="ChartGuageOriginal"></div>
+
+          <div>
+            <%= render(partial: 'title_bar', locals: {title: "ORIGINAL COLLECTION AVERAGE QUALITY"}) %>
+            <div class="surrounding_box score_box">
+              <div class="data_area">
+                <div id="ChartGuageOriginal"></div>
+              </div>
             </div>
           </div>
 
-          <div class="surrounding_box score_box">
-            <%= render(partial: 'title_bottom_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
-            <div class="data_area">
-                <div id="ChartGuageUpdated"></div>
+          <div>
+            <%= render(partial: 'title_bar', locals: {title: "UPDATED COLLECTION AVERAGE QUALITY"}) %>
+            <div class="surrounding_box score_box">
+              <div class="data_area">
+                  <div id="ChartGuageUpdated"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -281,7 +288,7 @@
               xAxes: [{
                   ticks: {
                       beginAtZero:true,
-                      fontFamily: "'Open Sans Bold', sans-serif",
+                      fontFamily: "sans-serif",
                       fontSize:11
                   },
                   scaleLabel:{
@@ -299,7 +306,7 @@
                       zeroLineWidth: 0
                   },
                   ticks: {
-                      fontFamily: "'Open Sans Bold', sans-serif",
+                      fontFamily: "sans-serif",
                       fontSize:11
                   },
                   stacked: true,
@@ -325,12 +332,12 @@
                           data = dataset.data[index];
                           if(i==0){
                               ctx.fillStyle = "#3ab841";
-                              ctx.font = "20px Open Sans";
+                              ctx.font = "20px sans-serif";
                               ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
                           } else {
-                              ctx.font = "25px Open Sans";
+                              ctx.font = "25px sans-serif";
                               ctx.fillStyle = "#3e3e40";
-                              ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x+5, bar._model.y -15);
+                              ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y -15);
                           }
                       }),this)
                   }),this);
@@ -537,7 +544,7 @@
             xAxes: [{
                 ticks: {
                     beginAtZero:true,
-                    fontFamily: "'Open Sans Bold', sans-serif",
+                    fontFamily: "sans-serif",
                     fontSize:11
                 },
                 scaleLabel:{
@@ -555,7 +562,7 @@
                     zeroLineWidth: 0
                 },
                 ticks: {
-                    fontFamily: "'Open Sans Bold', sans-serif",
+                    fontFamily: "sans-serif",
                     fontSize:11
                 },
                 stacked: false,
@@ -581,10 +588,10 @@
                         data = dataset.data[index];
                         if(i==0){
                             ctx.fillStyle = "#3e3e40";
-                            ctx.font = "20px Open Sans";
+                            ctx.font = "20px sans-serif";
                             ctx.fillText(data, bar._model.x - 30, bar._model.y-38);
                         } else {
-                            ctx.font = "20px Open Sans";
+                            ctx.font = "20px sans-serif";
                             ctx.fillStyle = "#3e3e40";
                             ctx.fillText(data,  bar._model.x - 30, bar._model.y-38);
                         }
@@ -603,12 +610,12 @@
             labels: [""],
 
             datasets: [{
-                label: "Updated Collections Re-Reviewed",
+                label: "Updated Collections ReReviewed",
                 data: [<%= @updated_done_count %>],
                 backgroundColor: "rgba(58, 184, 65, 0.6)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
             },{
-                label: "Collections Updated in CMR After Review",
+                label: "Collections Updated After Review",
                 data: [<%= @updated_count %>],
                 backgroundColor: "rgba(58, 184, 65, 1)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 1)"
