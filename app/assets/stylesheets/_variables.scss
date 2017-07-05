@@ -2,14 +2,16 @@ $blue-dark: #2276ac;
 $blue-light: #CAE4F5;
 $sky-blue: #7ab5da;
 $green-light: #20ce6f;
+$disabled-gray-light: #d8d8d8;
 $gray-light: #ebebeb;
 $gray-dark: #95a5a6;
 $green-dark: #189c54;
 $red: #b3241c;
 
 $report-gray-light: #dbdcdd;
-$report-gray-dark: #3e3e40;
+$report-gray-dark: #3F3F40;
 $report-green-dark: #3ab841;
+$report-line: #95989A;
 
 @function z($layer) {
   @return map-get($z-layers, $layer);

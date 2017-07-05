@@ -147,7 +147,11 @@ class Cmr
   # throws timeout error after time determined by TIMEOUT_MARGIN
 
   def self.cmr_request(url)
-    HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+    begin
+      HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+    rescue Net::ReadTimeout
+      nil
+    end
   end
 
   # ====Params   
@@ -294,9 +298,10 @@ class Cmr
     end
           
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
-
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    #Dif10 records come in with some uneeded header values
+    nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
     required_fields_hash
   end
@@ -762,8 +767,20 @@ class Cmr
     end
 
     total_results = Cmr.cmr_request(url)
-    results_hash = Hash.from_xml(total_results)["results"]
+    begin
+      results_hash = Hash.from_xml(total_results)["results"]
+    rescue
+      Rails.logger.error("CMR Connection Error: Collection Count")
+      return 0
+    end
     results_hash["hits"].to_i
+  end
+
+
+  def self.remove_header_values(collection_hash)
+    #removes if it starts with xlmns or xsi
+    collection_hash.delete_if { |key, value| (key.to_s.match(/^xmlns/)) || (key.to_s.match(/^xsi/)) }
+    collection_hash
   end
 
 end
