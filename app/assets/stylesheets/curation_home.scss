@@ -71,9 +71,6 @@
       color: white;
     } 
 
-    input[type=submit] {
-      background-color:$green-light;
-    }
     input[type=text] {
       height:38px;
       width:623px;
@@ -100,19 +97,6 @@
       font-size: 0.8em;
     }
 
-    .detailButton {
-      background-color:$green-light;
-    }
-
-    .deleteButton {
-      background-color: $red;
-    }
-
-    .detailButton, .deleteButton {
-      &:disabled {
-        background-color:$gray-light;
-      }
-    }
   }
 
   .form_buttons {
