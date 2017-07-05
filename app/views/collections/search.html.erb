@@ -63,7 +63,7 @@
                 <%= form_tag( new_collection_path ,  {method: "get", id: 'ingest_form'}) do %>
                   <%= hidden_field_tag(:concept_id, "") %>
                   <%= hidden_field_tag(:revision_id, "") %>
-                  <%= submit_tag("Select Collection", id: 'ingest_submit', class: 'detailButton selectButton') %>
+                  <%= submit_tag("Select Collection", id: 'ingest_submit', class: 'selectButton') %>
                 <% end %> 
               </div>
 
