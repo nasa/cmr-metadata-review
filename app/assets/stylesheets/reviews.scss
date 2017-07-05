@@ -1,3 +1,5 @@
+@import "variables";
+
 .toggle_area {
   background-color: white;
   padding-left: 46px;
@@ -94,6 +96,23 @@
 }
 
 
+
+.color_red {
+  background-color: $review-red;
+}
+.color_blue {
+  background-color: $review-blue;
+}
+.color_yellow {
+  background-color: $review-yellow;
+}
+.color_green {
+  background-color: $review-green;
+}
+
+
+
+
 .scroll_table {
   margin-top: 25px;
   max-width: 85%;
@@ -149,6 +168,46 @@
   }
 
   tr td {
+    &.color_code_cell {
+      padding: 0px;
+
+      .height_holder {
+        height: 40px;
+      }
+
+      .color_code_background {
+         padding-top: 6px;
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+      }
+
+      .color_code_button {
+        width:40px; 
+        height:27px; 
+        margin-left: 2px;
+        margin-right: 2px;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+
+      .color_code_icon {
+        color:white; 
+        font-size: 22px; 
+        padding-left: 16px; 
+        padding-top: 2px;
+      }
+
+      .cancel_selection_icon {
+        color: white;
+        font-size: 20px;
+        float: right;
+        margin-right: 10px;
+        margin-top: 9px;
+        cursor: pointer;
+      }
+
+    }
     min-width: 200px;
     padding-left: 10px;
   }

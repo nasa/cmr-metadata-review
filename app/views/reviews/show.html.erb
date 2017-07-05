@@ -328,6 +328,40 @@
         <th class="headcol second_to_final_headcol">COLOR CODE</th>
           <% @section_titles.each do |title| %>
             <td class="color_code_cell column_<%=title%>">
+              <div class="height_holder">
+
+                <!-- Only one of the two divs below shown at once, managed by update_color_backgrounds -->
+                <!-- Color selection version of contents -->
+                <div class="color_code_background" id="color_code_background_<%=title%>">
+                  <% ["green", "blue", "yellow", "red"].each do |color| %>
+                    <div class="color_code_button color_<%=color%>" id="color_button_<%=color%>_<%=title%>">
+                      <i class="color_code_icon fa fa-arrow-circle-right"></i>
+                    </div>
+
+                    <!-- setting the color select then running an update across all colors -->
+                    <script type="text/javascript">
+                      document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
+                        document.getElementById("color_code_<%=title%>").value = "<%=color%>";
+                        update_color_backgrounds(); 
+                      }
+                    </script>
+                  <% end %>
+                </div>
+
+                <!-- Color cancelling div -->
+                <div class="color_cancel_selection" id="color_cancel_selection_<%=title%>">
+                  <i class="cancel_selection_icon fa fa-window-close-o" id="cancel_icon_<%=title%>"></i>
+
+                  <!-- clearing the color select then running an update across all colors -->
+                  <script type="text/javascript">
+                    document.getElementById("cancel_icon_<%=title%>").onclick = function() {
+                      document.getElementById("color_code_<%=title%>").value = "";
+                      update_color_backgrounds(); 
+                    }
+                  </script>
+                </div>
+              </div>
+
               <div class="styled-select blue semi-square">
                 <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code[<%= title %>]" id="color_code_<%= title %>" form="field_form" >
                 <% selected = color_selected_list(@color_codes[title]) %>
@@ -379,16 +413,33 @@
 
 <script type="text/javascript">
   function update_color_backgrounds() {
+    //hidden select inputs
     var color_selects = document.getElementsByClassName("color_code_select");
+    //full td cell
     var color_cells = document.getElementsByClassName("color_code_cell");
+    //the div containing the color selecting icons
+    var color_button_sets = document.getElementsByClassName("color_code_background");
+    //the divs containing the x out option to remove a selected color
+    var color_cancels = document.getElementsByClassName("color_cancel_selection");
+
     var counter = 0;
+    //iterating over all the hidden color select inputs
     while (counter < color_selects.length) {
       var color = color_selects[counter].value
-      color_cells[counter].style.backgroundColor = color;
-      if (color == "green" || color == "red" || color == "blue") {
-        color_selects[counter].style.color = "white";
+      //Removing all BG colors from the cell
+      <% ["color_green", "color_yellow", "color_red", "color_blue"].each do |color_class| %>
+        color_cells[counter].classList.remove("<%=color_class%>");  
+      <% end %>
+      //adding the class that corresponds to the color selected in the select input
+      color_cells[counter].classList.add("color_" + color.toString());
+      //if no color selected, show the set of color icons to click
+      if (color == "") {
+        color_button_sets[counter].style.display = "flex";
+        color_cancels[counter].style.display = "none";
+      //if color is selected, hide color icons, and show the x out button to remove color selection
       } else {
-        color_selects[counter].style.color = "black";
+        color_button_sets[counter].style.display = "none";
+        color_cancels[counter].style.display = "block";
       }
       counter++;
     }
