@@ -163,6 +163,36 @@ tr:nth-child(odd) {background: #FFF}
   overflow: auto;
 }
 
+.record_review_text {
+  font-size: 0.7em;
+  max-height: 150px;
+  overflow: auto;
+}
+
+
+.processing_modal {
+  position: fixed;
+  top: 20%;
+  left: 40%;
+  background-color: $gray-light;
+  min-height: 150px;
+  min-width: 20%;
+  text-align: center;
+  padding-top: 20px;
+  border: 1px solid;
+  line-height: 2.5;
+  z-index: z("modal-base");
+}
+
+.processing_modal_cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: z("modal-cover");
+}
+
 
 
 @mixin button_attributes {
@@ -223,7 +253,9 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $blue-dark;
 }
 
-
-
-
-
+.finishedButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
+}
