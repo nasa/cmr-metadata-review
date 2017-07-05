@@ -121,7 +121,11 @@ class RecordsController < ApplicationController
       end
     end 
 
-    redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
+    if params["redirect_index"].nil?
+      redirect_to record_path(id: params["id"], section_index: params["redirect_index"])
+    else
+      redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
+    end
   end
 
 end

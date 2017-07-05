@@ -35,7 +35,7 @@
   <div class="results_area">
 
     <div class="results_title">
-      <p><strong>Unreviewed Records:</strong></p>
+      <p><strong>Your Unreviewed Records:</strong></p>
     </div>
 
     
@@ -69,7 +69,7 @@
       <div class="form_buttons">
         <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table1_form'}) do %>
           <%= hidden_field_tag(:concept_id, "", id: "table1ConceptId") %>
-          <%= submit_tag("See Collection Review Detail", id: 'table1Submit', class: "detailButton") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table1Submit', class: "selectButton") %>
         <% end %>
 
         <% if current_user.admin %>
@@ -95,7 +95,7 @@
 
 
     <div class="results_title">
-      <p><strong>In Process Records:</strong></p>
+      <p><strong>Your In Process Records:</strong></p>
     </div>
 
     <div class="results_table">
@@ -132,7 +132,7 @@
       <div class="form_buttons">
         <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table2_form'}) do %>
           <%= hidden_field_tag(:concept_id, "", id: "table2ConceptId") %>
-          <%= submit_tag("See Collection Review Detail", id: 'table2Submit', class: "detailButton") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table2Submit', class: "selectButton") %>
         <% end %>
 
         <% if current_user.admin %>
@@ -158,7 +158,7 @@
 
 
     <div class="results_title">
-      <p><strong>Closed Records:</strong></p>
+      <p><strong>Team's Closed Records:</strong></p>
     </div>
 
     <div class="results_table">
@@ -193,7 +193,7 @@
       <div class="form_buttons">
         <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'table3_form'}) do %>
           <%= hidden_field_tag(:concept_id, "", id: "table3ConceptId") %>
-          <%= submit_tag("See Collection Review Detail", id: 'table3Submit', class: "detailButton") %>
+          <%= submit_tag("See Collection Review Detail", id: 'table3Submit', class: "selectButton") %>
         <% end %>
 
         <%= form_tag( reports_single_path ,  {method: "get", id: 'table3report_form'}) do %>
