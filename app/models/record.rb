@@ -82,15 +82,33 @@ class Record < ActiveRecord::Base
     values_hash
   end
 
-  def previous_values
+  def get_previous_revision
     # a set of fellow records sorted by revision id in ascending order
     collection_records = self.recordable.records.order(:revision_id).to_a
     self_index = collection_records.index { |record| record.revision_id == self.revision_id }
     # self is first revision id or is not found
     if self_index < 1
+      nil
+    else
+      collection_records[(self_index - 1)]
+    end 
+  end
+
+  def previous_values
+    previous_record = self.get_previous_revision
+    if previous_record.nil?
       {}
     else
-      collection_records[(self_index - 1)].values
+      previous_record.values
+    end
+  end
+
+  def previous_recommendations
+    previous_record = self.get_previous_revision
+    if previous_record.nil?
+      {}
+    else
+      previous_record.get_recommendations
     end 
   end
 
