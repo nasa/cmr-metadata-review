@@ -157,26 +157,10 @@ table th {
 tr:nth-child(even) {background: $gray-light}
 tr:nth-child(odd) {background: #FFF}
 
-
-input[type=submit] {
-    color: white;
-    border: 1px solid rgba(50, 50, 50, 0.15);
-    background: $blue-dark;
-    display: inline-block;
-    padding: 0.5em 1em;
-    text-align: center;
-    vertical-align: middle;
-    transition: background 0.15s ease-in-out;
-    outline: none;
-}
-
-input[type=submit]:disabled {
-    /*color: white;*/
-    border: 1px solid rgba(50, 50, 50, 0.15);
-    background: $gray-light;
-    color: #323232;
-    opacity: 0.65;
-    background: $gray-light;
+.record_review_text {
+  font-size: 0.7em;
+  max-height: 150px;
+  overflow: auto;
 }
 
 .record_review_text {
@@ -208,4 +192,64 @@ input[type=submit]:disabled {
   width: 100%;
   height: 100%;
   z-index: z("modal-cover");
+}
+
+
+
+@mixin button_attributes {
+  color: white;
+  border: 1px solid rgba(50, 50, 50, 0.15);
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  transition: background 0.15s ease-in-out;
+  outline: none;
+
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+@mixin normal_button_sizing {
+  padding: 0.5em 1em;
+}
+
+@mixin small_button_sizing {
+  font-size: 0.9em;
+}
+
+@mixin button_disabled {
+  &:disabled {
+    background-color:$gray-light;
+    color: $disabled-gray-light;
+  }
+}
+
+
+
+.selectButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color:$green-light;
+}
+
+.smallSelectButton {
+  @include button_attributes;
+  @include small_button_sizing;
+  @include button_disabled;
+  background-color:$green-light;
+}
+
+.deleteButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $red;
+}
+
+.reportButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
 }
