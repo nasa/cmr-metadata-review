@@ -257,37 +257,52 @@ class Record < ActiveRecord::Base
 
 
   def update_recommendations(partial_hash)
+    any_data_changed = false
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.recommendation != value
+              any_data_changed = true
+            end
             data.recommendation = value
             data.save
           end
       end
     end
+
+    any_data_changed
   end
 
 
   def update_colors(partial_hash)
+    any_data_changed = false
     if partial_hash
       partial_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.color != value
+              any_data_changed = true
+            end
             data.color = value
             data.save
           end
       end
     end
+    any_data_changed
   end
   
   def update_opinions(opinions_hash)
+    any_data_changed = false
     if opinions_hash
       opinions_hash.each do |key, value|
           data = RecordData.where(record: self, column_name: key).first
           if data
+            if data.opinion != value
+              any_data_changed = true
+            end
             data.opinion = value
-           data.save
+            data.save
          end
       end
     end
@@ -501,6 +516,59 @@ class Record < ActiveRecord::Base
   def cmr_update?
     self.recordable.update?
   end
+
+  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions)
+    section_index = section_index.to_i
+
+    if section_index.nil?
+      return -1
+    end
+
+    section_titles = self.sections[section_index][1]
+
+    #this is so that no review is created unless the input some data into the review
+    any_data_changed = false
+
+    begin
+      if self.update_recommendations(new_recommendations)
+        any_data_changed = true
+      end
+
+      if self.update_colors(new_colors)
+        any_data_changed = true
+      end
+
+      opinion_values = self.get_opinions
+      section_titles.each do |title|
+        opinion_values[title] = false
+      end
+
+      if new_opinions
+        new_opinions.each do |key, value|
+            if value == "on"
+              opinion_values[key] = true
+            end
+        end
+      end
+      
+      self.update_opinions(opinion_values)
+      
+      if new_discussions
+        new_discussions.each do |key, value|
+          if value != ""
+            any_data_changed = true
+            message = Discussion.new(record: self, user: current_user, column_name: key, date: DateTime.now, comment: value)
+            message.save
+          end
+        end
+      end 
+    rescue
+      return -1
+    end
+
+    any_data_changed
+  end
+
 
   def umm_json_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
