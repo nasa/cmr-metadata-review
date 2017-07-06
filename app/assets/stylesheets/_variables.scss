@@ -13,6 +13,11 @@ $report-gray-dark: #3F3F40;
 $report-green-dark: #3ab841;
 $report-line: #95989A;
 
+$review-green: #00b340;
+$review-yellow: #f6c500;
+$review-blue: #0f6990;
+$review-red: #fe3630;
+
 @function z($layer) {
   @return map-get($z-layers, $layer);
 }
