@@ -231,7 +231,7 @@
               <td class="column_<%=title%>">
                 <div class="umm_required_cell">
                   <% if Cmr.required_collection_field? title %>
-                    <i class="eui-icon eui-check-o"></i>
+                    <i class="eui-icon eui-check-o review_check"></i>
                   <% end %>    
                 </div>
               </td>
@@ -245,7 +245,7 @@
               <td class="column_<%=title%>">
                 <div class="script_check_cell">
                   <% if @flagged_by_script[title] %>
-                    <i class="eui-icon eui-check-o"></i>
+                    <i class="eui-icon eui-check-o review_check"></i>
                   <% end %>    
                 </div>
               </td>
@@ -361,7 +361,7 @@
                 <div id="opinion_cell_<%= title %>" class="opinion_cell">
                   <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
                   <p id="opinion_text_<%= title %>">
-                    <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
+                    <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o review_check flag_icon"></i>
                     Requires 2nd Opinion
                   </p>
                 </div>  

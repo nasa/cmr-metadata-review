@@ -132,12 +132,11 @@
 
 
 
-
 .scroll_table {
   margin-top: 25px;
   max-width: 78%;
   overflow-x: auto;  
-  margin-left: 19em;
+  margin-left: 17.1em;
   overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
@@ -166,6 +165,7 @@
     top: auto;
     padding-left: 2em;
     height: 200px;
+    font-size: 0.9em;
   }
 
   .first_headcol {
@@ -237,6 +237,14 @@
 
   .previous_recommendation_cell {
     min-height: 40px;
+  }
+
+  .review_check {
+    font-weight: 900;
+    font-size: 1.6em;
+    margin-top: 2px;
+    margin-left: 1px;
+    color: $review-gray-dark
   }
 
   tr div {
