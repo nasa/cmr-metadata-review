@@ -1,193 +1,194 @@
-<%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
+<div class="review_background">
+  <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
 
-<div class="toggle_area">
-  <!-- bubbles and drop down navigation -->
-  <div>
-    <div class="bubble_title">
-      <p class="bubble_title_text">METADATA INFORMATION</p>
+  <div class="toggle_area">
+    <!-- bubbles and drop down navigation -->
+    <div>
+      <div class="bubble_title">
+        <p class="bubble_title_text">METADATA INFORMATION</p>
+      </div>
+      <!-- bubbles -->
+      <div class="bubble_title">
+        <% @bubble_data.each_with_index do | bubble, index | %>
+          <% script_class = bubble[:script] ? "script" : "no_script" %>
+          <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
+
+          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+            <% if bubble[:opinion] && bubble[:opinion] != "" %>
+              <div class="<%= script_text_class %> bubble_opinion">2</div>
+              <% else %>
+              <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <!-- bubbles -->
-    <div class="bubble_title">
-      <% @bubble_data.each_with_index do | bubble, index | %>
-        <% script_class = bubble[:script] ? "script" : "no_script" %>
-        <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
 
-        <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
-          <% if bubble[:opinion] && bubble[:opinion] != "" %>
-            <div class="<%= script_text_class %> bubble_opinion">2</div>
-            <% else %>
-            <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
-          <% end %>
+    <div class="filter_row">
+      <p><strong>FILTERS:</strong></p>
+      <!-- slider toggles -->
+      <div class="filter_switches">
+        <div class="filter_switch">
+          <p>FLAGGED BY SCRIPT</p>
+          <label class="switch">
+            <input type="checkbox" id="script_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
         </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="filter_row">
-    <p><strong>FILTERS:</strong></p>
-    <!-- slider toggles -->
-    <div class="filter_switches">
-      <div class="filter_switch">
-        <p>FLAGGED BY SCRIPT</p>
-        <label class="switch">
-          <input type="checkbox" id="script_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
+        <div class="filter_switch">
+          <p>REQUIRES 2ND OPINION</p>
+          <label class="switch">
+            <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <div class="filter_switch">
+          <p>NOT COLOR CODED</p>
+          <label class="switch">
+            <input type="checkbox" id="color_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <div class="filter_switch">
+          <p>UMM Required</p>
+          <label class="switch">
+            <input type="checkbox" id="umm_toggle" onchange="toggleCells()">
+            <div class="slider round"></div>
+          </label>
+        </div>
       </div>
-      <div class="filter_switch">
-        <p>REQUIRES 2ND OPINION</p>
-        <label class="switch">
-          <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-      <div class="filter_switch">
-        <p>NOT COLOR CODED</p>
-        <label class="switch">
-          <input type="checkbox" id="color_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-      <div class="filter_switch">
-        <p>UMM Required</p>
-        <label class="switch">
-          <input type="checkbox" id="umm_toggle" onchange="toggleCells()">
-          <div class="slider round"></div>
-        </label>
-      </div>
-    </div>
 
-    <script type="text/javascript">
-      //each column cells are marked with a title class so that a row can be grabbed together
-      var titleList = [];
-      <% @section_titles.each do |title| %>
-        titleList.push("column_" + "<%=title%>");
-      <% end %>
+      <script type="text/javascript">
+        //each column cells are marked with a title class so that a row can be grabbed together
+        var titleList = [];
+        <% @section_titles.each do |title| %>
+          titleList.push("column_" + "<%=title%>");
+        <% end %>
 
 
 
-      function toggleCells() {
-        unhideAllCells();
+        function toggleCells() {
+          unhideAllCells();
 
-        var hiddenCells = [];
+          var hiddenCells = [];
 
-        //checks the toggle, then checks each cell of a row against the check_function
-        function toggleCheck(toggle_name, cell_name, check_function) {
-          var toggle = document.getElementById(toggle_name);
-          if (toggle.checked == true) {
-            var cells = document.getElementsByClassName(cell_name);
-            //finding all the script_cells which have the check icon.
-            for (var index in cells) {
-              if (check_function(cells[parseInt(index)])) {
-                hiddenCells.push(parseInt(index));
+          //checks the toggle, then checks each cell of a row against the check_function
+          function toggleCheck(toggle_name, cell_name, check_function) {
+            var toggle = document.getElementById(toggle_name);
+            if (toggle.checked == true) {
+              var cells = document.getElementsByClassName(cell_name);
+              //finding all the script_cells which have the check icon.
+              for (var index in cells) {
+                if (check_function(cells[parseInt(index)])) {
+                  hiddenCells.push(parseInt(index));
+                }
               }
             }
           }
-        }
 
-        //the statement provided in the anon function in cellCheck is the rule used for each set of hide/don't hide evals
-        toggleCheck("script_toggle", "script_check_cell", cellCheck(function(single_div) {
-          return single_div.children.length > 0;
-        }));
-        //checks if the check icon is visible
-        toggleCheck("opinion_toggle", "opinion_cell", cellCheck(function(single_div) {
-          return single_div.childNodes[3].childNodes[1].style.visibility == "visible";
-        }));
-        //checks if cell has color
-        toggleCheck("color_toggle", "color_code_cell", cellCheck(function(single_div) {
-          return !single_div.style.backgroundColor;
-        }));
-        //checks if check icon is present
-        toggleCheck("umm_toggle", "umm_required_cell", cellCheck(function(single_div) {
-          return single_div.children.length > 0;
-        }));
+          //the statement provided in the anon function in cellCheck is the rule used for each set of hide/don't hide evals
+          toggleCheck("script_toggle", "script_check_cell", cellCheck(function(single_div) {
+            return single_div.children.length > 0;
+          }));
+          //checks if the check icon is visible
+          toggleCheck("opinion_toggle", "opinion_cell", cellCheck(function(single_div) {
+            return single_div.childNodes[3].childNodes[1].style.visibility == "visible";
+          }));
+          //checks if cell has color
+          toggleCheck("color_toggle", "color_code_cell", cellCheck(function(single_div) {
+            return !single_div.style.backgroundColor;
+          }));
+          //checks if check icon is present
+          toggleCheck("umm_toggle", "umm_required_cell", cellCheck(function(single_div) {
+            return single_div.children.length > 0;
+          }));
 
-        //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
-        var uniqueHidden = hiddenCells.filter(function(item, pos) {
-            return hiddenCells.indexOf(item) == pos;
-        });
-        if (uniqueHidden.length == titleList.length) {
-          document.getElementById("scroll_table").style.display = "none";
-        }
-
-
-        //hiding each column individually
-        for (var columnNum in hiddenCells) {
-          var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
-          for (var cell in hideCells) {
-            if (!(hideCells[parseInt(cell)] == undefined)) {
-              hideCells[parseInt(cell)].style.display = "none";
-            }
+          //checking if all the table cells are hidden. True if cells to hide.length == totalCells.length
+          var uniqueHidden = hiddenCells.filter(function(item, pos) {
+              return hiddenCells.indexOf(item) == pos;
+          });
+          if (uniqueHidden.length == titleList.length) {
+            document.getElementById("scroll_table").style.display = "none";
           }
-        }
 
-        //resetting the discussion <th> field height;
-        adjustDiscussionCellHeight();
-          
-      }
 
-      function unhideAllCells() {
-          document.getElementById("scroll_table").style.display = "block";
-
-          for (var index in titleList) {
-            var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
-            for (var cell in showCells) {
-              if (showCells[parseInt(cell)]) {
-                showCells[parseInt(cell)].style.display = "table-cell";  
+          //hiding each column individually
+          for (var columnNum in hiddenCells) {
+            var hideCells = document.getElementsByClassName(titleList[hiddenCells[parseInt(columnNum)]]);
+            for (var cell in hideCells) {
+              if (!(hideCells[parseInt(cell)] == undefined)) {
+                hideCells[parseInt(cell)].style.display = "none";
               }
             }
           }
-      }
 
-      function cellCheck(check_rule) {
-        return function(single_div) {
-          if (single_div == undefined || !single_div) {
-            return false;
-          }
+          //resetting the discussion <th> field height;
+          adjustDiscussionCellHeight();
+            
+        }
 
-          if(check_rule(single_div)) {
-            return false;
-          } else {
-            return true;
+        function unhideAllCells() {
+            document.getElementById("scroll_table").style.display = "block";
+
+            for (var index in titleList) {
+              var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
+              for (var cell in showCells) {
+                if (showCells[parseInt(cell)]) {
+                  showCells[parseInt(cell)].style.display = "table-cell";  
+                }
+              }
+            }
+        }
+
+        function cellCheck(check_rule) {
+          return function(single_div) {
+            if (single_div == undefined || !single_div) {
+              return false;
+            }
+
+            if(check_rule(single_div)) {
+              return false;
+            } else {
+              return true;
+            }
           }
         }
-      }
-    </script>
-      
-      <div class="filter_dropdown">
-        <i class="eui-icon eui-fa-unsorted"></i>
-        <p>SAVE AND GO TO:</p> 
-        <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
-          <% @navigation_list.each_with_index do |data_section, index_count| %>
-            <option value="<%=index_count%>"><%= data_section %></option>
-          <% end %>
-        </select>  
-      </div>
+      </script>
+        
+        <div class="filter_dropdown">
+          <i class="eui-icon eui-fa-unsorted"></i>
+          <p>SAVE AND GO TO:</p> 
+          <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
+            <% @navigation_list.each_with_index do |data_section, index_count| %>
+              <option value="<%=index_count%>"><%= data_section %></option>
+            <% end %>
+          </select>  
+        </div>
 
 
 
-    <script type="text/javascript">
-      var section_select = document.getElementById("section_select");
-      section_select.options[<%=params["section_index"].to_i %>].selected = true;
-      section_select.onchange = function () {
-        document.getElementById("field_form").submit();
-        showLoading("Saving and Moving to Selected Section");  
-      };
+      <script type="text/javascript">
+        let section_select = document.getElementById("section_select");
+        section_select.options[<%=params["section_index"].to_i %>].selected = true;
+        section_select.onchange = function () {
+          document.getElementById("field_form").submit();  
+        };
 
-      //changing the button contents if user on first or last section of record
-      var section_select_length = document.getElementById("section_select").options.length
-      if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
-        document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
-        document.getElementById('nextButton').style.width = '140px';
-        document.getElementById('previousButton').style.width = '140px';
-      } else if (<%=params["section_index"].to_i%> == 0) {
-        document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
-        document.getElementById('previousButton').style.width = '140px';
-        document.getElementById('nextButton').style.width = '140px';
-      }
-    </script>
+        //changing the button contents if user on first or last section of record
+        var section_select_length = document.getElementById("section_select").options.length
+        if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
+          document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('nextButton').style.width = '140px';
+          document.getElementById('previousButton').style.width = '140px';
+        } else if (<%=params["section_index"].to_i%> == 0) {
+          document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('previousButton').style.width = '140px';
+          document.getElementById('nextButton').style.width = '140px';
+        }
+      </script>
 
-  </div>
+
+    </div>
 
   <div class="clearfix"></div>
 </div>
@@ -198,9 +199,9 @@
     <div >
       <div class="scroll_table" id="scroll_table">
 
-      <table >
+      <table class="review_table">
         <tr>
-        <th class="headcol"></th>
+        <th class="headcol first_headcol"></th>
 
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
@@ -211,251 +212,304 @@
             </td>
           <% end %>
         </tr>
-        <tr>
-        <th class="headcol">UMM REQUIRED</th>
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div class="umm_required_cell">
-                <% if Cmr.required_collection_field? title %>
-                  <i class="eui-icon eui-check-o"></i>
-                <% end %>    
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-        <th class="headcol">FLAGGED BY SCRIPT</th>
-          <!-- for each of shown value list, create td for value -->
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div class="script_check_cell">
-                <% if @flagged_by_script[title] %>
-                  <i class="eui-icon eui-check-o"></i>
-                <% end %>    
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-        <th class="headcol">SCRIPT RESULT</th>
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div><%= @script_values[title] %></div>
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-        <th class="headcol">PREVIOUS VALUE</th>
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div>
-                <%= @previous_values[title] %>
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-        <th class="headcol">CURRENT VALUE</th>
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div>
-              <%= @current_values[title] %>    
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div class="previous_recommendation_cell">
-              <%= @previous_recommendations[title] %>    
-              </div>
-            </td>
-          <% end %>
-        </tr>
+
+          <tr class="auto_line_row line_row">
+            <th class="inputlabelcol"></th>
+            <th class="headcol">
+            </th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+              </td>
+            <% end %>
+          </tr>
 
 
-        <tr>
-        <th class="headcol">
-          <p>RECOMMENDATION</p>
-          <p class="headcol_subtitle">(Visible on Reports)</p>
-        </th>
-          <% @section_titles.each do |title| %>
-            <td class="recommendation_cell column_<%=title%>">
-              <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
-            </td>
-          <% end %>
-        </tr>
+          <tr>
+          <th class="autolabelcol"></th>
+          <th class="headcol">UMM REQUIRED</th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div class="umm_required_cell">
+                  <% if Cmr.required_collection_field? title %>
+                    <i class="eui-icon eui-check-o review_check"></i>
+                  <% end %>    
+                </div>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+          <th class="autolabelcol"></th>
+          <th class="headcol">FLAGGED BY SCRIPT</th>
+            <!-- for each of shown value list, create td for value -->
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div class="script_check_cell">
+                  <% if @flagged_by_script[title] %>
+                    <i class="eui-icon eui-check-o review_check"></i>
+                  <% end %>    
+                </div>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+          <th class="autolabelcol"></th>
+          <th class="headcol">SCRIPT RESULT</th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div><%= @script_values[title] %></div>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+          <th class="autolabelcol"></th>
+          <th class="headcol">PREVIOUS VALUE</th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div>
+                  <%= @previous_values[title] %>
+                </div>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <th class="autolabelcol"></th>
+            <th class="headcol">CURRENT VALUE</th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div>
+                <%= @current_values[title] %>    
+                </div>
+              </td>
+            <% end %>
+          </tr>
 
-        <script type="text/javascript">
-          function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
-            document.getElementById(cell_id).onclick = function() {
-              var check = document.getElementById(check_id);
-              if (check.checked == true) {
-                document.getElementById(cell_id).style.backgroundColor = "inherit";
-                check.checked = false;;
-                document.getElementById(p_id).style.fontWeight = "";
-                document.getElementById(icon_id).style.visibility = "hidden";
-              } else {
-                document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
-                check.checked = true;
-                document.getElementById(p_id).style.fontWeight = "bold";
-                document.getElementById(icon_id).style.visibility = "visible";
-              }
-            }; 
-          }
-        </script>
+          <tr>
+            <th class="autolabelcol"></th>
+            <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+                <div class="previous_recommendation_cell">
+                <%= @previous_recommendations[title] %>    
+                </div>
+              </td>
+            <% end %>
+          </tr>
 
 
-        <tr>
-        <th class="headcol second_to_final_headcol">2ND OPINION</th>
-          <% @section_titles.each do |title| %>
-            <td class="no_padding column_<%=title%>">
-              <div id="opinion_cell_<%= title %>" class="opinion_cell">
-                <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
-                <p id="opinion_text_<%= title %>">
-                  <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o flag_icon"></i>
-                  Requires 2nd Opinion
-                </p>
-              </div>  
-            </td>
+          <tr class="input_line_row line_row">
+            <th class="inputlabelcol"></th>
+            <th class="headcol">
+            </th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>"> 
+              </td>
+            <% end %>
+          </tr>
 
-            <script type="text/javascript">
-              add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
-              <% if @second_opinions[title] == true %>
-                document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
-                document.getElementById("opinion_check_<%= title %>").checked = true;
-                document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
-                document.getElementById("opinion_icon_<%= title %>").style.visibility = "visible";
-              <% end %>
-            </script>
-          <% end %>
-        </tr>
+          <tr>
+          <th class="inputlabelcol"></th>
+          <th class="headcol">
+            <p>RECOMMENDATION</p>
+            <p class="headcol_subtitle">(Visible on Reports)</p>
+          </th>
+            <% @section_titles.each do |title| %>
+              <td class="recommendation_cell column_<%=title%>">
+                <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+              </td>
+            <% end %>
+          </tr>
+
+          <script type="text/javascript">
+            function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
+              document.getElementById(cell_id).onclick = function() {
+                var check = document.getElementById(check_id);
+                if (check.checked == true) {
+                  document.getElementById(cell_id).style.backgroundColor = "inherit";
+                  check.checked = false;;
+                  document.getElementById(p_id).style.fontWeight = "";
+                  document.getElementById(icon_id).style.visibility = "hidden";
+                } else {
+                  document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
+                  check.checked = true;
+                  document.getElementById(p_id).style.fontWeight = "bold";
+                  document.getElementById(icon_id).style.visibility = "visible";
+                }
+              }; 
+            }
+          </script>
 
 
-        <tr>
-        <th class="headcol second_to_final_headcol">COLOR CODE</th>
-          <% @section_titles.each do |title| %>
-            <td class="color_code_cell column_<%=title%>">
-              <div class="height_holder">
 
-                <!-- Only one of the two divs below shown at once, managed by update_color_backgrounds -->
-                <!-- Color selection version of contents -->
-                <div class="color_code_background" id="color_code_background_<%=title%>">
-                  <% ["green", "blue", "yellow", "red"].each do |color| %>
-                    <div class="color_code_button color_<%=color%>" id="color_button_<%=color%>_<%=title%>">
-                      <i class="color_code_icon fa fa-arrow-circle-right"></i>
+          <tr class="input_line_row line_row">
+            <th class="inputlabelcol"></th>
+            <th class="headcol">
+            </th>
+            <% @section_titles.each do |title| %>
+              <td class="column_<%=title%>">
+              </td>
+            <% end %>
+          </tr>
+
+
+
+
+          <tr>
+          <th class="inputlabelcol"></th>
+          <th class="headcol second_to_final_headcol">2ND OPINION</th>
+            <% @section_titles.each do |title| %>
+              <td class="no_padding column_<%=title%>">
+                <div id="opinion_cell_<%= title %>" class="opinion_cell">
+                  <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
+                  <p id="opinion_text_<%= title %>">
+                    <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o review_check flag_icon"></i>
+                    Requires 2nd Opinion
+                  </p>
+                </div>  
+              </td>
+
+              <script type="text/javascript">
+                add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
+                <% if @second_opinions[title] == true %>
+                  document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
+                  document.getElementById("opinion_check_<%= title %>").checked = true;
+                  document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
+                  document.getElementById("opinion_icon_<%= title %>").style.visibility = "visible";
+                <% end %>
+              </script>
+            <% end %>
+          </tr>
+
+          <tr>
+            <th class="inputlabelcol"></th>
+            <th class="headcol second_to_final_headcol">COLOR CODE</th>
+              <% @section_titles.each do |title| %>
+                <td class="color_code_cell column_<%=title%>">
+                  <div class="height_holder">
+
+                    <!-- Only one of the two divs below shown at once, managed by update_color_backgrounds -->
+                    <!-- Color selection version of contents -->
+                    <div class="color_code_background" id="color_code_background_<%=title%>">
+                      <% ["green", "blue", "yellow", "red"].each do |color| %>
+                        <div class="color_code_button color_<%=color%>" id="color_button_<%=color%>_<%=title%>">
+                          <i class="color_code_icon fa fa-arrow-circle-right"></i>
+                        </div>
+
+                        <!-- setting the color select then running an update across all colors -->
+                        <script type="text/javascript">
+                          document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
+                            document.getElementById("color_code_<%=title%>").value = "<%=color%>";
+                            update_color_backgrounds(); 
+                          }
+                        </script>
+                      <% end %>
                     </div>
 
-                    <!-- setting the color select then running an update across all colors -->
-                    <script type="text/javascript">
-                      document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
-                        document.getElementById("color_code_<%=title%>").value = "<%=color%>";
-                        update_color_backgrounds(); 
-                      }
-                    </script>
-                  <% end %>
-                </div>
+                    <!-- Color cancelling div -->
+                    <div class="color_cancel_selection" id="color_cancel_selection_<%=title%>">
+                      <i class="cancel_selection_icon fa fa-window-close-o" id="cancel_icon_<%=title%>"></i>
 
-                <!-- Color cancelling div -->
-                <div class="color_cancel_selection" id="color_cancel_selection_<%=title%>">
-                  <i class="cancel_selection_icon fa fa-window-close-o" id="cancel_icon_<%=title%>"></i>
-
-                  <!-- clearing the color select then running an update across all colors -->
-                  <script type="text/javascript">
-                    document.getElementById("cancel_icon_<%=title%>").onclick = function() {
-                      document.getElementById("color_code_<%=title%>").value = "";
-                      update_color_backgrounds(); 
-                    }
-                  </script>
-                </div>
-              </div>
-
-              <div class="styled-select blue semi-square">
-                <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code[<%= title %>]" id="color_code_<%= title %>" form="field_form" >
-                <% selected = color_selected_list(@color_codes[title]) %>
-
-                  <option <%= selected[0] %> value="">Select Color</option>
-                  <option <%= selected[1] %> value="green">Green</option>
-                  <option <%= selected[2] %> value="blue">Blue</option>
-                  <option <%= selected[3] %> value="yellow">Yellow</option>
-                  <option <%= selected[4] %> value="red">Red</option>
-                </select>
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <tr>
-        <th class="headcol final_headcol">
-          <p>DISCUSSION &amp; JUSTIFICATION</p>
-          <p class="headcol_subtitle">(Visible to All)</p>
-        </th>
-          <% @section_titles.each do |title| %>
-            <td class="discussion_td column_<%=title%>">
-              <div class="discussion_holder">
-                <div class="new_discussion">
-                  <textarea placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
-                </div>
-                
-                <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
-                <% messages.each do |message| %>
-                  <div class="discussion_comment">
-                    <div class="discussion_title">
-                      <p><%= message.formatted_date %></p>
-                      <p><%= message.user.email %> says:</p>
-                    </div>
-                    <div class="discussion_text">
-                      <p><%= message.comment %></p>
+                      <!-- clearing the color select then running an update across all colors -->
+                      <script type="text/javascript">
+                        document.getElementById("cancel_icon_<%=title%>").onclick = function() {
+                          document.getElementById("color_code_<%=title%>").value = "";
+                          update_color_backgrounds(); 
+                        }
+                      </script>
                     </div>
                   </div>
-                <% end %>
-              </div>  
-            </td>
-          <% end %>
-        </tr>
-      </table>  
 
-      </div>  
-    </div>
+                  <div class="styled-select blue semi-square">
+                    <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code[<%= title %>]" id="color_code_<%= title %>" form="field_form" >
+                    <% selected = color_selected_list(@color_codes[title]) %>
 
-</section>
+                      <option <%= selected[0] %> value="">Select Color</option>
+                      <option <%= selected[1] %> value="green">Green</option>
+                      <option <%= selected[2] %> value="blue">Blue</option>
+                      <option <%= selected[3] %> value="yellow">Yellow</option>
+                      <option <%= selected[4] %> value="red">Red</option>
+                    </select>
+                  </div>
+                </td>
+              <% end %>
+            </tr>
 
-<script type="text/javascript">
-  function update_color_backgrounds() {
-    //hidden select inputs
-    var color_selects = document.getElementsByClassName("color_code_select");
-    //full td cell
-    var color_cells = document.getElementsByClassName("color_code_cell");
-    //the div containing the color selecting icons
-    var color_button_sets = document.getElementsByClassName("color_code_background");
-    //the divs containing the x out option to remove a selected color
-    var color_cancels = document.getElementsByClassName("color_cancel_selection");
 
-    var counter = 0;
-    //iterating over all the hidden color select inputs
-    while (counter < color_selects.length) {
-      var color = color_selects[counter].value
-      //Removing all BG colors from the cell
-      <% ["color_green", "color_yellow", "color_red", "color_blue"].each do |color_class| %>
-        color_cells[counter].classList.remove("<%=color_class%>");  
-      <% end %>
-      //adding the class that corresponds to the color selected in the select input
-      color_cells[counter].classList.add("color_" + color.toString());
-      //if no color selected, show the set of color icons to click
-      if (color == "") {
-        color_button_sets[counter].style.display = "flex";
-        color_cancels[counter].style.display = "none";
-      //if color is selected, hide color icons, and show the x out button to remove color selection
-      } else {
-        color_button_sets[counter].style.display = "none";
-        color_cancels[counter].style.display = "block";
+
+
+          <tr>
+          <th class="inputlabelcol final_headcol"></th>
+          <th class="headcol final_headcol">
+            <p>DISCUSSION &amp; JUSTIFICATION</p>
+            <p class="headcol_subtitle">(Visible to All)</p>
+          </th>
+            <% @section_titles.each do |title| %>
+              <td class="discussion_td column_<%=title%>">
+                <div class="discussion_holder">
+                  <div class="new_discussion">
+                    <textarea placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
+                  </div>
+                  
+                  <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
+                  <% messages.each do |message| %>
+                    <div class="discussion_comment">
+                      <div class="discussion_title">
+                        <p><%= message.formatted_date %></p>
+                        <p><%= message.user.email %> says:</p>
+                      </div>
+                      <div class="discussion_text">
+                        <p><%= message.comment %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>  
+              </td>
+            <% end %>
+          </tr>
+
+        </table>  
+
+        </div>  
+      </div>
+
+  </section>
+
+  <script type="text/javascript">
+    function update_color_backgrounds() {
+      //hidden select inputs
+      var color_selects = document.getElementsByClassName("color_code_select");
+      //full td cell
+      var color_cells = document.getElementsByClassName("color_code_cell");
+      //the div containing the color selecting icons
+      var color_button_sets = document.getElementsByClassName("color_code_background");
+      //the divs containing the x out option to remove a selected color
+      var color_cancels = document.getElementsByClassName("color_cancel_selection");
+
+      var counter = 0;
+      //iterating over all the hidden color select inputs
+      while (counter < color_selects.length) {
+        var color = color_selects[counter].value
+        //Removing all BG colors from the cell
+        <% ["color_green", "color_yellow", "color_red", "color_blue"].each do |color_class| %>
+          color_cells[counter].classList.remove("<%=color_class%>");  
+        <% end %>
+        //adding the class that corresponds to the color selected in the select input
+        color_cells[counter].classList.add("color_" + color.toString());
+        //if no color selected, show the set of color icons to click
+        if (color == "") {
+          color_button_sets[counter].style.display = "flex";
+          color_cancels[counter].style.display = "none";
+        //if color is selected, hide color icons, and show the x out button to remove color selection
+        } else {
+          color_button_sets[counter].style.display = "none";
+          color_cancels[counter].style.display = "block";
+        }
+        counter = counter + 1;
       }
-      counter++;
-    }
-  }
+    }  
 
-  update_color_backgrounds();
-</script>
+    update_color_backgrounds();
+  </script>
+
 
   <% if !@marked_done %>
     <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
@@ -470,41 +524,41 @@
     </script>
   <% end %>
 
-<section class="detail_footer">
+  <section class="detail_footer">
 
-<%= render(partial: 'legend') %>
+    <%= render(partial: 'legend') %>
 
-</section>
-
-
-<script type="text/javascript">
-//resizing the discussion header div
-
-function adjustDiscussionCellHeight() {
-    //resetting the discussion <th> field height;
-    $(".final_headcol").each(function() { 
-      var siblings = $(this).siblings();
-      $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
-    });
-}
-
-//setting the height of the discussion <th> element on page load.
-adjustDiscussionCellHeight();
+  </section>
 
 
-function recommendationMonitor(textarea) {
-  if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
-    let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
-    turnColumnGreen(columnName);
-  }
-}
+  <script type="text/javascript">
+    //resizing the discussion header div
 
-function turnColumnGreen(columnName) {
-  var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
-  //chaning the select value
-  colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
-  update_color_backgrounds();
-}
+    function adjustDiscussionCellHeight() {
+        //resetting the discussion <th> field height;
+        $(".final_headcol").each(function() { 
+          var siblings = $(this).siblings();
+          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
+        });
+    }
+
+    //setting the height of the discussion <th> element on page load.
+    adjustDiscussionCellHeight();
 
 
-</script>
+    function recommendationMonitor(textarea) {
+      if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
+        let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
+        turnColumnGreen(columnName);
+      }
+    }
+
+    function turnColumnGreen(columnName) {
+      var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
+      //chaning the select value
+      colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
+      update_color_backgrounds();
+    }
+  </script>
+
+</div>

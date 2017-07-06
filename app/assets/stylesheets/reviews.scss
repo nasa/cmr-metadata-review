@@ -1,5 +1,25 @@
 @import "variables";
 
+.review_background {
+  background-color: white;
+}
+
+.review_table {
+  td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: $report-line;
+  }
+  tr {
+      &:nth-child(1), &:nth-child(4), &:nth-child(6), &:nth-child(8) {background: $review-blue-light}
+      &:nth-child(10), &:nth-child(14) {background: $review-yellow-dark}
+      &:nth-child(13), &:nth-child(15) {background: $review-green-light}
+  }
+  th {
+    background-color: inherit;
+  }
+}
+
 .toggle_area {
   background-color: white;
   padding-left: 46px;
@@ -112,12 +132,11 @@
 
 
 
-
 .scroll_table {
   margin-top: 25px;
-  max-width: 85%;
+  max-width: 78%;
   overflow-x: auto;  
-  margin-left: 17em;
+  margin-left: 17.1em;
   overflow-y: visible;
   font-size: 0.8em;
   border-right-style: solid;
@@ -142,11 +161,67 @@
   .headcol {
     position: absolute;
     width: 14em;
-    left: 3em;
+    left: 5em;
     top: auto;
     padding-left: 2em;
     height: 200px;
+    font-size: 0.9em;
   }
+
+  .first_headcol {
+    background-color: white;
+    border: none;
+  }
+
+  .autolabelcol {
+    position: absolute;
+    width: 2em;
+    left: 3em;
+    top: auto;
+    background-color: $review-blue-dark;
+    height: 200px;
+    border: none;
+  }
+
+  .inputlabelcol {
+    position: absolute;
+    width: 2em;
+    left: 3em;
+    top: auto;
+    background-color: $review-gray-dark;
+    height: 90px;
+    border: none; 
+  }
+
+  .input_line_row {
+    td, th  {
+      background-color: $review-gray-dark;
+    }
+  }
+
+  .auto_line_row {
+    td, th {
+      background-color: $review-blue-dark;
+    }
+  }
+
+  .line_row {
+    th {
+      border: none;
+      position: absolute;
+      width: 14em;
+      top: auto;
+      padding-left: 2em;
+      height: 5px;
+    }
+
+    td {
+      border: none;
+      padding: 0px;
+      height: 5px;
+    }
+  }
+
 
   .second_to_final_headcol {
     height: 60px;
@@ -162,6 +237,14 @@
 
   .previous_recommendation_cell {
     min-height: 40px;
+  }
+
+  .review_check {
+    font-weight: 900;
+    font-size: 1.6em;
+    margin-top: 2px;
+    margin-left: 1px;
+    color: $review-gray-dark
   }
 
   tr div {
@@ -259,7 +342,7 @@
   }
 
   .recommendation_cell {
-    background-color: white;
+
   }
 
   .opinion_cell {
@@ -298,7 +381,6 @@
 
 
   .discussion_td {
-    background-color:white;
     vertical-align: top;
     max-height: 300px;
   }
@@ -308,7 +390,6 @@
   }
 
   .discussion_comment {
-    background-color: white;
 
     .discussion_title {
       padding: 5px;
