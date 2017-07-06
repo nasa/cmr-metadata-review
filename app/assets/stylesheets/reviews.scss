@@ -11,9 +11,9 @@
     border-color: $report-line;
   }
   tr {
-      &:nth-child(1), &:nth-child(4), &:nth-child(6) {background: $review-blue-light}
-      &:nth-child(9), &:nth-child(13) {background: $review-yellow-dark}
-      &:nth-child(12), &:nth-child(14) {background: $review-green-light}
+      &:nth-child(1), &:nth-child(4), &:nth-child(6), &:nth-child(8) {background: $review-blue-light}
+      &:nth-child(10), &:nth-child(14) {background: $review-yellow-dark}
+      &:nth-child(13), &:nth-child(15) {background: $review-green-light}
   }
   th {
     background-color: inherit;
@@ -179,7 +179,6 @@
     left: 3em;
     top: auto;
     background-color: $review-blue-dark;
-    // padding-left: 2em;
     height: 200px;
     border: none;
   }
@@ -190,25 +189,18 @@
     left: 3em;
     top: auto;
     background-color: $review-gray-dark;
-    // padding-left: 2em;
     height: 90px;
     border: none; 
   }
 
   .input_line_row {
-    td {
-      background-color: $review-gray-dark;
-    }
-    th {
+    td, th  {
       background-color: $review-gray-dark;
     }
   }
 
   .auto_line_row {
-    td {
-      background-color: $review-blue-dark;
-    }
-    th {
+    td, th {
       background-color: $review-blue-dark;
     }
   }
