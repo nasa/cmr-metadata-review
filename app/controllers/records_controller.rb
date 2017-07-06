@@ -67,70 +67,21 @@ class RecordsController < ApplicationController
     if record.nil?
       redirect_to home_path
       return
-    end
-
-    if record.closed?
+    elsif record.closed?
       redirect_to review_path(id: params["id"], section_index: params["section_index"])
       return 
     end
 
-    section_index = params["section_index"].to_i
+    #update result will == true if any updates were made to record on save
+    update_result = record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"])
 
-    if section_index.nil?
-      redirect_to home_path
-      return
-    end
-
-    section_titles = record.sections[section_index][1]
-
-    begin
-      #this is so that no review is created unless the input some data into the review
-      any_data_changed = false
-
-      if record.update_recommendations(params["recommendation"])
-        any_data_changed = true
-      end
-
-      if record.update_colors(params["color_code"])
-        any_data_changed = true
-      end
-
-      opinion_values = record.get_opinions
-      section_titles.each do |title|
-        opinion_values[title] = false
-      end
-
-      if params["opinion"]
-        params["opinion"].each do |key, value|
-            if value == "on"
-              opinion_values[key] = true
-            end
-        end
-      end
-      
-      record.update_opinions(opinion_values)
-      
-    rescue
+    if update_result == -1
       flash[:error] = "Values were not updated in the system.  Please resave changes."
-    end
-
-    if params["discussion"]
-      params["discussion"].each do |key, value|
-        if value != ""
-          any_data_changed = true
-          message = Discussion.new(record: record, user: current_user, column_name: key, date: DateTime.now, comment: value)
-          message.save
-        end
-      end
-    end 
-
-    if any_data_changed
+    elsif update_result == true
       #creating a review is one is not yet recorded
-      @review = Review.where(user: current_user, record_id: params["id"]).first
-      if @review.nil?
-          @review = Review.new(user: current_user, record_id: params["id"], review_state: 0)
-          @review.save
-      end
+      #.review will create a review if one not found.
+      review = record.review(current_user.id)
+      review.save
     end
 
     if params["redirect_index"].nil?

@@ -499,4 +499,56 @@ class Record < ActiveRecord::Base
     self.recordable.update?
   end
 
+  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions)
+    section_index = section_index.to_i
+
+    if section_index.nil?
+      return -1
+    end
+
+    section_titles = self.sections[section_index][1]
+
+    #this is so that no review is created unless the input some data into the review
+    any_data_changed = false
+
+    begin
+      if self.update_recommendations(new_recommendations)
+        any_data_changed = true
+      end
+
+      if self.update_colors(new_colors)
+        any_data_changed = true
+      end
+
+      opinion_values = self.get_opinions
+      section_titles.each do |title|
+        opinion_values[title] = false
+      end
+
+      if new_opinions
+        new_opinions.each do |key, value|
+            if value == "on"
+              opinion_values[key] = true
+            end
+        end
+      end
+      
+      self.update_opinions(opinion_values)
+      
+      if new_discussions
+        new_discussions.each do |key, value|
+          if value != ""
+            any_data_changed = true
+            message = Discussion.new(record: self, user: current_user, column_name: key, date: DateTime.now, comment: value)
+            message.save
+          end
+        end
+      end 
+    rescue
+      return -1
+    end
+
+    any_data_changed
+  end
+
 end
