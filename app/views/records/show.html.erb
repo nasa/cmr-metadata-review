@@ -53,7 +53,8 @@
           <h3>Review Comments</h3>
         </div>
 
-        <% if !@user_review.completed? && !@marked_done %>
+        <%# checking that the review exists, its not completed already, and the record is not done %> 
+        <% if !@user_review.id.nil? && !@user_review.completed? && !@marked_done %>
           <br>
           <p>
             <strong>Complete Review Comment:</strong>
