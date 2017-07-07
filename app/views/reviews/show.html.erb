@@ -176,14 +176,15 @@
 
         //changing the button contents if user on first or last section of record
         var section_select_length = document.getElementById("section_select").options.length
+        var button_width = '155px';
         if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
           document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
-          document.getElementById('nextButton').style.width = '140px';
-          document.getElementById('previousButton').style.width = '140px';
+          document.getElementById('nextButton').style.width = button_width;
+          document.getElementById('previousButton').style.width = button_width;
         } else if (<%=params["section_index"].to_i%> == 0) {
           document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
-          document.getElementById('previousButton').style.width = '140px';
-          document.getElementById('nextButton').style.width = '140px';
+          document.getElementById('previousButton').style.width = button_width;
+          document.getElementById('nextButton').style.width = button_width;
         }
       </script>
 

@@ -1,3 +1,5 @@
+@import "variables";
+
 .record_review_data {
   padding-left: 70px;
   padding-top: 30px;
@@ -198,6 +200,29 @@
 
     button {
       width: 110px;
+      height: 35px;
+    }
+
+    .icon_holder {
+      font-size: 1.5em;
+      position: relative;
+      bottom: 1px;
+    }
+
+    .icon_text {
+      position: relative;
+      bottom: 2px;
+    }
+
+    .review_nav_button {
+      background-color: white;
+      border: 1px solid $review-gray-dark;
+      width: 125px;
+    }
+
+    .icon_spacing {
+      width: 5px;
+      display: inline-block;
     }
   }
 
