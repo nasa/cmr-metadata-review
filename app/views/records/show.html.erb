@@ -53,8 +53,7 @@
           <h3>Review Comments</h3>
         </div>
 
-        <%# checking that the review exists, its not completed already, and the record is not done %> 
-        <% if !@user_review.id.nil? && !@user_review.completed? && !@marked_done %>
+        <% if !@user_review.completed? && !@marked_done %>
           <br>
           <p>
             <strong>Complete Review Comment:</strong>
@@ -63,6 +62,8 @@
           <%= form_for @user_review, html: {id: :review_form} do |f| %>
             <%= f.hidden_field :record_id, { :value => @user_review.record_id } %>
             <%= f.hidden_field :id, { :value => @user_review.id } %>
+            <%= f.hidden_field :user_id, { :value => @user_review.user_id } %>
+            <%= f.hidden_field :review_state, { :value => 1 } %>
             <%= f.text_area :comment, html: {id: :review_comment} %>
 
             <script type="text/javascript">
