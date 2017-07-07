@@ -68,8 +68,13 @@ class RecordsController < ApplicationController
       redirect_to home_path
       return
     elsif record.closed?
-      redirect_to review_path(id: params["id"], section_index: params["section_index"])
-      return 
+      if !params["redirect_index"].nil?
+        redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
+        return 
+      else 
+        redirect_to record_path(id: params["id"], section_index: params["section_index"])
+        return 
+      end
     end
 
     #update result will == true if any updates were made to record on save
