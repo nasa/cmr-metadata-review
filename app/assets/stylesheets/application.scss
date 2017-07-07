@@ -196,6 +196,7 @@ tr:nth-child(odd) {background: #FFF}
 
 
 @mixin button_attributes {
+
   color: white;
   border: 1px solid rgba(50, 50, 50, 0.15);
   display: inline-block;
@@ -210,10 +211,12 @@ tr:nth-child(odd) {background: #FFF}
 
 @mixin normal_button_sizing {
   padding: 0.5em 1em;
+  border-radius: 7px;
 }
 
 @mixin small_button_sizing {
   font-size: 0.9em;
+  border-radius: 5px;
 }
 
 @mixin button_disabled {

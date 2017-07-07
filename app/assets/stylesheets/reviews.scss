@@ -99,10 +99,29 @@
   font-size: 0.7em;
 }
 
+.save_button_spacer {
+    width: 78%;
+    margin-left: 13.7em;
+    display: inline-block;
+}
 
 .form_save_button {
+  display: inline-block;
   margin-left: 46px;
   margin-top: 30px;
+  line-height: 0;
+  float: right;
+
+  .save_review_text {
+    position: relative;
+    bottom: 4px;
+    margin-right: 4px;
+  }
+
+  .save_review_icon {
+    color: white;
+    font-size: 1.7em;
+  }
 }
 
 .color_code_select {
@@ -142,7 +161,7 @@
 
 .scroll_table {
   margin-top: 25px;
-  max-width: 78%;
+  width: 78%;
   overflow-x: auto;  
   margin-left: 17.1em;
   overflow-y: visible;
