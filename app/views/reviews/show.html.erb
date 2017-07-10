@@ -205,9 +205,11 @@
 
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
+            <td class="title_column column_<%=title%>">
               <div class="title_text">
                 <%= split_on_capitals(title) %>
+              </div>
+              <div class="widthGrab">
               </div>
             </td>
           <% end %>
@@ -475,22 +477,72 @@
 
   <script type="text/javascript">
 
-    var changeWidthBool = false;
-    var tableCells = document.getElementById('scroll_table').getElementsByTagName('td');
-    for (var i = 0; i < tableCells.length; i++) {
-      tableCells[i].onmousedown = function(e) {
-        console.log(e.currentTarget);
-        console.log($(e.currentTarget).offset());
-        console.log('x:' + e.x + ' y:' + e.y);
-        console.log('offset width: ' + e.currentTarget.offsetWidth);
+
+    // var tableColumns = [];
+    // for (var i = 0; i < tableRows[0].getElementsByTagName('td').length; i++) {
+    //   tableColumns.push([]);
+    // }
+
+    // for (var i = 0; i < tableRows.length; i++) {
+    //   for (var k = 0; k < tableRows[i].getElementsByTagName('td').length; k++) {
+    //     tableColumns[k].push(tableRows[i].getElementsByTagName('td')[k]);
+    //   }
+    // }
+    (function setupWidthAdjustment() {
+      var tableTitles = document.getElementById('scroll_table').getElementsByClassName('title_column');
+      var widthGrabs = document.getElementsByClassName('widthGrab');
+      for (var i=0; i < widthGrabs.length; i++) {
+        widthGrabs[i].style.height = tableTitles[0].offsetHeight.toString() + 'px';
       }
 
-    }
+      var grabWidth = 20;
 
-    document.onmouseup = function(e) {
-      changeWidthBool = false;
-    }
+      var changeWidthBool = false;
+      var targetElement = null;
+      var totalXMovement = 0;
+      var originalWidth = 0;
 
+      function findInHtmlCollection(element, collection) {
+        for (var i = 0; i < collection.length; i++) {
+          if (element.parentNode == collection[i].parentNode) {
+            return i;
+          }
+        }
+        return -1
+      }
+
+      for (var i = 0; i < widthGrabs.length; i++) {
+        var index = parseInt(i.toString());
+        widthGrabs[i].onmousedown = function(e) {
+          changeWidthBool = true;
+          var index = findInHtmlCollection(e.currentTarget, widthGrabs)
+          targetElement = tableTitles[index];
+          originalWidth = tableTitles[index].offsetWidth;
+        }
+      }
+
+      document.addEventListener('mouseup', function(e) {
+         changeWidthBool = false;
+         targetElement = null;
+         totalXMovement = 0;
+         originalWidth = 0;
+      }, false);
+
+      document.addEventListener('mousemove', function(e) {
+        if (changeWidthBool) {
+          if (targetElement != null) {
+            if (Math.abs(e.movementX) > 0) {
+              totalXMovement += e.movementX;
+              if ((originalWidth + totalXMovement) > 200) {
+                var newWidth = (originalWidth + totalXMovement).toString() + 'px';
+                targetElement.children[0].style.width = newWidth;
+              }
+            }
+          }
+        }
+      }, false);
+    })();
+    //sets all of the flag colors on page loads and updates
     function update_color_backgrounds() {
       //hidden select inputs
       var color_selects = document.getElementsByClassName("color_code_select");
@@ -565,6 +617,7 @@
     adjustDiscussionCellHeight();
 
 
+    //used to automatically flag a cell green if recommendation starts with OK string
     function recommendationMonitor(textarea) {
       if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
         let columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
@@ -572,6 +625,7 @@
       }
     }
 
+    //used to automatically flag a cell green if recommendation starts with OK string
     function turnColumnGreen(columnName) {
       var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
       //chaning the select value
