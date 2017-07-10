@@ -517,7 +517,7 @@
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
     <% if !@marked_done %>
 
-      <div class="save_button_spacer">
+      <div class="save_button_review">
         <button type="submit" id="save_review_button" class="form_save_button selectButton">
           <span class="save_review_text">
             Save Review
@@ -537,16 +537,7 @@
 
   <% end %>
 
-  <div class="save_button_spacer">
-        <div>
-          <span class="save_review_text">
-            Save Review
-          </span>
-          <span class="save_review_icon">
-            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-          </span>
-        </div>
-      </div>
+
 
   <section class="detail_footer">
 
