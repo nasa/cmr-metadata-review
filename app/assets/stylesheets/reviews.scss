@@ -94,9 +94,12 @@
 
 
 .detail_footer {
-  padding-top: 20px;
-  padding-left: 46px;
+  padding-top: 15px;
+  margin-top: 30px;
+  margin-left: 40px;
   font-size: 0.7em;
+  margin-right: 5%;
+  border-top: 1px solid gray;
 }
 
 .save_button_review {
@@ -107,7 +110,7 @@
 .form_save_button {
   display: inline-block;
   margin-left: 46px;
-  margin-top: 30px;
+  margin-top: 15px;
   line-height: 0;
 
   .save_review_text {
