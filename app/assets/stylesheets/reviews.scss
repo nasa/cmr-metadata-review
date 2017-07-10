@@ -158,6 +158,22 @@
   margin-right: 5px;
 }
 
+.review_top_button {
+  float: right;
+  cursor: pointer;
+  .review_top_text {
+    font-size: 1.1em;
+    position: relative;
+    bottom: 2px;
+    margin-right: 2px;
+  }
+  .review_top_icon {
+    font-size: 1.8em;
+  }
+}
+
+
+
 
 
 .scroll_table {
