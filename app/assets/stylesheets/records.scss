@@ -84,30 +84,6 @@
     padding-right: 5px;
 }
 
-/*the unique flag background colors*/
-.flag_white {
-    background-color: white;
-}
-
-.flag_blue {
-    background-color: blue;
-    color: white;
-}
-
-.flag_green {
-    background-color: green;
-    color: white;
-}
-
-.flag_yellow {
-    background-color: yellow;
-}
-
-.flag_red {
-    background-color: red;
-    color: white;
-}
-
 .no_script {
     border: 1px solid #d9d9d9;
     // height: 20px;
@@ -317,7 +293,8 @@
 }
 
 .legend_title {
-  font-size: 1.2em;
+  font-size: 1.7em;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
@@ -327,10 +304,15 @@
     -webkit-flex-direction: column;
     flex-direction: column;
 
+    .legend_flex_row {
+      display: flex;
+    }
+
     .legend_flex_item {
       height: 30px;
       display: flex;
       align-items: center;
+      padding-right: 15px;
 
       .legend_text {
         display: inline-block;
