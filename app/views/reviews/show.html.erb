@@ -541,6 +541,22 @@
 
   <section class="detail_footer">
 
+    <div id="review_top_button" class="review_top_button">
+      <span class="review_top_text">
+        Back To Top
+      </span>
+      <span class="review_top_icon">
+        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+      </span>
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById('review_top_button').onclick = function() {
+        window.scrollTo(0,0);
+      }
+    </script>
+
+
     <%= render(partial: 'legend') %>
 
   </section>
