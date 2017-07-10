@@ -476,32 +476,23 @@
   </section>
 
   <script type="text/javascript">
-
-
-    // var tableColumns = [];
-    // for (var i = 0; i < tableRows[0].getElementsByTagName('td').length; i++) {
-    //   tableColumns.push([]);
-    // }
-
-    // for (var i = 0; i < tableRows.length; i++) {
-    //   for (var k = 0; k < tableRows[i].getElementsByTagName('td').length; k++) {
-    //     tableColumns[k].push(tableRows[i].getElementsByTagName('td')[k]);
-    //   }
-    // }
+    //This is adding the ability to drag to adjust column widths
+    //all column widths are determine by the top row of table, with class title_column
     (function setupWidthAdjustment() {
       var tableTitles = document.getElementById('scroll_table').getElementsByClassName('title_column');
       var widthGrabs = document.getElementsByClassName('widthGrab');
+      //since the grabbers have to be absolutely position, setting correct dynamic height once table loads.
       for (var i=0; i < widthGrabs.length; i++) {
         widthGrabs[i].style.height = tableTitles[0].offsetHeight.toString() + 'px';
       }
-
-      var grabWidth = 20;
-
+      //function scope bools to keep track of state during move events
       var changeWidthBool = false;
       var targetElement = null;
       var totalXMovement = 0;
       var originalWidth = 0;
+      var minWidth = 200;
 
+      //needed to set the index in the onmousedown event
       function findInHtmlCollection(element, collection) {
         for (var i = 0; i < collection.length; i++) {
           if (element.parentNode == collection[i].parentNode) {
@@ -511,6 +502,7 @@
         return -1
       }
 
+      //setting the clicked column as the one to be adjusted.
       for (var i = 0; i < widthGrabs.length; i++) {
         var index = parseInt(i.toString());
         widthGrabs[i].onmousedown = function(e) {
@@ -521,6 +513,7 @@
         }
       }
 
+      //clearing state variables
       document.addEventListener('mouseup', function(e) {
          changeWidthBool = false;
          targetElement = null;
@@ -528,20 +521,27 @@
          originalWidth = 0;
       }, false);
 
+      //for each x mouse move, find the new total width and set the column.
       document.addEventListener('mousemove', function(e) {
-        if (changeWidthBool) {
-          if (targetElement != null) {
-            if (Math.abs(e.movementX) > 0) {
-              totalXMovement += e.movementX;
-              if ((originalWidth + totalXMovement) > 200) {
-                var newWidth = (originalWidth + totalXMovement).toString() + 'px';
-                targetElement.children[0].style.width = newWidth;
+        try {
+          if (changeWidthBool) {
+            if (targetElement != null) {
+              if (Math.abs(e.movementX) > 0) {
+                totalXMovement += e.movementX;
+                if ((originalWidth + totalXMovement) > minWidth) {
+                  var newWidth = (originalWidth + totalXMovement).toString() + 'px';
+                  targetElement.children[0].style.width = newWidth;
+                }
               }
             }
           }
+        } catch (e) {
+          console.log('Column Width Change Failure');
         }
       }, false);
     })();
+
+
     //sets all of the flag colors on page loads and updates
     function update_color_backgrounds() {
       //hidden select inputs
