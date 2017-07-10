@@ -474,6 +474,23 @@
   </section>
 
   <script type="text/javascript">
+
+    var changeWidthBool = false;
+    var tableCells = document.getElementById('scroll_table').getElementsByTagName('td');
+    for (var i = 0; i < tableCells.length; i++) {
+      tableCells[i].onmousedown = function(e) {
+        console.log(e.currentTarget);
+        console.log($(e.currentTarget).offset());
+        console.log('x:' + e.x + ' y:' + e.y);
+        console.log('offset width: ' + e.currentTarget.offsetWidth);
+      }
+
+    }
+
+    document.onmouseup = function(e) {
+      changeWidthBool = false;
+    }
+
     function update_color_backgrounds() {
       //hidden select inputs
       var color_selects = document.getElementsByClassName("color_code_select");
