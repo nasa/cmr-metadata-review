@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612013938) do
+ActiveRecord::Schema.define(version: 20170711153111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170612013938) do
     t.string   "flag",           default: [],                 array: true
     t.string   "recommendation", default: ""
     t.integer  "order_count",    default: 0
+    t.string   "value_array",    default: [],                 array: true
   end
 
   add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree

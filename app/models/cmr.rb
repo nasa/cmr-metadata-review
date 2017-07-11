@@ -298,7 +298,7 @@ class Cmr
     end
           
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
-    byebug
+
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
     #Dif10 records come in with some uneeded header values
