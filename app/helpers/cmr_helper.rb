@@ -6,13 +6,20 @@ module CmrHelper
       array_collection = flatten_to_array(collection_hash, parent_string)
       #turning into grouped hash
       collection_hash = {}
+      bullet = "\n\u{2022} "
       array_collection.map do |field_name, value|
         if collection_hash.key? field_name
-          collection_hash[field_name] += "\n\u{2022} " + value
+          collection_hash[field_name] += (bullet + value)
         else
-          collection_hash[field_name] = "\u{2022} " + value
+          collection_hash[field_name] = value
         end  
+        #if field contains bullet but does not start with one, add one to start
+        if (collection_hash[field_name].include?(bullet) && !(collection_hash[field_name].match(bullet, 0).nil?))
+          collection_hash[field_name] = bullet + collection_hash[field_name]
+        end
       end
+
+
 
       collection_hash
     end
@@ -27,41 +34,35 @@ module CmrHelper
         elsif sub_value.is_a?(Array)
           #some keyword groupings are presented as lists of strings, do not want to seperate these
           if sub_value[0].is_a?(String)
-            # new_collection_hash[(parent_string + "/" + key)] = ""
             new_collection_arr_entry = [(parent_string + "/" + key), ""]
             sub_value.each_with_index do | array_entry |
-              # new_collection_hash[(parent_string + "/" + key)] += (array_entry + " ")
               new_collection_arr_entry[1] += (array_entry + " ")
             end
-            # new_collection_hash[(parent_string + "/" + key)].strip
             new_collection_arr_entry[1].strip
             new_collection_arr.push(new_collection_arr_entry)
           else
             sub_value.each_with_index do | array_entry, index |
-              # new_collection_hash = new_collection_hash.merge(flatten_collection_to_array(array_entry, parent_string + "/" + key + index.to_s))
               new_collection_arr = new_collection_arr.concat(flatten_to_array(array_entry, parent_string + "/" + key))
             end
           end
         else
           #if string num or other end value
-          # new_collection_hash[(parent_string + "/" + key)] = sub_value
           new_collection_arr.push([(parent_string + "/" + key), sub_value])
         end
       end
 
-      return new_collection_arr
-
-      final_collection_hash = {}
-      #remove /'s from top level
+      final_collection_arr = []
+      #remove /'s from beginning of every element on top array
       if parent_string == ""
-        new_collection_hash.each do |key, sub_value|
-          final_collection_hash[key[1..-1]] = sub_value
+        new_collection_arr.each do |key, sub_value|
+          final_collection_arr.push([key[1..-1], sub_value])
         end
       else 
-        final_collection_hash = new_collection_hash
+        final_collection_arr = new_collection_arr
       end
 
-      return final_collection_hash
+
+      return final_collection_arr
     end
 
   end
