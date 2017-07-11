@@ -29,4 +29,8 @@ module ReviewsHelper
     return title.gsub(/([0-9]+)/, " \\1")
   end
 
+  def format_new_lines(string)
+    return (raw string.gsub("\n", "<br>"))
+  end 
+
 end
