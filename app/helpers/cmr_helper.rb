@@ -2,30 +2,54 @@ module CmrHelper
   module ClassMethods
 
     def flatten_collection(collection_hash, parent_string = "")
-      new_collection_hash = {}
+      #output will be [['element_name', 'value'], [],....]
+      array_collection = flatten_to_array(collection_hash, parent_string)
+      #turning into grouped hash
+      collection_hash = {}
+      array_collection.map do |field_name, value|
+        if collection_hash.key? field_name
+          collection_hash[field_name] += "\n\u{2022} " + value
+        else
+          collection_hash[field_name] = "\u{2022} " + value
+        end  
+      end
+
+      collection_hash
+    end
+
+    def flatten_to_array(collection_hash, parent_string = "")
+      new_collection_arr = []
 
       collection_hash.each do |key, sub_value|
 
         if sub_value.is_a?(Hash)
-          new_collection_hash = new_collection_hash.merge(flatten_collection(sub_value, parent_string + "/" + key))
+          new_collection_arr = new_collection_arr.concat(flatten_to_array(sub_value, parent_string + "/" + key))
         elsif sub_value.is_a?(Array)
           #some keyword groupings are presented as lists of strings, do not want to seperate these
           if sub_value[0].is_a?(String)
-            new_collection_hash[(parent_string + "/" + key)] = ""
+            # new_collection_hash[(parent_string + "/" + key)] = ""
+            new_collection_arr_entry = [(parent_string + "/" + key), ""]
             sub_value.each_with_index do | array_entry |
-              new_collection_hash[(parent_string + "/" + key)] += (array_entry + " ")
+              # new_collection_hash[(parent_string + "/" + key)] += (array_entry + " ")
+              new_collection_arr_entry[1] += (array_entry + " ")
             end
-            new_collection_hash[(parent_string + "/" + key)].strip
+            # new_collection_hash[(parent_string + "/" + key)].strip
+            new_collection_arr_entry[1].strip
+            new_collection_arr.push(new_collection_arr_entry)
           else
             sub_value.each_with_index do | array_entry, index |
-              new_collection_hash = new_collection_hash.merge(flatten_collection(array_entry, parent_string + "/" + key + index.to_s))
+              # new_collection_hash = new_collection_hash.merge(flatten_collection_to_array(array_entry, parent_string + "/" + key + index.to_s))
+              new_collection_arr = new_collection_arr.concat(flatten_to_array(array_entry, parent_string + "/" + key))
             end
           end
         else
           #if string num or other end value
-          new_collection_hash[(parent_string + "/" + key)] = sub_value
+          # new_collection_hash[(parent_string + "/" + key)] = sub_value
+          new_collection_arr.push([(parent_string + "/" + key), sub_value])
         end
       end
+
+      return new_collection_arr
 
       final_collection_hash = {}
       #remove /'s from top level
@@ -39,12 +63,13 @@ module CmrHelper
 
       return final_collection_hash
     end
+
   end
 
   def self.included(receiver)
     receiver.extend ClassMethods
   end
-
+  
 end
 
 
