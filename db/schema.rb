@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20170711153111) do
     t.string   "flag",           default: [],                 array: true
     t.string   "recommendation", default: ""
     t.integer  "order_count",    default: 0
-    t.string   "value_array",    default: [],                 array: true
   end
 
   add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree
