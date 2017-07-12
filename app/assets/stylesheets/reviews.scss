@@ -300,7 +300,12 @@
   }
 
   .title_text {
+    display: flex;
     font-weight: bold;
+    .controlled_icon {
+      margin-left:10px; 
+      cursor: help;
+    }
   }
 
   textarea {

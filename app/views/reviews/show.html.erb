@@ -206,8 +206,13 @@
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
             <td class="column_<%=title%>">
-              <div class="title_text">
-                <%= split_on_capitals(title) %>
+              <div class="title_text" style="display:flex;">
+                <div>
+                  <%= split_on_capitals(title) %>
+                </div>
+                <% if @controlled_notices[title] %>
+                  <i class="fa fa-asterisk controlled_icon" title="<%=@controlled_notices[title]%>"></i>
+                <% end %>
               </div>
             </td>
           <% end %>
