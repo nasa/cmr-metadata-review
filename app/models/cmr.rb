@@ -159,8 +159,8 @@ class Cmr
               'Platforms/Platform/ShortName',
               'Platforms/Platform/LongName',
               'Platforms/Platform/Type',
-              'Platforms/Platform/Instruments/Instrument/Short Name',
-              'Platforms/Platform/Instruments/Instrument/Long Name',
+              'Platforms/Platform/Instruments/Instrument/ShortName',
+              'Platforms/Platform/Instruments/Instrument/LongName',
               'Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName',
               'Platforms/Platform/Instruments/Instrument/Sensors/Sensor/LongName',
               'Campaigns/Campaign/ShortName',
@@ -187,7 +187,84 @@ class Cmr
               'SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/GeographicCoordinateUnits',
               'SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/LatitudeResolution',
               'SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/LongitudeResolution'
+    ]
 
+    DESIRED_FIELDS_DIF10 = [
+              'Personnel/Contact_Group/Name',
+              'Science_Keywords/Category',
+              'Science_Keywords/Topic',
+              'Science_Keywords/Term',
+              'Science_Keywords/Variable_Level_1',
+              'Science_Keywords/Variable_Level_1/Variable_Level_2',
+              'Science_Keywords/Variable_Level_1/Variable_Level_2/Variable_Level_3',
+              'Science_Keywords/Variable_Level_1/Variable_Level_2/Variable_Level_3/Detailed_Variable',
+              'Platform/Type',
+              'Platform/Short_Name',
+              'Platform/Long_Name',
+              'Platform/Instrument/Short_Name',
+              'Platform/Instrument/Long_Name',
+              'Platform/Instrument/Sensor/Short_Name',
+              'Platform/Instrument/Sensor/Long_Name',
+              'Temporal_Coverage/Ends_At_Present_Flag',
+              'Temporal_Coverage/Range_DateTime/Beginning_Date_Time',
+              'Temporal_Coverage/Range_DateTime/Ending_Date_Time',
+              'Temporal_Coverage/Single_Date_Time',
+              'Dataset_Progress',
+              'Spatial_Coverage/Granule_Spatial_Representation',
+              'Spatial_Coverage/Geometry/Coordinate_System',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Southernmost_Latitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Northernmost_Latitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Westernmost_Longitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Easternmost_Longitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Minimum_Altitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Maximum_Altitude',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Altitude_Unit',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Minimum_Depth',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Maximum_Depth',
+              'Spatial_Coverage/Geometry/Bounding_Rectangle/Depth_Unit',
+              'Spatial_Coverage/Spatial_Info/Spatial_Coverage_Type',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geodetic_Model/Horizontal_DatumName',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geodetic_Model/Ellipsoid_Name',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geodetic_Model/Semi_Major_Axis',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geodetic_Model/Denominator_Of_Flattening_Ratio',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geographic_Coordinate_System/GeographicCoordinateUnits',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geographic_Coordinate_System/LatitudeResolution',
+              'Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geographic_Coordinate_System/LongitudeResolution',
+              'Location/Location_Category',
+              'Location/Location_Type',
+              'Location/Location_Subregion1',
+              'Location/Location_Subregion2',
+              'Location/Location_Subregion3',
+              'Location/Detailed_Location',
+              'Data_Resolution/Latitude_Resolution',
+              'Data_Resolution/Longitude_Resolution',
+              'Data_Resolution/Horizontal_Resolution_Range',
+              'Data_Resolution/Vertical_Resolution',
+              'Data_Resolution/Vertical_Resolution_Range',
+              'Data_Resolution/Temporal_Resolution',
+              'Data_Resolution/Temporal_Resolution_Range',
+              'Project/Short_Name',
+              'Project/Long_Name',
+              'Organization/Organization_Type',
+              'Organization/Organization_Name/Short_Name',
+              'Organization/Organization_Name/Long_Name',
+              'Organization/Organization_URL',
+              'Organization/Personnel/Contact_Group/Name',
+              'Distribution/Distribution_Format',
+              'Multimedia_Sample/Description',
+              'Reference/Citation',
+              'Summary/Abstract',
+              'Related_URL/URL_Content_Type/Type',
+              'Related_URL/URL_Content_Type/Subtype',
+              'Related_URL/URL',
+              'Related_URL/Title',
+              'Related_URL/Description',
+              'Related_URL/Mime_Type',
+              'Product_Level_ID',
+              'Metadata_Dates/Metadata_Creation',
+              'Metadata_Dates/Metadata_Last_Revision',
+              'Metadata_Dates/Data_Creation',
+              'Metadata_Dates/Data_Last_Revision'
     ]
 
 
@@ -349,8 +426,10 @@ class Cmr
   def self.get_collection(concept_id, data_format = "echo10")
     if data_format == "echo10"
       required_fields = REQUIRED_COLLECTION_FIELDS
+      desired_fields = DESIRED_FIELDS_ECHO10
     elsif data_format == "dif10"
       required_fields = REQUIRED_DIF10_FIELDS 
+      desired_fields = DESIRED_FIELDS_DIF10
     else
       required_fields = []
     end
@@ -361,6 +440,7 @@ class Cmr
     #Dif10 records come in with some uneeded header values
     nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, desired_fields)
     required_fields_hash
   end
 
@@ -478,7 +558,7 @@ class Cmr
   # Iterates through parameter hash adding any UMM required fields    
   # List of required fields set in hardcoded list within method
 
-  def self.add_required_collection_fields(collection_hash, required_fields = REQUIRED_COLLECTION_FIELDS)
+  def self.add_required_collection_fields(collection_hash, required_fields)
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
@@ -488,7 +568,6 @@ class Cmr
 
     collection_hash
   end
-
 
   # ====Params
   # Hash of metadata keys and values    
