@@ -14,8 +14,10 @@ module CmrHelper
           collection_hash[field_name] = value
         end  
         #if field contains bullet but does not start with one, add one to start
-        if (collection_hash[field_name].include?(bullet) && !(collection_hash[field_name].match(bullet, 0).nil?))
-          collection_hash[field_name] = bullet + collection_hash[field_name]
+        if collection_hash[field_name].include?(bullet) 
+          if collection_hash[field_name].match(bullet).offset(0)[0] != 0
+            collection_hash[field_name] = "\u{2022} " + collection_hash[field_name]
+          end
         end
       end
 
