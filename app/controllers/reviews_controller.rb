@@ -19,6 +19,7 @@ class ReviewsController < ApplicationController
     @discussions = record.discussions
 
     @section_titles = (record.sections[section_index][1])
+    @controlled_notices = record.controlled_notice_list(@section_titles)
 
     @bubble_data = []
     bubble_map = record.bubble_map

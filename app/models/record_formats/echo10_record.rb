@@ -5,6 +5,7 @@
 module RecordFormats::Echo10Record
   SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
 
+  include Echo10ControlledElements
 
   def get_section_titles
     SECTION_TITLES
@@ -82,5 +83,15 @@ module RecordFormats::Echo10Record
     else
       {}
     end
+  end
+
+  def controlled_notice_list(element_list)
+    controlled_map = {}
+    element_list.map do |element|
+      if CONTROLLED_ELEMENT_MAP.key? element
+        controlled_map[element] = CONTROLLED_ELEMENT_MAP[element]
+      end
+    end
+    controlled_map
   end
 end
