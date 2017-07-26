@@ -6,17 +6,18 @@ module CmrHelper
       array_collection = flatten_to_array(collection_hash, parent_string)
       #turning into grouped hash
       collection_hash = {}
-      bullet = "\n\u{2022} "
+      bullet = "\u{2022} "
       array_collection.map do |field_name, value|
         if collection_hash.key? field_name
-          collection_hash[field_name] += (bullet + value)
+          collection_hash[field_name] += ("\n" + bullet + value)
         else
           collection_hash[field_name] = value
         end  
         #if field contains bullet but does not start with one, add one to start
         if collection_hash[field_name].include?(bullet) 
-          if collection_hash[field_name].match("\u{2022}").offset(0)[0] != 0
-            collection_hash[field_name] = "\u{2022} " + collection_hash[field_name]
+          #this checks if a bullet symbol (\u{2022}) and a space " " are the two first chars
+          if collection_hash[field_name][0..1] != bullet
+            collection_hash[field_name] = bullet + collection_hash[field_name]
           end
         end
       end
@@ -32,19 +33,27 @@ module CmrHelper
       collection_hash.each do |key, sub_value|
 
         if sub_value.is_a?(Hash)
-          new_collection_arr = new_collection_arr.concat(flatten_to_array(sub_value, parent_string + "/" + key))
+          #flattening the child tree
+          flattened_sub_array = flatten_to_array(sub_value, parent_string + "/" + key)
+          #adding to flattened parent list
+          new_collection_arr.concat(flattened_sub_array)
         elsif sub_value.is_a?(Array)
           #some keyword groupings are presented as lists of strings, do not want to seperate these
           if sub_value[0].is_a?(String)
+            #creating an inline object here [key_name, value]
             new_collection_arr_entry = [(parent_string + "/" + key), ""]
+            value_index = 1
             sub_value.each_with_index do | array_entry |
-              new_collection_arr_entry[1] += (array_entry + " ")
+              new_collection_arr_entry[value_index] += (array_entry + " ")
             end
-            new_collection_arr_entry[1].strip
+            new_collection_arr_entry[value_index].strip
             new_collection_arr.push(new_collection_arr_entry)
           else
             sub_value.each_with_index do | array_entry, index |
-              new_collection_arr = new_collection_arr.concat(flatten_to_array(array_entry, parent_string + "/" + key))
+              #flattening the child tree
+              flattened_sub_array = flatten_to_array(array_entry, parent_string + "/" + key)
+              #adding to flattened parent list
+              new_collection_arr.concat(flattened_sub_array)
             end
           end
         else

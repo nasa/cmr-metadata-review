@@ -175,7 +175,7 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
     rescue Timeout::Error
       flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
-    rescue 
+    rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
     end
       
