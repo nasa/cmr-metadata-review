@@ -173,6 +173,20 @@
     border: none;
   }
 
+  .title_column {
+    min-width: 200px;
+    position: relative;
+  }
+
+  .widthGrab {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 15px;
+    cursor: col-resize;
+    background-color: rgba(255,255,255,0.6);
+  }
+
   .autolabelcol {
     position: absolute;
     width: 2em;
@@ -251,7 +265,6 @@
     max-height:130px;
     min-height: 19px;
     overflow: auto;
-    max-width: 400px;
   }
 
   tr td {
@@ -295,7 +308,7 @@
       }
 
     }
-    min-width: 200px;
+
     padding-left: 10px;
   }
 
