@@ -122,8 +122,8 @@
             }
           }
 
-          //resetting the discussion <th> field height;
-          adjustDiscussionCellHeight();
+          //resetting the text heights on each row header;
+          adjustHeaderRowTextPosition();
             
         }
 
@@ -544,8 +544,35 @@
         });
     }
 
-    //setting the height of the discussion <th> element on page load.
-    adjustDiscussionCellHeight();
+    function adjustHeaderRowTextPosition() {
+      //turning htmlelement collection into array
+      var rows =  Array.prototype.slice.call( document.getElementsByTagName('tr'))
+      //getting an array of heights in px
+      var heights = rows.map(function(row) {
+        var tdArr = row.getElementsByTagName('td')
+        for (var i=0; i < tdArr.length; i ++) {
+          //adding display check for when first row hidden due to filters
+          if (tdArr[i].style.display != 'none') {
+            return row.getElementsByTagName('td')[i].offsetHeight;
+          }
+        }  
+      });
+
+      var headcols = document.getElementsByClassName('headcol');
+      //-1 is to leave out the discussion row, done manually in next method
+      for (var i=0; i < (heights.length - 1); i++) {
+        //added a pixel to each row hieght to make the borders look smoother
+        headcols[i].style.height = (heights[i] + 1).toString() + 'px';
+        //used padding top and line height to center the text
+        headcols[i].style.paddingTop = '0px';
+        headcols[i].style.lineHeight = (heights[i] + 1).toString() + 'px';
+      }
+
+      //setting the height of the discussion <th> element on page load.
+      adjustDiscussionCellHeight();
+    }
+
+    adjustHeaderRowTextPosition();
 
 
     function recommendationMonitor(textarea) {
