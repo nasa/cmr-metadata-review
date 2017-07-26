@@ -156,7 +156,7 @@
       </script>
         
         <div class="filter_dropdown">
-          <i class="eui-icon eui-fa-unsorted"></i>
+          <i class="fa fa-floppy-o"></i>
           <p>SAVE AND GO TO:</p> 
           <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
             <% @navigation_list.each_with_index do |data_section, index_count| %>
@@ -176,14 +176,15 @@
 
         //changing the button contents if user on first or last section of record
         var section_select_length = document.getElementById("section_select").options.length
+        var button_width = '155px';
         if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
           document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
-          document.getElementById('nextButton').style.width = '140px';
-          document.getElementById('previousButton').style.width = '140px';
+          document.getElementById('nextButton').style.width = button_width;
+          document.getElementById('previousButton').style.width = button_width;
         } else if (<%=params["section_index"].to_i%> == 0) {
           document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
-          document.getElementById('previousButton').style.width = '140px';
-          document.getElementById('nextButton').style.width = '140px';
+          document.getElementById('previousButton').style.width = button_width;
+          document.getElementById('nextButton').style.width = button_width;
         }
       </script>
 
@@ -595,7 +596,17 @@
   <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
     <% if !@marked_done %>
-      <%= submit_tag("Save Review", id: "save_review_button", class: "form_save_button selectButton") %>
+
+      <div class="save_button_review">
+        <button type="submit" id="save_review_button" class="form_save_button selectButton">
+          <span class="save_review_text">
+            Save Review
+          </span>
+          <span class="save_review_icon">
+            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
       
       <script type="text/javascript">
         document.getElementById("save_review_button").onclick = function() {
@@ -606,7 +617,25 @@
 
   <% end %>
 
+
+
   <section class="detail_footer">
+
+    <div id="review_top_button" class="review_top_button">
+      <span class="review_top_text">
+        Back To Top
+      </span>
+      <span class="review_top_icon">
+        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+      </span>
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById('review_top_button').onclick = function() {
+        window.scrollTo(0,0);
+      }
+    </script>
+
 
     <%= render(partial: 'legend') %>
 
