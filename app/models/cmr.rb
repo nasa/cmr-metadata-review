@@ -1,136 +1,11 @@
 class Cmr
   include ApplicationHelper
   include CmrHelper
+  #imports lists of required fields
+  include RequiredCollectionLists
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
-  REQUIRED_COLLECTION_FIELDS = ["ShortName", 
-                                "VersionId", 
-                                "LastUpdate", 
-                                "LongName", 
-                                "DataSetId", 
-                                "Description", 
-                                "ProcessingLevelId", 
-                                  [
-                                    "ArchiveCenter",
-                                    "ProcessingCenter"
-                                    ],
-                                "CollectionState", 
-                                "DataFormat", 
-                                  [
-                                    "Temporal/SingleDateTime", 
-                                    "Temporal/RangeDateTime/BeginningDateTime",
-                                    "Temporal/PeriodicDateTime/Name"
-                                    ],
-                                "Contacts/Contact/Role",
-                                "ScienceKeywords/ScienceKeyword/CategoryKeyword",
-                                "ScienceKeywords/ScienceKeyword/TopicKeyword",
-                                "ScienceKeywords/ScienceKeyword/TermKeyword", 
-                                "Platforms/Platform/ShortName", 
-                                "Platforms/Platform/Instruments/Instrument/ShortName",
-                                "Campaigns/Campaign/ShortName", 
-                                "OnlineAccessURLs/OnlineAccessURL/URL", 
-                                "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem",
-                                [
-                                  [
-                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate"
-                                  ],
-                                  [
-                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLongitude",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/Point/PointLatitude"
-                                  ],
-                                  [
-                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLongitude",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/Line/Point/PointLatitude"
-                                  ],
-                                  [
-                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLatitude",
-                                    "Spatial/HorizontalSpatialDomain/Geometry/GPolygon/Boundary/Point/PointLongitude"
-                                  ]
-                                ],
-                                "Spatial/GranuleSpatialRepresentation"]
-
-    REQUIRED_DIF10_FIELDS =    [
-                                  "Entry_ID/Short_Name",
-                                  "Entry_ID/Version",
-                                  "Entry_Title",
-                                  "Science_Keywords/Category",
-                                  "Science_Keywords/Topic",
-                                  "Science_Keywords/Term",
-                                  "Platform/Short_Name",
-                                  "Platform/Instrument/Short_Name",
-                                  [
-                                    "Temporal_Coverage/Range_DateTime/Beginning_Date_Time",
-                                    "Temporal_Coverage/Single_Date_Time",
-                                    [
-                                      "Temporal_Coverage/Periodic_DateTime/Name",
-                                      "Temporal_Coverage/Periodic_DateTime/Start_Date",
-                                      "Temporal_Coverage/Periodic_DateTime/End_Date",
-                                      "Temporal_Coverage/Periodic_DateTime/Duration_Unit",
-                                      "Temporal_Coverage/Periodic_DateTime/Duration_Value",
-                                      "Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Unit",
-                                      "Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Value"
-                                    ],
-                                    [
-                                      "Temporal_Coverage/Paleo_DateTime/Paleo_Start_Date",
-                                      "Temporal_Coverage/Paleo_DateTime/Paleo_Stop_Date"
-                                    ]
-                                  ],
-                                  "Data_Set_Progress",
-                                  "Spatial_Coverage/Granule_Spatial_Representation",
-                                  "Spatial_Coverage/Geometry/Coordinate_System", 
-                                  [
-                                    [
-                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Southernmost_Latitude",
-                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Northernmost_Latitude",
-                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Westernmost_Longitude",
-                                      "Spatial_Coverage/Geometry/Bounding_Rectangle/Easternmost_Longitude"
-                                    ],
-                                    [
-                                      "Spatial_Coverage/Geometry/Point/Point_Longitude",
-                                      "Spatial_Coverage/Geometry/Point/Point_Latitude"
-                                    ],
-                                    [
-                                      "Spatial_Coverage/Geometry/Line/Point/Point_Longitude",
-                                      "Spatial_Coverage/Geometry/Line/Point/Point_Latitude",
-                                    ],
-                                    [
-                                      "Spatial_Coverage/Geometry/Polygon/Boundary/Point/Point_Longitude",
-                                      "Spatial_Coverage/Geometry/Polygon/Boundary/Point/Point_Latitude"
-                                    ]
-                                  ],
-                                  "Project/Short_Name",
-                                  "Organization/Organization_Type",
-                                  "Organization/Organization_Name/Short_Name",
-                                  "Summary/Abstract",
-                                  "Related_URL/URL_Content_Type/Type",
-                                  "Related_URL/URL",
-                                  "Product_Level_ID",
-                                  "Metadata_Dates/Metadata_Creation",
-                                  "Metadata_Dates/Metadata_Last_Revision",
-                                  "Metadata_Dates/Data_Creation",
-                                  "Metadata_Dates/Data_Last_Revision",
-                                  "Dataset_Citation/Persistent_Identifier/Type",
-                                  "Dataset_Citation/Persistent_Identifier/Identifier"
-                                ]               
-
-
-    REQUIRED_GRANULE_FIELDS =  ["GranuleUR",
-                                "InsertTime",
-                                "LastUpdate",
-                                  [
-                                    [
-                                      "Collection/ShortName",
-                                      "Collection/VersionId"
-                                    ],
-                                    "Collection/DataSetId"
-                                  ],
-                                "DataGranule/ProductionDateTime",
-                                "OnlineAccessURLs/OnlineAccessURL/URL"] 
-
 
 
   # A custom error raised when items can not be found in the CMR.
@@ -291,8 +166,10 @@ class Cmr
   def self.get_collection(concept_id, data_format = "echo10")
     if data_format == "echo10"
       required_fields = REQUIRED_COLLECTION_FIELDS
+      desired_fields = DESIRED_FIELDS_ECHO10
     elsif data_format == "dif10"
       required_fields = REQUIRED_DIF10_FIELDS 
+      desired_fields = DESIRED_FIELDS_DIF10
     else
       required_fields = []
     end
@@ -303,6 +180,7 @@ class Cmr
     #Dif10 records come in with some uneeded header values
     nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
     required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
+    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, desired_fields)
     required_fields_hash
   end
 
@@ -420,7 +298,7 @@ class Cmr
   # Iterates through parameter hash adding any UMM required fields    
   # List of required fields set in hardcoded list within method
 
-  def self.add_required_collection_fields(collection_hash, required_fields = REQUIRED_COLLECTION_FIELDS)
+  def self.add_required_collection_fields(collection_hash, required_fields)
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
@@ -430,7 +308,6 @@ class Cmr
 
     collection_hash
   end
-
 
   # ====Params
   # Hash of metadata keys and values    
