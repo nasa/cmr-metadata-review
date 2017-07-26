@@ -8,7 +8,7 @@
       <p><strong>Search the CMR:</strong></p>
     </div>
 
-    <%= form_tag(collections_search_path, method: "get") do %>
+    <%= form_tag(collections_search_path, id: 'cmr_search', method: "get") do %>
       <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
       <%= text_field_tag(:free_text, @free_text) %>
       <%= hidden_field_tag(:curr_page, "1") %>
@@ -17,6 +17,12 @@
         <i class="eui-icon eui-fa-search"></i>
       </button>
     <% end %>
+
+    <script type="text/javascript">
+      document.getElementById('cmr_search').onsubmit = function() {
+        showLoading("Searching the CMR");
+      }
+    </script>
 
     <br>
     <p><strong>Search Results:</strong></p>
@@ -65,26 +71,44 @@
                   <%= hidden_field_tag(:revision_id, "") %>
                   <%= submit_tag("Select Collection", id: 'ingest_submit', class: 'selectButton') %>
                 <% end %> 
+
+                <script type="text/javascript">
+                  document.getElementById('ingest_form').onsubmit = function() {
+                    showLoading('Finding Record in CMR');
+                  }
+                </script>
               </div>
 
               <div class="direction_links">
                 
                 <% if @curr_page.to_i > 1 %>
-                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>">
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>" id="prev_link">
                     <button id="prev_button">
                       <i class="eui-icon eui-fa-chevron-circle-left"></i>
                       <p>Previous Page</p>    
                     </button>
                   </a>
+
+                  <script type="text/javascript">
+                    document.getElementById('prev_link').onclick = function() {
+                      showLoading('Loading');
+                    }
+                  </script>
                 <% end %>
 
                 <% if @curr_page.to_i * 10 < @collection_count %>
-                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>">
+                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>" id="next_link">
                     <button id="next_button">
                       <p>Next Page</p>    
                       <i class="eui-icon eui-fa-chevron-circle-right"></i>
                     </button>
                   </a>
+
+                  <script type="text/javascript">
+                    document.getElementById('next_link').onclick = function() {
+                      showLoading('Loading');
+                    }
+                  </script>
                 <% end %>
               </div>
 
@@ -108,6 +132,8 @@
                                               }
                     })(i);
                 }
+
+
             </script>
 
 
