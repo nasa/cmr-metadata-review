@@ -44,6 +44,22 @@ class ReviewsController < ApplicationController
 
   end
 
+  def create
+    #making sure we dont make duplicate review
+    if !Review.where(user_id: params['review']['user_id'].to_i, record_id: params['review']['record_id'].to_i).first.nil?
+        redirect_to record_path(id: params['review']['record_id'].to_i)
+    end
+
+    new_review = Review.new
+    new_review.record_id = params['review']['record_id'].to_i
+    new_review.user_id = params['review']['user_id'].to_i
+    new_review.comment = params['review']['comment']
+    new_review.review_state = params['review']['review_state'].to_i
+    new_review.review_completion_date = DateTime.now    
+    new_review.save
+
+    redirect_to record_path(id: params['review']['record_id'].to_i)
+  end
 
   def update
 
