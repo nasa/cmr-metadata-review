@@ -72,11 +72,11 @@ class CollectionsController < ApplicationController
       redirect_to home_path
       return
     rescue Net::OpenTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      flash[:alert] = 'There was an open timeout error while connecting to the CMR System, please try again'
       redirect_to home_path
       return
     rescue Net::ReadTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
       redirect_to home_path
       return
     rescue Exception => ex
@@ -145,7 +145,7 @@ class CollectionsController < ApplicationController
         begin
           #In production there is an egress issue with certain link types given in metadata
           #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-          Timeout::timeout(12) {
+          Timeout::timeout(20) {
             new_collection_record.create_script
 
             #getting list of records for script
@@ -157,7 +157,7 @@ class CollectionsController < ApplicationController
           save_success = true
         rescue Timeout::Error
           flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
-          Rails.logger.error("PyCMR Error: On Ingest Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error") 
+          Rails.logger.error("PyCMR Error: On Ingest Revision #{revision_id}, Concept_id #{concept_id} had timeout error") 
           raise ActiveRecord::Rollback
         end
       end
@@ -170,9 +170,9 @@ class CollectionsController < ApplicationController
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
     rescue Net::OpenTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      flash[:alert] = 'There was an open timeout error connecting to the CMR System, please try again'
     rescue Net::ReadTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
     rescue Timeout::Error
       flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
     rescue

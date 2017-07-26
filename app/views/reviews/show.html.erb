@@ -279,7 +279,7 @@
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div>
-                <%= @current_values[title] %>    
+                <%= format_new_lines(@current_values[title]) %>    
                 </div>
               </td>
             <% end %>
