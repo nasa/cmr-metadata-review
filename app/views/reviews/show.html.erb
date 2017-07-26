@@ -193,6 +193,7 @@
   <div class="clearfix"></div>
 </div>
 
+
 <!-- Data/review area -->
 <section >
 
@@ -211,7 +212,9 @@
                   <%= split_on_capitals(title) %>
                 </div>
                 <% if @controlled_notices[title] %>
-                  <i class="fa fa-asterisk controlled_icon" title="<%=@controlled_notices[title]%>"></i>
+                  <i class="fa fa-asterisk controlled_icon tooltip">
+                    <p class="tooltiptext"><%=@controlled_notices[title]%></p>
+                  </i>
                 <% end %>
               </div>
               <div class="widthGrab">
