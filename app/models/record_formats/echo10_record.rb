@@ -5,7 +5,7 @@
 module RecordFormats::Echo10Record
   SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
 
-  include Echo10ControlledElements
+  include RecordFormats::Echo10ControlledElements
 
   def get_section_titles
     SECTION_TITLES
