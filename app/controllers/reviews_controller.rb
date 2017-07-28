@@ -35,6 +35,8 @@ class ReviewsController < ApplicationController
     @script_values = replace_links(@script_values)
 
     @previous_values = record.previous_values
+    @previous_values = replace_links(@previous_values)
+
     @previous_recommendations = record.previous_recommendations
 
     @current_values = record.values

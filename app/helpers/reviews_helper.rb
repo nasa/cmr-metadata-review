@@ -30,7 +30,9 @@ module ReviewsHelper
   end
 
   def format_new_lines(string)
-    return (raw string.gsub("\n", "<br>"))
+    unless string.nil?
+      return (raw string.gsub("\n", "<br>"))
+    end
   end 
 
   def replace_links(values_hash)
