@@ -20,6 +20,18 @@
   }
 }
 
+
+tr.empty_prev_class {
+  display: none;
+}
+
+tr.empty_prev_class.curr_value {
+  display: table-row;
+  background: $review-blue-light;
+}
+
+
+
 .toggle_area {
   background-color: white;
   padding-left: 59px;

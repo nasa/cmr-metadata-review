@@ -271,18 +271,20 @@
               </td>
             <% end %>
           </tr>
-          <tr>
-          <th class="autolabelcol"></th>
-          <th class="headcol">PREVIOUS VALUE</th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div>
-                  <%= @previous_values[title] %>
-                </div>
-              </td>
-            <% end %>
-          </tr>
-          <tr>
+          
+          <tr class="<%= @empty_prev_class %>">
+            <th class="autolabelcol"></th>
+            <th class="headcol">PREVIOUS VALUE</th>
+              <% @section_titles.each do |title| %>
+                <td class="column_<%=title%>">
+                  <div>
+                    <%= @previous_values[title] %>
+                  </div>
+                </td>
+              <% end %>
+            </tr>
+
+          <tr class="<%= @empty_prev_class %> curr_value">
             <th class="autolabelcol"></th>
             <th class="headcol">CURRENT VALUE</th>
             <% @section_titles.each do |title| %>
@@ -294,7 +296,7 @@
             <% end %>
           </tr>
 
-          <tr>
+          <tr class="<%= @empty_prev_class %>">
             <th class="autolabelcol"></th>
             <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
             <% @section_titles.each do |title| %>

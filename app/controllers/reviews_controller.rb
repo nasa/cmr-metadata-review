@@ -34,6 +34,8 @@ class ReviewsController < ApplicationController
     @script_values = record.script_values
 
     @previous_values = record.previous_values
+    @empty_prev_class = @previous_values.empty? ? 'empty_prev_class' : ''
+
     @previous_recommendations = record.previous_recommendations
 
     @current_values = record.values
