@@ -574,4 +574,8 @@ class Record < ActiveRecord::Base
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end
 
+  def native_link
+    "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.native"
+  end
+
 end
