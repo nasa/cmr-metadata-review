@@ -32,13 +32,16 @@ class ReviewsController < ApplicationController
 
     @flagged_by_script = record.binary_script_values
     @script_values = record.script_values
+    @script_values = replace_links(@script_values)
 
-    @previous_values = record.previous_values
-    @empty_prev_class = @previous_values.empty? ? 'empty_prev_class' : ''
+    @previous_values = replace_links(@previous_values)
+
 
     @previous_recommendations = record.previous_recommendations
 
     @current_values = record.values
+    @current_values = replace_links(@current_values)
+
     @recommendations = record.get_recommendations
     @second_opinions = record.get_opinions
 
