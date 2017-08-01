@@ -267,7 +267,7 @@
           <th class="headcol">SCRIPT RESULT</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
-                <div><%= @script_values[title] %></div>
+                <div><%= raw @script_values[title] %></div>
               </td>
             <% end %>
           </tr>
@@ -277,7 +277,7 @@
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div>
-                  <%= @previous_values[title] %>
+                  <%= format_new_lines(@previous_values[title]) %>
                 </div>
               </td>
             <% end %>
