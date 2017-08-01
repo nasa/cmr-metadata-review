@@ -19,7 +19,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | b
 nvm install 4.4.5
 
 //creating working dir
-git clone -b abaker_working_branch https://abaker:Mcgladrey1@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git
+git clone -b abaker_working_branch https://abaker:***REMOVED***@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git
 
 //enter dir
 cd cmr-metadata-review

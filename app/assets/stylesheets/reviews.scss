@@ -11,6 +11,7 @@
     border-color: $report-line;
   }
   tr {
+
     &:nth-child(even) {background: $review-blue-light}
   }
   tr.section_title_row {
@@ -20,12 +21,10 @@
     &:nth-child(even) {background: $review-yellow-dark}
     &:nth-child(odd) {background: $review-green-light}
   }
-
   th {
     background-color: inherit;
   }
 }
-
 
 .toggle_area {
   background-color: white;
