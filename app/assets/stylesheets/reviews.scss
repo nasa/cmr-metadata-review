@@ -11,25 +11,20 @@
     border-color: $report-line;
   }
   tr {
-      &:nth-child(1), &:nth-child(4), &:nth-child(6), &:nth-child(8) {background: $review-blue-light}
-      &:nth-child(10), &:nth-child(14) {background: $review-yellow-dark}
-      &:nth-child(13), &:nth-child(15) {background: $review-green-light}
+    &:nth-child(even) {background: $review-blue-light}
   }
+  tr.section_title_row {
+    background: $review-blue-light; 
+  }
+  tr.user_input {
+    &:nth-child(even) {background: $review-yellow-dark}
+    &:nth-child(odd) {background: $review-green-light}
+  }
+
   th {
     background-color: inherit;
   }
 }
-
-
-tr.empty_prev_class {
-  display: none;
-}
-
-tr.empty_prev_class.curr_value {
-  display: table-row;
-  background: $review-blue-light;
-}
-
 
 
 .toggle_area {
