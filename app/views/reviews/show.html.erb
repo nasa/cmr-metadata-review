@@ -694,9 +694,9 @@
 
     //used to automatically flag a cell green if recommendation starts with OK string
     function turnColumnGreen(columnName) {
-      var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
-      //chaning the select value
-      colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
+      var colorTD = document.getElementById("color_code_" + columnName);
+      //changing the select value
+      colorTD.value = 'green';
       update_color_backgrounds();
     }
   </script>
