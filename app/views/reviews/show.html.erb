@@ -332,7 +332,7 @@
           </th>
             <% @section_titles.each do |title| %>
               <td class="recommendation_cell column_<%=title%>">
-                <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+                <textarea class="input_entry" name="recommendation[<%= title %>]" oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
               </td>
             <% end %>
           </tr>
@@ -340,6 +340,7 @@
           <script type="text/javascript">
             function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
               document.getElementById(cell_id).onclick = function() {
+                activateSaveButton();
                 var check = document.getElementById(check_id);
                 if (check.checked == true) {
                   document.getElementById(cell_id).style.backgroundColor = "inherit";
@@ -354,6 +355,7 @@
                 }
               }; 
             }
+
           </script>
 
 
@@ -421,6 +423,7 @@
                           document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
                             document.getElementById("color_code_<%=title%>").value = "<%=color%>";
                             update_color_backgrounds(); 
+                            activateSaveButton();
                           }
                         </script>
                       <% end %>
@@ -435,6 +438,7 @@
                         document.getElementById("cancel_icon_<%=title%>").onclick = function() {
                           document.getElementById("color_code_<%=title%>").value = "";
                           update_color_backgrounds(); 
+                          activateSaveButton();
                         }
                       </script>
                     </div>
@@ -468,9 +472,9 @@
               <td class="discussion_td column_<%=title%>">
                 <div class="discussion_holder">
                   <div class="new_discussion">
-                    <textarea placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
+                    <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
                   </div>
-                  
+
                   <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
                   <% messages.each do |message| %>
                     <div class="discussion_comment">
@@ -620,8 +624,15 @@
       </div>
       
       <script type="text/javascript">
+        // Setting as disbled until someone triggers an "activateSaveButton" action
+        document.getElementById("save_review_button").disabled = true;
+
         document.getElementById("save_review_button").onclick = function() {
           showLoading("Saving Record Review");
+        }
+
+        function activateSaveButton() {
+          document.getElementById('save_review_button').disabled = false; 
         }
       </script>
     <% end %>
