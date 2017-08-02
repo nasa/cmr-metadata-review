@@ -263,3 +263,23 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $blue-dark;
 }
 
+.flag_green {
+  background-color: $review-green;
+  color: white;
+}
+
+.flag_blue {
+  background-color: $review-blue;
+  color: white;
+}
+
+.flag_yellow {
+  background-color: $review-yellow;
+  color: black;
+}
+
+.flag_red {
+  background-color: $review-red;
+  color: white;
+}
+

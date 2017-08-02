@@ -36,6 +36,10 @@ module ReviewsHelper
   end 
 
   def replace_links(values_hash)
+    if values_hash.nil?
+      return {}
+    end
+    
     new_values_hash = {}
     values_hash.each do |key, value|
       #taken from https://stackoverflow.com/questions/30344445/detect-and-replace-urls-in-text
