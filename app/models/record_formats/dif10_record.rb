@@ -3,7 +3,7 @@
 #Since individual record formats have different underlying structures of RecordData objects
 #unique accessors are needed for each format to access commonly requested data.
 module RecordFormats::Dif10Record
-  SECTION_TITLES = ["Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Related_URL", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
+  SECTION_TITLES = ["Summary", "Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Reference", "Location", "Data_Resolution", "Related_URL", "Distribution", "Multimedia_Sample", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
 
   include RecordFormats::Dif10ControlledElements
 
