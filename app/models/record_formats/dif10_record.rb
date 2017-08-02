@@ -5,6 +5,8 @@
 module RecordFormats::Dif10Record
   SECTION_TITLES = ["Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Related_URL", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
 
+  include RecordFormats::Dif10ControlledElements
+
   def get_section_titles
     SECTION_TITLES
   end
@@ -48,5 +50,15 @@ module RecordFormats::Dif10Record
   #There is currently no script for DIF10 records
   def evaluate_script(raw_data = nil)
     nil
+  end
+
+  def controlled_notice_list(element_list)
+    controlled_map = {}
+    element_list.map do |element|
+      if CONTROLLED_ELEMENT_MAP.key? element
+        controlled_map[element] = CONTROLLED_ELEMENT_MAP[element]
+      end
+    end
+    controlled_map
   end
 end
