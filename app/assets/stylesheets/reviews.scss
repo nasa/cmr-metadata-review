@@ -22,7 +22,7 @@
 
 .toggle_area {
   background-color: white;
-  padding-left: 46px;
+  padding-left: 59px;
   padding-top: 10px;
   padding-bottom: 10px;
 
@@ -75,7 +75,7 @@
 
 .filter_dropdown {
   float: right;
-  padding-right: 62px;
+  padding-right: 5%;
   i {
     position: relative;
     top: 2px;
@@ -94,15 +94,35 @@
 
 
 .detail_footer {
-  padding-top: 20px;
-  padding-left: 46px;
+  padding-top: 15px;
+  margin-top: 30px;
+  margin-left: 40px;
   font-size: 0.7em;
+  margin-right: 5%;
+  border-top: 1px solid gray;
 }
 
+.save_button_review {
+    margin-right: 5%;
+    text-align: right;
+}
 
 .form_save_button {
+  display: inline-block;
   margin-left: 46px;
-  margin-top: 30px;
+  margin-top: 15px;
+  line-height: 0;
+
+  .save_review_text {
+    position: relative;
+    bottom: 4px;
+    margin-right: 4px;
+  }
+
+  .save_review_icon {
+    color: white;
+    font-size: 1.7em;
+  }
 }
 
 .color_code_select {
@@ -130,11 +150,35 @@
   background-color: $review-green;
 }
 
+.icon_holder {
+  font-size: 1.5em;
+}
+
+.review_nav_icon {
+  margin-right: 5px;
+}
+
+.review_top_button {
+  float: right;
+  cursor: pointer;
+  .review_top_text {
+    font-size: 1.1em;
+    position: relative;
+    bottom: 2px;
+    margin-right: 2px;
+  }
+  .review_top_icon {
+    font-size: 1.8em;
+  }
+}
+
+
+
 
 
 .scroll_table {
   margin-top: 25px;
-  max-width: 78%;
+  margin-right: 5%;
   overflow-x: auto;  
   margin-left: 17.1em;
   overflow-y: visible;
@@ -171,6 +215,20 @@
   .first_headcol {
     background-color: white;
     border: none;
+  }
+
+  .title_column {
+    min-width: 200px;
+    position: relative;
+  }
+
+  .widthGrab {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 15px;
+    cursor: col-resize;
+    background-color: rgba(255,255,255,0.6);
   }
 
   .autolabelcol {
@@ -251,7 +309,6 @@
     max-height:130px;
     min-height: 19px;
     overflow: auto;
-    max-width: 400px;
   }
 
   tr td {
@@ -295,12 +352,17 @@
       }
 
     }
-    min-width: 200px;
+
     padding-left: 10px;
   }
 
   .title_text {
+    display: flex;
     font-weight: bold;
+    .controlled_icon {
+      margin-left:10px; 
+      cursor: help;
+    }
   }
 
   textarea {
@@ -406,4 +468,34 @@
     }
   }
 
+}
+
+
+.tooltip {
+    /*position: relative;*/
+    display: inline-block;
+    /*border-bottom: 1px dotted black;*/
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    padding: 10px;
+    word-wrap: break-word;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid black;
+    font-size: 1.1em;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 75%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

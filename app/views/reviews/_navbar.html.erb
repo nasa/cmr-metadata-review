@@ -58,13 +58,23 @@
 
       <div class="title_buttons">
 
-        <button type="button" id="previousButton" class="eui-btn eui-btn--round eui-btn--sm">
-          <i class="eui-icon eui-fa-arrow-circle-left button_symbol"></i>
-          <span id="previousButtonText">PREVIOUS</span>
+        <button type="button" id="previousButton" class="eui-btn eui-btn--round eui-btn--sm review_nav_button">
+          <div>
+            <span class="icon_holder">
+              <i class="fa fa-arrow-left review_nav_icon"></i>
+            </span>
+            <div class="icon_spacing"></div> 
+            <span class="icon_text" id="previousButtonText">PREVIOUS</span>
+          </div>
         </button>
-        <button type="button" id="nextButton" class="eui-btn eui-btn--round eui-btn--sm">
-          <span id="nextButtonText">NEXT</span>
-          <i class="eui-icon eui-fa-arrow-circle-right button_symbol"></i>
+        <button type="button" id="nextButton" class="eui-btn eui-btn--round eui-btn--sm review_nav_button">
+          <div>
+            <span class="icon_text" id="nextButtonText">NEXT</span>
+            <div class="icon_spacing"></div> 
+            <span class="icon_holder">
+              <i class="fa fa-arrow-right review_nav_icon"></i>
+            </span>
+          </div>
         </button>    
       </div>
       <div class="clearfix"></div>
@@ -72,7 +82,7 @@
       <script type="text/javascript">
         document.getElementById("previousButton").onclick = function() {
           if (<%=params["section_index"].to_i%> > 0) {
-            let section_select = document.getElementById("section_select");
+            var section_select = document.getElementById("section_select");
             section_select.options[<%=params["section_index"].to_i - 1%>].selected = true;
             section_select.options[<%=params["section_index"].to_i%>].selected = false;
 
@@ -82,10 +92,11 @@
             section_select.selectedIndex = -1;
             section_select.onchange();
           }
+          showLoading("Loading");
         };
 
         document.getElementById("nextButton").onclick = function() {
-          let section_select = document.getElementById("section_select");
+          var section_select = document.getElementById("section_select");
           if (<%=params["section_index"].to_i%> < (section_select.options.length - 1)) {
             
             section_select.options[<%=params["section_index"].to_i + 1%>].selected = true;
@@ -97,6 +108,7 @@
             section_select.selectedIndex = -1;
             section_select.onchange();
           }
+          showLoading("Loading");
         };
 
       </script>
