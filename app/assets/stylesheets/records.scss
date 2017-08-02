@@ -270,6 +270,14 @@
     margin-top: -15px;
     margin-bottom: 10px;
   }
+  .format_links {
+    width: 20em;
+    display: flex;
+    justify-content: space-between;
+    .format_link {
+      font-weight: 600;
+    }
+  }
 }
 
 .section_display {

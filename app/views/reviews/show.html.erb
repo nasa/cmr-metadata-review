@@ -202,7 +202,7 @@
       <div class="scroll_table" id="scroll_table">
 
       <table class="review_table">
-        <tr>
+        <tr class="section_title_row">
         <th class="headcol first_headcol"></th>
 
           <!-- for each of shown value list, create td for value -->
@@ -267,21 +267,25 @@
           <th class="headcol">SCRIPT RESULT</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
-                <div><%= @script_values[title] %></div>
+                <div><%= raw @script_values[title] %></div>
               </td>
             <% end %>
-          </tr>
-          <tr>
-          <th class="autolabelcol"></th>
-          <th class="headcol">PREVIOUS VALUE</th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div>
-                  <%= @previous_values[title] %>
-                </div>
-              </td>
-            <% end %>
-          </tr>
+          </tr>          
+
+          <% if !@previous_values.empty? %>
+            <tr>
+              <th class="autolabelcol"></th>
+              <th class="headcol">PREVIOUS VALUE</th>
+                <% @section_titles.each do |title| %>
+                  <td class="column_<%=title%>">
+                    <div>
+                      <%= format_new_lines(@previous_values[title]) %>
+                    </div>
+                  </td>
+                <% end %>
+              </tr>
+          <% end %>
+
           <tr>
             <th class="autolabelcol"></th>
             <th class="headcol">CURRENT VALUE</th>
@@ -294,18 +298,19 @@
             <% end %>
           </tr>
 
-          <tr>
-            <th class="autolabelcol"></th>
-            <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div class="previous_recommendation_cell">
-                <%= @previous_recommendations[title] %>    
-                </div>
-              </td>
-            <% end %>
-          </tr>
-
+          <% if !@previous_values.empty? %>
+            <tr>
+              <th class="autolabelcol"></th>
+              <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
+              <% @section_titles.each do |title| %>
+                <td class="column_<%=title%>">
+                  <div class="previous_recommendation_cell">
+                  <%= @previous_recommendations[title] %>    
+                  </div>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
 
           <tr class="input_line_row line_row">
             <th class="inputlabelcol"></th>
@@ -317,7 +322,9 @@
             <% end %>
           </tr>
 
-          <tr>
+
+          <tr class="user_input">
+
           <th class="inputlabelcol"></th>
           <th class="headcol">
             <p>RECOMMENDATION</p>
@@ -325,7 +332,7 @@
           </th>
             <% @section_titles.each do |title| %>
               <td class="recommendation_cell column_<%=title%>">
-                <textarea name="recommendation[<%= title %>]" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+                <textarea class="input_entry" name="recommendation[<%= title %>]" oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
               </td>
             <% end %>
           </tr>
@@ -333,6 +340,7 @@
           <script type="text/javascript">
             function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
               document.getElementById(cell_id).onclick = function() {
+                activateSaveButton();
                 var check = document.getElementById(check_id);
                 if (check.checked == true) {
                   document.getElementById(cell_id).style.backgroundColor = "inherit";
@@ -347,6 +355,7 @@
                 }
               }; 
             }
+
           </script>
 
 
@@ -364,7 +373,9 @@
 
 
 
-          <tr>
+
+          <tr class="user_input">
+
           <th class="inputlabelcol"></th>
           <th class="headcol second_to_final_headcol">2ND OPINION</th>
             <% @section_titles.each do |title| %>
@@ -390,7 +401,9 @@
             <% end %>
           </tr>
 
-          <tr>
+
+          <tr class="user_input">
+
             <th class="inputlabelcol"></th>
             <th class="headcol second_to_final_headcol">COLOR CODE</th>
               <% @section_titles.each do |title| %>
@@ -410,6 +423,7 @@
                           document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
                             document.getElementById("color_code_<%=title%>").value = "<%=color%>";
                             update_color_backgrounds(); 
+                            activateSaveButton();
                           }
                         </script>
                       <% end %>
@@ -424,6 +438,7 @@
                         document.getElementById("cancel_icon_<%=title%>").onclick = function() {
                           document.getElementById("color_code_<%=title%>").value = "";
                           update_color_backgrounds(); 
+                          activateSaveButton();
                         }
                       </script>
                     </div>
@@ -446,8 +461,8 @@
 
 
 
+          <tr class="user_input">
 
-          <tr>
           <th class="inputlabelcol final_headcol"></th>
           <th class="headcol final_headcol">
             <p>DISCUSSION &amp; JUSTIFICATION</p>
@@ -457,9 +472,9 @@
               <td class="discussion_td column_<%=title%>">
                 <div class="discussion_holder">
                   <div class="new_discussion">
-                    <textarea placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
+                    <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
                   </div>
-                  
+
                   <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
                   <% messages.each do |message| %>
                     <div class="discussion_comment">
@@ -609,8 +624,15 @@
       </div>
       
       <script type="text/javascript">
+        // Setting as disbled until someone triggers an "activateSaveButton" action
+        document.getElementById("save_review_button").disabled = true;
+
         document.getElementById("save_review_button").onclick = function() {
           showLoading("Saving Record Review");
+        }
+
+        function activateSaveButton() {
+          document.getElementById('save_review_button').disabled = false; 
         }
       </script>
     <% end %>
@@ -694,9 +716,9 @@
 
     //used to automatically flag a cell green if recommendation starts with OK string
     function turnColumnGreen(columnName) {
-      var colorTD = document.getElementsByClassName("color_code_cell column_" + columnName)[0];
-      //chaning the select value
-      colorTD.childNodes[1].childNodes[1].selectedIndex = 1;
+      var colorTD = document.getElementById("color_code_" + columnName);
+      //changing the select value
+      colorTD.value = 'green';
       update_color_backgrounds();
     }
   </script>
