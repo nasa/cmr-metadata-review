@@ -22,7 +22,11 @@ module RecordFormats::Echo10Record
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
-    self.get_column("LongName")
+    if self.is_collection?
+      self.get_column("LongName")
+    else 
+      self.get_column("GranuleUR")
+    end
   end 
 
   # ====Params   

@@ -20,7 +20,7 @@ class RecordsController < ApplicationController
       redirect_to home_path
       return
     end
-
+    
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
