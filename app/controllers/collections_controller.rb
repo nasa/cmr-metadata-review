@@ -23,7 +23,6 @@ class CollectionsController < ApplicationController
     @collection_records = collection.get_records.order(:revision_id).reverse_order
 
     @granule_objects = Granule.where(collection: collection)
-    # @granule_records = granule_objects.map { |granule|}
   end
 
   def search
@@ -113,12 +112,15 @@ class CollectionsController < ApplicationController
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
       granules_components = []
-      #only selecting granules for certain formats per business rules
-      if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
-          #nil gets turned into 0
-          granules_count = params["granulesCount"].to_i
-          #creating all the Granule related objects
-          granules_components = Granule.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
+      #checking that no granule exists for previously imported/deleted records.
+      if collection_object.granules.count == 0
+        #only selecting granules for certain formats per business rules
+        if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
+            #nil gets turned into 0
+            granules_count = params["granulesCount"].to_i
+            #creating all the Granule related objects
+            granules_components = Granule.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
+        end
       end
 
 
