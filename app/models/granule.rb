@@ -14,8 +14,11 @@ class Granule < ActiveRecord::Base
       new_granule_record.save
 
       granule_record_data_list = []
+
+      flattened_granule_data = Cmr.get_granule(granule_data['concept_id'])
+
       #creating all the recordData values for the granule
-      granule_data["Granule"].each_with_index do |(key, value), i|
+      flattened_granule_data.each_with_index do |(key, value), i|
         granule_record_data = RecordData.new(record: new_granule_record)
         granule_record_data.last_updated = DateTime.now
         granule_record_data.column_name = key

@@ -184,6 +184,14 @@ class Cmr
     required_fields_hash
   end
 
+
+  def self.get_granule(concept_id)    
+    granule_raw_data = Cmr.get_raw_granule(concept_id)
+    results_hash = flatten_collection(granule_raw_data)
+    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    nil_replaced_hash
+  end
+
   # ====Params   
   # string 
   # ====Returns
@@ -246,6 +254,8 @@ class Cmr
   # Queries the CMR for a metadata record
   # returns the response hash without processing
   # need the raw return format to run automated scripts against
+  # Only Echo10 records pull in granules pre business rules.
+  # See Collection::INCLUDE_GRANULE_FORMATS
 
 
   def self.get_raw_granule(concept_id)

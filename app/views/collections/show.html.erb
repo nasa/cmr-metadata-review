@@ -71,22 +71,27 @@
 
   <div class="group_box">
     <h3>Granules</h3>
-      <% @granule_objects.each do |granule| %>
+      <% @granule_objects.each_with_index do |granule, index| %>
 
       <table cellpadding="5" border="1">
 
         <tr>
           <th>
-            <h4>Revision ID: <%= granule.concept_id %></h4>
+            <h4>Concept ID: <%= granule.concept_id %></h4>
           </th>
         </tr>
 
         <tr>
           <td>
             <div class="review_actions">
-              <button id="review_details_button">
-                  <p>See Granule Review Details</p>
+              <button id="granule_details_button<%=index%>" class="smallSelectButton">
+                <p>See Granule Review Details</p>
               </button>
+              <script type="text/javascript">
+                document.getElementById("granule_details_button<%=index%>").onclick = function() {
+                  document.location.href = "<%= record_path(id:granule.records.first.id) %>"
+                };
+              </script>
             </div>
           </td>
         </tr>
