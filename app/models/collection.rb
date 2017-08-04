@@ -168,4 +168,74 @@ class Collection < ActiveRecord::Base
     end
   end
 
+
+  #method added for the manual addition of granules into the database for collections.
+  def add_granule(current_user)
+    if current_user.nil?
+      current_user = User.find_by(email: 'abaker@element84.com')
+    end
+
+    begin
+      granules_components = []
+      granules_count = 1
+      native_format = self.records[0].format
+
+        #checking that no granule exists for previously imported/deleted records.
+        if self.granules.count > 0
+          #only selecting granules for certain formats per business rules
+          if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
+              #creating all the Granule related objects
+              granules_components = Granule.assemble_granule_components(self.concept_id, granules_count, self, current_user)
+          end
+        end
+
+        save_success = false
+        #saving all the related collection and granule data in a combined transaction
+        ActiveRecord::Base.transaction do
+          granules_components.flatten.each { |savable_object| 
+                                                if savable_object.is_a?(Array)
+                                                  savable_object.each do |savable_item|
+                                                    savable_item.save!
+                                                  end
+                                                else
+                                                  savable_object.save! 
+                                                end
+                                            }
+
+        begin
+          #In production there is an egress issue with certain link types given in metadata
+          #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+          Timeout::timeout(20) {
+            #getting list of records for script
+            granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
+            granule_records.each do |record|
+              record.create_script
+            end
+          }
+          save_success = true
+        rescue Timeout::Error
+          Rails.logger.error("PyCMR Error: On Ingest Revision #{revision_id}, Concept_id #{concept_id} had timeout error") 
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      if !save_success
+        return -1
+      end
+  
+      return 0
+    rescue Cmr::CmrError
+      return -1
+    rescue Net::OpenTimeout
+      return -1
+    rescue Net::ReadTimeout
+      return -1
+    rescue Timeout::Error
+      return -1
+    rescue
+      return -1
+    end
+  end
+
+
 end
