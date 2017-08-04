@@ -158,6 +158,10 @@
               alert("Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags.");
               return false;
             }
+            if (!<%=@granule_completed%>) {
+              alert("The Collection's related Granule must be marked complete before the Collection can be completed.");
+              return false;
+            }
 
             document.location.href = "<%= record_complete_path(id: params["id"]) %>"
           };

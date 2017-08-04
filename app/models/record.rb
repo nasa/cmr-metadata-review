@@ -423,6 +423,22 @@ class Record < ActiveRecord::Base
     return !(self.get_opinions.select {|key,value| value == true}).any?
   end
 
+  def granule_completed?
+    byebug
+    if self.is_granule?
+      return true
+    end
+    if self.recordable.granules.count == 0
+      return true
+    end
+
+    if self.recordable.granules.first.records.first.closed == true
+      return true
+    end
+
+    return false
+  end
+
   def second_opinion_count
     opinion_values = self.get_opinions
     return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }

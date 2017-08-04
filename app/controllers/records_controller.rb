@@ -34,10 +34,12 @@ class RecordsController < ApplicationController
       @color_coding_complete = true
       @has_enough_reviews = true
       @no_second_opinions = true
+      @granule_completed = true
     else
       @color_coding_complete = @record.color_coding_complete?
       @has_enough_reviews = @record.has_enough_reviews?
       @no_second_opinions = @record.no_second_opinions?
+      @granule_completed = @record.granule_completed?
     end
   end
 
