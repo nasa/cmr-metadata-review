@@ -127,6 +127,7 @@ class CollectionsController < ApplicationController
             new_collection_record.create_script
           }
 
+          #this contains all the code for adding granule and running granule script
           collection_object.add_granule(current_user)
 
           save_success = true

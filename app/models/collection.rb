@@ -219,5 +219,21 @@ class Collection < ActiveRecord::Base
     return 0
   end
 
+  def remove_all_granule_data
+    granules = self.granules
+    granules.each do |granule|
+      granule_records = granule.records
+      granule_records.each do |record|
+        record_datas = record.record_datas
+        record_datas.each do |data|
+          data.destroy
+        end
+        record.ingest.destroy
+        record.destroy
+      end
+      granule.destroy
+    end
+  end
+
 
 end
