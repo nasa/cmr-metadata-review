@@ -52,7 +52,7 @@ class RecordsController < ApplicationController
 
     if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
       #checking that all bubbles are filled in
-      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions?
+      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions? || !record.granule_completed?
         redirect_to record_path(record)
         return
       end
