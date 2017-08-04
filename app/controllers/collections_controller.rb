@@ -111,21 +111,6 @@ class CollectionsController < ApplicationController
       #creating all the collection related objects
       collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
 
-      granules_components = []
-      #checking that no granule exists for previously imported/deleted records.
-      if collection_object.granules.count == 0
-        #only selecting granules for certain formats per business rules
-        if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
-            #nil gets turned into 0
-            granules_count = params["granulesCount"].to_i
-            #creating all the Granule related objects
-            granules_components = Granule.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
-        end
-      end
-
-
-      
-
       save_success = false
       #saving all the related collection and granule data in a combined transaction
       ActiveRecord::Base.transaction do
@@ -134,28 +119,16 @@ class CollectionsController < ApplicationController
           record_data.save!
         end
         ingest_record.save!
-        granules_components.flatten.each { |savable_object| 
-                                              if savable_object.is_a?(Array)
-                                                savable_object.each do |savable_item|
-                                                  savable_item.save!
-                                                end
-                                              else
-                                                savable_object.save! 
-                                              end
-                                          }
 
         begin
           #In production there is an egress issue with certain link types given in metadata
           #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
           Timeout::timeout(20) {
             new_collection_record.create_script
-
-            #getting list of records for script
-            granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
-            granule_records.each do |record|
-              record.create_script
-            end
           }
+
+          collection_object.add_granule(current_user)
+
           save_success = true
         rescue Timeout::Error
           flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
