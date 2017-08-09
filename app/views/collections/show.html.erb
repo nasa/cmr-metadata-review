@@ -68,7 +68,8 @@
       <% end %>
 
   </div>
-
+  
+  <% if @granule_objects.count > 0 %>
   <div class="group_box">
     <h3>Granules</h3>
       <% @granule_objects.each_with_index do |granule, index| %>
@@ -123,8 +124,9 @@
       <% end %>
 
   </div>
-
+  <% else %>
+  <div class="group_box no_results">
+    <h3>NO GRANULES AVAILABLE</h3>
+  </div>
+  <% end %>
 </div>
-
-
-
