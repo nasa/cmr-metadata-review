@@ -11,7 +11,7 @@
       display: flex;
       background-color: white;
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 80px;
   }
 
   .outer_flex_item_left {
@@ -37,12 +37,11 @@
 
   .section_header {
     border-bottom: thin solid #d9d9d9;
-    width: 90%;
+    width: 97%;
   }
 
   .section_container {
     border-right: thin solid #d9d9d9;
-    // width: 60%;
 
     .flex_container {
         display: -webkit-flex;
@@ -295,7 +294,10 @@
 .legend_title {
   font-size: 1.2em;
   font-weight: 600;
-  margin-bottom: 10px;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: thin solid #d9d9d9;
+  width: 10%;
 }
 
 .legend_flexbox {
