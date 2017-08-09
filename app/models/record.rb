@@ -424,17 +424,11 @@ class Record < ActiveRecord::Base
   end
 
   def granule_completed?
-    begin
-      if self.is_granule?
-        return true
-      end
-      if self.recordable.granules.count == 0
-        return true
-      end
-      if self.recordable.granules.first.records.first.closed == true
-        return true
-      end
-    rescue
+    if self.is_granule? || 
+       self.recordable.try(:granules).nil? ||
+       self.recordable.granules.count == 0 || 
+       self.recordable.granules.first.records.first.closed == true
+      
       return true
     end
 
