@@ -70,63 +70,63 @@
   </div>
   
   <% if @granule_objects.count > 0 %>
-  <div class="group_box">
-    <h3>Granules</h3>
-      <% @granule_objects.each_with_index do |granule, index| %>
-        <% granule.records.each do |granule_record| %>
-          <table cellpadding="5" border="1">
+    <div class="group_box">
+      <h3>Granules</h3>
+        <% @granule_objects.each_with_index do |granule, index| %>
+          <% granule.records.each do |granule_record| %>
+            <table cellpadding="5" border="1">
 
-            <tr>
-              <th>
-                <h4>Concept ID: <%= granule_record.concept_id %></h4>
-              </th>
-            </tr>
+              <tr>
+                <th>
+                  <h4>Concept ID: <%= granule_record.concept_id %></h4>
+                </th>
+              </tr>
 
-            <tr>
-              <td>
-                <table cellpadding="5" border="1">
-                    <tr>
-                        <td>Reviewer</td>
-                        <td>Status</td>
-                        <td>Completion Date</td>
-                    </tr>
+              <tr>
+                <td>
+                  <table cellpadding="5" border="1">
+                      <tr>
+                          <td>Reviewer</td>
+                          <td>Status</td>
+                          <td>Completion Date</td>
+                      </tr>
 
 
-                  <% granule_record.reviews.each do |review| %>
-                    <tr>
-                        <td><%= review.user.email %></td>
-                        <td><%= review.state_string %></td>
-                        <td><%= review.formatted_date %></td>
-                    </tr>
+                    <% granule_record.reviews.each do |review| %>
+                      <tr>
+                          <td><%= review.user.email %></td>
+                          <td><%= review.state_string %></td>
+                          <td><%= review.formatted_date %></td>
+                      </tr>
 
-                  <% end %>
-                </table>
+                    <% end %>
+                  </table>
 
-                <div class="review_actions">
-                  <div class="ingest_score">
-                    <p>Granule Review Status: <%= granule_record.closed ? "Closed" : "In Process" %></p>  
+                  <div class="review_actions">
+                    <div class="ingest_score">
+                      <p>Granule Review Status: <%= granule_record.closed ? "Closed" : "In Process" %></p>  
+                    </div>
+
+                    <button id="granule_details_button<%=index%>" class="smallSelectButton">
+                      <p>See Granule Review Details</p>
+                    </button>
+                    <script type="text/javascript">
+                      document.getElementById("granule_details_button<%=index%>").onclick = function() {
+                        document.location.href = "<%= record_path(id:granule_record.id) %>"
+                      };
+                    </script>
                   </div>
+                </td>
+              </tr>
 
-                  <button id="granule_details_button<%=index%>" class="smallSelectButton">
-                    <p>See Granule Review Details</p>
-                  </button>
-                  <script type="text/javascript">
-                    document.getElementById("granule_details_button<%=index%>").onclick = function() {
-                      document.location.href = "<%= record_path(id:granule_record.id) %>"
-                    };
-                  </script>
-                </div>
-              </td>
-            </tr>
+            </table>
+          <% end %>  
+        <% end %>
 
-          </table>
-        <% end %>  
-      <% end %>
-
-  </div>
+    </div>
   <% else %>
-  <div class="group_box no_results">
-    <h3>NO GRANULES AVAILABLE</h3>
-  </div>
+    <div class="group_box no_results">
+      <h3>NO GRANULES AVAILABLE</h3>
+    </div>
   <% end %>
 </div>
