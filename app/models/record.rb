@@ -426,8 +426,9 @@ class Record < ActiveRecord::Base
   def granule_completed?
     if self.is_granule? || 
        self.recordable.try(:granules).nil? ||
-       self.recordable.granules.count == 0 || 
-       self.recordable.granules.first.records.first.closed == true
+       (self.recordable.granules.count == 0) || 
+       (self.recordable.granules.first.records.first.nil?) ||
+       (self.recordable.granules.first.records.first.closed == true)
       
       return true
     end
