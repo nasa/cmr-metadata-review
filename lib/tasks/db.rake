@@ -12,13 +12,20 @@ namespace :db do
     puts cmd
     %x{exec #{cmd}}
 
-    backup_name = ""
-    with_config do |app, host, db, user|
-      s3 = Aws::S3::Resource.new
-      backup_name = 'backup-' + db.to_s + '-' + Rails.env + '-' + DateTime.now.to_s 
-      s3.bucket('arc-uah-cloud-prod').object(backup_name).upload_file(Rails.root.to_s + "/db/#{app}.dump")
+    begin
+      backup_name = ""
+      with_config do |app, host, db, user|
+        s3 = Aws::S3::Resource.new
+        backup_name = 'backup-' + db.to_s + '-' + Rails.env + '-' + DateTime.now.to_s 
+        s3.bucket('arc-uah-cloud-prod').object(backup_name).upload_file(Rails.root.to_s + "/db/#{app}.dump")
+      end
+      puts backup_name
+    rescue
+      puts ''
+      puts 'backup made locally, but not saved to S3'
+      puts 'most likey a permission issue for writing to S3'
     end
-    puts backup_name
+
   end
 
   desc "Deletes the App DB and Restores the database dump at db/APP_NAME.dump."
