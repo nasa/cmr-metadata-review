@@ -21,20 +21,19 @@ namespace :db do
     puts backup_name
   end
 
-  desc "Restores the database dump at db/APP_NAME.dump."
-  task :restore_from_s3, [:db_filename] => :environment do |t, args|
-    next if args[:db_filename].nil?
-
-    s3 = Aws::S3::Client.new
-    File.open('s3_dump.dump', 'wb') do |file|
-      reap = s3.get_object({ bucket:'arc-uah-cloud-prod', key:args[:db_filename] }, target: file)
+  desc "Deletes the App DB and Restores the database dump at db/APP_NAME.dump."
+  task :restore_from_local, [:task_pass] => :environment do |t, args|
+    if args[:task_pass] != 'thisDeletesTheDatabase'
+      puts 'No action taken, password required'
+      next
     end
 
     cmd = nil
     with_config do |app, host, db, user|
-      cmd = "pg_restore --verbose --host #{host} --username #{user} --clean --no-owner --no-acl --dbname #{db} #{Rails.root}/s3_dump.dump"
+      cmd = "pg_restore --verbose --host #{host} --username #{user} --clean --no-owner --no-acl --dbname #{db} #{Rails.root}/db/cmr_metadata_review.dump"
     end
 
+    #this will delete the current app DB contents
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
     puts cmd
