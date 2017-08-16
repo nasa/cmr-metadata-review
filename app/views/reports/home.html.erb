@@ -311,7 +311,7 @@
                 <div class="data_text">
                   <p>NUMBER OF GRANULE</p>
                   <p>ELEMENTS REVIEWED</p>
-                  <p class="checked_num"><%=@original_metric_set.color_counts.values.sum%></p>
+                  <p class="checked_num"><%=@granule_original_metric_set.color_counts.values.sum%></p>
                 </div>
                 <div class="doughnut_graph_container">
                   <canvas id="GranuleChartFlagOriginal"></canvas>
@@ -322,24 +322,24 @@
                   <div class="legend_item first_item">
                     <div class="color_box green">
                     </div>
-                    <p>ELEMENTS PASSED <br>(<%=@original_metric_set.color_counts["green"]%>)</p>
+                    <p>ELEMENTS PASSED <br>(<%=@granule_original_metric_set.color_counts["green"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box yellow">
                     </div>
-                    <p>ELEMENTS WITH WARNINGS <br>(<%=@original_metric_set.color_counts["yellow"]%>)</p>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@granule_original_metric_set.color_counts["yellow"]%>)</p>
                   </div>
                 </div>
                 <div class="legend_row">
                   <div class="legend_item first_item">
                     <div class="color_box blue">
                     </div>
-                    <p>ELEMENTS NOTED <br>(<%=@original_metric_set.color_counts["blue"]%>)</p>
+                    <p>ELEMENTS NOTED <br>(<%=@granule_original_metric_set.color_counts["blue"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box red">
                     </div>
-                    <p>ELEMENTS FAILED <br>(<%=@original_metric_set.color_counts["red"]%>)</p>
+                    <p>ELEMENTS FAILED <br>(<%=@granule_original_metric_set.color_counts["red"]%>)</p>
                   </div>
                 </div>
               </div>
@@ -353,7 +353,7 @@
                 <div class="data_text">
                   <p>NUMBER OF GRANULE</p>
                   <p>ELEMENTS REVIEWED</p>
-                  <p class="checked_num"><%=@metric_set.color_counts.values.sum%></p>
+                  <p class="checked_num"><%=@granule_metric_set.color_counts.values.sum%></p>
                 </div>
                 <div class="doughnut_graph_container">
                   <canvas id="GranuleChartFlag"></canvas>
@@ -364,24 +364,24 @@
                   <div class="legend_item first_item">
                     <div class="color_box green">
                     </div>
-                    <p>ELEMENTS PASSED (<%=@metric_set.color_counts["green"]%>)</p>
+                    <p>ELEMENTS PASSED (<%=@granule_metric_set.color_counts["green"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box yellow">
                     </div>
-                    <p>ELEMENTS WITH WARNINGS <br>(<%=@metric_set.color_counts["yellow"]%>)</p>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@granule_metric_set.color_counts["yellow"]%>)</p>
                   </div>
                 </div>
                 <div class="legend_row">
                   <div class="legend_item first_item">
                     <div class="color_box blue">
                     </div>
-                    <p>ELEMENTS NOTED (<%=@metric_set.color_counts["blue"]%>)</p>
+                    <p>ELEMENTS NOTED (<%=@granule_metric_set.color_counts["blue"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box red">
                     </div>
-                    <p>ELEMENTS FAILED <br>(<%=@metric_set.color_counts["red"]%>)</p>
+                    <p>ELEMENTS FAILED <br>(<%=@granule_metric_set.color_counts["red"]%>)</p>
                   </div>
                 </div>
               </div>

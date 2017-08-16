@@ -12,7 +12,7 @@
               ],
               datasets: [
                   {
-                      data: [<%=@original_metric_set.color_counts["red"]%>, <%=@original_metric_set.color_counts["blue"]%>, <%=@original_metric_set.color_counts["yellow"]%>, <%=@original_metric_set.color_counts["green"]%>],
+                      data: [<%=@granule_original_metric_set.color_counts["red"]%>, <%=@granule_original_metric_set.color_counts["blue"]%>, <%=@granule_original_metric_set.color_counts["yellow"]%>, <%=@granule_original_metric_set.color_counts["green"]%>],
                       backgroundColor: [
                           "#e84a34",
                           "#1b75ae",
@@ -64,7 +64,7 @@
       ],
       datasets: [
           {
-              data: [<%=@metric_set.color_counts["red"]%>, <%=@metric_set.color_counts["blue"]%>, <%=@metric_set.color_counts["yellow"]%>, <%=@metric_set.color_counts["green"]%>],
+              data: [<%=@granule_metric_set.color_counts["red"]%>, <%=@granule_metric_set.color_counts["blue"]%>, <%=@granule_metric_set.color_counts["yellow"]%>, <%=@granule_metric_set.color_counts["green"]%>],
               backgroundColor: [
                   "#e84a34",
                   "#1b75ae",
@@ -107,7 +107,7 @@
     var ctx = document.getElementById("GranuleChartErrors");
 
     var data = {
-        labels: <%= raw (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[0]}) %>,
+        labels: <%= raw (@granule_original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[0]}) %>,
         datasets: [
             {
                 label: "",
@@ -123,7 +123,7 @@
                     'rgba(105, 105, 105, 0.3)',
                     'rgba(105, 105, 105, 0.3)',
                 ],
-                data: <%= (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[1]}) %>,
+                data: <%= (@granule_original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[1]}) %>,
             }
         ]
     };
@@ -162,7 +162,7 @@
         bindto: '#GranuleChartGuageOriginal',
         data: {
             columns: [
-                ['data', <%= @original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_metric_set.quality_done_records.size %>]
+                ['data', <%= @granule_original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @granule_original_metric_set.quality_done_records.size %>]
             ],
             type: 'gauge'
         },
@@ -187,7 +187,7 @@
         bindto: '#GranuleChartGuageUpdated',
         data: {
             columns: [
-                ['data', <%= @metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @metric_set.quality_done_records.size %>]
+                ['data', <%= @granule_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @granule_metric_set.quality_done_records.size %>]
             ],
             type: 'gauge'
         },
