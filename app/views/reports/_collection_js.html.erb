@@ -1,0 +1,456 @@
+<% if @cmr_total_collection_count %>
+
+    <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
+    <script type="text/javascript">
+      var barOptions_stacked = {
+          tooltips: {
+              enabled: false
+          },
+          hover :{
+              animationDuration:0
+          },
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      beginAtZero:true,
+                      fontFamily: "sans-serif",
+                      fontSize:11
+                  },
+                  scaleLabel:{
+                      display:false
+                  },
+                  gridLines: {
+                  }, 
+                  stacked: true
+              }],
+              yAxes: [{
+                  gridLines: {
+                      display:false,
+                      color: "#fff",
+                      zeroLineColor: "#fff",
+                      zeroLineWidth: 0
+                  },
+                  ticks: {
+                      fontFamily: "sans-serif",
+                      fontSize:11
+                  },
+                  stacked: true,
+                  barThickness: 50
+              }]
+          },
+          legend:{
+              display:true,
+              position: "bottom"
+          },
+          maintainAspectRatio: false,
+          
+          animation: {
+              onComplete: function () {
+                  var chartInstance = this.chart;
+                  var ctx = chartInstance.ctx;
+                  ctx.textAlign = "left";
+                  
+
+                  Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                          data = dataset.data[index];
+                          if(i==0){
+                              ctx.fillStyle = "#3ab841";
+                              ctx.font = "20px sans-serif";
+                              ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
+                          } else {
+                              ctx.font = "25px sans-serif";
+                              ctx.fillStyle = "#3e3e40";
+                              ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y -15);
+                          }
+                      }),this)
+                  }),this);
+              }
+          },
+          pointLabelFontFamily : "Quadon Extra Bold",
+          scaleFontFamily : "Quadon Extra Bold",
+      };
+
+      var ctx = document.getElementById("ChartIngest");
+      var myChart = new Chart(ctx, {
+          type: 'horizontalBar',
+          data: {
+              labels: [""],
+
+              datasets: [{
+                  label: "Number of Ingested Collections",
+                  data: [<%= @collection_ingest_count %>],
+                  backgroundColor: "#3ab841",
+                  hoverBackgroundColor: "#3ab841"
+              },{
+                  label: "Total Number of Collections in CMR",
+                  data: [<%= @cmr_total_collection_count - @collection_ingest_count %>],
+                  backgroundColor: "#dbdcdd",
+                  hoverBackgroundColor: "#dbdcdd"
+              }]
+          },
+
+          options: barOptions_stacked
+      });
+    </script>
+
+
+
+    <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
+    <script type="text/javascript">
+      var ctx = document.getElementById("ChartVelocity");
+
+      var data = {
+          labels: <%= raw @display_months %>,
+          datasets: [
+              {
+                  label: "Completed Reviews",
+                  backgroundColor: [
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.3)',
+                      'rgba(58, 184, 65, 0.4)',
+                      'rgba(58, 184, 65, 0.5)',
+                      'rgba(58, 184, 65, 0.6)',
+                      'rgba(58, 184, 65, 0.7)',
+                      'rgba(58, 184, 65, 0.8)',
+                      'rgba(58, 184, 65, 0.9)',
+                      'rgba(58, 184, 65, 1)'
+                  ],
+                  data: <%= @review_month_counts %>,
+              }
+          ]
+      };
+
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: data,
+
+          options: {
+            legend:{
+              display:false
+            },
+            scales: {
+              xAxes: [{
+                  barThickness: 20
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Number of Completed Reviews'
+                }
+              }]
+            },
+            maintainAspectRatio: false
+          }
+      });
+    </script>
+  <% end %>  
+
+
+  <%# ChartFlagOriginal - pie chart of flag colors %>
+  <script type="text/javascript">
+
+            var ctx = document.getElementById("ChartFlagOriginal");
+
+            var data = {
+              labels: [
+                  "Red",
+                  "Blue",
+                  "Yellow",
+                  "Green"
+              ],
+              datasets: [
+                  {
+                      data: [<%=@original_metric_set.color_counts["red"]%>, <%=@original_metric_set.color_counts["blue"]%>, <%=@original_metric_set.color_counts["yellow"]%>, <%=@original_metric_set.color_counts["green"]%>],
+                      backgroundColor: [
+                          "#e84a34",
+                          "#1b75ae",
+                          "#ffce00",
+                          "#3ab841"
+                      ],
+                      hoverBackgroundColor: [
+                          "#e84a34",
+                          "#1b75ae",
+                          "#ffce00",
+                          "#3ab841"
+                      ]
+                  }]
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                  legend:{
+                    display:false
+                  },
+                  maintainAspectRatio: false,
+                  pieceLabel: {
+                    mode: 'value',
+                    fontSize: 18,
+                    fontStyle: 'bold'
+                  }
+                }
+              });
+
+  </script>
+
+
+
+  <%# ChartFlag - pie chart of current flag colors %>
+  <script type="text/javascript">
+
+
+
+    var ctx = document.getElementById("ChartFlag");
+
+    var data = {
+      labels: [
+          "Red",
+          "Blue",
+          "Yellow",
+          "Green"
+      ],
+      datasets: [
+          {
+              data: [<%=@metric_set.color_counts["red"]%>, <%=@metric_set.color_counts["blue"]%>, <%=@metric_set.color_counts["yellow"]%>, <%=@metric_set.color_counts["green"]%>],
+              backgroundColor: [
+                  "#e84a34",
+                  "#1b75ae",
+                  "#ffce00",
+                  "#3ab841"
+              ],
+              hoverBackgroundColor: [
+                  "#e84a34",
+                  "#1b75ae",
+                  "#ffce00",
+                  "#3ab841"
+              ]
+          }]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+
+        options: {
+                    legend:{
+                      display:false
+                    },
+                    maintainAspectRatio: false,
+                    pieceLabel: {
+                      mode: 'value',
+                      fontSize: 18,
+                      fontStyle: 'bold'
+                    }
+                 }
+      });
+  </script>
+
+
+
+
+
+
+
+  <%# ChartUpdate - chart of collection updates in cmr and their re reviews%>
+  <script type="text/javascript">
+    var barOptions_stacked = {
+        tooltips: {
+            enabled: false
+        },
+        hover :{
+            animationDuration:0
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    fontFamily: "sans-serif",
+                    fontSize:11
+                },
+                scaleLabel:{
+                    display:false
+                },
+                gridLines: {
+                }, 
+                stacked: false
+            }],
+            yAxes: [{
+                gridLines: {
+                    display:false,
+                    color: "#fff",
+                    zeroLineColor: "#fff",
+                    zeroLineWidth: 0
+                },
+                ticks: {
+                    fontFamily: "sans-serif",
+                    fontSize:11
+                },
+                stacked: false,
+                barThickness: 30
+            }]
+        },
+        legend:{
+            display:true,
+            position: "bottom"
+        },
+        maintainAspectRatio: false,
+        
+        animation: {
+            onComplete: function () {
+                var chartInstance = this.chart;
+                var ctx = chartInstance.ctx;
+                ctx.textAlign = "left";
+                
+
+                Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                    var meta = chartInstance.controller.getDatasetMeta(i);
+                    Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                        data = dataset.data[index];
+                        if(i==0){
+                            ctx.fillStyle = "#3e3e40";
+                            ctx.font = "20px sans-serif";
+                            ctx.fillText(data, bar._model.x - 30, bar._model.y-38);
+                        } else {
+                            ctx.font = "20px sans-serif";
+                            ctx.fillStyle = "#3e3e40";
+                            ctx.fillText(data,  bar._model.x - 30, bar._model.y-38);
+                        }
+                    }),this)
+                }),this);
+            }
+        },
+        pointLabelFontFamily : "Quadon Extra Bold",
+        scaleFontFamily : "Quadon Extra Bold",
+    };
+
+    var ctx = document.getElementById("ChartUpdate");
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [""],
+
+            datasets: [{
+                label: "Updated Collections ReReviewed",
+                data: [<%= @metric_set.updated_done_count %>],
+                backgroundColor: "rgba(58, 184, 65, 0.6)",
+                hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
+            },{
+                label: "Collections Updated After Review",
+                data: [<%= @metric_set.updated_count %>],
+                backgroundColor: "rgba(58, 184, 65, 1)",
+                hoverBackgroundColor: "rgba(58, 184, 65, 1)"
+            }]
+        },
+
+        options: barOptions_stacked
+    });
+  </script>
+
+
+
+  <%# ChartErrors - chart showing the overall elements with the most errors found%>
+  <script type="text/javascript">
+    var ctx = document.getElementById("ChartErrors");
+
+    var data = {
+        labels: <%= raw (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[0]}) %>,
+        datasets: [
+            {
+                label: "",
+                backgroundColor: [
+                    'rgba(105, 105, 105, 1)',
+                    'rgba(105, 105, 105, 0.9)',
+                    'rgba(105, 105, 105, 0.8)',
+                    'rgba(105, 105, 105, 0.7)',
+                    'rgba(105, 105, 105, 0.6)',
+                    'rgba(105, 105, 105, 0.5)',
+                    'rgba(105, 105, 105, 0.4)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
+                    'rgba(105, 105, 105, 0.3)',
+                ],
+                data: <%= (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[1]}) %>,
+            }
+        ]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: data,
+
+        options: {
+          legend:{
+            display:false
+          },
+          scales: {
+            xAxes: [{
+                barThickness: 20,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Number of Non Green Flags Per Element'
+                }
+            }],
+            yAxes: [{
+              position: "right"
+            }]
+          },
+          maintainAspectRatio: false
+        }
+    });
+  </script>
+
+
+
+
+  <%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
+  <script>
+    var chart = c3.generate({
+        bindto: '#ChartGuageOriginal',
+        data: {
+            columns: [
+                ['data', <%= @original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_metric_set.quality_done_records.size %>]
+            ],
+            type: 'gauge'
+        },
+        color: {
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 80, 100]
+            }
+        },
+        size: {
+            height: 180
+        }
+    });
+
+  </script>
+
+
+
+  <%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
+  <script>
+    var chart = c3.generate({
+        bindto: '#ChartGuageUpdated',
+        data: {
+            columns: [
+                ['data', <%= @metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @metric_set.quality_done_records.size %>]
+            ],
+            type: 'gauge'
+        },
+        color: {
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+            threshold: {
+                values: [30, 60, 80, 100]
+            }
+        },
+        size: {
+            height: 180
+        }
+    });
+
+  </script>

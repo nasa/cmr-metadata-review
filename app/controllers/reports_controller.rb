@@ -8,24 +8,14 @@ class ReportsController < ApplicationController
     @show_charts = true
     @csv_path = reports_home_path
     @csv_params = ""
-
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_month_counts = list_past_months
-
     @display_months = get_month_list
 
-    @records = Collection.all_records
-
-    record_set = Collection.all_newest_revisions
-
-    #when views are redone, instantiate these as instance vars, then use directly in the 
-    #view to get some DRY going accross all these views.
-    @metric_set = MetricSet.new(record_set)
+    @metric_set = MetricSet.new(Collection.all_newest_revisions)
     @original_metric_set = @metric_set.original_metric_set
-
-    @review_counts = @metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1)})
 
     respond_to do |format|
       format.html
