@@ -171,7 +171,7 @@ class MetricSet
     end
     concept_ids.uniq!
 
-    collections = concept_ids.map {|concept_id| Collection.find_by concept_id: concept_id }
+    collections = concept_ids.map {|concept_id| (Collection.find_by concept_id: concept_id) || (Granule.find_by concept_id: concept_id) }
     record_hash = {}
 
     collections.map do |collection|

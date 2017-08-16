@@ -17,6 +17,9 @@ class ReportsController < ApplicationController
     @metric_set = MetricSet.new(Collection.all_newest_revisions)
     @original_metric_set = @metric_set.original_metric_set
 
+    @granule_metric_set = MetricSet.new(Granule.all_newest_revisions)
+    @granule_original_metric_set = @granule_metric_set.original_metric_set
+
     respond_to do |format|
       format.html
       format.csv { send_data(render_to_string, filename: "cmr_dashboard_metrics.csv") }
