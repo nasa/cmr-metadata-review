@@ -1,9 +1,5 @@
 module RecordRevision
 
-  def get_records
-    self.records.where(hidden: false)
-  end
-
   # ====Params   
   # Optional String DAAC short name
   # ====Returns

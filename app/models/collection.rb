@@ -7,6 +7,11 @@ class Collection < ActiveRecord::Base
 
   extend RecordRevision
 
+  
+  def get_records
+    self.records.where(hidden: false)
+  end
+
   # ====Params   
   # string concept_id,     
   # string revision_id
