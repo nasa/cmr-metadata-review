@@ -133,7 +133,7 @@
                 <div class="data_text">
                   <p>NUMBER OF COLLECTION</p>
                   <p>ELEMENTS REVIEWED</p>
-                  <p class="checked_num"><%=@original_total_checked%></p>
+                  <p class="checked_num"><%=@original_metric_set.color_counts.values.sum%></p>
                 </div>
                 <div class="doughnut_graph_container">
                   <canvas id="ChartFlagOriginal"></canvas>
@@ -144,24 +144,24 @@
                   <div class="legend_item first_item">
                     <div class="color_box green">
                     </div>
-                    <p>ELEMENTS PASSED <br>(<%=@original_field_colors["green"]%>)</p>
+                    <p>ELEMENTS PASSED <br>(<%=@original_metric_set.color_counts["green"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box yellow">
                     </div>
-                    <p>ELEMENTS WITH WARNINGS <br>(<%=@original_field_colors["yellow"]%>)</p>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@original_metric_set.color_counts["yellow"]%>)</p>
                   </div>
                 </div>
                 <div class="legend_row">
                   <div class="legend_item first_item">
                     <div class="color_box blue">
                     </div>
-                    <p>ELEMENTS NOTED <br>(<%=@original_field_colors["blue"]%>)</p>
+                    <p>ELEMENTS NOTED <br>(<%=@original_metric_set.color_counts["blue"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box red">
                     </div>
-                    <p>ELEMENTS FAILED <br>(<%=@original_field_colors["red"]%>)</p>
+                    <p>ELEMENTS FAILED <br>(<%=@original_metric_set.color_counts["red"]%>)</p>
                   </div>
                 </div>
               </div>
@@ -175,7 +175,7 @@
                 <div class="data_text">
                   <p>NUMBER OF COLLECTION</p>
                   <p>ELEMENTS REVIEWED</p>
-                  <p class="checked_num"><%=@original_total_checked%></p>
+                  <p class="checked_num"><%=@metric_set.color_counts.values.sum%></p>
                 </div>
                 <div class="doughnut_graph_container">
                   <canvas id="ChartFlag"></canvas>
@@ -186,24 +186,24 @@
                   <div class="legend_item first_item">
                     <div class="color_box green">
                     </div>
-                    <p>ELEMENTS PASSED (<%=@field_colors["green"]%>)</p>
+                    <p>ELEMENTS PASSED (<%=@metric_set.color_counts["green"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box yellow">
                     </div>
-                    <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+                    <p>ELEMENTS WITH WARNINGS <br>(<%=@metric_set.color_counts["yellow"]%>)</p>
                   </div>
                 </div>
                 <div class="legend_row">
                   <div class="legend_item first_item">
                     <div class="color_box blue">
                     </div>
-                    <p>ELEMENTS NOTED (<%=@field_colors["blue"]%>)</p>
+                    <p>ELEMENTS NOTED (<%=@metric_set.color_counts["blue"]%>)</p>
                   </div>
                   <div class="legend_item">
                     <div class="color_box red">
                     </div>
-                    <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+                    <p>ELEMENTS FAILED <br>(<%=@metric_set.color_counts["red"]%>)</p>
                   </div>
                 </div>
               </div>
@@ -439,7 +439,7 @@
               ],
               datasets: [
                   {
-                      data: [<%=@original_field_colors["red"]%>, <%=@original_field_colors["blue"]%>, <%=@original_field_colors["yellow"]%>, <%=@original_field_colors["green"]%>],
+                      data: [<%=@original_metric_set.color_counts["red"]%>, <%=@original_metric_set.color_counts["blue"]%>, <%=@original_metric_set.color_counts["yellow"]%>, <%=@original_metric_set.color_counts["green"]%>],
                       backgroundColor: [
                           "#e84a34",
                           "#1b75ae",
@@ -491,7 +491,7 @@
       ],
       datasets: [
           {
-              data: [<%=@field_colors["red"]%>, <%=@field_colors["blue"]%>, <%=@field_colors["yellow"]%>, <%=@field_colors["green"]%>],
+              data: [<%=@metric_set.color_counts["red"]%>, <%=@metric_set.color_counts["blue"]%>, <%=@metric_set.color_counts["yellow"]%>, <%=@metric_set.color_counts["green"]%>],
               backgroundColor: [
                   "#e84a34",
                   "#1b75ae",
@@ -611,12 +611,12 @@
 
             datasets: [{
                 label: "Updated Collections ReReviewed",
-                data: [<%= @updated_done_count %>],
+                data: [<%= @metric_set.updated_done_count %>],
                 backgroundColor: "rgba(58, 184, 65, 0.6)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
             },{
                 label: "Collections Updated After Review",
-                data: [<%= @updated_count %>],
+                data: [<%= @metric_set.updated_count %>],
                 backgroundColor: "rgba(58, 184, 65, 1)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 1)"
             }]
@@ -633,7 +633,7 @@
     var ctx = document.getElementById("ChartErrors");
 
     var data = {
-        labels: <%= raw (@failing_elements_five.map {|data_set| data_set[0]}) %>,
+        labels: <%= raw (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[0]}) %>,
         datasets: [
             {
                 label: "",
@@ -649,7 +649,7 @@
                     'rgba(105, 105, 105, 0.3)',
                     'rgba(105, 105, 105, 0.3)',
                 ],
-                data: <%= (@failing_elements_five.map {|data_set| data_set[1]}) %>,
+                data: <%= (@original_metric_set.element_non_green_count.take(10).map {|data_set| data_set[1]}) %>,
             }
         ]
     };
@@ -688,7 +688,7 @@
         bindto: '#ChartGuageOriginal',
         data: {
             columns: [
-                ['data', <%= @original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size %>]
+                ['data', <%= @original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_metric_set.quality_done_records.size %>]
             ],
             type: 'gauge'
         },
@@ -713,7 +713,7 @@
         bindto: '#ChartGuageUpdated',
         data: {
             columns: [
-                ['data', <%= @quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size %>]
+                ['data', <%= @metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @metric_set.quality_done_records.size %>]
             ],
             type: 'gauge'
         },
