@@ -7,6 +7,7 @@ class Granule < ActiveRecord::Base
     granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
     #replacing the data with new granule & record & ingest objects
     granules_components = []
+
     granules_to_save.each do |granule_data|
       #creating the granule and related record 
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
@@ -32,7 +33,7 @@ class Granule < ActiveRecord::Base
       #pushing the list of granule parts into the granule_components list for a return value
       granules_components.push([ granule_object, new_granule_record, granule_record_data_list, granule_ingest ])
     end 
-
+      
     granules_components
   end
 end
