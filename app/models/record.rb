@@ -591,4 +591,19 @@ class Record < ActiveRecord::Base
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.native"
   end
 
+  def related_granule_record
+    if self.is_granule?
+      return nil
+    end
+
+    collection = self.recordable
+    granule = collection.granules.first
+    if granule
+      granule_record = (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first
+      return granule_record
+    end
+
+    nil
+  end
+
 end

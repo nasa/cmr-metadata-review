@@ -7,7 +7,7 @@ class Collection < ActiveRecord::Base
 
   extend RecordRevision
 
-  
+
   def get_records
     self.records.where(hidden: false)
   end
@@ -24,27 +24,6 @@ class Collection < ActiveRecord::Base
     record = Collection.find_record(concept_id, revision_id)
     return (!record.nil?) && (!record.hidden)
   end
-
-  # ====Params   
-  # string concept_id,     
-  # string revision_id
-  # ====Returns
-  # Record || nil
-  # ==== Method
-  # Queries the DB and returns a record matching params    
-  # if no record is found, returns nil.
-
-  def self.find_record(concept_id, revision_id) 
-    record = nil
-
-    collection = Collection.find_by concept_id: concept_id
-    unless collection.nil?
-      record = collection.records.where(revision_id: revision_id, hidden: false).first
-    end
-
-    return record
-  end
-
 
 
   def self.assemble_new_record(concept_id, revision_id, current_user)
@@ -86,17 +65,6 @@ class Collection < ActiveRecord::Base
     return collection_object, new_collection_record, record_data_list, ingest_record
   end
 
-
-  # ====Params   
-  # String, DAAC Short Name  
-  # ====Returns
-  # Collection list
-  # ==== Method
-  # returns all collections ingested that belong to the daac parameter
-
-  def self.by_daac(daac_short_name)
-    Collection.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
-  end
 
   def update?
     self.cmr_update

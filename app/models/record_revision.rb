@@ -1,6 +1,37 @@
 module RecordRevision
 
   # ====Params   
+  # String, DAAC Short Name  
+  # ====Returns
+  # Collection list
+  # ==== Method
+  # returns all collections ingested that belong to the daac parameter
+
+  def by_daac(daac_short_name)
+    self.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
+  end
+
+  # ====Params   
+  # string concept_id,     
+  # string revision_id
+  # ====Returns
+  # Record || nil
+  # ==== Method
+  # Queries the DB and returns a record matching params    
+  # if no record is found, returns nil.
+
+  def find_record(concept_id, revision_id) 
+    record = nil
+
+    collection = self.find_by concept_id: concept_id
+    unless collection.nil?
+      record = collection.records.where(revision_id: revision_id, hidden: false).first
+    end
+
+    return record
+  end
+
+  # ====Params   
   # Optional String DAAC short name
   # ====Returns
   # Record Array 

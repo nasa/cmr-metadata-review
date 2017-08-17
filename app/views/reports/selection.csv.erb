@@ -9,26 +9,47 @@
   <% end %>
 <% end %> 
 
-<%= CSV.generate_line(["State of Reviews:", "0 Reviews:", "1 Review:", "2+ Reviews:", "Record Complete:"]) %>
-<%= CSV.generate_line(["Record Counts", (@review_counts.count { |x| x == 0 }), (@review_counts.count { |x| x == 1 }), ((@review_counts.count { |x| x >= 2 }) - @total_completed), @total_completed]) %>
-
 <%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
-<%= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
+<%#= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
+
+<%= CSV.generate_line(['Completed Review Progress'].concat(@display_months)) %>
+<%= CSV.generate_line(["Review Counts"].concat(@review_month_counts)) %>
             
 <%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
-<%= CSV.generate_line(["Number of elements checked (total):", @original_total_checked, @total_checked]) %>
-<%= CSV.generate_line(["Number of elements that passed:", @original_field_colors["green"], @field_colors["green"]]) %>
-<%= CSV.generate_line(["Number of elements that failed:", @original_field_colors["red"], @field_colors["red"]]) %>
-<%= CSV.generate_line(["Number of elements with warnings issued:", @original_field_colors["yellow"], @field_colors["yellow"]]) %>
-<%= CSV.generate_line(["Number of elements with informational notes added:", @original_field_colors["blue"], @field_colors["blue"]]) %>
+<%= CSV.generate_line(["Number of elements checked (total):", @original_metric_set.color_counts.values.sum, @metric_set.color_counts.values.sum]) %>
+<%= CSV.generate_line(["Number of elements that passed:", @original_metric_set.color_counts["green"], @metric_set.color_counts["green"]]) %>
+<%= CSV.generate_line(["Number of elements that failed:", @original_metric_set.color_counts["red"], @metric_set.color_counts["red"]]) %>
+<%= CSV.generate_line(["Number of elements with warnings issued:", @original_metric_set.color_counts["yellow"], @metric_set.color_counts["yellow"]]) %>
+<%= CSV.generate_line(["Number of elements with informational notes added:", @original_metric_set.color_counts["blue"], @metric_set.color_counts["blue"]]) %>
 
 <%= CSV.generate_line(["Element Error Frequency"]) %>
 <%= CSV.generate_line(["Element Name:", "Non Green Count:"]) %>
-<% @failing_elements_five.each do |column_name, non_green_count|%>
+<% @original_metric_set.element_non_green_count.take(10).each do |column_name, non_green_count| %>
   <%= CSV.generate_line([column_name, non_green_count]) %>
 <%end%>
 
-<%= CSV.generate_line(["Number of Collections that been updated in CMR after a finished review:", @updated_count]) %>
-<%= CSV.generate_line(["Number of Updated Collection Reviews marked as Done:", @updated_done_count]) %>
-<%= CSV.generate_line(["Quality of Collection Reviews marked as Done (high/low/avg):", (@original_quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_quality_done_records.size).round(2)]) %>
-<%= CSV.generate_line(["Quality of Updated Collection Reviews marked as Done (high/low/avg)", (@quality_done_records.inject(0.0) { |sum, el| sum + el } / @quality_done_records.size).round(2)]) %>
+<%= CSV.generate_line(["Number of Collections that been updated in CMR after a finished review:", @metric_set.updated_count]) %>
+<%= CSV.generate_line(["Number of Updated Collection Reviews marked as Done:", @metric_set.updated_done_count]) %>
+
+<%= CSV.generate_line(["Quality of Collection Reviews marked as Done (high/low/avg):", (@original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @original_metric_set.quality_done_records.size)]) %>
+<%= CSV.generate_line(["Quality of Updated Collection Reviews marked as Done (high/low/avg)", (@metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @metric_set.quality_done_records.size)]) %>
+
+
+<%= CSV.generate_line(["Granules Information"]) %>  
+
+
+<%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
+<%= CSV.generate_line(["Number of elements checked (total):", @granule_original_metric_set.color_counts.values.sum, @granule_metric_set.color_counts.values.sum]) %>
+<%= CSV.generate_line(["Number of elements that passed:", @granule_original_metric_set.color_counts["green"], @granule_metric_set.color_counts["green"]]) %>
+<%= CSV.generate_line(["Number of elements that failed:", @granule_original_metric_set.color_counts["red"], @granule_metric_set.color_counts["red"]]) %>
+<%= CSV.generate_line(["Number of elements with warnings issued:", @granule_original_metric_set.color_counts["yellow"], @granule_metric_set.color_counts["yellow"]]) %>
+<%= CSV.generate_line(["Number of elements with informational notes added:", @granule_original_metric_set.color_counts["blue"], @granule_metric_set.color_counts["blue"]]) %>
+
+<%= CSV.generate_line(["Element Error Frequency"]) %>
+<%= CSV.generate_line(["Element Name:", "Non Green Count:"]) %>
+<% @granule_original_metric_set.element_non_green_count.take(10).each do |column_name, non_green_count| %>
+  <%= CSV.generate_line([column_name, non_green_count]) %>
+<%end%>
+
+<%= CSV.generate_line(["Quality of Collection Reviews marked as Done (high/low/avg):", (@granule_original_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @granule_original_metric_set.quality_done_records.size)]) %>
+<%= CSV.generate_line(["Quality of Updated Collection Reviews marked as Done (high/low/avg)", (@granule_metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @granule_metric_set.quality_done_records.size)]) %>

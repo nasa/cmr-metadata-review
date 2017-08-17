@@ -52,7 +52,7 @@
       <%# This div grouped to be moved up for the display when printed %>
       <section class="report_overall section_holder">
         <div class="sub_section_title">
-          OVERALL COLLECTION METRICS
+          COLLECTION METRICS
         </div>
 
         <% if @cmr_total_collection_count %>
@@ -94,7 +94,7 @@
                 <td>Concept Id</td>
                 <td>Short Name</td>
               </tr>
-              <% @report_list.each do |record| %>
+              <% @report_list.concat(@granule_report_list).each do |record| %>
                 <tr>
                   <td>
                     <%=record.concept_id%>
@@ -283,7 +283,7 @@
       <%# This div grouped to be moved up for the display when printed %>
       <section class="section_holder">
         <div class="sub_section_title">
-          OVERALL GRANULE METRICS
+          GRANULE METRICS
         </div>
       </section>
 
