@@ -278,26 +278,17 @@
 
   <% if @show_charts %>
 
-    <div class="report_sub_title first_sub_title">
-      <div class="title_box">
-        <%= @report_title %>
-      </div>
-      <div class="title_text">
-
-      </div>
-    </div>
-
     <div class="stats_area">
       
       <%# This div grouped to be moved up for the display when printed %>
-      <section class="report_overall section_holder">
+      <section class="section_holder">
         <div class="sub_section_title">
           OVERALL GRANULE METRICS
         </div>
       </section>
 
 
-      <section class="quality_section section_holder">
+      <section class="granule_quality_section quality_section section_holder">
         <div class="sub_section_title">
           METADATA QUALITY
         </div>
