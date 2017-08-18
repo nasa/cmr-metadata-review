@@ -20,13 +20,20 @@
 @import "font-awesome";
 
 body {
+   -webkit-font-smoothing: antialiased;
    font-family: 'Open Sans', sans-serif !important;
-   /*padding-left: 20px;*/
    background-color: $gray-light;
 }
 
 p {
      margin: 0px;
+}
+
+a,
+button {
+  &:focus {
+    outline: 0;
+  }
 }
 
 .clearfix {
@@ -282,4 +289,3 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $review-red;
   color: white;
 }
-

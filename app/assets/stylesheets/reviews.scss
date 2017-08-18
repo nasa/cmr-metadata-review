@@ -51,6 +51,10 @@
 
 }
 
+.filter_row {
+    margin-top: 1em;
+}
+
 .filter_row p {
   display: inline-block;
   font-size: 0.6em;
@@ -64,6 +68,7 @@
 
   .filter_switch {
     border: thin solid #d9d9d9;
+    border-radius: 7px;
     padding-left: 10px;
     padding-right: 10px;
 
@@ -105,7 +110,6 @@
   margin-left: 40px;
   font-size: 0.7em;
   margin-right: 5%;
-  border-top: 1px solid gray;
 }
 
 .save_button_review {
@@ -189,8 +193,6 @@
   margin-left: 17.1em;
   overflow-y: visible;
   font-size: 0.8em;
-  border-right-style: solid;
-  border-right-width: 1px;
 
   table {
     width: auto;
@@ -224,7 +226,7 @@
   }
 
   .title_column {
-    min-width: 200px;
+    min-width: 220px;
     position: relative;
     padding-right: 25px;
   }
@@ -233,9 +235,16 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 15px;
     cursor: col-resize;
     background-color: rgba(255,255,255,0.6);
+    
+    i {
+      color: $gray-dark;
+    }
   }
 
   .autolabelcol {

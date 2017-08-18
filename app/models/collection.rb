@@ -139,7 +139,9 @@ class Collection < ActiveRecord::Base
         record_datas.each do |data|
           data.destroy
         end
-        record.ingest.destroy
+        if record.try(:ingest)
+          record.ingest.destroy
+        end
         record.destroy
       end
       granule.destroy
