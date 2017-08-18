@@ -5,21 +5,28 @@ class CollectionsController < ApplicationController
 
 
   def show
-    @concept_id = params["concept_id"]
-    if !@concept_id
-      flash[:error] = "No concept_id provided to find record details"
+    if !(params["concept_id"])
+      flash[:alert] = "No concept_id provided to find record details"
       redirect_to home_path
       return
     end
 
-    collection = Collection.find_by(concept_id: @concept_id)
+    collection = Collection.find_by(concept_id: params["concept_id"])
+    #allowing action to also accept granule concept id's
+    if collection.nil?
+      granule = Granule.find_by(concept_id: params["concept_id"])
+      unless granule.nil?
+        collection = granule.collection
+      end
+    end
 
     if collection.nil?
-      flash[:error] = "No Collection Could be Found With Concept Id"
+      flash[:alert] = "No Collection Could be Found With Concept Id"
       redirect_to home_path
       return
     end
 
+    @concept_id = collection.concept_id
     @collection_records = collection.get_records.order(:revision_id).reverse_order
 
     @granule_objects = Granule.where(collection: collection)

@@ -45,6 +45,7 @@
           <table cellpadding="5" border="1">
             <tr>
                 <th>Concept_ID</th>
+                <th>Type</th>
                 <th class="center_text">Revision_ID</th>
                 <th>ShortName</th>
                 <th class="center_text">Version</th>
@@ -55,6 +56,7 @@
             <% @unreviewed_records.each_with_index do |record, index| %>
               <tr>
                   <td id="table1Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
                   <td id="table1Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                   <td><%= record.recordable.short_name %></td>
                   <td class="center_text"><%= record.version_id %></td>
@@ -99,6 +101,7 @@
           <table cellpadding="5" border="1">
             <tr>
                 <th>Concept_ID</th>
+                <th>Type</th>
                 <th class="center_text">Revision_ID</th>
                 <th>ShortName</th>
                 <th class="center_text">Version</th>
@@ -111,6 +114,7 @@
             <% @in_process_records.each_with_index do |record, index| %>
               <tr>
                   <td id="table2Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
                   <td id="table2Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                   <td><%= record.recordable.short_name %></td>
                   <td class="center_text"><%= record.version_id %></td>
@@ -157,6 +161,7 @@
           <table cellpadding="5" border="1">
             <tr>
                 <th>Concept_ID</th>
+                <th>Type</th>
                 <th class="center_text">Revision_ID</th>
                 <th>ShortName</th>
                 <th>Version</th>
@@ -168,6 +173,7 @@
             <% @closed_records.each_with_index do |record, index| %>
               <tr>
                   <td id="table3Concept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
                   <td id="table3Revision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                   <td><%= record.recordable.short_name %></td>
                   <td><%= record.version_id %></td>
