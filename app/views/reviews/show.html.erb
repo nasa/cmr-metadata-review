@@ -219,6 +219,7 @@
                 <% end %>
               </div>
               <div class="widthGrab">
+                <i class="fa fa-arrows-h" aria-hidden="true"></i>
               </div>
             </td>
           <% end %>
@@ -346,12 +347,12 @@
                   document.getElementById(cell_id).style.backgroundColor = "inherit";
                   check.checked = false;;
                   document.getElementById(p_id).style.fontWeight = "";
-                  document.getElementById(icon_id).style.visibility = "hidden";
+                  document.getElementById(icon_id).className = "fa fa-user-plus";
                 } else {
                   document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
                   check.checked = true;
                   document.getElementById(p_id).style.fontWeight = "bold";
-                  document.getElementById(icon_id).style.visibility = "visible";
+                  document.getElementById(icon_id).className = "eui-icon eui-check-o";
                 }
               }; 
             }
@@ -383,7 +384,7 @@
                 <div id="opinion_cell_<%= title %>" class="opinion_cell">
                   <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
                   <p id="opinion_text_<%= title %>">
-                    <i style="visibility:hidden;" id="opinion_icon_<%= title %>" class="eui-icon eui-check-o review_check flag_icon"></i>
+                    <i id="opinion_icon_<%= title %>" class="fa fa-user-plus"></i>
                     Requires 2nd Opinion
                   </p>
                 </div>  
@@ -395,7 +396,7 @@
                   document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
                   document.getElementById("opinion_check_<%= title %>").checked = true;
                   document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
-                  document.getElementById("opinion_icon_<%= title %>").style.visibility = "visible";
+                  document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o review_check flag_icon";
                 <% end %>
               </script>
             <% end %>

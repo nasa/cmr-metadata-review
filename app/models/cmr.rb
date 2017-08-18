@@ -431,7 +431,7 @@ class Cmr
         
       #checking if we asked for more granules than exist  
       if total_granules < granule_count
-        return -1
+        return []
       end
 
       granule_data_list = []
