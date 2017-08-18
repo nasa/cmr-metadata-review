@@ -271,12 +271,19 @@
     margin-bottom: 10px;
   }
   .format_links {
-    width: 20em;
     display: flex;
     justify-content: space-between;
     .format_link {
       font-weight: 600;
     }
+  }
+
+  .granule_link_width {
+    width: 13em;
+  }
+
+  .collection_link_width {
+    width: 20em;
   }
 }
 
