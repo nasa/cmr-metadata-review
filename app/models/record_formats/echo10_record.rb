@@ -4,7 +4,7 @@
 #unique accessors are needed for each format to access commonly requested data.
 module RecordFormats::Echo10Record
   SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "SpatialInfo", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
-  GRANULE_SECTION_TITLES =["Collection", "DataGranule", "Temporal", "Spatial", "MeasuredParameters", "OnlineAccessURLs"]
+  GRANULE_SECTION_TITLES =["Collection", "DataGranule", "Platforms", "Temporal", "Spatial", "PGEVersionClass", "MeasuredParameters", "OnlineAccessURLs", "TwoDCoordinateSystems", "OnlineResources", "AdditionalAttributes"]
   include RecordFormats::Echo10ControlledElements
 
   def get_section_titles

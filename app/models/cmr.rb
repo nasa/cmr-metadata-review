@@ -3,6 +3,7 @@ class Cmr
   include CmrHelper
   #imports lists of required fields
   include RequiredCollectionLists
+  include RequiredGranuleLists
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
@@ -179,8 +180,8 @@ class Cmr
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
     #Dif10 records come in with some uneeded header values
     nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, required_fields)
-    required_fields_hash = Cmr.add_required_collection_fields(nil_replaced_hash, desired_fields)
+    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
+    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
     required_fields_hash
   end
 
@@ -189,7 +190,11 @@ class Cmr
     granule_raw_data = Cmr.get_raw_granule(concept_id)
     results_hash = flatten_collection(granule_raw_data)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    nil_replaced_hash
+
+    required_fields = REQUIRED_GRANULE_FIELDS
+    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
+
+    required_fields_hash
   end
 
   # ====Params   
@@ -308,7 +313,7 @@ class Cmr
   # Iterates through parameter hash adding any UMM required fields    
   # List of required fields set in hardcoded list within method
 
-  def self.add_required_collection_fields(collection_hash, required_fields)
+  def self.add_required_fields(collection_hash, required_fields)
     keys = collection_hash.keys
     required_fields.each do |field|
       unless Cmr.keyset_has_field?(keys, field)
@@ -604,7 +609,14 @@ class Cmr
     return output_string
   end
 
-  def self.required_collection_field?(field_string, required_fields = REQUIRED_COLLECTION_FIELDS)
+  def self.required_field?(field_string, type = "Collection")
+    required_fields = nil
+    if type == "Collection"
+      required_fields = REQUIRED_COLLECTION_FIELDS
+    else
+      required_fields = REQUIRED_GRANULE_FIELDS
+    end
+
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
     is_required_field = false
@@ -614,7 +626,7 @@ class Cmr
           is_required_field = true
         end
       elsif required_field.is_a?(Array)
-        if Cmr.required_collection_field?(field_string, required_field)
+        if Cmr.required_field?(field_string, required_field)
           is_required_field = true
         end
       end
