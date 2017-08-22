@@ -305,7 +305,7 @@
               <% @section_titles.each do |title| %>
                 <td class="column_<%=title%>">
                   <div class="previous_recommendation_cell">
-                  <%= @previous_recommendations[title] %>    
+                  <%= string_html_format(@previous_recommendations[title]) %>    
                   </div>
                 </td>
               <% end %>
@@ -483,7 +483,7 @@
                         <p><%= message.user.email %> says:</p>
                       </div>
                       <div class="discussion_text">
-                        <p><%= message.comment %></p>
+                        <p><%= string_html_format(message.comment) %></p>
                       </div>
                     </div>
                   <% end %>

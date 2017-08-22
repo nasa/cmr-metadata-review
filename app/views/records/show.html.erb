@@ -87,7 +87,7 @@
           <div class="single_comment">
             <p><strong>Reviewer: <%=review.user.email%></strong></p>
             <p><%=review.formatted_date%></p>
-            <p><%=review.comment%></p>
+            <p><%=string_html_format(review.comment)%></p>
           </div>
         <% end %>
 
