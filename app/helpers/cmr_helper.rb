@@ -11,7 +11,7 @@ module CmrHelper
         if collection_hash.key? field_name
           collection_hash[field_name] += ("\n" + bullet + value)
         else
-          collection_hash[field_name] = value
+          collection_hash[field_name] = (value || "")
         end  
         #if field contains bullet but does not start with one, add one to start
         if collection_hash[field_name].include?(bullet) 
