@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def string_html_format(string)
-    string.gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
+    sanitize(string, tags: %w(br a)).gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
   end
 
 end
