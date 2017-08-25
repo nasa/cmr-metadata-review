@@ -5,7 +5,7 @@ class Collection < ActiveRecord::Base
   SUPPORTED_FORMATS = ["dif10", "echo10"]
   INCLUDE_GRANULE_FORMATS = ["echo10"]
 
-  extend RecordRevision
+  extend Modules::RecordRevision
 
 
   def get_records

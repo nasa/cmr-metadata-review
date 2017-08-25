@@ -269,7 +269,9 @@
 
 
 <% if @show_charts %>
-  <%= render(partial: 'collection_js') %>
+  <script type="text/javascript">
+    <%= render(partial: 'collection_js.js.erb') %>
+  </script>
 <% end %>  
 
 
@@ -437,6 +439,8 @@
 
 
 <% if @show_charts %>
-  <%= render(partial: 'granule_js') %>
+  <script type="text/javascript">
+    <%= render(partial: 'granule_js.js.erb') %>
+  </script>
 <% end %>  
 

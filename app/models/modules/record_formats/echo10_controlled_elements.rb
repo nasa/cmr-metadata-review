@@ -1,4 +1,4 @@
-module RecordFormats::Echo10ControlledElements
+module Modules::RecordFormats::Echo10ControlledElements
   CONTROLLED_ELEMENT_MAP = {
     'DOI/Authority' => 'ECHO 10 schema documentation  Should be http://dx.doi.org/ according to ECHO 10 schema',
     'CollectionDataType' => 'ECHO 10 schema enumeration  SCIENCE_QUALITY, NEAR_REAL_TIME, OTHER',

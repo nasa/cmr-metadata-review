@@ -1,5 +1,5 @@
   <%# ChartFlagOriginal - pie chart of flag colors %>
-  <script type="text/javascript">
+
 
             var ctx = document.getElementById("GranuleChartFlagOriginal");
 
@@ -44,12 +44,10 @@
                 }
               });
 
-  </script>
 
 
 
   <%# ChartFlag - pie chart of current flag colors %>
-  <script type="text/javascript">
 
 
 
@@ -96,14 +94,12 @@
                     }
                  }
       });
-  </script>
 
 
 
 
   
   <%# ChartErrors - chart showing the overall elements with the most errors found%>
-  <script type="text/javascript">
     var ctx = document.getElementById("GranuleChartErrors");
 
     var data = {
@@ -151,13 +147,13 @@
           maintainAspectRatio: false
         }
     });
-  </script>
+
 
 
 
 
   <%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
-  <script>
+
     var chart = c3.generate({
         bindto: '#GranuleChartGuageOriginal',
         data: {
@@ -177,12 +173,12 @@
         }
     });
 
-  </script>
+
 
 
 
   <%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
-  <script>
+
     var chart = c3.generate({
         bindto: '#GranuleChartGuageUpdated',
         data: {
@@ -202,4 +198,3 @@
         }
     });
 
-  </script>

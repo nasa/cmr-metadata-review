@@ -1,7 +1,6 @@
 <% if @cmr_total_collection_count %>
 
     <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
-    <script type="text/javascript">
       var barOptions_stacked = {
           tooltips: {
               enabled: false
@@ -93,12 +92,10 @@
 
           options: barOptions_stacked
       });
-    </script>
 
 
 
     <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
-    <script type="text/javascript">
       var ctx = document.getElementById("ChartVelocity");
 
       var data = {
@@ -146,12 +143,10 @@
             maintainAspectRatio: false
           }
       });
-    </script>
   <% end %>  
 
 
   <%# ChartFlagOriginal - pie chart of flag colors %>
-  <script type="text/javascript">
 
             var ctx = document.getElementById("ChartFlagOriginal");
 
@@ -196,12 +191,10 @@
                 }
               });
 
-  </script>
 
 
 
   <%# ChartFlag - pie chart of current flag colors %>
-  <script type="text/javascript">
 
 
 
@@ -248,7 +241,6 @@
                     }
                  }
       });
-  </script>
 
 
 
@@ -257,7 +249,6 @@
 
 
   <%# ChartUpdate - chart of collection updates in cmr and their re reviews%>
-  <script type="text/javascript">
     var barOptions_stacked = {
         tooltips: {
             enabled: false
@@ -349,12 +340,10 @@
 
         options: barOptions_stacked
     });
-  </script>
 
 
 
   <%# ChartErrors - chart showing the overall elements with the most errors found%>
-  <script type="text/javascript">
     var ctx = document.getElementById("ChartErrors");
 
     var data = {
@@ -402,13 +391,11 @@
           maintainAspectRatio: false
         }
     });
-  </script>
 
 
 
 
   <%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
-  <script>
     var chart = c3.generate({
         bindto: '#ChartGuageOriginal',
         data: {
@@ -428,12 +415,10 @@
         }
     });
 
-  </script>
 
 
 
   <%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
-  <script>
     var chart = c3.generate({
         bindto: '#ChartGuageUpdated',
         data: {
@@ -452,5 +437,3 @@
             height: 180
         }
     });
-
-  </script>

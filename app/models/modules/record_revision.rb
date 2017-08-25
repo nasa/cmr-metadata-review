@@ -1,4 +1,4 @@
-module RecordRevision
+module Modules::RecordRevision
 
   # ====Params   
   # String, DAAC Short Name  
