@@ -2,6 +2,13 @@ class Granule < ActiveRecord::Base
   has_many :records, :as => :recordable
   belongs_to :collection
 
+  extend Modules::RecordRevision
+
+  
+  def get_records
+    self.records.where(hidden: false)
+  end
+
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
     #returns a list of granule data
     granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)

@@ -14,9 +14,9 @@ class Record < ActiveRecord::Base
 
   def load_format_module
     if self.format == "dif10"
-      self.extend(RecordFormats::Dif10Record)
+      self.extend(Modules::RecordFormats::Dif10Record)
     else
-      self.extend(RecordFormats::Echo10Record)
+      self.extend(Modules::RecordFormats::Echo10Record)
     end
   end
 
@@ -589,6 +589,21 @@ class Record < ActiveRecord::Base
 
   def native_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.native"
+  end
+
+  def related_granule_record
+    if self.is_granule?
+      return nil
+    end
+
+    collection = self.recordable
+    granule = collection.granules.first
+    if granule
+      granule_record = (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first
+      return granule_record
+    end
+
+    nil
   end
 
 end
