@@ -43,4 +43,13 @@ class Granule < ActiveRecord::Base
       
     granules_components
   end
+
+
+  def update?
+    self.collection.update?
+  end
+
+  def short_name
+    self.collection.short_name
+  end
 end
