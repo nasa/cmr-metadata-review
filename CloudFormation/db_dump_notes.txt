@@ -1,0 +1,22 @@
+The rake tasks db.rake and replace_all_granules.rake were added to assist with the updating of all the old granule data, which was brought in with garbage ingest code
+
+The db.rake file sets up tasks to pg_dump the running db to S3.  This greatly helps moving the prod data to the SIT env for testing.  Currently this is a complicated project.  It will become simpler once Prod is updated with the new deploys.
+
+The current process:
+1. Make new rds with one of prod backups
+2. Update the SIT_env file in the SIT s3 to point to the new db, with prod db name and pass info.
+3. Launch new sit box
+4. SSH in and update postgres to 9.4-dev using tips from here https://wiki.postgresql.org/wiki/YUM_Installation
+5. run the db:dump_to_s3 task
+6. Reset the SIT_env file to the old SIT db and credentials, then fire up another new server
+7. SSH into that new server and pull down the db dump from s3 using this code in a production console: https://aws.amazon.com/blogs/developer/downloading-objects-from-amazon-s3-using-the-aws-sdk-for-ruby/
+8. Update the postgres on the new box using step 4.
+9. Run the db:restore_from_local, THIS WILL DELETE THE ATTACHED DB, so make sure you are on SIT.  Also check that the dump is in the right place at db/cmr_metadata_review.dump
+10. Fire up one more server and your SIT db should be updated and good to go.
+
+
+
+Planned process (Need to update Prod code and update AMI with postgres 9.4)
+1. SSH into the prod box.
+2. Run the db:dump, this will dump prod data to the sit s3
+3. SSH into the sit box and run steps 7, 9, 10
