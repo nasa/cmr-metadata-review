@@ -63,7 +63,11 @@ class Record < ActiveRecord::Base
   # ==== Method
   # Lookes up the Ingest object related to this record, then returns the email of the user associated with the Ingest
   def ingested_by
-    self.ingest.user.email
+    begin
+      self.ingest.user.email
+    rescue
+      "None"
+    end
   end
 
 
