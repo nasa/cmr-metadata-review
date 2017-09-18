@@ -10,12 +10,12 @@ class SiteController < ApplicationController
     #unfinished review records
     @user_open_collection_reviews = []
     #unreviewed by user, record not closed
-    @unreviewed_records = (Record.all.select {|record| !record.closed && !record.hidden}).select {|record| !record.reviews.where(user: current_user).any?}
+    @unreviewed_records = ((Record.all.select {|record| !record.closed && !record.hidden}).select {|record| !record.reviews.where(user: current_user).any?}).sort_by {|record| record.recordable.short_name}
     #reviewed by user, record not closed
-    @in_process_records = (Record.all.select {|record| !record.closed && !record.hidden}).select {|record| record.reviews.where(user: current_user).any?}
+    @in_process_records = ((Record.all.select {|record| !record.closed && !record.hidden}).select {|record| record.reviews.where(user: current_user).any?}).sort_by {|record| record.recordable.short_name}
 
     #record closed
-    @closed_records = Record.all.select {|record| !record.hidden && record.closed && record.cmr_update? }
+    @closed_records = (Record.all.select {|record| !record.hidden && record.closed && record.cmr_update? }).sort_by {|record| record.recordable.short_name}
 
     @search_results = []
     @provider_select_list = provider_select_list
