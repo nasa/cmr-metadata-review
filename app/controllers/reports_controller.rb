@@ -8,45 +8,17 @@ class ReportsController < ApplicationController
     @show_charts = true
     @csv_path = reports_home_path
     @csv_params = ""
-
     @collection_ingest_count = Collection.all.length
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_month_counts = list_past_months
-
     @display_months = get_month_list
 
-    @metric_set = MetricSet.new(Collection.all_records)
+    @metric_set = MetricSet.new(Collection.all_newest_revisions)
+    @original_metric_set = @metric_set.original_metric_set
 
-    @records = Collection.all_records
-
-    record_set = Collection.all_newest_revisions
-
-    #when views are redone, instantiate these as instance vars, then use directly in the 
-    #view to get some DRY going accross all these views.
-    metric_set = MetricSet.new(record_set)
-    original_metric_set = metric_set.original_metric_set
-
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1)})
-
-    @total_completed = metric_set.total_completed
-
-    #stat generation for original and current sets of records
-    @original_field_colors = original_metric_set.color_counts
-    @original_total_checked = @original_field_colors.values.sum
-
-    @original_quality_done_records = original_metric_set.quality_done_records
-
-    @field_colors = metric_set.color_counts
-    @total_checked = @field_colors.values.sum
-
-    #taking the top 10 elements with the most issues
-    @failing_elements_five = original_metric_set.element_non_green_count.take(10)
-
-    @updated_count = metric_set.updated_count
-    @updated_done_count = metric_set.updated_done_count
-
-    @quality_done_records = metric_set.quality_done_records
+    @granule_metric_set = MetricSet.new(Granule.all_newest_revisions)
+    @granule_original_metric_set = @granule_metric_set.original_metric_set
 
     respond_to do |format|
       format.html
@@ -72,36 +44,14 @@ class ReportsController < ApplicationController
       daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
 
       @review_month_counts = list_past_months(daac_reviews)
-
       @display_months = get_month_list
-      
-      @percent_ingested = (@collection_ingest_count.to_f * 100 / @cmr_total_collection_count).round(2)
 
       record_set = Collection.all_newest_revisions(params["daac"])
+      @metric_set = MetricSet.new(record_set)
+      @original_metric_set = @metric_set.original_metric_set
 
-      metric_set = MetricSet.new(record_set)
-      original_metric_set = metric_set.original_metric_set
-
-      @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| (review.review_state == 1) && (review.record.daac == @daac)})
-
-      @total_completed = metric_set.total_completed
-
-      #stat generation for original and current sets of records
-      @original_field_colors = original_metric_set.color_counts
-      @original_total_checked = @original_field_colors.values.sum
-
-      @original_quality_done_records = original_metric_set.quality_done_records
-
-      @field_colors = metric_set.color_counts
-      @total_checked = @field_colors.values.sum
-
-
-      @failing_elements_five = original_metric_set.element_non_green_count.take(5)
-
-      @updated_count = metric_set.updated_count
-      @updated_done_count = metric_set.updated_done_count
-
-      @quality_done_records = metric_set.quality_done_records
+      @granule_metric_set = MetricSet.new(Granule.all_newest_revisions(params["daac"]))
+      @granule_original_metric_set = @granule_metric_set.original_metric_set
     end
 
     respond_to do |format|
@@ -144,38 +94,24 @@ class ReportsController < ApplicationController
 
     records_list = params["records"].split(",")
     @report_list = []
+    @granule_report_list = []
 
     records_list.each_slice(2) {|(concept_id, revision_id)|
                                   new_record = Collection.find_record(concept_id, revision_id) 
                                   if new_record
                                     @report_list.push(new_record)
+                                    new_granule_record = new_record.related_granule_record
+                                    if new_granule_record
+                                      @granule_report_list.push(new_granule_record)
+                                    end
                                   end
                                  }
 
-    metric_set = MetricSet.new(@report_list)
-    original_metric_set = metric_set.original_metric_set
+    @metric_set = MetricSet.new(@report_list)
+    @original_metric_set = @metric_set.original_metric_set
 
-
-    @review_counts = metric_set.completed_review_counts(Review.get_reviews.select { |review| review.review_state == 1 })
-
-    @total_completed = metric_set.total_completed
-
-    #stat generation for original and current sets of records
-    @original_field_colors = original_metric_set.color_counts
-    @original_total_checked = @original_field_colors.values.sum
-
-    @original_quality_done_records = original_metric_set.quality_done_records
-
-    @field_colors = metric_set.color_counts
-    @total_checked = @field_colors.values.sum
-
-
-    @failing_elements_five = original_metric_set.element_non_green_count.take(5)
-
-    @updated_count = metric_set.updated_count
-    @updated_done_count = metric_set.updated_done_count
-
-    @quality_done_records = metric_set.quality_done_records
+    @granule_metric_set = MetricSet.new(@granule_report_list)
+    @granule_original_metric_set = @granule_metric_set.original_metric_set
 
     respond_to do |format|
       format.html { render :template => "reports/home" }

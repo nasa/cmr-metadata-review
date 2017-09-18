@@ -1,4 +1,4 @@
-module RecordFormats::Dif10ControlledElements
+module Modules::RecordFormats::Dif10ControlledElements
 
   CONTROLLED_ELEMENT_MAP = {
     'Dataset_Citation/Persistent_Identifier/Type'=>' UMMCommon_1.2 XML Schema Definition; PersistentIdentifierEnum PersistentIdentifierEnum = DOI, ARK',

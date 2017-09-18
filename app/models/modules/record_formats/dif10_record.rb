@@ -2,13 +2,18 @@
 #
 #Since individual record formats have different underlying structures of RecordData objects
 #unique accessors are needed for each format to access commonly requested data.
-module RecordFormats::Dif10Record
+module Modules::RecordFormats::Dif10Record
   SECTION_TITLES = ["Summary", "Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Reference", "Location", "Data_Resolution", "Related_URL", "Distribution", "Multimedia_Sample", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
+  GRANULE_SECTION_TITLES = []
 
-  include RecordFormats::Dif10ControlledElements
+  include Modules::RecordFormats::Dif10ControlledElements
 
   def get_section_titles
-    SECTION_TITLES
+    if self.is_collection?
+      SECTION_TITLES
+    else
+      GRANULE_SECTION_TITLES
+    end
   end
 
 

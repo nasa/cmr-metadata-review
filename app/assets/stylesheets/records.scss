@@ -1,8 +1,7 @@
 @import "variables";
 
 .record_review_data {
-  padding-left: 70px;
-  padding-top: 30px;
+  padding: 60px;
   font-size: 0.9em;
   background-color: white;
 
@@ -12,15 +11,15 @@
       display: flex;
       background-color: white;
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 80px;
   }
 
   .outer_flex_item_left {
-      width: 60%;
+      min-width: 70%;
   }
 
   .outer_flex_item_right {
-      width: 40%;
+      min-width: 30%;
 
       .review_comments {
         padding-left: 15px;
@@ -38,12 +37,11 @@
 
   .section_header {
     border-bottom: thin solid #d9d9d9;
-    width: 90%;
+    width: 97%;
   }
 
   .section_container {
     border-right: thin solid #d9d9d9;
-    width: 60%;
 
     .flex_container {
         display: -webkit-flex;
@@ -76,12 +74,11 @@
 
 .bubble {
     display: inline-block;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
     /*This is to hold the 2 text content for second opinion*/
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 0 5px;
 }
 
 .no_script {
@@ -271,10 +268,8 @@
     margin-bottom: 10px;
   }
   .format_links {
-    width: 20em;
-    display: flex;
-    justify-content: space-between;
     .format_link {
+      margin: 0.5em;
       font-weight: 600;
     }
   }
@@ -283,7 +278,7 @@
 .section_display {
   padding-top: 15px;
   padding-bottom: 15px;
-  min-height: 106px;
+  min-height: 125px;
 
   .section_button {
     border: none;
@@ -299,7 +294,10 @@
 .legend_title {
   font-size: 1.2em;
   font-weight: 600;
-  margin-bottom: 10px;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: thin solid #d9d9d9;
+  width: 10%;
 }
 
 .legend_flexbox {
@@ -313,18 +311,19 @@
     }
 
     .legend_flex_item {
-      height: 30px;
       display: flex;
       align-items: center;
-      padding-right: 15px;
+      margin: 0 20px 20px 0;
+      min-width: 250px;
 
       .legend_text {
         display: inline-block;
         padding-left: 5px;
         font-size: 0.8em;
       }
+      
+      .bubble {
+        padding: 0 6px;
+      }
     }
 }
-
-
-

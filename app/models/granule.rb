@@ -2,11 +2,19 @@ class Granule < ActiveRecord::Base
   has_many :records, :as => :recordable
   belongs_to :collection
 
+  extend Modules::RecordRevision
+
+  
+  def get_records
+    self.records.where(hidden: false)
+  end
+
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
     #returns a list of granule data
     granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
     #replacing the data with new granule & record & ingest objects
     granules_components = []
+
     granules_to_save.each do |granule_data|
       #creating the granule and related record 
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
@@ -14,8 +22,11 @@ class Granule < ActiveRecord::Base
       new_granule_record.save
 
       granule_record_data_list = []
+
+      flattened_granule_data = Cmr.get_granule(granule_data['concept_id'])
+
       #creating all the recordData values for the granule
-      granule_data["Granule"].each_with_index do |(key, value), i|
+      flattened_granule_data.each_with_index do |(key, value), i|
         granule_record_data = RecordData.new(record: new_granule_record)
         granule_record_data.last_updated = DateTime.now
         granule_record_data.column_name = key
@@ -29,7 +40,16 @@ class Granule < ActiveRecord::Base
       #pushing the list of granule parts into the granule_components list for a return value
       granules_components.push([ granule_object, new_granule_record, granule_record_data_list, granule_ingest ])
     end 
-
+      
     granules_components
+  end
+
+
+  def update?
+    self.collection.update?
+  end
+
+  def short_name
+    self.collection.short_name
   end
 end

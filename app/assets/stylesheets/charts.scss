@@ -5,11 +5,22 @@
       page-break-after: always;
     }
 
+    .granule_quality_section {
+      page-break-after: always;
+    }
+
     .sub_section_title {
       &:not(:first-child) {
         margin-top: 100px;
       }
     }
+
+    .section_title {
+      &:not(:first-child) {
+        margin-top: 100px;
+      }
+    }
+
     .page_header {
       display: none !important;
     }
@@ -222,6 +233,13 @@
 .sub_section_title {
   font-weight: 600;
   font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.section_title {
+  font-weight: 600;
+  font-size: 25px;
+  border-bottom: 1px solid black;
   margin-bottom: 15px;
 }
 

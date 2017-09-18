@@ -20,7 +20,7 @@ class RecordsController < ApplicationController
       redirect_to home_path
       return
     end
-
+    
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
@@ -34,10 +34,12 @@ class RecordsController < ApplicationController
       @color_coding_complete = true
       @has_enough_reviews = true
       @no_second_opinions = true
+      @granule_completed = true
     else
       @color_coding_complete = @record.color_coding_complete?
       @has_enough_reviews = @record.has_enough_reviews?
       @no_second_opinions = @record.no_second_opinions?
+      @granule_completed = @record.granule_completed?
     end
   end
 
@@ -50,7 +52,7 @@ class RecordsController < ApplicationController
 
     if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
       #checking that all bubbles are filled in
-      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions?
+      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions? || !record.granule_completed?
         redirect_to record_path(record)
         return
       end

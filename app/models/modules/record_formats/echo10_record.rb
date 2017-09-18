@@ -2,13 +2,17 @@
 #
 #Since individual record formats have different underlying structures of RecordData objects
 #unique accessors are needed for each format to access commonly requested data.
-module RecordFormats::Echo10Record
+module Modules::RecordFormats::Echo10Record
   SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "SpatialInfo", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
-
-  include RecordFormats::Echo10ControlledElements
+  GRANULE_SECTION_TITLES =["Collection", "DataGranule", "Platforms", "Temporal", "Spatial", "PGEVersionClass", "MeasuredParameters", "OnlineAccessURLs", "TwoDCoordinateSystems", "OnlineResources", "AdditionalAttributes"]
+  include Modules::RecordFormats::Echo10ControlledElements
 
   def get_section_titles
-    SECTION_TITLES
+    if self.is_collection?
+      SECTION_TITLES
+    else 
+      GRANULE_SECTION_TITLES
+    end
   end
 
   # ====Params   
@@ -18,7 +22,11 @@ module RecordFormats::Echo10Record
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
-    self.get_column("LongName")
+    if self.is_collection?
+      self.get_column("LongName")
+    else 
+      self.get_column("GranuleUR")
+    end
   end 
 
   # ====Params   

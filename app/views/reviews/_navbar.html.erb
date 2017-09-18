@@ -19,7 +19,11 @@
   <% if page == "navigation" %>
     <script type="text/javascript">
       document.getElementById("nav_back_button").onclick = function() {
-        document.location.href = "<%= collection_path(id: params["id"], concept_id: record.concept_id) %>"
+        <% if record.is_collection? %>
+          document.location.href = "<%= collection_path(id: params["id"], concept_id: record.concept_id) %>"
+        <% else %>
+          document.location.href = "<%= collection_path(id: params["id"], concept_id: record.recordable.collection.concept_id) %>"
+        <% end %>
       }
     </script>
   <% else %>
@@ -49,9 +53,15 @@
     <% end %>
   
     <p><strong>LONG NAME : </strong><%= record.long_name %></p>
-    <p>SHORT NAME : <%= record.short_name %></p>
-    <p>FORMAT : <%= record.format %></p>
-    <p class="format_links">SOURCE FILES : <a class="format_link" href="<%= record.umm_json_link %>" download>UMM-JSON</a> | <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a></p>
+
+    <% if record.is_collection? %>
+      <p>SHORT NAME : <%= record.short_name %></p>
+      <p>FORMAT : <%= record.format %></p>
+      <p class="format_links">SOURCE FILES : <a class="format_link" href="<%= record.umm_json_link %>" download>UMM-JSON</a> | <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a></p>
+    <% else %>
+      <p>FORMAT : GRANULE</p>
+      <p class="format_links">SOURCE FILES : <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a></p>
+    <% end %>
   </div>
 
   <% if page == "review" %>
@@ -150,6 +160,10 @@
             }
             if (!<%=@no_second_opinions%>) {
               alert("Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags.");
+              return false;
+            }
+            if (!<%=@granule_completed%>) {
+              alert("The Collection's related Granule must be marked complete before the Collection can be completed.");
               return false;
             }
 
