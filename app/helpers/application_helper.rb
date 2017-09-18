@@ -28,4 +28,8 @@ module ApplicationHelper
     provider_select_list  
   end
 
+  def string_html_format(string)
+    sanitize(string, tags: %w(br a)).gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
+  end
+
 end
