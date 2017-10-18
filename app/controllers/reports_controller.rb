@@ -91,7 +91,6 @@ class ReportsController < ApplicationController
     @report_title = "SELECTION VIEW"
     @csv_path = reports_selection_path
     @csv_params = "?records=#{params["records"].to_s}"
-    @display_months = get_month_list
 
     records_list = params["records"].split(",")
     @report_list = []
@@ -107,6 +106,12 @@ class ReportsController < ApplicationController
                                     end
                                   end
                                  }
+
+
+    #getting reviews of selected records to get a per month count
+    selection_reviews = (@report_list.map {|record| record.reviews.to_a}).flatten                                 
+    @review_month_counts = list_past_months(selection_reviews)
+    @display_months = get_month_list
 
     @metric_set = MetricSet.new(@report_list)
     @original_metric_set = @metric_set.original_metric_set
