@@ -91,6 +91,7 @@ class ReportsController < ApplicationController
     @report_title = "SELECTION VIEW"
     @csv_path = reports_selection_path
     @csv_params = "?records=#{params["records"].to_s}"
+    @display_months = get_month_list
 
     records_list = params["records"].split(",")
     @report_list = []
