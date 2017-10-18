@@ -118,8 +118,8 @@ class CmrTest < ActiveSupport::TestCase
 
   describe "required_collection_field?" do
     it "positively identifies a required field from string" do
-      assert_equal(true, Cmr.required_collection_field?("Platforms/Platform/Instruments/Instrument0/ShortName"))
-      assert_equal(true, Cmr.required_collection_field?("ShortName"))
+      assert_equal(true, Cmr.required_field?("Platforms/Platform/Instruments/Instrument0/ShortName", "Collection", "echo10"))
+      assert_equal(true, Cmr.required_field?("ShortName", "Collection", "echo10"))
     end
 
     it "returns false for none required field strings" do

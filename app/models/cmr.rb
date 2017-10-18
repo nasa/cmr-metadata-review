@@ -609,12 +609,23 @@ class Cmr
     return output_string
   end
 
-  def self.required_field?(field_string, type = "Collection")
+  def self.required_field?(field_string, type = "Collection", format = "echo10")
     required_fields = nil
     if type == "Collection"
-      required_fields = REQUIRED_COLLECTION_FIELDS
+      if format == "echo10"
+        required_fields = REQUIRED_COLLECTION_FIELDS
+      elsif format == "dif10"
+        required_fields = REQUIRED_DIF10_FIELDS
+      else
+        required_fields = []
+      end
     else
-      required_fields = REQUIRED_GRANULE_FIELDS
+      if format == "echo10"
+        required_fields = REQUIRED_GRANULE_FIELDS
+      #dif10 records have no granules, so there are no associated required fields
+      else
+        required_fields = []
+      end
     end
 
     #removing the numbers added to fields during ingest to seperate platforms/instruments
@@ -626,7 +637,7 @@ class Cmr
           is_required_field = true
         end
       elsif required_field.is_a?(Array)
-        if Cmr.required_field?(field_string, required_field)
+        if Cmr.required_field?(field_string, required_field, format)
           is_required_field = true
         end
       end

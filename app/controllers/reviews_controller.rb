@@ -9,6 +9,7 @@ class ReviewsController < ApplicationController
     section_index = params["section_index"].to_i
 
     @record_type = (record.is_collection? ? "Collection" : "Granule")
+    @record_format = record.format
     @marked_done = record.closed
 
     @collection_record = Record.find_by id: params[:id] 
