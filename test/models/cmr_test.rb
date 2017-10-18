@@ -123,9 +123,8 @@ class CmrTest < ActiveSupport::TestCase
     end
 
     it "returns false for none required field strings" do
-      assert_equal(false, Cmr.required_collection_field?("Platforms/Platform0/LongName"))
-      #Mispelling of required field, lower case S, was a previous bug.
-      assert_equal(false, Cmr.required_collection_field?("DatasetId"))
+      assert_equal(false, Cmr.required_field?("Platforms/Platform/LongName", "Collection", "echo10"))
+      assert_equal(false, Cmr.required_field?("DatasetId", "Collection", "echo10"))
     end
   end
 
