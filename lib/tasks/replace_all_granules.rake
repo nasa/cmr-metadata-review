@@ -11,7 +11,9 @@ task :replace_all_granules => :environment do
     granule.delete_self
   end
 
+  ingester = User.find_by(email: 'jeanne.leroux@nsstc.uah.edu')
+
   collections_with_record.each do |collection|
-    collection.add_granule(nil)
+    collection.add_granule(ingester)
   end
 end
