@@ -6,7 +6,6 @@ class ReviewsController < ApplicationController
 
   def show
     record = Record.find_by id: params[:id]
-    section_index = params["section_index"].to_i
 
     @record_type = (record.is_collection? ? "Collection" : "Granule")
     @marked_done = record.closed
@@ -19,7 +18,11 @@ class ReviewsController < ApplicationController
 
     @discussions = record.discussions
 
-    @section_titles = (record.sections[section_index][1])
+    section_index = params["section_index"].to_i
+    section = record.sections[section_index];
+
+    @section_title = section[0]
+    @section_titles = section[1]
     @controlled_notices = record.controlled_notice_list(@section_titles)
 
     @bubble_data = []
@@ -29,7 +32,6 @@ class ReviewsController < ApplicationController
             @bubble_data.push(bubble_map[title])
         end
     end
-
 
     @flagged_by_script = record.binary_script_values
     @script_values = record.script_values
