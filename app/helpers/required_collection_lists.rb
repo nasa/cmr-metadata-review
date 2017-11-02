@@ -134,7 +134,7 @@ module RequiredCollectionLists
               'DOI/Authority',
               'CollectionDataType',
               'ProcessingLevelDescription',
-              'CitationforExternalPublication',
+              'CitationForExternalPublication',
               'RestrictionFlagRestrictionComment',
               'DataFormat',
               'SpatialKeywords/Keyword',
