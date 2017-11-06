@@ -42,9 +42,7 @@ module ReviewsHelper
     
     new_values_hash = {}
     values_hash.each do |key, value|
-      #taken from https://stackoverflow.com/questions/30344445/detect-and-replace-urls-in-text
-      regexp = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/?)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s\`!()\[\]{};:\'\".,<>?«»“”‘’]))/
-      values_hash[key] = value.gsub(regexp){|url| "<a target=\"_blank\" href=\"#{url}\">#{url}</a>"}
+      values_hash[key] = value.gsub(URI.regexp(['http', 'https'])) { |url| "<a target=\"_blank\" href=\"#{url}\">#{url}</a>" }
     end
     values_hash
   end
