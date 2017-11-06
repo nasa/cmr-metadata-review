@@ -104,7 +104,7 @@ module RequiredCollectionLists
                                   "Summary/Abstract",
                                   "Related_URL/URL_Content_Type/Type",
                                   "Related_URL/URL",
-                                  "Product_Level_ID",
+                                  "Product_Level_Id",
                                   "Metadata_Dates/Metadata_Creation",
                                   "Metadata_Dates/Metadata_Last_Revision",
                                   "Metadata_Dates/Data_Creation",
