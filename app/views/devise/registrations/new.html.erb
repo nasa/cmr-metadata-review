@@ -33,15 +33,31 @@
           <%= f.check_box :curator %>
           <%= f.label :curator %>
         </div>
-        <div class="form_buttons">
-          <%= f.submit("Create User", class: 'selectButton') %>
+        <div class="remember_button">
+          <%= f.check_box :daac_curator %>
+          <%= f.label :daac_curator %>
         </div>
       </div>
+
+      <div id="daac_curator_fields" style="display:none;">              
+        <%= f.label :daac, "Associated DAAC*" %>
+        <%= f.select :daac, [["NSIDCV0","NSIDCV0"], ["ORNL_DAAC", "ORNL_DAAC"]]  %>
+      </div>
+
+
+      <div class="form_buttons">
+        <%= f.submit("Create User", class: 'selectButton') %>
+      </div>
+      
     <% end %>
   </div>
 
-
-
-
 </div>
 
+<script type="text/javascript">
+  console.log("Toggle script!");
+  $("input[name='user[daac_curator]'").on('change', function() {
+    console.log("checkbox changed!");
+    $('#daac_curator_fields').toggle();
+  });
+</script>
