@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :reviews 
   has_many :discussions   
 
+  validates_presence_of :daac, if: :daac_curator
+
   # ====Params   
   # None
   # ====Returns
