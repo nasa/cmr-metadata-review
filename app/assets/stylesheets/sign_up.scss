@@ -2,15 +2,12 @@
 
 .sign_up_box {
   background-color:white;
-  height:365px;
+  height:auto;
   width:500px;
   margin: auto;
   padding-left:40px;
-
-  .space_box {
-    height:22px; 
-    width:80px;
-  }
+  padding-top: 25px;
+  padding-bottom: 25px;
 
   .box_tab {
     height:40px;
@@ -22,13 +19,18 @@
   }
 
   .form_box {
-    height:255px;
-    width:415px;
-    border-width:1px;
-    border-style:solid;
-    padding-top:27px;
-    padding-left:42px;
+    height: auto;
+    width: 415px;
+    border-width: 1px;
+    border-style: solid;
+    padding-top: 27px;
 
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
     input[type=email] {
       width:325px;
     }
@@ -37,23 +39,23 @@
       width:325px;
     }
 
+    #daac_curator_fields {
+      margin-left: 48px;
+      margin-bottom: 20px;
+    }
+
     .form_buttons {
       display: inline-block;
       background-color: white;
       color:white;
       height:55px;
-      margin-left: 50px;
-      padding-left:3px;
-
+      
       .remember_button {
         cursor: pointer;
         color: black;
         display:inline-block;
         height: 36px;
         position: relative;
-        left:-61px;
-        bottom:2px;
-        padding-top: 5px;
         padding-left: 5px;
         font-size: 0.9em;
 

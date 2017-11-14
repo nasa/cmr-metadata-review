@@ -1,7 +1,6 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: CREATE USER"}) %> 
 
 <div class="sign_up_box">
-  <div class="space_box"></div>
 
   <div class="box_tab">
     CREATE NEW USER
@@ -31,17 +30,17 @@
       <div class="form_buttons">
         <div class="remember_button">
           <%= f.check_box :curator %>
-          <%= f.label :curator %>
+          <%= f.label :curator, "ARC Curator" %>
         </div>
         <div class="remember_button">
           <%= f.check_box :daac_curator %>
-          <%= f.label :daac_curator %>
+          <%= f.label :daac_curator, "DAAC Curator" %>
         </div>
       </div>
 
       <div id="daac_curator_fields" style="display:none;">              
         <%= f.label :daac, "Associated DAAC*" %>
-        <%= f.select :daac, [["NSIDCV0","NSIDCV0"], ["ORNL_DAAC", "ORNL_DAAC"]]  %>
+        <%= f.select :daac, provider_select_list  %>
       </div>
 
 
