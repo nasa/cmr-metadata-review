@@ -75,7 +75,7 @@ module RequiredCollectionLists
                                       "Temporal_Coverage/Paleo_DateTime/Paleo_Stop_Date"
                                     ]
                                   ],
-                                  "Data_Set_Progress",
+                                  "Dataset_Progress",
                                   "Spatial_Coverage/Granule_Spatial_Representation",
                                   "Spatial_Coverage/Geometry/Coordinate_System", 
                                   [
