@@ -302,7 +302,7 @@
   }
 
   .final_headcol {
-    height: 76px;
+    height: 69px;
   }
 
   .headcol_subtitle {
@@ -322,7 +322,7 @@
   }
 
   tr div {
-    max-height:130px;
+    max-height:180px;
     min-height: 19px;
     overflow: auto;
   }
@@ -420,7 +420,11 @@
   }
 
   .recommendation_cell {
+    height: 180px;
 
+    div textarea {
+      height: 150px;
+    }
   }
 
   .opinion_cell {
