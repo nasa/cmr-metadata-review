@@ -75,7 +75,7 @@ module RequiredCollectionLists
                                       "Temporal_Coverage/Paleo_DateTime/Paleo_Stop_Date"
                                     ]
                                   ],
-                                  "Data_Set_Progress",
+                                  "Dataset_Progress",
                                   "Spatial_Coverage/Granule_Spatial_Representation",
                                   "Spatial_Coverage/Geometry/Coordinate_System", 
                                   [
@@ -104,7 +104,7 @@ module RequiredCollectionLists
                                   "Summary/Abstract",
                                   "Related_URL/URL_Content_Type/Type",
                                   "Related_URL/URL",
-                                  "Product_Level_ID",
+                                  "Product_Level_Id",
                                   "Metadata_Dates/Metadata_Creation",
                                   "Metadata_Dates/Metadata_Last_Revision",
                                   "Metadata_Dates/Data_Creation",
@@ -134,7 +134,7 @@ module RequiredCollectionLists
               'DOI/Authority',
               'CollectionDataType',
               'ProcessingLevelDescription',
-              'CitationforExternalPublication',
+              'CitationForExternalPublication',
               'RestrictionFlagRestrictionComment',
               'DataFormat',
               'SpatialKeywords/Keyword',
