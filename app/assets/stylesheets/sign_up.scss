@@ -5,9 +5,7 @@
   height:auto;
   width:500px;
   margin: auto;
-  padding-left:40px;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 25px 0 25px 40px;
 
   .box_tab {
     height:40px;
@@ -21,8 +19,7 @@
   .form_box {
     height: auto;
     width: 415px;
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid;
     padding-top: 27px;
 
     form {
@@ -39,9 +36,9 @@
       width:325px;
     }
 
-    #daac_curator_fields {
-      margin-left: 48px;
-      margin-bottom: 20px;
+    .select_container {
+      width: 325px;
+      margin: 5px 0 15px 0;
     }
 
     .form_buttons {

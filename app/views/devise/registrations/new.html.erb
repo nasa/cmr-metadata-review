@@ -26,23 +26,15 @@
         <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation" %>
       </div>
       
-
-      <div class="form_buttons">
-        <div class="remember_button">
-          <%= f.check_box :curator %>
-          <%= f.label :curator, "ARC Curator" %>
-        </div>
-        <div class="remember_button">
-          <%= f.check_box :daac_curator %>
-          <%= f.label :daac_curator, "DAAC Curator" %>
-        </div>
+      <div class="select_container">
+        <%= f.label :role, "Role" %>
+        <%= f.collection_select :role, User::ROLES, :to_s, :upcase %>
       </div>
 
-      <div id="daac_curator_fields" style="display:none;">              
-        <%= f.label :daac, "Associated DAAC*" %>
+       <div id="daac_curator_fields" style="display:none;"" class="select_container">              
+        <%= f.label :role, "Associated DAAC*" %>
         <%= f.select :daac, provider_select_list  %>
       </div>
-
 
       <div class="form_buttons">
         <%= f.submit("Create User", class: 'selectButton') %>
@@ -54,8 +46,11 @@
 </div>
 
 <script type="text/javascript">
-  console.log("Toggle script!");
-  $("input[name='user[daac_curator]'").on('change', function() {
-    $('#daac_curator_fields').toggle();
+  $("select[name='user[role]'").on('change', function() {
+    if (this.value === 'daac_curator') {
+      $('#daac_curator_fields').show();
+    } else {
+      $('#daac_curator_fields').hide();
+    }
   });
 </script>
