@@ -468,7 +468,7 @@
             <% @section_titles.each do |title| %>
               <td class="discussion_td column_<%=title%>">
                 <div class="discussion_holder">
-                  <div style="border-bottom-color: #000;border-bottom-style: solid;border-bottom-width: 1px">
+                  <div class="discussion_comment_input">
                     <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>
                   </div>
 

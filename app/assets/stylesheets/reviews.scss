@@ -471,6 +471,10 @@
     max-height: 350px;
   }
 
+  .discussion_comment_input {
+    border-bottom: 1px solid black;
+  }
+
   .discussion_comment {
 
     .discussion_title {
@@ -482,9 +486,7 @@
 
     .discussion_text {
       padding: 0 0 5px 25px;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
-      border-bottom-color:black;
+      border-bottom: 1px sold black;
     }
   }
 
