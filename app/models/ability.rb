@@ -14,6 +14,10 @@ class Ability
         can :access, :curate
       end
 
+      if user.role.eql?("daac_curator")
+        can :access, :curate
+      end
+
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.
