@@ -456,11 +456,11 @@
       padding: 5px;
       box-sizing: border-box;
     }
-
-
   }
 
-
+  .recommendation_col {
+    height: 180px;
+  }
 
   .discussion_td {
     vertical-align: top;
@@ -486,7 +486,7 @@
 
     .discussion_text {
       padding: 0 0 5px 25px;
-      border-bottom: 1px sold black;
+      border-bottom: 1px solid black;
     }
   }
 
