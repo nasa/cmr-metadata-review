@@ -5,50 +5,50 @@ class ReviewsController < ApplicationController
   before_filter :ensure_curation
 
   def show
-    record = Record.find_by id: params[:id]
+    @record = Record.find_by id: params[:id]
 
-    @record_type = (record.is_collection? ? "Collection" : "Granule")
-    @marked_done = record.closed
+    @record_type = (@record.is_collection? ? "Collection" : "Granule")
+    @marked_done = @record.closed
 
     @collection_record = Record.find_by id: params[:id] 
 
-    @navigation_list = record.sections.map {|section| section[0] }
+    @navigation_list = @record.sections.map {|section| section[0] }
 
     @script_comment = @collection_record.get_script_comments
 
-    @discussions = record.discussions
+    @discussions = @record.discussions
 
     section_index = params["section_index"].to_i
-    section = record.sections[section_index];
+    section = @record.sections[section_index];
 
     @section_title = section[0]
     @section_titles = section[1]
-    @controlled_notices = record.controlled_notice_list(@section_titles)
+    @controlled_notices = @record.controlled_notice_list(@section_titles)
 
     @bubble_data = []
-    bubble_map = record.bubble_map
+    bubble_map = @record.bubble_map
     @section_titles.each do |title|
         unless bubble_map[title].nil?
             @bubble_data.push(bubble_map[title])
         end
     end
 
-    @flagged_by_script = record.binary_script_values
-    @script_values = record.script_values
+    @flagged_by_script = @record.binary_script_values
+    @script_values = @record.script_values
     @script_values = replace_links(@script_values)
 
     @previous_values = replace_links(@previous_values)
 
 
-    @previous_recommendations = record.previous_recommendations
+    @previous_recommendations = @record.previous_recommendations
 
-    @current_values = record.values
+    @current_values = @record.values
     @current_values = replace_links(@current_values)
 
-    @recommendations = record.get_recommendations
-    @second_opinions = record.get_opinions
+    @recommendations = @record.get_recommendations
+    @second_opinions = @record.get_opinions
 
-    @color_codes = record.color_codes
+    @color_codes = @record.color_codes
 
   end
 

@@ -1,0 +1,28 @@
+<tr class="user_input">
+
+  <th class="inputlabelcol"></th>
+  <th class="headcol second_to_final_headcol">2ND OPINION</th>
+  
+  <% section_titles.each do |title| %>
+    <td class="no_padding column_<%=title%>">
+      <div id="opinion_cell_<%= title %>" class="opinion_cell">
+        <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
+        <p id="opinion_text_<%= title %>">
+          <i id="opinion_icon_<%= title %>" class="fa fa-user-plus"></i>
+          Requires 2nd Opinion
+        </p>
+      </div>  
+    </td>
+
+    <script type="text/javascript">
+      add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
+      <% if second_opinions[title] == true %>
+        document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
+        document.getElementById("opinion_check_<%= title %>").checked = true;
+        document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
+        document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o review_check flag_icon";
+      <% end %>
+    </script>
+  <% end %>
+
+</tr>
