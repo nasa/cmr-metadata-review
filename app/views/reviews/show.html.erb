@@ -126,7 +126,7 @@
 
           //resetting the text heights on each row header;
           adjustHeaderRowTextPosition();
-            
+
         }
 
         function unhideAllCells() {
@@ -136,7 +136,7 @@
               var showCells = document.getElementsByClassName(titleList[parseInt(index)]);
               for (var cell in showCells) {
                 if (showCells[parseInt(cell)]) {
-                  showCells[parseInt(cell)].style.display = "table-cell";  
+                  showCells[parseInt(cell)].style.display = "table-cell";
                 }
               }
             }
@@ -156,15 +156,15 @@
           }
         }
       </script>
-        
+
         <div class="filter_dropdown">
           <i class="fa fa-floppy-o"></i>
-          <p>SAVE AND GO TO:</p> 
+          <p>SAVE AND GO TO:</p>
           <select class="filter_select" name="redirect_index" id="section_select" form="field_form">
             <% @navigation_list.each_with_index do |data_section, index_count| %>
               <option value="<%=index_count%>"><%= data_section %></option>
             <% end %>
-          </select>  
+          </select>
         </div>
 
 
@@ -173,7 +173,7 @@
         var section_select = document.getElementById("section_select");
         section_select.options[<%=params["section_index"].to_i %>].selected = true;
         section_select.onchange = function () {
-          document.getElementById("field_form").submit();  
+          document.getElementById("field_form").submit();
         };
 
         //changing the button contents if user on first or last section of record
@@ -246,7 +246,7 @@
                 <div class="umm_required_cell">
                   <% if Cmr.required_field?(title, @record_type) %>
                     <i class="eui-icon eui-check-o review_check"></i>
-                  <% end %>    
+                  <% end %>
                 </div>
               </td>
             <% end %>
@@ -260,7 +260,7 @@
                 <div class="script_check_cell">
                   <% if @flagged_by_script[title] %>
                     <i class="eui-icon eui-check-o review_check"></i>
-                  <% end %>    
+                  <% end %>
                 </div>
               </td>
             <% end %>
@@ -273,7 +273,7 @@
                 <div><%= raw @script_values[title] %></div>
               </td>
             <% end %>
-          </tr>          
+          </tr>
 
           <% if !@previous_values.empty? %>
             <tr>
@@ -295,7 +295,7 @@
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div>
-                <%= format_new_lines(@current_values[title]) %>    
+                <%= format_new_lines(@current_values[title]) %>
                 </div>
               </td>
             <% end %>
@@ -308,7 +308,7 @@
               <% @section_titles.each do |title| %>
                 <td class="column_<%=title%>">
                   <div class="previous_recommendation_cell">
-                  <%= string_html_format(@previous_recommendations[title]) %>    
+                  <%= string_html_format(@previous_recommendations[title]) %>
                   </div>
                 </td>
               <% end %>
@@ -320,7 +320,7 @@
             <th class="headcol">
             </th>
             <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>"> 
+              <td class="column_<%=title%>">
               </td>
             <% end %>
           </tr>
@@ -357,12 +357,10 @@
                   document.getElementById(p_id).style.fontWeight = "bold";
                   document.getElementById(icon_id).className = "eui-icon eui-check-o";
                 }
-              }; 
+              };
             }
 
           </script>
-
-
 
           <tr class="input_line_row line_row">
             <th class="inputlabelcol"></th>
@@ -374,33 +372,9 @@
             <% end %>
           </tr>
 
-          <tr class="user_input">
-
-          <th class="inputlabelcol"></th>
-          <th class="headcol second_to_final_headcol">2ND OPINION</th>
-            <% @section_titles.each do |title| %>
-              <td class="no_padding column_<%=title%>">
-                <div id="opinion_cell_<%= title %>" class="opinion_cell">
-                  <input style="visibility: hidden;" type="checkbox" id="opinion_check_<%= title %>" name="opinion[<%= title %>]" form="field_form">
-                  <p id="opinion_text_<%= title %>">
-                    <i id="opinion_icon_<%= title %>" class="fa fa-user-plus"></i>
-                    Requires 2nd Opinion
-                  </p>
-                </div>  
-              </td>
-
-              <script type="text/javascript">
-                add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
-                <% if @second_opinions[title] == true %>
-                  document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
-                  document.getElementById("opinion_check_<%= title %>").checked = true;
-                  document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
-                  document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o review_check flag_icon";
-                <% end %>
-              </script>
-            <% end %>
-          </tr>
-
+          <% if can?(:request_opinions, @record) %>
+            <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
+          <% end %>
 
           <tr class="user_input">
 
@@ -422,7 +396,7 @@
                         <script type="text/javascript">
                           document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
                             document.getElementById("color_code_<%=title%>").value = "<%=color%>";
-                            update_color_backgrounds(); 
+                            update_color_backgrounds();
                             activateSaveButton();
                           }
                         </script>
@@ -437,7 +411,7 @@
                       <script type="text/javascript">
                         document.getElementById("cancel_icon_<%=title%>").onclick = function() {
                           document.getElementById("color_code_<%=title%>").value = "";
-                          update_color_backgrounds(); 
+                          update_color_backgrounds();
                           activateSaveButton();
                         }
                       </script>
@@ -460,6 +434,7 @@
             </tr>
 
 
+<<<<<<< HEAD
 
           <tr class="user_input">
 
@@ -486,14 +461,19 @@
                       </div>
                     </div>
                   <% end %>
-                </div>  
+                </div>
               </td>
             <% end %>
           </tr>
+=======
+          <% if can?(:discuss_reviews, @record) %>
+            <%= render partial: 'discussion_and_justification', locals: { discussions: @discussions, section_titles: @section_titles } %>
+          <% end %>
+>>>>>>> a578e72... Adds new abilities for admin and arc curator roles. Hides review sections based on role.
 
-        </table>  
+        </table>
 
-        </div>  
+        </div>
       </div>
 
   </section>
@@ -585,7 +565,7 @@
         var color = color_selects[counter].value
         //Removing all BG colors from the cell
         <% ["color_green", "color_yellow", "color_red", "color_blue"].each do |color_class| %>
-          color_cells[counter].classList.remove("<%=color_class%>");  
+          color_cells[counter].classList.remove("<%=color_class%>");
         <% end %>
         //adding the class that corresponds to the color selected in the select input
         color_cells[counter].classList.add("color_" + color.toString());
@@ -600,13 +580,13 @@
         }
         counter = counter + 1;
       }
-    }  
+    }
 
     update_color_backgrounds();
   </script>
 
 
-  
+
   <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
     <%= hidden_field_tag(:section_index, params["section_index"]) %>
     <% if !@marked_done %>
@@ -621,7 +601,7 @@
           </span>
         </button>
       </div>
-      
+
       <script type="text/javascript">
         // Setting as disbled until someone triggers an "activateSaveButton" action
         document.getElementById("save_review_button").disabled = true;
@@ -631,7 +611,7 @@
         }
 
         function activateSaveButton() {
-          document.getElementById('save_review_button').disabled = false; 
+          document.getElementById('save_review_button').disabled = false;
         }
       </script>
     <% end %>
@@ -668,9 +648,9 @@
 
     function adjustDiscussionCellHeight() {
         //resetting the discussion <th> field height;
-        $(".final_headcol").each(function() { 
+        $(".final_headcol").each(function() {
           var siblings = $(this).siblings();
-          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
+          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight());
         });
     }
 
@@ -685,7 +665,7 @@
           if (tdArr[i].style.display != 'none') {
             return row.getElementsByTagName('td')[i].offsetHeight;
           }
-        }  
+        }
       });
 
       var headcols = document.getElementsByClassName('headcol');
