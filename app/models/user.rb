@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   has_many :reviews 
   has_many :discussions   
 
+  validates_presence_of :daac, if: Proc.new { |u| u.role.eql?("daac_curator") }
+
+  ROLES = %w[admin arc_curator daac_curator].freeze
+
   # ====Params   
   # None
   # ====Returns
@@ -24,4 +28,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Whether or not the User is an admin.
+  # ==== Method
+  # This method checks if the user is a "admin", which is a legacy role name. It's only
+  # intended for backwards compatibility. For new code, use the 'role' attribute directly.
+  def admin
+    role.eql?("admin")
+  end
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Whether or not the User is a curator.
+  # ==== Method
+  # This method checks if the user is a "curator", which is a legacy role name. It's only
+  # intended for backwards compatibility. For new code, use the 'role' attribute directly.
+  def curator
+    role.eql?("arc_curator")
+  end
 end
