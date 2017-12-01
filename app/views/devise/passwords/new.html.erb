@@ -8,14 +8,16 @@
 
 <div class="log_in_box">
 
-  <div class="space_box"></div>
+  <div class="box_tab">
+    RESET
+  </div>
 
   <div class="form_box">
     
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
 
-      <p>
+      <p class='password-reset-callout'>
         Enter your email and we'll send you instructions for resetting your password.
       </p>
 
@@ -23,15 +25,15 @@
         <%= f.email_field :email, autofocus: true, placeholder: "Email" %>
       </div>
 
-      <div class="form_buttons">
-        <%= f.submit "Submit", class: 'selectButton' %>
-      </div>
-
+      <%= f.submit "Submit", class: 'selectButton' %>
+      
     <% end %>
 
   </div>
 
-  <%= render "devise/shared/links" %>
+  <div class='devise-links'>
+    <%= render "devise/shared/links" %>
+  </div>
 
 </div>
 
