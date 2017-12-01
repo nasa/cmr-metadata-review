@@ -1,3 +1,5 @@
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: REVIEW"}) %>
+
 <div class="review_background">
  <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
 
@@ -178,11 +180,11 @@
         var section_select_length = document.getElementById("section_select").options.length
         var button_width = '155px';
         if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
-          document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('nextButtonText').innerHTML = 'METADATA';
           document.getElementById('nextButton').style.width = button_width;
           document.getElementById('previousButton').style.width = button_width;
         } else if (<%=params["section_index"].to_i%> == 0) {
-          document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('previousButtonText').innerHTML = 'METADATA';
           document.getElementById('previousButton').style.width = button_width;
           document.getElementById('nextButton').style.width = button_width;
         }
