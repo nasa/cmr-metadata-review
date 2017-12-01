@@ -1,3 +1,5 @@
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: REVIEW"}) %>
+
 <div class="review_background">
  <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
 
@@ -178,11 +180,11 @@
         var section_select_length = document.getElementById("section_select").options.length
         var button_width = '155px';
         if (<%=params["section_index"].to_i%> == (section_select_length - 1)) {
-          document.getElementById('nextButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('nextButtonText').innerHTML = 'METADATA';
           document.getElementById('nextButton').style.width = button_width;
           document.getElementById('previousButton').style.width = button_width;
         } else if (<%=params["section_index"].to_i%> == 0) {
-          document.getElementById('previousButtonText').innerHTML = 'RECORD HOME';
+          document.getElementById('previousButtonText').innerHTML = 'METADATA';
           document.getElementById('previousButton').style.width = button_width;
           document.getElementById('nextButton').style.width = button_width;
         }
@@ -325,17 +327,18 @@
 
 
           <tr class="user_input">
-
-          <th class="inputlabelcol"></th>
-          <th class="headcol">
-            <p>RECOMMENDATION</p>
-            <p class="headcol_subtitle">(Visible on Reports)</p>
-          </th>
-            <% @section_titles.each do |title| %>
-              <td class="recommendation_cell column_<%=title%>">
-                <textarea class="input_entry" name="recommendation[<%= title %>]" oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
-              </td>
-            <% end %>
+            <th class="inputlabelcol recommendation_col"></th>
+            <th class="headcol">
+              <p>RECOMMENDATION</p>
+              <p class="headcol_subtitle">(Visible on Reports)</p>
+            </th>
+              <% @section_titles.each do |title| %>
+                <td class="recommendation_cell column_<%=title%>">
+                  <div class="new_discussion">
+                    <textarea class="input_entry" name="recommendation[<%= title %>]" placeholder="New Recommendation..." oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+                  </div>
+                </td>
+              <% end %>
           </tr>
 
           <script type="text/javascript">
@@ -370,10 +373,6 @@
               </td>
             <% end %>
           </tr>
-
-
-
-
 
           <tr class="user_input">
 
@@ -467,13 +466,12 @@
           <th class="inputlabelcol final_headcol"></th>
           <th class="headcol final_headcol">
             <p>DISCUSSION &amp; JUSTIFICATION</p>
-            <p class="headcol_subtitle">(Visible to All)</p>
           </th>
             <% @section_titles.each do |title| %>
               <td class="discussion_td column_<%=title%>">
                 <div class="discussion_holder">
-                  <div class="new_discussion">
-                    <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>  
+                  <div class="discussion_comment_input">
+                    <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>]" form="field_form"></textarea>
                   </div>
 
                   <% messages = @discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>

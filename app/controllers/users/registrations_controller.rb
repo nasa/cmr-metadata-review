@@ -81,7 +81,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   #Added this to be able to configure user roles from admin screen
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << :curator
+    devise_parameter_sanitizer.for(:sign_up).concat([:curator, :role, :daac])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
