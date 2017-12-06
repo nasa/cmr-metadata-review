@@ -215,9 +215,19 @@
     width: 14em;
     left: 5em;
     top: auto;
-    padding-left: 2em;
     height: 200px;
     font-size: 0.9em;
+    text-align: center;
+    border-left: 20px;
+    border-left-style: solid;
+
+    &__user-row {
+       border-left-color: $review-gray-dark;
+    }
+
+    &__script-row {
+      border-left-color: $review-blue-dark;
+    }
   }
 
   .first_headcol {
@@ -264,7 +274,8 @@
     top: auto;
     background-color: $review-gray-dark;
     height: 90px;
-    border: none; 
+    border: none;
+    display: none; 
   }
 
   .input_line_row {
@@ -351,6 +362,10 @@
         cursor: pointer;
       }
 
+      .color_code_button[data-disabled=true] {
+        display: none;
+      }
+
       .color_code_icon {
         color:white; 
         font-size: 22px; 
@@ -365,6 +380,10 @@
         margin-right: 10px;
         margin-top: 9px;
         cursor: pointer;
+      }
+
+      .cancel_selection_icon[data-disabled=true] {
+        display: none;
       }
 
     }
@@ -455,6 +474,11 @@
       box-shadow: inset 2px 2px 2px 2px #dddddd;
       padding: 5px;
       box-sizing: border-box;
+    }
+
+    textarea:disabled {
+      background: none;
+      box-shadow: none;
     }
   }
 
