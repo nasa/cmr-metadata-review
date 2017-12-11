@@ -320,6 +320,22 @@
 
           <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
 
+<<<<<<< HEAD
+=======
+          <tr class="user_input">
+            <th class="inputlabelcol recommendation_col"></th>
+            <th class="headcol">
+              <p>RECOMMENDATION</p>
+            </th>
+              <% @section_titles.each do |title| %>
+                <td class="recommendation_cell column_<%=title%>">
+                  <div class="new_discussion">
+                    <textarea class="input_entry" name="recommendation[<%= title %>]" placeholder="New Recommendation..." oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
+                  </div>
+                </td>
+              <% end %>
+          </tr>
+>>>>>>> 5153d64... Removes errant commentted out element.
 
           <script type="text/javascript">
             function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
