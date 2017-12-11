@@ -15,7 +15,7 @@
     &:nth-child(even) {background: $review-blue-light}
   }
   tr.section_title_row {
-    background: $review-blue-light; 
+    background: $review-blue-light;
   }
   tr.user_input {
     &:nth-child(even) {background: $review-yellow-dark}
@@ -189,7 +189,7 @@
 .scroll_table {
   margin-top: 25px;
   margin-right: 5%;
-  overflow-x: auto;  
+  overflow-x: auto;
   margin-left: 17.1em;
   overflow-y: visible;
   font-size: 0.8em;
@@ -199,7 +199,7 @@
   }
 
   [type="checkbox"] {
-  
+
     position: absolute;
     top: 0;
     left: 0;
@@ -255,7 +255,7 @@
     width: 15px;
     cursor: col-resize;
     background-color: rgba(255,255,255,0.6);
-    
+
     i {
       color: $gray-dark;
     }
@@ -279,7 +279,7 @@
     background-color: $review-gray-dark;
     height: 90px;
     border: none;
-    display: none; 
+    display: none;
   }
 
   .input_line_row {
@@ -322,7 +322,7 @@
 
   .headcol_subtitle {
     font-size: 11px;
-  }      
+  }
 
   .previous_recommendation_cell {
     min-height: 40px;
@@ -358,8 +358,8 @@
       }
 
       .color_code_button {
-        width:40px; 
-        height:27px; 
+        width:40px;
+        height:27px;
         margin-left: 2px;
         margin-right: 2px;
         border-radius: 15px;
@@ -371,9 +371,9 @@
       }
 
       .color_code_icon {
-        color:white; 
-        font-size: 22px; 
-        padding-left: 16px; 
+        color:white;
+        font-size: 22px;
+        padding-left: 16px;
         padding-top: 2px;
       }
 
@@ -399,7 +399,7 @@
     display: flex;
     font-weight: bold;
     .controlled_icon {
-      margin-left:10px; 
+      margin-left:10px;
       cursor: help;
     }
   }
@@ -507,7 +507,7 @@
 
     .discussion_title {
       padding: 5px;
-      
+
       font-size: 0.8em;
       font-weight: bold;
     }
@@ -538,7 +538,7 @@
     border-radius: 6px;
     border: 1px solid black;
     font-size: 1.1em;
-    
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
