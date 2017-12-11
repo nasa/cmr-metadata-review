@@ -238,6 +238,15 @@ class Record < ActiveRecord::Base
     get_field("opinion")
   end
 
+  # ====Params   
+  # None
+  # ====Returns
+  # Hash of "column_names" => "feedback (true/false)"
+  # ==== Method
+  # This method looks up the record's associated feedback request values.
+  def get_feedbacks
+    get_field("feedback")
+  end
 
   # ====Params   
   # Hash
@@ -312,6 +321,22 @@ class Record < ActiveRecord::Base
     end
   end
 
+  def update_feedbacks(feedbacks_hash)
+    any_data_changed = false
+    if feedbacks_hash
+      feedbacks_hash.each do |key, value|
+          data = RecordData.where(record: self, column_name: key).first
+          if data
+            if data.feedback != value
+              any_data_changed = true
+            end
+            
+            data.feedback = value
+            data.save
+         end
+      end
+    end
+  end
 
   # ====Params   
   # None
@@ -534,7 +559,7 @@ class Record < ActiveRecord::Base
     self.recordable.update?
   end
 
-  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions)
+  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions, new_feedbacks)
     section_index = section_index.to_i
 
     if section_index.nil?
@@ -570,6 +595,21 @@ class Record < ActiveRecord::Base
       
       self.update_opinions(opinion_values)
       
+      feedback_values = self.get_feedbacks
+      section_titles.each do |title|
+        feedback_values[title] = false
+      end
+
+      if new_feedbacks
+        new_feedbacks.each do |key, value|
+          if value == "on"
+            feedback_values[key] = true
+          end
+        end
+      end
+
+      self.update_feedbacks(feedback_values)
+
       if new_discussions
         new_discussions.each do |key, value|
           if value != ""
