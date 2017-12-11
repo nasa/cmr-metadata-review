@@ -47,6 +47,7 @@ class ReviewsController < ApplicationController
 
     @recommendations = @record.get_recommendations
     @second_opinions = @record.get_opinions
+    @feedbacks = @record.get_feedbacks
 
     @color_codes = @record.color_codes
 

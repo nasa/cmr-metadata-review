@@ -24,6 +24,7 @@ class Ability
 
       if user.role.eql?("daac_curator")
         can :access, :curate
+        can :request_feedback, Record
       end
 
     #
