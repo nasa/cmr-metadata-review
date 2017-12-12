@@ -320,7 +320,6 @@
 
           <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
 
-          
           <script type="text/javascript">
             function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
               document.getElementById(cell_id).onclick = function() {
