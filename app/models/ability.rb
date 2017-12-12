@@ -11,6 +11,7 @@ class Ability
 
         can :request_opinions, Record
         can :discuss_reviews, Record
+        can :recommend_changes, Record
       end
 
       if user.role.eql?("arc_curator")
@@ -18,6 +19,7 @@ class Ability
         
         can :request_opinions, Record
         can :discuss_reviews, Record
+        can :recommend_changes, Record
       end
 
       if user.role.eql?("daac_curator")

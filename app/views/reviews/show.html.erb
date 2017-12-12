@@ -228,8 +228,7 @@
         </tr>
 
           <tr class="auto_line_row line_row">
-            <th class="inputlabelcol"></th>
-            <th class="headcol">
+            <th class="headcol headcol__script-row">
             </th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
@@ -239,8 +238,7 @@
 
 
           <tr>
-          <th class="autolabelcol"></th>
-          <th class="headcol">UMM REQUIRED</th>
+            <th class="headcol headcol__script-row">UMM REQUIRED</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div class="umm_required_cell">
@@ -252,8 +250,7 @@
             <% end %>
           </tr>
           <tr>
-          <th class="autolabelcol"></th>
-          <th class="headcol">FLAGGED BY SCRIPT</th>
+          <th class="headcol headcol__script-row">FLAGGED BY SCRIPT</th>
             <!-- for each of shown value list, create td for value -->
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
@@ -266,8 +263,7 @@
             <% end %>
           </tr>
           <tr>
-          <th class="autolabelcol"></th>
-          <th class="headcol">SCRIPT RESULT</th>
+          <th class="headcol headcol__script-row">SCRIPT RESULT</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div><%= raw @script_values[title] %></div>
@@ -277,8 +273,7 @@
 
           <% if !@previous_values.empty? %>
             <tr>
-              <th class="autolabelcol"></th>
-              <th class="headcol">PREVIOUS VALUE</th>
+              <th class="headcol headcol__script-row">PREVIOUS VALUE</th>
                 <% @section_titles.each do |title| %>
                   <td class="column_<%=title%>">
                     <div>
@@ -290,8 +285,7 @@
           <% end %>
 
           <tr>
-            <th class="autolabelcol"></th>
-            <th class="headcol">CURRENT VALUE</th>
+            <th class="headcol headcol__script-row">CURRENT VALUE</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div>
@@ -303,8 +297,7 @@
 
           <% if !@previous_values.empty? %>
             <tr>
-              <th class="autolabelcol"></th>
-              <th class="headcol">PREVIOUS REVISION RECOMMENDATION</th>
+              <th class="headcol headcol__script-row">PREVIOUS REVISION RECOMMENDATION</th>
               <% @section_titles.each do |title| %>
                 <td class="column_<%=title%>">
                   <div class="previous_recommendation_cell">
@@ -325,20 +318,7 @@
             <% end %>
           </tr>
 
-
-          <tr class="user_input">
-            <th class="inputlabelcol recommendation_col"></th>
-            <th class="headcol">
-              <p>RECOMMENDATION</p>
-            </th>
-              <% @section_titles.each do |title| %>
-                <td class="recommendation_cell column_<%=title%>">
-                  <div class="new_discussion">
-                    <textarea class="input_entry" name="recommendation[<%= title %>]" placeholder="New Recommendation..." oninput="activateSaveButton()" onchange="recommendationMonitor(this)" form="field_form"><%=@recommendations[title]%></textarea>
-                  </div>
-                </td>
-              <% end %>
-          </tr>
+          <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
 
           <script type="text/javascript">
             function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
@@ -363,7 +343,7 @@
 
           <tr class="input_line_row line_row">
             <th class="inputlabelcol"></th>
-            <th class="headcol">
+            <th class="headcol headcol__user-row">
             </th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
@@ -375,62 +355,7 @@
             <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
           <% end %>
 
-          <tr class="user_input">
-
-            <th class="inputlabelcol"></th>
-            <th class="headcol second_to_final_headcol">COLOR CODE</th>
-              <% @section_titles.each do |title| %>
-                <td class="color_code_cell column_<%=title%>">
-                  <div class="height_holder">
-
-                    <!-- Only one of the two divs below shown at once, managed by update_color_backgrounds -->
-                    <!-- Color selection version of contents -->
-                    <div class="color_code_background" id="color_code_background_<%=title%>">
-                      <% ["green", "blue", "yellow", "red"].each do |color| %>
-                        <div class="color_code_button color_<%=color%>" id="color_button_<%=color%>_<%=title%>">
-                          <i class="color_code_icon fa fa-arrow-circle-right"></i>
-                        </div>
-
-                        <!-- setting the color select then running an update across all colors -->
-                        <script type="text/javascript">
-                          document.getElementById("color_button_<%=color%>_<%=title%>").onclick = function() {
-                            document.getElementById("color_code_<%=title%>").value = "<%=color%>";
-                            update_color_backgrounds(); 
-                            activateSaveButton();
-                          }
-                        </script>
-                      <% end %>
-                    </div>
-
-                    <!-- Color cancelling div -->
-                    <div class="color_cancel_selection" id="color_cancel_selection_<%=title%>">
-                      <i class="cancel_selection_icon fa fa-window-close-o" id="cancel_icon_<%=title%>"></i>
-
-                      <!-- clearing the color select then running an update across all colors -->
-                      <script type="text/javascript">
-                        document.getElementById("cancel_icon_<%=title%>").onclick = function() {
-                          document.getElementById("color_code_<%=title%>").value = "";
-                          update_color_backgrounds(); 
-                          activateSaveButton();
-                        }
-                      </script>
-                    </div>
-                  </div>
-
-                  <div class="styled-select blue semi-square">
-                    <select onchange="update_color_backgrounds()" class="color_code_select" name="color_code[<%= title %>]" id="color_code_<%= title %>" form="field_form" >
-                    <% selected = color_selected_list(@color_codes[title]) %>
-
-                      <option <%= selected[0] %> value="">Select Color</option>
-                      <option <%= selected[1] %> value="green">Green</option>
-                      <option <%= selected[2] %> value="blue">Blue</option>
-                      <option <%= selected[3] %> value="yellow">Yellow</option>
-                      <option <%= selected[4] %> value="red">Red</option>
-                    </select>
-                  </div>
-                </td>
-              <% end %>
-            </tr>
+          <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
 
           <% if can?(:discuss_reviews, @record) %>
             <%= render partial: 'discussion_and_justification', locals: { discussions: @discussions, section_titles: @section_titles } %>
