@@ -220,13 +220,17 @@
     text-align: center;
     border-left: 20px;
     border-left-style: solid;
+    border-right: none;
+    border-bottom: none;
 
     &__user-row {
        border-left-color: $review-gray-dark;
+       border-top-color: $review-gray-dark;
     }
 
     &__script-row {
       border-left-color: $review-blue-dark;
+      border-top-color: $review-blue-dark;
     }
   }
 
