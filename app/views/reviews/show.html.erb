@@ -320,31 +320,6 @@
 
           <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
 
-<<<<<<< HEAD
-
-          <script type="text/javascript">
-            function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
-              document.getElementById(cell_id).onclick = function() {
-                activateSaveButton();
-                var check = document.getElementById(check_id);
-                if (check.checked == true) {
-                  document.getElementById(cell_id).style.backgroundColor = "inherit";
-                  check.checked = false;;
-                  document.getElementById(p_id).style.fontWeight = "";
-                  document.getElementById(icon_id).className = "fa fa-user-plus";
-                } else {
-                  document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
-                  check.checked = true;
-                  document.getElementById(p_id).style.fontWeight = "bold";
-                  document.getElementById(icon_id).className = "eui-icon eui-check-o";
-                }
-              };
-            }
-
-          </script>
-
-=======
->>>>>>> 9888025... [CMRARC-220]: Adds Feedback request flag on reviews for daac-curator role.
           <tr class="input_line_row line_row">
             <th class="inputlabelcol"></th>
             <th class="headcol headcol__user-row">
@@ -357,10 +332,6 @@
 
           <% if can?(:request_opinions, @record) %>
             <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
-          <% end %>
-
-          <% if can?(:request_feedback, @record) %>
-            <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
           <% end %>
 
           <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
