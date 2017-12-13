@@ -358,14 +358,14 @@
             <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
           <% end %>
 
-          <% if can?(:request_feedback, @record) %>
-            <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
-          <% end %>
-
           <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
 
           <% if can?(:discuss_reviews, @record) %>
             <%= render partial: 'discussion_and_justification', locals: { discussions: @discussions, section_titles: @section_titles } %>
+          <% end %>
+
+          <% if can?(:request_feedback, @record) %>
+            <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
           <% end %>
 
         </table>  
