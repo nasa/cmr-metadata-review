@@ -559,7 +559,7 @@ class Record < ActiveRecord::Base
     self.recordable.update?
   end
 
-  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions, new_feedbacks)
+  def update_from_review(current_user, section_index, new_recommendations, new_colors, new_opinions, new_discussions, new_feedbacks, new_feedback_discussions)
     section_index = section_index.to_i
 
     if section_index.nil?
@@ -619,6 +619,16 @@ class Record < ActiveRecord::Base
           end
         end
       end 
+
+      if new_feedback_discussions
+        new_feedback_discussions.each do |key, value|
+          if value != ""
+            any_data_changed = true
+            message = Discussion.new(record: self, user: current_user, column_name: key, date: DateTime.now, comment: value, category: DiscussionCategory::FEEDBACK)
+            message.save
+          end
+        end
+      end
     rescue
       return -1
     end
