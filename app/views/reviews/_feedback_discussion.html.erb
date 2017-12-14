@@ -8,8 +8,7 @@
     <td class="discussion_td column_<%=title%>">
       <div class="discussion_holder">
         <div class="new_discussion">
-          <!-- <input type='hidden' name='discussion[<%= title %>][category]' value='<%= DiscussionCategory::FEEDBACK %>' form="field_form"> -->
-          <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="discussion[<%= title %>][comment]" form="field_form"></textarea>  
+          <textarea oninput="activateSaveButton()" placeholder="New Comment..." name="feedback_discussion[<%= title %>]" form="field_form"></textarea>  
         </div>
 
         <% messages = discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
