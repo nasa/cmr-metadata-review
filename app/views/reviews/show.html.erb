@@ -368,6 +368,8 @@
             <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
           <% end %>
 
+          <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
+
         </table>  
 
         </div>  

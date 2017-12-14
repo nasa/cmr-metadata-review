@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211200847) do
+ActiveRecord::Schema.define(version: 20171213205247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20171211200847) do
   end
 
   create_table "discussions", force: :cascade do |t|
-    t.integer  "record_id",   null: false
-    t.integer  "user_id",     null: false
-    t.datetime "date",        null: false
-    t.string   "column_name", null: false
+    t.integer  "record_id",               null: false
+    t.integer  "user_id",                 null: false
+    t.datetime "date",                    null: false
+    t.string   "column_name",             null: false
     t.string   "comment"
+    t.integer  "category",    default: 0
   end
 
   add_index "discussions", ["record_id"], name: "index_discussions_on_record_id", using: :btree

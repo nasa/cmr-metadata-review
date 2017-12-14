@@ -2,10 +2,17 @@
 # Discussion objects are stored with record, user, fieldName, and dateTime attributes   
 # The discussion strings are then attached to each fieldName shown on a review screen and sorted by dateTime.
 
+module DiscussionCategory
+  JUSTIFICATION = 0
+  FEEDBACK = 1
+end
+
 class Discussion < ActiveRecord::Base
   belongs_to :record
   belongs_to :user
 
+  scope :justification, -> { where(category: DiscussionCategory::JUSTIFICATION) }
+  scope :feedback, -> { where(category: DiscussionCategory::FEEDBACK) }
 
   # ====Params   
   # None
