@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
 
     @script_comment = @collection_record.get_script_comments
 
-    @discussions = @record.discussions.justification
+    @justification_discussions = @record.discussions.justification
     @feedback_discussions = @record.discussions.feedback
 
     section_index = params["section_index"].to_i
