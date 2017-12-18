@@ -368,7 +368,9 @@
             <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
           <% end %>
 
-          <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
+          <%#= if @record.marked_done? %>
+            <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
+          <%# end %>
 
         </table>  
 
@@ -547,7 +549,7 @@
 
     function adjustDiscussionCellHeight() {
         //resetting the discussion <th> field height;
-        $(".final_headcol").each(function() { 
+        $('.headcol--discussion').each(function() { 
           var siblings = $(this).siblings();
           $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
         });
@@ -567,9 +569,9 @@
         }  
       });
 
-      var headcols = document.getElementsByClassName('headcol');
-      //-1 is to leave out the discussion row, done manually in next method
-      for (var i=0; i < (heights.length - 1); i++) {
+      var headcols = $('.headcol').not('.headcol--discussion');
+      
+      for (var i=0; i < (heights.length); i++) {
         //added a pixel to each row hieght to make the borders look smoother
         headcols[i].style.height = (heights[i] + 1).toString() + 'px';
         //used padding top and line height to center the text
