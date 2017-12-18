@@ -518,7 +518,11 @@
 
     function adjustDiscussionCellHeight() {
         //resetting the discussion <th> field height;
+<<<<<<< HEAD
         $(".final_headcol").each(function() {
+=======
+        $('.headcol--discussion').each(function() {
+>>>>>>> f919835... Tweaks discussion row class names for targeted height adjustments.
           var siblings = $(this).siblings();
           $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight());
         });
@@ -538,9 +542,9 @@
         }
       });
 
-      var headcols = document.getElementsByClassName('headcol');
-      //-1 is to leave out the discussion row, done manually in next method
-      for (var i=0; i < (heights.length - 1); i++) {
+      var headcols = $('.headcol').not('.headcol--discussion');
+
+      for (var i=0; i < (heights.length); i++) {
         //added a pixel to each row hieght to make the borders look smoother
         headcols[i].style.height = (heights[i] + 1).toString() + 'px';
         //used padding top and line height to center the text
