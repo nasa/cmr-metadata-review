@@ -51,18 +51,24 @@ class RecordsController < ApplicationController
       return
     end
 
+    # TODO: Re-implement this check with new transition guards.
     if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
-      #checking that all bubbles are filled in
-      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions? || !record.granule_completed?
-        redirect_to record_path(record)
-        return
-      end
     end
 
-    record.close
-
-    flash[:notice] = "Record has been successfully marked as done"
-    redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+    if record.in_arc_review?
+      success = record.complete_arc_review!
+    elsif record.ready_for_daac_review?
+      success = record.release_to_daac!
+    else
+      success = record.close!
+    end
+    
+    if success
+      flash[:notice] = "Record has been successfully updated."
+      redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+    else
+      redirect_to record_path(record)
+    end
   end
 
   def update
@@ -90,6 +96,8 @@ class RecordsController < ApplicationController
       #.review will create a review if one not found.
       review = record.review(current_user.id)
       review.save
+
+      record.start_arc_review! unless record.in_arc_review?
     end
 
     if params["redirect_index"].nil?

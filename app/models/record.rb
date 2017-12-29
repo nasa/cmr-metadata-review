@@ -3,7 +3,9 @@
 #Record is a child of both Collection and Granule
 
 class Record < ActiveRecord::Base
+  include AASM
   include RecordHelper
+  
   after_initialize :load_format_module
 
   has_many :record_datas
@@ -11,6 +13,31 @@ class Record < ActiveRecord::Base
   has_many :reviews
   has_one :ingest
   has_many :discussions
+
+  aasm column: 'state' do 
+    state :open, initial: true
+    state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
+
+    event :start_arc_review do
+      transitions from: :open, to: :in_arc_review
+    end
+
+    event :complete_arc_review do
+      transitions from: :in_arc_review, to: :ready_for_daac_review#, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?, :granule_completed?]
+    end
+
+    event :release_to_daac do
+      transitions from: :ready_for_daac_review, to: :in_daac_review
+    end
+
+    event :close do
+      transitions from: :in_daac_review, to: :closed
+    end
+
+    event :hide do
+      transitions from: :closed, to: :hidden
+    end
+  end
 
   def load_format_module
     if self.format == "dif10"
