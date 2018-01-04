@@ -97,7 +97,7 @@ class RecordsController < ApplicationController
       review = record.review(current_user.id)
       review.save
 
-      record.start_arc_review! unless record.in_arc_review?
+      record.start_arc_review! if record.open?
     end
 
     if params["redirect_index"].nil?

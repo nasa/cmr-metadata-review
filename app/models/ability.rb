@@ -8,10 +8,11 @@ class Ability
       if user.role.eql?("admin")
         can :access, :curate
         can :access, :create_user
-
+        
         can :request_opinions, Record
         can :discuss_reviews, Record
         can :recommend_changes, Record
+        can :provide_feedback, Record
 
         can :review_state, Record.aasm.states.map(&:name)
       end
@@ -22,13 +23,16 @@ class Ability
         can :request_opinions, Record
         can :discuss_reviews, Record
         can :recommend_changes, Record
+        can :provide_feedback, Record
 
         can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED]
       end
 
       if user.role.eql?("daac_curator")
         can :access, :curate
+        
         can :request_feedback, Record
+        can :provide_feedback, Record
 
         can :review_state, Record::STATE_IN_DAAC_REVIEW
       end
