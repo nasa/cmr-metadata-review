@@ -34,121 +34,122 @@
 
   <div class="results_area">
 
-    <div class="table_backdrop">
-      <div class="results_title">
-        <p><strong>Unreviewed Records:</strong></p>
-      </div>
+    <% if can?(:review_state, Record::STATE_OPEN) %>
+      <div class="table_backdrop">
+        <div class="results_title">
+          <p><strong>Unreviewed Records:</strong></p>
+        </div>
 
-      
-      <div class="results_table">
-        <div class="table_scroll">
-          <table cellpadding="5" border="1">
-            <tr>
-                <th>Concept_ID</th>
-                <th>Type</th>
-                <th class="center_text">Revision_ID</th>
-                <th>ShortName</th>
-                <th class="center_text">Version</th>
-                <th>Ingested By</th>
-                <th>Selection</th>
-            </tr>
-
-            <% @unreviewed_records.each_with_index do |record, index| %>
+        
+        <div class="results_table">
+          <div class="table_scroll">
+            <table cellpadding="5" border="1">
               <tr>
-                  <td id="unreviewedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
-                  <td id="unreviewedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
-                  <td><%= record.recordable.short_name %></td>
-                  <td class="center_text"><%= record.version_id %></td>
-                  <td><%= record.ingested_by %></td>
-                  <td class="center_text"><input type="radio" id="unreviewed<%= index.to_s %>" name="unreviewedSelection" value="<%= index.to_s %>"/></td>
+                  <th>Concept_ID</th>
+                  <th>Type</th>
+                  <th class="center_text">Revision_ID</th>
+                  <th>ShortName</th>
+                  <th class="center_text">Version</th>
+                  <th>Ingested By</th>
+                  <th>Selection</th>
               </tr>
+
+              <% @unreviewed_records.each_with_index do |record, index| %>
+                <tr>
+                    <td id="unreviewedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td id="unreviewedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
+                    <td><%= record.recordable.short_name %></td>
+                    <td class="center_text"><%= record.version_id %></td>
+                    <td><%= record.ingested_by %></td>
+                    <td class="center_text"><input type="radio" id="unreviewed<%= index.to_s %>" name="unreviewedSelection" value="<%= index.to_s %>"/></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="form_buttons">
+            <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'unreviewed_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "unreviewedConceptId") %>
+              <%= submit_tag("See Review Detail", id: 'unreviewedSubmit', class: "selectButton") %>
             <% end %>
-          </table>
+
+            <% if current_user.admin %>
+              <%= form_tag( collections_hide_path ,  {method: "get", id: 'unrevieweddelete_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "unreviewedDeleteConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "unreviewedDeleteRevisionId") %>
+                <%= submit_tag("Delete Record", id: 'unreviewedDeleteSubmit', class: "deleteButton") %>
+              <% end %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+
+
+
+    <% if can?(:review_state, Record::STATE_IN_ARC_REVIEW) %>
+      <div class="table_backdrop">
+        <div class="results_title">
+          <p><strong>In ARC Review Records:</strong></p>
         </div>
 
-        <br>
-
-        <div class="form_buttons">
-          <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'unreviewed_form'}) do %>
-            <%= hidden_field_tag(:concept_id, "", id: "unreviewedConceptId") %>
-            <%= submit_tag("See Review Detail", id: 'unreviewedSubmit', class: "selectButton") %>
-          <% end %>
-
-          <% if current_user.admin %>
-            <%= form_tag( collections_hide_path ,  {method: "get", id: 'unrevieweddelete_form'}) do %>
-              <%= hidden_field_tag(:concept_id, "", id: "unreviewedDeleteConceptId") %>
-              <%= hidden_field_tag(:revision_id, "", id: "unreviewedDeleteRevisionId") %>
-              <%= submit_tag("Delete Record", id: 'unreviewedDeleteSubmit', class: "deleteButton") %>
-            <% end %>
-          <% end %>
-        </div>
-
-      </div>
-    </div>
-    
-
-
-
-
-    <div class="table_backdrop">
-      <div class="results_title">
-        <p><strong>In ARC Review Records:</strong></p>
-      </div>
-
-      <div class="results_table">
-        <div class="table_scroll">
-          <table cellpadding="5" border="1">
-            <tr>
-                <th>Concept_ID</th>
-                <th>Type</th>
-                <th class="center_text">Revision_ID</th>
-                <th>ShortName</th>
-                <th class="center_text">Version</th>
-                <th>Ingested By</th>
-                <th class="center_text"># Completed Reviews</th>
-                <th class="center_text"># Second Reviews Requested</th>
-                <th>Selection</th>
-            </tr>
-
-            <% @in_arc_review_records.each_with_index do |record, index| %>
+        <div class="results_table">
+          <div class="table_scroll">
+            <table cellpadding="5" border="1">
               <tr>
-                  <td id="in-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
-                  <td id="in-reviewRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
-                  <td><%= record.recordable.short_name %></td>
-                  <td class="center_text"><%= record.version_id %></td>
-                  <td><%= record.ingested_by %></td>
-                  <td class="center_text"><%= record.completed_review_count %></td>
-                  <td class="center_text"><%= record.second_opinion_count %></td>
-                  <td class="center_text"><input type="radio" id="in-review<%= index.to_s %>" name="in-reviewSelection" value="<%= index.to_s %>"/></td>
+                  <th>Concept_ID</th>
+                  <th>Type</th>
+                  <th class="center_text">Revision_ID</th>
+                  <th>ShortName</th>
+                  <th class="center_text">Version</th>
+                  <th>Ingested By</th>
+                  <th class="center_text"># Completed Reviews</th>
+                  <th class="center_text"># Second Reviews Requested</th>
+                  <th>Selection</th>
               </tr>
+
+              <% @in_arc_review_records.each_with_index do |record, index| %>
+                <tr>
+                    <td id="in-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td id="in-reviewRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
+                    <td><%= record.recordable.short_name %></td>
+                    <td class="center_text"><%= record.version_id %></td>
+                    <td><%= record.ingested_by %></td>
+                    <td class="center_text"><%= record.completed_review_count %></td>
+                    <td class="center_text"><%= record.second_opinion_count %></td>
+                    <td class="center_text"><input type="radio" id="in-review<%= index.to_s %>" name="in-reviewSelection" value="<%= index.to_s %>"/></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="form_buttons">
+            <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'in-review_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "in-reviewConceptId") %>
+              <%= submit_tag("See Review Detail", id: 'in-reviewSubmit', class: "selectButton") %>
             <% end %>
-          </table>
-        </div>
 
-        <br>
-
-        <div class="form_buttons">
-          <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'in-review_form'}) do %>
-            <%= hidden_field_tag(:concept_id, "", id: "in-reviewConceptId") %>
-            <%= submit_tag("See Review Detail", id: 'in-reviewSubmit', class: "selectButton") %>
-          <% end %>
-
-          <% if current_user.admin %>
-            <%= form_tag( collections_hide_path ,  {method: "get", id: 'in-reviewdelete_form'}) do %>
-              <%= hidden_field_tag(:concept_id, "", id: "in-reviewDeleteConceptId") %>
-              <%= hidden_field_tag(:revision_id, "", id: "in-reviewDeleteRevisionId") %>
-              <%= submit_tag("Delete Record", id: 'in-reviewDeleteSubmit', class: "deleteButton") %>
+            <% if current_user.admin %>
+              <%= form_tag( collections_hide_path ,  {method: "get", id: 'in-reviewdelete_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "in-reviewDeleteConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "in-reviewDeleteRevisionId") %>
+                <%= submit_tag("Delete Record", id: 'in-reviewDeleteSubmit', class: "deleteButton") %>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
 
-
-    <% if current_user.role.eql?('admin') %>
+    <% if can?(:review_state, Record::STATE_READY_FOR_DAAC_REVIEW) %>
       <div class="table_backdrop">
         <div class="results_title">
           <p><strong>Awaiting Release to DAAC:</strong></p>
@@ -207,7 +208,7 @@
 
 
 
-    <% if current_user.role.eql?('daac_curator') %>
+    <% if can?(:review_state, Record::STATE_IN_DAAC_REVIEW) %>
       <div class="table_backdrop">
         <div class="results_title">
           <p><strong>In DAAC Review:</strong></p>
@@ -265,71 +266,73 @@
     <% end %>
 
 
-    <div class="table_backdrop">
-      <div class="results_title">
-        <p><strong>Team's Closed Records:</strong></p>
-      </div>
+    <% if can?(:review_state, Record::STATE_CLOSED) %>
+      <div class="table_backdrop">
+        <div class="results_title">
+          <p><strong>Team's Closed Records:</strong></p>
+        </div>
 
-      <div class="results_table">
-        <div class="table_scroll">
-          <table cellpadding="5" border="1">
-            <tr>
-                <th>Concept_ID</th>
-                <th>Type</th>
-                <th class="center_text">Revision_ID</th>
-                <th>ShortName</th>
-                <th>Version</th>
-                <th>Ingested By</th>
-                <th>Date Review Closed</th>
-                <th>Selection</th>
-            </tr>
-
-            <% @closed_records.each_with_index do |record, index| %>
+        <div class="results_table">
+          <div class="table_scroll">
+            <table cellpadding="5" border="1">
               <tr>
-                  <td id="closedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                  <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
-                  <td id="closedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
-                  <td><%= record.recordable.short_name %></td>
-                  <td><%= record.version_id %></td>
-                  <td><%= record.ingested_by %></td>
-                  <td><%= record.formatted_closed_date %></td>
-                  <td class="center_text"><input type="radio" id="closed<%= index.to_s %>" name="closedSelection" value="<%= index.to_s %>"/></td>
+                  <th>Concept_ID</th>
+                  <th>Type</th>
+                  <th class="center_text">Revision_ID</th>
+                  <th>ShortName</th>
+                  <th>Version</th>
+                  <th>Ingested By</th>
+                  <th>Date Review Closed</th>
+                  <th>Selection</th>
               </tr>
+
+              <% @closed_records.each_with_index do |record, index| %>
+                <tr>
+                    <td id="closedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td id="closedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
+                    <td><%= record.recordable.short_name %></td>
+                    <td><%= record.version_id %></td>
+                    <td><%= record.ingested_by %></td>
+                    <td><%= record.formatted_closed_date %></td>
+                    <td class="center_text"><input type="radio" id="closed<%= index.to_s %>" name="closedSelection" value="<%= index.to_s %>"/></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="form_buttons">
+            <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'closed_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "closedConceptId") %>
+              <%= submit_tag("See Review Detail", id: 'closedSubmit', class: "selectButton") %>
             <% end %>
-          </table>
+
+            <%= form_tag( reports_single_path ,  {method: "get", id: 'closedreport_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "closedReportConceptId") %>
+              <%= hidden_field_tag(:revision_id, "", id: "closedReportRevisionId") %>
+              <%= submit_tag("Get Review Report", id: 'closedReportSubmit', class: "reportButton") %>
+            <% end %>
+
+            <% if current_user.admin %>
+              <%= form_tag( collections_hide_path ,  {method: "get", id: 'closeddelete_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "closedDeleteConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "closedDeleteRevisionId") %>
+                <%= submit_tag("Delete Record", id: 'closedDeleteSubmit', class: "deleteButton") %>
+              <% end %>
+
+              <%= form_tag( collections_stop_updates_path ,  {method: "get", id: 'closedfinished_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "closedFinishedConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "closedFinishedRevisionId") %>
+                <%= submit_tag("Exclude Record from Updates", id: 'closedFinishedSubmit', class: "finishedButton", data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
+              <% end %>
+            <% end %>
+          </div>
+
         </div>
-
-        <br>
-
-        <div class="form_buttons">
-          <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'closed_form'}) do %>
-            <%= hidden_field_tag(:concept_id, "", id: "closedConceptId") %>
-            <%= submit_tag("See Review Detail", id: 'closedSubmit', class: "selectButton") %>
-          <% end %>
-
-          <%= form_tag( reports_single_path ,  {method: "get", id: 'closedreport_form'}) do %>
-            <%= hidden_field_tag(:concept_id, "", id: "closedReportConceptId") %>
-            <%= hidden_field_tag(:revision_id, "", id: "closedReportRevisionId") %>
-            <%= submit_tag("Get Review Report", id: 'closedReportSubmit', class: "reportButton") %>
-          <% end %>
-
-          <% if current_user.admin %>
-            <%= form_tag( collections_hide_path ,  {method: "get", id: 'closeddelete_form'}) do %>
-              <%= hidden_field_tag(:concept_id, "", id: "closedDeleteConceptId") %>
-              <%= hidden_field_tag(:revision_id, "", id: "closedDeleteRevisionId") %>
-              <%= submit_tag("Delete Record", id: 'closedDeleteSubmit', class: "deleteButton") %>
-            <% end %>
-
-            <%= form_tag( collections_stop_updates_path ,  {method: "get", id: 'closedfinished_form'}) do %>
-              <%= hidden_field_tag(:concept_id, "", id: "closedFinishedConceptId") %>
-              <%= hidden_field_tag(:revision_id, "", id: "closedFinishedRevisionId") %>
-              <%= submit_tag("Exclude Record from Updates", id: 'closedFinishedSubmit', class: "finishedButton", data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
-            <% end %>
-          <% end %>
-        </div>
-
       </div>
-    </div>
+    <% end %>
 
   </div>
 
