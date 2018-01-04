@@ -215,7 +215,7 @@
     }
 
     .complete_symbol {
-      margin-left: 20px;
+      margin-left: 5px;
     }
 
     button[disabled=disabled], button:disabled {
@@ -227,16 +227,17 @@
 
     button {
       padding: 5px;
-      width: 150px;
+      width: auto;
+      min-width: 150px;
       text-align: left;
 
-      .button_text{
+      .button_text {
         display: inline-block;
         text-align: left;
         margin-right: 10px;
       }
 
-      .button_symbol{
+      .button_symbol {
         display: inline-block;
         text-align: right;
       }

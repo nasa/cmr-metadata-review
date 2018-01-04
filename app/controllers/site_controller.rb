@@ -20,6 +20,8 @@ class SiteController < ApplicationController
     @closed_records = Record.closed.sort_by { |record| record.recordable.short_name }
 
     @waiting_daac_release_records = Record.ready_for_daac_review.sort_by { |record| record.recordable.short_name }
+
+    @requires_curator_feedback_records = Record.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id })
     
     @in_daac_review_records = Record.in_daac_review.sort_by { |record| record.recordable.short_name }
 
