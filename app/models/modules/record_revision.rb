@@ -25,7 +25,7 @@ module Modules::RecordRevision
 
     collection = self.find_by concept_id: concept_id
     unless collection.nil?
-      record = collection.records.where(revision_id: revision_id, hidden: false).first
+      record = collection.records.where(revision_id: revision_id).where.not(state: Record::STATE_HIDDEN).first
     end
 
     return record
@@ -57,11 +57,11 @@ module Modules::RecordRevision
 
   def ordered_revisions(daac_short_name = nil)
     if daac_short_name.nil?
-      collection_records = self.all_records.where(closed: true)
+      collection_records = self.all_records.where(state: Record::STATE_CLOSED)
     else 
       collections = self.by_daac(daac_short_name)
       collection_ids = collections.map {|collection| collection.id }
-      collection_records = Record.all.select { |record| record.closed && (record.recordable_type == self.name) && (collection_ids.include? record.recordable_id) }
+      collection_records = Record.all.select { |record| record.closed? && (record.recordable_type == self.name) && (collection_ids.include? record.recordable_id) }
     end
     records_hash = {}
 
@@ -88,7 +88,7 @@ module Modules::RecordRevision
   # returns all records found in the DB of type collection
 
   def all_records
-    Record.all.where(recordable_type: self.name, hidden: false)
+    Record.all.where(recordable_type: self.name).where.not(state: Record::STATE_HIDDEN)
   end
 
 

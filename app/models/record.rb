@@ -31,6 +31,10 @@ class Record < ActiveRecord::Base
     end
 
     event :close do
+      after do
+        self.closed_date = Date.new
+      end
+
       transitions from: :in_daac_review, to: :closed
     end
 
@@ -152,7 +156,7 @@ class Record < ActiveRecord::Base
   # Returns "In Process" or "Completed"     
   # When records are complete, no further reviews or changes to review data can be added
   def status_string
-    if self.closed
+    if self.closed?
       "Completed"
     else
       "In Process"
@@ -484,7 +488,7 @@ class Record < ActiveRecord::Base
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) || 
        (self.recordable.granules.first.records.first.nil?) ||
-       (self.recordable.granules.first.records.first.closed == true)
+       (self.recordable.granules.first.records.first.closed?)
       
       return true
     end
@@ -498,11 +502,11 @@ class Record < ActiveRecord::Base
   end
 
 
-  def close
-    self.closed = true
-    self.closed_date = DateTime.now
-    self.save
-  end
+  # def close
+  #   self.closed = true
+  #   self.closed_date = DateTime.now
+  #   self.save
+  # end
 
   def formatted_closed_date
     #01/19/2017 at 01:55PM (example format)

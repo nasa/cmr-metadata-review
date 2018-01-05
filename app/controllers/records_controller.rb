@@ -29,7 +29,7 @@ class RecordsController < ApplicationController
     @user_review = @record.review(current_user.id)
 
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = @record.closed
+    @marked_done = @record.closed?
 
     if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
       @color_coding_complete = true
@@ -49,10 +49,6 @@ class RecordsController < ApplicationController
     if record.nil?
       redirect_to home_path
       return
-    end
-
-    # TODO: Re-implement this check with new transition guards.
-    if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
     end
 
     if record.in_arc_review?
