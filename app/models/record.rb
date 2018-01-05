@@ -31,6 +31,10 @@ class Record < ActiveRecord::Base
     end
 
     event :close do
+      after do
+        self.closed_date = Date.new
+      end
+
       transitions from: :in_daac_review, to: :closed
     end
 
@@ -498,11 +502,11 @@ class Record < ActiveRecord::Base
   end
 
 
-  def close
-    self.closed = true
-    self.closed_date = DateTime.now
-    self.save
-  end
+  # def close
+  #   self.closed = true
+  #   self.closed_date = DateTime.now
+  #   self.save
+  # end
 
   def formatted_closed_date
     #01/19/2017 at 01:55PM (example format)

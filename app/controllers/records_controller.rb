@@ -51,10 +51,6 @@ class RecordsController < ApplicationController
       return
     end
 
-    # TODO: Re-implement this check with new transition guards.
-    if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
-    end
-
     if record.in_arc_review?
       success = record.complete_arc_review!
     elsif record.ready_for_daac_review?
