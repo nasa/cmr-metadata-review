@@ -9,7 +9,7 @@ class Collection < ActiveRecord::Base
 
 
   def get_records
-    self.records.where(hidden: false)
+    self.records.where.not(state: Record::STATE_HIDDEN)
   end
 
   # ====Params   
@@ -22,7 +22,7 @@ class Collection < ActiveRecord::Base
 
   def self.record_exists?(concept_id, revision_id) 
     record = Collection.find_record(concept_id, revision_id)
-    return (!record.nil?) && (!record.hidden)
+    return (!record.nil?) && (!record.hidden?)
   end
 
 
@@ -46,7 +46,7 @@ class Collection < ActiveRecord::Base
     collection_object.short_name = short_name
     collection_object.save!
     #creating collection record related objects
-    new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, format: native_format, closed: false)
+    new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, format: native_format)
 
     record_data_list = []
 

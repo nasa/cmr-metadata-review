@@ -47,7 +47,7 @@
             <div class="review_actions">
 
               <div class="ingest_score">
-                <p>Collection Review Status: <%= record.closed ? "Closed" : "In Process" %></p>  
+                <p>Collection Review Status: <%= record.closed? ? "Closed" : "In Process" %></p>  
               </div>
 
               <button id="review_details_button<%=index%>" class="smallSelectButton">
@@ -103,7 +103,7 @@
 
                   <div class="review_actions">
                     <div class="ingest_score">
-                      <p>Granule Review Status: <%= granule_record.closed ? "Closed" : "In Process" %></p>  
+                      <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>  
                     </div>
 
                     <button id="granule_details_button<%=index%>" class="smallSelectButton">
