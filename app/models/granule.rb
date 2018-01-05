@@ -6,7 +6,7 @@ class Granule < ActiveRecord::Base
 
   
   def get_records
-    self.records.where(hidden: false)
+    self.records.where.not(state: Record::STATE_HIDDEN)
   end
 
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)

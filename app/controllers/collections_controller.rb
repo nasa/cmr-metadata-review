@@ -181,7 +181,7 @@ class CollectionsController < ApplicationController
       return
     end
 
-    record.hidden = true
+    record.hide
     record.save
 
     flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} Deleted"

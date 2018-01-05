@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     @record = Record.find_by id: params[:id]
 
     @record_type = (@record.is_collection? ? "Collection" : "Granule")
-    @marked_done = @record.closed
+    @marked_done = @record.closed?
 
     @collection_record = Record.find_by id: params[:id] 
 
