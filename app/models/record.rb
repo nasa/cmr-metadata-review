@@ -156,7 +156,7 @@ class Record < ActiveRecord::Base
   # Returns "In Process" or "Completed"     
   # When records are complete, no further reviews or changes to review data can be added
   def status_string
-    if self.closed
+    if self.closed?
       "Completed"
     else
       "In Process"
@@ -488,7 +488,7 @@ class Record < ActiveRecord::Base
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) || 
        (self.recordable.granules.first.records.first.nil?) ||
-       (self.recordable.granules.first.records.first.closed == true)
+       (self.recordable.granules.first.records.first.closed?)
       
       return true
     end
