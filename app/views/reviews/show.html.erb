@@ -337,12 +337,16 @@
           <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
 
           <% if can?(:discuss_reviews, @record) %>
-            <%= render partial: 'discussion_and_justification', locals: { discussions: @discussions, section_titles: @section_titles } %>
+            <%= render partial: 'discussion_and_justification', locals: { discussions: @justification_discussions, section_titles: @section_titles } %>
           <% end %>
 
           <% if can?(:request_feedback, @record) %>
             <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
           <% end %>
+
+          <%#= if @record.marked_done? %>
+            <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
+          <%# end %>
 
         </table>  
 
@@ -520,11 +524,17 @@
     //resizing the discussion header div
 
     function adjustDiscussionCellHeight() {
-        //resetting the discussion <th> field height;
-        $(".final_headcol").each(function() { 
+        // Sets the height of a discussion row's lead column to the
+        // tallest sibling (i.e. the column with the longest - or tallest - discussion).
+        $('.headcol--discussion').each(function() { 
           var siblings = $(this).siblings();
-          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight()); 
-        });
+          var maxHeight = Math.max.apply(null, siblings.map(function() {
+            return $(this).outerHeight();
+          }).get());
+
+          // Adds 1 px to account for borders.
+          $(this).css("height", maxHeight + 1);
+         });
     }
 
     function adjustHeaderRowTextPosition() {
@@ -541,9 +551,9 @@
         }  
       });
 
-      var headcols = document.getElementsByClassName('headcol');
-      //-1 is to leave out the discussion row, done manually in next method
-      for (var i=0; i < (heights.length - 1); i++) {
+      var headcols = $('.headcol').not('.headcol--discussion');
+      
+      for (var i = 0; i < (headcols.length); i++) {
         //added a pixel to each row hieght to make the borders look smoother
         headcols[i].style.height = (heights[i] + 1).toString() + 'px';
         //used padding top and line height to center the text
