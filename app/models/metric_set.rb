@@ -196,7 +196,7 @@ class MetricSet
     ordered_revisions = ordered_revisions.select { |record_list| !record_list.empty? }
     unless ordered_revisions.empty?
       updated_and_done = ordered_revisions.select { |record_list|
-        record_list[0].closed && ((record_list.select { |record| record.closed? }).count > 1)
+        record_list[0].closed? && ((record_list.select { |record| record.closed? }).count > 1)
       }
 
       updated_and_done.count
