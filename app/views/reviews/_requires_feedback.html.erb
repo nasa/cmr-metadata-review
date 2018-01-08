@@ -1,20 +1,16 @@
 <script type="text/javascript">
   
-  function add_feedback_click_handler(cell_id, check_id, p_id, icon_id) {
-    document.getElementById(cell_id).onclick = function() {
+  function addFeedbackClickHandler(cellId, checkId, pId, iconId) {
+    document.getElementById(cellId).onclick = function() {
       activateSaveButton();
-      var check = document.getElementById(check_id);
-      if (check.checked == true) {
-        document.getElementById(cell_id).style.backgroundColor = "inherit";
-        check.checked = false;;
-        document.getElementById(p_id).style.fontWeight = "";
-        document.getElementById(icon_id).className = "fa fa-comments";
-      } else {
-        document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
-        check.checked = true;
-        document.getElementById(p_id).style.fontWeight = "bold";
-        document.getElementById(icon_id).className = "eui-icon eui-check-o";
-      }
+      
+      var feedbackCheckbox = document.getElementById(checkId);
+      feedbackCheckbox.checked = !feedbackCheckbox.checked;
+      
+      var feedbackIconClass = feedbackCheckbox.checked ? 'eui-icon eui-check-o' : 'fa fa-comments';
+      $("#" + iconId).attr('class', feedbackIconClass);
+      $("#" + cellId).toggleClass('feedback-requested__cell');
+      $("#" + pId).toggleClass('feedback-requested__text') 
     }; 
   }
 
@@ -36,7 +32,8 @@
     </td>
 
     <script type="text/javascript">
-      add_feedback_click_handler("feedback_cell_<%= title %>", "feedback_check_<%= title %>", "feedback_text_<%= title %>", "feedback_icon_<%= title %>");
+      addFeedbackClickHandler("feedback_cell_<%= title %>", "feedback_check_<%= title %>", "feedback_text_<%= title %>", "feedback_icon_<%= title %>");
+      
       <% if feedbacks[title] %>
         document.getElementById("feedback_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
         document.getElementById("feedback_check_<%= title %>").checked = true;
