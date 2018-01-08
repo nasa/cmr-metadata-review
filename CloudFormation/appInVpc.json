@@ -15,11 +15,6 @@
       "Description" : "The alphanumeric ID of the AMI to use"
     },
 
-    "SSLCertArn" : {
-      "Description" : "The ARN for the ssl certificate to be used for elb",
-      "Type" : "String"
-    },
-
     "KeyName" : {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type" : "AWS::EC2::KeyPair::KeyName",
@@ -36,6 +31,12 @@
       "Description" : "Password for CMR Git Directory",
       "Type" : "String",
       "NoEcho" : "true"
+    },
+
+    "GitBranch" : {
+      "Description": "The CMR Git branch used when checking out the application's source code.",
+      "Type": "String",
+      "Default": "master"
     },
 
     "VPCid" : {
@@ -90,7 +91,8 @@
     "SubnetRegion" : {
       "Description": "[F] The region of the subnet to be used",
       "Type": "String"
-    }
+    },
+
   },
 
   "Resources" : {
@@ -101,14 +103,7 @@
         "CrossZone" : "true",
         "SecurityGroups" : [ { "Ref" : "PublicLoadBalancerSecurityGroup" } ],
         "Subnets" : [ { "Ref" : "PublicSubnetId" } ],
-        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" },
-                        { 
-                          "LoadBalancerPort" : "443", 
-                          "InstancePort" : "80", 
-                          "Protocol" : "HTTPS",
-                          "SSLCertificateId" : { "Ref" : "SSLCertArn" }
-                        }                     
-                      ],
+        "Listeners" : [ { "LoadBalancerPort" : "80", "InstancePort" : "80", "Protocol" : "HTTP" } ],
         "HealthCheck" : {
           "Target" : "HTTP:80/elb_status",
           "HealthyThreshold" : "3",
@@ -246,7 +241,7 @@
           "export S3BUCKET=", { "Ref" : "S3BucketName" }, "\n",
 
           "rm -rf /home/ec2-user/cmr-metadata-review\n",
-          "git clone https://", { "Ref" : "GitUserName" }, ":", { "Ref" : "GitPassword" }, "@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git /home/ec2-user/cmr-metadata-review\n",
+          "git clone https://", { "Ref" : "GitUserName" }, ":", { "Ref" : "GitPassword" }, "@git.earthdata.nasa.gov/scm/cmrarc/cmr-metadata-review.git --branch ", { "Ref" : "GitBranch" }, " --single-branch /home/ec2-user/cmr-metadata-review\n",
           "sh /home/ec2-user/cmr-metadata-review/CloudFormation/test.sh\n",
           "service nginx restart\n",
           "sudo service awslogs start\n",
