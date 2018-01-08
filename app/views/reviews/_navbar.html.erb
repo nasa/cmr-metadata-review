@@ -135,7 +135,6 @@
           };
         </script>
 
-        <%# checking to make sure that two reviews are completed on pageload %>
         <% if @completed_records > 1 && !@marked_done %>
           <% is_disabled = "" %>
         <% else %>
@@ -146,6 +145,8 @@
         <button type="button" <%= is_disabled %> id="done_button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
           <% if @record.ready_for_daac_review? %>
             <p class="button_text">RELEASE TO DAAC</p>            
+          <% elsif @record.in_daac_review? %>
+            <p class="button_text">CMR UPDATED</p>
           <% else %>
             <p class="button_text">MARK AS DONE</p>
           <% end %>
