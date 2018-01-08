@@ -550,3 +550,13 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+.feedback-requested {
+  &__cell {
+    background-color: #e7d1ff;
+  }
+
+  &__text {
+    font-weight: bold;
+  }
+}
