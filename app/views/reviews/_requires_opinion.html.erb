@@ -1,20 +1,16 @@
 <script type="text/javascript">
   
-  function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
-    document.getElementById(cell_id).onclick = function() {
+  function add_opinion_click_handler(cellId, checkId, pId, iconId) {
+    document.getElementById(cellId).onclick = function() {
       activateSaveButton();
-      var check = document.getElementById(check_id);
-      if (check.checked == true) {
-        document.getElementById(cell_id).style.backgroundColor = "inherit";
-        check.checked = false;;
-        document.getElementById(p_id).style.fontWeight = "";
-        document.getElementById(icon_id).className = "fa fa-user-plus";
-      } else {
-        document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
-        check.checked = true;
-        document.getElementById(p_id).style.fontWeight = "bold";
-        document.getElementById(icon_id).className = "eui-icon eui-check-o";
-      }
+      
+      var checkbox = document.getElementById(checkId);
+      checkbox.checked = !checkbox.checked;
+
+      var iconClass = checkbox.checked ? 'eui-icon eui-check-o' : 'fa fa-user-plus';
+      $("#" + iconId).attr('class', iconClass);
+      $("#" + cellId).toggleClass('review-toggle__cell');
+      $("#" + pId).toggleClass('review-toggle__text');      
     }; 
   }
 
@@ -37,11 +33,12 @@
 
     <script type="text/javascript">
       add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
+      
       <% if second_opinions[title] == true %>
-        document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
-        document.getElementById("opinion_check_<%= title %>").checked = true;
-        document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
-        document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o review_check flag_icon";
+        $("#opinion_check_<%= title %>").attr('checked', true);
+        $("#opinion_cell_<%= title %>").addClass('review-toggle__cell');
+        $("#opinion_text_<%= title %>").addClass('review-toggle__text');
+        $("#opinion_icon_<%= title %>").attr('class', "eui-icon eui-check-o");
       <% end %>
     </script>
   <% end %>
