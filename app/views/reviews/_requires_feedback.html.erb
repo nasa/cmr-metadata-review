@@ -8,9 +8,18 @@
       checkbox.checked = !checkbox.checked;
       
       var iconClass = checkbox.checked ? 'eui-icon eui-check-o' : 'fa fa-comments';
-      $("#" + iconId).attr('class', iconClass);
-      $("#" + cellId).toggleClass('review-toggle__cell');
-      $("#" + pId).toggleClass('review-toggle__text'); 
+      document.getElementById(iconId).className = iconClass;
+
+      var cellEl = document.getElementById(cellId), cellClass = "review-toggle__cell";
+      var textEl = document.getElementById(pId), textClass = "review-toggle__text";
+      
+      if (checkbox.checked) {
+        cellEl.classList.add(cellClass);
+        textEl.classList.add(textClass);
+      } else {
+        cellEl.classList.remove(cellClass);
+        textEl.classList.remove(textClass);
+      }
     }; 
   }
 
@@ -35,10 +44,10 @@
       addFeedbackClickHandler("feedback_cell_<%= title %>", "feedback_check_<%= title %>", "feedback_text_<%= title %>", "feedback_icon_<%= title %>");
       
       <% if feedbacks[title] %>
-        $("#feedback_check_<%= title %>").attr('checked', true);
-        $("#feedback_cell_<%= title %>").addClass('review-toggle__cell');
-        $("#feedback_text_<%= title %>").addClass('review-toggle__text');
-        $("#feedback_icon_<%= title %>").attr('class', "eui-icon eui-check-o");
+        document.getElementById("feedback_check_<%= title %>").checked = true;
+        document.getElementById("feedback_cell_<%= title %>").classList.add("review-toggle__cell");
+        document.getElementById("feedback_text_<%= title %>").classList.add("review-toggle__text");
+        document.getElementById("feedback_icon_<%= title %>").className = "eui-icon eui-check-o";
       <% end %>
     </script>
   <% end %>
