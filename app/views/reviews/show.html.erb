@@ -165,23 +165,20 @@
             <% end %>
           </tr>
 
-          <% if can?(:request_opinions, @record) %>
+          <% if can?(:request_opinions, @record) && (@record.open? || @record.in_arc_review? || @record.ready_for_daac_review?) %>
             <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
           <% end %>
 
           <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
 
-          <% if can?(:discuss_reviews, @record) %>
+          <% if can?(:discuss_justification, @record) %>
             <%= render partial: 'discussion_and_justification', locals: { discussions: @justification_discussions, section_titles: @section_titles } %>
           <% end %>
 
-          <% if can?(:request_feedback, @record) %>
+          <% if can?(:provide_feedback, @record) && (@record.in_daac_review? || @record.closed?) %>
             <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
-          <% end %>
-
-          <%#= if @record.marked_done? %>
             <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
-          <%# end %>
+          <% end %>
 
         </table>  
 
@@ -369,6 +366,8 @@
 
           // Adds 1 px to account for borders.
           $(this).css("height", maxHeight + 1);
+          $(this).css("lineHeight", 'normal');
+          $(this).css("paddingTop", '12px');
          });
     }
 
@@ -386,14 +385,15 @@
         }  
       });
 
-      var headcols = $('.headcol').not('.headcol--discussion');
+      //var headcols = $('.headcol').not('.headcol--discussion');
       
-      for (var i = 0; i < (headcols.length); i++) {
+      for (var i = 0; i < (rows.length); i++) {
+        var headcol = rows[i].getElementsByTagName('th')[0];
         //added a pixel to each row hieght to make the borders look smoother
-        headcols[i].style.height = (heights[i] + 1).toString() + 'px';
+        headcol.style.height = (heights[i] + 1).toString() + 'px';
         //used padding top and line height to center the text
-        headcols[i].style.paddingTop = '0px';
-        headcols[i].style.lineHeight = (heights[i] + 1).toString() + 'px';
+        headcol.style.paddingTop = '0px';
+        headcol.style.lineHeight = (heights[i] + 1).toString() + 'px';
       }
 
       //setting the height of the discussion <th> element on page load.
@@ -401,7 +401,6 @@
     }
 
     adjustHeaderRowTextPosition();
-
 
     //used to automatically flag a cell green if recommendation starts with OK string
     function recommendationMonitor(textarea) {

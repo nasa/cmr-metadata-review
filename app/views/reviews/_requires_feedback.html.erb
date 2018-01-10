@@ -1,33 +1,33 @@
-<script type="text/javascript">
-  
-  function addFeedbackClickHandler(cellId, checkId, pId, iconId) {
-    document.getElementById(cellId).onclick = function() {
-      activateSaveButton();
-      
-      var checkbox = document.getElementById(checkId);
-      checkbox.checked = !checkbox.checked;
-      
-      var iconClass = checkbox.checked ? 'eui-icon eui-check-o' : 'fa fa-comments';
-      document.getElementById(iconId).className = iconClass;
-
-      var cellEl = document.getElementById(cellId), cellClass = "review-toggle__cell";
-      var textEl = document.getElementById(pId), textClass = "review-toggle__text";
-      
-      if (checkbox.checked) {
-        cellEl.classList.add(cellClass);
-        textEl.classList.add(textClass);
-      } else {
-        cellEl.classList.remove(cellClass);
-        textEl.classList.remove(textClass);
-      }
-    }; 
-  }
-
-</script>
-
 <tr class="user_input">
 
-  <th class="headcol headcol__user-row second_to_final_headcol">Feedback</th>
+  <script>
+
+    function addFeedbackClickHandler(cellId, checkId, pId, iconId) {
+      document.getElementById(cellId).onclick = function() {
+      activateSaveButton();
+    
+        var checkbox = document.getElementById(checkId);
+        checkbox.checked = !checkbox.checked;
+        
+        var iconClass = checkbox.checked ? 'eui-icon eui-check-o' : 'fa fa-comments';
+        document.getElementById(iconId).className = iconClass;
+
+        var cellEl = document.getElementById(cellId), cellClass = "review-toggle__cell";
+        var textEl = document.getElementById(pId), textClass = "review-toggle__text";
+        
+        if (checkbox.checked) {
+          cellEl.classList.add(cellClass);
+          textEl.classList.add(textClass);
+        } else {
+          cellEl.classList.remove(cellClass);
+          textEl.classList.remove(textClass);
+        }
+      }; 
+    }
+
+  </script>
+
+  <th class="headcol headcol__user-row">Feedback</th>
   
   <% section_titles.each do |title| %>
     <td class="no_padding column_<%=title%>">
@@ -49,6 +49,7 @@
         document.getElementById("feedback_text_<%= title %>").classList.add("review-toggle__text");
         document.getElementById("feedback_icon_<%= title %>").className = "eui-icon eui-check-o";
       <% end %>
+
     </script>
   <% end %>
 
