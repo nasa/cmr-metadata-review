@@ -81,7 +81,7 @@ class RecordsController < ApplicationController
     end
 
     #update result will == true if any updates were made to record on save
-    update_result = record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"])
+    update_result = record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
 
     if update_result == -1
       flash[:error] = "Values were not updated in the system.  Please resave changes."

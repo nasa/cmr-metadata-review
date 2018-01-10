@@ -16,7 +16,8 @@ class ReviewsController < ApplicationController
 
     @script_comment = @collection_record.get_script_comments
 
-    @discussions = @record.discussions
+    @justification_discussions = @record.discussions.justification
+    @feedback_discussions = @record.discussions.feedback
 
     section_index = params["section_index"].to_i
     section = @record.sections[section_index];
@@ -39,7 +40,6 @@ class ReviewsController < ApplicationController
 
     @previous_values = replace_links(@previous_values)
 
-
     @previous_recommendations = @record.previous_recommendations
 
     @current_values = @record.values
@@ -47,6 +47,7 @@ class ReviewsController < ApplicationController
 
     @recommendations = @record.get_recommendations
     @second_opinions = @record.get_opinions
+    @feedbacks = @record.get_feedbacks
 
     @color_codes = @record.color_codes
 

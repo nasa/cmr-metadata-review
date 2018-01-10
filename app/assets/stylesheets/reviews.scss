@@ -220,6 +220,7 @@
     text-align: center;
     border-left: 20px;
     border-left-style: solid;
+    text-transform: uppercase;
     border-right: none;
     border-bottom: none;
 
@@ -548,4 +549,14 @@
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.review-toggle {
+  &__cell {
+    background-color: #e7d1ff;
+  }
+
+  &__text {
+    font-weight: bold;
+  }
 }
