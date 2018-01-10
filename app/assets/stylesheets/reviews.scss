@@ -456,18 +456,6 @@
     }
   }
 
-  .opinion_cell {
-    cursor: pointer;
-    width:100%;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    :hover {
-      font-weight: bold;
-    }
-  }
-
   .flag_icon {
     visibility: hidden;
   }
@@ -557,6 +545,16 @@
 }
 
 .review-toggle {
+  cursor: pointer;
+  width:100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  :hover {
+    font-weight: bold;
+  }
+
   &__cell {
     background-color: #e7d1ff;
   }
