@@ -10,17 +10,20 @@
     border-style: solid;
     border-color: $report-line;
   }
-  tr {
 
+  tr {
     &:nth-child(even) {background: $review-blue-light}
   }
+
   tr.section_title_row {
     background: $review-blue-light; 
   }
+
   tr.user_input {
     &:nth-child(even) {background: $review-yellow-dark}
     &:nth-child(odd) {background: $review-green-light}
   }
+
   th {
     background-color: inherit;
   }
@@ -549,4 +552,14 @@
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.review-toggle {
+  &__cell {
+    background-color: #e7d1ff;
+  }
+
+  &__text {
+    font-weight: bold;
+  }
 }

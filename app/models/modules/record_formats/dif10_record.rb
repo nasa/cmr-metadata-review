@@ -47,14 +47,39 @@ module Modules::RecordFormats::Dif10Record
     self.get_column("Entry_ID/Version")
   end
 
-  #There is currently no script for DIF10 records
+  # There are currently only scripts for DIF10 collections.
   def create_script(raw_data = nil)
-    nil 
+    if raw_data.nil?
+      raw_data = get_raw_data
+    end
+    comment_hash = self.evaluate_script(raw_data)
+    score = score_script_hash(comment_hash)
+    add_script_comment(comment_hash) 
   end
 
-  #There is currently no script for DIF10 records
+  # There are currently only scripts for DIF10 collections.
   def evaluate_script(raw_data = nil)
-    nil
+    if raw_data.nil?
+      raw_data = get_raw_data
+    end
+    #escaping json for passing to python
+    record_json = raw_data.to_json.gsub("\"", "\\\"")
+    #running collection script in python
+    #W option to silence warnings
+    if self.is_collection?  
+      script_results = `python -W ignore lib/CollectionCheckerDIF.py "#{record_json}"  `
+    else
+      script_results = nil
+    end
+
+    unless script_results.nil?
+      comment_hash = JSON.parse(script_results)
+      value_keys = self.record_datas.map { |data| data.column_name }
+      comment_hash = Record.format_script_comments(comment_hash, value_keys)
+      comment_hash
+    else
+      {}
+    end
   end
 
   def controlled_notice_list(element_list)

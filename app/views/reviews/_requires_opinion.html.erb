@@ -1,26 +1,31 @@
-<script type="text/javascript">
-  
-  function add_opinion_click_handler(cell_id, check_id, p_id, icon_id) {
-    document.getElementById(cell_id).onclick = function() {
-      activateSaveButton();
-      var check = document.getElementById(check_id);
-      if (check.checked == true) {
-        document.getElementById(cell_id).style.backgroundColor = "inherit";
-        check.checked = false;;
-        document.getElementById(p_id).style.fontWeight = "";
-        document.getElementById(icon_id).className = "fa fa-user-plus";
-      } else {
-        document.getElementById(cell_id).style.backgroundColor = "#e7d1ff";
-        check.checked = true;
-        document.getElementById(p_id).style.fontWeight = "bold";
-        document.getElementById(icon_id).className = "eui-icon eui-check-o";
-      }
-    }; 
-  }
-
-</script>
-
 <tr class="user_input">
+
+  <script type="text/javascript">
+  
+    function add_opinion_click_handler(cellId, checkId, pId, iconId) {
+      document.getElementById(cellId).onclick = function() {
+        activateSaveButton();
+        
+        var checkbox = document.getElementById(checkId);
+        checkbox.checked = !checkbox.checked;
+
+        var iconClass = checkbox.checked ? 'eui-icon eui-check-o' : 'fa fa-user-plus';
+        document.getElementById(iconId).className = iconClass;
+
+        var cellEl = document.getElementById(cellId), cellClass = "review-toggle__cell";
+        var textEl = document.getElementById(pId), textClass = "review-toggle__text";
+        
+        if (checkbox.checked) {
+          cellEl.classList.add(cellClass);
+          textEl.classList.add(textClass);
+        } else {
+          cellEl.classList.remove(cellClass);
+          textEl.classList.remove(textClass);
+        }
+      }; 
+    }
+
+  </script>
 
   <th class="headcol headcol__user-row second_to_final_headcol">2ND OPINION</th>
   
@@ -37,11 +42,12 @@
 
     <script type="text/javascript">
       add_opinion_click_handler("opinion_cell_<%= title %>", "opinion_check_<%= title %>", "opinion_text_<%= title %>", "opinion_icon_<%= title %>");
+      
       <% if second_opinions[title] == true %>
-        document.getElementById("opinion_cell_<%= title %>").style.backgroundColor = "#e7d1ff";
         document.getElementById("opinion_check_<%= title %>").checked = true;
-        document.getElementById("opinion_text_<%= title %>").style.fontWeight = "bold";
-        document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o review_check flag_icon";
+        document.getElementById("opinion_cell_<%= title %>").classList.add("review-toggle__cell");
+        document.getElementById("opinion_text_<%= title %>").classList.add("review-toggle__text");
+        document.getElementById("opinion_icon_<%= title %>").className = "eui-icon eui-check-o";
       <% end %>
     </script>
   <% end %>
