@@ -8,10 +8,18 @@ class Ability
       if user.role.eql?("admin")
         can :access, :curate
         can :access, :create_user
+
+        can :request_opinions, Record
+        can :discuss_reviews, Record
+        can :recommend_changes, Record
       end
 
       if user.role.eql?("arc_curator")
         can :access, :curate
+        
+        can :request_opinions, Record
+        can :discuss_reviews, Record
+        can :recommend_changes, Record
       end
 
       if user.role.eql?("daac_curator")
