@@ -30,6 +30,7 @@
       <p><strong>FILTERS:</strong></p>
       <!-- slider toggles -->
       <div class="filter_switches">
+        
         <div class="filter_switch">
           <p>FLAGGED BY SCRIPT</p>
           <label class="switch">
@@ -37,13 +38,17 @@
             <div class="slider round"></div>
           </label>
         </div>
-        <div class="filter_switch">
-          <p>REQUIRES 2ND OPINION</p>
-          <label class="switch">
-            <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
-            <div class="slider round"></div>
-          </label>
-        </div>
+        
+        <% if @record.open? || @record.in_arc_review? %>
+          <div class="filter_switch">
+            <p>REQUIRES 2ND OPINION</p>
+            <label class="switch">
+              <input type="checkbox" id="opinion_toggle" onchange="toggleCells()">
+              <div class="slider round"></div>
+            </label>
+          </div>
+        <% end %>
+        
         <div class="filter_switch">
           <p>NOT COLOR CODED</p>
           <label class="switch">
@@ -51,6 +56,7 @@
             <div class="slider round"></div>
           </label>
         </div>
+        
         <div class="filter_switch">
           <p>UMM Required</p>
           <label class="switch">
@@ -58,6 +64,7 @@
             <div class="slider round"></div>
           </label>
         </div>
+        
       </div>
 
       <script type="text/javascript">
@@ -66,8 +73,6 @@
         <% @section_titles.each do |title| %>
           titleList.push("column_" + "<%=title%>");
         <% end %>
-
-
 
         function toggleCells() {
           unhideAllCells();
