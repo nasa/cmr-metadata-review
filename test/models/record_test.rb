@@ -17,7 +17,7 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
-  describe "script_values && script_score" do 
+  describe "script_values && script_score" do
     it "adds script results and can return them on command" do
       record = Record.find_by id: 1
 
@@ -60,7 +60,7 @@ class RecordTest < ActiveSupport::TestCase
       record.update_colors(color_codes)
       assert_equal(record.color_coding_complete?, false)
 
-      #testing again with 1 review, 2 needed 
+      #testing again with 1 review, 2 needed
       first_review = record.add_review(1)
       first_review.mark_complete
       assert_equal(record.has_enough_reviews?, false)
@@ -98,12 +98,39 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
+  describe "start arc review" do
+    it "moves a record from open to in arc review" do
+      record = Record.find_by id: 1
+      record.start_arc_review
+      assert_equal(record.in_arc_review?, true)
+
+    end
+  end
+
+  describe "complete arc review" do
+    it "moves a record from in arc review to ready for daac review" do
+      record = Record.find_by id: 2
+      record.complete_arc_review
+      assert_equal(record.ready_for_daac_review?, true)
+
+    end
+  end
+
+  describe "release to daac review" do
+    it "moves a record from ready for daac review to in daac review" do
+      record = Record.find_by id: 3
+      record.release_to_daac
+      assert_equal(record.in_daac_review?, true)
+
+    end
+  end
+
   describe "close" do
     it "closes a record" do
-      record = Record.find_by id: 1
+      record = Record.find_by id: 4
       record.close
 
-      assert_equal(record.closed, true)
+      assert_equal(record.closed?, true)
       #testing that the time is not null and within range
       assert_equal((record.closed_date && (record.closed_date < DateTime.now) && (record.closed_date > (DateTime.now - 5000))), true)
       record.closed_date = "Tue, 28 Feb 2017 16:25:04 UTC +00:00"
@@ -112,6 +139,7 @@ class RecordTest < ActiveSupport::TestCase
       assert_equal(record.formatted_closed_date, "02/28/2017 at 11:25AM")
     end
   end
+
 
   describe "evaluate_script" do
     it "returns results of the automated collection_script" do

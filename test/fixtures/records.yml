@@ -4,7 +4,28 @@ first:
   recordable_id: 1
   recordable_type: "Collection"
   revision_id: "8"
-  state: "closed"
+  state: "open"
+
+second:
+  id: 2
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "in_arc_review"
+
+third:
+  id: 3
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "ready_for_daac_review"
+
+fourth:
+  id: 4
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "in_daac_review"
 
 
 granule:
