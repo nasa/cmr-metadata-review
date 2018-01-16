@@ -9,8 +9,7 @@ if User.where(email: 'abaker@element84.com').first.nil?
   user = User.new
   user.email = 'abaker@element84.com'
   user.password = 'Password101'
-  user.admin = true
-  user.curator = true
+  user.role = 'admin'
   user.save
 end
 
@@ -18,8 +17,7 @@ if User.where(email: 'andrew@element84.com').first.nil?
   user = User.new
   user.email = 'andrew@element84.com'
   user.password = 'Password101'
-  user.admin = true
-  user.curator = true
+  user.role = 'admin'
   user.save
 end
 
@@ -28,8 +26,15 @@ if User.where(email: 'general@element84.com').first.nil?
   user = User.new
   user.email = 'general@element84.com'
   user.password = 'Password101'
-  user.admin = false
-  user.curator = true
+  user.role = 'arc_curator'
+  user.save
+end
+
+if User.where(email: 'daac@element84.com').first.nil?
+  user = User.new
+  user.email = 'daac@element84.com'
+  user.password = 'Password101'
+  user.role = 'daac_curator'
   user.save
 end
 
