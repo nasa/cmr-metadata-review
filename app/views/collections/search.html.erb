@@ -9,7 +9,7 @@
     </div>
 
     <%= form_tag(collections_search_path, id: 'cmr_search', method: "get") do %>
-      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
+      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
       <%= text_field_tag(:free_text, @free_text) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>

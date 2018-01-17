@@ -26,7 +26,6 @@ class SiteController < ApplicationController
     @in_daac_review_records = Record.in_daac_review.sort_by { |record| record.recordable.short_name }
 
     @search_results = []
-    @provider_select_list = provider_select_list
   end
 
   def general_home
