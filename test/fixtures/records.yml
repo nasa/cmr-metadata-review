@@ -4,25 +4,47 @@ first:
   recordable_id: 1
   recordable_type: "Collection"
   revision_id: "8"
-  closed: false
+  state: "open"
+
+second:
+  id: 2
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "in_arc_review"
+
+third:
+  id: 3
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "ready_for_daac_review"
+
+fourth:
+  id: 4
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "in_daac_review"
+
 
 granule:
   id: 5
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
-  closed: false
-  
+  state: "closed"
+
 metric1:
   id: 10
   recordable_id: 2
   recordable_type: "Collection"
   revision_id: "8"
-  closed: true
+  state: "open"
 
 metric2:
   id: 11
   recordable_id: 3
   recordable_type: "Collection"
   revision_id: "8"
-  closed: false
+  state: "closed"
