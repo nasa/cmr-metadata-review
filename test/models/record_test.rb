@@ -130,7 +130,17 @@ class RecordTest < ActiveSupport::TestCase
 
       assert_equal(comment_hash.to_s, "{\"OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime\"=>\"np\", \"Collection/DataSetId\"=>\"np\", \"Campaigns/Campaign/ShortName\"=>\"np\", \"OnlineAccessURLs/OnlineAccessURL/URLDescription\"=>\"Recommend providing a brief URL description\", \"Temporal/RangeDateTime/BeginningDateTime\"=>\"np\", \"OnlineResources/OnlineResource/Type\"=>\"np\", \"Temporal/RangeDateTime/SingleDateTime\"=>\"np\", \"OnlineAccessURLs/OnlineAccessURL/URL\"=>\"No Online Access URL is provided\", \"Orderable\"=>\"np\", \"OnlineResources/OnlineResource/Description\"=>\"Recommend providing descriptions for all Online Resource URLs.\", \"Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle\"=>\"np, np, np, np\", \"OnlineResources/OnlineResource/URL\"=>\"np\", \"DataGranule/SizeMBDataGranule\"=>\"Granule file size not provided. Recommend providing a value for this field in the metadata\", \"DeleteTime\"=>\"np\", \"Platforms/Platform\"=>\"np\", \"Platforms/Platform/ShortName\"=>\"np\", \"DataFormat\"=>\"Recommend providing the data format for the associated granule\", \"InsertTime\"=>\"np\", \"Temporal/RangeDateTime/EndingDateTime\"=>\"np\", \"LastUpdate\"=>\"np\", \"DataGranule/ProductionDateTime\"=>\"np\", \"Visible\"=>\"np\"}")
     end
+  end
 
+  describe "daac scope" do
+    it "will return records for the given DAAC" do
+      records = Record.daac("PODAAC")
+      assert_equal 4, records.length
+    end
 
+    it "will not return records that belong to anoter DAAC" do
+      records = Record.daac("FakeDAAC")
+      assert records.empty?
+    end
   end
 end
