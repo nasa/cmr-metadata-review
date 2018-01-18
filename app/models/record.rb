@@ -31,8 +31,8 @@ class Record < ActiveRecord::Base
     end
 
     event :close do
-      after do
-        self.closed_date = Date.new
+      before do
+        write_attribute(:closed_date, ::DateTime.now)
       end
 
       transitions from: :in_daac_review, to: :closed
