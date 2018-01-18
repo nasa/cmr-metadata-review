@@ -14,7 +14,7 @@ class Record < ActiveRecord::Base
   has_one :ingest
   has_many :discussions
 
-  aasm column: 'state' do 
+  aasm column: 'state', whiny_persistence: false do 
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
 
@@ -499,7 +499,7 @@ class Record < ActiveRecord::Base
     if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
       return true
     end
-    
+
     if self.is_granule? || 
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) || 
