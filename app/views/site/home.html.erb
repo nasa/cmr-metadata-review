@@ -40,7 +40,7 @@
           <p><strong>Unreviewed Records:</strong></p>
         </div>
 
-        
+
         <div class="results_table">
           <div class="table_scroll">
             <table cellpadding="5" border="1">
@@ -180,7 +180,7 @@
                     <td><%= record.ingested_by %></td>
                     <td class="center_text"><%= record.completed_review_count %></td>
                     <td class="center_text"><%= record.second_opinion_count %></td>
-                    <td class="center_text"><input type="radio" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection" value="<%= index.to_s %>"/></td>
+                    <td class="center_text"><input type="checkbox" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection" value="<%= index.to_s %>"/></td>
                 </tr>
               <% end %>
             </table>
@@ -195,6 +195,12 @@
             <% end %>
 
             <% if current_user.admin %>
+              <%= form_tag( collections_move_path ,  {method: "get", id: 'waiting-daac-releasemove_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "waiting-daac-releaseMoveConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "waiting-daac-releaseMoveRevisionId") %>
+                <%= submit_tag("Move Record(s)", id: 'waiting-daac-releaseMoveSubmit', class: "moveButton") %>
+              <% end %>
+
               <%= form_tag( collections_hide_path ,  {method: "get", id: 'waiting-daac-releasedelete_form'}) do %>
                 <%= hidden_field_tag(:concept_id, "", id: "waiting-daac-releaseDeleteConceptId") %>
                 <%= hidden_field_tag(:revision_id, "", id: "waiting-daac-releaseDeleteRevisionId") %>
@@ -409,6 +415,17 @@
     };
   }
 
+  var moveButtons = document.getElementsByClassName("moveButton")
+  for (var i = 0; i < moveButtons.length; i++) {
+    moveButtons[i].onclick = function() {
+      if (confirm("Move Record(s) to in DAAC Review?")) {
+        showLoading("Moving Record(s)");
+      } else {
+        return false;
+      }
+    };
+  }
+
   setUpTable("unreviewed");
   setUpTable("in-review");
   setUpTable("waiting-daac-release");
@@ -420,15 +437,16 @@
     var tableButton = document.getElementById(table + "Submit");
     var tableDeleteButton = document.getElementById(table + "DeleteSubmit");
     var tableReportButton = document.getElementById(table + "ReportSubmit");
+    var tableMoveButton = document.getElementById(table + "MoveSubmit");
     var tableFinishedButton = document.getElementById(table + "FinishedSubmit");
-    var buttonArr = [tableButton, tableDeleteButton, tableReportButton, tableFinishedButton];
+    var buttonArr = [tableButton, tableDeleteButton, tableReportButton, tableMoveButton, tableFinishedButton];
 
-    var tableSelector = document.getElementsByName(table + "Selection");    
+    var tableSelector = document.getElementsByName(table + "Selection");
     //setting the buttons manually here because sometimes the page is loaded with something already selected
     for (var k=0; k < buttonArr.length; k++) {
       if (buttonArr[k] != null) {
         buttonArr[k].disabled = setOnClick(table, buttonArr,tableSelector);
-      }  
+      }
     }
   }
 
@@ -447,14 +465,14 @@
                                     for (var k=0; k < tableArr.length; k++) {
                                       if (tableArr[k] != null) {
                                         tableArr[k].disabled = false;
-                                      }  
+                                      }
                                     }
                                   }
           })(i);
       }
       return shouldDisable;
   }
-  
+
 
   function updateTableValues(count, table) {
     var rowName = table + "Concept" + count;
@@ -466,16 +484,25 @@
     var deleteConceptId = document.getElementById(table + "DeleteConceptId");
     var deleteRevisionId = document.getElementById(table + "DeleteRevisionId");
     if (deleteConceptId != null) {
-      deleteConceptId.value = newConceptId;  
+      deleteConceptId.value = newConceptId;
     }
     if (deleteRevisionId != null) {
       deleteRevisionId.value = newRevisionId;
     }
 
+    var moveConceptId = document.getElementById(table + "MoveConceptId");
+    var moveRevisionId = document.getElementById(table + "MoveRevisionId");
+    if (moveConceptId != null) {
+      moveConceptId.value = newConceptId;
+    }
+    if (moveRevisionId != null) {
+      moveRevisionId.value = newRevisionId;
+    }
+
     var reportConceptId = document.getElementById(table + "ReportConceptId");
     var reportRevisionId = document.getElementById(table + "ReportRevisionId");
     if (reportConceptId != null) {
-      reportConceptId.value = newConceptId;  
+      reportConceptId.value = newConceptId;
     }
     if (reportRevisionId != null) {
       reportRevisionId.value = newRevisionId;
@@ -484,7 +511,7 @@
     var finishedConceptId = document.getElementById(table + "FinishedConceptId");
     var finishedRevisionId = document.getElementById(table + "FinishedRevisionId");
     if (finishedConceptId != null) {
-      finishedConceptId.value = newConceptId;  
+      finishedConceptId.value = newConceptId;
     }
     if (finishedRevisionId != null) {
       finishedRevisionId.value = newRevisionId;
@@ -494,5 +521,3 @@
 
 
 </script>
-
-

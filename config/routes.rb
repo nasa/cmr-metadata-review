@@ -15,10 +15,11 @@ Rails.application.routes.draw do
 
   get '/home', to: 'site#home'
   get '/general_home', to: 'site#general_home'
-  
+
   resources :collections
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
+  get '/collections_move', to: 'collections#move'
   get '/collections_stop_updates', to: 'collections#stop_updates'
 
   resources :granules
@@ -38,5 +39,5 @@ Rails.application.routes.draw do
   if ENV['SHOW_DOCUMENTATION'] == 'true'
     get "/documentation" => redirect("/doc/index.html")
   end
-  
+
 end

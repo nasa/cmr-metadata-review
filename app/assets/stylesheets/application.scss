@@ -102,7 +102,7 @@ button {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: white;
-  
+
   .header_title {
     display: flex;
     flex-direction: column;
@@ -127,7 +127,7 @@ button {
   h3 {
     margin: 0px;
   }
-} 
+}
 
 .header_image {
   position: absolute;
@@ -253,6 +253,13 @@ tr:nth-child(odd) {background: #FFF}
   @include normal_button_sizing;
   @include button_disabled;
   background-color: $red;
+}
+
+.moveButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
 }
 
 .reportButton {
