@@ -180,7 +180,7 @@
                     <td><%= record.ingested_by %></td>
                     <td class="center_text"><%= record.completed_review_count %></td>
                     <td class="center_text"><%= record.second_opinion_count %></td>
-                    <td class="center_text"><input type="checkbox" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection" value="<%= index.to_s %>"/></td>
+                    <td class="center_text"><input type="radio" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection" value="<%= index.to_s %>"/></td>
                 </tr>
               <% end %>
             </table>
