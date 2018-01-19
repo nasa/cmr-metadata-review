@@ -14,7 +14,7 @@ class Record < ActiveRecord::Base
   has_one :ingest
   has_many :discussions
 
-  aasm column: 'state' do 
+  aasm column: 'state', whiny_persistence: false do 
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
 
@@ -23,7 +23,7 @@ class Record < ActiveRecord::Base
     end
 
     event :complete_arc_review do
-      transitions from: :in_arc_review, to: :ready_for_daac_review#, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?, :granule_completed?]
+      transitions from: :in_arc_review, to: :ready_for_daac_review, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?, :granule_completed?]
     end
 
     event :release_to_daac do
@@ -31,8 +31,8 @@ class Record < ActiveRecord::Base
     end
 
     event :close do
-      after do
-        self.closed_date = Date.new
+      before do
+        write_attribute(:closed_date, ::DateTime.now)
       end
 
       transitions from: :in_daac_review, to: :closed
@@ -460,6 +460,10 @@ class Record < ActiveRecord::Base
   end
 
   def color_coding_complete?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     colors = self.get_colors
 
     colors.each do |key, value|
@@ -476,14 +480,26 @@ class Record < ActiveRecord::Base
   end
 
   def has_enough_reviews?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     return self.completed_review_count > 1
   end
 
   def no_second_opinions?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     return !(self.get_opinions.select {|key,value| value == true}).any?
   end
 
   def granule_completed?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     if self.is_granule? || 
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) || 
