@@ -166,13 +166,7 @@ class MetricSet
   # Maps to each Collection Id, a list of related records, sorted newest to oldest
 
   def ordered_revisions
-    collections = @record_set.map do |record|
-      concept_id = record.concept_id
-      Collection.find_by(concept_id: concept_id) || Granule.find_by(concept_id: concept_id)
-    end
-
-    # Guarding against nils
-    collections.compact!
+    collections = @record_set.map(&:recordable).uniq
 
     {}.tap do |record_hash|
       collections.map do |collection|
