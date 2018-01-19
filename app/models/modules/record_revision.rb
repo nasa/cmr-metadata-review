@@ -57,7 +57,7 @@ module Modules::RecordRevision
 
   def ordered_revisions(daac_short_name = nil)
     if daac_short_name.nil?
-      collection_records = self.all_records.where(state: Record::STATE_CLOSED)
+      collection_records = self.all_records.where(state: MetricSet::METRIC_STATES)
     else 
       collections = self.by_daac(daac_short_name)
       collection_ids = collections.map {|collection| collection.id }
