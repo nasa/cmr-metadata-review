@@ -111,7 +111,7 @@ class MetricSet
   # Aggregates the total number of records with their most recent revision_id record in a completed state.
 
   def total_completed
-    (@record_set.select {|record| record.closed == true }).count
+    (@record_set.select {|record| record.closed? }).count
   end 
 
   # ====Params   
@@ -122,7 +122,7 @@ class MetricSet
   # Aggregates the total number of records with their most recent revision_id record in the in process state.
 
   def total_in_process
-    (@record_set.select {|record| record.closed == false }).count
+    (@record_set.select {|record| !record.closed? }).count
   end 
 
   # ====Params   
@@ -134,7 +134,7 @@ class MetricSet
 
 
   def quality_done_records
-    collection_records = @record_set.select { |record| record.closed }
+    collection_records = @record_set.select { |record| record.closed? }
     record_data_sets = collection_records.map { |record|  record.record_datas }
     scores = record_data_sets.map do |data_list| 
       reds = (data_list.select { |data| data.color == "red" }).count.to_f
@@ -177,7 +177,7 @@ class MetricSet
     record_hash = {}
 
     collections.map do |collection|
-      record_hash[collection.concept_id] = collection.get_records.where(closed: true).sort { |x,y| y.id.to_i <=> x.id.to_i } 
+      record_hash[collection.concept_id] = collection.get_records.where(state: Record::STATE_CLOSED).sort { |x,y| y.id.to_i <=> x.id.to_i } 
     end
 
     record_hash
@@ -196,7 +196,7 @@ class MetricSet
     ordered_revisions = ordered_revisions.select { |record_list| !record_list.empty? }
     unless ordered_revisions.empty?
       updated_and_done = ordered_revisions.select { |record_list|
-        record_list[0].closed && ((record_list.select { |record| record.closed }).count > 1)
+        record_list[0].closed? && ((record_list.select { |record| record.closed? }).count > 1)
       }
 
       updated_and_done.count

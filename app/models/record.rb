@@ -3,7 +3,9 @@
 #Record is a child of both Collection and Granule
 
 class Record < ActiveRecord::Base
+  include AASM
   include RecordHelper
+  
   after_initialize :load_format_module
 
   has_many :record_datas
@@ -11,6 +13,35 @@ class Record < ActiveRecord::Base
   has_many :reviews
   has_one :ingest
   has_many :discussions
+
+  aasm column: 'state', whiny_persistence: false do 
+    state :open, initial: true
+    state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
+
+    event :start_arc_review do
+      transitions from: :open, to: :in_arc_review
+    end
+
+    event :complete_arc_review do
+      transitions from: :in_arc_review, to: :ready_for_daac_review, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?, :granule_completed?]
+    end
+
+    event :release_to_daac do
+      transitions from: :ready_for_daac_review, to: :in_daac_review
+    end
+
+    event :close do
+      before do
+        write_attribute(:closed_date, ::DateTime.now)
+      end
+
+      transitions from: :in_daac_review, to: :closed
+    end
+
+    event :hide do
+      transitions from: :closed, to: :hidden
+    end
+  end
 
   def load_format_module
     if self.format == "dif10"
@@ -125,7 +156,7 @@ class Record < ActiveRecord::Base
   # Returns "In Process" or "Completed"     
   # When records are complete, no further reviews or changes to review data can be added
   def status_string
-    if self.closed
+    if self.closed?
       "Completed"
     else
       "In Process"
@@ -429,6 +460,10 @@ class Record < ActiveRecord::Base
   end
 
   def color_coding_complete?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     colors = self.get_colors
 
     colors.each do |key, value|
@@ -445,19 +480,31 @@ class Record < ActiveRecord::Base
   end
 
   def has_enough_reviews?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     return self.completed_review_count > 1
   end
 
   def no_second_opinions?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     return !(self.get_opinions.select {|key,value| value == true}).any?
   end
 
   def granule_completed?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
     if self.is_granule? || 
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) || 
        (self.recordable.granules.first.records.first.nil?) ||
-       (self.recordable.granules.first.records.first.closed == true)
+       (self.recordable.granules.first.records.first.closed?)
       
       return true
     end
@@ -471,11 +518,11 @@ class Record < ActiveRecord::Base
   end
 
 
-  def close
-    self.closed = true
-    self.closed_date = DateTime.now
-    self.save
-  end
+  # def close
+  #   self.closed = true
+  #   self.closed_date = DateTime.now
+  #   self.save
+  # end
 
   def formatted_closed_date
     #01/19/2017 at 01:55PM (example format)

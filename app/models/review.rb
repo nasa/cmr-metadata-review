@@ -68,7 +68,7 @@ class Review < ActiveRecord::Base
   def self.get_reviews
     Review.all.select do |review|
       record = review.record
-      (!record.nil?) && (!record.hidden) 
+      (!record.nil?) && (!record.hidden?) 
     end
   end
 

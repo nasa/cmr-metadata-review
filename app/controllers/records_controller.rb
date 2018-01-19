@@ -29,7 +29,7 @@ class RecordsController < ApplicationController
     @user_review = @record.review(current_user.id)
 
     @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = @record.closed
+    @marked_done = @record.closed?
 
     if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
       @color_coding_complete = true
@@ -51,18 +51,20 @@ class RecordsController < ApplicationController
       return
     end
 
-    if !(ENV['SIT_SKIP_DONE_CHECK'] == 'true')
-      #checking that all bubbles are filled in
-      if !record.color_coding_complete? || !record.has_enough_reviews? || !record.no_second_opinions? || !record.granule_completed?
-        redirect_to record_path(record)
-        return
-      end
+    if record.in_arc_review?
+      success = record.complete_arc_review!
+    elsif record.ready_for_daac_review?
+      success = record.release_to_daac!
+    else
+      success = record.close!
     end
-
-    record.close
-
-    flash[:notice] = "Record has been successfully marked as done"
-    redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+    
+    if success
+      flash[:notice] = "Record has been successfully updated."
+      redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+    else
+      redirect_to record_path(record)
+    end
   end
 
   def update
@@ -90,6 +92,8 @@ class RecordsController < ApplicationController
       #.review will create a review if one not found.
       review = record.review(current_user.id)
       review.save
+
+      record.start_arc_review! if record.open?
     end
 
     if params["redirect_index"].nil?

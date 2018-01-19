@@ -10,17 +10,20 @@
     border-style: solid;
     border-color: $report-line;
   }
-  tr {
 
+  tr {
     &:nth-child(even) {background: $review-blue-light}
   }
+
   tr.section_title_row {
     background: $review-blue-light; 
   }
+
   tr.user_input {
     &:nth-child(even) {background: $review-yellow-dark}
     &:nth-child(odd) {background: $review-green-light}
   }
+
   th {
     background-color: inherit;
   }
@@ -53,12 +56,15 @@
 
 .filter_row {
     margin-top: 1em;
+
+    p {
+      display: inline-block;
+      font-size: 0.6em;  
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 }
 
-.filter_row p {
-  display: inline-block;
-  font-size: 0.6em;
-}
 .filter_row div {
   display: inline-block;
 }
@@ -69,20 +75,19 @@
   .filter_switch {
     border: thin solid #d9d9d9;
     border-radius: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-
+    padding: 0 10px 4px 10px;
 
     label {
       vertical-align: middle;
     }
-    p {
+
+    &__title {
+      font-weight: normal;
       vertical-align: middle;
-    }
+    } 
+
   }
 }
-
-
 
 .filter_dropdown {
   float: right;
@@ -451,18 +456,6 @@
     }
   }
 
-  .opinion_cell {
-    cursor: pointer;
-    width:100%;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    :hover {
-      font-weight: bold;
-    }
-  }
-
   .flag_icon {
     visibility: hidden;
   }
@@ -552,6 +545,14 @@
 }
 
 .review-toggle {
+  cursor: pointer;
+  width:100%;
+  padding: 10px;
+  
+  :hover {
+    font-weight: bold;
+  }
+
   &__cell {
     background-color: #e7d1ff;
   }
