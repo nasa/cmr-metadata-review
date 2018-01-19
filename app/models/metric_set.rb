@@ -22,13 +22,13 @@ class MetricSet
     @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # new MetricSet object
   # ==== Method
   # Takes the records in the current MetricSet, then finds the original revision for each record
-  # Returns a new MetricSet made up of these original records so that metrics can be calculated for the original 
+  # Returns a new MetricSet made up of these original records so that metrics can be calculated for the original
   # revisions of any arbitrary record set.
 
   def original_metric_set
@@ -46,8 +46,8 @@ class MetricSet
     return MetricSet.new(original_record_set)
   end
 
-  # ====Params   
-  # Array of review objects 
+  # ====Params
+  # Array of review objects
   # ====Returns
   # Array of integers
   # ==== Method
@@ -67,9 +67,9 @@ class MetricSet
     end
 
     review_hash.values
-  end  
+  end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash {color_string => count}
@@ -85,7 +85,7 @@ class MetricSet
   end
 
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of counts for each flag type
@@ -105,8 +105,8 @@ class MetricSet
     flag_hash
   end
 
-  # ====Params   
-  # None    
+  # ====Params
+  # None
   # ====Returns
   # Integer
   # ==== Method
@@ -114,10 +114,10 @@ class MetricSet
 
   def total_completed
     (@record_set.select {|record| record.closed? }).count
-  end 
+  end
 
-  # ====Params   
-  # None    
+  # ====Params
+  # None
   # ====Returns
   # Integer
   # ==== Method
@@ -125,10 +125,10 @@ class MetricSet
 
   def total_in_process
     (@record_set.select {|record| !record.closed? }).count
-  end 
+  end
 
-  # ====Params   
-  # None     
+  # ====Params
+  # None
   # ====Returns
   # Array of Floats
   # ==== Method
@@ -138,7 +138,7 @@ class MetricSet
   def quality_done_records
     collection_records = @record_set.select { |record| record.closed? }
     record_data_sets = collection_records.map { |record|  record.record_datas }
-    scores = record_data_sets.map do |data_list| 
+    scores = record_data_sets.map do |data_list|
       reds = (data_list.select { |data| data.color == "red" }).count.to_f
       flagged = (data_list.select { |data| data.color != "" }).count
       if flagged == 0
@@ -156,8 +156,8 @@ class MetricSet
     scores
   end
 
-  # ====Params   
-  # None     
+  # ====Params
+  # None
   # ====Returns
   # Hash {Integer => [Record]}
   # ==== Method
@@ -176,8 +176,8 @@ class MetricSet
     end
   end
 
-  # ====Params   
-  # None     
+  # ====Params
+  # None
   # ====Returns
   # Integer
   # ==== Method
@@ -198,8 +198,8 @@ class MetricSet
     end
   end
 
-  # ====Params   
-  # None     
+  # ====Params
+  # None
   # ====Returns
   # Integer
   # ==== Method
@@ -215,7 +215,7 @@ class MetricSet
     updated.count
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Array of [column_name, non_green_count] sets.  Double depth array
@@ -249,7 +249,7 @@ class MetricSet
     end
 
     #sorting in reverse order so highest counts are first
-    column_counts.sort! { |x,y| y[1] <=> x[1] } 
+    column_counts.sort! { |x,y| y[1] <=> x[1] }
   end
 
 
