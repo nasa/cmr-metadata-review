@@ -9,6 +9,7 @@ class Ability
         can :access, :curate
         can :access, :create_user
         
+        can :request_feedback, Record
         can :request_opinions, Record
         can :recommend_changes, Record
 
