@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     @show_charts = true
     @csv_path = reports_home_path
     @csv_params = ""
-    @collection_ingest_count = Collection.all.length
+    @collection_ingest_count = Collection.count
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_month_counts = list_past_months
