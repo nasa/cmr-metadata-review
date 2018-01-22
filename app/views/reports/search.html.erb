@@ -9,8 +9,8 @@
     </div>
 
     <%= form_tag(reports_search_path, method: "get") do %>
-      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
-      <%= text_field_tag(:free_text, @free_text) %>
+      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => params[:provider])) %>
+      <%= text_field_tag(:free_text, params[:free_text]) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>
       <button class="search_button">
@@ -19,13 +19,13 @@
     <% end %>
 
     <br>
-    <% if @free_text %>
+    <% if params[:free_text] %>
       <p><strong>Search Results:</strong></p>
 
       <div class="results_box">
 
         <div class="search_phrase">
-          <p>Search Phrase = <%=@free_text%></p>
+          <p>Search Phrase = <%= params[:free_text] %></p>
         </div>
         <div class="total_results">
           <p>Total Results = <%= @collection_count %></p>
@@ -41,7 +41,7 @@
           </div>
         </div>
         
-        <% if @free_text && @search_iterator.empty? %>
+        <% if params[:free_text] && @search_iterator.empty? %>
           <div class="empty_results_phrase">
             <p>No ingested records were found matching your query</p>
           </div>
@@ -63,7 +63,7 @@
 
                 <% @search_iterator.each_with_index do |result, index| %>
                   <tr concept_id="<%= result.concept_id %>" revision_id="<%= result.revision_id %>" onclick="appendRecordsList(this)" class="report_search_row">
-                      <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
+                      <td><%= (params[:curr_page].to_i - 1) * 10 + index + 1 %></td>
                       <td id="concept<%= index.to_s %>"><%= result.concept_id %></td>
                       <td id="revision<%= index.to_s %>"><%= result.revision_id %></td>
                       <td><%= result.short_name %></td>

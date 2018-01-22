@@ -61,12 +61,9 @@ class ReportsController < ApplicationController
   end
 
   def search
-    @free_text = params["free_text"]
-    @provider = params["provider"]
-    @curr_page = params["curr_page"]
     @provider_select_list = provider_select_list
     begin
-      @search_iterator, @collection_count = Cmr.contained_collection_search(params["free_text"], params["provider"], params["curr_page"])
+      @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page])
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       redirect_to reports_search_path
