@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
   include ReportsHelper
 
   before_filter :authenticate_user!
-  
+
   def home
     @report_title = "OVERALL VIEW"
     @show_charts = true
@@ -84,7 +84,7 @@ class ReportsController < ApplicationController
     @granule_report_list = []
 
     records_list.each_slice(2) {|(concept_id, revision_id)|
-                                  new_record = Collection.find_record(concept_id, revision_id) 
+                                  new_record = Collection.find_record(concept_id, revision_id)
                                   if new_record
                                     @report_list.push(new_record)
                                     new_granule_record = new_record.related_granule_record
@@ -103,14 +103,14 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html { render :template => "reports/home" }
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
-    end                          
+    end
   end
 
-  def single 
+  def single
     @csv_path = reports_single_path
     @csv_params = "?concept_id=#{params["concept_id"]}&revision_id=#{params["revision_id"]}"
     @report_title = "SINGLE RECORD VIEW"
-    
+
     @record = Collection.find_record(params["concept_id"], params["revision_id"])
 
     @reviews = @record.reviews
