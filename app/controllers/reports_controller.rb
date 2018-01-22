@@ -64,22 +64,12 @@ class ReportsController < ApplicationController
     @provider_select_list = provider_select_list
     begin
       @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page])
-    rescue Cmr::CmrError
+    rescue Cmr::CmrError, Net::OpenTimeout, Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       redirect_to reports_search_path
-      return
-    rescue Net::OpenTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to reports_search_path
-      return
-    rescue Net::ReadTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to reports_search_path
-      return
     rescue
       flash[:alert] = 'There was an error searching the system'
       redirect_to reports_search_path
-      return
     end
   end
 
