@@ -28,4 +28,11 @@ module RecordHelper
     !(value.start_with?("OK", "ok", "Ok"))
   end
 
+  def completed_reviews(reviews)
+    reviews.reduce(0) { |sum, review| sum + review.review_state.to_i }
+  end
+
+  def daac_reviewer_ok?(record)
+    !record.in_daac_review? || can?(:review_state, Record::STATE_IN_DAAC_REVIEW)
+  end
 end

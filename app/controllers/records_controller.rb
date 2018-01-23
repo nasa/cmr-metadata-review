@@ -1,4 +1,6 @@
 class RecordsController < ApplicationController
+  include RecordHelper
+
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :find_record, only: [:show, :complete, :update]
@@ -22,9 +24,6 @@ class RecordsController < ApplicationController
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
 
     @user_review = @record.review(current_user.id)
-
-    @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = @record.closed?
 
     if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
       @color_coding_complete = true
