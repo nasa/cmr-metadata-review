@@ -17,7 +17,7 @@ module RecordHelper
       end
     end
 
-    return new_value
+    new_value
   end
 
   def script_test(value)
@@ -25,7 +25,7 @@ module RecordHelper
       return false
     end
     
-    return !(value.start_with?("OK", "ok", "Ok"))
+    !(value.start_with?("OK", "ok", "Ok"))
   end
 
 end
