@@ -135,7 +135,7 @@
           };
         </script>
 
-        <% if @completed_records > 1 && !@marked_done %>
+        <% if completed_reviews(@reviews) > 1 && !@record.closed? && daac_reviewer_ok?(@record) %>
           <% is_disabled = "" %>
         <% else %>
           <% is_disabled = "disabled" %>
