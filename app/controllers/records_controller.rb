@@ -1,6 +1,7 @@
 class RecordsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_curation
+  before_filter :find_record, only: [:show, :complete, :update]
 
   def refresh
     # a list of records added in update in format of
@@ -15,12 +16,6 @@ class RecordsController < ApplicationController
   end
 
   def show
-    @record = Record.find_by id: params["id"]
-    if @record.nil?
-      redirect_to home_path
-      return
-    end
-    
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
@@ -45,34 +40,24 @@ class RecordsController < ApplicationController
   end
 
   def complete
-    record = Record.find_by id: params["id"]
-    if record.nil?
-      redirect_to home_path
-      return
-    end
-
-    if record.in_arc_review?
-      success = record.complete_arc_review!
-    elsif record.ready_for_daac_review?
-      success = record.release_to_daac!
+    if @record.in_arc_review?
+      success = @record.complete_arc_review!
+    elsif @record.ready_for_daac_review?
+      success = @record.release_to_daac!
     else
-      success = record.close!
+      success = @record.close!
     end
     
     if success
       flash[:notice] = "Record has been successfully updated."
-      redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+      redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
     else
-      redirect_to record_path(record)
+      redirect_to record_path(@record)
     end
   end
 
   def update
-    record = Record.find_by id: params[:id]
-    if record.nil?
-      redirect_to home_path
-      return
-    elsif record.closed?
+    if @record.closed?
       if !params["redirect_index"].nil?
         redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
         return 
@@ -83,17 +68,17 @@ class RecordsController < ApplicationController
     end
 
     #update result will == true if any updates were made to record on save
-    update_result = record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
+    update_result = @record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
 
     if update_result == -1
       flash[:error] = "Values were not updated in the system.  Please resave changes."
     elsif update_result == true
       #creating a review is one is not yet recorded
       #.review will create a review if one not found.
-      review = record.review(current_user.id)
+      review = @record.review(current_user.id)
       review.save
 
-      record.start_arc_review! if record.open?
+      @record.start_arc_review! if @record.open?
     end
 
     if params["redirect_index"].nil?
@@ -101,6 +86,13 @@ class RecordsController < ApplicationController
     else
       redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
     end
+  end
+
+  private
+
+  def find_record
+    @record = Record.find_by(id: params[:id])
+    redirect_to home_path unless @record
   end
 
 end

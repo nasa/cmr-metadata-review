@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class RecordsControllerTest < ActionController::TestCase
 
   describe "POST #create" do  

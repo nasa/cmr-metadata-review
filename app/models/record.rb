@@ -14,6 +14,8 @@ class Record < ActiveRecord::Base
   has_one :ingest
   has_many :discussions
 
+  scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
+
   aasm column: 'state', whiny_persistence: false do 
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden

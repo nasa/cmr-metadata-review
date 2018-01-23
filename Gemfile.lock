@@ -50,8 +50,9 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
-    byebug (9.0.6)
+    byebug (9.1.0)
     cancan (1.6.10)
+    coderay (1.1.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -97,6 +98,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -111,6 +113,14 @@ GEM
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.5.1)
+      byebug (~> 9.1)
+      pry (~> 0.10)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     puma (3.6.2)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -196,7 +206,6 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 4.12.0)
   aws-sdk (~> 2.2.37)
-  byebug
   cancan (~> 1.6.10)
   coffee-rails (~> 4.1.0)
   devise (~> 3.5.10)
@@ -208,6 +217,8 @@ DEPENDENCIES
   jquery-rails
   minitest-spec-rails
   pg (~> 0.17.1)
+  pry-byebug
+  pry-rails
   puma (~> 3.6.2)
   rails (= 4.2.7.1)
   rdoc
@@ -220,3 +231,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   webmock
+
+BUNDLED WITH
+   1.16.1
