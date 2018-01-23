@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     @show_charts = true
     @csv_path = reports_home_path
     @csv_params = ""
-    @collection_ingest_count = Collection.all.length
+    @collection_ingest_count = Collection.count
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @review_month_counts = list_past_months
@@ -61,28 +61,15 @@ class ReportsController < ApplicationController
   end
 
   def search
-    @free_text = params["free_text"]
-    @provider = params["provider"]
-    @curr_page = params["curr_page"]
     @provider_select_list = provider_select_list
     begin
-      @search_iterator, @collection_count = Cmr.contained_collection_search(params["free_text"], params["provider"], params["curr_page"])
-    rescue Cmr::CmrError
+      @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page])
+    rescue Cmr::CmrError, Net::OpenTimeout, Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       redirect_to reports_search_path
-      return
-    rescue Net::OpenTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to reports_search_path
-      return
-    rescue Net::ReadTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to reports_search_path
-      return
     rescue
       flash[:alert] = 'There was an error searching the system'
       redirect_to reports_search_path
-      return
     end
   end
 

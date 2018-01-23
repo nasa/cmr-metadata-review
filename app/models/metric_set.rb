@@ -13,6 +13,8 @@ class MetricSet
   @record_set = []
   @record_data_set = []
 
+  METRIC_STATES = [Record::STATE_CLOSED, Record::STATE_IN_DAAC_REVIEW]
+
   def initialize(record_set = [])
     #only selecting closed records
     @record_set = record_set
@@ -163,24 +165,15 @@ class MetricSet
   # Grabs a list of Collections for each record and then reduces to only unique Collections
   # Maps to each Collection Id, a list of related records, sorted newest to oldest
 
-
   def ordered_revisions
-    concept_ids = []
-    @record_set.each do |record|
-      concept_ids.push(record.concept_id)
+    collections = @record_set.map(&:recordable).uniq
+
+    {}.tap do |record_hash|
+      collections.map do |collection|
+        collection_records = collection.get_records.where(state: METRIC_STATES)
+        record_hash[collection.concept_id] = collection_records.sort(&:id).reverse
+      end
     end
-    concept_ids.uniq!
-
-    collections = concept_ids.map {|concept_id| (Collection.find_by concept_id: concept_id) || (Granule.find_by concept_id: concept_id) }
-    # guarding against nils
-    collections = collections.select { |collection| !(collection.nil?) }
-    record_hash = {}
-
-    collections.map do |collection|
-      record_hash[collection.concept_id] = collection.get_records.where(state: Record::STATE_CLOSED).sort { |x,y| y.id.to_i <=> x.id.to_i } 
-    end
-
-    record_hash
   end
 
   # ====Params   
