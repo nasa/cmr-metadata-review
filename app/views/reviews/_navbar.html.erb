@@ -11,7 +11,7 @@
     <% else %>
       METADATA ELEMENTS
     <% end %>
-    <% if ENV['SIT_ENV'] == 'true' %> 
+    <% if ENV['SIT_ENV'] == 'true' %>
        (SIT Environment)
     <% end %>
   </button>
@@ -32,10 +32,10 @@
       document.location.href = "<%= record_path(id: params["id"]) %>"
     }
   </script>
-    
+
   <% end %>
 
-    
+
 
   <div class="nav_info">
     <p>REVIEWER: <%= user_email %></p>
@@ -51,7 +51,7 @@
     <% else %>
       <div class="nav_review_details">
     <% end %>
-  
+
     <p><strong>LONG NAME : </strong><%= record.long_name %></p>
 
     <% if record.is_collection? %>
@@ -73,19 +73,19 @@
             <span class="icon_holder">
               <i class="fa fa-arrow-left review_nav_icon"></i>
             </span>
-            <div class="icon_spacing"></div> 
+            <div class="icon_spacing"></div>
             <span class="icon_text" id="previousButtonText">PREVIOUS</span>
           </div>
         </button>
         <button type="button" id="nextButton" class="eui-btn eui-btn--round eui-btn--sm review_nav_button">
           <div>
             <span class="icon_text" id="nextButtonText">NEXT</span>
-            <div class="icon_spacing"></div> 
+            <div class="icon_spacing"></div>
             <span class="icon_holder">
               <i class="fa fa-arrow-right review_nav_icon"></i>
             </span>
           </div>
-        </button>    
+        </button>
       </div>
       <div class="clearfix"></div>
 
@@ -124,7 +124,7 @@
   <% else %>
 
       <div class="complete_buttons">
-  
+
         <button id="review_complete_button" type="button" disabled class="eui-btn eui-btn--round eui-btn--sm review_complete_button">
           <p class="button_text">REVIEW COMPLETE</p>
           <i class="eui-icon eui-check-o button_symbol"></i>

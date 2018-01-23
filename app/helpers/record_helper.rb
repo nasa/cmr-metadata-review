@@ -24,7 +24,7 @@ module RecordHelper
     if value.nil? || value == ""
       return false
     end
-    
+
     !(value.start_with?("OK", "ok", "Ok"))
   end
 
