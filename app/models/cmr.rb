@@ -41,7 +41,7 @@ class Cmr
   # Queries CMR again to download and ingest all updated records with matching concept_id
   # returns all of the updated records which match a concept_id
 
-  def self.update_collections(current_user)
+  def self.update_records(current_user)
     update_lock = RecordsUpdateLock.find_by id: 1
     if update_lock.nil?
       #subtracting a year so that any older records picked up from an artificially setup starting set of records
@@ -63,12 +63,14 @@ class Cmr
     while result_count < total_results
       raw_collections = Cmr.collections_updated_since(search_date, page_num)
       total_collections = raw_collections["results"]["hits"].to_i
+      added_collections, failed_collections = Cmr.process_updated_collections(raw_collections, current_user)
+
       raw_granules = Cmr.granules_updated_since(search_date, page_num)
       total_granules = raw_granules["results"]["hits"].to_i
-      added_collections, failed_collections = Cmr.process_updated_collections(raw_collections, current_user)
       added_granules, failed_granules = Cmr.process_updated_granules(raw_granules, current_user)
-      total_added_records = total_added_records.concat(added_collections, added_granules)
-      total_failed_records = total_failed_records.concat(failed_collections, failed_granules)
+
+      total_added_records = added_collections + added_granules
+      total_failed_records = failed_collections + failed_granules
 
       result_count = result_count + 2000
       page_num = page_num + 1
@@ -90,7 +92,7 @@ class Cmr
   # Queries cmr for collections updated since provided data, returns parsed response
 
   def self.collections_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    return Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -103,9 +105,9 @@ class Cmr
   # Ingests and saves all new records
   # Returns Array of the added record objects.
 
-  def self.process_updated_collections(raw_results, current_user)
+  def self.process_updated_collections(raw_collections, current_user)
     #mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
+    updated_collection_data = raw_collections["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
     #doing this eager loading to stop system from making each include? a seperate db call.
     all_collections = Collection.all.map{|collection| collection.concept_id }
     #reducing to only the ones in system
@@ -165,7 +167,7 @@ class Cmr
   # Queries cmr for granules updated since provided data, returns parsed response
 
   def self.granules_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    return Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -178,13 +180,13 @@ class Cmr
   # Ingests and saves all new granules
   # Returns Array of the added granules objects.
 
-  def self.process_updated_granules(raw_results, current_user)
+  def self.process_updated_granules(raw_granules, current_user)
     #mapping to hashes of concept_id/revision_id
-    updated_granule_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"]} }
+    updated_granule_data = raw_granules["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"]} }
     #doing this eager loading to stop system from making each include? a seperate db call.
     all_granules = Granule.all.map{|granule| granule.concept_id }
     #reducing to only the ones in system
-    contained_granules = updated_granule_data.select {|data| all_collections.include? data["concept_id"] }
+    contained_granules = updated_granule_data.select {|data| all_granules.include? data["concept_id"] }
     #will return this list of added records for logging/presentation
     added_records = []
     failed_records = []
