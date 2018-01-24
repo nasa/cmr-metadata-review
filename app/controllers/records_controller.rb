@@ -33,6 +33,7 @@ class RecordsController < ApplicationController
       flash[:notice] = "Record has been successfully updated."
       redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
     else
+      flash[:alert] = error
       redirect_to record_path(@record)
     end
   end
@@ -76,6 +77,7 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
+<<<<<<< HEAD
   def completion_success
     if !can?(:review_state, @record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"
@@ -100,4 +102,32 @@ class RecordsController < ApplicationController
       false
     end
   end
+=======
+  def completion_error_message
+    if !can?(:review_state, @record.state.to_sym)
+      "You do not have permission to perform this action"
+    elsif ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      nil
+    elsif !@record.color_coding_complete?
+      "Not all columns have been flagged with a color, can not close review"
+    elsif !@record.has_enough_reviews?
+      "A review needs two completed reviews to be closed, can not close review"
+    elsif !@record.no_second_opinions?
+      "Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags."
+    elsif !@record.granule_completed?
+      "The Collection's related Granule must be marked complete before the Collection can be completed."
+    end
+  end
+
+  def completion_success
+    if @record.in_arc_review?
+      @record.complete_arc_review!
+    elsif @record.ready_for_daac_review?
+      @record.release_to_daac!
+    else
+      @record.close!
+    end
+  end
+
+>>>>>>> 524a8f1... Update permission checks when moving Record to next stage
 end
