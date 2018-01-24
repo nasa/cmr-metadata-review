@@ -24,24 +24,12 @@ class RecordsController < ApplicationController
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
 
     @user_review = @record.review(current_user.id)
-
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
-      @color_coding_complete = true
-      @has_enough_reviews = true
-      @no_second_opinions = true
-      @granule_completed = true
-    else
-      @color_coding_complete = @record.color_coding_complete?
-      @has_enough_reviews = @record.has_enough_reviews?
-      @no_second_opinions = @record.no_second_opinions?
-      @granule_completed = @record.granule_completed?
-    end
   end
 
   def complete
     error   = completion_error_message
     success = completion_success unless error
-    
+
     if success
       flash[:notice] = "Record has been successfully updated."
       redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
