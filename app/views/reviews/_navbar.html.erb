@@ -135,17 +135,11 @@
           };
         </script>
 
-        <% if completed_reviews(@reviews) > 1 && !@record.closed? && daac_reviewer_ok?(@record) %>
-          <% is_disabled = "" %>
-        <% else %>
-          <% is_disabled = "disabled" %>
+        <%= button_to complete_record_path, disabled: disable_complete_button?(@reviews, @record), id: "done_button", class: "eui-btn eui-btn--round eui-btn--sm mark_complete_button" do %>
+          <p class="button_text"><%= complete_button_text(@record) %></p>
+          <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
         <% end %>
 
-        <!-- close record button -->
-        <button type="button" <%= is_disabled %> id="done_button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
-          <p class="button_text"><%= complete_button_text(@record)%></p>            
-          <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
-        </button>    
         <script type="text/javascript">
           document.getElementById("done_button").onclick = function() {
             if (!<%=@color_coding_complete%>) {
@@ -164,8 +158,6 @@
               alert("The Collection's related Granule must be marked complete before the Collection can be completed.");
               return false;
             }
-
-            document.location.href = "<%= record_complete_path(id: params["id"]) %>"
           };
         </script>
       </div>
