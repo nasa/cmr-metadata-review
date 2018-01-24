@@ -4,25 +4,28 @@ first:
   recordable_id: 1
   recordable_type: "Collection"
   revision_id: "8"
-  closed: false
 
 granule:
   id: 5
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
-  closed: false
   
 metric1:
   id: 10
   recordable_id: 2
   recordable_type: "Collection"
   revision_id: "8"
-  closed: true
 
 metric2:
   id: 11
   recordable_id: 3
   recordable_type: "Collection"
   revision_id: "8"
-  closed: false
+
+in_daac_review:
+  id: 12
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "8"
+  state: "in_daac_review"
