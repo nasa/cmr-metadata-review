@@ -10,7 +10,7 @@ granule:
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
-  
+
 metric1:
   id: 10
   recordable_id: 2
