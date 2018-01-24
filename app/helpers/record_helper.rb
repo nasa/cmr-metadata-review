@@ -35,4 +35,14 @@ module RecordHelper
   def daac_reviewer_ok?(record)
     !record.in_daac_review? || can?(:review_state, Record::STATE_IN_DAAC_REVIEW)
   end
+
+  def complete_button_text(record)
+    if record.ready_for_daac_review?
+      "RELEASE TO DAAC"
+    elsif record.in_daac_review?
+      "CMR UPDATED"
+    else
+      "MARK AS DONE"
+    end
+  end
 end
