@@ -41,7 +41,7 @@ class RecordsController < ApplicationController
   def complete
     error   = completion_error_message
     success = completion_success unless error
-
+    
     if success
       flash[:notice] = "Record has been successfully updated."
       redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
