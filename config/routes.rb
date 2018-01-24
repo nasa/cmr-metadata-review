@@ -24,8 +24,12 @@ Rails.application.routes.draw do
   resources :granules
   resources :comments
   resources :reviews
-  resources :records
-  get '/record_complete', to: 'records#complete'
+  resources :records do
+    member do
+      post "complete"
+    end
+  end
+  
   get '/record_refresh', to: 'records#refresh'
 
   get '/reports/home', to: 'reports#home'
