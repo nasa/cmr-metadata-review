@@ -145,8 +145,10 @@
         <button type="button" <%= is_disabled %> id="done_button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
           <% if @record.ready_for_daac_review? %>
             <p class="button_text">RELEASE TO DAAC</p>            
+          <% elsif @record.in_daac_review? && !@record.flagged? %>
+            <p class="button_text">CLOSE</p>
           <% elsif @record.in_daac_review? %>
-            <p class="button_text">CMR UPDATED</p>
+            <p class="button_text">UPDATED IN CMR</p>
           <% else %>
             <p class="button_text">MARK AS DONE</p>
           <% end %>

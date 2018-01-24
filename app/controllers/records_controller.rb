@@ -55,7 +55,9 @@ class RecordsController < ApplicationController
       success = record.complete_arc_review!
     elsif record.ready_for_daac_review?
       success = record.release_to_daac!
-    else
+    elsif can?(:force_close, record)
+      success = record.force_close!
+    elsif can?(:close, record)
       success = record.close!
     end
     
