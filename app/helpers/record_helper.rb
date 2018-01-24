@@ -45,4 +45,8 @@ module RecordHelper
       "MARK AS DONE"
     end
   end
+
+  def disable_complete_button?(reviews, record)
+    completed_reviews(reviews) <= 1 || record.closed? || !daac_reviewer_ok?(record)
+  end
 end
