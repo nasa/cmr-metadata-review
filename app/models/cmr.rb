@@ -14,7 +14,7 @@ class Cmr
 
   end
 
-  # ====Params   
+  # ====Params
   # string url
   # ====Returns
   # HTTParty response object
@@ -30,7 +30,7 @@ class Cmr
     end
   end
 
-  # ====Params   
+  # ====Params
   # User object
   # ====Returns
   # Array of Records
@@ -47,7 +47,7 @@ class Cmr
       #subtracting a year so that any older records picked up from an artificially setup starting set of records
       update_lock = RecordsUpdateLock.new(id: 1, last_update: (DateTime.now - 365.days))
     end
-    
+
     last_date = update_lock.get_last_update
     #getting date into format
     #taking last update and going back a day to give cmr time to update
@@ -61,11 +61,14 @@ class Cmr
 
     #only 2000 results returned at a time, so have to loop through requests
     while result_count < total_results
-      raw_results = Cmr.collections_updated_since(search_date, page_num)
-      total_results = raw_results["results"]["hits"].to_i
-      added_records, failed_records = Cmr.process_updated_collections(raw_results, current_user)
-      total_added_records = total_added_records.concat(added_records)
-      total_failed_records = total_failed_records.concat(failed_records)
+      raw_collections = Cmr.collections_updated_since(search_date, page_num)
+      total_collections = raw_collections["results"]["hits"].to_i
+      raw_granules = Cmr.granules_updated_since(search_date, page_num)
+      total_granules = raw_granules["results"]["hits"].to_i
+      added_collections, failed_collections = Cmr.process_updated_collections(raw_collections, current_user)
+      added_granules, failed_granules = Cmr.process_updated_granules(raw_granules, current_user)
+      total_added_records = total_added_records.concat(added_collections, added_granules)
+      total_failed_records = total_failed_records.concat(failed_collections, failed_granules)
 
       result_count = result_count + 2000
       page_num = page_num + 1
@@ -79,8 +82,8 @@ class Cmr
     return total_added_records, total_failed_records
   end
 
-  # ====Params   
-  # string of date(no time), Integer 
+  # ====Params
+  # string of date(no time), Integer
   # ====Returns
   # Hash of CMR response
   # ==== Method
@@ -91,14 +94,14 @@ class Cmr
   end
 
 
-  # ====Params   
+  # ====Params
   # hash of CMR response, User object
   # ====Returns
   # Array of records
   # ==== Method
   # Filters provided CMR response to only the records that match concept_id's already in system
   # Ingests and saves all new records
-  # Returns Array of the added record objects. 
+  # Returns Array of the added record objects.
 
   def self.process_updated_collections(raw_results, current_user)
     #mapping to hashes of concept_id/revision_id
@@ -117,7 +120,7 @@ class Cmr
         unless Collection.record_exists?(data["concept_id"], data["revision_id"]) && Collection.update?(data["concept_id"])
           collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
           #second check to make sure we don't save duplicate revisions
-          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id) 
+          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id)
             save_success = false
             ActiveRecord::Base.transaction do
               new_collection_record.save!
@@ -125,7 +128,7 @@ class Cmr
                 record_data.save!
               end
               ingest_record.save!
-              
+
               begin
                 Timeout::timeout(12) {
                   new_collection_record.create_script
@@ -134,10 +137,10 @@ class Cmr
                 save_success = true
               rescue Timeout::Error
                 raise ActiveRecord::Rollback
-                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error") 
+                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
               end
             end
-            
+
             if save_success
               added_records.push([data["concept_id"], data["revision_id"]]);
             else
@@ -154,27 +157,102 @@ class Cmr
     return added_records, failed_records
   end
 
-  # ====Params   
+  # ====Params
+  # string of date(no time), Integer
+  # ====Returns
+  # Hash of CMR response
+  # ==== Method
+  # Queries cmr for granules updated since provided data, returns parsed response
+
+  def self.granules_updated_since(date_string, page_num = 1)
+    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+  end
+
+
+  # ====Params
+  # hash of CMR response, User object
+  # ====Returns
+  # Array of records
+  # ==== Method
+  # Filters provided CMR response to only the granules that match concept_id's already in system
+  # Ingests and saves all new granules
+  # Returns Array of the added granules objects.
+
+  def self.process_updated_granules(raw_results, current_user)
+    #mapping to hashes of concept_id/revision_id
+    updated_granule_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"]} }
+    #doing this eager loading to stop system from making each include? a seperate db call.
+    all_granules = Granule.all.map{|granule| granule.concept_id }
+    #reducing to only the ones in system
+    contained_granules = updated_granule_data.select {|data| all_collections.include? data["concept_id"] }
+    #will return this list of added records for logging/presentation
+    added_records = []
+    failed_records = []
+
+    #importing the new ones if any
+    contained_granules.each do |data|
+      begin
+        unless Granule.record_exists?(data["concept_id"]) && Granule.update?(data["concept_id"])
+          granule_object, new_granule_record, record_data_list, ingest_record = Granule.assemble_new_record(data["concept_id"], current_user)
+          #second check to make sure we don't save duplicate revisions
+          unless Collection.record_exists?(collection_object.concept_id)
+            save_success = false
+            ActiveRecord::Base.transaction do
+              new_granule_record.save!
+              record_data_list.each do |record_data|
+                record_data.save!
+              end
+              ingest_record.save!
+
+              begin
+                Timeout::timeout(12) {
+                  new_granule_record.create_script
+                }
+
+                save_success = true
+              rescue Timeout::Error
+                raise ActiveRecord::Rollback
+                Rails.logger.error("PyCMR Error: On CMR Update Revision Concept_id #{data["concept_id"]} had timeout error")
+              end
+            end
+
+            if save_success
+              added_records.push([data["concept_id"]]);
+            else
+              failed_records.push([data["concept_id"]]);
+            end
+          end
+        end
+      rescue
+        failed_records.push([data["concept_id"]]);
+      end
+    end
+
+
+    return added_records, failed_records
+  end
+
+  # ====Params
   # string concept_id, string data_type
   # ====Returns
   # Hash of the data contained in a CMR collection object
   # ==== Method
   # Retrieves the most recent revision of a collection from the CMR
-  # then processes and returns the data   
-  # Automatically returns only the most recent revision of a collection       
-  # can add "&all_revisions=true&pretty=true" params to find specific revision      
+  # then processes and returns the data
+  # Automatically returns only the most recent revision of a collection
+  # can add "&all_revisions=true&pretty=true" params to find specific revision
 
   def self.get_collection(concept_id, data_format = "echo10")
     if data_format == "echo10"
       required_fields = REQUIRED_COLLECTION_FIELDS
       desired_fields = DESIRED_FIELDS_ECHO10
     elsif data_format == "dif10"
-      required_fields = REQUIRED_DIF10_FIELDS 
+      required_fields = REQUIRED_DIF10_FIELDS
       desired_fields = DESIRED_FIELDS_DIF10
     else
       required_fields = []
     end
-          
+
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
@@ -186,7 +264,7 @@ class Cmr
   end
 
 
-  def self.get_granule(concept_id)    
+  def self.get_granule(concept_id)
     granule_raw_data = Cmr.get_raw_granule(concept_id)
     results_hash = flatten_collection(granule_raw_data)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
@@ -197,8 +275,8 @@ class Cmr
     required_fields_hash
   end
 
-  # ====Params   
-  # string 
+  # ====Params
+  # string
   # ====Returns
   # string
   # ==== Method
@@ -220,7 +298,7 @@ class Cmr
     end
   end
 
-  # ====Params   
+  # ====Params
   # string, string
   # ====Returns
   # Hash
@@ -251,7 +329,7 @@ class Cmr
     end
   end
 
-  # ====Params   
+  # ====Params
   # string, string
   # ====Returns
   # Hash
@@ -280,12 +358,12 @@ class Cmr
   end
 
 
-  # ====Params   
+  # ====Params
   # accepts hash or array elements containing collection data
   # ====Returns
   # parameter with any nil contents removed
   # ==== Method
-  # Method recursively travels through elements contained in parameter removing 
+  # Method recursively travels through elements contained in parameter removing
   # any nil values.
   def self.remove_nil_values(collection_element)
 
@@ -305,12 +383,12 @@ class Cmr
     collection_element
   end
 
-  # ====Params   
+  # ====Params
   # Hash containing collection data
   # ====Returns
   # Hash
   # ==== Method
-  # Iterates through parameter hash adding any UMM required fields    
+  # Iterates through parameter hash adding any UMM required fields
   # List of required fields set in hardcoded list within method
 
   def self.add_required_fields(collection_hash, required_fields)
@@ -325,7 +403,7 @@ class Cmr
   end
 
   # ====Params
-  # Hash of metadata keys and values    
+  # Hash of metadata keys and values
   # String Field Name or List of String Field Names
   # ====Returns
   # Hash of metadata keys and values
@@ -346,13 +424,13 @@ class Cmr
           collection_hash[sub_field] = ""
         end
       end
-      return collection_hash 
+      return collection_hash
     end
   end
 
 
-  # ====Params   
-  # Array of keys,     
+  # ====Params
+  # Array of keys,
   # String Field Name or List of String Field Names
   # Optional Boolean
   # ====Returns
@@ -378,7 +456,7 @@ class Cmr
             contains_field = true
           end
         end
-        
+
       end
 
       return contains_field
@@ -386,7 +464,7 @@ class Cmr
   end
 
 
-  # ====Params   
+  # ====Params
   # string concept_id
   # ====Returns
   # Integer
@@ -398,13 +476,13 @@ class Cmr
     return granule_list["hits"].to_i
   end
 
-  # ====Params   
-  # string concept_id,     
+  # ====Params
+  # string concept_id,
   # integer page number
   # ====Returns
   # Array of granule data hashes
   # ==== Method
-  # Contacts the CMR system and pulls granule data related to conecept_id param     
+  # Contacts the CMR system and pulls granule data related to conecept_id param
   # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
@@ -417,13 +495,13 @@ class Cmr
     end
   end
 
-  # ====Params   
-  # string concept_id,     
+  # ====Params
+  # string concept_id,
   # integer number of granules to download
   # ====Returns
   # Array of granule data hashmaps
   # ==== Method
-  # Contacts the CMR system and pulls granule data related to conecept_id param     
+  # Contacts the CMR system and pulls granule data related to conecept_id param
   # Uses a random number generator to select random granules from the overall list related to a collection
 
 
@@ -433,8 +511,8 @@ class Cmr
     unless granule_count == 0
       granule_results = Cmr.granule_list_from_collection(collection_concept_id)
       total_granules = granule_results["hits"].to_i
-        
-      #checking if we asked for more granules than exist  
+
+      #checking if we asked for more granules than exist
       if total_granules < granule_count
         return []
       end
@@ -462,16 +540,16 @@ class Cmr
   end
 
 
-  # ====Params   
-  # string free text         
-  # string DAAC provider name    
-  # string page number of results to jump to    
+  # ====Params
+  # string free text
+  # string DAAC provider name
+  # string page number of results to jump to
   # ====Returns
-  # Array of collection search results data     
+  # Array of collection search results data
   # Integer total collection results found
   # ==== Method
-  # Contacts the CMR system and uses the free text search API     
-  # parses the results and then returns a group of 10 to show in paginated results.  
+  # Contacts the CMR system and uses the free text search API
+  # parses the results and then returns a group of 10 to show in paginated results.
 
 
   def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
@@ -497,7 +575,7 @@ class Cmr
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
       query_text_first_char = Cmr.api_url("collections", "echo10", options_first_char)
-      
+
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
         search_results = Hash.from_xml(raw_xml)["results"]
@@ -620,7 +698,7 @@ class Cmr
     #removing the numbers added to fields during ingest to seperate platforms/instruments
     stripped_field = field_string.gsub(/[0-9]/,'')
     is_required_field = false
-    required_fields.each do |required_field| 
+    required_fields.each do |required_field|
       if required_field.is_a?(String)
         if required_field == stripped_field
           is_required_field = true
@@ -638,7 +716,7 @@ class Cmr
 
   def self.api_url(data_type = "collections", format_type = "echo10", options = {})
     result = "https://cmr.earthdata.nasa.gov/search/" + data_type + "." + format_type + "?"
-    options.each do |key, value| 
+    options.each do |key, value|
       #using list with flatten so that a string and list will both work as values
       [value].flatten.each do |single_value|
         result += (key.to_s + "=" + single_value.to_s + "&")
@@ -648,10 +726,10 @@ class Cmr
   end
 
 
-  # ====Params   
+  # ====Params
   # Optional Sting of DAAC short name
   # ====Returns
-  # Integer, total collections in the CMR     
+  # Integer, total collections in the CMR
   # ==== Method
   # Contacts CMR and obtains the total number of collections in the system for the EOSDIS daacs.
   # If Daac short name provided, only returns the total collections of that Daac.
@@ -661,7 +739,7 @@ class Cmr
       options = {"page_size" => 1}
       options["provider"] = PROVIDERS
       url = Cmr.api_url("collections", "echo10", options)
-    else 
+    else
       url = Cmr.api_url("collections", "echo10", {"page_size" => 1, "provider" => daac })
     end
 
