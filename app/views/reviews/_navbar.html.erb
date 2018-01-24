@@ -139,27 +139,6 @@
           <p class="button_text"><%= complete_button_text(@record) %></p>
           <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
         <% end %>
-
-        <script type="text/javascript">
-          document.getElementById("done_button").onclick = function() {
-            if (!<%=@color_coding_complete%>) {
-              alert("Not all columns have been flagged with a color, can not close review");
-              return false;
-            }
-            if (!<%=@has_enough_reviews%>) {
-              alert("A review needs two completed reviews to be closed, can not close review");
-              return false;
-            }
-            if (!<%=@no_second_opinions%>) {
-              alert("Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags.");
-              return false;
-            }
-            if (!<%=@granule_completed%>) {
-              alert("The Collection's related Granule must be marked complete before the Collection can be completed.");
-              return false;
-            }
-          };
-        </script>
       </div>
       <div class="clearfix"></div>
 
