@@ -29,3 +29,10 @@ in_daac_review:
   recordable_type: "Collection"
   revision_id: "8"
   state: "in_daac_review"
+
+in_arc_review:
+  id: 13
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "6"
+  state: "in_arc_review"
