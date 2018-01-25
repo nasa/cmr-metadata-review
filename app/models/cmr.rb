@@ -6,7 +6,7 @@ class Cmr
   include RequiredGranuleLists
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
-  TIMEOUT_MARGIN = 10
+  TIMEOUT_MARGIN = 15
 
 
   # A custom error raised when items can not be found in the CMR.
@@ -63,15 +63,17 @@ class Cmr
     while result_count < total_results
       raw_collections = Cmr.collections_updated_since(search_date, page_num)
       total_collections = raw_collections["results"]["hits"].to_i
-      added_collections, failed_collections = Cmr.process_updated_collections(raw_collections, current_user)
+
+      added_results, failed_results = Cmr.process_updated_collections(raw_collections, current_user)
 
       raw_granules = Cmr.granules_updated_since(search_date, page_num)
       total_granules = raw_granules["results"]["hits"].to_i
       added_granules, failed_granules = Cmr.process_updated_granules(raw_granules, current_user)
 
-      total_added_records = added_collections + added_granules
-      total_failed_records = failed_collections + failed_granules
+      total_added_records = added_results + added_granules
+      total_failed_records = failed_results + failed_granules
 
+      total_results = total_collections
       result_count = result_count + 2000
       page_num = page_num + 1
     end

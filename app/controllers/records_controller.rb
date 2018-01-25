@@ -6,7 +6,7 @@ class RecordsController < ApplicationController
   def refresh
     # a list of records added in update in format of
     # [["concept_id1", "revision_id1"], ["concept_id2", "revision_id2"]]
-    total_added_records, total_failed_records = Cmr.update_collections(current_user)
+    total_added_records, total_failed_records = Cmr.update_records(current_user)
 
     flash[:notice] = Cmr.format_added_records_list(total_added_records).html_safe
     if !total_failed_records.empty?
@@ -47,7 +47,7 @@ class RecordsController < ApplicationController
     else
       success = @record.close!
     end
-    
+
     if success
       flash[:notice] = "Record has been successfully updated."
       redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
@@ -60,10 +60,10 @@ class RecordsController < ApplicationController
     if @record.closed?
       if !params["redirect_index"].nil?
         redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
-        return 
-      else 
+        return
+      else
         redirect_to record_path(id: params["id"], section_index: params["section_index"])
-        return 
+        return
       end
     end
 
