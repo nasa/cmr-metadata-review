@@ -113,14 +113,13 @@ class RecordsControllerTest < ActionController::TestCase
       user = User.find_by(email: "abaker@element84.com")
       sign_in(user)
 
-      ENV.expects(:[]).with("SIT_SKIP_DONE_CHECK").returns(false)
       Record.any_instance.stubs(color_coding_complete?: false)
-      record_id = Record.first.id
+      record = Record.find(13)
 
-      post :complete, id: record_id
+      post :complete, id: record.id
 
-      assert_equal "Not all columns have been flagged with a color, can not close review", flash[:alert]
-      assert_redirected_to record_path(record_id)
+      assert_equal "Not all columns have been flagged with a color, cannot close review.", flash[:alert]
+      assert_redirected_to record_path(record.id)
     end
 
     it "will send the user to the collection's page when successful" do
