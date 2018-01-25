@@ -35,7 +35,7 @@ class Record < ActiveRecord::Base
         write_closed_date
       end
 
-      transitions from: :in_daac_review, to: :closed, guards: [:updated_revision_if_needed?]
+      transitions from: :in_daac_review, to: :closed, guards: [:updated_revision_if_needed?, :no_feedback_requested?]
     end
 
     event :force_close do
@@ -279,6 +279,16 @@ class Record < ActiveRecord::Base
   # This method looks up the record's associated opinion values. 
   def get_opinions
     get_field("opinion")
+  end
+
+  # ====Params   
+  # None
+  # ====Returns
+  # Hash of "column_names" => "feedback"
+  # ==== Method
+  # This method looks up the record's associated feedback requests. 
+  def get_feedback
+    get_field("feedback")
   end
 
   # ====Params   
@@ -534,6 +544,14 @@ class Record < ActiveRecord::Base
     end
 
     flagged_reviews? ? Cmr.current_revision_for(concept_id) > self.revision_id.to_i : true
+  end
+
+  def no_feedback_requested?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
+    (get_feedbacks.find { |key, value| value }).nil?
   end
 
   def second_opinion_count
