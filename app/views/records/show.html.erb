@@ -67,11 +67,13 @@
             <%= f.hidden_field :review_state, { :value => 1 } %>
             <%= f.text_area :comment, html: {id: :review_comment} %>
 
-            <script type="text/javascript">
-              document.getElementById("review_comment").oninput = function() {
-                document.getElementById("review_complete_button").disabled = false;
-              }
-            </script>
+            <% if @record.in_arc_review? %>
+              <script type="text/javascript">
+                document.getElementById("review_comment").oninput = function() {
+                  document.getElementById("review_complete_button").disabled = false;
+                }
+              </script>
+            <% end %>
           <% end %>
 
 
