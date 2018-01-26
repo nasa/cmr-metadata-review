@@ -16,6 +16,13 @@ class Record < ActiveRecord::Base
 
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
 
+  REVIEW_ERRORS = {
+    color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",
+    has_enough_reviews?: "A review needs two completed reviews to be closed, cannot close review.",
+    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags.",
+    granule_completed?: "The Collection's related Granule must be marked complete before the Collection can be completed."
+  }
+
   aasm column: 'state', whiny_persistence: false do 
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
