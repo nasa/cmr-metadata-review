@@ -10,7 +10,12 @@ granule:
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
+<<<<<<< HEAD
 
+=======
+  state: "in_arc_review"
+
+>>>>>>> ae88bba... Add tests for GranulesController#replace
 metric1:
   id: 10
   recordable_id: 2
