@@ -114,6 +114,7 @@
                         document.location.href = "<%= record_path(id:granule_record.id) %>"
                       };
                     </script>
+                    <%= button_to "Ingest Different Granule", refresh_granule_path(granule_record.recordable_id), method: :delete, class: "smallSelectButton" %>
                   </div>
                 </td>
               </tr>
