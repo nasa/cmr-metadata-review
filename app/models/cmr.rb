@@ -180,6 +180,7 @@ class Cmr
       begin
         if Granule.record_exists?(data["concept_id"]) && Granule.update?(data["concept_id"])
           granule_object, new_granule_record, record_data_list, ingest_record = Granule.assemble_new_record(data["concept_id"], current_user)
+
           if process_updated_data_helper(new_granule_record, record_data_list, ingest_record)
             added_records.push([data["concept_id"]]);
           else
@@ -194,7 +195,9 @@ class Cmr
     return added_records, failed_records
   end
 
-
+  # ==== Method
+  # Helper method that ingests and saves all new data objects (granules or collections)
+  # Returns true/false if it saved
   def process_updated_data_helper(new_data_record, record_data_list, ingest_record)
 
     save_success = false
