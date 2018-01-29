@@ -6,12 +6,12 @@ class GranulesController < ApplicationController
   def show
   end
 
-  def refresh
+  def replace
     granule    = Granule.find(params[:id])
     record     = granule.records.find(params[:record_id])
     collection = granule.collection
 
-    authorize! :refresh_granule, granule
+    authorize! :replace_granule, granule
 
     if record.open?
       granule.delete_self
