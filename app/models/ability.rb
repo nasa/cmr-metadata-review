@@ -19,7 +19,7 @@ class Ability
 
         can :review_state, Record.aasm.states.map(&:name)
 
-        can :refresh_granule, Granule
+        can :replace_granule, Granule
       end
 
       if user.role.eql?("arc_curator")
@@ -34,7 +34,7 @@ class Ability
 
         can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED]
 
-        can :refresh_granule, Granule
+        can :replace_granule, Granule
       end
 
       if user.role.eql?("daac_curator")

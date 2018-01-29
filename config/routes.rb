@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :granules do
     member do
-      delete "refresh"
+      delete "replace"
     end
   end
   resources :comments
