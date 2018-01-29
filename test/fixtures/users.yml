@@ -25,4 +25,3 @@ podaac_daac_curator:
   id: 5
   email: podaac_daac@element84.com
   daac: PODAAC
-  role: daac_curator
