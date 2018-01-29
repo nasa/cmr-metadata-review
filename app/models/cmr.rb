@@ -7,6 +7,7 @@ class Cmr
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 15
+  CMR_URL = "https://cmr.earthdata.nasa.gov/search/collections.xml?page_num="
 
 
   # A custom error raised when items can not be found in the CMR.
@@ -73,7 +74,7 @@ class Cmr
       total_added_records = added_collections + added_granules
       total_failed_records = failed_collections + failed_granules
 
-      total_results = total_collections
+      total_results = total_collections + total_granules
       result_count = result_count + 2000
       page_num = page_num + 1
     end
@@ -94,7 +95,7 @@ class Cmr
   # Queries cmr for collections updated since provided data, returns parsed response
 
   def self.collections_updated_since(date_string, page_num = 1)
-    return Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    raw_updated = Cmr.cmr_request("#{CMR_URL}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -125,27 +126,8 @@ class Cmr
           collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
           #second check to make sure we don't save duplicate revisions
           unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id)
-            save_success = false
-            ActiveRecord::Base.transaction do
-              new_collection_record.save!
-              record_data_list.each do |record_data|
-                record_data.save!
-              end
-              ingest_record.save!
 
-              begin
-                Timeout::timeout(12) {
-                  new_collection_record.create_script
-                }
-
-                save_success = true
-              rescue Timeout::Error
-                raise ActiveRecord::Rollback
-                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
-              end
-            end
-
-            if save_success
+            if process_updated_data_helper(new_collection_record, record_data_list, ingest_record)
               added_records.push([data["concept_id"], data["revision_id"]]);
             else
               failed_records.push([data["concept_id"], data["revision_id"]]);
@@ -169,7 +151,7 @@ class Cmr
   # Queries cmr for granules updated since provided data, returns parsed response
 
   def self.granules_updated_since(date_string, page_num = 1)
-    return Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/granules.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    raw_updated = Cmr.cmr_request("#{CMR_URL}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -196,35 +178,12 @@ class Cmr
     #importing the new ones if any
     contained_granules.each do |data|
       begin
-        unless Granule.record_exists?(data["concept_id"]) && Granule.update?(data["concept_id"])
+        if Granule.record_exists?(data["concept_id"]) && Granule.update?(data["concept_id"])
           granule_object, new_granule_record, record_data_list, ingest_record = Granule.assemble_new_record(data["concept_id"], current_user)
-          #second check to make sure we don't save duplicate revisions
-          unless Collection.record_exists?(collection_object.concept_id)
-            save_success = false
-            ActiveRecord::Base.transaction do
-              new_granule_record.save!
-              record_data_list.each do |record_data|
-                record_data.save!
-              end
-              ingest_record.save!
-
-              begin
-                Timeout::timeout(12) {
-                  new_granule_record.create_script
-                }
-
-                save_success = true
-              rescue Timeout::Error
-                raise ActiveRecord::Rollback
-                Rails.logger.error("PyCMR Error: On CMR Update Revision Concept_id #{data["concept_id"]} had timeout error")
-              end
-            end
-
-            if save_success
-              added_records.push([data["concept_id"]]);
-            else
-              failed_records.push([data["concept_id"]]);
-            end
+          if process_updated_data_helper(new_granule_record, record_data_list, ingest_record)
+            added_records.push([data["concept_id"]]);
+          else
+            failed_records.push([data["concept_id"]]);
           end
         end
       rescue
@@ -232,8 +191,32 @@ class Cmr
       end
     end
 
-
     return added_records, failed_records
+  end
+
+
+  def process_updated_data_helper(new_data_record, record_data_list, ingest_record)
+
+    save_success = false
+    ActiveRecord::Base.transaction do
+      new_data_record.save!
+      record_data_list.each do |record_data|
+        record_data.save!
+      end
+      ingest_record.save!
+
+      begin
+        Timeout::timeout(12) {
+          new_granule_record.create_script
+        }
+
+        save_success = true
+      rescue Timeout::Error
+        raise ActiveRecord::Rollback
+        Rails.logger.error("PyCMR Error: On CMR Update Revision Concept_id #{data["concept_id"]} had timeout error")
+      end
+    end
+    return save_success
   end
 
   # ====Params
