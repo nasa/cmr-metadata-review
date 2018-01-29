@@ -17,8 +17,8 @@ class Granule < ActiveRecord::Base
   # ==== Method
   # Checks the DB and returns boolean if a record with matching concept_id is found
 
-  def self.record_exists?(concept_id)
-    record = Granule.find_record(concept_id)
+  def self.record_exists?(concept_id, revision_id)
+    record = Collection.find_record(concept_id, revision_id)
     return (!record.nil?) && (!record.hidden?)
   end
 
@@ -55,6 +55,45 @@ class Granule < ActiveRecord::Base
     end
 
     granules_components
+  end
+
+  def self.assemble_new_record(concept_id, revision_id, current_user)
+    native_format = Cmr.get_raw_record_format(concept_id, "granules")
+
+    if native_format == "dif10"
+      granule_data = Cmr.get_granule(concept_id, native_format)
+      short_name = granule_data["Entry_ID/Short_Name"]
+    elsif native_format == "echo10"
+      granule_data = Cmr.get_granule(concept_id, native_format)
+      short_name = granule_data["ShortName"]
+    else
+      #Guard against records that come in with unsupported types
+      return
+    end
+
+    ingest_time = DateTime.now
+    #finding parent collection
+    granule_object = Granule.find_or_create_by(concept_id: concept_id)
+    granule_object.short_name = short_name
+    granule_object.save!
+    #creating collection record related objects
+    new_granule_record = Record.new(recordable: granule_object, revision_id: revision_id, format: native_format)
+
+    record_data_list = []
+
+    granule_data.each_with_index do |(key, value), i|
+      record_data = RecordData.new(record: new_granule_record)
+      record_data.last_updated = DateTime.now
+      record_data.column_name = key
+      record_data.value = value
+      record_data.order_count = i
+      record_data.daac = concept_id.partition('-').last
+      record_data_list.push(record_data)
+    end
+
+    ingest_record = Ingest.new(record: new_granule_record, user: current_user, date_ingested: ingest_time)
+
+    return granule_object, new_granule_record, record_data_list, ingest_record
   end
 
 

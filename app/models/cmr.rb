@@ -7,7 +7,8 @@ class Cmr
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 15
-  CMR_URL = "https://cmr.earthdata.nasa.gov/search/collections.xml?page_num="
+  COLLECTION_URL = "https://cmr.earthdata.nasa.gov/search/collections.xml?page_num="
+  GRANULE_URL = "https://cmr.earthdata.nasa.gov/search/granules.xml?page_num="
 
 
   # A custom error raised when items can not be found in the CMR.
@@ -46,7 +47,7 @@ class Cmr
     update_lock = RecordsUpdateLock.find_by id: 1
     if update_lock.nil?
       #subtracting a year so that any older records picked up from an artificially setup starting set of records
-      update_lock = RecordsUpdateLock.new(id: 1, last_update: (DateTime.now - 365.days))
+      update_lock = RecordsUpdateLock.new(id: 1, last_update: (DateTime.now - 10.days))
     end
 
     last_date = update_lock.get_last_update
@@ -55,26 +56,36 @@ class Cmr
     search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
     page_num = 1
     result_count = 0
-    total_results = Float::INFINITY
+    total_collection_results = Float::INFINITY
+    total_granule_results = Float::INFINITY
     #will return this list of added records for logging/presentation
     total_added_records = []
     total_failed_records = []
 
     #only 2000 results returned at a time, so have to loop through requests
-    while result_count < total_results
-      raw_collections = Cmr.collections_updated_since(search_date, page_num)
+    while result_count < total_collection_results
+      raw_collections = Cmr.records_updated_since(COLLECTION_URL, search_date, page_num)
       total_collections = raw_collections["results"]["hits"].to_i
+      added_collections, failed_collections = Cmr.process_updated_records(raw_collections, current_user, "collections", Collection)
 
-      added_collections, failed_collections = Cmr.process_updated_collections(raw_collections, current_user)
+      total_added_records = total_added_records.concat(added_collections)
+      total_failed_records = total_failed_records.concat(failed_collections)
 
-      raw_granules = Cmr.granules_updated_since(search_date, page_num)
+      total_collection_results = total_collections
+      result_count = result_count + 2000
+      page_num = page_num + 1
+    end
+
+    #only 2000 results returned at a time, so have to loop through requests
+    while result_count < total_granule_results
+      raw_granules = Cmr.records_updated_since(GRANULE_URL, search_date, page_num)
       total_granules = raw_granules["results"]["hits"].to_i
-      added_granules, failed_granules = Cmr.process_updated_granules(raw_granules, current_user)
+      added_granules, failed_granules = Cmr.process_updated_records(raw_granules, current_user, "granules", Granule)
 
-      total_added_records = added_collections + added_granules
-      total_failed_records = failed_collections + failed_granules
+      total_added_records = total_added_records.concat(added_granules)
+      total_failed_records = total_failed_records.concat(failed_granules)
 
-      total_results = total_collections + total_granules
+      total_granule_results = total_granules
       result_count = result_count + 2000
       page_num = page_num + 1
     end
@@ -92,135 +103,74 @@ class Cmr
   # ====Returns
   # Hash of CMR response
   # ==== Method
-  # Queries cmr for collections updated since provided data, returns parsed response
-
-  def self.collections_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("#{CMR_URL}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
-  end
-
-
-  # ====Params
-  # hash of CMR response, User object
-  # ====Returns
-  # Array of records
-  # ==== Method
-  # Filters provided CMR response to only the records that match concept_id's already in system
-  # Ingests and saves all new records
-  # Returns Array of the added record objects.
-
-  def self.process_updated_collections(raw_collections, current_user)
-    #mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_collections["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
-    #doing this eager loading to stop system from making each include? a seperate db call.
-    all_collections = Collection.all.map{|collection| collection.concept_id }
-    #reducing to only the ones in system
-    contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
-    #will return this list of added records for logging/presentation
-    added_records = []
-    failed_records = []
-
-    #importing the new ones if any
-    contained_collections.each do |data|
-      begin
-        unless Collection.record_exists?(data["concept_id"], data["revision_id"]) && Collection.update?(data["concept_id"])
-          collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
-          #second check to make sure we don't save duplicate revisions
-          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id)
-
-            if process_updated_data_helper(new_collection_record, record_data_list, ingest_record)
-              added_records.push([data["concept_id"], data["revision_id"]]);
-            else
-              failed_records.push([data["concept_id"], data["revision_id"]]);
-            end
-          end
-        end
-      rescue
-        failed_records.push([data["concept_id"], data["revision_id"]]);
-      end
-    end
-
-
-    return added_records, failed_records
-  end
-
-  # ====Params
-  # string of date(no time), Integer
-  # ====Returns
-  # Hash of CMR response
-  # ==== Method
   # Queries cmr for granules updated since provided data, returns parsed response
 
-  def self.granules_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("#{CMR_URL}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+  def self.records_updated_since(url, date_string, page_num = 1)
+    raw_updated = Cmr.cmr_request("#{url}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
-
 
   # ====Params
-  # hash of CMR response, User object
-  # ====Returns
-  # Array of records
-  # ==== Method
-  # Filters provided CMR response to only the granules that match concept_id's already in system
-  # Ingests and saves all new granules
-  # Returns Array of the added granules objects.
+   # hash of CMR response, User object
+   # ====Returns
+   # Array of records
+   # ==== Method
+   # Filters provided CMR response to only the records that match concept_id's already in system
+   # Ingests and saves all new records
+   # Returns Array of the added record objects.
 
-  def self.process_updated_granules(raw_granules, current_user)
-    #mapping to hashes of concept_id/revision_id
-    updated_granule_data = raw_granules["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"]} }
-    #doing this eager loading to stop system from making each include? a seperate db call.
-    all_granules = Granule.all.map{|granule| granule.concept_id }
-    #reducing to only the ones in system
-    contained_granules = updated_granule_data.select {|data| all_granules.include? data["concept_id"] }
-    #will return this list of added records for logging/presentation
-    added_records = []
-    failed_records = []
+   def self.process_updated_records(raw_results, current_user, data_type, data_object)
+     #mapping to hashes of concept_id/revision_id
+     updated_records_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
+     #doing this eager loading to stop system from making each include? a seperate db call.
+     all_records = data_object.all.map{|data_type| data_type.concept_id }
+     #reducing to only the ones in system
+     contained_records = updated_records_data.select {|data| all_records.include? data["concept_id"] }
+     #will return this list of added records for logging/presentation
+     added_records = []
+     failed_records = []
 
-    #importing the new ones if any
-    contained_granules.each do |data|
-      begin
-        if Granule.record_exists?(data["concept_id"]) && Granule.update?(data["concept_id"])
-          granule_object, new_granule_record, record_data_list, ingest_record = Granule.assemble_new_record(data["concept_id"], current_user)
+     #importing the new ones if any
+     contained_records.each do |data|
+       begin
+         unless data_object.record_exists?(data["concept_id"], data["revision_id"]) && data_object.update?(data["concept_id"])
+           record_object, new_record, record_data_list, ingest_record = data_object.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
+           #second check to make sure we don't save duplicate revisions
+           unless data_object.record_exists?(record_object.concept_id, new_record.revision_id)
+             save_success = false
+             ActiveRecord::Base.transaction do
+               new_record.save!
+               record_data_list.each do |record_data|
+                 record_data.save!
+               end
+               ingest_record.save!
 
-          if process_updated_data_helper(new_granule_record, record_data_list, ingest_record)
-            added_records.push([data["concept_id"]]);
-          else
-            failed_records.push([data["concept_id"]]);
-          end
-        end
-      rescue
-        failed_records.push([data["concept_id"]]);
-      end
-    end
+               begin
+                 Timeout::timeout(12) {
+                   new_record.create_script
+                 }
 
-    return added_records, failed_records
-  end
+                 save_success = true
+               rescue Timeout::Error
+                 raise ActiveRecord::Rollback
+                 Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
+               end
+             end
 
-  # ==== Method
-  # Helper method that ingests and saves all new data objects (granules or collections)
-  # Returns true/false if it saved
-  def process_updated_data_helper(new_data_record, record_data_list, ingest_record)
+             if save_success
+               added_records.push([data["concept_id"], data["revision_id"]]);
+             else
+               failed_records.push([data["concept_id"], data["revision_id"]]);
+             end
+           end
+         end
+       rescue
+         failed_records.push([data["concept_id"], data["revision_id"]]);
+       end
+     end
 
-    save_success = false
-    ActiveRecord::Base.transaction do
-      new_data_record.save!
-      record_data_list.each do |record_data|
-        record_data.save!
-      end
-      ingest_record.save!
 
-      begin
-        Timeout::timeout(12) {
-          new_granule_record.create_script
-        }
-
-        save_success = true
-      rescue Timeout::Error
-        raise ActiveRecord::Rollback
-        Rails.logger.error("PyCMR Error: On CMR Update Revision Concept_id #{data["concept_id"]} had timeout error")
-      end
-    end
-    return save_success
-  end
+     return added_records, failed_records
+   end
 
   # ====Params
   # string concept_id, string data_type
@@ -279,6 +229,29 @@ class Cmr
     collection_xml = Cmr.cmr_request(url).parsed_response
     collection_results = Hash.from_xml(collection_xml)["feed"]
     raw_format = collection_results["entry"]["originalFormat"].downcase
+    if raw_format.include? "dif10"
+      return "dif10"
+    elsif raw_format.include? "echo10"
+      return "echo10"
+    else
+      return raw_format
+    end
+  end
+
+  # ====Params
+  # string
+  # ====Returns
+  # string
+  # ==== Method
+  # Queries the CMR for a record's original format
+  # This tells the user what format a record was uploaded to CMR in.
+  # Uses the cmr internal atom format as this provides a standardized structure to get the "originalFormat" attribute from
+
+  def self.get_raw_record_format(concept_id, data_type)
+    url = Cmr.api_url(data_type, "atom", {"concept_id" => concept_id})
+    record_xml = Cmr.cmr_request(url).parsed_response
+    record_results = Hash.from_xml(record_xml)["feed"]
+    raw_format = record_results["entry"]["originalFormat"].downcase
     if raw_format.include? "dif10"
       return "dif10"
     elsif raw_format.include? "echo10"
