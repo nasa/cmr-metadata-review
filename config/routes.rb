@@ -2,11 +2,9 @@ Rails.application.routes.draw do
 
   get '/elb_status', to: 'site#elb_status'
 
-  Rails.application.routes.draw do
-      devise_for :users, controllers: {
-        registrations: 'users/registrations'
-      }
-  end
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
 
   devise_scope :user do
     root to: "devise/sessions#new"
