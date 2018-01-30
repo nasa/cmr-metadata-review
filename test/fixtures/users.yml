@@ -14,3 +14,15 @@ arc_curator:
   email: arc_curator@element84.com
   encrypted_password: <%= User.new.send(:password_digest, "Password101") %>
   role: arc_curator
+
+lance_daac_curator:
+  id: 4
+  email: lance_daac@element84.com
+  daac: LANCEAMSR2
+  role: daac_curator
+
+podaac_daac_curator:
+  id: 5
+  email: podaac_daac@element84.com
+  daac: PODAAC
+  role: daac_curator

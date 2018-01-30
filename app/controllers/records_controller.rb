@@ -87,6 +87,8 @@ class RecordsController < ApplicationController
         @record.complete_arc_review!
       elsif @record.ready_for_daac_review?
         @record.release_to_daac!
+
+        RecordNotifier.notify_daac_curators([@record])
       else
         @record.close!
       end
