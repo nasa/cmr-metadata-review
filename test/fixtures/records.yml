@@ -36,3 +36,10 @@ in_arc_review:
   recordable_type: "Collection"
   revision_id: "6"
   state: "in_arc_review"
+
+podaac_in_daac_review:
+  id: 14
+  recordable_id: 2
+  recordable_type: "Collection"
+  revision_id: "7"
+  state: "in_daac_review"
