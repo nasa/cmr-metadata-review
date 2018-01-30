@@ -76,7 +76,6 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
-<<<<<<< HEAD
   def completion_success
     if !can?(:review_state, @record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"
@@ -89,6 +88,7 @@ class RecordsController < ApplicationController
       elsif @record.ready_for_daac_review?
         @record.release_to_daac!
 
+<<<<<<< HEAD
         RecordNotifier.notify_released([@record])
       else
         @record.close!
