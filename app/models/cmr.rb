@@ -8,7 +8,7 @@ class Cmr
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 15
   COLLECTION_URL = "https://cmr.earthdata.nasa.gov/search/collections.xml?page_num="
-  GRANULE_URL = "https://cmr.earthdata.nasa.gov/search/granules.xml?page_num="
+  GRANULE_URL = "https://cmr.earthdata.nasa.gov/search/granules?"
 
 
   # A custom error raised when items can not be found in the CMR.
@@ -76,19 +76,19 @@ class Cmr
       page_num = page_num + 1
     end
 
-    #only 2000 results returned at a time, so have to loop through requests
-    while result_count < total_granule_results
-      raw_granules = Cmr.records_updated_since(GRANULE_URL, search_date, page_num)
-      total_granules = raw_granules["results"]["hits"].to_i
-      added_granules, failed_granules = Cmr.process_updated_records(raw_granules, current_user, "granules", Granule)
-
-      total_added_records = total_added_records.concat(added_granules)
-      total_failed_records = total_failed_records.concat(failed_granules)
-
-      total_granule_results = total_granules
-      result_count = result_count + 2000
-      page_num = page_num + 1
-    end
+    # #only 2000 results returned at a time, so have to loop through requests
+    # while result_count < total_granule_results
+    #   raw_granules = Cmr.records_updated_since(GRANULE_URL, search_date, page_num)
+    #   total_granules = raw_granules["results"]["hits"].to_i
+    #   added_granules, failed_granules = Cmr.process_updated_records(raw_granules, current_user, "granules", Granule)
+    #
+    #   total_added_records = total_added_records.concat(added_granules)
+    #   total_failed_records = total_failed_records.concat(failed_granules)
+    #
+    #   total_granule_results = total_granules
+    #   result_count = result_count + 2000
+    #   page_num = page_num + 1
+    # end
 
     if total_failed_records.empty?
       update_lock.last_update = DateTime.now
@@ -105,8 +105,11 @@ class Cmr
   # ==== Method
   # Queries cmr for granules updated since provided data, returns parsed response
 
-  def self.records_updated_since(url, date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("#{url}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+  def self.records_updated_since(url, date_string, page_num = 1, concept_id = "")
+    if concept_id = ""
+      raw_updated = Cmr.cmr_request("#{url}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    else
+      raw_updated = Cmr.cmr_request("#{url}concept_id=#{concept_id}")
   end
 
   # ====Params
@@ -167,7 +170,6 @@ class Cmr
          failed_records.push([data["concept_id"], data["revision_id"]]);
        end
      end
-
 
      return added_records, failed_records
    end

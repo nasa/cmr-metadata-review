@@ -61,10 +61,10 @@ class Granule < ActiveRecord::Base
     native_format = Cmr.get_raw_record_format(concept_id, "granules")
 
     if native_format == "dif10"
-      granule_data = Cmr.get_granule(concept_id, native_format)
+      granule_data = Cmr.get_granule(concept_id)
       short_name = granule_data["Entry_ID/Short_Name"]
     elsif native_format == "echo10"
-      granule_data = Cmr.get_granule(concept_id, native_format)
+      granule_data = Cmr.get_granule(concept_id)
       short_name = granule_data["ShortName"]
     else
       #Guard against records that come in with unsupported types
