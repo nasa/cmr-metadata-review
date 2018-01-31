@@ -26,10 +26,6 @@ Rails.application.routes.draw do
       post "complete"
     end
   end
-
-  get '/users/email/edit', to: 'users#edit'
-  patch '/users/email',    to: 'users#update'
-
   
   get '/record_refresh', to: 'records#refresh'
 
