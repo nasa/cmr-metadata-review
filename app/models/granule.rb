@@ -18,7 +18,7 @@ class Granule < ActiveRecord::Base
   # Checks the DB and returns boolean if a record with matching concept_id is found
 
   def self.record_exists?(concept_id, revision_id)
-    record = Collection.find_record(concept_id, revision_id)
+    record = Granule.find_record(concept_id, revision_id)
     return (!record.nil?) && (!record.hidden?)
   end
 
@@ -72,11 +72,11 @@ class Granule < ActiveRecord::Base
     end
 
     ingest_time = DateTime.now
-    #finding parent collection
+    #finding parent granule
     granule_object = Granule.find_or_create_by(concept_id: concept_id)
     granule_object.short_name = short_name
     granule_object.save!
-    #creating collection record related objects
+    #creating granule record related objects
     new_granule_record = Record.new(recordable: granule_object, revision_id: revision_id, format: native_format)
 
     record_data_list = []
@@ -103,6 +103,10 @@ class Granule < ActiveRecord::Base
 
   def short_name
     self.collection.short_name
+  end
+
+  def concept_id
+    self.collection.concept_id
   end
 
   def delete_self

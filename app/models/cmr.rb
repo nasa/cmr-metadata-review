@@ -55,6 +55,7 @@ class Cmr
     #taking last update and going back a day to give cmr time to update
     search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
     page_num = 1
+    is_granule = 1
     result_count = 0
     total_collection_results = Float::INFINITY
     total_granule_results = Float::INFINITY
@@ -76,19 +77,19 @@ class Cmr
       page_num = page_num + 1
     end
 
-    # #only 2000 results returned at a time, so have to loop through requests
-    # while result_count < total_granule_results
-    #   raw_granules = Cmr.records_updated_since(GRANULE_URL, search_date, page_num)
-    #   total_granules = raw_granules["results"]["hits"].to_i
-    #   added_granules, failed_granules = Cmr.process_updated_records(raw_granules, current_user, "granules", Granule)
-    #
-    #   total_added_records = total_added_records.concat(added_granules)
-    #   total_failed_records = total_failed_records.concat(failed_granules)
-    #
-    #   total_granule_results = total_granules
-    #   result_count = result_count + 2000
-    #   page_num = page_num + 1
-    # end
+    #only 2000 results returned at a time, so have to loop through requests
+    while result_count < total_granule_results
+      raw_granules = Cmr.records_updated_since(GRANULE_URL, search_date, page_num, is_granule)
+      total_granules = raw_granules["results"]["hits"].to_i
+      added_granules, failed_granules = Cmr.process_updated_records(raw_granules, current_user, "granules", Granule)
+
+      total_added_records = total_added_records.concat(added_granules)
+      total_failed_records = total_failed_records.concat(failed_granules)
+
+      total_granule_results = total_granules
+      result_count = result_count + 2000
+      page_num = page_num + 1
+    end
 
     if total_failed_records.empty?
       update_lock.last_update = DateTime.now
@@ -105,11 +106,18 @@ class Cmr
   # ==== Method
   # Queries cmr for granules updated since provided data, returns parsed response
 
-  def self.records_updated_since(url, date_string, page_num = 1, concept_id = "")
-    if concept_id = ""
-      raw_updated = Cmr.cmr_request("#{url}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+  def self.records_updated_since(url, date_string, page_num = 1, is_granule = 0)
+    if is_granule != 0
+      concept_id_url = ""
+      Granule.all.to_a.each do |granule|
+        granule_concept_id = granule.concept_id.to_s
+        concept_id_url = concept_id_url + "concept_id=" + granule_concept_id + "&"
+      end
+      concept_id_url.chomp("&")
+      raw_updated = Cmr.cmr_request("#{url}#{concept_id_url}").parsed_response
     else
-      raw_updated = Cmr.cmr_request("#{url}concept_id=#{concept_id}")
+      raw_updated = Cmr.cmr_request("#{url}#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    end
   end
 
   # ====Params
