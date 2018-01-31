@@ -43,6 +43,7 @@ gem 'aasm', '~> 4.12.0'
 group :test do
   gem 'minitest-spec-rails'
   gem 'webmock'
+  gem 'mocha'
 end
 
 group :development, :test do

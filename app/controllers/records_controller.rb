@@ -1,4 +1,6 @@
 class RecordsController < ApplicationController
+  include RecordHelper
+
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :find_record, only: [:show, :complete, :update]
@@ -22,21 +24,6 @@ class RecordsController < ApplicationController
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
 
     @user_review = @record.review(current_user.id)
-
-    @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = @record.closed?
-
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
-      @color_coding_complete = true
-      @has_enough_reviews = true
-      @no_second_opinions = true
-      @granule_completed = true
-    else
-      @color_coding_complete = @record.color_coding_complete?
-      @has_enough_reviews = @record.has_enough_reviews?
-      @no_second_opinions = @record.no_second_opinions?
-      @granule_completed = @record.granule_completed?
-    end
   end
 
   def complete
@@ -90,4 +77,24 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
+  def completion_success
+    if !can?(:review_state, @record.state.to_sym)
+      flash[:alert] = "You do not have permission to perform this action"
+      return false
+    end
+
+    begin
+      if @record.in_arc_review?
+        @record.complete_arc_review!
+      elsif @record.ready_for_daac_review?
+        @record.release_to_daac!
+      else
+        @record.close!
+      end
+    rescue => e
+      error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
+      flash[:alert] = error_messages.join(" ")
+      false
+    end
+  end
 end

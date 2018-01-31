@@ -17,7 +17,7 @@ module RecordHelper
       end
     end
 
-    return new_value
+    new_value
   end
 
   def script_test(value)
@@ -25,7 +25,28 @@ module RecordHelper
       return false
     end
     
-    return !(value.start_with?("OK", "ok", "Ok"))
+    !(value.start_with?("OK", "ok", "Ok"))
   end
 
+  def completed_reviews(reviews)
+    reviews.reduce(0) { |sum, review| sum + review.review_state.to_i }
+  end
+
+  def daac_reviewer_ok?(record)
+    !record.in_daac_review? || can?(:review_state, Record::STATE_IN_DAAC_REVIEW)
+  end
+
+  def complete_button_text(record)
+    if record.ready_for_daac_review?
+      "RELEASE TO DAAC"
+    elsif record.in_daac_review?
+      "CMR UPDATED"
+    else
+      "MARK AS DONE"
+    end
+  end
+
+  def disable_complete_button?(reviews, record)
+    completed_reviews(reviews) <= 1 || record.closed? || !daac_reviewer_ok?(record)
+  end
 end
