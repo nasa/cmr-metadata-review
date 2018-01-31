@@ -40,13 +40,8 @@ class RecordsController < ApplicationController
   end
 
   def complete
-    if @record.in_arc_review?
-      success = @record.complete_arc_review!
-    elsif @record.ready_for_daac_review?
-      success = @record.release_to_daac!
-    else
-      success = @record.close!
-    end
+
+    success = completion_success
 
     if success
       flash[:notice] = "Record has been successfully updated."
