@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User Email has been updated"
       redirect_to home_path
     else
-      flash[:alert] = user_error_alert
+      flash.now[:alert] = user_error_alert
       render "edit"
     end
   end
