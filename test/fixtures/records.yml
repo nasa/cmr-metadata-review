@@ -43,3 +43,10 @@ podaac_in_daac_review:
   recordable_type: "Collection"
   revision_id: "7"
   state: "in_daac_review"
+
+closed:
+  id: 15
+  recordable_id: 2
+  recordable_type: "Collection"
+  revision_id: 4
+  state: "closed"
