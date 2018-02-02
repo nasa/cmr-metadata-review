@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <h1>Metadata Curation Records Are Closed</h1>
+    <p>The following Metadata Curation records have been closed:</p>
+
+    <ul>
+        <li>metric1-PODAAC</li>
+    </ul>
+
+    <p>Please sign in to the Metadata Curation Tool to view these records.</p>
+  </body>
+
+</html>

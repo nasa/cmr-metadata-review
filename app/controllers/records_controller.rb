@@ -88,9 +88,11 @@ class RecordsController < ApplicationController
       elsif @record.ready_for_daac_review?
         @record.release_to_daac!
 
-        RecordNotifier.notify_daac_curators([@record])
+        RecordNotifier.notify_released([@record])
       else
         @record.close!
+
+        RecordNotifier.notify_closed([@record])
       end
     rescue => e
       error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
