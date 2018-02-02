@@ -135,47 +135,10 @@
           };
         </script>
 
-        <% if @completed_records > 1 && !@marked_done %>
-          <% is_disabled = "" %>
-        <% else %>
-          <% is_disabled = "disabled" %>
-        <% end %>
-
-        <!-- close record button -->
-        <button type="button" <%= is_disabled %> id="done_button" class="eui-btn eui-btn--round eui-btn--sm mark_complete_button">
-          <% if @record.ready_for_daac_review? %>
-            <p class="button_text">RELEASE TO DAAC</p>            
-          <% elsif @record.in_daac_review? && !@record.flagged? %>
-            <p class="button_text">CLOSE</p>
-          <% elsif @record.in_daac_review? %>
-            <p class="button_text">UPDATED IN CMR</p>
-          <% else %>
-            <p class="button_text">MARK AS DONE</p>
-          <% end %>
+        <%= button_to complete_record_path, disabled: disable_complete_button?(@reviews, @record), id: "done_button", class: "eui-btn eui-btn--round eui-btn--sm mark_complete_button" do %>
+          <p class="button_text"><%= complete_button_text(@record) %></p>
           <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
-        </button>    
-        <script type="text/javascript">
-          document.getElementById("done_button").onclick = function() {
-            if (!<%=@color_coding_complete%>) {
-              alert("Not all columns have been flagged with a color, can not close review");
-              return false;
-            }
-            if (!<%=@has_enough_reviews%>) {
-              alert("A review needs two completed reviews to be closed, can not close review");
-              return false;
-            }
-            if (!<%=@no_second_opinions%>) {
-              alert("Some columns still need a second opinion review, can not close review.  Please clear all second opinion flags.");
-              return false;
-            }
-            if (!<%=@granule_completed%>) {
-              alert("The Collection's related Granule must be marked complete before the Collection can be completed.");
-              return false;
-            }
-
-            document.location.href = "<%= record_complete_path(id: params["id"]) %>"
-          };
-        </script>
+        <% end %>
       </div>
       <div class="clearfix"></div>
 

@@ -1,6 +1,9 @@
 class RecordsController < ApplicationController
+  include RecordHelper
+
   before_filter :authenticate_user!
   before_filter :ensure_curation
+  before_filter :find_record, only: [:show, :complete, :update]
 
   def refresh
     # a list of records added in update in format of
@@ -15,66 +18,27 @@ class RecordsController < ApplicationController
   end
 
   def show
-    @record = Record.find_by id: params["id"]
-    if @record.nil?
-      redirect_to home_path
-      return
-    end
-    
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
 
     @user_review = @record.review(current_user.id)
-
-    @completed_records = (@reviews.map {|item| item.review_state == 1 ? 1:0}).reduce(0) {|sum, item| sum + item }
-    @marked_done = @record.closed?
-
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
-      @color_coding_complete = true
-      @has_enough_reviews = true
-      @no_second_opinions = true
-      @granule_completed = true
-    else
-      @color_coding_complete = @record.color_coding_complete?
-      @has_enough_reviews = @record.has_enough_reviews?
-      @no_second_opinions = @record.no_second_opinions?
-      @granule_completed = @record.granule_completed?
-    end
   end
 
   def complete
-    record = Record.find_by id: params["id"]
-    if record.nil?
-      redirect_to home_path
-      return
-    end
+    success = completion_success
 
-    if record.in_arc_review?
-      success = record.complete_arc_review!
-    elsif record.ready_for_daac_review?
-      success = record.release_to_daac!
-    elsif can?(:force_close, record)
-      success = record.force_close!
-    elsif can?(:close, record)
-      success = record.close!
-    end
-    
     if success
       flash[:notice] = "Record has been successfully updated."
-      redirect_to collection_path(id:1, concept_id: record.recordable.concept_id)
+      redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
     else
-      redirect_to record_path(record)
+      redirect_to record_path(@record)
     end
   end
 
   def update
-    record = Record.find_by id: params[:id]
-    if record.nil?
-      redirect_to home_path
-      return
-    elsif record.closed?
+    if @record.closed?
       if !params["redirect_index"].nil?
         redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
         return 
@@ -85,17 +49,17 @@ class RecordsController < ApplicationController
     end
 
     #update result will == true if any updates were made to record on save
-    update_result = record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
+    update_result = @record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
 
     if update_result == -1
       flash[:error] = "Values were not updated in the system.  Please resave changes."
     elsif update_result == true
       #creating a review is one is not yet recorded
       #.review will create a review if one not found.
-      review = record.review(current_user.id)
+      review = @record.review(current_user.id)
       review.save
 
-      record.start_arc_review! if record.open?
+      @record.start_arc_review! if @record.open?
     end
 
     if params["redirect_index"].nil?
@@ -105,4 +69,33 @@ class RecordsController < ApplicationController
     end
   end
 
+  private
+
+  def find_record
+    @record = Record.find_by(id: params[:id])
+    redirect_to home_path unless @record
+  end
+
+  def completion_success
+    if !can?(:review_state, @record.state.to_sym)
+      flash[:alert] = "You do not have permission to perform this action"
+      return false
+    end
+
+    begin
+      if @record.in_arc_review?
+        @record.complete_arc_review!
+      elsif @record.ready_for_daac_review?
+        @record.release_to_daac!
+
+        RecordNotifier.notify_daac_curators([@record])
+      else
+        can?(:force_close, @record) ? @record.force_close! : @record.close!
+      end
+    rescue => e
+      error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
+      flash[:alert] = error_messages.join(" ")
+      false
+    end
+  end
 end

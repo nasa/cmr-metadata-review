@@ -37,7 +37,7 @@
             <p>Account Options</p>
           </a>
           <ul class="eui-sub-menu">
-            <li><a href="<%=edit_user_registration_path%>">Change Password</a></li>
+            <li><%= link_to "Edit Account", edit_user_registration_path %></li>
             <% if current_user.admin %>
               <li><a href="<%=new_user_registration_path%>">Create User</a></li>
               <li id="record_refresh"><a href="<%=record_refresh_path%>">Refresh Records</a></li>
