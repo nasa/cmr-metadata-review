@@ -143,4 +143,5 @@ class RecordTest < ActiveSupport::TestCase
       assert records.empty?
     end
   end
+
 end

@@ -5,7 +5,7 @@
 class Record < ActiveRecord::Base
   include AASM
   include RecordHelper
-  
+
   after_initialize :load_format_module
 
   has_many :record_datas
@@ -16,7 +16,14 @@ class Record < ActiveRecord::Base
 
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
 
-  aasm column: 'state', whiny_persistence: false do 
+  REVIEW_ERRORS = {
+    color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",
+    has_enough_reviews?: "A review needs two completed reviews to be closed, cannot close review.",
+    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags.",
+    granule_completed?: "The Collection's related Granule must be marked complete before the Collection can be completed."
+  }
+
+  aasm column: 'state', whiny_persistence: false do
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
 
@@ -41,7 +48,7 @@ class Record < ActiveRecord::Base
     end
 
     event :hide do
-      transitions from: :closed, to: :hidden
+      transitions from: [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed], to: :hidden
     end
   end
 
@@ -53,7 +60,7 @@ class Record < ActiveRecord::Base
     end
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Boolean
@@ -63,7 +70,7 @@ class Record < ActiveRecord::Base
     self.recordable_type == "Collection"
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Boolean
@@ -73,7 +80,7 @@ class Record < ActiveRecord::Base
     self.recordable_type == "Granule"
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # String
@@ -89,7 +96,7 @@ class Record < ActiveRecord::Base
   end
 
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # String
@@ -104,7 +111,7 @@ class Record < ActiveRecord::Base
   end
 
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash
@@ -128,7 +135,7 @@ class Record < ActiveRecord::Base
       nil
     else
       collection_records[(self_index - 1)]
-    end 
+    end
   end
 
   def previous_values
@@ -146,16 +153,16 @@ class Record < ActiveRecord::Base
       {}
     else
       previous_record.get_recommendations
-    end 
+    end
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # String
   # ==== Method
-  # Helper to return the state of a record in String form     
-  # Returns "In Process" or "Completed"     
+  # Helper to return the state of a record in String form
+  # Returns "In Process" or "Completed"
   # When records are complete, no further reviews or changes to review data can be added
   def status_string
     if self.closed?
@@ -166,7 +173,7 @@ class Record < ActiveRecord::Base
   end
 
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # String
@@ -186,19 +193,19 @@ class Record < ActiveRecord::Base
   end
 
 
-  # ====Params   
+  # ====Params
   # Hash from automated script output,
   # List of keys in record data
   # ====Returns
   # Hash of recordData values
   # ==== Method
-  # This method takes the raw output of the automated script, and attaches it 
+  # This method takes the raw output of the automated script, and attaches it
   # to a recordData value hash
-  # Method is necessary because automated script will only produce one result for 
+  # Method is necessary because automated script will only produce one result for
   # "Platforms/Platform/ShortName" etc.
   # and the recordData hash needs that result connected to all platform keys
   # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
-  def self.format_script_comments(comment_hash, value_keys) 
+  def self.format_script_comments(comment_hash, value_keys)
     comment_keys = comment_hash.keys
 
     comment_keys.each do |comment_field|
@@ -215,12 +222,12 @@ class Record < ActiveRecord::Base
     return comment_hash
   end
 
-  # ====Params   
+  # ====Params
   # String
   # ====Returns
   # Hash of "column_names" => "field_values"
   # ==== Method
-  # The general method for retreiving column => field hashes from a record 
+  # The general method for retreiving column => field hashes from a record
   def get_field(field_name)
     record_datas = self.sorted_record_datas
     fields = {}
@@ -230,48 +237,48 @@ class Record < ActiveRecord::Base
     fields
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of "column_names" => "color_values"
   # ==== Method
-  # This method looks up the record's associated Color values.    
+  # This method looks up the record's associated Color values.
   def get_colors
     get_field("color")
   end
 
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of "column_names" => "script_values"
   # ==== Method
-  # This method looks up the record's associated script_comment values. 
+  # This method looks up the record's associated script_comment values.
   def get_script_comments
     get_field("script_comment")
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of "column_names" => "recommendation_values"
   # ==== Method
-  # This method looks up the record's associated recommendation values. 
+  # This method looks up the record's associated recommendation values.
   def get_recommendations
     get_field("recommendation")
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of "column_names" => "opinion_values"
   # ==== Method
-  # This method looks up the record's associated opinion values. 
+  # This method looks up the record's associated opinion values.
   def get_opinions
     get_field("opinion")
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash of "column_names" => "feedback (true/false)"
@@ -281,15 +288,15 @@ class Record < ActiveRecord::Base
     get_field("feedback")
   end
 
-  # ====Params   
+  # ====Params
   # Hash
   # ====Returns
   # Integer
   # ==== Method
-  # Method takes a param of a hash of "field_name" => "script output string" pairs    
-  # Each value of the Hash is checked for containing any variation of the string "ok"    
+  # Method takes a param of a hash of "field_name" => "script output string" pairs
+  # Each value of the Hash is checked for containing any variation of the string "ok"
   # Each value containing the string is counted as a point, the total points for the whole hash is returned.
-  def score_script_hash(script_hash) 
+  def score_script_hash(script_hash)
     score = 0
     script_hash.each do |key, sub_value|
       if script_hash[key].is_a?(String)
@@ -337,7 +344,7 @@ class Record < ActiveRecord::Base
     end
     any_data_changed
   end
-  
+
   def update_opinions(opinions_hash)
     any_data_changed = false
     if opinions_hash
@@ -363,7 +370,7 @@ class Record < ActiveRecord::Base
             if data.feedback != value
               any_data_changed = true
             end
-            
+
             data.feedback = value
             data.save
          end
@@ -371,7 +378,7 @@ class Record < ActiveRecord::Base
     end
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Hash
@@ -381,12 +388,12 @@ class Record < ActiveRecord::Base
     self.get_script_comments
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Integer
   # ==== Method
-  # Returns the score originally generated in #score_script_hash method    
+  # Returns the score originally generated in #score_script_hash method
   # No further processing is done as this method accesses the score as a stored attribute
   def script_score
     0
@@ -418,14 +425,14 @@ class Record < ActiveRecord::Base
     bubble_set = []
     # setting flag data
     record_colors = self.get_colors
-    bubble_set = record_colors.keys.map do |field| 
+    bubble_set = record_colors.keys.map do |field|
       if record_colors[field] == ""
         bubble_color = "white"
       else
         bubble_color = record_colors[field]
       end
 
-      { :field_name => field, :color => bubble_color } 
+      { :field_name => field, :color => bubble_color }
     end
 
     # adding the automated script results to each bubble
@@ -434,18 +441,18 @@ class Record < ActiveRecord::Base
     if binary_script_values.empty?
       bubble_set = bubble_set.map { |bubble| bubble[:script] = false }
     else
-      bubble_set = bubble_set.map do |bubble| 
+      bubble_set = bubble_set.map do |bubble|
         bubble[:script] = binary_script_values[bubble[:field_name]]
         bubble
-      end 
+      end
     end
 
     #adding the second opinions
     opinion_values = self.get_opinions
-    bubble_set = bubble_set.map do |bubble| 
+    bubble_set = bubble_set.map do |bubble|
       bubble[:opinion] = opinion_values[bubble[:field_name]]
       bubble
-    end 
+    end
 
     bubble_set
   end
@@ -502,12 +509,12 @@ class Record < ActiveRecord::Base
       return true
     end
 
-    if self.is_granule? || 
+    if self.is_granule? ||
        self.recordable.try(:granules).nil? ||
-       (self.recordable.granules.count == 0) || 
+       (self.recordable.granules.count == 0) ||
        (self.recordable.granules.first.records.first.nil?) ||
        (self.recordable.granules.first.records.first.closed?)
-      
+
       return true
     end
 
@@ -554,7 +561,7 @@ class Record < ActiveRecord::Base
   #should return a list where each entry is a (title,[title_list])
   def sections
     section_list = []
-    
+
     get_section_titles.each do |title|
       section_list += self.get_section(title)
     end
@@ -596,7 +603,7 @@ class Record < ActiveRecord::Base
     self.record_datas.sort_by { |data| data.order_count }
   end
 
-  def has_short_name? 
+  def has_short_name?
     self.short_name != ""
   end
 
@@ -641,9 +648,9 @@ class Record < ActiveRecord::Base
             end
         end
       end
-      
+
       self.update_opinions(opinion_values)
-      
+
       feedback_values = self.get_feedbacks
       section_titles.each do |title|
         feedback_values[title] = false
@@ -667,7 +674,7 @@ class Record < ActiveRecord::Base
             message.save
           end
         end
-      end 
+      end
 
       if new_feedback_discussions
         new_feedback_discussions.each do |key, value|
