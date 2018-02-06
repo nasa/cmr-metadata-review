@@ -10,6 +10,7 @@ granule:
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
+  state: "in_arc_review"
   
 metric1:
   id: 10
@@ -43,3 +44,11 @@ podaac_in_daac_review:
   recordable_type: "Collection"
   revision_id: "7"
   state: "in_daac_review"
+
+open_granule:
+  id: 15
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "6"
+  state: "open"
+

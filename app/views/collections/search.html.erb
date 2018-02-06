@@ -9,8 +9,8 @@
     </div>
 
     <%= form_tag(collections_search_path, id: 'cmr_search', method: "get") do %>
-      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
-      <%= text_field_tag(:free_text, @free_text) %>
+      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => params[:provider])) %>
+      <%= text_field_tag(:free_text, params[:free_text]) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>
       <button class="search_button">
@@ -30,7 +30,7 @@
     <div class="results_box">
 
       <div class="search_phrase">
-        <p>Search Phrase = <%=@free_text%></p>
+        <p>Search Phrase = <%=params[:free_text]%></p>
       </div>
       <div class="total_results">
         <p>Total Results = <%= @collection_count %></p>
@@ -55,7 +55,7 @@
 
               <% @search_iterator.each_with_index do |result, index| %>
                 <tr>
-                    <td><%= (@curr_page.to_i - 1) * 10 + index + 1 %></td>
+                    <td><%= (params[:curr_page].to_i - 1) * 10 + index + 1 %></td>
                     <td id="concept<%= index.to_s %>"><%= result["concept_id"] %></td>
                     <td id="revision<%= index.to_s %>"><%= result["revision_id"] %></td>
                     <td><%= result["Collection"]["ShortName"] %></td>
@@ -81,8 +81,8 @@
 
               <div class="direction_links">
                 
-                <% if @curr_page.to_i > 1 %>
-                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i - 1).to_s)%>" id="prev_link">
+                <% if params[:curr_page].to_i > 1 %>
+                  <a href="<%=collections_search_path(free_text: params[:free_text], provider: params[:provider], curr_page: (params[:curr_page].to_i - 1).to_s)%>" id="prev_link">
                     <button id="prev_button">
                       <i class="eui-icon eui-fa-chevron-circle-left"></i>
                       <p>Previous Page</p>    
@@ -95,9 +95,9 @@
                     }
                   </script>
                 <% end %>
-
-                <% if @curr_page.to_i * 10 < @collection_count %>
-                  <a href="<%=collections_search_path(free_text: @free_text, provider: @provider, curr_page: (@curr_page.to_i + 1).to_s)%>" id="next_link">
+                
+                <% if params[:curr_page].to_i * 10 < @collection_count %>
+                  <a href="<%=collections_search_path(free_text: params[:free_text], provider: params[:provider], curr_page: (params[:curr_page].to_i + 1).to_s)%>" id="next_link">
                     <button id="next_button">
                       <p>Next Page</p>    
                       <i class="eui-icon eui-fa-chevron-circle-right"></i>
