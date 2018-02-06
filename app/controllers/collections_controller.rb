@@ -173,6 +173,10 @@ class CollectionsController < ApplicationController
     end
 
     record = Collection.find_record(params["concept_id"], params["revision_id"])
+    #allowing action to also accept granules
+    if record.nil?
+      record = Granule.find_record(params["concept_id"], params["revision_id"])
+    end
 
     if record.nil?
       flash[:alert] = "Error: Record was not Deleted"
@@ -196,15 +200,9 @@ def move
   end
 
   record = Collection.find_record(params["concept_id"], params["revision_id"])
-  #allowing action to also accept granule concept id's
+  #allowing action to also accept granules
   if record.nil?
-    granule = Granule.find_by(concept_id: params["concept_id"])
-    unless granule.nil?
-      granule.release_to_daac
-      flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} Moved"
-      redirect_to home_path
-      return
-    end
+    record = Granule.find_record(params["concept_id"], params["revision_id"])
   end
 
 
