@@ -15,7 +15,7 @@
     <p><strong>Search the CMR Database for Data Ingest:</strong></p>
 
     <%= form_tag(collections_search_path, method: "get") do %>
-      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @provider)) %>
+      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
       <%= text_field_tag(:free_text) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("Search") %>
@@ -33,6 +33,14 @@
   </div>
 
   <div class="results_area">
+
+    <div class="filter_daac searchbox_area">
+      <p><strong>Filter Records by DAAC:</strong></p>
+      <%= form_tag(home_path, method: "get") do %>
+        <%= select_tag(:daac, options_for_select(provider_select_list, selected: params[:daac])) %>
+        <%= submit_tag("Filter", class: "selectButton") %>
+      <% end %>
+    </div>
 
     <% if can?(:review_state, Record::STATE_OPEN) %>
       <div class="table_backdrop">

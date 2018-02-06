@@ -36,7 +36,6 @@ class CollectionsController < ApplicationController
     @free_text = params["free_text"]
     @provider = params["provider"]
     @curr_page = params["curr_page"]
-    @provider_select_list = provider_select_list
 
     begin
       @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
