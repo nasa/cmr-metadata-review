@@ -164,7 +164,22 @@ class Cmr
   # Automatically returns only the most recent revision of a collection       
   # can add "&all_revisions=true&pretty=true" params to find specific revision      
 
-  def self.get_collection(concept_id, data_format = "echo10")
+  def self.get_collection(concept_id, data_format = "echo10")              
+    raw_collection = get_raw_collection(concept_id, data_format)
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.get_collection_by_url(url)
+    data_format = url =~ /echo10/ ? "echo10" : "dif10"
+
+    collection_xml = cmr_request(url).parsed_response
+    collection_xml_hash = Hash.from_xml(collection_xml)
+
+    raw_collection = data_format == "echo10" ? collection_xml_hash["Collection"] : collection_xml_hash["DIF"]
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.format_collection(raw_collection, data_format = "echo10")
     if data_format == "echo10"
       required_fields = REQUIRED_COLLECTION_FIELDS
       desired_fields = DESIRED_FIELDS_ECHO10
@@ -174,15 +189,14 @@ class Cmr
     else
       required_fields = []
     end
-          
-    raw_collection = Cmr.get_raw_collection(concept_id, data_format)
-    results_hash = flatten_collection(raw_collection)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    #Dif10 records come in with some uneeded header values
-    nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
-    required_fields_hash
+
+    results_hash      = flatten_collection(raw_collection)
+    nil_replaced_hash = remove_nil_values(results_hash)
+    
+    # Dif10 records come in with some uneeded header values
+    nil_replaced_hash    = remove_header_values(nil_replaced_hash)
+    add_required_fields(nil_replaced_hash, required_fields)
+    add_required_fields(nil_replaced_hash, desired_fields)
   end
 
 
