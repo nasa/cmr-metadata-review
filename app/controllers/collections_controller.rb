@@ -33,10 +33,6 @@ class CollectionsController < ApplicationController
   end
 
   def search
-    @free_text = params["free_text"]
-    @provider = params["provider"]
-    @curr_page = params["curr_page"]
-
     begin
       @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
     rescue Cmr::CmrError

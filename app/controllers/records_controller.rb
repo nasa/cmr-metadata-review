@@ -27,7 +27,6 @@ class RecordsController < ApplicationController
   end
 
   def complete
-
     success = completion_success
 
     if success

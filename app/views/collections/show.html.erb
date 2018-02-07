@@ -50,14 +50,7 @@
                 <p>Collection Review Status: <%= record.closed? ? "Closed" : "In Process" %></p>  
               </div>
 
-              <button id="review_details_button<%=index%>" class="smallSelectButton">
-                <p>See Collection Review Details</p>
-              </button>
-              <script type="text/javascript">
-                document.getElementById("review_details_button<%=index%>").onclick = function() {
-                  document.location.href = "<%= record_path(id:record.id) %>"
-                };
-              </script>
+              <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
             </div>    
  
           </td>
@@ -105,16 +98,19 @@
                     <div class="ingest_score">
                       <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>  
                     </div>
+                    
+                    <div>
+                      <div id="granule_review_link">
+                        <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
+                      </div>
 
-                    <button id="granule_details_button<%=index%>" class="smallSelectButton">
-                      <p>See Granule Review Details</p>
-                    </button>
-                    <script type="text/javascript">
-                      document.getElementById("granule_details_button<%=index%>").onclick = function() {
-                        document.location.href = "<%= record_path(id:granule_record.id) %>"
-                      };
-                    </script>
+                      <div>
+                        <% if granule_record.open? && can?(:replace_granule, granule_record.recordable) %>
+                          <%= button_to "Ingest Different Granule", replace_granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: "smallSelectButton", id: "ingest_replace", data: { confirm: "Are you sure?" } %>
+                        <% end %>
+                      </div>
                   </div>
+                </div>
                 </td>
               </tr>
 

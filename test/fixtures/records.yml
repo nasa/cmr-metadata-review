@@ -10,6 +10,7 @@ granule:
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "1"
+  state: "in_arc_review"
   
 metric1:
   id: 10
@@ -50,3 +51,10 @@ closed:
   recordable_type: "Collection"
   revision_id: 4
   state: "closed"
+
+open_granule:
+  id: 16
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "6"
+  state: "open"

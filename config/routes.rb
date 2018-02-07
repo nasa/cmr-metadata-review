@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
-
   get '/elb_status', to: 'site#elb_status'
 
-  Rails.application.routes.draw do
-      devise_for :users, controllers: {
-        registrations: 'users/registrations'
-      }
-  end
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
 
   devise_scope :user do
     root to: "devise/sessions#new"
@@ -21,7 +18,11 @@ Rails.application.routes.draw do
   get '/collections_hide', to: 'collections#hide'
   get '/collections_stop_updates', to: 'collections#stop_updates'
 
-  resources :granules
+  resources :granules do
+    member do
+      delete "replace"
+    end
+  end
   resources :comments
   resources :reviews
   resources :records do
