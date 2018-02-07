@@ -148,8 +148,22 @@ class Cmr
   # then processes and returns the data
   # Automatically returns only the most recent revision of a collection
   # can add "&all_revisions=true&pretty=true" params to find specific revision
-
   def self.get_collection(concept_id, data_format = "echo10")
+    raw_collection = get_raw_collection(concept_id, data_format)
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.get_collection_by_url(url)
+    data_format = url =~ /echo10/ ? "echo10" : "dif10"
+
+    collection_xml = cmr_request(url).parsed_response
+    collection_xml_hash = Hash.from_xml(collection_xml)
+
+    raw_collection = data_format == "echo10" ? collection_xml_hash["Collection"] : collection_xml_hash["DIF"]
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.format_collection(raw_collection, data_format = "echo10")
     desired_fields = if data_format == "echo10"
       RecordFormats::Echo10Fields::DESIRED_FIELDS
     elsif data_format == "dif10"
@@ -160,11 +174,10 @@ class Cmr
       []
     end
 
-    raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash   = flatten_collection(raw_collection)
     # Dif10 records come in with some uneeded header values
     results_hash = Cmr.remove_header_values(results_hash)
-    Cmr.add_required_fields(results_hash, desired_fields)
+    add_required_fields(results_hash, desired_fields)
   end
 
 
