@@ -188,7 +188,7 @@
                     <td><%= record.ingested_by %></td>
                     <td class="center_text"><%= record.completed_review_count %></td>
                     <td class="center_text"><%= record.second_opinion_count %></td>
-                    <td class="center_text"><input type="checkbox" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection" value="<%= index.to_s %>"/></td>
+                    <td class="center_text"><input type="checkbox" id="waiting-daac-release<%= index.to_s %>" name="waiting-daac-releaseSelection[]" value="<%= record.concept_id %>"/></td>
                 </tr>
               <% end %>
             </table>
@@ -449,7 +449,11 @@
     var tableFinishedButton = document.getElementById(table + "FinishedSubmit");
     var buttonArr = [tableButton, tableDeleteButton, tableReportButton, tableMoveButton, tableFinishedButton];
 
-    var tableSelector = document.getElementsByName(table + "Selection");
+    if (table === "waiting-daac-release") {
+      var tableSelector = document.getElementsByName(table + "Selection[]");
+    } else {
+            var tableSelector = document.getElementsByName(table + "Selection");
+    }
     //setting the buttons manually here because sometimes the page is loaded with something already selected
     for (var k=0; k < buttonArr.length; k++) {
       if (buttonArr[k] != null) {
