@@ -18,6 +18,7 @@
 
 #ingore env vars
 .env
+.env.test
 
 #ignore compiled assets
 /public/assets
