@@ -45,10 +45,16 @@ podaac_in_daac_review:
   revision_id: "7"
   state: "in_daac_review"
 
-open_granule:
+closed:
   id: 15
+  recordable_id: 2
+  recordable_type: "Collection"
+  revision_id: 4
+  state: "closed"
+
+open_granule:
+  id: 16
   recordable_id: 1
   recordable_type: "Granule"
   revision_id: "6"
   state: "open"
-
