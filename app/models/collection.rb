@@ -69,6 +69,39 @@ class Collection < ActiveRecord::Base
     end
   end
 
+  def self.assemble_new_record_by_url(url, current_user = nil)
+    concept_id, revision_id, data_format = parse_collection_url(url)
+    collection_data                      = Cmr.get_collection_by_url(url)
+
+    short_name = data_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
+
+    Collection.transaction do
+      collection = Collection.find_or_create_by(concept_id: concept_id)
+      collection.update_attributes(short_name: short_name)
+
+      collection_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format)
+
+      collection_data.each_with_index do |(key, value), i|
+        collection_record.record_datas.create(
+          last_updated: DateTime.now,
+          column_name:  key,
+          value:        value,
+          order_count:  i,
+          daac:         concept_id.partition('-').last
+        )
+      end
+
+      current_user = User.find_by(role: "admin") unless current_user
+      Ingest.create(record: collection_record, user: current_user, date_ingested: DateTime.now)
+      collection
+    end
+  end
+
+  def self.parse_collection_url(url)
+    url =~ /https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/
+    [$1, $2, $3]
+  end
+
   def update?
     self.cmr_update
   end
