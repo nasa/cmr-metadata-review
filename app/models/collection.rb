@@ -89,7 +89,7 @@ class Collection < ActiveRecord::Base
 
       current_user = User.find_by(role: "admin") unless current_user
       Ingest.create(record: collection_record, user: current_user, date_ingested: DateTime.now)
-      collection
+      collection_record
     end
   end
 
