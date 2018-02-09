@@ -727,6 +727,11 @@ class Record < ActiveRecord::Base
     end
   end
 
+  def update_legacy_data(column_name, data)
+    record_data = record_datas.find_by(column_name: column_name)
+    record_data.update_attributes(data) if record_data
+  end
+
   def umm_json_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end
