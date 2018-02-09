@@ -23,7 +23,7 @@ class Record < ActiveRecord::Base
     granule_completed?: "The Collection's related Granule must be marked complete before the Collection can be completed."
   }
 
-  aasm column: 'state', whiny_persistence: false do 
+  aasm column: 'state', whiny_persistence: false do
     state :open, initial: true
     state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
 
@@ -513,7 +513,7 @@ class Record < ActiveRecord::Base
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) ||
        (self.recordable.granules.first.records.first.nil?) ||
-       (self.recordable.granules.first.records.first.closed?)
+       (self.recordable.granules.first.records.first.ready_for_daac_review?)
 
       return true
     end
