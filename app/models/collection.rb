@@ -3,7 +3,7 @@ class Collection < ActiveRecord::Base
   has_many :granules
 
   SUPPORTED_FORMATS = ["dif10", "echo10"]
-  INCLUDE_GRANULE_FORMATS = ["echo10"]
+  INCLUDE_GRANULE_FORMATS = ["dif10", "echo10"]
 
   extend Modules::RecordRevision
 
