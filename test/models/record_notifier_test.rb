@@ -2,7 +2,6 @@ require 'test_helper'
 
 class RecordNotifierTest < ActiveSupport::TestCase
 
-<<<<<<< HEAD
   describe "notify_released" do
 
     it 'should email daac curators for released records' do
@@ -22,15 +21,6 @@ class RecordNotifierTest < ActiveSupport::TestCase
 
       assert_difference 'ActionMailer::Base.deliveries.size', +1 do
         RecordNotifier.notify_closed(records)
-=======
-  describe "notify_daac_curators" do
-
-    it 'should email daac curators by daac' do
-      records = Record.find([12, 14])
-
-      assert_difference 'ActionMailer::Base.deliveries.size', +2 do
-        RecordNotifier.notify_daac_curators(records)
->>>>>>> 1eb0701... [CMRARC-227]: Adds email notifications when records move to DAAC review.
       end
     end
 

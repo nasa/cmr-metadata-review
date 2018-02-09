@@ -88,7 +88,6 @@ class RecordsController < ApplicationController
       elsif @record.ready_for_daac_review?
         @record.release_to_daac!
 
-<<<<<<< HEAD
         RecordNotifier.notify_released([@record])
       else
         @record.close!
@@ -101,28 +100,5 @@ class RecordsController < ApplicationController
       false
     end
   end
-    if !can?(:review_state, @record.state.to_sym)
-      flash[:alert] = "You do not have permission to perform this action"
-      return false
-    end
 
-    begin
-      if @record.in_arc_review?
-        @record.complete_arc_review!
-      elsif @record.ready_for_daac_review?
-        @record.release_to_daac!
-      else
-        @record.close!
-      end
-    rescue => e
-      error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
-      flash[:alert] = error_messages.join(" ")
-      false
-    end
-  end
-<<<<<<< HEAD
-
->>>>>>> 524a8f1... Update permission checks when moving Record to next stage
-=======
->>>>>>> e0779d1... Clean up RecordsController validation
 end
