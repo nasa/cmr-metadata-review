@@ -513,7 +513,9 @@ class Record < ActiveRecord::Base
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) ||
        (self.recordable.granules.first.records.first.nil?) ||
-       (self.recordable.granules.first.records.first.ready_for_daac_review?)
+       (self.recordable.granules.first.records.first.ready_for_daac_review?) ||
+       (self.recordable.granules.first.records.first.in_daac_review?) ||
+       (self.recordable.granules.first.records.first.closed?)
 
       return true
     end
