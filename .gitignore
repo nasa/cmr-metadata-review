@@ -28,3 +28,6 @@
 #ignore test coverage
 /coverage/*
 
+#ignore python computed files
+/lib/*.pyc
+
