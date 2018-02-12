@@ -3,8 +3,13 @@ class LegacyIngestor
   attr_accessor :spreadsheet
   attr_accessor :granules
 
-  COLLECTION_HEADER_ROW = 5
-  GRANULE_HEADER_ROW    = 4
+  COLLECTION_HEADER_ROW        = 5
+  COLLECTION_COMMENTS_COLUMN   = 198
+  COLLECTION_CHECKED_BY_COLUMN = 197
+  GRANULE_HEADER_ROW           = 4
+  GRANULE_CHECKED_BY_COLUMN    = 102
+  GRANULE_COMMENTS_COLUMN      = 103
+  
   # Spreadsheet gem can't read colors exactly right
   COLORS = {
     brown: "yellow",
@@ -15,7 +20,7 @@ class LegacyIngestor
 
   def initialize(filename, granules = false)
     @spreadsheet = Spreadsheet.open(filename)
-    @granules = granules
+    @granules    = granules
   end
 
   def ingest_records!
@@ -32,7 +37,7 @@ class LegacyIngestor
       record = granules ? get_granule_record(row) : get_collection_record(row)
       next unless record
 
-      row.to_a[1..-1].each_with_index do |review, index|
+      row.to_a[1...checked_by_column].each_with_index do |review, index|
         column_name    = headers[index+1]
         data = {
           script_comment: review,
@@ -41,6 +46,9 @@ class LegacyIngestor
 
         record.update_legacy_data(column_name, data)
       end
+
+      # Add additional comments as a review
+      record.add_legacy_review(row[checked_by_column], row[comments_column])
     end
   end
 
@@ -70,5 +78,13 @@ class LegacyIngestor
 
   def header_row
     @header_row ||= granules ? GRANULE_HEADER_ROW : COLLECTION_HEADER_ROW
+  end
+
+  def checked_by_column
+    @checked_by_column ||= granules ? GRANULE_CHECKED_BY_COLUMN : COLLECTION_CHECKED_BY_COLUMN
+  end
+
+  def comments_column
+    @comment_column ||= granules ? GRANULE_COMMENTS_COLUMN : COLLECTION_COMMENTS_COLUMN
   end
 end
