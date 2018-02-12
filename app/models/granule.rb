@@ -32,7 +32,7 @@ class Granule < ActiveRecord::Base
         granule_record_data.column_name = key
         granule_record_data.value = value
         granule_record_data.order_count = i
-        granule_record_data.daac = granule_data["concept_id"].partition('-').last
+        granule_record_data.daac = daac_from_concept_id(granule_data["concept_id"])
         granule_record_data_list.push(granule_record_data)
       end
 
@@ -44,6 +44,36 @@ class Granule < ActiveRecord::Base
     granules_components
   end
 
+  def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
+    granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
+    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+
+    return unless collection
+
+    granule_data = granule_info["Granule"]
+
+    Granule.transaction do
+      granule        = Granule.create(concept_id: granule_concept_id, collection: collection)
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
+
+      granule_data.each_with_index do |(key, value), i|
+        granule_record.record_datas.create(
+          last_updated: DateTime.now,
+          column_name:  key,
+          value:        value,
+          order_count:  i,
+          daac:         daac_from_concept_id(granule_concept_id)
+        )
+      end
+
+      Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
+      granule_record
+    end
+  end
+
+  def self.daac_from_concept_id(concept_id)
+    concept_id.partition('-').last
+  end
 
   def update?
     self.collection.update?
