@@ -199,16 +199,21 @@ class Cmr
     add_required_fields(nil_replaced_hash, desired_fields)
   end
 
-
   def self.get_granule(concept_id)    
     granule_raw_data = Cmr.get_raw_granule(concept_id)
-    results_hash = flatten_collection(granule_raw_data)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    format_granule_data(granule_raw_data)
+  end
 
-    required_fields = REQUIRED_GRANULE_FIELDS
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
+  def self.get_granule_with_collection_data(concept_id)
+    granule_data            = get_raw_granule_results(concept_id)
+    granule_data["Granule"] = format_granule_data(granule_data["Granule"])
+    granule_data
+  end
 
-    required_fields_hash
+  def self.format_granule_data(granule_raw_data)
+    results_hash      = flatten_collection(granule_raw_data)
+    nil_replaced_hash = remove_nil_values(results_hash)
+    add_required_fields(nil_replaced_hash, REQUIRED_GRANULE_FIELDS)
   end
 
   # ====Params   
@@ -276,8 +281,12 @@ class Cmr
   # Only Echo10 records pull in granules pre business rules.
   # See Collection::INCLUDE_GRANULE_FORMATS
 
-
   def self.get_raw_granule(concept_id)
+    granule_results = get_raw_granule_results(concept_id)
+    granule_results["Granule"]
+  end
+
+  def self.get_raw_granule_results(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
@@ -290,9 +299,8 @@ class Cmr
       raise CmrError
     end
 
-    granule_results["result"]["Granule"]
+    granule_results["result"]
   end
-
 
   # ====Params   
   # accepts hash or array elements containing collection data
