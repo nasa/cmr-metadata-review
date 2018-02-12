@@ -10,14 +10,14 @@ class checkerRules():
         self.urls = urls
 
     def checkShortName(self, val):
-        #print 'Input of checkShortName() is ' + val
+        ##print 'Input of checkShortName() is ' + val
         if val == None:
             return 'Provide a short name for this dataset. This is a required field.'
         else:
             return 'OK'
 
     def checkVersionID(self, val):
-        #print 'Input of checkVersionID() is ' + val
+        ##print 'Input of checkVersionID() is ' + val
         if val == None:
             return 'Provide a version Id for this dataset. This is a required field.'
         else:
@@ -45,21 +45,21 @@ class checkerRules():
 
 
     def checkInsertTime(self, val):
-        #print 'Input of checkInsertTime() is ' + val
+        ##print 'Input of checkInsertTime() is ' + val
         return self.__checkTimeStr(val,
                                    'Provide an insert time for this dataset. This is a required field.',
                                    'OK - quality check',
                                    'InsertTime error')
 
     def checkLastUpdate(self, val):
-        #print 'Input of checkLastUpdate() is ' + val
+        ##print 'Input of checkLastUpdate() is ' + val
         return self.__checkTimeStr(val,
                                    'Provide a last update time for this dataset. This is a required field.',
                                    'OK - quality check',
                                    'LastUpdate time error')
 
     def checkLongName(self, val):
-        #print "Input of checkLongName() is " + val
+        ##print "Input of checkLongName() is " + val
         if val == None:
             return "np"
         elif val.isupper() or val.islower():
@@ -68,7 +68,7 @@ class checkerRules():
             return "OK"
 
     def checkCollectionState(self, val):
-        #print "Input of checkCollectionState() is " + val
+        ##print "Input of checkCollectionState() is " + val
         states = ('PLANNED', 'IN WORK', 'COMPLETE')
         if val == None:
             return '"CollectionState is a required element in CMR. Please choose a CollectionState from one of the following options: PLANNED, IN WORK, COMPLETE"'
@@ -79,7 +79,7 @@ class checkerRules():
             return "OK"
 
     def checkDateSetID(self, val,shortName):
-        #print "Input of checkDateSetID() is " + val
+        ##print "Input of checkDateSetID() is " + val
         if val == None:
             return "Provide a Dataset Id for this dataset. This is a required field."
         elif val.isupper() or val.islower():
@@ -90,7 +90,7 @@ class checkerRules():
             return "OK"
 
     def checkDesc(self, val):
-        #print "Input of checkDesc() is " + val[0:20]
+        ##print "Input of checkDesc() is " + val[0:20]
         msg = ''
         if val == None:
             return "Provide a description for this dataset. This is a required field."
@@ -144,14 +144,14 @@ class checkerRules():
             return 'Note: The Orderable field is being deprecated in UMM.'
 
     def checkVisible(self, val):
-        #print 'Input of checkVisible() is ' + val
+        ##print 'Input of checkVisible() is ' + val
         if val == None:
             return 'np'
         else:
             return 'Note: The Visible field is being deprecated in UMM.'
 
     def checkRevisionDate(self, val):
-        #print 'Input of checkRevisionDate() is ' + val
+        ##print 'Input of checkRevisionDate() is ' + val
         try:
             if val == None:
                 return 'Provide an revision date for this dataset. This is a required field.'
@@ -167,7 +167,7 @@ class checkerRules():
             return 'Revision date error'
 
     def checkProcCenter(self, val):
-        #print 'Input of checkProcCenter() is ' + val
+        ##print 'Input of checkProcCenter() is ' + val
         DateCents = list()
         response = urllib2.urlopen(self.urls['ArchiveCenterURL'])
         data = csv.reader(response)
@@ -186,7 +186,7 @@ class checkerRules():
             return "It is recommended that the ProcessingCenter name be compliant with GCMD vocabulary. Choose a valid ProcessingCenter name from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. All records from the same DAAC should have the same ProcessingCenter name for consistency."
 
     def checkProcLevelID(self, val):
-        #print 'Input of checkProcLevelID() is ' + val
+        ##print 'Input of checkProcLevelID() is ' + val
         levels = ('0', '1A', '1B', '2', '3', '4')
         if val == None:
             return 'Provide a processing level Id for this dataset. This is a required field.'
@@ -198,7 +198,7 @@ class checkerRules():
             return 'OK'
 
     def checkArchiveCenter(self, val):
-        #print "Input of checkArchiveCenter() is " + val
+        ##print "Input of checkArchiveCenter() is " + val
         ArchCents = list()
         response = urllib2.urlopen(self.urls['ArchiveCenterURL'])
         data = csv.reader(response)
@@ -219,7 +219,7 @@ class checkerRules():
             return 'It is recommended that the Archive Center name be compliant with GCMD vocabulary. Choose a valid Archive Center name from the following list: http://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. All records from the same DAAC should have the same archive center name for consistency.'
 
     def checkExtPub(self, val):
-        #print "Input of checkExtPub() is " + val
+        ##print "Input of checkExtPub() is " + val
         if val == None:
             return "np"
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', val)
@@ -233,7 +233,7 @@ class checkerRules():
         return "OK - quality check"
 
     def checkRestrictFlag(self, val):
-        #print "Input of checkRestrictFlag() is " + val
+        ##print "Input of checkRestrictFlag() is " + val
         if val == None:
             return "np"
         else:
@@ -246,7 +246,7 @@ class checkerRules():
             return "OK - quality check"
 
     def checkDateFormat(self, val):
-        #print "Input of checkDateFormat() is " + val
+        ##print "Input of checkDateFormat() is " + val
         if val == None:
             return "Recommend providing the DataFormat for this data set. If there is more than one DataFormat; each should be listed as a separate element."
         listItems = ["hdf", "netcdf", "geotiff", "gml", "geography markup language"]
@@ -255,18 +255,18 @@ class checkerRules():
         return "OK " + val.replace(',', ';')
 
     def checkPrice(self, val):
-        #print "Input of checkPrice() is " + val
+        ##print "Input of checkPrice() is " + val
         if val == None:
             return "np"
         else:
             return "OK"
 
     def checkSpatialKey(self, val):
-        # try:
-        #     #print "Input of checkSpatialKey() is " + val
-        # except TypeError:
-        #     #print "Input of checkSpatialKey() is ..."
-        #     val = ', '.join(val)
+        #try:
+            #print "Input of checkSpatialKey() is " + val
+        #except TypeError:
+            ##print "Input of checkSpatialKey() is ..."
+            #val = ', '.join(val)
 
         if val == None:
             return "Recommend providing a spatial keyword from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/locations/locations.csv"
@@ -296,7 +296,7 @@ class checkerRules():
         return "OK"
 
     def checkTemporalKeyword(self, val, length):
-        #print "Input of checkTemporalKeyword() is ..."
+        ##print "Input of checkTemporalKeyword() is ..."
         if length == 1:
             if len(val) != 0:
                 return "OK - quality check"
@@ -307,7 +307,7 @@ class checkerRules():
         return "np"
 
     def checkSingleDateTime(self, val):
-        #print "Input of checkSingleDateTime() is " + val
+        ##print "Input of checkSingleDateTime() is " + val
         try:
             if val == None:
                 return "np"

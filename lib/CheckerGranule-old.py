@@ -437,8 +437,8 @@ class checkerRules():
                                InstrumentKeys):
                         return "The keyword does not conform to GCMD.", SensorResult
                     processInstrCount += 1
-            #except KeyError:
-                #print "Access Key Error!"
+            except KeyError:
+                print "Access Key Error!"
         else:
             for i in range(0, platformNum):
                 try:
