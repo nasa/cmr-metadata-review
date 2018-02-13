@@ -32,8 +32,8 @@ module RecordHelper
     reviews.reduce(0) { |sum, review| sum + review.review_state.to_i }
   end
 
-  def daac_reviewer_ok?(record)
-    !record.in_daac_review? || can?(:review_state, Record::STATE_IN_DAAC_REVIEW)
+  def reviewer_ok?(record)
+    can?(:review_state, record.state.to_sym)
   end
 
   def complete_button_text(record)
@@ -47,6 +47,6 @@ module RecordHelper
   end
 
   def disable_complete_button?(reviews, record)
-    completed_reviews(reviews) <= 1 || record.closed? || !daac_reviewer_ok?(record)
+    completed_reviews(reviews) <= 1 || record.closed? || !reviewer_ok?(record)
   end
 end
