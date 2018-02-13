@@ -67,15 +67,22 @@ class Collection < ActiveRecord::Base
 
   def self.assemble_new_record_by_url(url, current_user = nil)
     concept_id, revision_id, data_format = parse_collection_url(url)
-    collection_data                      = Cmr.get_collection_by_url(url)
+    native_format                        = Cmr.get_raw_collection_format(concept_id)
 
-    short_name = data_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
+    return unless SUPPORTED_FORMATS.include?(native_format)
+
+    # Use the native format to get the collection
+    url[data_format] = native_format unless data_format == native_format
+
+    collection_data = Cmr.get_collection_by_url(url)
+
+    short_name = native_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
 
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes(short_name: short_name)
 
-      collection_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format)
+      collection_record = Record.create(recordable: collection, revision_id: revision_id, format: native_format)
 
       collection_data.each_with_index do |(key, value), i|
         collection_record.record_datas.create(
@@ -94,8 +101,8 @@ class Collection < ActiveRecord::Base
   end
 
   def self.parse_collection_url(url)
-    url =~ /https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/
-    [$1, $2, $3]
+    match_data = url.match(/https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/)
+    match_data[1..3]
   end
 
   def update?
