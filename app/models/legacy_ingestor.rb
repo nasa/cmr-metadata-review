@@ -12,10 +12,11 @@ class LegacyIngestor
   
   # Spreadsheet gem can't read colors exactly right
   COLORS = {
-    brown: "yellow",
-    cyan:  "red",
-    green: "blue",
-    white: "green"
+    brown:  "yellow",
+    cyan:   "red",
+    green:  "blue",
+    white:  "green",
+    border: "green"
   }
 
   def initialize(filename, granules = false)
@@ -67,13 +68,13 @@ class LegacyIngestor
   end
 
   def parse_url(data_set_id)
-    data_set_id =~ /(https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts.*)/
-    $1
+    return unless data_set_id
+    data_set_id.match(/https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts.*/)[0]
   end
 
   def parse_concept_id(granule_ur)
-    granule_ur =~ /.*\((G\d+-.*)\).*/
-    $1
+    return unless granule_ur
+    granule_ur.match(/.*\((G\d+-.*)\).*/)[1]
   end
 
   def header_row
