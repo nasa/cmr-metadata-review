@@ -48,7 +48,7 @@
           <p><strong>Unreviewed Records:</strong></p>
         </div>
 
-        
+
         <div class="results_table">
           <div class="table_scroll">
             <table cellpadding="5" border="1">
@@ -261,6 +261,12 @@
               <%= submit_tag("See Review Detail", id: 'in-daac-reviewSubmit', class: "selectButton") %>
             <% end %>
 
+            <%= form_tag( reports_single_path ,  {method: "get", id: 'in-daac-review_report_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "in-daac-reviewReportConceptId") %>
+              <%= hidden_field_tag(:revision_id, "", id: "in-daac-reviewReportRevisionId") %>
+              <%= submit_tag("Get Review Report", id: 'in-daac-reviewReportSubmit', class: "reportButton") %>
+            <% end %>
+
             <% if current_user.admin %>
               <%= form_tag( collections_hide_path ,  {method: "get", id: 'in-daac-reviewdelete_form'}) do %>
                 <%= hidden_field_tag(:concept_id, "", id: "in-daac-reviewDeleteConceptId") %>
@@ -431,12 +437,12 @@
     var tableFinishedButton = document.getElementById(table + "FinishedSubmit");
     var buttonArr = [tableButton, tableDeleteButton, tableReportButton, tableFinishedButton];
 
-    var tableSelector = document.getElementsByName(table + "Selection");    
+    var tableSelector = document.getElementsByName(table + "Selection");
     //setting the buttons manually here because sometimes the page is loaded with something already selected
     for (var k=0; k < buttonArr.length; k++) {
       if (buttonArr[k] != null) {
         buttonArr[k].disabled = setOnClick(table, buttonArr,tableSelector);
-      }  
+      }
     }
   }
 
@@ -455,14 +461,14 @@
                                     for (var k=0; k < tableArr.length; k++) {
                                       if (tableArr[k] != null) {
                                         tableArr[k].disabled = false;
-                                      }  
+                                      }
                                     }
                                   }
           })(i);
       }
       return shouldDisable;
   }
-  
+
 
   function updateTableValues(count, table) {
     var rowName = table + "Concept" + count;
@@ -474,7 +480,7 @@
     var deleteConceptId = document.getElementById(table + "DeleteConceptId");
     var deleteRevisionId = document.getElementById(table + "DeleteRevisionId");
     if (deleteConceptId != null) {
-      deleteConceptId.value = newConceptId;  
+      deleteConceptId.value = newConceptId;
     }
     if (deleteRevisionId != null) {
       deleteRevisionId.value = newRevisionId;
@@ -483,7 +489,7 @@
     var reportConceptId = document.getElementById(table + "ReportConceptId");
     var reportRevisionId = document.getElementById(table + "ReportRevisionId");
     if (reportConceptId != null) {
-      reportConceptId.value = newConceptId;  
+      reportConceptId.value = newConceptId;
     }
     if (reportRevisionId != null) {
       reportRevisionId.value = newRevisionId;
@@ -492,7 +498,7 @@
     var finishedConceptId = document.getElementById(table + "FinishedConceptId");
     var finishedRevisionId = document.getElementById(table + "FinishedRevisionId");
     if (finishedConceptId != null) {
-      finishedConceptId.value = newConceptId;  
+      finishedConceptId.value = newConceptId;
     }
     if (finishedRevisionId != null) {
       finishedRevisionId.value = newRevisionId;
@@ -502,5 +508,3 @@
 
 
 </script>
-
-
