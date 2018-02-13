@@ -8,7 +8,7 @@ class CollectionOutputCSVBackup():
         self.fetchAllSciKeyWords = fetchAllSciKeyWords
 
     def checkAll(self, metadata):
-        #print metadata
+        ##print metadata
         result = ""
         result += self.checkerRules.checkShortName(metadata['ShortName']) + ', '
         result += self.checkerRules.checkVersionID(metadata['VersionId']) + ', '
@@ -203,7 +203,7 @@ class CollectionOutputCSVBackup():
         result += ', , , , , , , , , ,'
         # ================
 
-       # print metadata['Contacts']['Contact']
+       # #print metadata['Contacts']['Contact']
         try:
             result += self.checkerRules.checkContactPhone(metadata['Contacts']['Contact']['OrganizationPhones'],1) + ';'
         except:
@@ -249,7 +249,7 @@ class CollectionOutputCSVBackup():
         # ================
         ScienceKeywords = self.fetchAllSciKeyWords()
 
-        #print metadata['ScienceKeywords']['ScienceKeyword']
+        ##print metadata['ScienceKeywords']['ScienceKeyword']
         try:
             metadata['ScienceKeywords']['ScienceKeyword']['CategoryKeyword']
             result += self.checkerRules.checkSciKeyCategory(metadata['ScienceKeywords']['ScienceKeyword'], 1, ScienceKeywords) + ', '
@@ -510,7 +510,7 @@ class CollectionOutputCSVBackup():
             result += 'np' + ', '
         # ================
         try:
-           # print metadata['OnlineAccessURLs']['OnlineAccessURL']
+           # #print metadata['OnlineAccessURLs']['OnlineAccessURL']
             result += self.checkerRules.checkOnlineURLDesc(metadata['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'], 1) + ', ,'
         except TypeError:
             if metadata['OnlineAccessURLs'] != None:

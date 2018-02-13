@@ -1,6 +1,7 @@
 import datetime
 import re
 import urllib2
+import requests
 
 from parse.parseInstrument import parseInstrument
 from parse.parsePlatform import parsePlatform
@@ -12,6 +13,7 @@ from parse.parseLocations import parseLocations
 from parse.parseHori import parseHori
 from parse.parseVerti import parseVerti
 from parse.parseRange import parseRange
+from urllib2 import Request, urlopen, URLError, HTTPError
 
 from bs4 import BeautifulSoup
 from datetime import *
@@ -36,11 +38,27 @@ class checkerRules():
         return listNew
 
     def broken_url(self,val):
-        try:
-            urllib2.urlopen(val)
-            return False
-        except:
-            return True
+        if (val != None):
+            r = requests.get(val, allow_redirects=False)
+            return r.status_code
+        else:
+            return 404
+    #Modified broken_url method to check broken, redirected and valid URLs
+    #Modified by Siva
+        # try:
+        #     urllib2.urlopen(val)
+        #     return False
+        # except:
+        #     return True
+        # print "I am checking validity of URLS   " + val
+        # try:
+        #
+        #     #urllib2.urlopen(val)
+        #
+        #     print "Status Code   " + r.status_code
+        #
+        # except:
+        #     return 404
 
     def valid_email(self,val):
         if(val == None):
@@ -84,9 +102,19 @@ class checkerRules():
         return 'OK'
 
     def check_Dataset_Citation_Online_Resource(self, val):
-        if(self.broken_url(val)):
-            return 'Broken link: ' + val
-        return 'OK'
+        #if(self.broken_url(val)):
+        #    return 'Broken link: ' + val
+        #return 'OK'
+        ##Added new code to check the broken, redirected and valid URLs
+        #Added by Siva
+        status = self.broken_url(val)
+        if (status >= 400):
+            return "Broken link :" + val
+        if (status >= 300 and status < 400):
+            return "Redirected link :" + val
+        if (status == 200):
+            return "OK"
+
     def check_Personnel_Role_item(self,val):
         if(val == None):
             return 'np'
@@ -548,11 +576,17 @@ class checkerRules():
         return "OK - " + val
 
     def check_Multimedia_Sample_URL(self,val):
+        #Added code to check broken, redirected and valid URLs.
+        #Coded by Siva
         if(val == None):
             return 'np'
-        if(self.broken_url(val)):
+        status = self.broken_url(val)
+        if(status>=400):
             return "Broken link :" + val
-        return "OK"
+        if (status >= 300 and status < 400):
+            return "Redirected link :" + val
+        if(status == 200):
+            return "OK"
 
     def check_summary_abstract(self,val):
         result = ""
@@ -563,8 +597,15 @@ class checkerRules():
 
         urls = re.findall("(?P<url>https?://[^\s]+)",val)
         for item in urls:
-            if (self.broken_url(item)):
-                result +='Broken link: ' + item + ";"
+            #if (self.broken_url(item)):
+            #    result +='Broken link: ' + item + ";"
+            #Added code to check broken, redirected and valid URLs
+            #Coded by Siva
+            status = self.broken_url(val)
+            if (status >= 400):
+                return "Broken link :" + val
+            if (status >= 300 and status < 400):
+                return "Redirected link :" + val
 
         if(bool(BeautifulSoup(val,"html.parser").find())):
             result += " The abstract contains HTML. Please verify the HTML entities are being displayed properly."
