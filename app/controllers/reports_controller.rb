@@ -112,6 +112,10 @@ class ReportsController < ApplicationController
     @report_title = "SINGLE RECORD VIEW"
 
     @record = Collection.find_record(params["concept_id"], params["revision_id"])
+    
+    if @record.nil?
+      @record = Granule.find_record(params["concept_id"], params["revision_id"])
+    end
 
     @reviews = @record.reviews
 
