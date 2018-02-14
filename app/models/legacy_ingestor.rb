@@ -36,7 +36,16 @@ class LegacyIngestor
 
     data_sheet.rows[header_row+1..-1].each do |row|
       begin
-        record = granules ? get_granule_record(row) : get_collection_record(row)
+        
+        if granules
+          concept_id = parse_granule_concept_id(row[0])
+          record     = get_granule_record(concept_id)
+        else
+          url        = parse_url(row[0])
+          concept_id = Collection.parse_collection_url(url)[0] if url
+          record     = get_collection_record(url)
+        end
+
         next unless record
 
         row.to_a[1...checked_by_column].each_with_index do |review, index|
@@ -54,13 +63,13 @@ class LegacyIngestor
         record.add_legacy_review(row[checked_by_column], row[comments_column])
 
       rescue Cmr::CmrError => e
-        errors << { data: row.first, reason: "There was an Error with the CMR: #{e.message}" }
+        errors << { concept_id: concept_id, reason: "There was an Error with the CMR: #{e.message}" }
       rescue Cmr::UnsupportedFormatError => e
-        errors << { data: row.first, reason: "The record does not have a supported format: #{e.message}"}
+        errors << { concept_id: concept_id, reason: "The record does not have a supported format: #{e.message}"}
       rescue ActiveRecord::RecordNotFound => e
-        errors << { data: row.first, reason: "#{e.message}"}
+        errors << { concept_id: concept_id, reason: e.message }
       rescue StandardError => e
-        errors << { data: row.first, reason: "The legacy review could not be ingested: #{e.message}"}
+        errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
       end
     end
 
@@ -69,14 +78,12 @@ class LegacyIngestor
 
   private
 
-  def get_collection_record(row)
-    url = parse_url(row[0])
+  def get_collection_record(url)
     return unless url
     Collection.assemble_new_record_by_url(url)
   end
 
-  def get_granule_record(row)
-    concept_id = parse_concept_id(row[0])
+  def get_granule_record(concept_id)
     return unless concept_id
     Granule.add_granule_by_concept_id(concept_id)
   end
@@ -86,18 +93,17 @@ class LegacyIngestor
     data_set_id.match(/https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts.*/)[0]
   end
 
-  def parse_concept_id(granule_ur)
-    return unless granule_ur
-    granule_ur.match(/.*\((G\d+-.*)\).*/)[1]
+  def parse_granule_concept_id(concept_id_data)
+    return unless concept_id_data
+    concept_id_data.match(/.*\((G\d+-.*)\).*/)[1]
   end
 
   def report_errors
     if errors.empty?
       puts "No errors when importing reviews"
     else
-      data_type = granules ? "Granule" : "Collection"
       errors.each do |error|
-        puts "#{data_type} review could not be ingested for #{error[:data]}. #{error[:reason]}"
+        puts "#{error[:concept_id]} review could not be ingested: #{error[:reason]}"
       end
     end
   end
