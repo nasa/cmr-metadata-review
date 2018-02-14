@@ -9,6 +9,7 @@ class LegacyIngestor
   GRANULE_HEADER_ROW           = 4
   GRANULE_CHECKED_BY_COLUMN    = 102
   GRANULE_COMMENTS_COLUMN      = 103
+  NOT_IN_METADATA              = "np"
   
   # Spreadsheet gem can't read colors exactly right
   COLORS = {
@@ -55,7 +56,7 @@ class LegacyIngestor
             color:          COLORS[row.format(index+1).pattern_fg_color]
           }
 
-          record.update_legacy_data(column_name, data)
+          add_field_errors(concept_id, column_name, review) unless record.update_legacy_data(column_name, data)
         end
       
 
@@ -74,6 +75,7 @@ class LegacyIngestor
     end
 
     report_errors
+    report_field_errors
   end
 
   private
@@ -108,6 +110,26 @@ class LegacyIngestor
     end
   end
 
+  def add_field_errors(concept_id, column_name, review)
+    return if review == NOT_IN_METADATA
+    field_errors[concept_id] ||= {}
+    field_errors[concept_id][column_name] = review
+  end
+
+  def report_field_errors
+    if field_errors.empty?
+      puts "No errors for specific columns when ingesting reviews"
+    else
+      field_errors.each do |concept_id, error_data|
+        error_str = "The following fields were not ingested for #{concept_id}\n"
+        error_data.each do |column_name, review|
+          error_str += "\t#{column_name}: #{review}\n"
+        end
+        puts error_str
+      end
+    end
+  end
+
   def header_row
     @header_row ||= granules ? GRANULE_HEADER_ROW : COLLECTION_HEADER_ROW
   end
@@ -122,5 +144,9 @@ class LegacyIngestor
 
   def errors
     @errors ||= []
+  end
+
+  def field_errors
+    @field_errors ||= {}
   end
 end
