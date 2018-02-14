@@ -69,7 +69,7 @@ class Collection < ActiveRecord::Base
     concept_id, revision_id, data_format = parse_collection_url(url)
     native_format                        = Cmr.get_raw_collection_format(concept_id)
 
-    return unless SUPPORTED_FORMATS.include?(native_format)
+    raise Cmr::UnsupportedFormatError.new("#{native_format} format is not supported") unless SUPPORTED_FORMATS.include?(native_format)
 
     # Use the native format to get the collection
     url[data_format] = native_format unless data_format == native_format

@@ -11,7 +11,9 @@ class Cmr
 
   # A custom error raised when items can not be found in the CMR.
   class CmrError < StandardError
+  end
 
+  class UnsupportedFormatError < StandardError
   end
 
   # ====Params   

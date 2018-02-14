@@ -46,9 +46,7 @@ class Granule < ActiveRecord::Base
 
   def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
-    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
-
-    return unless collection
+    collection   = Collection.find_by!(concept_id: granule_info["collection_concept_id"])
 
     granule_data = granule_info["Granule"]
 
