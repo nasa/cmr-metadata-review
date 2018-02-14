@@ -35,22 +35,36 @@ class LegacyIngestor
     headers.each { |header| header.gsub!(/[\s\*]/, "") }
 
     data_sheet.rows[header_row+1..-1].each do |row|
-      record = granules ? get_granule_record(row) : get_collection_record(row)
-      next unless record
+      begin
+        record = granules ? get_granule_record(row) : get_collection_record(row)
+        next unless record
 
-      row.to_a[1...checked_by_column].each_with_index do |review, index|
-        column_name    = headers[index+1]
-        data = {
-          script_comment: review,
-          color:          COLORS[row.format(index+1).pattern_fg_color]
-        }
+        row.to_a[1...checked_by_column].each_with_index do |review, index|
+          column_name    = headers[index+1]
+          data = {
+            script_comment: review,
+            color:          COLORS[row.format(index+1).pattern_fg_color]
+          }
 
-        record.update_legacy_data(column_name, data)
+          record.update_legacy_data(column_name, data)
+        end
+      
+
+        # Add additional comments as a review
+        record.add_legacy_review(row[checked_by_column], row[comments_column])
+
+      rescue Cmr::CmrError => e
+        errors << { data: row.first, reason: "There was an Error with the CMR: #{e.message}" }
+      rescue Cmr::UnsupportedFormatError => e
+        errors << { data: row.first, reason: "The record does not have a supported format: #{e.message}"}
+      rescue ActiveRecord::RecordNotFound => e
+        errors << { data: row.first, reason: "#{e.message}"}
+      rescue StandardError => e
+        errors << { data: row.first, reason: "The legacy review could not be ingested: #{e.message}"}
       end
-
-      # Add additional comments as a review
-      record.add_legacy_review(row[checked_by_column], row[comments_column])
     end
+
+    report_errors
   end
 
   private
@@ -77,6 +91,17 @@ class LegacyIngestor
     granule_ur.match(/.*\((G\d+-.*)\).*/)[1]
   end
 
+  def report_errors
+    if errors.empty?
+      puts "No errors when importing reviews"
+    else
+      data_type = granules ? "Granule" : "Collection"
+      errors.each do |error|
+        puts "#{data_type} review could not be ingested for #{error[:data]}. #{error[:reason]}"
+      end
+    end
+  end
+
   def header_row
     @header_row ||= granules ? GRANULE_HEADER_ROW : COLLECTION_HEADER_ROW
   end
@@ -87,5 +112,9 @@ class LegacyIngestor
 
   def comments_column
     @comment_column ||= granules ? GRANULE_COMMENTS_COLUMN : COLLECTION_COMMENTS_COLUMN
+  end
+
+  def errors
+    @errors ||= []
   end
 end
