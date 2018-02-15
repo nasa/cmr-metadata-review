@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
   def refresh
     # a list of records added in update in format of
     # [["concept_id1", "revision_id1"], ["concept_id2", "revision_id2"]]
-    total_added_records, total_failed_records = Cmr.update_collections(current_user)
+    total_added_records, total_failed_records = Cmr.update_records(current_user)
 
     flash[:notice] = Cmr.format_added_records_list(total_added_records).html_safe
     if !total_failed_records.empty?
@@ -88,11 +88,9 @@ class RecordsController < ApplicationController
       elsif @record.ready_for_daac_review?
         @record.release_to_daac!
 
-        RecordNotifier.notify_released([@record])
+        RecordNotifier.notify_daac_curators([@record])
       else
         @record.close!
-
-        RecordNotifier.notify_closed([@record])
       end
     rescue => e
       error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
@@ -100,5 +98,4 @@ class RecordsController < ApplicationController
       false
     end
   end
-
 end
