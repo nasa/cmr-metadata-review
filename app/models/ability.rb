@@ -19,6 +19,9 @@ class Ability
 
         can :review_state, Record.aasm.states.map(&:name)
 
+        can :force_close, Record
+        can :close, Record
+
         can :replace_granule, Granule
       end
 
@@ -41,6 +44,8 @@ class Ability
         can :access, :curate
         
         can :provide_feedback, Record
+
+        can :close, Record
 
         can :review_state, Record::STATE_IN_DAAC_REVIEW
       end

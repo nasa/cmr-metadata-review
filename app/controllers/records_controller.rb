@@ -90,7 +90,7 @@ class RecordsController < ApplicationController
 
         RecordNotifier.notify_released([@record])
       else
-        @record.close!
+        can?(:force_close, @record) ? @record.force_close! : @record.close!
 
         RecordNotifier.notify_closed([@record])
       end
