@@ -4,11 +4,7 @@ class LegacyIngestor
   attr_accessor :granules
 
   COLLECTION_HEADER_ROW        = 5
-  COLLECTION_COMMENTS_COLUMN   = 198
-  COLLECTION_CHECKED_BY_COLUMN = 197
   GRANULE_HEADER_ROW           = 4
-  GRANULE_CHECKED_BY_COLUMN    = 102
-  GRANULE_COMMENTS_COLUMN      = 103
   NOT_IN_METADATA              = "np"
   PROGRESS_BAR_FORMAT          = "%t: |%B| %p%"
   
@@ -55,7 +51,7 @@ class LegacyIngestor
 
         next unless record
 
-        row.to_a[1...checked_by_column].each_with_index do |review, index|
+        row.to_a[1..-1].each_with_index do |review, index|
           column_name    = headers[index+1]
           data = {
             script_comment: review,
@@ -67,7 +63,7 @@ class LegacyIngestor
       
 
         # Add additional comments as a review
-        record.add_legacy_review(row[checked_by_column], row[comments_column])
+        record.add_legacy_review
 
       rescue Cmr::CmrError => e
         errors << { concept_id: concept_id, reason: "There was an Error with the CMR: #{e.message}" }
