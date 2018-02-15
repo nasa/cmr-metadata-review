@@ -10,6 +10,7 @@ class LegacyIngestor
   GRANULE_CHECKED_BY_COLUMN    = 102
   GRANULE_COMMENTS_COLUMN      = 103
   NOT_IN_METADATA              = "np"
+  PROGRESS_BAR_FORMAT          = "%t: |%B| %p%"
   
   # Spreadsheet gem can't read colors exactly right
   COLORS = {
@@ -33,9 +34,14 @@ class LegacyIngestor
     headers.each { |header| header.gsub!(/\([ab]\)/, "") }
 
     # Replace any spaces and asterisks in the headers to match CMR data
-    headers.each { |header| header.gsub!(/[\s\*]/, "") }
+    headers.each { |header| header.gsub!(/[\s\*]/, "") } 
 
-    data_sheet.rows[header_row+1..-1].each do |row|
+    data_rows = data_sheet.rows[header_row+1..-1]
+    data_rows = remove_nil_rows(data_rows)
+
+    progress_bar = ProgressBar.create(total: data_rows.length, format: PROGRESS_BAR_FORMAT)
+
+    data_rows.each do |row|
       begin
         
         if granules
@@ -72,6 +78,8 @@ class LegacyIngestor
       rescue StandardError => e
         errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
       end
+
+      progress_bar.increment
     end
 
     report_errors
@@ -128,6 +136,12 @@ class LegacyIngestor
         puts error_str
       end
     end
+  end
+
+  def remove_nil_rows(rows)
+    rows.map do |row|
+      row.any?(&:present?) ? row : nil
+    end.compact!
   end
 
   def header_row

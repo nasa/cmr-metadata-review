@@ -40,6 +40,7 @@ gem 'aasm', '~> 4.12.0'
 # gem 'capistrano-rails', group: :development
 
 gem 'spreadsheet'
+gem 'ruby-progressbar'
 
 
 group :test do
