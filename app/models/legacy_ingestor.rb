@@ -8,23 +8,23 @@ class LegacyIngestor
   NOT_IN_METADATA              = "np"
   PROGRESS_BAR_FORMAT          = "%t: |%B| %p%"
   
-  # Spreadsheet gem can't read colors exactly right
+  # Translate from HEX to our colors in the DB
   COLORS = {
-    brown:  "yellow",
-    cyan:   "red",
-    green:  "blue",
-    white:  "green",
-    border: "green"
+    "ffffff"   => "green",
+    "FFFFFFFF" => "green",
+    "FF4A86E8" => "blue",
+    "FFFFFF00" => "yellow",
+    "FFE06666"   => "red"
   }
 
   def initialize(filename, granules = false)
-    @spreadsheet = Spreadsheet.open(filename)
+    @spreadsheet = RubyXL::Parser.parse(filename)
     @granules    = granules
   end
 
   def ingest_records!
-    data_sheet = spreadsheet.worksheet(0)
-    headers = data_sheet.row(header_row)
+    data_sheet = spreadsheet[0]
+    headers = data_sheet[header_row].cells.map(&:value)
     
     # Replaces any markings suchs as (a) or (b) in the data
     headers.each { |header| header.gsub!(/\([ab]\)/, "") }
@@ -32,7 +32,7 @@ class LegacyIngestor
     # Replace any spaces and asterisks in the headers to match CMR data
     headers.each { |header| header.gsub!(/[\s\*]/, "") } 
 
-    data_rows = data_sheet.rows[header_row+1..-1]
+    data_rows = data_sheet[header_row+1..-1]
     data_rows = remove_nil_rows(data_rows)
 
     progress_bar = ProgressBar.create(total: data_rows.length, format: PROGRESS_BAR_FORMAT)
@@ -41,24 +41,24 @@ class LegacyIngestor
       begin
         
         if granules
-          concept_id = parse_granule_concept_id(row[0])
+          concept_id = parse_granule_concept_id(row.cells[0].value)
           record     = get_granule_record(concept_id)
         else
-          url        = parse_url(row[0])
+          url        = parse_url(row.cells[0].value)
           concept_id = Collection.parse_collection_url(url)[0] if url
           record     = get_collection_record(url)
         end
 
         next unless record
 
-        row.to_a[1..-1].each_with_index do |review, index|
+        row.cells[1..-1].each_with_index do |cell, index|
           column_name    = headers[index+1]
           data = {
-            script_comment: review,
-            color:          COLORS[row.format(index+1).pattern_fg_color]
+            script_comment: cell.value,
+            color:          COLORS[cell.fill_color]
           }
 
-          add_field_errors(concept_id, column_name, review) unless record.update_legacy_data(column_name, data)
+          add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data)
         end
       
 
@@ -136,7 +136,7 @@ class LegacyIngestor
 
   def remove_nil_rows(rows)
     rows.map do |row|
-      row.any?(&:present?) ? row : nil
+      row.cells.any? { |cell| cell.value.present? } ? row : nil
     end.compact!
   end
 

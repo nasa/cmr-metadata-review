@@ -162,8 +162,11 @@ GEM
     rdoc (4.3.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    ruby-ole (1.2.12.1)
     ruby-progressbar (1.9.0)
+    rubyXL (3.3.27)
+      nokogiri (>= 1.4.4)
+      rubyzip (>= 1.1.6)
+    rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -180,8 +183,6 @@ GEM
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
-    spreadsheet (1.1.5)
-      ruby-ole (>= 1.0)
     spring (2.0.0)
       activesupport (>= 4.2)
     sprockets (3.7.1)
@@ -238,10 +239,10 @@ DEPENDENCIES
   rails (= 4.2.7.1)
   rdoc
   ruby-progressbar
+  rubyXL
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   simplecov
-  spreadsheet
   spring
   sqlite3 (~> 1.3.12)
   turbolinks

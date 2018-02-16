@@ -39,7 +39,7 @@ gem 'aasm', '~> 4.12.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'spreadsheet'
+gem 'rubyXL'
 gem 'ruby-progressbar'
 
 
