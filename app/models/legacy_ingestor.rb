@@ -29,7 +29,7 @@ class LegacyIngestor
     headers = data_sheet[header_row].cells.map(&:value)
     
     # Replaces any markings suchs as (a) or (b) in the data
-    headers.each { |header| header.gsub!(/\([ab]\)/, "") }
+    headers.each { |header| header.gsub!(/\(\w\)/, "") }
 
     # Replace any spaces and asterisks in the headers to match CMR data
     headers.each { |header| header.gsub!(/[\s\*]/, "") }
