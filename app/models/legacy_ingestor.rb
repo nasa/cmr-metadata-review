@@ -75,8 +75,8 @@ class LegacyIngestor
         errors << { concept_id: concept_id, reason: "The record does not have a supported format: #{e.message}"}
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
-     # rescue StandardError => e
-      #  errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
+      rescue StandardError => e
+        errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
       end
 
       progress_bar.increment
