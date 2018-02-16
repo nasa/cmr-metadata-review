@@ -66,7 +66,7 @@ class CollectionsController < ApplicationController
 
     begin
       collection_data = Cmr.get_collection(params["concept_id"])
-      @short_name = collection_data["ShortName"]  
+      @short_name = collection_data["ShortName"]
       @granule_count = Cmr.collection_granule_count(@concept_id)
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
@@ -104,7 +104,7 @@ class CollectionsController < ApplicationController
     begin
       #guard against bringing in an unsupported format
       native_format = Cmr.get_raw_collection_format(concept_id)
-      if !(Collection::SUPPORTED_FORMATS.include? native_format) 
+      if !(Collection::SUPPORTED_FORMATS.include? native_format)
         redirect_to home_path
         flash[:alert] = "The system could not ingest the selected record, #{native_format} format records are not currently supported"
         return
@@ -135,7 +135,7 @@ class CollectionsController < ApplicationController
           save_success = true
         rescue Timeout::Error
           flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
-          Rails.logger.error("PyCMR Error: On Ingest Revision #{revision_id}, Concept_id #{concept_id} had timeout error") 
+          Rails.logger.error("PyCMR Error: On Ingest Revision #{revision_id}, Concept_id #{concept_id} had timeout error")
           raise ActiveRecord::Rollback
         end
       end
@@ -168,19 +168,50 @@ class CollectionsController < ApplicationController
       return
     end
 
-    record = Collection.find_record(params["concept_id"], params["revision_id"])
-
-    if record.nil?
-      flash[:alert] = "Error: Record was not Deleted"
-      Rails.logger.error("Delete Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Deleted") 
-      redirect_to home_path
-      return
+    data_type = Collection.find_type(params["concept_id"])
+    
+    if data_type.nil?
+      raise ActiveRecord::RecordNotFound
+    else
+      record = data_type.find_record(params["concept_id"], params["revision_id"])
+      if record.nil?
+        flash[:alert] = "Error: Record was not Deleted"
+        Rails.logger.error("Move Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Moved")
+        redirect_to home_path
+      end
     end
 
     record.hide
     record.save
 
     flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} Deleted"
+    redirect_to home_path
+  end
+  
+  def move
+    if !current_user.admin
+      flash[:alert] = "User not authorized to move records"
+      redirect_to home_path
+      return
+    end
+
+    data_type = Collection.find_type(params["concept_id"])
+    
+    if data_type.nil?
+      raise ActiveRecord::RecordNotFound
+    else
+      record = data_type.find_record(params["concept_id"], params["revision_id"])
+      if record.nil?
+        flash[:alert] = "Error: Record was not moved"
+        Rails.logger.error("Move Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Moved")
+        redirect_to home_path
+      end
+    end
+
+    record.release_to_daac
+    record.save
+    
+    flash[:notice] = "Revision #{params["revision_id"]} of Concept_id #{params["concept_id"]} Moved"
     redirect_to home_path
   end
 
