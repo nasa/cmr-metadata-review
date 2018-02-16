@@ -3,10 +3,12 @@ class LegacyIngestor
   attr_accessor :spreadsheet
   attr_accessor :granules
 
-  COLLECTION_HEADER_ROW        = 5
-  GRANULE_HEADER_ROW           = 4
-  NOT_IN_METADATA              = "np"
-  PROGRESS_BAR_FORMAT          = "%t: |%B| %p%"
+  COLLECTION_HEADER_ROW = 5
+  GRANULE_HEADER_ROW    = 4
+  NOT_IN_METADATA       = "np"
+  PROGRESS_BAR_FORMAT   = "%t: |%B| %p%"
+  COMMENT_HEADER        = "Comments:"
+  CHECKED_BY_HEADER     = "Checkedby:"
   
   # Translate from HEX to our colors in the DB
   COLORS = {
@@ -14,7 +16,7 @@ class LegacyIngestor
     "FFFFFFFF" => "green",
     "FF4A86E8" => "blue",
     "FFFFFF00" => "yellow",
-    "FFE06666"   => "red"
+    "FFE06666" => "red"
   }
 
   def initialize(filename, granules = false)
@@ -30,7 +32,10 @@ class LegacyIngestor
     headers.each { |header| header.gsub!(/\([ab]\)/, "") }
 
     # Replace any spaces and asterisks in the headers to match CMR data
-    headers.each { |header| header.gsub!(/[\s\*]/, "") } 
+    headers.each { |header| header.gsub!(/[\s\*]/, "") }
+
+    comment_by = headers.find_index(COMMENT_HEADER)
+    checked_by = headers.find_index(CHECKED_BY_HEADER)
 
     data_rows = data_sheet[header_row+1..-1]
     data_rows = remove_nil_rows(data_rows)
@@ -39,7 +44,6 @@ class LegacyIngestor
 
     data_rows.each do |row|
       begin
-        
         if granules
           concept_id = parse_granule_concept_id(row.cells[0].value)
           record     = get_granule_record(concept_id)
@@ -51,7 +55,7 @@ class LegacyIngestor
 
         next unless record
 
-        row.cells[1..-1].each_with_index do |cell, index|
+        row.cells[1...checked_by].each_with_index do |cell, index|
           column_name    = headers[index+1]
           data = {
             script_comment: cell.value,
@@ -63,7 +67,7 @@ class LegacyIngestor
       
 
         # Add additional comments as a review
-        record.add_legacy_review
+        record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value)
 
       rescue Cmr::CmrError => e
         errors << { concept_id: concept_id, reason: "There was an Error with the CMR: #{e.message}" }
@@ -71,8 +75,8 @@ class LegacyIngestor
         errors << { concept_id: concept_id, reason: "The record does not have a supported format: #{e.message}"}
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
-      rescue StandardError => e
-        errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
+     # rescue StandardError => e
+      #  errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
       end
 
       progress_bar.increment
@@ -142,14 +146,6 @@ class LegacyIngestor
 
   def header_row
     @header_row ||= granules ? GRANULE_HEADER_ROW : COLLECTION_HEADER_ROW
-  end
-
-  def checked_by_column
-    @checked_by_column ||= granules ? GRANULE_CHECKED_BY_COLUMN : COLLECTION_CHECKED_BY_COLUMN
-  end
-
-  def comments_column
-    @comment_column ||= granules ? GRANULE_COMMENTS_COLUMN : COLLECTION_COMMENTS_COLUMN
   end
 
   def errors

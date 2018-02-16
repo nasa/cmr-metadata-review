@@ -732,9 +732,11 @@ class Record < ActiveRecord::Base
     record_data.update_attributes(data) if record_data
   end
 
-  def add_legacy_review(user = User.find_by(role: "admin"))
-    comment = "This review was imported from legacy data\n"
-    review = reviews.create(user: user, comment: comment, review_state: 0)
+  def add_legacy_review(checked_by, comment, user = User.find_by(role: "admin"))
+    final_comment = "This review was imported from legacy data\n"
+    final_comment += "Checked By: #{checked_by}"
+    final_comment += "Additional Comments: #{comment}" if comment
+    review = reviews.create(user: user, comment: final_comment, review_state: 0)
     review.mark_complete
   end
 
