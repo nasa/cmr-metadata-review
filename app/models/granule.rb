@@ -4,6 +4,7 @@ class Granule < ActiveRecord::Base
 
   extend Modules::RecordRevision
 
+  delegate :update?, :short_name, to: :collection
   
   def get_records
     self.records.where.not(state: Record::STATE_HIDDEN)
@@ -42,14 +43,5 @@ class Granule < ActiveRecord::Base
     end 
       
     granules_components
-  end
-
-
-  def update?
-    self.collection.update?
-  end
-
-  def short_name
-    self.collection.short_name
   end
 end
