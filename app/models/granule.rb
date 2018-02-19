@@ -7,7 +7,7 @@ class Granule < ActiveRecord::Base
   delegate :update?, :short_name, to: :collection
   
   def get_records
-    self.records.where.not(state: Record::STATE_HIDDEN)
+    records.visible
   end
 
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
