@@ -52,20 +52,4 @@ class Granule < ActiveRecord::Base
   def short_name
     self.collection.short_name
   end
-
-  def delete_self
-    granule = self
-    granule_records = granule.records
-    granule_records.each do |record|
-      record_datas = record.record_datas
-      record_datas.each do |data|
-        data.destroy
-      end
-      if record.try(:ingest)
-        record.ingest.destroy
-      end
-      record.destroy
-    end
-    granule.destroy
-  end
 end

@@ -14,7 +14,7 @@ class GranulesController < ApplicationController
     authorize! :replace_granule, granule
 
     if record.open?
-      granule.delete_self
+      granule.destroy
       collection.add_granule(current_user)
       
       flash[:notice] = "A new granule has been selected for this collection"
