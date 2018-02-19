@@ -78,7 +78,7 @@ class Collection < ActiveRecord::Base
     # Use the native format to get the collection
     url[data_format] = native_format unless data_format == native_format
 
-    collection_data = Cmr.get_collection_by_url(url)
+    collection_data = Cmr.get_collection_by_url(url, native_format)
 
     short_name = native_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
 

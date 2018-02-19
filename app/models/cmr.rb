@@ -155,12 +155,12 @@ class Cmr
     format_collection(raw_collection, data_format)
   end
 
-  def self.get_collection_by_url(url)
-    data_format = url =~ /echo10/ ? "echo10" : "dif10"
-
+  def self.get_collection_by_url(url, data_format)
     collection_xml = cmr_request(url).parsed_response
-    collection_xml_hash = Hash.from_xml(collection_xml)
 
+    raise CmrError.new(collection_xml["errors"]["error"]) if collection_xml["errors"]
+    
+    collection_xml_hash = Hash.from_xml(collection_xml)
     raw_collection = data_format == "echo10" ? collection_xml_hash["Collection"] : collection_xml_hash["DIF"]
     format_collection(raw_collection, data_format)
   end
@@ -211,7 +211,10 @@ class Cmr
     url = Cmr.api_url("collections", "atom", {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
     collection_results = Hash.from_xml(collection_xml)["feed"]
-    raw_format = collection_results["entry"]["originalFormat"].downcase
+    raw_format = collection_results["entry"]["originalFormat"].downcase if collection_results["entry"]
+
+    raise CmrError.new("Native Format not found") unless raw_format
+    
     if raw_format.include? "dif10"
       return "dif10"
     elsif raw_format.include? "echo10"
