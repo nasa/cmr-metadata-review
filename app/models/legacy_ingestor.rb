@@ -5,7 +5,6 @@ class LegacyIngestor
 
   COLLECTION_HEADER_ROW = 5
   GRANULE_HEADER_ROW    = 4
-  NOT_IN_METADATA       = "np"
   PROGRESS_BAR_FORMAT   = "%t: |%B| %p%"
   COMMENT_HEADER        = "Comments:"
   CHECKED_BY_HEADER     = "Checkedby:"
@@ -119,7 +118,6 @@ class LegacyIngestor
   end
 
   def add_field_errors(concept_id, column_name, review)
-    return if review == NOT_IN_METADATA
     field_errors[concept_id] ||= {}
     field_errors[concept_id][column_name] = review
   end
