@@ -24,8 +24,13 @@ class SiteController < ApplicationController
 
     @requires_curator_feedback_records = records.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id })
     
-    @in_daac_review_records = records.in_daac_review.sort_by { |record| record.recordable.short_name }
-
+    @in_daac_review_records = records.in_daac_review
+    if current_user.role.eql?('daac_curator')
+      @in_daac_review_records = @in_daac_review_records.daac(current_user.daac)
+    end
+    
+    @in_daac_review_records.sort_by { |record| record.recordable.short_name }
+    
     @search_results = []
   end
 

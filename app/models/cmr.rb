@@ -79,6 +79,18 @@ class Cmr
     return total_added_records, total_failed_records
   end
 
+  def self.current_revision_for(concept_id) 
+    url = "https://cmr.earthdata.nasa.gov/search/collections.xml?concept_id[]=#{concept_id}"
+    result =  Cmr.cmr_request(url).parsed_response
+
+    revision = -1
+    if result['results']['hits'].to_i > 0
+      revision = result['results']['references']['reference']['revision_id'].to_i
+    end
+
+    revision
+  end
+
   # ====Params   
   # string of date(no time), Integer 
   # ====Returns
