@@ -14,6 +14,8 @@ class Record < ActiveRecord::Base
   has_one :ingest, dependent: :destroy
   has_many :discussions
 
+  delegate :concept_id, to: :recordable
+
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
 
@@ -183,17 +185,6 @@ class Record < ActiveRecord::Base
     else
       "In Process"
     end
-  end
-
-
-  # ====Params
-  # None
-  # ====Returns
-  # String
-  # ==== Method
-  # Accesses the Collection or Granule that this record is an attribute of and returns its concept_id
-  def concept_id
-    self.recordable.concept_id
   end
 
   def get_raw_data
