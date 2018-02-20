@@ -66,7 +66,7 @@
               <% @unreviewed_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="unreviewedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="unreviewedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td class="center_text"><%= record.version_id %></td>
@@ -124,7 +124,7 @@
               <% @in_arc_review_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="in-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="in-reviewRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td class="center_text"><%= record.version_id %></td>
@@ -182,7 +182,7 @@
               <% @waiting_daac_release_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="waiting-daac-releaseConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="waiting-daac-releaseRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td class="center_text"><%= record.version_id %></td>
@@ -241,7 +241,7 @@
               <% @in_daac_review_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="in-daac-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="in-daac-reviewRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td class="center_text"><%= record.version_id %></td>
@@ -304,7 +304,7 @@
               <% @requires_curator_feedback_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="requires-curator-feedbackConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="requires-curator-feedbackRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td class="center_text"><%= record.version_id %></td>
@@ -361,7 +361,7 @@
               <% @closed_records.each_with_index do |record, index| %>
                 <tr>
                     <td id="closedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
-                    <td><%= record.is_collection? ? "Collection" : "Granule" %></td>
+                    <td><%= record.collection? ? "Collection" : "Granule" %></td>
                     <td id="closedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
                     <td><%= record.recordable.short_name %></td>
                     <td><%= record.version_id %></td>

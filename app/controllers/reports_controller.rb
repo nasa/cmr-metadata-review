@@ -109,7 +109,6 @@ class ReportsController < ApplicationController
   def single
     @csv_path = reports_single_path
     @csv_params = "?concept_id=#{params["concept_id"]}&revision_id=#{params["revision_id"]}"
-    @report_title = "SINGLE RECORD VIEW"
 
     data_type = Collection.find_type(params["concept_id"])
     
@@ -121,10 +120,6 @@ class ReportsController < ApplicationController
         raise ActiveRecord::RecordNotFound
       end
     end
-    
-
-
-    @reviews = @record.reviews
 
     record_data = @record.record_datas
     @reds = record_data.select{|data| data.color == "red"}

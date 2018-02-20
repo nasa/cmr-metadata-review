@@ -38,7 +38,7 @@
 
     <div class="report_sub_title first_sub_title">
       <div class="title_box">
-        <%= @report_title %>
+        SINGLE RECORD VIEW
       </div>
       <div class="title_text">
 
@@ -73,7 +73,7 @@
                 <td>Date of Review</td>
                 <td>Review Comment</td>
               </tr>
-              <% @reviews.each do |review| %>
+              <% @record.reviews.each do |review| %>
                 <tr>
                   <td><%= review.reviewer_email %></td>
                   <td><%= review.formatted_date %></td>

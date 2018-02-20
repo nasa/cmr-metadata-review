@@ -79,8 +79,8 @@ class Record < ActiveRecord::Base
   # Boolean
   # ==== Method
   # Returns true if this record is an attribute of a Collection
-  def is_collection?
-    self.recordable_type == "Collection"
+  def collection?
+    recordable_type == "Collection"
   end
 
   # ====Params
@@ -89,8 +89,8 @@ class Record < ActiveRecord::Base
   # Boolean
   # ==== Method
   # Returns true if this record is an attribute of a Granule
-  def is_granule?
-    self.recordable_type == "Granule"
+  def granule?
+    recordable_type == "Granule"
   end
 
   # ====Params
@@ -196,15 +196,9 @@ class Record < ActiveRecord::Base
     self.recordable.concept_id
   end
 
-
   def get_raw_data
-    if is_collection?
-      Cmr.get_raw_collection(concept_id)
-    else
-      Cmr.get_raw_granule(concept_id)
-    end
+    collection? ? Cmr.get_raw_collection(concept_id) : Cmr.get_raw_granule(concept_id)
   end
-
 
   # ====Params
   # Hash from automated script output,
@@ -522,7 +516,7 @@ class Record < ActiveRecord::Base
       return true
     end
 
-    if self.is_granule? ||
+    if granule? ||
        self.recordable.try(:granules).nil? ||
        (self.recordable.granules.count == 0) ||
        (self.recordable.granules.first.records.first.nil?) ||
@@ -718,7 +712,6 @@ class Record < ActiveRecord::Base
     any_data_changed
   end
 
-
   def umm_json_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end
@@ -728,18 +721,9 @@ class Record < ActiveRecord::Base
   end
 
   def related_granule_record
-    if self.is_granule?
-      return nil
-    end
+    return nil if granule?
 
-    collection = self.recordable
-    granule = collection.granules.first
-    if granule
-      granule_record = (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first
-      return granule_record
-    end
-
-    nil
+    granule = recordable.granules.first
+    (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first if granule
   end
-
 end

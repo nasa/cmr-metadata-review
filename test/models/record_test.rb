@@ -6,8 +6,8 @@ class RecordTest < ActiveSupport::TestCase
     it "returns correct attribute information for a record" do
       record = Record.find_by id: 1
       #had to remove description from yaml, json strings allow characters not allowed in yaml
-      assert_equal(record.is_collection?, true)
-      assert_equal(record.is_granule?, false)
+      assert_equal(record.collection?, true)
+      assert_equal(record.granule?, false)
       assert_equal(record.long_name, "Test_Long_Name")
       assert_equal(record.short_name, "A2_DySno_NRT")
       assert_equal(record.status_string, "In Process")
