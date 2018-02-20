@@ -66,6 +66,19 @@
                 <td><%=@record.formatted_closed_date%></td>
               </tr>
             </table>
+
+            <% if @record.granule? %>
+              <% granule = @record.recordable %>
+              <table>
+                <tr class="header_row">
+                  <td>Collection Concept Id</td>
+                  <td>Collection Short Name</td>
+                </tr>
+                <tr>
+                  <td><%= granule.collection_concept_id.partition('-').first %></td>
+                  <td><%= granule.collection_short_name %></td>
+                </tr>
+            <% end %>
               
             <table>
               <tr class="header_row">
