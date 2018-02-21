@@ -6,7 +6,7 @@ namespace :legacy_ingest do
   end
 
   desc "Imports legacy granule reviews from provided Excel Sheet"
-  task :import_granules, [:filename] => :environment do |t, args|
+  task :import_granules, [:filename, :daac] => :environment do |t, args|
     LegacyIngestor.new(args[:filename], args[:daac], true).ingest_records!
   end
 
