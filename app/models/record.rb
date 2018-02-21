@@ -727,8 +727,8 @@ class Record < ActiveRecord::Base
     end
   end
 
-  def update_legacy_data(column_name, data)
-    record_data = record_datas.find_or_create_by(column_name: column_name)
+  def update_legacy_data(column_name, data, daac)
+    record_data = record_datas.find_or_create_by(column_name: column_name, daac: daac)
     record_data.update_attributes(data) if record_data
   end
 

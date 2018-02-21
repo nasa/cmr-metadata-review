@@ -71,22 +71,18 @@ class Collection < ActiveRecord::Base
 
   def self.assemble_new_record_by_url(url, current_user = nil)
     concept_id, revision_id, data_format = parse_collection_url(url)
-    native_format                        = Cmr.get_raw_collection_format(concept_id)
 
-    raise Cmr::UnsupportedFormatError.new("#{native_format} format is not supported") unless SUPPORTED_FORMATS.include?(native_format)
+    raise Cmr::UnsupportedFormatError.new("#{data_format} format is not supported") unless SUPPORTED_FORMATS.include?(data_format)
 
-    # Use the native format to get the collection
-    url[data_format] = native_format unless data_format == native_format
+    collection_data = Cmr.get_collection_by_url(url, data_format)
 
-    collection_data = Cmr.get_collection_by_url(url, native_format)
-
-    short_name = native_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
+    short_name = data_format == "echo10" ? collection_data["ShortName"] : collection_data["Entry_ID/Short_Name"]
 
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes(short_name: short_name)
 
-      collection_record = Record.create(recordable: collection, revision_id: revision_id, format: native_format)
+      collection_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format)
 
       collection_data.each_with_index do |(key, value), i|
         collection_record.record_datas.create(
@@ -102,6 +98,8 @@ class Collection < ActiveRecord::Base
       Ingest.create(record: collection_record, user: current_user, date_ingested: DateTime.now)
       collection_record
     end
+  rescue Cmr::CmrError
+    false
   end
 
   def self.parse_collection_url(url)

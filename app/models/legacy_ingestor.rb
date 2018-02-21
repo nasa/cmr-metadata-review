@@ -2,6 +2,7 @@ class LegacyIngestor
 
   attr_accessor :spreadsheet
   attr_accessor :granules
+  attr_accessor :daac
 
   COLLECTION_HEADER_ROW = 5
   GRANULE_HEADER_ROW    = 4
@@ -18,8 +19,9 @@ class LegacyIngestor
     "FFE06666" => "red"
   }
 
-  def initialize(filename, granules = false)
+  def initialize(filename, daac, granules = false)
     @spreadsheet = RubyXL::Parser.parse(filename)
+    @daac        = daac
     @granules    = granules
   end
 
@@ -47,9 +49,11 @@ class LegacyIngestor
           concept_id = parse_granule_concept_id(row.cells[0].value)
           record     = get_granule_record(concept_id)
         else
-          url        = parse_url(row.cells[0].value)
-          concept_id = Collection.parse_collection_url(url)[0] if url
-          record     = get_collection_record(url)
+          data_id    = row.cells[0].value
+          url        = parse_url(data_id)
+          concept_id, revision_id, data_format = Collection.parse_collection_url(url) if url
+          
+          record     = get_collection_record(url) || create_collection_record_outside_cmr(concept_id, revision_id, data_format, data_id)
         end
 
         next unless record
@@ -61,17 +65,13 @@ class LegacyIngestor
             color:          COLORS[cell.fill_color]
           }
 
-          add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data)
+          add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data, daac)
         end
       
 
         # Add additional comments as a review
         record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value)
 
-      rescue Cmr::CmrError => e
-        errors << { concept_id: concept_id, reason: "There was an Error with the CMR: #{e.message}" }
-      rescue Cmr::UnsupportedFormatError => e
-        errors << { concept_id: concept_id, reason: "The record does not have a supported format: #{e.message}"}
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
       rescue StandardError => e
@@ -95,6 +95,21 @@ class LegacyIngestor
   def get_granule_record(concept_id)
     return unless concept_id
     Granule.add_granule_by_concept_id(concept_id)
+  end
+
+  def create_collection_record_outside_cmr(concept_id, revision_id, data_format, collection_data)
+    collection = Collection.find_or_create_by(concept_id: concept_id)
+    unless collection.short_name.present?
+      short_name = parse_short_name(collection_data)
+      collection.update_attributes(short_name: short_name)
+    end
+
+    collection.records.create(revision_id: revision_id, format: data_format)
+  end
+
+  def parse_short_name(data_set_id)
+    return unless data_set_id
+    data_set_id.match(/.*\((.*)\) - https.*/)[1]
   end
 
   def parse_url(data_set_id)
