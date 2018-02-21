@@ -75,7 +75,11 @@ class LegacyIngestor
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
       rescue StandardError => e
-        errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
+        if concept_id
+          errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
+        else
+          errors << { concept_id: "Not Found", reason: "No Concept ID found for #{row.cells[0].value}"}
+        end
       end
 
       progress_bar.increment
@@ -119,7 +123,7 @@ class LegacyIngestor
 
   def parse_granule_concept_id(concept_id_data)
     return unless concept_id_data
-    concept_id_data.match(/.*\((G\d+-.*)\).*/)[1]
+    concept_id_data.match(/G\d+-#{daac}/)[0]
   end
 
   def report_errors
