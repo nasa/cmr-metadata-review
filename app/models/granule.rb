@@ -2,7 +2,7 @@ class Granule < ActiveRecord::Base
   has_many :records, as: :recordable, dependent: :destroy
   belongs_to :collection
 
-  extend Modules::RecordRevision
+  extend RecordRevision
 
   delegate :update?, :short_name, to: :collection
 
