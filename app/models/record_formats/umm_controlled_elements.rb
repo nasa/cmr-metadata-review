@@ -57,7 +57,6 @@ module RecordFormats
       "Platforms/Instruments/ComposedOf/LongName"                                     => 'GCMD Keywords https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv',
       "Projects/ShortName"                                                            => 'GCMD Keywords https://gcmdservices.gsfc.nasa.gov/static/kms/projects/projects.csv',
       "Projects/LongName"                                                             => 'GCMD Keywords https://gcmdservices.gsfc.nasa.gov/static/kms/projects/projects.csv',
-      "TemporalExtents/TemporalRangeType"                                             => 'UMM-Common JSON schema TemporalExtentType ["SingleDateTime", "RangeDateTime", "PeriodicDateTime"]',
       "TemporalExtents/PeriodicDateTimes/DurationUnit"                                => 'UMM-Common JSON schema DurationUnitEnum = ["DAY", "MONTH", "YEAR"]',
       "TemporalExtents/PeriodicDateTimes/PeriodCycleDurationUnit"                     => 'UMM-Common JSON schema DurationUnitEnum = ["DAY", "MONTH", "YEAR"]',
       "DataCenters/Roles"                                                             => 'UMM-Common JSON schema DataCenterRoleEnum = ["ARCHIVER", "DISTRIBUTOR", "PROCESSOR", "ORIGINATOR"]',
