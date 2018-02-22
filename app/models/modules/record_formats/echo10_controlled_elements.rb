@@ -33,6 +33,7 @@ module Modules::RecordFormats::Echo10ControlledElements
     'OnlineResources/OnlineResource/MimeType'                            => 'UMM-Common JSON schema URLMimeTypeEnum https://git.earthdata.nasa.gov/projects/EMFD/repos/unified-metadata-model/browse/collection/v1.10/umm-cmn-json-schema.json#1542',
     'Spatial/SpatialCoverageType'                                        => 'UMM-Common JSON schema SpatialCoverageTypeEnum = ["HORIZONTAL", "VERTICAL", "ORBITAL", "HORIZONTAL_VERTICAL", "ORBITAL_VERTICAL"]',
     'Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem'          => 'ECHO metadata common schema CoordinateSystem enum = ["CARTESIAN", "GEODETIC"]',
-    'Spatial/GranuleSpatialRepresentation'                               => 'ECHO metadata common schema GranuleSpatialRepresentation enum = ["CARTESIAN", "GEODETIC", "ORBIT", "NO_SPATIAL"]'
+    'Spatial/GranuleSpatialRepresentation'                               => 'ECHO metadata common schema GranuleSpatialRepresentation enum = ["CARTESIAN", "GEODETIC", "ORBIT", "NO_SPATIAL"]',
+    'DataGranule/DayNightFlag'                                           => 'ECHO granule schema DayNightFlag enum = ["DAY", "NIGHT", "BOTH", "UNSPECIFIED"]'
   }
 end
