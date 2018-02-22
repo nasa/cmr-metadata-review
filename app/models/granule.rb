@@ -2,7 +2,7 @@ class Granule < ActiveRecord::Base
   has_many :records, :as => :recordable
   belongs_to :collection
 
-  extend Modules::RecordRevision
+  extend RecordRevision
 
   
   def get_records

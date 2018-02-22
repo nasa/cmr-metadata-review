@@ -62,9 +62,9 @@ class Record < ActiveRecord::Base
 
   def load_format_module
     if self.format == "dif10"
-      self.extend(Modules::RecordFormats::Dif10Record)
+      self.extend(RecordFormats::Dif10Record)
     else
-      self.extend(Modules::RecordFormats::Echo10Record)
+      self.extend(RecordFormats::Echo10Record)
     end
   end
 
