@@ -26,7 +26,7 @@ module RecordFormats
       'Temporal_Coverage/Periodic_DateTime/End_Date'                   => 'Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = ["Not provided", "unknown", "present", "unbounded", "future"].',
       'Temporal_Coverage/Periodic_DateTime/Duration_Unit'              => 'DIF/UMM DurationUnitEnum = ["DAY", "MONTH", "YEAR"]',
       'Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Unit' => 'DIF/UMM DurationUnitEnum = ["DAY", "MONTH", "YEAR"]',
-      'Dataset_Progress'                                               => '',
+      'Dataset_Progress'                                               => 'DIF/UMM DatasetProgressEnum = ["PLANNED", "IN WORK", "COMPLETE"]',
       'Spatial_Coverage/Spatial_Coverage_Type'                         => 'DIF/UMM SpatialCoverageTypeEnum = ["Horizontal", "HorizontalVertical", "Orbit", "Vertical", "Horizon&amp;Vert"]',
       'Spatial_Coverage/Granule_Spatial_Representation'                => 'DIF/UMM GranuleSpatialRepresentationEnum = ["CARTESIAN", "GEODETIC", "ORBIT", "NO_SPATIAL"]',
       'Spatial_Coverage/Geometry/Coordinate_System'                    => 'DIF/UMM CoordinateSystemEnum = ["CARTESIAN", "GEODETIC"]',
