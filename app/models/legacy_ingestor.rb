@@ -5,11 +5,11 @@ class LegacyIngestor
   attr_accessor :daac
 
   COLLECTION_HEADER_ROW = 5
-  GRANULE_HEADER_ROW    = 4
+  GRANULE_HEADER_ROW    = 5
   PROGRESS_BAR_FORMAT   = "%t: |%B| %p%"
   COMMENT_HEADER        = "Comments:"
   CHECKED_BY_HEADER     = "Checkedby:"
-  
+
   # Translate from HEX to our colors in the DB
   COLORS = {
     "ffffff"   => "green",
@@ -28,7 +28,7 @@ class LegacyIngestor
   def ingest_records!
     data_sheet = spreadsheet[0]
     headers = data_sheet[header_row].cells.map(&:value)
-    
+
     # Replaces any markings suchs as (a) or (b) in the data
     headers.each { |header| header.gsub!(/\(\w\)/, "") }
 
@@ -46,13 +46,14 @@ class LegacyIngestor
     data_rows.each do |row|
       begin
         if granules
-          concept_id = parse_granule_concept_id(row.cells[0].value)
-          record     = get_granule_record(concept_id)
+          data_set_id = row.cells[0].value
+          concept_id  = parse_granule_concept_id(data_set_id)
+          record      = get_granule_record(concept_id) || create_granule_record_outside_cmr(concept_id, data_set_id)
         else
           data_id    = row.cells[0].value
           url        = parse_url(data_id)
           concept_id, revision_id, data_format = Collection.parse_collection_url(url) if url
-          
+
           record     = get_collection_record(url) || create_collection_record_outside_cmr(concept_id, revision_id, data_format, data_id)
         end
 
@@ -67,7 +68,7 @@ class LegacyIngestor
 
           add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data, daac)
         end
-      
+
 
         # Add additional comments as a review
         record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value)
@@ -111,6 +112,12 @@ class LegacyIngestor
     collection.records.create(revision_id: revision_id, format: data_format)
   end
 
+  def create_granule_record_outside_cmr(concept_id, data_set_id)
+    collection = find_collection_for_granule(data_set_id)
+    granule    = Granule.create(concept_id: concept_id, collection: collection)
+    granule.records.create(revision_id: "1")
+  end
+
   def parse_short_name(data_set_id)
     return unless data_set_id
     data_set_id.match(/.*\((.*)\) - https.*/)[1]
@@ -124,6 +131,16 @@ class LegacyIngestor
   def parse_granule_concept_id(concept_id_data)
     return unless concept_id_data
     concept_id_data.match(/G\d+-#{daac}/)[0]
+  end
+
+  def find_collection_for_granule(data_set_id)
+    short_names = parse_short_names_for_granule(data_set_id)
+    Collection.find_by!(short_name: short_names)
+  end
+
+  def parse_short_names_for_granule(data_set_id)
+    return unless data_set_id
+    data_set_id.scan(/\(([^)]+)\)/).flatten
   end
 
   def report_errors

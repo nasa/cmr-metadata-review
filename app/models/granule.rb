@@ -47,7 +47,9 @@ class Granule < ActiveRecord::Base
 
   def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
-    collection   = Collection.find_by!(concept_id: granule_info["collection_concept_id"])
+    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+
+    return false unless collection
 
     granule_data = granule_info["Granule"]
 
@@ -68,6 +70,8 @@ class Granule < ActiveRecord::Base
       Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_record
     end
+  rescue Cmr::CmrError
+    false
   end
 
   def self.daac_from_concept_id(concept_id)
