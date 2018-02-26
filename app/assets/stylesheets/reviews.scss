@@ -59,7 +59,7 @@
 
     p {
       display: inline-block;
-      font-size: 0.6em;  
+      font-size: 0.6em;
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -84,7 +84,7 @@
     &__title {
       font-weight: normal;
       vertical-align: middle;
-    } 
+    }
 
   }
 }
@@ -544,11 +544,38 @@
     visibility: visible;
 }
 
+.bubbletooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.bubbletooltip .bubbletooltiptext {
+  visibility: hidden;
+  padding: 5px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid black;
+  font-size: 11px;
+  min-width: 150px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 75%;
+}
+
+.bubbletooltip:hover .bubbletooltiptext {
+  visibility: visible;
+}
+
 .review-toggle {
   cursor: pointer;
   width:100%;
   padding: 10px;
-  
+
   :hover {
     font-weight: bold;
   }
