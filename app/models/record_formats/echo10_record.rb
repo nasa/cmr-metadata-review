@@ -1,7 +1,7 @@
-#RecordFormats are modules to be included in record objects upon initialization
+# RecordFormats are modules to be included in record objects upon initialization
 #
-#Since individual record formats have different underlying structures of RecordData objects
-#unique accessors are needed for each format to access commonly requested data.
+# Since individual record formats have different underlying structures of RecordData objects
+# unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Echo10Record
     SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "SpatialInfo", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
@@ -10,6 +10,11 @@ module RecordFormats
 
     def get_section_titles
       collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
+    end
+
+    def field_required?(field)
+      required_fields = collection? ? RequiredCollectionLists::REQUIRED_COLLECTION_FIELDS : RequiredCollectionLists::REQUIRED_GRANULE_FIELDS
+      required_fields.include?(field)
     end
 
     # ====Params
