@@ -1,7 +1,7 @@
-#RecordFormats are modules to be included in record objects upon initialization
+# RecordFormats are modules to be included in record objects upon initialization
 #
-#Since individual record formats have different underlying structures of RecordData objects
-#unique accessors are needed for each format to access commonly requested data.
+# Since individual record formats have different underlying structures of RecordData objects
+# unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Dif10Record
     SECTION_TITLES = ["Summary", "Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Reference", "Location", "Data_Resolution", "Related_URL", "Distribution", "Multimedia_Sample", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
@@ -17,18 +17,21 @@ module RecordFormats
       end
     end
 
+    def field_required?(field)
+      RequiredCollectionLists::REQUIRED_DIF10_FIELDS.include?(field)
+    end
 
-    # ====Params   
+    # ====Params
     # None
     # ====Returns
     # String
     # ==== Method
     # Accesses the record's RecordData attribute and then returns the value of the "LongName" (equivalent) field
-    def long_name 
+    def long_name
       self.get_column("Entry_Title")
-    end 
+    end
 
-    # ====Params   
+    # ====Params
     # None
     # ====Returns
     # String
@@ -38,7 +41,7 @@ module RecordFormats
       self.get_column("Entry_ID/Short_Name")
     end
 
-    # ====Params   
+    # ====Params
     # None
     # ====Returns
     # String
@@ -55,7 +58,7 @@ module RecordFormats
       end
       comment_hash = self.evaluate_script(raw_data)
       score = score_script_hash(comment_hash)
-      add_script_comment(comment_hash) 
+      add_script_comment(comment_hash)
     end
 
     # There are currently only scripts for DIF10 collections.
@@ -67,7 +70,7 @@ module RecordFormats
       record_json = raw_data.to_json.gsub("\"", "\\\"")
       #running collection script in python
       #W option to silence warnings
-      if self.is_collection?  
+      if self.is_collection?
         script_results = `python -W ignore lib/CollectionCheckerDIF.py "#{record_json}"  `
       else
         script_results = nil

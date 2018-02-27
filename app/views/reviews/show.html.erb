@@ -77,7 +77,7 @@
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div class="umm_required_cell">
-                  <% if Cmr.required_field?(title, @record_type) %>
+                  <% if @record.field_required?(title) %>
                     <i class="eui-icon eui-check-o review_check"></i>
                   <% end %>
                 </div>

@@ -7,10 +7,9 @@ class ReviewsController < ApplicationController
   def show
     @record = Record.find_by id: params[:id]
 
-    @record_type = (@record.is_collection? ? "Collection" : "Granule")
     @marked_done = @record.closed?
 
-    @collection_record = Record.find_by id: params[:id] 
+    @collection_record = Record.find_by id: params[:id]
 
     @navigation_list = @record.sections.map {|section| section[0] }
 
@@ -64,7 +63,7 @@ class ReviewsController < ApplicationController
     new_review.user_id = params['review']['user_id'].to_i
     new_review.comment = params['review']['comment']
     new_review.review_state = params['review']['review_state'].to_i
-    new_review.review_completion_date = DateTime.now    
+    new_review.review_completion_date = DateTime.now
     new_review.save
 
     redirect_to record_path(id: params['review']['record_id'].to_i)
