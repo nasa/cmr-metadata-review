@@ -85,6 +85,22 @@ module RequiredCollectionLists
     "Dataset_Citation/Persistent_Identifier/Identifier"
   ]
 
+  REQUIRED_UMM_FIELDS = [
+    "ShortName",
+    "Abstract",
+    "SpatialExtent/GranuleSpatialRepresentation",
+    "ScienceKeywords/Category",
+    "ScienceKeywords/Topic",
+    "ScienceKeywords/Term",
+    "EntryTitle",
+    "CollectionProgress",
+    "ProcessingLevel/Id",
+    "Platforms/ShortName",
+    "Version",
+    "DataCenters/Roles",
+    "DataCenters/ShortName"
+  ]
+
   REQUIRED_GRANULE_FIELDS = [
     "GranuleUR",
     "InsertTime",
@@ -109,7 +125,7 @@ module RequiredCollectionLists
     'TemporalKeywords/Keyword',
     'Campaigns/Campaign/ShortName',
     'Campaigns/Campaign/LongName',
-    'Temporal/EndsatPresentFlag',
+    'Temporal/EndsAtPresentFlag',
     'Temporal/SingleDateTime',
     'Temporal/RangeDateTime/BeginningDateTime',
     'Temporal/RangeDateTime/EndingDateTime',
@@ -229,6 +245,53 @@ module RequiredCollectionLists
     'Metadata_Dates/Metadata_Last_Revision',
     'Metadata_Dates/Data_Creation',
     'Metadata_Dates/Data_Last_Revision'
+  ]
+
+  DESIRED_UMM_FIELDS = [
+    "LocationKeywords/Category",
+    "DOI/DOI",
+    "DOI/Authority",
+    "RelatedURLs/Description",
+    "RelatedURLs/URLContentType",
+    "RelatedURLs/Type",
+    "RelatedURLs/Subtype",
+    "RelatedURLs/URL",
+    "RelatedURLs/GetData/Format",
+    "RelatedURLs/GetService/MimeType",
+    "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/WestBounding Coordinate",
+    "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/NorthBounding Coordinate",
+    "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/EastBounding Coordinate",
+    "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/SouthBounding Coordinate",
+    "SpatialExtent/VerticalSpatialDomains/Type",
+    "SpatialExtent/VerticalSpatialDomains/Value",
+    "SpatialInformation/HorizontalCoordinateSystem/GeodeticModel/HorizontalDatum Name",
+    "SpatialInformation/HorizontalCoordinateSystem/GeodeticModel/EllipsoidName",
+    "SpatialInformation/HorizontalCoordinateSystem/GeodeticModel/Semi MajorAxis",
+    "SpatialInformation/HorizontalCoordinateSystem/GeodeticModel/DenominatorofFlatteningRatio",
+    "SpatialInformation/HorizontalCoordinateSystem/GeographicCoordinateSystem/GeographicCoordinateUnits",
+    "SpatialInformation/HorizontalCoordinateSystem/GeographicCoordinateSystem/LatitudeResolution",
+    "SpatialInformation/HorizontalCoordinateSystem/GeographicCoordinateSystem/LongitudeResolution",
+    "ContactGroups/Roles",
+    "ContactGroups/GroupName",
+    "ScienceKeywords/VariableLevel1",
+    "ScienceKeywords/VariableLevel2",
+    "ScienceKeywords/VariableLevel3",
+    "ScienceKeywords/DetailedVariable",
+    "Distributions/DistributionFormat",
+    "Platforms/Type",
+    "Platforms/LongName",
+    "Platforms/Instruments/ShortName",
+    "Platforms/Instruments/LongName",
+    "Platforms/Instruments/ComposedOf/ShortName",
+    "Platforms/Instruments/ComposedOf/LongName",
+    "Projects/ShortName",
+    "Projects/LongName",
+    "TemporalExtents/EndsAtPresentFlag",
+    "TemporalExtents/RangeDateTimes/BeginningDateTime",
+    "TemporalExtents/RangeDateTimes/EndingDateTime",
+    "TemporalExtents/SingleDateTimes",
+    "DataCenters/LongName",
+    "CollectionDataType"
   ]
 
 end
