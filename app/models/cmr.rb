@@ -177,22 +177,21 @@ class Cmr
   # can add "&all_revisions=true&pretty=true" params to find specific revision
 
   def self.get_collection(concept_id, data_format = "echo10")
-    if data_format == "echo10"
-      required_fields = REQUIRED_COLLECTION_FIELDS
-      desired_fields = DESIRED_FIELDS_ECHO10
+    desired_fields = if data_format == "echo10"
+      DESIRED_FIELDS_ECHO10
     elsif data_format == "dif10"
-      required_fields = REQUIRED_DIF10_FIELDS
-      desired_fields = DESIRED_FIELDS_DIF10
+      DESIRED_FIELDS_DIF10
+    elsif data_format == "umm"
+      DESIRED_FIELDS_UMM
     else
-      required_fields = []
+      []
     end
 
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash = flatten_collection(raw_collection)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
-    #Dif10 records come in with some uneeded header values
+    # Dif10 records come in with some uneeded header values
     nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
     required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
     required_fields_hash
   end
