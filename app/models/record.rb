@@ -66,6 +66,8 @@ class Record < ActiveRecord::Base
   def load_format_module
     if self.format == "dif10"
       self.extend(RecordFormats::Dif10Record)
+    elsif self.format == "umm_json"
+      self.extend(RecordFormats::UmmRecord)
     else
       self.extend(RecordFormats::Echo10Record)
     end

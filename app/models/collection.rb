@@ -2,8 +2,8 @@ class Collection < ActiveRecord::Base
   has_many :records, :as => :recordable
   has_many :granules
 
-  SUPPORTED_FORMATS = ["dif10", "echo10"]
-  INCLUDE_GRANULE_FORMATS = ["dif10", "echo10"]
+  SUPPORTED_FORMATS = ["dif10", "echo10", "umm_json"]
+  INCLUDE_GRANULE_FORMATS = ["dif10", "echo10", "umm_json"]
 
   extend RecordRevision
 
@@ -11,19 +11,18 @@ class Collection < ActiveRecord::Base
     records.visible
   end
 
-  # ====Params   
-  # string concept_id,     
+  # ====Params
+  # string concept_id,
   # string revision_id
   # ====Returns
   # Boolean
   # ==== Method
   # Checks the DB and returns boolean if a record with matching concept_id and revision_id is found
 
-  def self.record_exists?(concept_id, revision_id) 
+  def self.record_exists?(concept_id, revision_id)
     record = Collection.find_record(concept_id, revision_id)
     return (!record.nil?) && (!record.hidden?)
   end
-
 
   def self.assemble_new_record(concept_id, revision_id, current_user)
     native_format = Cmr.get_raw_collection_format(concept_id)
@@ -31,10 +30,10 @@ class Collection < ActiveRecord::Base
     if native_format == "dif10"
       collection_data = Cmr.get_collection(concept_id, native_format)
       short_name = collection_data["Entry_ID/Short_Name"]
-    elsif native_format == "echo10"
+    elsif native_format == "echo10" || native_format == "umm_json"
       collection_data = Cmr.get_collection(concept_id, native_format)
       short_name = collection_data["ShortName"]
-    else 
+    else
       #Guard against records that come in with unsupported types
       return
     end
@@ -92,7 +91,7 @@ class Collection < ActiveRecord::Base
       #checking that no granule exists for previously imported/deleted records.
       if self.granules.count == 0
         #only selecting granules for certain formats per business rules
-        if Collection::INCLUDE_GRANULE_FORMATS.include? native_format 
+        if Collection::INCLUDE_GRANULE_FORMATS.include? native_format
             #creating all the Granule related objects
             granules_components = Granule.assemble_granule_components(self.concept_id, granules_count, self, current_user)
         end
@@ -100,13 +99,13 @@ class Collection < ActiveRecord::Base
 
       save_success = false
       #saving all the related collection and granule data in a combined transaction
-        granules_components.flatten.each { |savable_object| 
+        granules_components.flatten.each { |savable_object|
                                               if savable_object.is_a?(Array)
                                                 savable_object.each do |savable_item|
                                                   savable_item.save!
                                                 end
                                               else
-                                                savable_object.save! 
+                                                savable_object.save!
                                               end
                                           }
 
@@ -116,7 +115,7 @@ class Collection < ActiveRecord::Base
           #getting list of records for script
           granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
           granule_records.each do |record|
-            record.create_script
+           # record.create_script
           end
         }
         save_success = true

@@ -181,7 +181,7 @@ class Cmr
       DESIRED_FIELDS_ECHO10
     elsif data_format == "dif10"
       DESIRED_FIELDS_DIF10
-    elsif data_format == "umm"
+    elsif data_format == "umm_json"
       DESIRED_FIELDS_UMM
     else
       []
@@ -241,24 +241,24 @@ class Cmr
   # need the raw return format to run automated scripts against
 
   def self.get_raw_collection(concept_id, type = "echo10")
-    url = Cmr.api_url("collections", type, {"concept_id" => concept_id})
+    url  = Cmr.api_url("collections", type, {"concept_id" => concept_id})
+    data = Cmr.cmr_request(url).parsed_response
 
-    collection_xml = Cmr.cmr_request(url).parsed_response
     begin
-      collection_results = Hash.from_xml(collection_xml)["results"]
+      collection_results = type == "umm_json" ? JSON.parse(data) : Hash.from_xml(data)["results"]
     rescue
-      #error raised when no results are found.  CMR returns an error hash instead of xml string
+      # Error raised when no results are found.  CMR returns an error hash instead of xml string
       raise CmrError
     end
 
-    if collection_results["hits"].to_i == 0
-      raise CmrError
-    end
+    raise CmrError if collection_results["hits"].to_i == 0
 
     if type == "echo10"
       collection_results["result"]["Collection"]
     elsif type == "dif10"
       collection_results["result"]["DIF"]
+    elsif type == "umm_json"
+      collection_results["items"].first["umm"]
     end
   end
 

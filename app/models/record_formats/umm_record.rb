@@ -4,7 +4,20 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module UmmRecord
+    SECTION_TITLES = ["LocationKeywords", "MetadataDates", "DOI", "TilingIdentificationSystems", "PublicationReferences",
+      "RelatedURLs", "ContactPersons", "Data Dates", "AccessConstraints", "SpatialExtent", "SpatialInformation",
+      "ContactGroups", "AdditionalAttributes", "ScienceKeywords", "Distributions", "ProcessingLevel", "Platforms", "Projects",
+      "TemporalExtents", "PaleoTemporalCoverages", "DataCenters", "CollectionCitations", "MetadataAssociations", "DirectoryNames"]
+
     include RecordFormats::UmmControlledElements
+
+    def get_section_titles
+      SECTION_TITLES
+    end
+
+    def field_required?(field)
+      RequiredCollectionLists::REQUIRED_UMM_FIELDS.include?(field)
+    end
 
     def long_name
       get_column("EntryTitle")
