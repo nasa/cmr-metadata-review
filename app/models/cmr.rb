@@ -140,7 +140,7 @@ class Cmr
 
               begin
                 Timeout::timeout(12) {
-               #   new_collection_record.create_script
+                  new_collection_record.create_script
                 }
 
                 save_success = true
