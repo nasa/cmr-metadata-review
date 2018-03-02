@@ -159,7 +159,7 @@ class Cmr
     collection_xml = cmr_request(url).parsed_response
 
     raise CmrError.new(collection_xml["errors"]["error"]) if collection_xml["errors"]
-    
+
     collection_xml_hash = Hash.from_xml(collection_xml)
     raw_collection = data_format == "echo10" ? collection_xml_hash["Collection"] : collection_xml_hash["DIF"]
     format_collection(raw_collection, data_format)
@@ -214,7 +214,7 @@ class Cmr
     raw_format = collection_results["entry"]["originalFormat"].downcase if collection_results["entry"]
 
     raise CmrError.new("Native Format not found") unless raw_format
-    
+
     if raw_format.include? "dif10"
       return "dif10"
     elsif raw_format.include? "echo10"

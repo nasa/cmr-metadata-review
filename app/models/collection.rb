@@ -103,8 +103,8 @@ class Collection < ActiveRecord::Base
   end
 
   def self.parse_collection_url(url)
-    match_data = url.match(/https:\/\/cmr\.earthdata\.nasa\.gov\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/)
-    match_data[1..3]
+    match_data = url.match(/https:\/\/cmr\.earthdata\.nasa\.gov(:443)?\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/)
+    match_data[2..4]
   end
 
   def update?
