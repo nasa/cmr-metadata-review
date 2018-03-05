@@ -6,10 +6,8 @@ task :replace_all_granules => :environment do
   all_collections = Collection.all.to_a
   collections_with_record = all_collections.select {|collection| collection.get_records.count > 0 }
 
-  #deleting all granules
-  Granule.all.to_a.each do |granule|
-    granule.delete_self
-  end
+  # Deleting all granules
+  Granule.destroy_all
 
   ingester = User.find_by(email: 'jeanne.leroux@nsstc.uah.edu')
 

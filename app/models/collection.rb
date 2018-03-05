@@ -7,9 +7,8 @@ class Collection < ActiveRecord::Base
 
   extend Modules::RecordRevision
 
-
   def get_records
-    self.records.where.not(state: Record::STATE_HIDDEN)
+    records.visible
   end
 
   # ====Params   

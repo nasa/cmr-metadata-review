@@ -1,12 +1,13 @@
 class Granule < ActiveRecord::Base
-  has_many :records, :as => :recordable
+  has_many :records, as: :recordable, dependent: :destroy
   belongs_to :collection
 
   extend Modules::RecordRevision
 
+  delegate :update?, :short_name, to: :collection
   
   def get_records
-    self.records.where.not(state: Record::STATE_HIDDEN)
+    records.visible
   end
 
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
@@ -42,30 +43,5 @@ class Granule < ActiveRecord::Base
     end 
       
     granules_components
-  end
-
-
-  def update?
-    self.collection.update?
-  end
-
-  def short_name
-    self.collection.short_name
-  end
-
-  def delete_self
-    granule = self
-    granule_records = granule.records
-    granule_records.each do |record|
-      record_datas = record.record_datas
-      record_datas.each do |data|
-        data.destroy
-      end
-      if record.try(:ingest)
-        record.ingest.destroy
-      end
-      record.destroy
-    end
-    granule.destroy
   end
 end

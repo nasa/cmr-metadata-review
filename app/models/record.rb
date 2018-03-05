@@ -8,13 +8,14 @@ class Record < ActiveRecord::Base
 
   after_initialize :load_format_module
 
-  has_many :record_datas
+  has_many :record_datas, dependent: :destroy
   belongs_to :recordable, :polymorphic => true
   has_many :reviews
-  has_one :ingest
+  has_one :ingest, dependent: :destroy
   has_many :discussions
 
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
+  scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
 
   REVIEW_ERRORS = {
     color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",

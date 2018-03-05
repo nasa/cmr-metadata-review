@@ -107,7 +107,7 @@ module Modules::RecordRevision
   # returns all records found in the DB of type collection
 
   def all_records
-    Record.all.where(recordable_type: self.name).where.not(state: Record::STATE_HIDDEN)
+    Record.where(recordable_type: name).visible
   end
 
 
