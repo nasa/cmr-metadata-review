@@ -23,6 +23,8 @@ class Ability
         can :close, Record
 
         can :replace_granule, Granule
+
+        can :access, :filter_daac
       end
 
       if user.role.eql?("arc_curator")
@@ -38,6 +40,8 @@ class Ability
         can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED]
 
         can :replace_granule, Granule
+
+        can :access, :filter_daac
       end
 
       if user.role.eql?("daac_curator")
