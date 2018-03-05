@@ -8,11 +8,7 @@ module Modules::RecordFormats::Echo10Record
   include Modules::RecordFormats::Echo10ControlledElements
 
   def get_section_titles
-    if self.is_collection?
-      SECTION_TITLES
-    else 
-      GRANULE_SECTION_TITLES
-    end
+    collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
   end
 
   # ====Params   
@@ -22,10 +18,10 @@ module Modules::RecordFormats::Echo10Record
   # ==== Method
   # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
   def long_name 
-    if self.is_collection?
-      self.get_column("LongName")
+    if collection?
+      get_column("LongName")
     else 
-      self.get_column("GranuleUR")
+      get_column("GranuleUR")
     end
   end 
 
@@ -77,7 +73,7 @@ module Modules::RecordFormats::Echo10Record
     record_json = raw_data.to_json.gsub("\"", "\\\"")
     #running collection script in python
     #W option to silence warnings
-    if self.is_collection?  
+    if collection?  
       script_results = `python -W ignore lib/CollectionChecker.py "#{record_json}"  `
     else
       script_results = `python -W ignore lib/GranuleChecker.py "#{record_json}"`

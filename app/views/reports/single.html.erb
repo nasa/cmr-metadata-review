@@ -38,7 +38,7 @@
 
     <div class="report_sub_title first_sub_title">
       <div class="title_box">
-        <%= @report_title %>
+        SINGLE RECORD VIEW
       </div>
       <div class="title_text">
 
@@ -66,6 +66,19 @@
                 <td><%=@record.formatted_closed_date%></td>
               </tr>
             </table>
+
+            <% if @record.granule? %>
+              <% granule = @record.recordable %>
+              <table>
+                <tr class="header_row">
+                  <td>Collection Concept Id</td>
+                  <td>Collection Short Name</td>
+                </tr>
+                <tr>
+                  <td><%= granule.collection_concept_id.partition('-').first %></td>
+                  <td><%= granule.collection_short_name %></td>
+                </tr>
+            <% end %>
               
             <table>
               <tr class="header_row">
@@ -73,7 +86,7 @@
                 <td>Date of Review</td>
                 <td>Review Comment</td>
               </tr>
-              <% @reviews.each do |review| %>
+              <% @record.reviews.each do |review| %>
                 <tr>
                   <td><%= review.reviewer_email %></td>
                   <td><%= review.formatted_date %></td>
