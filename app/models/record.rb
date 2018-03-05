@@ -41,7 +41,15 @@ class Record < ActiveRecord::Base
 
     event :close do
       before do
-        write_attribute(:closed_date, ::DateTime.now)
+        write_closed_date
+      end
+
+      transitions from: :in_daac_review, to: :closed, guards: [:updated_revision_if_needed?, :no_feedback_requested?]
+    end
+
+    event :force_close do
+      before do
+        write_closed_date
       end
 
       transitions from: :in_daac_review, to: :closed
@@ -58,6 +66,10 @@ class Record < ActiveRecord::Base
     else
       self.extend(Modules::RecordFormats::Echo10Record)
     end
+  end
+
+  def write_closed_date
+    write_attribute(:closed_date, DateTime.now)
   end
 
   # ====Params
@@ -526,12 +538,25 @@ class Record < ActiveRecord::Base
     return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }
   end
 
+  def flagged_reviews?
+    color_count("red") > 0
+  end
 
-  # def close
-  #   self.closed = true
-  #   self.closed_date = DateTime.now
-  #   self.save
-  # end
+  def updated_revision_if_needed?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
+    flagged_reviews? ? Cmr.current_revision_for(concept_id) > self.revision_id.to_i : true
+  end
+
+  def no_feedback_requested?
+    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+      return true
+    end
+
+    (get_feedbacks.find { |key, value| value }).nil?
+  end
 
   def formatted_closed_date
     #01/19/2017 at 01:55PM (example format)

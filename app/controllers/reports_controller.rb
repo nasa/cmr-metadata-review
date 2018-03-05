@@ -111,7 +111,18 @@ class ReportsController < ApplicationController
     @csv_params = "?concept_id=#{params["concept_id"]}&revision_id=#{params["revision_id"]}"
     @report_title = "SINGLE RECORD VIEW"
 
-    @record = Collection.find_record(params["concept_id"], params["revision_id"])
+    data_type = Collection.find_type(params["concept_id"])
+    
+    if data_type.nil?
+      raise ActiveRecord::RecordNotFound
+    else
+      @record = data_type.find_record(params["concept_id"], params["revision_id"])
+      if @record.nil?
+        raise ActiveRecord::RecordNotFound
+      end
+    end
+    
+
 
     @reviews = @record.reviews
 

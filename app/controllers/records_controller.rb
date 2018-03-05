@@ -90,7 +90,9 @@ class RecordsController < ApplicationController
 
         RecordNotifier.notify_daac_curators([@record])
       else
-        @record.close!
+        can?(:force_close, @record) ? @record.force_close! : @record.close!
+
+        RecordNotifier.notify_closed([@record])
       end
     rescue => e
       error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
