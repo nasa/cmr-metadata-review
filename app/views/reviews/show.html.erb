@@ -15,7 +15,8 @@
           <% script_class = bubble[:script] ? "script" : "no_script" %>
           <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
 
-          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %>" title="<%= bubble[:field_name] %>">
+          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %> bubbletooltip" title="<%= bubble[:field_name] %>">
+            <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
             <% if bubble[:opinion] && bubble[:opinion] != "" %>
               <div class="<%= script_text_class %> bubble_opinion">2</div>
               <% else %>
