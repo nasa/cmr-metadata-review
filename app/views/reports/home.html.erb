@@ -42,9 +42,6 @@
       <div class="title_box">
         <%= @report_title %>
       </div>
-      <div class="title_text">
-
-      </div>
     </div>
 
     <div class="stats_area">
@@ -52,7 +49,7 @@
       <%# This div grouped to be moved up for the display when printed %>
       <section class="report_overall section_holder">
         <div class="section_title">
-          COLLECTION METRICS
+          ARC PROGRESS
         </div>
 
         <% if @cmr_total_collection_count %>
@@ -117,14 +114,26 @@
         </div>
 
       </section>
+    </div>
+  <% end %>
+</div>
 
+<div class="reports_box">
+  <% if @show_charts %>
+    <div class="report_sub_title first_sub_title">
+      <div class="title_box">
+        <%= @report_title %>
+      </div>
+    </div>
+
+    <div class="stats_area">
+      <section>
+        <div class="section_title">
+          COLLECTION METADATA QUALITY
+        </div>
+      </section>
 
       <section class="quality_section section_holder">
-        <div class="sub_section_title">
-          METADATA QUALITY
-        </div>
-
-
         <div class="quality_row">
           <div>
             <%= render(partial: 'title_bar', locals: {title: "ORIGINAL REVIEW"}) %>
@@ -280,21 +289,23 @@
 
   <% if @show_charts %>
 
+    <div class="report_sub_title first_sub_title">
+      <div class="title_box">
+        <%= @report_title %>
+      </div>
+    </div>
+
     <div class="stats_area">
 
       <%# This div grouped to be moved up for the display when printed %>
       <section>
         <div class="section_title">
-          GRANULE METRICS
+          GRANULE METADATA QUALITY
         </div>
       </section>
 
 
       <section class="granule_quality_section quality_section section_holder">
-        <div class="sub_section_title">
-          METADATA QUALITY
-        </div>
-
 
         <div class="quality_row">
           <div>
