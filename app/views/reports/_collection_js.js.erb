@@ -19,7 +19,7 @@
                       display:false
                   },
                   gridLines: {
-                  }, 
+                  },
                   stacked: true
               }],
               yAxes: [{
@@ -42,13 +42,13 @@
               position: "bottom"
           },
           maintainAspectRatio: false,
-          
+
           animation: {
               onComplete: function () {
                   var chartInstance = this.chart;
                   var ctx = chartInstance.ctx;
                   ctx.textAlign = "left";
-                  
+
 
                   Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
@@ -143,7 +143,7 @@
             maintainAspectRatio: false
           }
       });
-  <% end %>  
+  <% end %>
 
 
   <%# ChartFlagOriginal - pie chart of flag colors %>
@@ -267,7 +267,7 @@
                     display:false
                 },
                 gridLines: {
-                }, 
+                },
                 stacked: false
             }],
             yAxes: [{
@@ -290,13 +290,13 @@
             position: "bottom"
         },
         maintainAspectRatio: false,
-        
+
         animation: {
             onComplete: function () {
                 var chartInstance = this.chart;
                 var ctx = chartInstance.ctx;
                 ctx.textAlign = "left";
-                
+
 
                 Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
                     var meta = chartInstance.controller.getDatasetMeta(i);
@@ -326,12 +326,12 @@
             labels: [""],
 
             datasets: [{
-                label: "Updated Collections ReReviewed",
+                label: "Updated Collections ReReviewed by ARC",
                 data: [<%= @metric_set.updated_done_count %>],
                 backgroundColor: "rgba(58, 184, 65, 0.6)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
             },{
-                label: "Collections Updated After Review",
+                label: "Collections Updated by DAAC",
                 data: [<%= @metric_set.updated_count %>],
                 backgroundColor: "rgba(58, 184, 65, 1)",
                 hoverBackgroundColor: "rgba(58, 184, 65, 1)"
