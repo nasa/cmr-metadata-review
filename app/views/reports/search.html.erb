@@ -9,7 +9,7 @@
     </div>
 
     <%= form_tag(reports_search_path, method: "get") do %>
-      <%= select_tag(:provider,options_for_select(@provider_select_list, :selected => params[:provider])) %>
+      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => params[:provider])) %>
       <%= text_field_tag(:free_text, params[:free_text]) %>
       <%= hidden_field_tag(:curr_page, "1") %>
       <%#= submit_tag("", class: 'search_button eui-icon eui-fa-search') %>
@@ -37,10 +37,10 @@
             <%= form_tag( reports_selection_path ,  {method: "get", id: 'select_form'}) do %>
               <%= hidden_field_tag(:records, "", id: "records_holder") %>
               <%= button_tag("Select Records", id: 'select_submit') %>
-            <% end %> 
+            <% end %>
           </div>
         </div>
-        
+
         <% if params[:free_text] && @search_iterator.empty? %>
           <div class="empty_results_phrase">
             <p>No ingested records were found matching your query</p>
@@ -59,7 +59,7 @@
                       <th>ShortName</th>
                   </tr>
 
-                  
+
 
                 <% @search_iterator.each_with_index do |result, index| %>
                   <tr concept_id="<%= result.concept_id %>" revision_id="<%= result.revision_id %>" onclick="appendRecordsList(this)" class="report_search_row">

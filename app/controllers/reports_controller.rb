@@ -6,8 +6,7 @@ class ReportsController < ApplicationController
   def home
     @report_title = "OVERALL VIEW"
     @show_charts = true
-    @csv_path = reports_home_path
-    @csv_params = ""
+    @csv_path = reports_home_path(format: :csv)
     @collection_ingest_count = Collection.count
     @cmr_total_collection_count = Cmr.total_collection_count
 
@@ -28,8 +27,7 @@ class ReportsController < ApplicationController
 
   def provider
     @report_title = "BY DAAC VIEW"
-    @csv_path = reports_provider_path
-    @csv_params = params["daac"].nil? ? "" : "?daac=#{params["daac"]}"
+    @csv_path = reports_provider_path(format: :csv, daac: params[:daac])
 
     @provider_select_list = provider_select_list
     @provider_select_list[0] = "Select DAAC"
@@ -61,7 +59,6 @@ class ReportsController < ApplicationController
   end
 
   def search
-    @provider_select_list = provider_select_list
     begin
       @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page])
     rescue Cmr::CmrError, Net::OpenTimeout, Net::ReadTimeout
@@ -76,8 +73,7 @@ class ReportsController < ApplicationController
   def selection
     @show_charts = true
     @report_title = "SELECTION VIEW"
-    @csv_path = reports_selection_path
-    @csv_params = "?records=#{params["records"].to_s}"
+    @csv_path = reports_selection_path(format: :csv, records: params[:records].to_s)
 
     records_list = params["records"].split(",")
     @report_list = []

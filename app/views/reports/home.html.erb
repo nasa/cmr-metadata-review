@@ -18,10 +18,10 @@
       <% end %>
     </div>
     <div class="report_buttons">
-      <a href="<%= @csv_path + ".csv" + @csv_params %>" class="report_button">
-          <p>EXPORT METRICS</p>
-          <i class="fa fa-file-excel-o"></i>
-      </a>
+      <%= link_to @csv_path, class: "report_button" do %>
+        <p>EXPORT METRICS</p>
+        <i class="fa fa-file-excel-o"></i>
+      <% end %>
       <a href="#" id="pdf_button" class="report_button">
           <p>PRINT PDF COPY</p>
           <i class="fa fa-file-pdf-o"></i>
