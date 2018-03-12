@@ -63,7 +63,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @unreviewed_records.each_with_index do |record, index| %>
+              <% records_sorted_by_short_name(@records.open).each_with_index do |record, index| %>
                 <tr>
                     <td id="unreviewedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
@@ -121,7 +121,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @in_arc_review_records.each_with_index do |record, index| %>
+              <% records_sorted_by_short_name(@records.in_arc_review).each_with_index do |record, index| %>
                 <tr>
                     <td id="in-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
@@ -179,7 +179,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @waiting_daac_release_records.each_with_index do |record, index| %>
+              <% records_sorted_by_short_name(@records.ready_for_daac_review).each_with_index do |record, index| %>
                 <tr>
                     <td id="waiting-daac-releaseConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
@@ -238,7 +238,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @in_daac_review_records.each_with_index do |record, index| %>
+              <% current_user_daac_records(@records.in_daac_review).each_with_index do |record, index| %>
                 <tr>
                     <td id="in-daac-reviewConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
@@ -301,7 +301,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @requires_curator_feedback_records.each_with_index do |record, index| %>
+              <% currator_feedback_records(@records).each_with_index do |record, index| %>
                 <tr>
                     <td id="requires-curator-feedbackConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
@@ -358,7 +358,7 @@
                   <th>Selection</th>
               </tr>
 
-              <% @closed_records.each_with_index do |record, index| %>
+              <% records_sorted_by_short_name(@records.closed).each_with_index do |record, index| %>
                 <tr>
                     <td id="closedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
                     <td><%= record.collection? ? "Collection" : "Granule" %></td>
