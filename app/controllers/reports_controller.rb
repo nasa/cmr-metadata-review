@@ -4,14 +4,8 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
 
   def home
-    @report_title = "OVERALL VIEW"
-    @show_charts = true
-    @csv_path = reports_home_path(format: :csv)
     @collection_ingest_count = Collection.count
     @cmr_total_collection_count = Cmr.total_collection_count
-
-    @review_month_counts = list_past_months
-    @display_months = get_month_list
 
     @metric_set = MetricSet.new(Collection.all_newest_revisions)
     @original_metric_set = @metric_set.original_metric_set
@@ -26,25 +20,12 @@ class ReportsController < ApplicationController
   end
 
   def provider
-    @report_title = "BY DAAC VIEW"
-    @csv_path = reports_provider_path(format: :csv, daac: params[:daac])
-
-    @provider_select_list = provider_select_list
-    @provider_select_list[0] = "Select DAAC"
-
-    unless params["daac"].nil? || params["daac"] == "Select DAAC"
+    unless params[:daac].nil? || params[:daac] == "Select DAAC"
       @show_charts = true
-      @daac = params["daac"]
-      @cmr_total_collection_count = Cmr.total_collection_count(@daac)
-      @collection_ingest_count = Collection.by_daac(@daac).count
+      @cmr_total_collection_count = Cmr.total_collection_count(params[:daac])
+      @collection_ingest_count = Collection.by_daac(params[:daac]).count
 
-      daac_records = (Collection.by_daac(@daac).map {|collection| collection.records.to_a}).flatten
-      daac_reviews = (daac_records.map {|record| record.reviews.to_a}).flatten
-
-      @review_month_counts = list_past_months(daac_reviews)
-      @display_months = get_month_list
-
-      record_set = Collection.all_newest_revisions(params["daac"])
+      record_set = Collection.all_newest_revisions(params[:daac])
       @metric_set = MetricSet.new(record_set)
       @original_metric_set = @metric_set.original_metric_set
 
@@ -53,8 +34,8 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :template => "reports/home" }
-      format.csv { send_data(render_to_string, filename: "#{@daac}_metrics.csv") }
+      format.html
+      format.csv { send_data(render_to_string, filename: "#{params[:daac]}_metrics.csv") }
     end
   end
 
@@ -71,10 +52,6 @@ class ReportsController < ApplicationController
   end
 
   def selection
-    @show_charts = true
-    @report_title = "SELECTION VIEW"
-    @csv_path = reports_selection_path(format: :csv, records: params[:records].to_s)
-
     records_list = params["records"].split(",")
     @report_list = []
     @granule_report_list = []
@@ -97,26 +74,15 @@ class ReportsController < ApplicationController
     @granule_original_metric_set = @granule_metric_set.original_metric_set
 
     respond_to do |format|
-      format.html { render :template => "reports/home" }
+      format.html
       format.csv { send_data(render_to_string, filename: "cmr_selection_metrics.csv") }
     end
   end
 
   def single
-    @csv_path = reports_single_path
-    @csv_params = "?record_id=#{params[:record_id]}"
-
     @record = Record.find(params[:record_id])
-
-    record_data = @record.record_datas
-    @reds = record_data.select{|data| data.color == "red"}
-    @yellows = record_data.select{|data| data.color == "yellow"}
-    @blues = record_data.select{|data| data.color == "blue"}
-
     @metric_set = MetricSet.new([@record])
-
     @field_colors = @metric_set.color_counts
-    @total_checked = @field_colors.values.sum
 
     respond_to do |format|
       format.html

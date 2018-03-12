@@ -5,7 +5,7 @@
     <div class="report_drop_down">
     </div>
     <div class="report_buttons">
-      <%= link_to reports_home_path(format: :csv), class: "report_button" do %>
+      <%= link_to reports_selection_path(format: :csv, records: params[:records].to_s), class: "report_button" do %>
         <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
@@ -25,7 +25,7 @@
 
   <div class="report_sub_title first_sub_title">
     <div class="title_box">
-      OVERALL VIEW
+      SELECTION VIEW
     </div>
   </div>
 
@@ -37,28 +37,6 @@
         ARC PROGRESS
       </div>
 
-      <% if @cmr_total_collection_count %>
-        <div class="ingest_section">
-            <%= render(partial: 'title_bar', locals: {title: "INGESTED COLLECTIONS PROGRESS"}) %>
-            <div class="surrounding_box">
-              <div class="graph_container">
-                <canvas id="ChartIngest"></canvas>
-              </div>
-            </div>
-        </div>
-
-        <br>
-
-        <div class="velocity_section">
-              <%= render(partial: 'title_bar', locals: {title: "COMPLETED REVIEW PROGRESS"}) %>
-              <div class="surrounding_box">
-                <div class="velocity_graph_container">
-                  <canvas id="ChartVelocity"></canvas>
-                </div>
-              </div>
-        </div>
-      <% end %>
-
       <div class="update_section">
           <%= render(partial: 'title_bar', locals: {title: "UPDATED COLLECTIONS PROGRESS"}) %>
           <div class="surrounding_box">
@@ -68,6 +46,28 @@
           </div>
       </div>
 
+      <div class="selection_section">
+        <%= render(partial: 'title_bar', locals: {title: "SELECTED RECORDS"}) %>
+        <table>
+          <tr>
+            <td>Concept Id</td>
+            <td>Short Name</td>
+          </tr>
+          <% @report_list.concat(@granule_report_list).each do |record| %>
+            <tr>
+              <td>
+                <%=record.concept_id%>
+              </td>
+              <% if record.has_short_name? %>
+                <td>
+                  <%=record.short_name%>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+
+      </div>
       <br>
 
       <div class="section_break">
@@ -80,7 +80,7 @@
 <div class="reports_box">
   <div class="report_sub_title first_sub_title">
     <div class="title_box">
-      OVERVALL VIEW
+      SELECTION VIEW
     </div>
   </div>
 
@@ -232,8 +232,6 @@
   </div>
 </div>
 
-
-
 <script type="text/javascript">
   <%= render(partial: 'collection_js.js.erb') %>
 </script>
@@ -241,7 +239,7 @@
 <div class="reports_box">
   <div class="report_sub_title first_sub_title">
     <div class="title_box">
-      OVERALL VIEW
+      SELECTION VIEW
     </div>
   </div>
 
@@ -346,17 +344,18 @@
       <br>
 
       <div class="problem_section">
-            <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
-            <div class="surrounding_box">
-              <div class="problem_graph_container">
-                <canvas id="GranuleChartErrors"></canvas>
-              </div>
-            </div>
+        <%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
+        <div class="surrounding_box">
+          <div class="problem_graph_container">
+            <canvas id="GranuleChartErrors"></canvas>
+          </div>
+        </div>
       </div>
 
       <br>
 
     </section>
+
 
     <div class="section_break">
     </div>

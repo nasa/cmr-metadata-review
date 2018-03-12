@@ -3,31 +3,18 @@
 <div class="reports_box">
   <div class="report_top">
     <div class="report_drop_down">
-      <% if @provider_select_list %>
-        <p>SELECT METRICS BY DAAC: </p>
-        <p><%= select_tag(:provider,options_for_select(@provider_select_list, :selected => @daac)) %></p>
-
-        <script type="text/javascript">
-          var selecter = document.getElementById("provider");
-          selecter.onchange = function() {
-            if (!(selecter.value == '<%=@provider_select_list[0][0]%>')) {
-              document.location = '/reports/provider?daac=' + selecter.value;
-            }
-          }
-        </script>
-      <% end %>
     </div>
     <div class="report_buttons">
-      <a href="<%= @csv_path + ".csv" + @csv_params %>" class="report_button">
-          <p>EXPORT METRICS</p>
-          <i class="fa fa-file-excel-o"></i>
-      </a>
+      <%=link_to reports_single_path(format: :csv, record_id: @record.id), class: "report_button" do %>
+        <p>EXPORT METRICS</p>
+        <i class="fa fa-file-excel-o"></i>
+      <% end %>
       <a href="#" id="pdf_button" class="report_button">
-          <p>PRINT PDF COPY</p>
-          <i class="fa fa-file-pdf-o"></i>
+        <p>PRINT PDF COPY</p>
+        <i class="fa fa-file-pdf-o"></i>
       </a>
     </div>
-    
+
     <script type="text/javascript">
       document.getElementById("pdf_button").onclick = function() {
         window.print();
@@ -46,7 +33,7 @@
     </div>
 
     <div class="stats_area">
-      
+
       <section class="report_overall">
 
         <div class="metrics_section">
@@ -79,7 +66,7 @@
                   <td><%= granule.collection_short_name %></td>
                 </tr>
             <% end %>
-              
+
             <table>
               <tr class="header_row">
                 <td>Reviewer</td>
@@ -106,7 +93,7 @@
               <div class="data_text">
                 <p>NUMBER OF COLLECTION</p>
                 <p>ELEMENTS REVIEWED</p>
-                <p class="checked_num"><%=@total_checked%></p>
+                <p class="checked_num"><%=@field_colors.values.sum%></p>
               </div>
               <div class="doughnut_graph_container">
                 <canvas id="ChartFlagOriginal"></canvas>
@@ -145,9 +132,9 @@
 
       <%# templating the 3 sections using a short 2d array %>
       <%[
-          ["red_section", "RED", @reds],
-          ["yellow_section", "YELLOW", @yellows],
-          ["blue_section", "BLUE", @blues]
+          ["red_section", "RED", record_data_colors(@record, "red")],
+          ["yellow_section", "YELLOW", record_data_colors(@record, "yellow")],
+          ["blue_section", "BLUE", record_data_colors(@record, "blue")]
         ].each do |section_name, color, elements| %>
 
         <section class="<%=section_name%>">
@@ -176,7 +163,7 @@
 
       <% end %>
 
-      <div class="print_width">   
+      <div class="print_width">
       </div>
 
     </div>

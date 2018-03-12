@@ -99,7 +99,7 @@
       var ctx = document.getElementById("ChartVelocity");
 
       var data = {
-          labels: <%= raw @display_months %>,
+          labels: <%= raw get_month_list %>,
           datasets: [
               {
                   label: "Completed Reviews",
@@ -116,7 +116,7 @@
                       'rgba(58, 184, 65, 0.9)',
                       'rgba(58, 184, 65, 1)'
                   ],
-                  data: <%= @review_month_counts %>,
+                  data: <%= list_past_months(params[:daac]) %>,
               }
           ]
       };

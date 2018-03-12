@@ -1,15 +1,15 @@
-<%= CSV.generate_line(["CMR DAAC Report"]) %>  
-<%= CSV.generate_line(["DAAC:", @daac]) %>  
+<%= CSV.generate_line(["CMR DAAC Report"]) %>
+<%= CSV.generate_line(["DAAC:", params[:daac]]) %>
 
-<%= CSV.generate_line(["Total Collections in DAAC:", @cmr_total_collection_count]) %>  
-<%= CSV.generate_line(["Total Ingested Collections:", @collection_ingest_count]) %>  
+<%= CSV.generate_line(["Total Collections in DAAC:", @cmr_total_collection_count]) %>
+<%= CSV.generate_line(["Total Ingested Collections:", @collection_ingest_count]) %>
 
 <%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
 <%#= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
 
-<%= CSV.generate_line(['Completed Review Progress'].concat(@display_months)) %>
-<%= CSV.generate_line(["Review Counts"].concat(@review_month_counts)) %>
-            
+<%= CSV.generate_line(['Completed Review Progress'].concat(get_month_list)) %>
+<%= CSV.generate_line(["Review Counts"].concat(list_past_months(params[:daac]))) %>
+
 <%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
 <%= CSV.generate_line(["Number of elements checked (total):", @original_metric_set.color_counts.values.sum, @metric_set.color_counts.values.sum]) %>
 <%= CSV.generate_line(["Number of elements that passed:", @original_metric_set.color_counts["green"], @metric_set.color_counts["green"]]) %>
@@ -30,7 +30,7 @@
 <%= CSV.generate_line(["Quality of Updated Collection Reviews marked as Done (high/low/avg)", (@metric_set.quality_done_records.inject(0.0) { |sum, el| sum + el } / @metric_set.quality_done_records.size)]) %>
 
 
-<%= CSV.generate_line(["Granules Information"]) %>  
+<%= CSV.generate_line(["Granules Information"]) %>
 
 
 <%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
