@@ -406,6 +406,65 @@
       </div>
     <% end %>
 
+    <% if can?(:review_state, Record::STATE_FINISHED) %>
+      <div class="table_backdrop">
+        <div class="results_title">
+          <p><strong>Finished Records:</strong></p>
+        </div>
+
+        <div class="results_table">
+          <div class="table_scroll">
+            <table cellpadding="5" border="1">
+              <tr>
+                <th>Concept_ID</th>
+                <th>Type</th>
+                <th class="center_text">Revision_ID</th>
+                <th>ShortName</th>
+                <th>Version</th>
+                <th>Ingested By</th>
+                <th>Selection</th>
+              </tr>
+
+              <% records_sorted_by_short_name(@records.finished).each_with_index do |record, index| %>
+                <tr>
+                  <td id="finishedConcept<%= index.to_s %>"><%= record.recordable.concept_id %></td>
+                  <td><%= record.collection? ? "Collection" : "Granule" %></td>
+                  <td id="finishedRevision<%= index.to_s %>" class="center_text"><%= record.revision_id %></td>
+                  <td><%= record.recordable.short_name %></td>
+                  <td><%= record.version_id %></td>
+                  <td><%= record.ingested_by %></td>
+                  <td class="center_text"><input type="radio" id="finished<%= index.to_s %>" name="finishedSelection" value="<%= index.to_s %>"/></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="form_buttons">
+            <%= form_tag( collection_path(id: 1) ,  {method: "get", id: 'finished_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "finishedConceptId") %>
+              <%= submit_tag("See Review Detail", id: 'finishedSubmit', class: "selectButton") %>
+            <% end %>
+
+            <%= form_tag( reports_single_path ,  {method: "get", id: 'finishedreport_form'}) do %>
+              <%= hidden_field_tag(:concept_id, "", id: "finishedReportConceptId") %>
+              <%= hidden_field_tag(:revision_id, "", id: "finishedReportRevisionId") %>
+              <%= submit_tag("Get Review Report", id: 'finishedReportSubmit', class: "reportButton") %>
+            <% end %>
+
+            <% if current_user.admin %>
+              <%= form_tag( collections_hide_path ,  {method: "get", id: 'finisheddelete_form'}) do %>
+                <%= hidden_field_tag(:concept_id, "", id: "finishedDeleteConceptId") %>
+                <%= hidden_field_tag(:revision_id, "", id: "finishedDeleteRevisionId") %>
+                <%= submit_tag("Delete Record", id: 'finishedDeleteSubmit', class: "deleteButton") %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 
 </div>
@@ -430,6 +489,7 @@
   setUpTable("requires-curator-feedback");
   setUpTable("in-daac-review");
   setUpTable("closed");
+  setUpTable("finished");
 
   function setUpTable(table) {
     var tableButton = document.getElementById(table + "Submit");
