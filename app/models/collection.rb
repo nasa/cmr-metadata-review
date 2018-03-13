@@ -77,7 +77,6 @@ class Collection < ActiveRecord::Base
     end
   end
 
-
   #method added for the manual addition of granules into the database for collections.
   def add_granule(current_user)
     if current_user.nil?
@@ -127,24 +126,4 @@ class Collection < ActiveRecord::Base
 
     return 0
   end
-
-  def remove_all_granule_data
-    granules = self.granules
-    granules.each do |granule|
-      granule_records = granule.records
-      granule_records.each do |record|
-        record_datas = record.record_datas
-        record_datas.each do |data|
-          data.destroy
-        end
-        if record.try(:ingest)
-          record.ingest.destroy
-        end
-        record.destroy
-      end
-      granule.destroy
-    end
-  end
-
-
 end
