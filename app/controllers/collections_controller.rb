@@ -66,7 +66,7 @@ class CollectionsController < ApplicationController
 
     begin
       collection_data = Cmr.get_collection(params["concept_id"])
-      @short_name = collection_data["ShortName"]  
+      @short_name = collection_data["ShortName"]
       @granule_count = Cmr.collection_granule_count(@concept_id)
     rescue Cmr::CmrError
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
@@ -87,77 +87,29 @@ class CollectionsController < ApplicationController
     end
   end
 
-  #this is a behemoth method, but it does several things
-  #creates and saves collection record, all related granule records and ingests
-  #runs evaluation script over collection record and all granules and saves results as comments
   def create
-    concept_id = params["concept_id"]
-    revision_id = params["revision_id"]
-
-    #guard against creating a duplicate record
-    if Collection.record_exists?(concept_id, revision_id)
-      redirect_to home_path
+    # Guard against creating a duplicate record
+    if Collection.record_exists?(params[:concept_id], params[:revision_id])
       flash[:alert] = 'This collection has already been ingested into the system'
-      return
+    else
+      begin
+        Collection.create_new_record(params[:concept_id], params[:revision_id], current_user, true)
+
+        flash[:notice] = "The selected collection has been successfully ingested into the system"
+      rescue Cmr::CmrError
+        flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+      rescue Net::OpenTimeout
+        flash[:alert] = 'There was an open timeout error connecting to the CMR System, please try again'
+      rescue Net::ReadTimeout
+        flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
+      rescue Timeout::Error
+        flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
+      rescue => ex
+        Rails.logger.error("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.backtrace}")
+        flash[:alert] = 'There was an error ingesting the record into the system'
+      end
     end
 
-    begin
-      #guard against bringing in an unsupported format
-      native_format = Cmr.get_raw_collection_format(concept_id)
-      if !(Collection::SUPPORTED_FORMATS.include? native_format) 
-        redirect_to home_path
-        flash[:alert] = "The system could not ingest the selected record, #{native_format} format records are not currently supported"
-        return
-      end
-
-      #creating all the collection related objects
-      collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(concept_id, revision_id, current_user)
-
-      save_success = false
-      #saving all the related collection and granule data in a combined transaction
-      ActiveRecord::Base.transaction do
-        new_collection_record.save!
-        record_data_list.each do |record_data|
-          record_data.save!
-        end
-        ingest_record.save!
-
-        begin
-          #In production there is an egress issue with certain link types given in metadata
-          #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-          Timeout::timeout(20) {
-            new_collection_record.create_script
-          }
-
-          #this contains all the code for adding granule and running granule script
-          collection_object.add_granule(current_user)
-
-          save_success = true
-        rescue Timeout::Error
-          flash[:alert] = 'The automated script timed out and was unable to finish, collection ingested without automated script'
-          Rails.logger.error("PyCMR Error: On Ingest Revision #{revision_id}, Concept_id #{concept_id} had timeout error") 
-          raise ActiveRecord::Rollback
-        end
-      end
-
-      if !save_success
-        raise Timeout::Error
-      end
-  
-      flash[:notice] = "The selected collection has been successfully ingested into the system"
-    rescue Cmr::CmrError
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-    rescue Net::OpenTimeout
-      flash[:alert] = 'There was an open timeout error connecting to the CMR System, please try again'
-    rescue Net::ReadTimeout
-      flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
-    rescue Timeout::Error
-      flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
-    rescue => ex
-      Rails.logger.error("PyCMR Error: Unknown error ingesting Revision #{revision_id} with Concept ID #{concept_id} with error\n#{ex.backtrace}")
-      flash[:alert] = 'There was an error ingesting the record into the system'
-    end
-      
     redirect_to home_path
   end
 
@@ -172,7 +124,7 @@ class CollectionsController < ApplicationController
 
     if record.nil?
       flash[:alert] = "Error: Record was not Deleted"
-      Rails.logger.error("Delete Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Deleted") 
+      Rails.logger.error("Delete Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Deleted")
       redirect_to home_path
       return
     end
