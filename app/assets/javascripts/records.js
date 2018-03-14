@@ -1,15 +1,26 @@
 $(document).on('turbolinks:load', function(){
 
   var forms   = ["closed", "finished"];
-  var buttons = ["select", "delete", "report", "finished"];
 
-  forms.forEach(function(element) {
-    var formInput = 'form#' + element + ' input[name="concept_id_revision"]';
-    $(formInput).click(function() {
-      buttons.forEach(function(button) {
-        var buttonId = 'form#' + element + ' .' + button + 'Button';
-        $(buttonId).prop("disabled", false);
+  forms.forEach(function(form) {
+    var formInput = 'form#' + form + ' input[name="concept_id_revision"]';
+    var formInputChecked = $(formInput + ':checked').val();
+
+    if (formInputChecked) {
+      enableAllButtons(form);
+    } else {
+      $(formInput).click(function(){
+        enableAllButtons(form)
       });
-    });
+    }
   });
 });
+
+function enableAllButtons(form){
+  var buttons = ["select", "delete", "report", "finished"];
+
+  buttons.forEach(function(button){
+    var buttonId = 'form#' + form + ' .' + button + 'Button';
+    $(buttonId).prop("disabled", false);
+  });
+}
