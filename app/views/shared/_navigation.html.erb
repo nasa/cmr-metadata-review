@@ -1,6 +1,6 @@
 <div class="page_header">
   <div class="header_title">
-    <% if ENV['SIT_ENV'] == 'true' %> 
+    <% if ENV['SIT_ENV'] == 'true' %>
       <h3><%= title %> (SIT Environment)</h3>
     <% else %>
       <h3><%= title %></h3>
@@ -25,9 +25,12 @@
             <p>Reports</p>
           </a>
           <ul class="eui-sub-menu">
-            <li><a href="<%=reports_home_path%>">Overall Report</a></li>
-            <li><a href="<%=reports_provider_path%>">Reports By DAAC</a></li>
-            <li><a href="<%=reports_search_path%>">Reports By Selection</a></li>
+            <li><%= link_to "Overall Report", reports_home_path %></li>
+            <li><%= link_to "Reports by DAAC", reports_provider_path %></li>
+            <li><%= link_to "Reports By Selection", reports_search_path %></li>
+            <% if can?(:review_state, Record::STATE_CLOSED) %>
+              <li><%= link_to "Closed Records", finished_records_path %></li>
+            <% end %>
           </ul>
         </li>
 
@@ -49,7 +52,7 @@
               </script>
             <% end %>
           </ul>
-        </li>  
+        </li>
         <li>
           <a href="<%= destroy_user_session_path %>" class="menu_link header_button">
             <i class="eui-icon eui-fa-external-link-square"></i>
@@ -62,5 +65,5 @@
 </div>
 
 <div class="header_image">
-  
-</div> 
+
+</div>

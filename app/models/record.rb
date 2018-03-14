@@ -723,4 +723,8 @@ class Record < ActiveRecord::Base
     granule = recordable.granules.first
     (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first if granule
   end
+
+  def concept_id_revision
+    "#{concept_id}/#{revision_id}"
+  end
 end

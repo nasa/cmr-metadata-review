@@ -5,7 +5,7 @@
 }
 
 .table_scroll {
-   max-height: 290px; 
+   max-height: 290px;
    overflow-y: auto;
 }
 
@@ -18,7 +18,7 @@
   padding-bottom:40px;
 
   .space_box {
-    height:15px; 
+    height:15px;
     width:80px;
   }
 
@@ -39,20 +39,20 @@
       width: 150px;
       padding-left:10px;
       height:38px;
-    }  
+    }
 
     button {
       background-color:$green-light;
       border:none;
       color: white;
-    } 
+    }
 
     input[type=text] {
       height:38px;
       width:623px;
     }
   }
-  
+
 
 
   input[type=radio] {
@@ -87,8 +87,11 @@
     form {
       margin-right: 10px;
     }
-
   }
 
-  
+  .navigate_buttons {
+    input[type=submit] {
+      margin-right: 10px;
+    }
+  }
 }

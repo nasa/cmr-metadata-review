@@ -19,17 +19,22 @@ module ApplicationHelper
               'LANCEAMSR2',
               'PODAAC']
 
-  
+
   def provider_select_list
     provider_select_list = [ANY_KEYWORD]
     PROVIDERS.each do |provider|
       provider_select_list.push([provider, provider])
     end
-    provider_select_list  
+    provider_select_list
   end
 
   def string_html_format(string)
     sanitize(string, tags: %w(br a)).gsub(/(?:\n\r?|\r\n?)/, '<br>').html_safe
   end
 
+  def records_sorted_by_short_name(records)
+    records.sort_by do |record|
+      record.recordable.short_name
+    end
+  end
 end

@@ -69,6 +69,25 @@ class RecordsController < ApplicationController
     end
   end
 
+  def finished
+    @records = Record.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
+  end
+
+  def navigate
+    concept_id,revision_id = params[:concept_id_revision].split("/")
+
+    case params[:commit]
+    when "See Review Detail"
+      redirect_to collection_path(id: 1, concept_id: concept_id)
+    when "Delete Record"
+      redirect_to collections_hide_path(concept_id: concept_id, revision_id: revision_id)
+    when "Get Review Report"
+      redirect_to reports_single_path(concept_id: concept_id, revision_id: revision_id)
+    when "Exclude Record from Updates"
+      redirect_to collections_stop_updates_path(concept_id: concept_id, revision_id: revision_id)
+    end
+  end
+
   private
 
   def find_record

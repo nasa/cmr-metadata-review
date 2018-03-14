@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   get '/home', to: 'site#home'
   get '/general_home', to: 'site#general_home'
-  
+
   resources :collections
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
@@ -29,8 +29,13 @@ Rails.application.routes.draw do
     member do
       post "complete"
     end
+
+    collection do
+      get "finished"
+      get "navigate"
+    end
   end
-  
+
   get '/record_refresh', to: 'records#refresh'
 
   get '/reports/home', to: 'reports#home'
@@ -43,5 +48,5 @@ Rails.application.routes.draw do
   if ENV['SHOW_DOCUMENTATION'] == 'true'
     get "/documentation" => redirect("/doc/index.html")
   end
-  
+
 end
