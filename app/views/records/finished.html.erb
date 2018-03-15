@@ -6,93 +6,23 @@
   <div class="results_area">
 
     <% if can?(:review_state, Record::STATE_CLOSED) %>
-      <div class="table_backdrop">
-        <div class="results_title">
-          <p><strong>Team's Closed Records:</strong></p>
-        </div>
-
-        <%= form_tag(navigate_records_path, method: :get, id: "closed") do %>
-          <div class="results_table">
-            <div class="table_scroll">
-              <table cellpadding="5" border="1">
-                <tr>
-                  <th>Concept_ID</th>
-                  <th>Type</th>
-                  <th class="center_text">Revision_ID</th>
-                  <th>ShortName</th>
-                  <th>Version</th>
-                  <th>Ingested By</th>
-                  <th>Date Review Closed</th>
-                  <th>Selection</th>
-                </tr>
-
-                <% records_sorted_by_short_name(@records.closed).each do |record| %>
-                  <tr>
-                    <td><%= record.recordable.concept_id %></td>
-                    <td><%= record.recordable_type %></td>
-                    <td class="center_text"><%= record.revision_id %></td>
-                    <td><%= record.recordable.short_name %></td>
-                    <td class="center_text"><%= record.version_id %></td>
-                    <td><%= record.ingested_by %></td>
-                    <td><%= record.formatted_closed_date %></td>
-                    <td class="center_text"><%= radio_button_tag(:concept_id_revision, record.concept_id_revision) %></td>
-                  </tr>
-                <% end %>
-              </table>
-            </div>
-
-            <br>
-
-            <%= render(layout: "shared/record_buttons", locals: { report: true }) do %>
-              <% if current_user.admin %>
-                <%= submit_tag("Exclude Record from Updates", class: "finishedButton", disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
-              <% end %>
-            <% end %>
-
-          </div>
+      <% content_for :form_buttons do %>
+        <%= render layout: "shared/record_buttons", locals: { report: true } do %>
+          <% if current_user.admin %>
+              <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: collections_stop_updates_path, disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
+          <% end %>
         <% end %>
-      </div>
+      <% end %>
+
+      <%= render partial: "shared/records_table", locals: {form_id: "closed", records: records_sorted_by_short_name(@records.closed), closed: true, report: true, title: "Team's Closed Records:" } %>
     <% end %>
 
     <% if can?(:review_state, Record::STATE_FINISHED) %>
-      <div class="table_backdrop">
-        <div class="results_title">
-          <p><strong>Finished Records:</strong></p>
-        </div>
-        <%= form_tag(navigate_records_path, method: :get, id: "finished") do %>
-          <div class="results_table">
-            <div class="table_scroll">
-              <table cellpadding="5" border="1">
-                <tr>
-                  <th>Concept_ID</th>
-                  <th>Type</th>
-                  <th class="center_text">Revision_ID</th>
-                  <th>ShortName</th>
-                  <th class="center_text">Version</th>
-                  <th>Ingested By</th>
-                  <th>Selection</th>
-                </tr>
+      <% content_for :form_buttons, flush: true do %>
+        <%= render(partial: "shared/record_buttons") %>
+      <% end %>
 
-                <% records_sorted_by_short_name(@records.finished).each do |record| %>
-                  <tr>
-                    <td><%= record.concept_id %></td>
-                    <td><%= record.recordable_type %></td>
-                    <td class="center_text"><%= record.revision_id %></td>
-                    <td><%= record.recordable.short_name %></td>
-                    <td class="center_text"><%= record.version_id %></td>
-                    <td><%= record.ingested_by %></td>
-                    <td class="center_text"><%= radio_button_tag(:concept_id_revision, record.concept_id_revision) %></td>
-                  </tr>
-                <% end %>
-              </table>
-            </div>
-
-            <br>
-
-            <%= render(partial: "shared/record_buttons") %>
-          </div>
-        <% end %>
-      </div>
+      <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records:" } %>
     <% end %>
   </div>
 </div>

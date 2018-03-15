@@ -19,11 +19,7 @@
   <% if page == "navigation" %>
     <script type="text/javascript">
       document.getElementById("nav_back_button").onclick = function() {
-        <% if record.collection? %>
-          document.location.href = "<%= collection_path(id: params["id"], concept_id: record.concept_id) %>"
-        <% else %>
-          document.location.href = "<%= collection_path(id: params["id"], concept_id: record.recordable.collection.concept_id) %>"
-        <% end %>
+        document.location.href = "<%= collection_path(id: 1, record_id: params[:id]) %>"
       }
     </script>
   <% else %>

@@ -27,11 +27,9 @@ class RecordsController < ApplicationController
   end
 
   def complete
-    success = completion_success
-
-    if success
+    if completion_success
       flash[:notice] = "Record has been successfully updated."
-      redirect_to collection_path(id:1, concept_id: @record.recordable.concept_id)
+      redirect_to collection_path(id:1, record_id: @record.id)
     else
       redirect_to record_path(@record)
     end
@@ -71,21 +69,6 @@ class RecordsController < ApplicationController
 
   def finished
     @records = Record.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
-  end
-
-  def navigate
-    concept_id,revision_id = params[:concept_id_revision].split("/")
-
-    case params[:commit]
-    when "See Review Detail"
-      redirect_to collection_path(id: 1, concept_id: concept_id)
-    when "Delete Record"
-      redirect_to collections_hide_path(concept_id: concept_id, revision_id: revision_id)
-    when "Get Review Report"
-      redirect_to reports_single_path(concept_id: concept_id, revision_id: revision_id)
-    when "Exclude Record from Updates"
-      redirect_to collections_stop_updates_path(concept_id: concept_id, revision_id: revision_id)
-    end
   end
 
   private

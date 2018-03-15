@@ -4,11 +4,11 @@
   <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
 
   <% if current_user.admin %>
-    <%= submit_tag("Delete Record", class: "deleteButton", disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
+    <%= submit_tag("Delete Record", class: "deleteButton", formaction: collections_hide_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
   <% end %>
 
   <% if report %>
-    <%= submit_tag("Get Review Report", class: "reportButton", disabled: true) %>
+    <%= submit_tag("Get Review Report", class: "reportButton", formaction: reports_single_path, disabled: true) %>
   <% end %>
 
   <%= yield %>
