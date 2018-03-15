@@ -7,22 +7,29 @@
 
     <% if can?(:review_state, Record::STATE_CLOSED) %>
       <% content_for :form_buttons do %>
+
         <%= render layout: "shared/record_buttons", locals: { report: true } do %>
+
           <% if current_user.admin %>
               <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: collections_stop_updates_path, disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
+
+              <%= submit_tag("Refresh", class: "refreshButton", formaction: refresh_collections_path, disabled: true) %>
           <% end %>
+
         <% end %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: {form_id: "closed", records: records_sorted_by_short_name(@records.closed), closed: true, report: true, title: "Team's Closed Records:" } %>
+      <%= render partial: "shared/records_table", locals: {form_id: "closed", records: records_sorted_by_short_name(@records.closed), closed: true, report: true, title: "Team's Closed Records" } %>
     <% end %>
 
     <% if can?(:review_state, Record::STATE_FINISHED) %>
+
       <% content_for :form_buttons, flush: true do %>
         <%= render(partial: "shared/record_buttons") %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records:" } %>
+      <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records" } %>
+
     <% end %>
   </div>
 </div>

@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   get '/home', to: 'site#home'
   get '/general_home', to: 'site#general_home'
 
-  resources :collections
+  resources :collections do
+    collection do
+      get 'refresh'
+    end
+  end
+
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
   get '/collections_stop_updates', to: 'collections#stop_updates'

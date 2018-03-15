@@ -25,7 +25,7 @@ $(document).on('turbolinks:load', function(){
 });
 
 function enableAllButtons(form){
-  var buttons = ["select", "delete", "report", "finished"];
+  var buttons = ["select", "delete", "report", "finished", "refresh"];
 
   buttons.forEach(function(button){
     var buttonId = 'form#' + form + ' .' + button + 'Button';

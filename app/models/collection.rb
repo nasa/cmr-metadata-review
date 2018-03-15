@@ -129,4 +129,14 @@ class Collection < ActiveRecord::Base
 
     return 0
   end
+
+  def refresh!(current_user)
+    latest_revision = Cmr.current_revision_for(concept_id)
+
+    if Collection.record_exists?(concept_id, latest_revision)
+      false
+    else
+      Collection.create_new_record(concept_id, latest_revision, current_user)
+    end
+  end
 end

@@ -2,6 +2,9 @@ class CollectionsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :ensure_curation
+  before_filter :admin_only, only: [:stop_updates, :hide, :refresh]
+  before_filter :find_record, only: [:stop_updates, :hide, :refresh]
+  before_filter :collection_only, only: [:stop_updates, :refresh]
 
   def show
     if params[:record_id]
@@ -99,43 +102,55 @@ class CollectionsController < ApplicationController
   end
 
   def hide
-    if current_user.admin
-      record = Record.find(params[:record_id])
+    @record.hide!
+    flash[:notice] = "Revision #{@record.revision_id} of Concept ID #{@record.concept_id} Deleted"
 
-      if record && record.collection?
-        record.hide!
-        flash[:notice] = "Revision #{record.revision_id} of Concept ID #{record.concept_id} Deleted"
-        redirect_to home_path
+    redirect_to :back
+  end
+
+  def refresh
+    begin
+      if @record.recordable.refresh!(current_user)
+        flash[:notice] = "Latest revision for Collection #{@record.concept_id} has been ingested"
       else
-        flash[:alert] = "Error: Record was not Deleted"
-        Rails.logger.error("Delete Error: Revision #{params["revision_id"]}, Concept_id #{params["concept_id"]} not Deleted")
-        redirect_to home_path
+        flash[:alert] = "Latest revision for Collection #{@record.concept_id} has already been ingested"
       end
-    else
-      flash[:alert] = "User not authorized to delete records"
-      redirect_to home_path
+    rescue Cmr::CmrError
+      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+    rescue Net::OpenTimeout
+      flash[:alert] = 'There was an open timeout error connecting to the CMR System, please try again'
+    rescue Net::ReadTimeout
+      flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
+    rescue Timeout::Error
+      flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
+    rescue => ex
+      flash[:alert] = 'There was an error ingesting the record into the system'
     end
+
+    redirect_to home_path
   end
 
   def stop_updates
-    if current_user.admin
-      record = Record.find(params[:record_id])
+    collection = @record.recordable
+    collection.update_attributes(cmr_update: false)
 
-      if record.collection?
-        collection = record.recordable
-        collection.update_attributes(cmr_update: false)
+    flash[:notice] = "Concept_id #{@record.concept_id} has Been Removed from Future CMR Updates"
 
-        flash[:notice] = "Revision #{record.revision_id} of Concept_id #{record.concept_id} has Been Removed from Future CMR Updates"
-      end
-
-      redirect_to home_path
-    else
-      flash[:alert] = "You do not have permission to perform this action"
-      redirect_to home_path
-    end
+    redirect_to finished_records_path
   end
 
   private
+
+  def find_record
+    @record = Record.find(params[:record_id])
+  end
+
+  def collection_only
+    if @record.granule?
+      flash[:alert] = "This action cannot be performed on Granules"
+      redirect_to finished_records_path
+    end
+  end
 
   def get_collection_from_record(record)
     if record.collection?
