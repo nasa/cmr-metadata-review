@@ -25,7 +25,14 @@
     <% if can?(:review_state, Record::STATE_FINISHED) %>
 
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons") %>
+
+        <%= render(layout: "shared/record_buttons") do %>
+
+          <% if current_user.admin %>
+            <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_collections_path, disabled: true) %>
+          <% end %>
+        <% end %>
+
       <% end %>
 
       <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records" } %>

@@ -2,9 +2,9 @@ class CollectionsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :ensure_curation
-  before_filter :admin_only, only: [:stop_updates, :hide, :refresh]
-  before_filter :find_record, only: [:stop_updates, :hide, :refresh]
-  before_filter :collection_only, only: [:stop_updates, :refresh]
+  before_filter :admin_only, only: [:stop_updates, :hide, :refresh, :allow_updates]
+  before_filter :find_record, only: [:stop_updates, :hide, :refresh, :allow_updates]
+  before_filter :collection_only, only: [:stop_updates, :refresh, :allow_updates]
 
   def show
     if params[:record_id]
@@ -139,6 +139,14 @@ class CollectionsController < ApplicationController
       flash[:alert] = "All records for Concept ID #{@record.concept_id} must be closed before being marked finished"
     end
 
+    redirect_to finished_records_path
+  end
+
+  def allow_updates
+    collection = @record.recordable
+    collection.allow_updates!
+
+    flash[:notice] = "Concept Id #{@record.concept_id} will now allow CMR updates"
     redirect_to finished_records_path
   end
 

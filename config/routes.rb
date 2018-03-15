@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :collections do
     collection do
       get 'refresh'
+      get 'allow_updates'
     end
   end
 

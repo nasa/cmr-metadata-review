@@ -62,6 +62,10 @@ class Record < ActiveRecord::Base
       transitions from: :closed, to: :finished
     end
 
+    event :allow_updates do
+      transitions from: :finished, to: :closed
+    end
+
     event :hide do
       transitions from: [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :finished], to: :hidden
     end

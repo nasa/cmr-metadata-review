@@ -276,6 +276,13 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $blue-dark;
 }
 
+.cmrUpdateButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
+}
+
 .flag_green {
   background-color: $review-green;
   color: white;
