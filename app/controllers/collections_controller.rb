@@ -132,9 +132,12 @@ class CollectionsController < ApplicationController
 
   def stop_updates
     collection = @record.recordable
-    collection.update_attributes(cmr_update: false)
 
-    flash[:notice] = "Concept_id #{@record.concept_id} has Been Removed from Future CMR Updates"
+    if collection.finish!
+      flash[:notice] = "Concept Id #{@record.concept_id} has Been Removed from Future CMR Updates"
+    else
+      flash[:alert] = "All records for Concept ID #{@record.concept_id} must be closed before being marked finished"
+    end
 
     redirect_to finished_records_path
   end

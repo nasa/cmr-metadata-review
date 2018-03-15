@@ -139,4 +139,10 @@ class Collection < ActiveRecord::Base
       Collection.create_new_record(concept_id, latest_revision, current_user)
     end
   end
+
+  def finish!
+    return false unless records.all? { |r| r.state == Record::STATE_CLOSED.to_s }
+    records.each(&:finish!)
+    update_attributes(cmr_update: false)
+  end
 end
