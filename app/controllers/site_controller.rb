@@ -3,9 +3,9 @@ class SiteController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:elb_status]
   before_filter :ensure_curation, :except => [:general_home, :elb_status]
+  before_filter :filtered_records, only: :home
 
   def home
-    @records = filtered_by_daac? ? Record.daac(params[:daac]) : Record.all
   end
 
   def general_home
@@ -17,11 +17,5 @@ class SiteController < ApplicationController
 
   def elb_status
     render :json => {"elb_status" => "ok" }
-  end
-
-  private
-
-  def filtered_by_daac?
-    params[:daac] && params[:daac] != ANY_KEYWORD
   end
 end

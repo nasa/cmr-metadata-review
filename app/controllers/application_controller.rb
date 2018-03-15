@@ -33,4 +33,14 @@ class ApplicationController < ActionController::Base
       redirect_to home_path
     end
   end
+
+  def filtered_records
+    @records = filtered_by_daac? ? Record.daac(params[:daac]) : Record.all
+  end
+
+  private
+
+  def filtered_by_daac?
+    params[:daac] && params[:daac] != ANY_KEYWORD
+  end
 end

@@ -4,6 +4,7 @@
   <div class="space_box"></div>
 
   <div class="results_area">
+    <%= render partial: "shared/daac_filter", locals: { path_for_form: finished_records_path } %>
 
     <% if can?(:review_state, Record::STATE_CLOSED) %>
       <% content_for :form_buttons do %>

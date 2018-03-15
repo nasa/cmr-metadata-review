@@ -4,6 +4,7 @@ class RecordsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :find_record, only: [:show, :complete, :update]
+  before_filter :filtered_records, only: :finished
 
   def refresh
     # a list of records added in update in format of
@@ -68,7 +69,7 @@ class RecordsController < ApplicationController
   end
 
   def finished
-    @records = Record.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
+    @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
   end
 
   private
