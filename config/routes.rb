@@ -16,13 +16,11 @@ Rails.application.routes.draw do
   resources :collections do
     collection do
       get 'refresh'
-      get 'allow_updates'
     end
   end
 
   get '/collections_search', to: 'collections#search'
   get '/collections_hide', to: 'collections#hide'
-  get '/collections_stop_updates', to: 'collections#stop_updates'
 
   resources :granules do
     member do
@@ -39,6 +37,8 @@ Rails.application.routes.draw do
     collection do
       get "finished"
       get "navigate"
+      get "allow_updates"
+      get "stop_updates"
     end
   end
 

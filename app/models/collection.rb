@@ -141,16 +141,16 @@ class Collection < ActiveRecord::Base
   end
 
   def finish!
-    visible_records = records.visible
-    return false unless visible_records.all? { |r| r.state == Record::STATE_CLOSED.to_s }
-    visible_records.each(&:finish!)
-    update_attributes(cmr_update: false)
+    update_attributes(cmr_update: false) if all_records_finished?
   end
 
   def allow_updates!
-    visible_records = records.visible
+    update_attributes(cmr_update: true) unless update?
+  end
 
-    visible_records.each(&:allow_updates!)
-    update_attributes(cmr_update: true)
+  private
+
+  def all_records_finished?
+    records.visible.all? { |r| r.state == Record::STATE_FINISHED.to_s }
   end
 end

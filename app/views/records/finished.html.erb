@@ -19,7 +19,7 @@
           <%= render layout: "shared/record_buttons", locals: { report: true } do %>
 
             <% if current_user.admin %>
-                <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: collections_stop_updates_path, disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
+                <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: stop_updates_records_path, disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
 
                 <%= submit_tag("Refresh", class: "refreshButton", formaction: refresh_collections_path, disabled: true) %>
             <% end %>
@@ -37,7 +37,7 @@
           <%= render(layout: "shared/record_buttons") do %>
 
             <% if current_user.admin %>
-              <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_collections_path, disabled: true) %>
+              <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_records_path, disabled: true) %>
             <% end %>
           <% end %>
 

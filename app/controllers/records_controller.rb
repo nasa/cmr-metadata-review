@@ -3,7 +3,8 @@ class RecordsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :ensure_curation
-  before_filter :find_record, only: [:show, :complete, :update]
+  before_filter :admin_only, only: [:stop_updates, :allow_updates]
+  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates]
   before_filter :filtered_records, only: :finished
 
   def refresh
@@ -37,7 +38,7 @@ class RecordsController < ApplicationController
   end
 
   def update
-    if @record.closed?
+    if @record.closed? || @record.finished?
       if !params["redirect_index"].nil?
         redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
         return
@@ -72,10 +73,26 @@ class RecordsController < ApplicationController
     @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
   end
 
+  def stop_updates
+    @record.finish!
+    @record.recordable.finish! if @record.collection?
+
+    flash[:notice] = "Concept ID #{@record.concept_id} has been marked finished"
+    redirect_to finished_records_path
+  end
+
+  def allow_updates
+    @record.allow_updates!
+    @record.recordable.allow_updates! if @record.collection?
+
+    flash[:notice] = "Concept ID #{@record.concept_id} will now allow CMR updates"
+    redirect_to finished_records_path
+  end
+
   private
 
   def find_record
-    @record = Record.find_by(id: params[:id])
+    @record = Record.find_by(id: params[:id]) || Record.find_by(id: params[:record_id])
     redirect_to home_path unless @record
   end
 
