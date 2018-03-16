@@ -50,4 +50,8 @@ function addButtonActions(form) {
   $(formId + ' .reportButton').click(function(){
     $(formId).prop("method", "get");
   });
+
+  $(formId + ' .refreshButton').click(function(){
+    showLoading("Refreshing Record");
+  });
 }
