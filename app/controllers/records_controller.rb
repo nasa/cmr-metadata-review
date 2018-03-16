@@ -4,7 +4,7 @@ class RecordsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :admin_only, only: [:stop_updates, :allow_updates]
-  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates]
+  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :hide]
   before_filter :filtered_records, only: :finished
 
   def refresh
@@ -87,6 +87,13 @@ class RecordsController < ApplicationController
 
     flash[:notice] = "Concept ID #{@record.concept_id} will now allow CMR updates"
     redirect_to finished_records_path
+  end
+
+  def hide
+    @record.hide!
+    flash[:notice] = "Revision #{@record.revision_id} of Concept ID #{@record.concept_id} Deleted"
+
+    redirect_to :back
   end
 
   private

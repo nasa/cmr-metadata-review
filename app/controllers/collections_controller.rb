@@ -101,13 +101,6 @@ class CollectionsController < ApplicationController
     redirect_to home_path
   end
 
-  def hide
-    @record.hide!
-    flash[:notice] = "Revision #{@record.revision_id} of Concept ID #{@record.concept_id} Deleted"
-
-    redirect_to :back
-  end
-
   def refresh
     begin
       if @record.recordable.refresh!(current_user)

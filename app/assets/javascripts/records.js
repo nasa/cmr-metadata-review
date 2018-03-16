@@ -14,6 +14,8 @@ $(document).on('turbolinks:load', function(){
     var formInput = 'form#' + form + ' input[name="record_id"]';
     var formInputChecked = $(formInput + ':checked').val();
 
+    addButtonActions(form);
+
     if (formInputChecked) {
       enableAllButtons(form);
     } else {
@@ -30,5 +32,22 @@ function enableAllButtons(form){
   buttons.forEach(function(button){
     var buttonId = 'form#' + form + ' .' + button + 'Button';
     $(buttonId).prop("disabled", false);
+  });
+}
+
+function addButtonActions(form) {
+  var formId = 'form#' + form;
+
+  $(formId + ' .selectButton').click(function(){
+    $(formId).prop("method", "get");
+  });
+
+  $(formId + ' .deleteButton').click(function(){
+    $(formId).prop("method", "post");
+    $(formId + ' input[name="_method"]').val("delete");
+  });
+
+  $(formId + ' .reportButton').click(function(){
+    $(formId).prop("method", "get");
   });
 }
