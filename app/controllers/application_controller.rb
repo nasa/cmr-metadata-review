@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def filtered_records
-    @records = if current_user.role == "daac_curator"
+    @records = if current_user.daac_curator?
       Record.daac(current_user.daac)
     else
       filtered_by_daac? ? Record.daac(params[:daac]) : Record.all

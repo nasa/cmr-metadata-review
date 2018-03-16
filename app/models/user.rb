@@ -6,29 +6,29 @@ class User < ActiveRecord::Base
 
   has_many :ingests
   has_many :comments
-  has_many :reviews 
-  has_many :discussions   
+  has_many :reviews
+  has_many :discussions
 
   validates_presence_of :daac, if: Proc.new { |u| u.role.eql?("daac_curator") }
 
   ROLES = %w[admin arc_curator daac_curator].freeze
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Array of Records
   # ==== Method
-  # Iterates through all collection records and returns an Array  
-  # containing only the records for which the user has not attached a completed review. 
+  # Iterates through all collection records and returns an Array
+  # containing only the records for which the user has not attached a completed review.
   def records_not_reviewed
-    Collection.all_records.select do |record| 
-      (record.reviews.select do |review| 
+    Collection.all_records.select do |record|
+      (record.reviews.select do |review|
         (review.user == self && review.review_state == 1)
-      end).empty? 
+      end).empty?
     end
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Whether or not the User is an admin.
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
     role.eql?("admin")
   end
 
-  # ====Params   
+  # ====Params
   # None
   # ====Returns
   # Whether or not the User is a curator.
@@ -48,5 +48,9 @@ class User < ActiveRecord::Base
   # intended for backwards compatibility. For new code, use the 'role' attribute directly.
   def curator
     role.eql?("arc_curator")
+  end
+
+  def daac_curator?
+    role == "daac_curator"
   end
 end

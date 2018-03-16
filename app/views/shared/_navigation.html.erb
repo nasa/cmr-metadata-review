@@ -28,9 +28,7 @@
             <li><%= link_to "Overall Report", reports_home_path %></li>
             <li><%= link_to "Reports by DAAC", reports_provider_path %></li>
             <li><%= link_to "Reports By Selection", reports_search_path %></li>
-            <% if can?(:review_state, Record::STATE_CLOSED) %>
-              <li><%= link_to "Closed Records", finished_records_path %></li>
-            <% end %>
+            <li><%= link_to "Closed Records", finished_records_path %></li>
           </ul>
         </li>
 
