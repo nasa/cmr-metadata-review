@@ -120,7 +120,7 @@
 .report_top {
   display: flex;
   min-height: 50px;
-  border-bottom-style: solid; 
+  border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: $gray-dark;
   padding-bottom: 10px;
@@ -133,7 +133,7 @@
       width: 150px;
       padding-left:10px;
       height:38px;
-    }  
+    }
   }
 
   .report_buttons {
@@ -283,13 +283,13 @@
 
 .update_section {
   display: inline-block;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   width: 350px;
 }
 
 .selection_section {
   display: inline-block;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   width: 35%;
   padding-left:15px;
   tr:nth-child(n) {
@@ -312,7 +312,7 @@
     .checked_num {
       font-size: 45px;
     }
-  }  
+  }
 
   .chart_padding {
     padding: 25px;

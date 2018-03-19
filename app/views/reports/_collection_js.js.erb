@@ -121,28 +121,30 @@
           ]
       };
 
-      var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: data,
+      if(ctx) {
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
 
-          options: {
-            legend:{
-              display:false
-            },
-            scales: {
-              xAxes: [{
-                  barThickness: 20
-              }],
-              yAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Number of Completed Reviews'
-                }
-              }]
-            },
-            maintainAspectRatio: false
-          }
-      });
+            options: {
+              legend:{
+                display:false
+              },
+              scales: {
+                xAxes: [{
+                    barThickness: 20
+                }],
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Number of Completed Reviews'
+                  }
+                }]
+              },
+              maintainAspectRatio: false
+            }
+        });
+      }
   <% end %>
 
 
