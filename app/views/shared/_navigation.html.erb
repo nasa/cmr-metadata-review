@@ -6,7 +6,7 @@
       <h3><%= title %></h3>
     <% end %>
     <% if current_user.admin %>
-      <p>CMR Last Update: <%=RecordsUpdateLock.formatted_last_update%></p>
+      <p>CMR Last Update: <%= RecordsUpdateLock.formatted_last_update %></p>
     <% end %>
   </div>
 
@@ -14,48 +14,47 @@
     <nav class="eui-menu menu_override">
       <ul>
         <li>
-          <a href="<%= home_path %>" class="menu_link header_button">
+          <%= link_to home_path, class: "menu_link header_button" do %>
             <i class="eui-icon eui-fa-globe"></i>
             <p>Curation Home</p>
-          </a>
+          <% end %>
         </li>
         <li>
-          <a href="<%=reports_home_path%>" class="menu_link header_button">
+          <%= link_to finished_records_path, class: "menu_link header_button" do %>
+            <i class="fa fa-times-circle"></i>
+            <p>Closed Records</p>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to reports_home_path, class: "menu_link header_button" do %>
             <i class="fa fa-bar-chart"></i>
             <p>Reports</p>
-          </a>
+          <% end %>
           <ul class="eui-sub-menu">
             <li><%= link_to "Overall Report", reports_home_path %></li>
             <li><%= link_to "Reports by DAAC", reports_provider_path %></li>
             <li><%= link_to "Reports By Selection", reports_search_path %></li>
-            <li><%= link_to "Closed Records", finished_records_path %></li>
           </ul>
         </li>
 
         <li>
-          <a href="#" class="menu_link header_button">
+          <%= link_to "#", class: "menu_link header_button" do %>
             <i class="fa fa-sliders"></i>
             <p>Account Options</p>
-          </a>
+          <% end %>
           <ul class="eui-sub-menu">
             <li><%= link_to "Edit Account", edit_user_registration_path %></li>
             <% if current_user.admin %>
-              <li><a href="<%=new_user_registration_path%>">Create User</a></li>
-              <li id="record_refresh"><a href="<%=record_refresh_path%>">Refresh Records</a></li>
-
-              <script type="text/javascript">
-                document.getElementById("record_refresh").onclick = function() {
-                  showLoading("Refreshing Records From CMR");
-                }
-              </script>
+              <li><%= link_to "Create User", new_user_registration_path %></li>
+              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
             <% end %>
           </ul>
         </li>
         <li>
-          <a href="<%= destroy_user_session_path %>" class="menu_link header_button">
+          <%= link_to destroy_user_session_path, class: "menu_link header_button" do %>
             <i class="eui-icon eui-fa-external-link-square"></i>
             <p>Logout</p>
-          </a>
+          <% end %>
         </li>
       </ul>
     </nav>
