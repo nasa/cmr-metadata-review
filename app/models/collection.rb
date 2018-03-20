@@ -12,6 +12,8 @@ class Collection < ActiveRecord::Base
 
   extend RecordRevision
 
+  scope :finished, -> { where(cmr_update: false) }
+
   def get_records
     records.visible
   end

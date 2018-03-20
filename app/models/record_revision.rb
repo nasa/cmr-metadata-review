@@ -8,7 +8,8 @@ module RecordRevision
   # returns all collections ingested that belong to the daac parameter
 
   def by_daac(daac_short_name)
-    self.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
+    records = Record.daac(daac_short_name)
+    self.joins(:records).merge(records)
   end
 
   # ====Params
@@ -30,7 +31,7 @@ module RecordRevision
 
     return record
   end
-  
+
   # ====Params
   # string concept_id,
   # ====Returns
@@ -40,7 +41,7 @@ module RecordRevision
   # will return nil if no concept id is provided
   def find_type(concept_id)
     type = nil
-    
+
     if !concept_id.eql? ""
       if concept_id[0].downcase.eql? "c"
         type = Collection

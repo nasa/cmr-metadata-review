@@ -57,11 +57,11 @@
                       if(i==0){
                           ctx.fillStyle = "#3ab841";
                           ctx.font = "20px sans-serif";
-                          ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
+                          ctx.fillText(data, <%= 25 + ((@collection_finished_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
                       } else {
                           ctx.font = "25px sans-serif";
                           ctx.fillStyle = "#3e3e40";
-                          ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y -15);
+                          ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y - 15);
                       }
                   }),this)
               }),this);
@@ -78,13 +78,15 @@
           labels: [""],
 
           datasets: [{
-              label: "Number of Ingested Collections",
-              data: [<%= @collection_ingest_count %>],
+              label: "Number of Completed Reviews",
+              data: [<%= @collection_finished_count %>],
               backgroundColor: "#3ab841",
               hoverBackgroundColor: "#3ab841"
           },{
               label: "Total Number of Collections in CMR",
-              data: [<%= @cmr_total_collection_count - @collection_ingest_count %>],
+              // Subtract Number Reviewed from total, otherwise graphs would stack
+              // bars on top of each other
+              data: [<%= @cmr_total_collection_count - @collection_finished_count %>],
               backgroundColor: "#dbdcdd",
               hoverBackgroundColor: "#dbdcdd"
           }]

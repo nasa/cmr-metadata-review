@@ -37,27 +37,25 @@
         ARC PROGRESS
       </div>
 
-      <% if @cmr_total_collection_count %>
-        <div class="ingest_section">
-            <%= render(partial: 'title_bar', locals: {title: "INGESTED COLLECTIONS PROGRESS"}) %>
-            <div class="surrounding_box">
-              <div class="graph_container">
-                <canvas id="ChartIngest"></canvas>
-              </div>
-            </div>
-        </div>
-
-        <br>
-
-        <div class="velocity_section">
-          <%= render(partial: 'title_bar', locals: {title: "COMPLETED REVIEW PROGRESS"}) %>
+      <div class="ingest_section">
+          <%= render(partial: 'title_bar', locals: {title: "COLLECTION REVIEW PROGRESS"}) %>
           <div class="surrounding_box">
-            <div class="velocity_graph_container">
-              <canvas id="ChartVelocity"></canvas>
+            <div class="graph_container">
+              <canvas id="ChartIngest"></canvas>
             </div>
           </div>
+      </div>
+
+      <br>
+
+      <div class="velocity_section">
+        <%= render(partial: 'title_bar', locals: {title: "COMPLETED REVIEW PROGRESS"}) %>
+        <div class="surrounding_box">
+          <div class="velocity_graph_container">
+            <canvas id="ChartVelocity"></canvas>
+          </div>
         </div>
-      <% end %>
+      </div>
 
       <div class="update_section">
         <%= render(partial: 'title_bar', locals: {title: "UPDATED COLLECTIONS PROGRESS"}) %>

@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
 
   def home
-    @collection_ingest_count = Collection.count
+    @collection_finished_count = Collection.finished.count
     @cmr_total_collection_count = Cmr.total_collection_count
 
     @metric_set = MetricSet.new(Collection.all_newest_revisions)
@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
     unless params[:daac].nil? || params[:daac] == "Select DAAC"
       @show_charts = true
       @cmr_total_collection_count = Cmr.total_collection_count(params[:daac])
-      @collection_ingest_count = Collection.by_daac(params[:daac]).count
+      @collection_finished_count = Collection.by_daac(params[:daac]).finished.count
 
       record_set = Collection.all_newest_revisions(params[:daac])
       @metric_set = MetricSet.new(record_set)
