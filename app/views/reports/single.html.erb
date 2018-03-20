@@ -39,32 +39,59 @@
         <div class="metrics_section">
           <%= render(partial: 'title_bar', locals: {title: "RECORD METRICS"}) %>
           <div class="surrounding_box">
-            <table>
-              <tr class="header_row">
-                <td>Concept Id</td>
-                <td>Short Name</td>
-                <td>DAAC</td>
-                <td>Review Close Date</td>
-              </tr>
-              <tr>
-                <td><%=@record.concept_id.partition('-').first%></td>
-                <td><%=@record.short_name%></td>
-                <td><%=@record.daac%></td>
-                <td><%=@record.formatted_closed_date%></td>
-              </tr>
-            </table>
+            <% if @record.collection? %>
 
-            <% if @record.granule? %>
+              <table>
+                <tr class="header_row">
+                  <td>Concept Id</td>
+                  <td>Revision Id</td>
+                  <td>Short Name</td>
+                  <td>DAAC</td>
+                  <td>Source File</td>
+                  <td>Format</td>
+                  <td>Review Close Date</td>
+                </tr>
+                <tr>
+                  <td><%= @record.concept_id.partition('-').first %></td>
+                  <td><%= @record.revision_id %></td>
+                  <td><%= @record.short_name %></td>
+                  <td><%= @record.daac %></td>
+                  <td><%= link_to "UMM", @record.umm_json_link %></td>
+                  <td><%= @record.format %></td>
+                  <td><%= @record.formatted_closed_date %></td>
+                </tr>
+              </table>
+
+              <br>
+
+            <% else %>
+
               <% granule = @record.recordable %>
               <table>
                 <tr class="header_row">
+                  <td>Concept Id</td>
+                  <td>Revision Id</td>
+                  <td>Short Name</td>
+                  <td>DAAC</td>
                   <td>Collection Concept Id</td>
-                  <td>Collection Short Name</td>
+                  <td>Source File</td>
+                  <td>Format</td>
+                  <td>Review Close Date</td>
                 </tr>
                 <tr>
-                  <td><%= granule.collection_concept_id.partition('-').first %></td>
+                  <td><%= @record.concept_id.partition('-').first %></td>
+                  <td><%= @record.revision_id %></td>
                   <td><%= granule.collection_short_name %></td>
+                  <td><%= @record.daac %></td>
+                  <td><%= granule.collection_concept_id.partition('-').first %></td>
+                  <td><%= link_to "Native", @record.native_link %></td>
+                  <td>echo10</td>
+                  <td><%= @record.formatted_closed_date %></td>
                 </tr>
+              </table>
+
+              <br>
+
             <% end %>
 
             <table>
