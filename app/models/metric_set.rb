@@ -17,9 +17,8 @@ class MetricSet
 
   def initialize(record_set = [])
     #only selecting closed records
-    @record_set = record_set
-    record_ids = @record_set.map { |record| record.id }
-    @record_data_set = RecordData.all.select { |data| record_ids.include? data.record_id }
+    @record_set      = record_set
+    @record_data_set = RecordData.where(record: @record_set)
   end
 
   # ====Params
