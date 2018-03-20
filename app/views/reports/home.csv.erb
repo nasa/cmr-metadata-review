@@ -3,7 +3,7 @@
 <%= CSV.generate_line(["Collections Information"]) %>
 
 <%= CSV.generate_line(["Total Collections in CMR:", @cmr_total_collection_count]) %>
-<%= CSV.generate_line(["Total Ingested Collections:", @collection_ingest_count]) %>
+<%= CSV.generate_line(["Total Completed Reviews:", @collection_finished_count]) %>
 
 <%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
 <%#= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>

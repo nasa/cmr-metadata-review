@@ -2,7 +2,7 @@
 <%= CSV.generate_line(["DAAC:", params[:daac]]) %>
 
 <%= CSV.generate_line(["Total Collections in DAAC:", @cmr_total_collection_count]) %>
-<%= CSV.generate_line(["Total Ingested Collections:", @collection_ingest_count]) %>
+<%= CSV.generate_line(["Total Completed Collections:", @collection_finished_count]) %>
 
 <%= CSV.generate_line(["Review Velocity:", "Closed in Last 30 Days:", "Last 90 Days:", "Last 180 Days:"]) %>
 <%#= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
