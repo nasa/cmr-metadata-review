@@ -34,4 +34,20 @@ module ReportsHelper
   def record_data_colors(record, color)
     record.record_datas.where(color: color)
   end
+
+  def closed_records_count
+    closed = Record.closed
+    closed = closed.daac(params[:daac]) if params[:daac]
+
+    closed.count
+  end
+
+  def finished_records_count
+    # TODO Update this to use the given scope when the finished
+    # work is merged in
+    finished = Record.where(state: "finished")
+    finished = finished.daac(params[:daac]) if params[:daac]
+
+    finished.count
+  end
 end

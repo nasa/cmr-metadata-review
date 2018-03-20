@@ -95,6 +95,12 @@
   height: 400px;
 }
 
+.finished_graph_container {
+  display: block;
+  wdith: 100%;
+  height: 240px;
+}
+
 .graph_container_flag{
   display:block;
   width:200px;
@@ -282,6 +288,13 @@
 }
 
 .update_section {
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  width: 350px;
+}
+
+.finished_section {
   display: inline-block;
   margin-bottom: 20px;
   width: 350px;

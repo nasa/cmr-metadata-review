@@ -1,152 +1,215 @@
 <% if @cmr_total_collection_count %>
 
-    <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
-      var barOptions_stacked = {
-          tooltips: {
-              enabled: false
-          },
-          hover :{
-              animationDuration:0
+  <%# ChartIngest - chart showing ingest of records vs total # in cmr%>
+  var barOptions_stacked = {
+      tooltips: {
+          enabled: false
+      },
+      hover :{
+          animationDuration:0
+      },
+      scales: {
+          xAxes: [{
+              ticks: {
+                  beginAtZero:true,
+                  fontFamily: "sans-serif",
+                  fontSize:11
+              },
+              scaleLabel:{
+                  display:false
+              },
+              gridLines: {
+              },
+              stacked: true
+          }],
+          yAxes: [{
+              gridLines: {
+                  display:false,
+                  color: "#fff",
+                  zeroLineColor: "#fff",
+                  zeroLineWidth: 0
+              },
+              ticks: {
+                  fontFamily: "sans-serif",
+                  fontSize:11
+              },
+              stacked: true,
+              barThickness: 50
+          }]
+      },
+      legend:{
+          display:true,
+          position: "bottom"
+      },
+      maintainAspectRatio: false,
+
+      animation: {
+          onComplete: function () {
+              var chartInstance = this.chart;
+              var ctx = chartInstance.ctx;
+              ctx.textAlign = "left";
+
+
+              Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  Chart.helpers.each(meta.data.forEach(function (bar, index) {
+                      data = dataset.data[index];
+                      if(i==0){
+                          ctx.fillStyle = "#3ab841";
+                          ctx.font = "20px sans-serif";
+                          ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
+                      } else {
+                          ctx.font = "25px sans-serif";
+                          ctx.fillStyle = "#3e3e40";
+                          ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y -15);
+                      }
+                  }),this)
+              }),this);
+          }
+      },
+      pointLabelFontFamily : "Quadon Extra Bold",
+      scaleFontFamily : "Quadon Extra Bold",
+  };
+
+  var ctx = document.getElementById("ChartIngest");
+  var myChart = new Chart(ctx, {
+      type: 'horizontalBar',
+      data: {
+          labels: [""],
+
+          datasets: [{
+              label: "Number of Ingested Collections",
+              data: [<%= @collection_ingest_count %>],
+              backgroundColor: "#3ab841",
+              hoverBackgroundColor: "#3ab841"
+          },{
+              label: "Total Number of Collections in CMR",
+              data: [<%= @cmr_total_collection_count - @collection_ingest_count %>],
+              backgroundColor: "#dbdcdd",
+              hoverBackgroundColor: "#dbdcdd"
+          }]
+      },
+
+      options: barOptions_stacked
+  });
+
+
+
+<%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
+  var ctx = document.getElementById("ChartVelocity");
+
+  var data = {
+      labels: <%= raw get_month_list %>,
+      datasets: [
+          {
+              label: "Completed Reviews",
+              backgroundColor: [
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.3)',
+                  'rgba(58, 184, 65, 0.4)',
+                  'rgba(58, 184, 65, 0.5)',
+                  'rgba(58, 184, 65, 0.6)',
+                  'rgba(58, 184, 65, 0.7)',
+                  'rgba(58, 184, 65, 0.8)',
+                  'rgba(58, 184, 65, 0.9)',
+                  'rgba(58, 184, 65, 1)'
+              ],
+              data: <%= list_past_months(params[:daac]) %>,
+          }
+      ]
+  };
+
+  if(ctx) {
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+
+        options: {
+          legend:{
+            display:false
           },
           scales: {
-              xAxes: [{
-                  ticks: {
-                      beginAtZero:true,
-                      fontFamily: "sans-serif",
-                      fontSize:11
-                  },
-                  scaleLabel:{
-                      display:false
-                  },
-                  gridLines: {
-                  },
-                  stacked: true
-              }],
-              yAxes: [{
-                  gridLines: {
-                      display:false,
-                      color: "#fff",
-                      zeroLineColor: "#fff",
-                      zeroLineWidth: 0
-                  },
-                  ticks: {
-                      fontFamily: "sans-serif",
-                      fontSize:11
-                  },
-                  stacked: true,
-                  barThickness: 50
-              }]
-          },
-          legend:{
-              display:true,
-              position: "bottom"
-          },
-          maintainAspectRatio: false,
-
-          animation: {
-              onComplete: function () {
-                  var chartInstance = this.chart;
-                  var ctx = chartInstance.ctx;
-                  ctx.textAlign = "left";
-
-
-                  Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-                      var meta = chartInstance.controller.getDatasetMeta(i);
-                      Chart.helpers.each(meta.data.forEach(function (bar, index) {
-                          data = dataset.data[index];
-                          if(i==0){
-                              ctx.fillStyle = "#3ab841";
-                              ctx.font = "20px sans-serif";
-                              ctx.fillText(data, <%= 25 + ((@collection_ingest_count.to_f / @cmr_total_collection_count) * 500) %>, bar._model.y-47);
-                          } else {
-                              ctx.font = "25px sans-serif";
-                              ctx.fillStyle = "#3e3e40";
-                              ctx.fillText(<%=@cmr_total_collection_count%>, bar._model.x - 60, bar._model.y -15);
-                          }
-                      }),this)
-                  }),this);
+            xAxes: [{
+                barThickness: 20
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Number of Completed Reviews'
               }
+            }]
           },
-          pointLabelFontFamily : "Quadon Extra Bold",
-          scaleFontFamily : "Quadon Extra Bold",
-      };
+          maintainAspectRatio: false
+        }
+    });
+  }
 
-      var ctx = document.getElementById("ChartIngest");
-      var myChart = new Chart(ctx, {
-          type: 'horizontalBar',
-          data: {
-              labels: [""],
+  <%# ChartFinished - bar chart showing finished records %>
 
-              datasets: [{
-                  label: "Number of Ingested Collections",
-                  data: [<%= @collection_ingest_count %>],
-                  backgroundColor: "#3ab841",
-                  hoverBackgroundColor: "#3ab841"
-              },{
-                  label: "Total Number of Collections in CMR",
-                  data: [<%= @cmr_total_collection_count - @collection_ingest_count %>],
-                  backgroundColor: "#dbdcdd",
-                  hoverBackgroundColor: "#dbdcdd"
-              }]
-          },
+  var ctx = document.getElementById("ChartFinished");
 
-          options: barOptions_stacked
-      });
+  var barOptionsStacked = {
+    scales: {
+      xAxes: [{
+        ticks: {
+          beginAtZero: true,
+          fontFamily:  "sans-serif",
+          fontSize:    11
+        },
+        scaleLabel:{
+          display: false
+        },
+        gridLines: {
+        },
+        stacked: false
+      }],
+      yAxes: [{
+        gridLines: {
+          display:       false,
+          color:         "#fff",
+          zeroLineColor: "#fff",
+          zeroLineWidth: 0
+        },
+        ticks: {
+          fontFamily: "sans-serif",
+          fontSize:   11
+        },
+        stacked:      false,
+        barThickness: 30
+      }]
+    },
+    legend:{
+      display: true,
+      position: "bottom"
+    },
+    maintainAspectRatio: false,
+    pointLabelFontFamily : "Quadon Extra Bold",
+    scaleFontFamily : "Quadon Extra Bold"
+  };
 
+  var data = {
+    labels: [""],
 
+    datasets: [{
+        label: "Finished by DAAC",
+        data: [<%= closed_records_count %>],
+        backgroundColor: "rgba(58, 184, 65, 0.6)"
+    },{
+        label: "Marked Complete by ARC",
+        data: [<%= finished_records_count %>],
+        backgroundColor: "rgba(58, 184, 65, 1)"
+    }]
+  }
 
-    <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
-      var ctx = document.getElementById("ChartVelocity");
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: data,
+    options: barOptionsStacked
+  });
 
-      var data = {
-          labels: <%= raw get_month_list %>,
-          datasets: [
-              {
-                  label: "Completed Reviews",
-                  backgroundColor: [
-                      'rgba(58, 184, 65, 0.3)',
-                      'rgba(58, 184, 65, 0.3)',
-                      'rgba(58, 184, 65, 0.3)',
-                      'rgba(58, 184, 65, 0.3)',
-                      'rgba(58, 184, 65, 0.4)',
-                      'rgba(58, 184, 65, 0.5)',
-                      'rgba(58, 184, 65, 0.6)',
-                      'rgba(58, 184, 65, 0.7)',
-                      'rgba(58, 184, 65, 0.8)',
-                      'rgba(58, 184, 65, 0.9)',
-                      'rgba(58, 184, 65, 1)'
-                  ],
-                  data: <%= list_past_months(params[:daac]) %>,
-              }
-          ]
-      };
-
-      if(ctx) {
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-
-            options: {
-              legend:{
-                display:false
-              },
-              scales: {
-                xAxes: [{
-                    barThickness: 20
-                }],
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Number of Completed Reviews'
-                  }
-                }]
-              },
-              maintainAspectRatio: false
-            }
-        });
-      }
-  <% end %>
-
+<% end %>
 
   <%# ChartFlagOriginal - pie chart of flag colors %>
 
