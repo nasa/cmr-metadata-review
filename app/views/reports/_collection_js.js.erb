@@ -100,30 +100,30 @@
 <%# ChartVelocity - bar chart showing the cumulative # of reviews over months%>
   var ctx = document.getElementById("ChartVelocity");
 
-  var data = {
-      labels: <%= raw get_month_list %>,
-      datasets: [
-          {
-              label: "Completed Reviews",
-              backgroundColor: [
-                  'rgba(58, 184, 65, 0.3)',
-                  'rgba(58, 184, 65, 0.3)',
-                  'rgba(58, 184, 65, 0.3)',
-                  'rgba(58, 184, 65, 0.3)',
-                  'rgba(58, 184, 65, 0.4)',
-                  'rgba(58, 184, 65, 0.5)',
-                  'rgba(58, 184, 65, 0.6)',
-                  'rgba(58, 184, 65, 0.7)',
-                  'rgba(58, 184, 65, 0.8)',
-                  'rgba(58, 184, 65, 0.9)',
-                  'rgba(58, 184, 65, 1)'
-              ],
-              data: <%= list_past_months(params[:daac]) %>,
-          }
-      ]
-  };
-
   if(ctx) {
+    var data = {
+        labels: <%= raw get_month_list %>,
+        datasets: [
+            {
+                label: "Closed Records",
+                backgroundColor: [
+                    'rgba(58, 184, 65, 0.3)',
+                    'rgba(58, 184, 65, 0.3)',
+                    'rgba(58, 184, 65, 0.3)',
+                    'rgba(58, 184, 65, 0.3)',
+                    'rgba(58, 184, 65, 0.4)',
+                    'rgba(58, 184, 65, 0.5)',
+                    'rgba(58, 184, 65, 0.6)',
+                    'rgba(58, 184, 65, 0.7)',
+                    'rgba(58, 184, 65, 0.8)',
+                    'rgba(58, 184, 65, 0.9)',
+                    'rgba(58, 184, 65, 1)'
+                ],
+                data: <%= closed_records_by_month %>,
+            }
+        ]
+    };
+
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: data,
@@ -139,7 +139,7 @@
             yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Number of Completed Reviews'
+                labelString: 'Number of Closed Records'
               }
             }]
           },

@@ -1,27 +1,18 @@
 module ReportsHelper
 
-  def list_past_months(daac = nil)
-    review_month_counts = []
+  def closed_records_by_month
+    begin_date = (Date.today - 10.months).beginning_of_month
+    end_date   = Date.today.end_of_month
 
-    review_list = if daac
-      records = Record.daac(daac)
-      records.map(&:reviews).flatten
-    else
-      Review.all
-    end
+    records = Record.where("closed_date >= :begin_date AND closed_date <= :end_date",
+      begin_date: begin_date, end_date: end_date)
 
-    #this should be optimized to bucket all the reviews in one run through
-    10.downto(0).to_a.each do |month_count|
-      total_count = (review_list.select { |review|
-                                            if review.review_completion_date
-                                              (DateTime.now.month - review.review_completion_date.month) >= month_count
-                                            else
-                                              false
-                                            end
-                                        }).count
-      review_month_counts.push(total_count)
+    count = records.group("to_char(closed_date, 'YYYY-MM')").count
+
+    10.downto(0).map do |month_mod|
+      date = (Date.today - month_mod.months).strftime("%Y-%m")
+      count[date].to_i
     end
-    review_month_counts
   end
 
   def get_month_list

@@ -9,7 +9,7 @@
 <%#= CSV.generate_line(["Review Counts", @review_counts[0], @review_counts[1], @review_counts[2]]) %>
 
 <%= CSV.generate_line(['Completed Review Progress'].concat(get_month_list) %>
-<%= CSV.generate_line(["Review Counts"].concat(list_past_months)) %>
+<%= CSV.generate_line(["Review Counts"].concat(closed_records_by_month)) %>
 
 <%= CSV.generate_line(["Stat:", "Original Set:", "Current Set:"]) %>
 <%= CSV.generate_line(["Number of elements checked (total):", @original_metric_set.color_counts.values.sum, @metric_set.color_counts.values.sum]) %>
