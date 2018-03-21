@@ -199,6 +199,19 @@
     font-size: 12px;
     // max-width: 170px;
     padding: 5px;
+
+    &.red_section_tab {
+      background-color: #e84a34;
+    }
+
+    &.yellow_section_tab {
+      color: black;
+      background-color: #ffce00;
+    }
+
+    &.blue_section_tab {
+      background-color: #1b75ae;
+    }
   }
 }
 

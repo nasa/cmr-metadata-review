@@ -167,7 +167,9 @@
         <section class="<%=section_name%>">
 
           <div class="single_color_table_holder">
-            <%= render(partial: 'title_bar', locals: {title: "#{color} FLAGGED ELEMENTS"}) %>
+            <div class="title_holder">
+              <p class=<%= "#{section_name}_tab"%>><%= "#{color} FLAGGED ELEMENTS" %></p>
+            </div>
             <div class="surrounding_box">
               <table class="flag_table">
                 <tr class="header_row">
