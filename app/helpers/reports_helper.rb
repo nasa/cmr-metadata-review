@@ -25,10 +25,10 @@ module ReportsHelper
   end
 
   def get_month_list
-    # negative numbers represent previous months
-    # then Date::MONTHNAMES[1..12] converts them into strings
-    # the % 12 then wraps negative numbers around to the end months of the year
-    (-11).upto(-1).to_a.map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
+    (10).downto(0).map do |month_mod|
+      date = Date.today - month_mod.months
+      date.strftime("%b %y")
+    end
   end
 
   def record_data_colors(record, color)
