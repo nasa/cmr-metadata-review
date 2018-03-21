@@ -169,8 +169,8 @@ class MetricSet
 
     {}.tap do |record_hash|
       collections.map do |collection|
-        collection_records = collection.get_records.where(state: METRIC_STATES)
-        record_hash[collection.concept_id] = collection_records.sort(&:id).reverse
+        collection_records = collection.get_records.order("revision_id DESC").where(state: METRIC_STATES)
+        record_hash[collection.concept_id] = collection_records
       end
     end
   end
