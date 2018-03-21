@@ -89,14 +89,4 @@ class ReportsController < ApplicationController
       format.csv { send_data(render_to_string, filename: "dashboard_#{record.concept_id}_#{record.revision_id}.csv") }
     end
   end
-
-  private
-
-  def get_month_list
-    # negative numbers represent previous months
-    # then Date::MONTHNAMES[1..12] converts them into strings
-    # the % 12 then wraps negative numbers around to the end months of the year
-    (-11).upto(-1).to_a.map {|month| Date::MONTHNAMES[1..12][((Date.today.month + month) % 12)]}
-  end
-
 end
