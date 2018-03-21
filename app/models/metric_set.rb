@@ -14,6 +14,7 @@ class MetricSet
   @record_data_set = []
 
   METRIC_STATES = [Record::STATE_CLOSED, Record::STATE_IN_DAAC_REVIEW]
+  COLORS        = ["red", "blue", "green", "yellow"]
 
   def initialize(record_set = [])
     #only selecting closed records
@@ -42,7 +43,7 @@ class MetricSet
       end
     end
 
-    return MetricSet.new(original_record_set)
+    MetricSet.new(original_record_set)
   end
 
   # ====Params
@@ -73,14 +74,10 @@ class MetricSet
   # ====Returns
   # Hash {color_string => count}
   # ==== Method
-  # Then aggregates the counts of each flag type in record_data_set and returns a list of those values
+  # Then aggregates the counts of each flag type in record_data_set and returns a hash of those values
 
   def color_counts
-    blue_count = (@record_data_set.select { |data| data.color == "blue"}).count
-    green_count = (@record_data_set.select { |data| data.color == "green"}).count
-    yellow_count = (@record_data_set.select { |data| data.color == "yellow"}).count
-    red_count = (@record_data_set.select { |data| data.color == "red"}).count
-    {"blue" => blue_count, "green" => green_count, "yellow" => yellow_count, "red" => red_count}
+    @color_counts ||= get_color_counts
   end
 
 
@@ -251,5 +248,14 @@ class MetricSet
     column_counts.sort! { |x,y| y[1] <=> x[1] }
   end
 
+  private
 
+  def get_color_counts
+    colors_zero_arrays = COLORS.collect { |c| [c, 0] }
+    default_colors = Hash[colors_zero_arrays]
+
+    counts = @record_data_set.where(color: COLORS).group(:color).count
+
+    default_colors.merge(counts)
+  end
 end
