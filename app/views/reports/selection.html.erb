@@ -58,11 +58,9 @@
               <td>
                 <%=record.concept_id%>
               </td>
-              <% if record.has_short_name? %>
-                <td>
-                  <%=record.short_name%>
-                </td>
-              <% end %>
+              <td>
+                <%= record.has_short_name? ? record.short_name : record.recordable.short_name %>
+              </td>
             </tr>
           <% end %>
         </table>
