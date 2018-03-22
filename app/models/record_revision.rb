@@ -66,7 +66,7 @@ module RecordRevision
     newest_records
   end
 
-    # ====Params
+  # ====Params
   # String, name of provider
   # ====Returns
   # List of record lists, each sub list is all records for a collection in order of ingest
@@ -79,10 +79,9 @@ module RecordRevision
     if daac_short_name.nil?
       collection_records = self.all_records.where(state: MetricSet::METRIC_STATES)
     else
-      collections = self.by_daac(daac_short_name)
-      collection_ids = collections.map {|collection| collection.id }
-      collection_records = Record.all.select { |record| record.closed? && (record.recordable_type == self.name) && (collection_ids.include? record.recordable_id) }
+      collection_records = all_records.where(state: MetricSet::METRIC_STATES).daac(daac_short_name)
     end
+
     records_hash = {}
 
     collection_records.each do |record|
