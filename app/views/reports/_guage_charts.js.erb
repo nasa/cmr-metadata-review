@@ -1,0 +1,39 @@
+<%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
+var chart = c3.generate({
+  bindto: '#<%= type %>ChartGuageOriginal',
+  data: {
+    columns: [
+      ['data', <%= metric_data.original_quality_done_records.inject(0.0) { |sum, el| sum + el } / metric_data.original_quality_done_records.size %>]
+    ],
+    type: 'gauge'
+  },
+  color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+      values: [30, 60, 80, 100]
+    }
+  },
+  size: {
+    height: 180
+  }
+});
+
+<%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
+var chart = c3.generate({
+  bindto: '#<%= type %>ChartGuageUpdated',
+  data: {
+    columns: [
+        ['data', <%= metric_data.updated_quality_done_records.inject(0.0) { |sum, el| sum + el } / metric_data.updated_quality_done_records.size %>]
+    ],
+    type: 'gauge'
+  },
+  color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+        values: [30, 60, 80, 100]
+    }
+  },
+  size: {
+    height: 180
+  }
+});

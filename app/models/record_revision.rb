@@ -76,11 +76,9 @@ module RecordRevision
   # Do not want to rely on revision ids since they may not be numbers
 
   def ordered_revisions(daac_short_name = nil)
-    if daac_short_name.nil?
-      collection_records = self.all_records.where(state: MetricSet::METRIC_STATES)
-    else
-      collection_records = all_records.where(state: MetricSet::METRIC_STATES).daac(daac_short_name)
-    end
+    collection_records = all_records.where(state: MetricData::METRIC_STATES)
+
+    collection_records = collection_records.daac(daac_short_name) if daac_short_name
 
     records_hash = {}
 

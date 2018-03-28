@@ -1,0 +1,35 @@
+<div class="reports_box">
+  <div class="report_sub_title first_sub_title">
+    <div class="title_box">
+      <%= title %>
+    </div>
+  </div>
+
+  <div class="stats_area">
+    <section>
+      <div class="section_title">
+        <%= type.upcase %> METADATA QUALITY
+      </div>
+    </section>
+
+    <section class="quality_section section_holder">
+
+      <%= render partial: 'reviewed_elements', locals: { metric_data: metric_data, type: type } %>
+
+      <br>
+
+      <%= render partial: 'errors', locals: { metric_data: metric_data, type: type } %>
+
+      <br>
+
+    </section>
+
+
+    <div class="section_break">
+    </div>
+
+    <section class="review_section section_holder">
+      <%= render partial: 'guage', locals: { metric_data: metric_data, type: type } %>
+    </section>
+  </div>
+</div>

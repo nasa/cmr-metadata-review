@@ -76,19 +76,17 @@
 
                 function appendRecordsList(tr_element) {
                   var concept_id = tr_element.getAttribute("concept_id");
-                  var revision_id = tr_element.getAttribute("revision_id");
-                  if (list_contains_record(records, concept_id, revision_id)) {
-                    records = records.filter(function(record_arr) { return ((!(record_arr[0] == concept_id)) || (!(record_arr[1] == revision_id)))});
+                  if (list_contains_record(records, concept_id)) {
+                    records = records.filter(function(record) { return record != concept_id });
                       tr_element.style.backgroundColor = "";
                   } else {
-                    records.push([concept_id, revision_id]);
+                    records.push(concept_id);
                     tr_element.style.backgroundColor = "#CAE4F5";
                   }
                 }
 
-                function list_contains_record(list, concept_id, revision_id) {
+                function list_contains_record(list, concept_id) {
                   var temp_records = list.filter(function(record_arr) { return record_arr[0] == concept_id })
-                  temp_records = temp_records.filter(function(record_arr) { return record_arr[1] == revision_id })
                   return temp_records.length > 0
                 }
               </script>

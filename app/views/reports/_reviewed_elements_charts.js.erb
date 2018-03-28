@@ -1,0 +1,149 @@
+<%# ChartFlagOriginal - pie chart of flag colors %>
+var ctx = document.getElementById("<%= type %>ChartFlagOriginal");
+
+var data = {
+  labels: [
+    "Red",
+    "Blue",
+    "Yellow",
+    "Green"
+  ],
+  datasets: [
+    {
+      data: [
+        <%= metric_data.original_color_counts["red"] %>,
+        <%= metric_data.original_color_counts["blue"] %>,
+        <%= metric_data.original_color_counts["yellow"]%>,
+        <%= metric_data.original_color_counts["green"]%>
+      ],
+      backgroundColor: [
+        "#e84a34",
+        "#1b75ae",
+        "#ffce00",
+        "#3ab841"
+      ],
+      hoverBackgroundColor: [
+        "#e84a34",
+        "#1b75ae",
+        "#ffce00",
+        "#3ab841"
+      ]
+    }]
+};
+
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: data,
+  options: {
+    legend:{
+      display:false
+    },
+    maintainAspectRatio: false,
+    pieceLabel: {
+      mode: 'value',
+      fontSize: 18,
+      fontStyle: 'bold'
+    }
+  }
+});
+
+<%# ChartFlag - pie chart of current flag colors %>
+var ctx = document.getElementById("<%= type %>ChartFlag");
+
+var data = {
+  labels: [
+    "Red",
+    "Blue",
+    "Yellow",
+    "Green"
+  ],
+  datasets: [
+    {
+      data: [
+        <%= metric_data.updated_color_counts["red"] %>,
+        <%= metric_data.updated_color_counts["blue"] %>,
+        <%= metric_data.updated_color_counts["yellow"] %>,
+        <%= metric_data.updated_color_counts["green"]%>
+      ],
+      backgroundColor: [
+        "#e84a34",
+        "#1b75ae",
+        "#ffce00",
+        "#3ab841"
+      ],
+      hoverBackgroundColor: [
+        "#e84a34",
+        "#1b75ae",
+        "#ffce00",
+        "#3ab841"
+      ]
+    }
+  ]
+};
+
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: data,
+
+  options: {
+    legend:{
+      display:false
+    },
+    maintainAspectRatio: false,
+    pieceLabel: {
+      mode: 'value',
+      fontSize: 18,
+      fontStyle: 'bold'
+    }
+  }
+});
+
+<%# ChartFlagFinal - pie chart of current flag colors %>
+var ctx = document.getElementById("<%= type %>ChartFlagFinal");
+
+var data = {
+  labels: [
+    "Red",
+    "Blue",
+    "Yellow",
+    "Green"
+  ],
+  datasets: [
+  {
+    data: [
+      <%= metric_data.final_color_counts["red"] %>,
+      <%= metric_data.final_color_counts["blue"] %>,
+      <%= metric_data.final_color_counts["yellow"] %>,
+      <%= metric_data.final_color_counts["green"] %>
+    ],
+    backgroundColor: [
+      "#e84a34",
+      "#1b75ae",
+      "#ffce00",
+      "#3ab841"
+    ],
+    hoverBackgroundColor: [
+      "#e84a34",
+      "#1b75ae",
+      "#ffce00",
+      "#3ab841"
+    ]
+  }]
+};
+
+var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: data,
+
+  options: {
+    legend:{
+      display:false
+    },
+    maintainAspectRatio: false,
+    pieceLabel: {
+      mode: 'value',
+      fontSize: 18,
+      fontStyle: 'bold'
+    }
+  }
+});

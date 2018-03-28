@@ -10,63 +10,12 @@
 
 class MetricSet
   attr_accessor :record_set, :record_data_set
-  @record_set = []
-  @record_data_set = []
 
-  METRIC_STATES = [Record::STATE_CLOSED, Record::STATE_IN_DAAC_REVIEW]
-  COLORS        = ["red", "blue", "green", "yellow"]
+  COLORS = ["red", "blue", "green", "yellow"]
 
   def initialize(record_set = [])
-    #only selecting closed records
     @record_set      = record_set
     @record_data_set = RecordData.where(record: @record_set)
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # new MetricSet object
-  # ==== Method
-  # Takes the records in the current MetricSet, then finds the original revision for each record
-  # Returns a new MetricSet made up of these original records so that metrics can be calculated for the original
-  # revisions of any arbitrary record set.
-
-  def original_metric_set
-    ordered_revisions = self.ordered_revisions
-    original_record_set = []
-    ordered_revisions.each do |key, value|
-      #for safety resorting the records by revision_id highest to lowest
-      #(lowest revision_id's being the oldest)
-      sorted_revisions = value.sort {|x, y| y.revision_id.to_i <=> x.revision_id.to_i }
-      unless sorted_revisions.empty?
-        original_record_set.push(sorted_revisions.last)
-      end
-    end
-
-    MetricSet.new(original_record_set)
-  end
-
-  # ====Params
-  # Array of review objects
-  # ====Returns
-  # Array of integers
-  # ==== Method
-  # Aggregates the number of reviews for each record in the record set, then returns the counts for each record in an Array
-
-  def completed_review_counts(reviews)
-    review_hash = {}
-    #setting up review count hash
-    @record_set.each do |record|
-      review_hash[record.id] = 0
-    end
-
-    reviews.each do |review|
-      if review_hash.key?(review.record_id)
-        review_hash[review.record_id] = review_hash[review.record_id] + 1
-      end
-    end
-
-    review_hash.values
   end
 
   # ====Params
@@ -80,56 +29,12 @@ class MetricSet
     @color_counts ||= get_color_counts
   end
 
-
-  # ====Params
-  # None
-  # ====Returns
-  # Hash of counts for each flag type
-  # ==== Method
-  # Iterates through record_data_set summing for each flag the number of times a recorddata has that flag and is marked red
-
-  def red_flags
-    flagged_data = @record_data_set.select { |data| !data.flag.empty? && (data.color == "red") }
-
-    flag_hash = { "Accessibility" => 0, "Traceability" => 0, "Usability" => 0 }
-    flagged_data.each do |data|
-      data.flag.each do |flag_name|
-        flag_hash[flag_name] = flag_hash[flag_name] + 1
-      end
-    end
-
-    flag_hash
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # Integer
-  # ==== Method
-  # Aggregates the total number of records with their most recent revision_id record in a completed state.
-
-  def total_completed
-    (@record_set.select {|record| record.closed? }).count
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # Integer
-  # ==== Method
-  # Aggregates the total number of records with their most recent revision_id record in the in process state.
-
-  def total_in_process
-    (@record_set.select {|record| !record.closed? }).count
-  end
-
   # ====Params
   # None
   # ====Returns
   # Array of Floats
   # ==== Method
   # Iterates through record_list and for each done record, stores quality score in an Array
-
 
   def quality_done_records
     collection_records = @record_set.select { |record| record.closed? }
@@ -150,65 +55,6 @@ class MetricSet
     end
 
     scores
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # Hash {Integer => [Record]}
-  # ==== Method
-  # Finds the Collection for each record in record_set
-  # Grabs a list of Collections for each record and then reduces to only unique Collections
-  # Maps to each Collection Id, a list of related records, sorted newest to oldest
-
-  def ordered_revisions
-    collections = @record_set.map(&:recordable).uniq
-
-    {}.tap do |record_hash|
-      collections.map do |collection|
-        collection_records = collection.get_records.order("revision_id DESC").where(state: METRIC_STATES)
-        record_hash[collection.concept_id] = collection_records
-      end
-    end
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # Integer
-  # ==== Method
-  # Obtains the ordered revisions list of lists
-  # Iterates through the list summing the count of sublists where the first record is done and there is at least a second revision marked done
-
-  def updated_done_count
-    ordered_revisions = self.ordered_revisions.values
-    ordered_revisions = ordered_revisions.select { |record_list| !record_list.empty? }
-    unless ordered_revisions.empty?
-      updated_and_done = ordered_revisions.select { |record_list|
-        record_list[0].closed? && ((record_list.select { |record| record.closed? }).count > 1)
-      }
-
-      updated_and_done.count
-    else
-      0
-    end
-  end
-
-  # ====Params
-  # None
-  # ====Returns
-  # Integer
-  # ==== Method
-  # Obtains the ordered revisions list of lists
-  # Iterates through the list summing count of sublists where there is a revision beyond the original one that is marked done.
-
-  def updated_count
-    ordered_revisions = self.ordered_revisions.values
-    updated = ordered_revisions.select { |record_list|
-      record_list.drop(1).count > 0
-    }
-
-    updated.count
   end
 
   # ====Params

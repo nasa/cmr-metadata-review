@@ -1,0 +1,48 @@
+<%# ChartErrors - chart showing the overall elements with the most errors found%>
+var ctx = document.getElementById("<%= type %>ChartErrors");
+
+var data = {
+  labels: <%= raw (metric_data.original_non_green_count.take(10).map {|data_set| data_set[0]}) %>,
+  datasets: [
+    {
+      label: "",
+      backgroundColor: [
+        'rgba(105, 105, 105, 1)',
+        'rgba(105, 105, 105, 0.9)',
+        'rgba(105, 105, 105, 0.8)',
+        'rgba(105, 105, 105, 0.7)',
+        'rgba(105, 105, 105, 0.6)',
+        'rgba(105, 105, 105, 0.5)',
+        'rgba(105, 105, 105, 0.4)',
+        'rgba(105, 105, 105, 0.3)',
+        'rgba(105, 105, 105, 0.3)',
+        'rgba(105, 105, 105, 0.3)',
+      ],
+      data: <%= (metric_data.original_non_green_count.take(10).map {|data_set| data_set[1]}) %>,
+    }
+  ]
+};
+
+var myChart = new Chart(ctx, {
+  type: 'horizontalBar',
+  data: data,
+
+  options: {
+    legend:{
+      display:false
+    },
+    scales: {
+      xAxes: [{
+        barThickness: 20,
+        scaleLabel: {
+          display: true,
+          labelString: 'Number of Non Green Flags Per Element'
+        }
+      }],
+      yAxes: [{
+        position: "right"
+      }]
+    },
+    maintainAspectRatio: false
+  }
+});

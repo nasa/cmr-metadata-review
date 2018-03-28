@@ -4,14 +4,8 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
 
   def home
-    @collection_finished_count = Collection.finished.count
-    @cmr_total_collection_count = Cmr.total_collection_count
-
-    @metric_set = MetricSet.new(Collection.all_newest_revisions)
-    @original_metric_set = @metric_set.original_metric_set
-
-    @granule_metric_set = MetricSet.new(Granule.all_newest_revisions)
-    @granule_original_metric_set = @granule_metric_set.original_metric_set
+    @metric_data         = MetricData.new(Collection.all)
+    @granule_metric_data = MetricData.new(Granule.all)
 
     respond_to do |format|
       format.html
@@ -20,17 +14,9 @@ class ReportsController < ApplicationController
   end
 
   def provider
-    unless params[:daac].nil? || params[:daac] == "Select DAAC"
-      @show_charts = true
-      @cmr_total_collection_count = Cmr.total_collection_count(params[:daac])
-      @collection_finished_count = Collection.by_daac(params[:daac]).finished.count
-
-      record_set = Collection.all_newest_revisions(params[:daac])
-      @metric_set = MetricSet.new(record_set)
-      @original_metric_set = @metric_set.original_metric_set
-
-      @granule_metric_set = MetricSet.new(Granule.all_newest_revisions(params["daac"]))
-      @granule_original_metric_set = @granule_metric_set.original_metric_set
+    if params[:daac] && params[:daac] != "Select DAAC"
+      @metric_data         = MetricData.new(Collection.by_daac(params[:daac]))
+      @granule_metric_data = MetricData.new(Granule.by_daac(params[:daac]))
     end
 
     respond_to do |format|
@@ -52,26 +38,13 @@ class ReportsController < ApplicationController
   end
 
   def selection
-    records_list = params["records"].split(",")
-    @report_list = []
-    @granule_report_list = []
+    concept_ids = params[:records].split(",")
 
-    records_list.each_slice(2) {|(concept_id, revision_id)|
-                                  new_record = Collection.find_record(concept_id, revision_id)
-                                  if new_record
-                                    @report_list.push(new_record)
-                                    new_granule_record = new_record.related_granule_record
-                                    if new_granule_record
-                                      @granule_report_list.push(new_granule_record)
-                                    end
-                                  end
-                                 }
+    @collections = Collection.where(concept_id: concept_ids)
+    @granules    = @collections.map(&:granules).flatten
 
-    @metric_set = MetricSet.new(@report_list)
-    @original_metric_set = @metric_set.original_metric_set
-
-    @granule_metric_set = MetricSet.new(@granule_report_list)
-    @granule_original_metric_set = @granule_metric_set.original_metric_set
+    @metric_data         = MetricData.new(@collections)
+    @granule_metric_data = MetricData.new(@granules)
 
     respond_to do |format|
       format.html

@@ -1,0 +1,32 @@
+<div class="sub_section_title">
+  REVIEW METRICS
+</div>
+
+<div class="score_section">
+
+  <div>
+    <%= render(partial: 'title_bar', locals: {title: "ORIGINAL AVERAGE QUALITY"}) %>
+    <div class="surrounding_box score_box">
+      <div class="data_area">
+        <div id="<%= type %>ChartGuageOriginal"></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%= render(partial: 'title_bar', locals: {title: "UPDATED AVERAGE QUALITY"}) %>
+    <div class="surrounding_box score_box">
+      <div class="data_area">
+          <div id="<%= type %>ChartGuageUpdated"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="print_width">
+
+</div>
+
+<script type="text/javascript">
+  <%= render partial: 'guage_charts.js', locals: { metric_data: metric_data, type: type } %>
+</script>

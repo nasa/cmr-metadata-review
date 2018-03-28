@@ -41,4 +41,16 @@ module ReportsHelper
 
     finished.count
   end
+
+  def collection_finished_count
+    @collection_finished_count ||= if params[:daac]
+      Collection.by_daac(params[:daac]).finished.count
+    else
+      Collection.finished.count
+    end
+  end
+
+  def cmr_total_collection_count
+    @cmr_total_collection_count ||= Cmr.total_collection_count(params[:daac])
+  end
 end
