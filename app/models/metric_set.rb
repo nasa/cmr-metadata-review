@@ -29,32 +29,8 @@ class MetricSet
     @color_counts ||= get_color_counts
   end
 
-  # ====Params
-  # None
-  # ====Returns
-  # Array of Floats
-  # ==== Method
-  # Iterates through record_list and for each done record, stores quality score in an Array
-
-  def quality_done_records
-    collection_records = @record_set.select { |record| record.closed? }
-    record_data_sets = collection_records.map { |record|  record.record_datas }
-    scores = record_data_sets.map do |data_list|
-      reds = (data_list.select { |data| data.color == "red" }).count.to_f
-      flagged = (data_list.select { |data| data.color != "" }).count
-      if flagged == 0
-        score = 100
-      else
-        score = (1 - (reds/flagged)) * 100
-      end
-      score
-    end
-    #adding at least one entry so that the average can shown if no records are closed.
-    if scores.empty?
-      scores.push(0)
-    end
-
-    scores
+  def percent_green
+   color_counts["green"].to_f / color_counts.values.sum.to_f * 100
   end
 
   # ====Params

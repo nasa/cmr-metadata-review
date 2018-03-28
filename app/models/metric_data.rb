@@ -39,17 +39,21 @@ class MetricData
     original_metric_set.element_non_green_count
   end
 
-  def original_quality_done_records
-    original_metric_set.quality_done_records
+  def original_percent_green
+    original_metric_set.percent_green
   end
 
-  def updated_quality_done_records
-    updated_metric_set.quality_done_records
+  def updated_percent_green
+    updated_metric_set.percent_green
+  end
+
+  def final_precent_green
+    final_metric_set.percent_green
   end
 
   def updated_count
     records_arrays.reduce(0) do |sum, records|
-      value = records.count > 1 ? 1 :0
+      value = records.count > 1 ? 1 : 0
       sum + value
     end
   end
