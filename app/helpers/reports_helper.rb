@@ -1,13 +1,15 @@
 module ReportsHelper
 
-  def closed_records_by_month
+  def records_with_reviews_by_month
     begin_date = (Date.today - 10.months).beginning_of_month
     end_date   = Date.today.end_of_month
 
-    records = Record.where("closed_date >= :begin_date AND closed_date <= :end_date",
+    # Finds the records with reviews completed that month
+    records = Record.joins(:reviews).where("reviews.review_completion_date >= :begin_date AND reviews.review_completion_date <= :end_date",
       begin_date: begin_date, end_date: end_date)
 
-    count = records.group("to_char(closed_date, 'YYYY-MM')").count
+    # Counts the unique records that have a review in the month
+    count = records.group("to_char(reviews.review_completion_date, 'YYYY-MM')").distinct.count
 
     10.downto(0).map do |month_mod|
       date = (Date.today - month_mod.months).strftime("%Y-%m")
