@@ -29,11 +29,7 @@
 
   <% if @metric_data %>
 
-    <div class="report_sub_title first_sub_title">
-      <div class="title_box">
-        BY DAAC VIEW
-      </div>
-    </div>
+    <%= render partial: "section_title", locals: { title: "BY DAAC VIEW" } %>
 
     <div class="stats_area">
 
@@ -62,7 +58,7 @@
 </div>
 
 <% if @metric_data %>
-  <%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "OVERALL VIEW" } %>
+  <%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "BY DAAC VIEW" } %>
 
-  <%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "OVERALL VIEW" } %>
+  <%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "BY DAAC VIEW" } %>
 <% end %>

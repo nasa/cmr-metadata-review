@@ -16,11 +16,7 @@
     </div>
   </div>
 
-  <div class="report_sub_title first_sub_title">
-    <div class="title_box">
-      SELECTION VIEW
-    </div>
-  </div>
+  <%= render partial: "section_title", locals: { title: "SELECTION VIEW" } %>
 
   <div class="stats_area">
 
@@ -61,6 +57,6 @@
   </div>
 </div>
 
-<%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "OVERALL VIEW" } %>
+<%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "SELECTION VIEW" } %>
 
-<%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "OVERALL VIEW" } %>
+<%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "SELECTION VIEW" } %>
