@@ -21,24 +21,28 @@ class CollectionsController < ApplicationController
   end
 
   def search
-    begin
-      @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
-    rescue Cmr::CmrError
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to home_path
-      return
-    rescue Net::OpenTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to home_path
-      return
-    rescue Net::ReadTimeout
-      flash[:alert] = 'There was an error connecting to the CMR System, please try again'
-      redirect_to home_path
-      return
-    rescue
-      flash[:alert] = 'There was an error ingesting the record into the system'
-      redirect_to home_path
-      return
+    if can?(:search, :cmr)
+      begin
+        @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
+      rescue Cmr::CmrError
+        flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+        redirect_to home_path
+        return
+      rescue Net::OpenTimeout
+        flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+        redirect_to home_path
+        return
+      rescue Net::ReadTimeout
+        flash[:alert] = 'There was an error connecting to the CMR System, please try again'
+        redirect_to home_path
+        return
+      rescue
+        flash[:alert] = 'There was an error ingesting the record into the system'
+        redirect_to home_path
+        return
+      end
+    else
+      redirect_to home_path, alert: "You do not have permission to perform this action"
     end
   end
 
@@ -116,7 +120,7 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
     rescue Timeout::Error
       flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
-    rescue => ex
+    rescue
       flash[:alert] = 'There was an error ingesting the record into the system'
     end
 

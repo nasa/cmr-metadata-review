@@ -3,26 +3,28 @@
 <div class="curation_box">
 
   <div class="space_box"></div>
-  <div class="searchbox_area">
-    <p><strong>Search the CMR Database for Data Ingest:</strong></p>
+  <% if can?(:search, :cmr) %>
+    <div class="searchbox_area">
+      <p><strong>Search the CMR Database for Data Ingest:</strong></p>
 
-    <%= form_tag(collections_search_path, method: "get") do %>
-      <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
-      <%= text_field_tag(:free_text) %>
-      <%= hidden_field_tag(:curr_page, "1") %>
-      <%#= submit_tag("Search") %>
-      <button class="search_button" id="search_button">
-        <i class="eui-icon eui-fa-search"></i>
-      </button>
-    <% end %>
+      <%= form_tag(collections_search_path, method: "get") do %>
+        <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
+        <%= text_field_tag(:free_text) %>
+        <%= hidden_field_tag(:curr_page, "1") %>
+        <%#= submit_tag("Search") %>
+        <button class="search_button" id="search_button">
+          <i class="eui-icon eui-fa-search"></i>
+        </button>
+      <% end %>
 
-    <script type="text/javascript">
-      document.getElementById("search_button").onclick = function() {
-        showLoading("Searching CMR System");
-      }
-    </script>
+      <script type="text/javascript">
+        document.getElementById("search_button").onclick = function() {
+          showLoading("Searching CMR System");
+        }
+      </script>
 
-  </div>
+    </div>
+  <% end %>
 
   <div class="results_area">
     <%= render "shared/daac_filter" %>
