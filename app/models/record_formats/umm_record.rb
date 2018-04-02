@@ -4,19 +4,14 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module UmmRecord
-    SECTION_TITLES = ["LocationKeywords", "MetadataDates", "DOI", "TilingIdentificationSystems", "PublicationReferences",
-      "RelatedURLs", "ContactPersons", "Data Dates", "AccessConstraints", "SpatialExtent", "SpatialInformation",
-      "ContactGroups", "AdditionalAttributes", "ScienceKeywords", "Distributions", "ProcessingLevel", "Platforms", "Projects",
-      "TemporalExtents", "PaleoTemporalCoverages", "DataCenters", "CollectionCitations", "MetadataAssociations", "DirectoryNames"]
-
-    include RecordFormats::UmmControlledElements
+    include RecordFormats::UmmFields
 
     def get_section_titles
       SECTION_TITLES
     end
 
     def field_required?(field)
-      RequiredCollectionLists::REQUIRED_UMM_FIELDS.include?(field)
+      REQUIRED_COLLECTION_FIELDS.include?(field)
     end
 
     def long_name
@@ -40,12 +35,8 @@ module RecordFormats
       {}
     end
 
-    def controlled_notice_list(element_list)
-      {}.tap do |controlled_map|
-        element_list.each do |element|
-          controlled_map[element] = CONTROLLED_ELEMENT_MAP[element] if CONTROLLED_ELEMENT_MAP.key?(element)
-        end
-      end
+    def controlled_element_map
+      CONTROLLED_ELEMENT_MAP
     end
   end
 end

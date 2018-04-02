@@ -713,6 +713,14 @@ class Record < ActiveRecord::Base
     any_data_changed
   end
 
+  def controlled_notice_list(element_list)
+    {}.tap do |controlled_map|
+      element_list.each do |element|
+        controlled_map[element] = controlled_element_map[element] if controlled_element_map.key?(element)
+      end
+    end
+  end
+
   def umm_json_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end

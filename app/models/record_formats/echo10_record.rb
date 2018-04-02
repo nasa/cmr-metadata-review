@@ -4,16 +4,13 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Echo10Record
-    SECTION_TITLES = ["Contacts/Contact", "Platforms/Platform", "Campaigns/Campaign", "Temporal", "ScienceKeywords/ScienceKeyword", "Spatial", "SpatialInfo", "OnlineResources/OnlineResource", "OnlineAccessURLs", "CSDTDescriptions", "AdditionalAttributes/AdditionalAttribute"]
-    GRANULE_SECTION_TITLES =["Collection", "DataGranule", "Platforms", "Temporal", "Spatial", "PGEVersionClass", "MeasuredParameters", "OnlineAccessURLs", "TwoDCoordinateSystems", "OnlineResources", "AdditionalAttributes"]
-    include RecordFormats::Echo10ControlledElements
+    include RecordFormats::Echo10Fields
 
     def get_section_titles
       collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
     end
 
     def field_required?(field)
-      required_fields = collection? ? RequiredCollectionLists::REQUIRED_COLLECTION_FIELDS : RequiredCollectionLists::REQUIRED_GRANULE_FIELDS
       required_fields.include?(field)
     end
 
@@ -94,14 +91,14 @@ module RecordFormats
       end
     end
 
-    def controlled_notice_list(element_list)
-      controlled_map = {}
-      element_list.map do |element|
-        if CONTROLLED_ELEMENT_MAP.key? element
-          controlled_map[element] = CONTROLLED_ELEMENT_MAP[element]
-        end
-      end
-      controlled_map
+    def controlled_element_map
+      CONTROLLED_ELEMENT_MAP
+    end
+
+    private
+
+    def required_fields
+      @required_fields ||= collection? ? REQUIRED_COLLECTION_FIELDS : REQUIRED_GRANULE_FIELDS
     end
   end
 end
