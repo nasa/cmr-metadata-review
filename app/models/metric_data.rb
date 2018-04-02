@@ -82,7 +82,7 @@ class MetricData
     end.compact
   end
 
-  # Provides fianl revision record for Collection/Granule
+  # Provides final revision record for Collection/Granule
   def final_revisions
     records_arrays.map do |records|
       records.where(state: FINISHED_METRICS).order("revision_id DESC").first
