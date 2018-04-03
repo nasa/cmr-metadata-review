@@ -49,7 +49,6 @@ module RecordFormats
       "Description",
       "ProcessingLevelId",
       "ArchiveCenter",
-      "ProcessingCenter",
       "CollectionState",
       "Temporal/SingleDateTime",
       "Temporal/RangeDateTime/BeginningDateTime",

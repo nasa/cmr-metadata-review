@@ -77,7 +77,7 @@ module RecordFormats
       "RelatedURLs/URL",
       "RelatedURLs/GetData/Format",
       "RelatedURLs/GetService/MimeType",
-      "Spatial Extent/HorizontalSpatialDomain/Geometry/Coordinate System",
+      "SpatialExtent/HorizontalSpatialDomain/Geometry/CoordinateSystem",
       "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/WestBoundingCoordinate",
       "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/NorthBoundingCoordinate",
       "SpatialExtent/HorizontalSpatialDomain/Geometry/BoundingRectangles/EastBoundingCoordinate",
