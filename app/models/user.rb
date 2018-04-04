@@ -53,4 +53,8 @@ class User < ActiveRecord::Base
   def daac_curator?
     role == "daac_curator"
   end
+
+  def arc?
+    admin || curator
+  end
 end

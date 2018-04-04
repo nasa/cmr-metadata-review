@@ -49,4 +49,12 @@ module RecordHelper
   def disable_complete_button?(reviews, record)
     completed_reviews(reviews) <= 1 || record.closed? || !reviewer_ok?(record)
   end
+
+  def script_class(field)
+    field[:script] && current_user.arc? ? "script" : "no_script"
+  end
+
+  def script_text_class(field)
+    field[:script] && current_user.arc? ? "script_text" : "no_script_text"
+  end
 end
