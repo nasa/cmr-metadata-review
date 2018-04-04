@@ -1,0 +1,133 @@
+<div class="quality_row">
+  <div>
+    <%= render(partial: 'title_bar', locals: {title: "ORIGINAL REVIEW"}) %>
+    <div class="surrounding_box quality_box chart_padding">
+      <div class="data_area">
+        <div class="data_text">
+          <p>NUMBER OF COLLECTION</p>
+          <p>ELEMENTS REVIEWED</p>
+          <p class="checked_num"><%= metric_data.original_color_counts.values.sum %></p>
+        </div>
+        <div class="doughnut_graph_container">
+          <canvas id="<%= type %>ChartFlagOriginal"></canvas>
+        </div>
+      </div>
+      <div class="legend_area" id="original_quality_legend">
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box green">
+            </div>
+            <p>ELEMENTS PASSED <br>(<%= metric_data.original_color_counts["green"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box yellow">
+            </div>
+            <p>ELEMENTS WITH WARNINGS <br>(<%= metric_data.original_color_counts["yellow"] %>)</p>
+          </div>
+        </div>
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box blue">
+            </div>
+            <p>ELEMENTS NOTED <br>(<%= metric_data.original_color_counts["blue"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box red">
+            </div>
+            <p>ELEMENTS FAILED <br>(<%= metric_data.original_color_counts["red"] %>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%= render(partial: 'title_bar', locals: {title: "UPDATED REVIEW"}) %>
+    <div class="surrounding_box quality_box chart_padding">
+      <div class="data_area">
+        <div class="data_text">
+          <p>NUMBER OF COLLECTION</p>
+          <p>ELEMENTS REVIEWED</p>
+          <p class="checked_num"><%= metric_data.updated_color_counts.values.sum %></p>
+        </div>
+        <div class="doughnut_graph_container">
+          <canvas id="<%= type %>ChartFlag"></canvas>
+        </div>
+      </div>
+      <div class="legend_area" id="original_quality_legend">
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box green">
+            </div>
+            <p>ELEMENTS PASSED <br>(<%= metric_data.updated_color_counts["green"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box yellow">
+            </div>
+            <p>ELEMENTS WITH WARNINGS <br>(<%= metric_data.updated_color_counts["yellow"] %>)</p>
+          </div>
+        </div>
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box blue">
+            </div>
+            <p>ELEMENTS NOTED (<%= metric_data.updated_color_counts["blue"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box red">
+            </div>
+            <p>ELEMENTS FAILED <br>(<%= metric_data.updated_color_counts["red"] %>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%= render(partial: 'title_bar', locals: {title: "FINAL REVIEW"}) %>
+    <div class="surrounding_box quality_box chart_padding">
+      <div class="data_area">
+        <div class="data_text">
+          <p>NUMBER OF COLLECTION</p>
+          <p>ELEMENTS REVIEWED</p>
+          <p class="checked_num"><%= metric_data.final_color_counts.values.sum %></p>
+        </div>
+        <div class="doughnut_graph_container">
+          <canvas id="<%= type %>ChartFlagFinal"></canvas>
+        </div>
+      </div>
+      <div class="legend_area" id="original_quality_legend">
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box green">
+            </div>
+            <p>ELEMENTS PASSED <br>(<%= metric_data.final_color_counts["green"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box yellow">
+            </div>
+            <p>ELEMENTS WITH WARNINGS <br>(<%= metric_data.final_color_counts["yellow"] %>)</p>
+          </div>
+        </div>
+        <div class="legend_row">
+          <div class="legend_item first_item">
+            <div class="color_box blue">
+            </div>
+            <p>ELEMENTS NOTED (<%= metric_data.final_color_counts["blue"] %>)</p>
+          </div>
+          <div class="legend_item">
+            <div class="color_box red">
+            </div>
+            <p>ELEMENTS FAILED <br>(<%= metric_data.final_color_counts["red"] %>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  <%= render partial: 'reviewed_elements_charts.js', locals: { metric_data: metric_data, type: type } %>
+</script>
+
+

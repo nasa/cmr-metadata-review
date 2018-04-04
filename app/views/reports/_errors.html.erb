@@ -1,0 +1,10 @@
+<%= render(partial: 'title_bar', locals: {title: "ELEMENT ERROR FREQUENCY"}) %>
+<div class="surrounding_box">
+  <div class="problem_graph_container">
+    <canvas id="<%= type %>ChartErrors"></canvas>
+  </div>
+</div>
+
+<script type="text/javascript">
+  <%= render partial: 'errors_chart.js', locals: { metric_data: metric_data, type: type } %>
+</script>

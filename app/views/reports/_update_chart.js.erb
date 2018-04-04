@@ -1,0 +1,92 @@
+<%# ChartUpdate - chart of collection updates in cmr and their re reviews%>
+var barOptionsStacked = {
+  tooltips: {
+      enabled: false
+  },
+  hover :{
+      animationDuration:0
+  },
+  scales: {
+      xAxes: [{
+          ticks: {
+            beginAtZero:true,
+            fontFamily: "sans-serif",
+            fontSize:11
+          },
+          scaleLabel:{
+            display:false
+          },
+          gridLines: {
+          },
+          stacked: false
+      }],
+      yAxes: [{
+          gridLines: {
+            display:false,
+            color: "#fff",
+            zeroLineColor: "#fff",
+            zeroLineWidth: 0
+          },
+          ticks: {
+            fontFamily: "sans-serif",
+            fontSize:11
+          },
+          stacked: false,
+          barThickness: 30
+      }]
+  },
+  legend:{
+    display:true,
+    position: "bottom"
+  },
+  maintainAspectRatio: false,
+
+  animation: {
+    onComplete: function () {
+      var chartInstance = this.chart;
+      var ctx = chartInstance.ctx;
+      ctx.textAlign = "left";
+
+      Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+        var meta = chartInstance.controller.getDatasetMeta(i);
+        Chart.helpers.each(meta.data.forEach(function (bar, index) {
+          data = dataset.data[index];
+          if(i==0){
+            ctx.fillStyle = "#3e3e40";
+            ctx.font = "20px sans-serif";
+            ctx.fillText(data, bar._model.x - 30, bar._model.y-38);
+          } else {
+            ctx.font = "20px sans-serif";
+            ctx.fillStyle = "#3e3e40";
+            ctx.fillText(data,  bar._model.x - 30, bar._model.y-38);
+          }
+        }),this)
+      }),this);
+    }
+  },
+  pointLabelFontFamily : "Quadon Extra Bold",
+  scaleFontFamily : "Quadon Extra Bold",
+};
+
+var ctx = document.getElementById("ChartUpdate");
+var myChart = new Chart(ctx, {
+  type: 'horizontalBar',
+  data: {
+    labels: [""],
+
+    datasets: [{
+      label: "Updated Collections ReReviewed by ARC",
+      data: [<%= metric_data.updated_collections_rereviewed %>],
+      backgroundColor: "rgba(58, 184, 65, 0.6)",
+      hoverBackgroundColor: "rgba(58, 184, 65, 0.6)"
+    },{
+      label: "Collections Updated by DAAC",
+      data: [<%= metric_data.updated_count %>],
+      backgroundColor: "rgba(58, 184, 65, 1)",
+      hoverBackgroundColor: "rgba(58, 184, 65, 1)"
+    }]
+  },
+
+  options: barOptionsStacked
+});
+

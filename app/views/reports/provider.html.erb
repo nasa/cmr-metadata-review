@@ -1,0 +1,64 @@
+<%= render(partial: 'shared/navigation', locals: {title: "REPORTS HOME PAGE"}) %>
+
+<div class="reports_box">
+  <div class="report_top">
+    <div class="report_drop_down">
+      <p>SELECT METRICS BY DAAC: </p>
+      <p><%= select_tag(:provider, options_for_select(select_daac_list, selected: params[:daac])) %></p>
+
+      <script type="text/javascript">
+        var selecter = document.getElementById("provider");
+        selecter.onchange = function() {
+          if (!(selecter.value == '<%= ApplicationHelper::SELECT_DAAC %>')) {
+            document.location = '/reports/provider?daac=' + selecter.value;
+          }
+        }
+      </script>
+    </div>
+    <div class="report_buttons">
+      <%= link_to reports_provider_path(format: :csv, daac: params[:daac]), class: "report_button" do %>
+        <p>EXPORT METRICS</p>
+        <i class="fa fa-file-excel-o"></i>
+      <% end %>
+      <a href="#" id="pdf_button" class="report_button">
+        <p>PRINT PDF COPY</p>
+        <i class="fa fa-file-pdf-o"></i>
+      </a>
+    </div>
+  </div>
+
+  <% if @metric_data %>
+
+    <%= render partial: "section_title", locals: { title: "BY DAAC VIEW" } %>
+
+    <div class="stats_area">
+
+      <%# This div grouped to be moved up for the display when printed %>
+      <section class="report_overall section_holder">
+        <div class="section_title">
+          ARC PROGRESS
+        </div>
+
+        <%= render "ingest_section" %>
+
+        <br>
+
+        <%= render partial: "update_section", locals: { metric_data: @metric_data } %>
+
+        <%= render "finished_section" %>
+
+        <br>
+
+        <div class="section_break">
+        </div>
+
+      </section>
+    </div>
+  <% end %>
+</div>
+
+<% if @metric_data %>
+  <%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "BY DAAC VIEW" } %>
+
+  <%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "BY DAAC VIEW" } %>
+<% end %>

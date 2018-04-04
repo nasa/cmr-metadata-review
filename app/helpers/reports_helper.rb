@@ -1,23 +1,56 @@
 module ReportsHelper
 
-  def list_past_months(review_list = nil)
-    @review_month_counts = []
-    if review_list.nil?
-      review_list = Review.all
-    end
+  def records_with_reviews_by_month
+    begin_date = (Date.today - 10.months).beginning_of_month
+    end_date   = Date.today.end_of_month
 
-    #this should be optimized to bucket all the reviews in one run through
-    10.downto(0).to_a.each do |month_count|
-      total_count = (review_list.select { |review| 
-                                            if review.review_completion_date
-                                              (DateTime.now.month - review.review_completion_date.month) >= month_count
-                                            else
-                                              false 
-                                            end
-                                        }).count
-      @review_month_counts.push(total_count)
+    # Finds the records with reviews completed that month
+    records = Record.joins(:reviews).where("reviews.review_completion_date >= :begin_date AND reviews.review_completion_date <= :end_date",
+      begin_date: begin_date, end_date: end_date)
+
+    # Counts the unique records that have a review in the month
+    count = records.group("to_char(reviews.review_completion_date, 'YYYY-MM')").distinct.count
+
+    10.downto(0).map do |month_mod|
+      date = (Date.today - month_mod.months).strftime("%Y-%m")
+      count[date].to_i
     end
-    @review_month_counts
   end
 
+  def get_month_list
+    (10).downto(0).map do |month_mod|
+      date = Date.today - month_mod.months
+      date.strftime("%b %y")
+    end
+  end
+
+  def record_data_colors(record, color)
+    record.record_datas.where(color: color)
+  end
+
+  def closed_records_count
+    closed = Record.closed
+    closed = closed.daac(params[:daac]) if params[:daac]
+
+    closed.count
+  end
+
+  def finished_records_count
+    finished = Record.finished
+    finished = finished.daac(params[:daac]) if params[:daac]
+
+    finished.count
+  end
+
+  def collection_finished_count
+    @collection_finished_count ||= if params[:daac]
+      Collection.by_daac(params[:daac]).finished.count
+    else
+      Collection.finished.count
+    end
+  end
+
+  def cmr_total_collection_count
+    @cmr_total_collection_count ||= Cmr.total_collection_count(params[:daac])
+  end
 end

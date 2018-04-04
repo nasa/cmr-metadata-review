@@ -1,0 +1,61 @@
+<%# ChartFinished - bar chart showing finished records %>
+var ctx = document.getElementById("ChartFinished");
+
+var barOptionsStacked = {
+  scales: {
+    xAxes: [{
+      ticks: {
+        beginAtZero: true,
+        fontFamily:  "sans-serif",
+        fontSize:    11
+      },
+      scaleLabel:{
+        display: false
+      },
+      gridLines: {
+      },
+      stacked: false
+    }],
+    yAxes: [{
+      gridLines: {
+        display:       false,
+        color:         "#fff",
+        zeroLineColor: "#fff",
+        zeroLineWidth: 0
+      },
+      ticks: {
+        fontFamily: "sans-serif",
+        fontSize:   11
+      },
+      stacked:      false,
+      barThickness: 30
+    }]
+  },
+  legend:{
+    display: true,
+    position: "bottom"
+  },
+  maintainAspectRatio: false,
+  pointLabelFontFamily : "Quadon Extra Bold",
+  scaleFontFamily : "Quadon Extra Bold"
+};
+
+var data = {
+  labels: [""],
+
+  datasets: [{
+    label: "Finished by DAAC",
+    data: [<%= closed_records_count %>],
+    backgroundColor: "rgba(58, 184, 65, 0.6)"
+  },{
+    label: "Marked Complete by ARC",
+    data: [<%= finished_records_count %>],
+    backgroundColor: "rgba(58, 184, 65, 1)"
+  }]
+}
+
+var myChart = new Chart(ctx, {
+  type: 'horizontalBar',
+  data: data,
+  options: barOptionsStacked
+});

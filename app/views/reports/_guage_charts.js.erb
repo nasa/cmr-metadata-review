@@ -1,0 +1,59 @@
+<%# ChartGuageOriginal - chart showing the quality score of original record 1-100%>
+var chart = c3.generate({
+  bindto: '#<%= type %>ChartGuageOriginal',
+  data: {
+    columns: [
+      ['data', <%= metric_data.original_percent_green %>]
+    ],
+    type: 'gauge'
+  },
+  color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+      values: [30, 60, 80, 100]
+    }
+  },
+  size: {
+    height: 180
+  }
+});
+
+<%# ChartGuageUpdated - chart showing the quality score of updated record 1-100%>
+var chart = c3.generate({
+  bindto: '#<%= type %>ChartGuageUpdated',
+  data: {
+    columns: [
+      ['data', <%= metric_data.updated_percent_green %>]
+    ],
+    type: 'gauge'
+  },
+  color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+      values: [30, 60, 80, 100]
+    }
+  },
+  size: {
+    height: 180
+  }
+});
+
+<%# ChartGuageFinal - chart showing the quality score of updated record 1-100%>
+var chart = c3.generate({
+  bindto: '#<%= type %>ChartGuageFinal',
+  data: {
+    columns: [
+      ['data', <%= metric_data.final_precent_green %>]
+    ],
+    type: 'gauge'
+  },
+  color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+      values: [30, 60, 80, 100]
+    }
+  },
+  size: {
+    height: 180
+  }
+});

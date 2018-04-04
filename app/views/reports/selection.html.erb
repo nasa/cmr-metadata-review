@@ -1,0 +1,62 @@
+<%= render(partial: 'shared/navigation', locals: {title: "REPORTS HOME PAGE"}) %>
+
+<div class="reports_box">
+  <div class="report_top">
+    <div class="report_drop_down">
+    </div>
+    <div class="report_buttons">
+      <%= link_to reports_selection_path(format: :csv, records: params[:records].to_s), class: "report_button" do %>
+        <p>EXPORT METRICS</p>
+        <i class="fa fa-file-excel-o"></i>
+      <% end %>
+      <a href="#" id="pdf_button" class="report_button">
+        <p>PRINT PDF COPY</p>
+        <i class="fa fa-file-pdf-o"></i>
+      </a>
+    </div>
+  </div>
+
+  <%= render partial: "section_title", locals: { title: "SELECTION VIEW" } %>
+
+  <div class="stats_area">
+
+    <%# This div grouped to be moved up for the display when printed %>
+    <section class="report_overall section_holder">
+      <div class="section_title">
+        ARC PROGRESS
+      </div>
+
+      <%= render partial: "update_section", locals: { metric_data: @metric_data } %>
+
+      <div class="selection_section">
+        <%= render(partial: 'title_bar', locals: {title: "SELECTED RECORDS"}) %>
+        <table>
+          <tr>
+            <td>Concept Id</td>
+            <td>Short Name</td>
+          </tr>
+          <% @collections.concat(@granules).each do |recordable| %>
+            <tr>
+              <td>
+                <%=recordable.concept_id%>
+              </td>
+              <td>
+                <%= recordable.short_name %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+
+      </div>
+      <br>
+
+      <div class="section_break">
+      </div>
+
+    </section>
+  </div>
+</div>
+
+<%= render partial: "data_section", locals: { metric_data: @metric_data, type: "Collection", title: "SELECTION VIEW" } %>
+
+<%= render partial: "data_section", locals: { metric_data: @granule_metric_data, type: "Granule", title: "SELECTION VIEW" } %>

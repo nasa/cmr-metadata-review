@@ -1,0 +1,12 @@
+<div class="finished_section">
+  <%= render(partial: 'title_bar', locals: { title: "FINISHED RECORDS"}) %>
+  <div class="surrounding_box">
+    <div class="finished_graph_container">
+      <canvas id="ChartFinished"></canvas>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  <%= render partial: 'finished_chart.js' %>
+</script>

@@ -91,8 +91,14 @@
 
 .problem_graph_container {
   display: block;
-  width: 500px;
+  width: 900px;
   height: 400px;
+}
+
+.finished_graph_container {
+  display: block;
+  width: 100%;
+  height: 240px;
 }
 
 .graph_container_flag{
@@ -120,7 +126,7 @@
 .report_top {
   display: flex;
   min-height: 50px;
-  border-bottom-style: solid; 
+  border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: $gray-dark;
   padding-bottom: 10px;
@@ -133,7 +139,7 @@
       width: 150px;
       padding-left:10px;
       height:38px;
-    }  
+    }
   }
 
   .report_buttons {
@@ -193,6 +199,19 @@
     font-size: 12px;
     // max-width: 170px;
     padding: 5px;
+
+    &.red_section_tab {
+      background-color: #e84a34;
+    }
+
+    &.yellow_section_tab {
+      color: black;
+      background-color: #ffce00;
+    }
+
+    &.blue_section_tab {
+      background-color: #1b75ae;
+    }
   }
 }
 
@@ -283,13 +302,20 @@
 
 .update_section {
   display: inline-block;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
+  margin-right: 20px;
+  width: 350px;
+}
+
+.finished_section {
+  display: inline-block;
+  margin-bottom: 20px;
   width: 350px;
 }
 
 .selection_section {
   display: inline-block;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   width: 35%;
   padding-left:15px;
   tr:nth-child(n) {
@@ -312,7 +338,7 @@
     .checked_num {
       font-size: 45px;
     }
-  }  
+  }
 
   .chart_padding {
     padding: 25px;
@@ -335,12 +361,6 @@
     background-color: white;
   }
 }
-
-.problem_section {
-  width: 600px;
-}
-
-
 
 .legend_area {
   .legend_row {

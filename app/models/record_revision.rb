@@ -8,7 +8,8 @@ module RecordRevision
   # returns all collections ingested that belong to the daac parameter
 
   def by_daac(daac_short_name)
-    self.all.select { |collection| (collection.concept_id.include? daac_short_name) && (!collection.get_records.empty?)}
+    records = Record.daac(daac_short_name)
+    self.joins(:records).merge(records)
   end
 
   # ====Params
@@ -30,7 +31,7 @@ module RecordRevision
 
     return record
   end
-  
+
   # ====Params
   # string concept_id,
   # ====Returns
@@ -40,7 +41,7 @@ module RecordRevision
   # will return nil if no concept id is provided
   def find_type(concept_id)
     type = nil
-    
+
     if !concept_id.eql? ""
       if concept_id[0].downcase.eql? "c"
         type = Collection
@@ -65,7 +66,7 @@ module RecordRevision
     newest_records
   end
 
-    # ====Params
+  # ====Params
   # String, name of provider
   # ====Returns
   # List of record lists, each sub list is all records for a collection in order of ingest
@@ -75,13 +76,10 @@ module RecordRevision
   # Do not want to rely on revision ids since they may not be numbers
 
   def ordered_revisions(daac_short_name = nil)
-    if daac_short_name.nil?
-      collection_records = self.all_records.where(state: MetricSet::METRIC_STATES)
-    else
-      collections = self.by_daac(daac_short_name)
-      collection_ids = collections.map {|collection| collection.id }
-      collection_records = Record.all.select { |record| record.closed? && (record.recordable_type == self.name) && (collection_ids.include? record.recordable_id) }
-    end
+    collection_records = all_records.where(state: MetricData::METRIC_STATES)
+
+    collection_records = collection_records.daac(daac_short_name) if daac_short_name
+
     records_hash = {}
 
     collection_records.each do |record|
