@@ -1,0 +1,51 @@
+<%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: HOME"}) %>
+
+<div class="curation_box">
+  <div class="space_box"></div>
+
+  <div class="results_area">
+    <% if current_user.daac_curator? %>
+      <% content_for :form_buttons do %>
+        <%= render "shared/record_buttons" %>
+      <% end %>
+
+      <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records), title: "DAAC Completed Records"} %>
+    <% else %>
+      <%= render partial: "shared/daac_filter", locals: { path_for_form: finished_records_path } %>
+
+      <% if can?(:review_state, Record::STATE_CLOSED) %>
+        <% content_for :form_buttons do %>
+
+          <%= render layout: "shared/record_buttons", locals: { report: true } do %>
+
+            <% if current_user.admin %>
+                <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: stop_updates_records_path, disabled: true, data: { confirm: "Exclude this Record from Future CMR Updates?" }) %>
+
+                <%= submit_tag("Refresh", class: "refreshButton", formaction: refresh_collections_path, disabled: true) %>
+            <% end %>
+
+          <% end %>
+        <% end %>
+
+        <%= render partial: "shared/records_table", locals: {form_id: "closed", records: records_sorted_by_short_name(@records.closed), closed: true, report: true, title: "Team's Closed Records" } %>
+      <% end %>
+
+      <% if can?(:review_state, Record::STATE_FINISHED) %>
+
+        <% content_for :form_buttons, flush: true do %>
+
+          <%= render(layout: "shared/record_buttons") do %>
+
+            <% if current_user.admin %>
+              <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_records_path, disabled: true) %>
+            <% end %>
+          <% end %>
+
+        <% end %>
+
+        <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records" } %>
+
+      <% end %>
+    <% end %>
+  </div>
+</div>

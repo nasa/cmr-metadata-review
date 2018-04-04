@@ -8,13 +8,13 @@ class Ability
       if user.role.eql?("admin")
         can :access, :curate
         can :access, :create_user
-        
+
         can :request_feedback, Record
         can :request_opinions, Record
         can :recommend_changes, Record
 
         can :discuss_justification, Record
-        
+
         can :provide_feedback, Record
 
         can :review_state, Record.aasm.states.map(&:name)
@@ -29,15 +29,15 @@ class Ability
 
       if user.role.eql?("arc_curator")
         can :access, :curate
-        
+
         can :request_opinions, Record
         can :recommend_changes, Record
-        
+
         can :discuss_justification, Record
-        
+
         can :provide_feedback, Record
 
-        can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED]
+        can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
 
         can :replace_granule, Granule
 
@@ -46,7 +46,7 @@ class Ability
 
       if user.role.eql?("daac_curator")
         can :access, :curate
-        
+
         can :provide_feedback, Record
 
         can :close, Record
@@ -55,12 +55,12 @@ class Ability
       end
 
     #
-    # The first argument to `can` is the action you are giving the user 
+    # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
     # here are :read, :create, :update and :destroy.
     #
-    # The second argument is the resource the user can perform the action on. 
+    # The second argument is the resource the user can perform the action on.
     # If you pass :all it will apply to every resource. Otherwise pass a Ruby
     # class of the resource.
     #

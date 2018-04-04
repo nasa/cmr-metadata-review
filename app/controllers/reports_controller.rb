@@ -108,18 +108,9 @@ class ReportsController < ApplicationController
 
   def single
     @csv_path = reports_single_path
-    @csv_params = "?concept_id=#{params["concept_id"]}&revision_id=#{params["revision_id"]}"
+    @csv_params = "?record_id=#{params[:record_id]}"
 
-    data_type = Collection.find_type(params["concept_id"])
-    
-    if data_type.nil?
-      raise ActiveRecord::RecordNotFound
-    else
-      @record = data_type.find_record(params["concept_id"], params["revision_id"])
-      if @record.nil?
-        raise ActiveRecord::RecordNotFound
-      end
-    end
+    @record = Record.find(params[:record_id])
 
     record_data = @record.record_datas
     @reds = record_data.select{|data| data.color == "red"}
@@ -133,7 +124,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data(render_to_string, filename: "dashboard_#{params["concept_id"]}_#{params["revision_id"]}.csv") }
+      format.csv { send_data(render_to_string, filename: "dashboard_#{record.concept_id}_#{record.revision_id}.csv") }
     end
   end
 

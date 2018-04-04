@@ -113,57 +113,33 @@ class Cmr
   # Returns Array of the added record objects.
 
   def self.process_updated_collections(raw_results, current_user)
-    #mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {"concept_id" => entry["id"], "revision_id" => entry["revision_id"]} }
-    #doing this eager loading to stop system from making each include? a seperate db call.
-    all_collections = Collection.all.map{|collection| collection.concept_id }
-    #reducing to only the ones in system
-    contained_collections = updated_collection_data.select {|data| all_collections.include? data["concept_id"] }
-    #will return this list of added records for logging/presentation
+    # Mapping to hashes of concept_id/revision_id
+    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {concept_id: entry["id"], revision_id: entry["revision_id"]} }
+    all_collections = Collection.pluck(:concept_id)
+
+    # Reducing to only the ones in system
+    contained_collections = updated_collection_data.select {|data| all_collections.include? data[:concept_id] }
+
+    # Will return this list of added records for logging/presentation
     added_records = []
     failed_records = []
 
-    #importing the new ones if any
+    # Importing the new ones if any
     contained_collections.each do |data|
       begin
-        unless Collection.record_exists?(data["concept_id"], data["revision_id"]) && Collection.update?(data["concept_id"])
-          collection_object, new_collection_record, record_data_list, ingest_record = Collection.assemble_new_record(data["concept_id"], data["revision_id"], current_user)
-          #second check to make sure we don't save duplicate revisions
-          unless Collection.record_exists?(collection_object.concept_id, new_collection_record.revision_id)
-            save_success = false
-            ActiveRecord::Base.transaction do
-              new_collection_record.save!
-              record_data_list.each do |record_data|
-                record_data.save!
-              end
-              ingest_record.save!
-
-              begin
-                Timeout::timeout(12) {
-                  new_collection_record.create_script
-                }
-
-                save_success = true
-              rescue Timeout::Error
-                raise ActiveRecord::Rollback
-                Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
-              end
-            end
-
-            if save_success
-              added_records.push([data["concept_id"], data["revision_id"]]);
-            else
-              failed_records.push([data["concept_id"], data["revision_id"]]);
-            end
-          end
+        if Collection.update?(data[:concept_id]) && !Collection.record_exists?(data[:concept_id], data[:revision_id])
+          Collection.create_new_record(data[:concept_id], data[:revision_id], current_user)
+          added_records << [data[:concept_id], data[:revision_id]]
         end
+      rescue Timeout::Error
+        Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
+        failed_records << [data[:concept_id], data[:revision_id]]
       rescue
-        failed_records.push([data["concept_id"], data["revision_id"]]);
+        failed_records << [data[:concept_id], data[:revision_id]]
       end
     end
 
-
-    return added_records, failed_records
+    [added_records, failed_records]
   end
 
   # ====Params

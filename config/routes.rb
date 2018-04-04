@@ -12,11 +12,14 @@ Rails.application.routes.draw do
 
   get '/home', to: 'site#home'
   get '/general_home', to: 'site#general_home'
-  
-  resources :collections
+
+  resources :collections do
+    collection do
+      put 'refresh'
+    end
+  end
+
   get '/collections_search', to: 'collections#search'
-  get '/collections_hide', to: 'collections#hide'
-  get '/collections_stop_updates', to: 'collections#stop_updates'
 
   resources :granules do
     member do
@@ -29,8 +32,16 @@ Rails.application.routes.draw do
     member do
       post "complete"
     end
+
+    collection do
+      get "finished"
+      get "navigate"
+      put "allow_updates"
+      put "stop_updates"
+      delete "hide"
+    end
   end
-  
+
   get '/record_refresh', to: 'records#refresh'
 
   get '/reports/home', to: 'reports#home'
@@ -43,5 +54,5 @@ Rails.application.routes.draw do
   if ENV['SHOW_DOCUMENTATION'] == 'true'
     get "/documentation" => redirect("/doc/index.html")
   end
-  
+
 end

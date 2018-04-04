@@ -29,5 +29,5 @@
 /coverage/*
 
 #ignore python computed files
-/lib/*.pyc
+*.pyc
 

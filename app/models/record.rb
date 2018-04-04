@@ -28,7 +28,7 @@ class Record < ActiveRecord::Base
 
   aasm column: 'state', whiny_persistence: false do
     state :open, initial: true
-    state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :hidden
+    state :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :finished, :hidden
 
     event :start_arc_review do
       transitions from: :open, to: :in_arc_review
@@ -58,8 +58,16 @@ class Record < ActiveRecord::Base
       transitions from: :in_daac_review, to: :closed
     end
 
+    event :finish do
+      transitions from: :closed, to: :finished
+    end
+
+    event :allow_updates do
+      transitions from: :finished, to: :closed
+    end
+
     event :hide do
-      transitions from: [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed], to: :hidden
+      transitions from: [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :finished], to: :hidden
     end
   end
 

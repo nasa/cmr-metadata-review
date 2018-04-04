@@ -1,0 +1,15 @@
+<% report ||= false %>
+
+<div class="navigate_buttons">
+  <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
+
+  <% if current_user.admin %>
+    <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
+  <% end %>
+
+  <% if report %>
+    <%= submit_tag("Get Review Report", class: "reportButton", formaction: reports_single_path, disabled: true) %>
+  <% end %>
+
+  <%= yield %>
+</div>

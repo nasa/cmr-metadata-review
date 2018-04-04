@@ -26,4 +26,25 @@ class ApplicationController < ActionController::Base
   def ensure_curation
     authorize! :access, :curate
   end
+
+  def admin_only
+    unless current_user.admin
+      flash[:alert] = "You do not have permission to perform this action"
+      redirect_to home_path
+    end
+  end
+
+  def filtered_records
+    @records = if current_user.daac_curator?
+      Record.daac(current_user.daac)
+    else
+      filtered_by_daac? ? Record.daac(params[:daac]) : Record.all
+    end
+  end
+
+  private
+
+  def filtered_by_daac?
+    params[:daac] && params[:daac] != ANY_KEYWORD
+  end
 end

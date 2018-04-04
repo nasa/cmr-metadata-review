@@ -4,6 +4,11 @@ class Collection < ActiveRecord::Base
 
   SUPPORTED_FORMATS = ["dif10", "echo10", "umm_json"]
   INCLUDE_GRANULE_FORMATS = ["dif10", "echo10", "umm_json"]
+  SHORT_NAMES = {
+    "dif10"    => "Entry_ID/Short_Name",
+    "echo10"   => "ShortName",
+    "umm_json" => "ShortName"
+  }
 
   extend RecordRevision
 
@@ -21,48 +26,46 @@ class Collection < ActiveRecord::Base
 
   def self.record_exists?(concept_id, revision_id)
     record = Collection.find_record(concept_id, revision_id)
-    return (!record.nil?) && (!record.hidden?)
+    record && !record.hidden?
   end
 
-  def self.assemble_new_record(concept_id, revision_id, current_user)
+  def self.create_new_record(concept_id, revision_id, current_user, granule = false)
     native_format = Cmr.get_raw_collection_format(concept_id)
+    return unless SUPPORTED_FORMATS.include?(native_format)
 
-    if native_format == "dif10"
-      collection_data = Cmr.get_collection(concept_id, native_format)
-      short_name = collection_data["Entry_ID/Short_Name"]
-    elsif native_format == "echo10" || native_format == "umm_json"
-      collection_data = Cmr.get_collection(concept_id, native_format)
-      short_name = collection_data["ShortName"]
-    else
-      #Guard against records that come in with unsupported types
-      return
+    collection_data = Cmr.get_collection(concept_id, native_format)
+    short_name = collection_data[SHORT_NAMES[native_format]]
+
+    Collection.transaction do
+      collection = Collection.find_or_create_by(concept_id: concept_id)
+      collection.update_attributes!(short_name: short_name)
+
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: native_format)
+
+      daac = concept_id.split('-').last
+      collection_data.each_with_index do |(key, value), i|
+        new_record.record_datas.create({
+          last_updated: DateTime.now,
+          column_name: key,
+          value: value,
+          order_count: i,
+          daac: daac
+        })
+      end
+
+      Ingest.create(record: new_record, user: current_user, date_ingested: DateTime.now)
+
+      # In production there is an egress issue with certain link types given in metadata
+      # AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+      Timeout::timeout(20) {
+        new_record.create_script
+      }
+
+      collection.add_granule(current_user) if granule
+
+      new_record
     end
-
-    ingest_time = DateTime.now
-    #finding parent collection
-    collection_object = Collection.find_or_create_by(concept_id: concept_id)
-    collection_object.short_name = short_name
-    collection_object.save!
-    #creating collection record related objects
-    new_collection_record = Record.new(recordable: collection_object, revision_id: revision_id, format: native_format)
-
-    record_data_list = []
-
-    collection_data.each_with_index do |(key, value), i|
-      record_data = RecordData.new(record: new_collection_record)
-      record_data.last_updated = DateTime.now
-      record_data.column_name = key
-      record_data.value = value
-      record_data.order_count = i
-      record_data.daac = concept_id.partition('-').last
-      record_data_list.push(record_data)
-    end
-
-    ingest_record = Ingest.new(record: new_collection_record, user: current_user, date_ingested: ingest_time)
-
-    return collection_object, new_collection_record, record_data_list, ingest_record
   end
-
 
   def update?
     self.cmr_update
@@ -76,7 +79,6 @@ class Collection < ActiveRecord::Base
       collection.cmr_update
     end
   end
-
 
   #method added for the manual addition of granules into the database for collections.
   def add_granule(current_user)
@@ -128,23 +130,27 @@ class Collection < ActiveRecord::Base
     return 0
   end
 
-  def remove_all_granule_data
-    granules = self.granules
-    granules.each do |granule|
-      granule_records = granule.records
-      granule_records.each do |record|
-        record_datas = record.record_datas
-        record_datas.each do |data|
-          data.destroy
-        end
-        if record.try(:ingest)
-          record.ingest.destroy
-        end
-        record.destroy
-      end
-      granule.destroy
+  def refresh!(current_user)
+    latest_revision = Cmr.current_revision_for(concept_id)
+
+    if Collection.record_exists?(concept_id, latest_revision)
+      false
+    else
+      Collection.create_new_record(concept_id, latest_revision, current_user)
     end
   end
 
+  def finish!
+    update_attributes(cmr_update: false) if all_records_finished?
+  end
 
+  def allow_updates!
+    update_attributes(cmr_update: true) unless update?
+  end
+
+  private
+
+  def all_records_finished?
+    records.visible.all? { |r| r.state == Record::STATE_FINISHED.to_s }
+  end
 end
