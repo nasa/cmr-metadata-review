@@ -1,9 +1,6 @@
 class Cmr
   include ApplicationHelper
   include CmrHelper
-  #imports lists of required fields
-  include RequiredCollectionLists
-  include RequiredGranuleLists
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
@@ -154,11 +151,11 @@ class Cmr
 
   def self.get_collection(concept_id, data_format = "echo10")
     desired_fields = if data_format == "echo10"
-      DESIRED_FIELDS_ECHO10
+      RecordFormats::Echo10Fields::DESIRED_FIELDS
     elsif data_format == "dif10"
-      DESIRED_FIELDS_DIF10
+      RecordFormats::Dif10Fields::DESIRED_FIELDS
     elsif data_format == "umm_json"
-      DESIRED_FIELDS_UMM
+      RecordFormats::UmmFields::DESIRED_FIELDS
     else
       []
     end
