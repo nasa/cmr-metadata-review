@@ -25,6 +25,8 @@ class Ability
         can :replace_granule, Granule
 
         can :access, :filter_daac
+
+        can :search, :cmr
       end
 
       if user.role.eql?("arc_curator")
@@ -42,6 +44,8 @@ class Ability
         can :replace_granule, Granule
 
         can :access, :filter_daac
+
+        can :search, :cmr
       end
 
       if user.role.eql?("daac_curator")
