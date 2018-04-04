@@ -8,13 +8,14 @@ module CmrHelper
       collection_hash = {}
       bullet = "\u{2022} "
       array_collection.map do |field_name, value|
+        value = value.to_s
         if collection_hash.key? field_name
           collection_hash[field_name] += ("\n" + bullet + (value || ""))
         else
           collection_hash[field_name] = (value || "")
-        end  
+        end
         #if field contains bullet but does not start with one, add one to start
-        if !collection_hash[field_name].nil? && collection_hash[field_name].include?(bullet) 
+        if !collection_hash[field_name].nil? && collection_hash[field_name].include?(bullet)
           #this checks if a bullet symbol (\u{2022}) and a space " " are the two first chars
           if collection_hash[field_name][0..1] != bullet
             collection_hash[field_name] = bullet + collection_hash[field_name]
@@ -66,7 +67,7 @@ module CmrHelper
         new_collection_arr.each do |key, sub_value|
           final_collection_arr.push([key[1..-1], sub_value])
         end
-      else 
+      else
         final_collection_arr = new_collection_arr
       end
 
@@ -79,5 +80,5 @@ module CmrHelper
   def self.included(receiver)
     receiver.extend ClassMethods
   end
-  
+
 end
