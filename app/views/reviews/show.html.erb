@@ -74,7 +74,7 @@
 
 
           <tr>
-            <th class="headcol headcol__script-row">UMM REQUIRED</th>
+            <th class="headcol headcol__script-row multi_line">Required by Schema and/or UMM</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
                 <div class="umm_required_cell">
@@ -357,25 +357,19 @@
     //resizing the discussion header div
 
     function adjustDiscussionCellHeight() {
-        $('.headcol--discussion').each(function() {
-          var siblings = $(this).siblings();
-          $(this).css("height", siblings.filter(function(index) {return siblings[index].style != undefined && siblings[index].style.display != "none";}).outerHeight());
-        });
-=======
-        // Sets the height of a discussion row's lead column to the
-        // tallest sibling (i.e. the column with the longest - or tallest - discussion).
-        $('.headcol--discussion').each(function() {
-          var siblings = $(this).siblings();
-          var maxHeight = Math.max.apply(null, siblings.map(function() {
-            return $(this).outerHeight();
-          }).get());
+      // Sets the height of a discussion row's lead column to the
+      // tallest sibling (i.e. the column with the longest - or tallest - discussion).
+      $('.headcol--discussion').each(function() {
+        var siblings = $(this).siblings();
+        var maxHeight = Math.max.apply(null, siblings.map(function() {
+          return $(this).outerHeight();
+        }).get());
 
-          // Adds 1 px to account for borders.
-          $(this).css("height", maxHeight + 1);
-          $(this).css("lineHeight", 'normal');
-          $(this).css("paddingTop", '12px');
-         });
->>>>>>> ef571f6... Refactors discussion HTML into partials. Updates discussion field height settings.
+        // Adds 1 px to account for borders.
+        $(this).css("height", maxHeight + 1);
+        $(this).css("lineHeight", 'normal');
+        $(this).css("paddingTop", '12px');
+      });
     }
 
     function adjustHeaderRowTextPosition() {
@@ -392,15 +386,17 @@
         }
       });
 
-      //var headcols = $('.headcol').not('.headcol--discussion');
-
       for (var i = 0; i < (rows.length); i++) {
         var headcol = rows[i].getElementsByTagName('th')[0];
         //added a pixel to each row hieght to make the borders look smoother
         headcol.style.height = (heights[i] + 1).toString() + 'px';
         //used padding top and line height to center the text
         headcol.style.paddingTop = '0px';
-        headcol.style.lineHeight = (heights[i] + 1).toString() + 'px';
+        if (headcol.classList.value.match(/multi_line/)) {
+          headcol.style.lineHeight = (heights[i]/2 + 1).toString() + 'px';
+        } else {
+          headcol.style.lineHeight = (heights[i] + 1).toString() + 'px';
+        }
       }
 
       //setting the height of the discussion <th> element on page load.

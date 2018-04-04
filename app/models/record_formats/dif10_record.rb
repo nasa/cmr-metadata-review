@@ -4,17 +4,14 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Dif10Record
-    SECTION_TITLES = ["Summary", "Platform", "Science_Keywords", "Dataset_Citation", "Organization", "Personnel", "Reference", "Location", "Data_Resolution", "Related_URL", "Distribution", "Multimedia_Sample", "Additional_Attributes", "Temporal_Coverage", "Spatial_Coverage", "Project", "Metadata_Dates"]
-    GRANULE_SECTION_TITLES = []
-
-    include RecordFormats::Dif10ControlledElements
+    include RecordFormats::Dif10Fields
 
     def get_section_titles
-      collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
+      SECTION_TITLES
     end
 
     def field_required?(field)
-      RequiredCollectionLists::REQUIRED_DIF10_FIELDS.include?(field)
+      REQUIRED_COLLECTION_FIELDS.include?(field)
     end
 
     # ====Params
@@ -22,7 +19,6 @@ module RecordFormats
     # ====Returns
     # String
     # ==== Method
-    # Accesses the record's RecordData attribute and then returns the value of the "LongName" (equivalent) field
     def long_name
       self.get_column("Entry_Title")
     end
@@ -82,14 +78,8 @@ module RecordFormats
       end
     end
 
-    def controlled_notice_list(element_list)
-      controlled_map = {}
-      element_list.map do |element|
-        if CONTROLLED_ELEMENT_MAP.key? element
-          controlled_map[element] = CONTROLLED_ELEMENT_MAP[element]
-        end
-      end
-      controlled_map
+    def controlled_element_map
+      CONTROLLED_ELEMENT_MAP
     end
   end
 end
