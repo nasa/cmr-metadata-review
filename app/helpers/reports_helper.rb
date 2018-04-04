@@ -36,9 +36,7 @@ module ReportsHelper
   end
 
   def finished_records_count
-    # TODO Update this to use the given scope when the finished
-    # work is merged in
-    finished = Record.where(state: "finished")
+    finished = Record.finished
     finished = finished.daac(params[:daac]) if params[:daac]
 
     finished.count

@@ -2,9 +2,8 @@
 class MetricData
   attr_reader :recordables
 
-  # TODO Update this with the Record::STATE_FINISHED constant when finished work is moved in
   IN_PROGRESS_METRICS = [Record::STATE_CLOSED, Record::STATE_IN_DAAC_REVIEW]
-  FINISHED_METRICS    = [:finished]
+  FINISHED_METRICS    = [Record::STATE_FINISHED]
   METRIC_STATES       = IN_PROGRESS_METRICS + FINISHED_METRICS
 
   def initialize(recordables)
