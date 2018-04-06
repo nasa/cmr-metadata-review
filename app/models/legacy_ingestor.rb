@@ -94,12 +94,16 @@ class LegacyIngestor
 
   def get_collection_record(url)
     return unless url
-    Collection.assemble_new_record_by_url(url)
+    Collection.create_new_record_by_url(url, legacy_ingest_user)
+  end
+
+  def legacy_ingest_user
+    @legacy_ingest_user ||= User.find_by(email: "brian@element84.com")
   end
 
   def get_granule_record(concept_id)
     return unless concept_id
-    Granule.add_granule_by_concept_id(concept_id)
+    Granule.add_granule_by_concept_id(concept_id, legacy_ingest_user)
   end
 
   def create_collection_record_outside_cmr(concept_id, revision_id, data_format, collection_data)
@@ -109,13 +113,19 @@ class LegacyIngestor
       collection.update_attributes(short_name: short_name)
     end
 
-    collection.records.create(revision_id: revision_id, format: data_format)
+    record = collection.records.create(revision_id: revision_id, format: data_format)
+    Ingest.create(record: record, user: legacy_ingest_user, date_ingested: DateTime.now)
+
+    record
   end
 
   def create_granule_record_outside_cmr(concept_id, data_set_id)
     collection = find_collection_for_granule(data_set_id)
     granule    = Granule.create(concept_id: concept_id, collection: collection)
-    granule.records.create(revision_id: "1")
+    record     = granule.records.create(revision_id: "1")
+
+    Ingest.create(record: record, user: legacy_ingest_user, date_ingested: DateTime.now)
+    record
   end
 
   def parse_short_name(data_set_id)
