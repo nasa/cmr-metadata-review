@@ -150,7 +150,9 @@ class LegacyIngestor
 
   def parse_short_names_for_granule(data_set_id)
     return unless data_set_id
-    data_set_id.scan(/\(([^)]+)\)/).flatten
+    regex_set = data_set_id.scan(/\(([^)]+)\)/).flatten
+    character_set = data_set_id.split(/[:,\.,-,\s]/)
+    regex_set + character_set
   end
 
   def report_errors
