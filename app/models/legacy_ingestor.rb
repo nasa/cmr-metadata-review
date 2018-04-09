@@ -71,7 +71,7 @@ class LegacyIngestor
 
 
         # Add additional comments as a review
-        record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value)
+        record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value, legacy_ingest_user)
 
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
