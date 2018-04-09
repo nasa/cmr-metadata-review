@@ -156,12 +156,23 @@ class Cmr
   end
 
   def self.get_collection_by_url(url, data_format)
-    collection_xml = cmr_request(url).parsed_response
+    collection_data = cmr_request(url).parsed_response
 
-    raise CmrError.new(collection_xml["errors"]["error"]) if collection_xml["errors"]
+    if collection_data["errors"]
+      error_message = data_format == "umm_json" ? collection_data["errors"] : collection_data["error"]
+      raise CmrError.new(error_message)
+    end
 
-    collection_xml_hash = Hash.from_xml(collection_xml)
-    raw_collection = data_format == "echo10" ? collection_xml_hash["Collection"] : collection_xml_hash["DIF"]
+    collection_data_hash = data_format == "umm_json" ? JSON.parse(collection_data) : Hash.from_xml(collection_data)
+
+    raw_collection = if data_format == "echo10"
+      collection_data_hash["Collection"]
+    elsif data_format == "dif10"
+      collection_data_hash["DIF"]
+    elsif data_format == "umm_json"
+      collection_data_hash
+    end
+
     format_collection(raw_collection, data_format)
   end
 

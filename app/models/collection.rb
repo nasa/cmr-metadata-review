@@ -83,6 +83,9 @@ class Collection < ActiveRecord::Base
 
   def self.create_new_record_by_url(url, user = nil)
     concept_id, revision_id, data_format = parse_collection_url(url)
+
+    # Change 'umm-json' to 'umm_json'
+    data_format = data_format.underscore
     collection_data = Cmr.get_collection_by_url(url, data_format)
     create_record(concept_id, revision_id, data_format, collection_data, user: user)
   rescue Cmr::CmrError
