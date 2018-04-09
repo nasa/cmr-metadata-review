@@ -175,10 +175,10 @@ class Cmr
     results_hash = flatten_collection(granule_raw_data)
     nil_replaced_hash = Cmr.remove_nil_values(results_hash)
 
-    required_fields = REQUIRED_GRANULE_FIELDS
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, required_fields)
+    desired_fields = RecordFormats::Echo10Fields::DESIRED_GRANULE_FIELDS
+    desired_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
 
-    required_fields_hash
+    desired_fields_hash
   end
 
   # ====Params
