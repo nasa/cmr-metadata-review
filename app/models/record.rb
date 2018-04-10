@@ -455,10 +455,14 @@ class Record < ActiveRecord::Base
       end
     end
 
-    #adding the second opinions
-    opinion_values = self.get_opinions
+    # Adding second opinions and feedback flags.
+    opinion_values = get_opinions
+    feedbacks = get_feedbacks
+    
     bubble_set = bubble_set.map do |bubble|
       bubble[:opinion] = opinion_values[bubble[:field_name]]
+      bubble[:feedback] = feedbacks[bubble[:field_name]]
+      
       bubble
     end
 

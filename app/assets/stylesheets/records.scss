@@ -113,9 +113,11 @@
     min-width: 20px;
     min-height: 20px;
   }
+  
   .bubble_opinion {
     font-size: 1.1em;
   }
+
   .script_text {
 
   }
@@ -310,9 +312,13 @@
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 
     .legend_flex_row {
       display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;      
     }
 
     .legend_flex_item {
