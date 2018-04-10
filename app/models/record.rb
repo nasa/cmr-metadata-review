@@ -60,6 +60,14 @@ class Record < ActiveRecord::Base
       transitions from: :in_daac_review, to: :closed
     end
 
+    event :close_legacy_review do
+      before do
+        write_closed_date
+      end
+
+      transitions from: :open, to: :closed
+    end
+
     event :finish do
       transitions from: :closed, to: :finished
     end
