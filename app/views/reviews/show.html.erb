@@ -11,18 +11,15 @@
       </div>
       <!-- bubbles -->
       <div class="bubble_title">
-        <% @bubble_data.each_with_index do | bubble, index | %>
-          <% script_class = bubble[:script] ? "script" : "no_script" %>
-          <% script_text_class = bubble[:script] ? "script_text" : "no_script_text" %>
-
-          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class %> bubbletooltip" title="<%= bubble[:field_name] %>">
+        <% @bubble_data.each do |bubble| %>
+          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
             <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
-            <% if bubble[:opinion] && bubble[:opinion] != "" %>
-              <div class="<%= script_text_class %> bubble_opinion">2</div>
+            <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
+              <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
             <% elsif bubble[:feedback] %>
               <div class="<%= script_text_class %> bubble_opinion">F</div>
             <% else %>
-              <div style="visibility: hidden;" class="<%= script_text_class %> bubble_opinion">2</div>
+              <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
             <% end %>
           </div>
         <% end %>
