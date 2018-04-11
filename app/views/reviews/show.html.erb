@@ -14,7 +14,7 @@
         <% @bubble_data.each do |bubble| %>
           <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
             <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
-            <% if bubble[:opinion] && bubble[:opinion] != "" %>
+            <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
               <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
               <% else %>
               <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>

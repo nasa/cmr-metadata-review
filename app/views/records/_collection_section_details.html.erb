@@ -11,9 +11,9 @@
         <div class="single_bubble_container">
           <div class="bubble flag_<%= current_field[:color] %> <%= script_class(current_field) %> bubbletooltip">
               <p class="bubbletooltiptext"><%= split_on_capitals(current_field[:field_name]) %></p>
-            <% if current_field[:opinion] && current_field[:opinion] != "" %>
+            <% if current_user.arc? && current_field[:opinion] && current_field[:opinion] != "" %>
               <div class="<%= script_text_class(current_field) %> bubble_opinion">2</div>
-              <% else %>
+            <% else %>
               <div style="visibility: hidden;" class="<%= script_text_class(current_field) %> bubble_opinion">2</div>
             <% end %>
           </div>
