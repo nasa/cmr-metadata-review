@@ -13,6 +13,8 @@
               <p class="bubbletooltiptext"><%= split_on_capitals(current_field[:field_name]) %></p>
             <% if current_user.arc? && current_field[:opinion] && current_field[:opinion] != "" %>
               <div class="<%= script_text_class(current_field) %> bubble_opinion">2</div>
+            <% elsif current_field[:feedback] %>
+              <div class="<%= script_text_class(current_field) %> bubble_opinion">F</div>
             <% else %>
               <div style="visibility: hidden;" class="<%= script_text_class(current_field) %> bubble_opinion">2</div>
             <% end %>
