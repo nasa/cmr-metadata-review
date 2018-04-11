@@ -62,7 +62,7 @@ class LegacyIngestor
         row.cells[1...checked_by].each_with_index do |cell, index|
           column_name    = headers[index+1]
           data = {
-            script_comment: cell.value,
+            recommendation: cell.value,
             color:          COLORS[cell.fill_color]
           }
 
