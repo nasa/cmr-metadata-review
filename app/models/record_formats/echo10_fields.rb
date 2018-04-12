@@ -6,7 +6,6 @@ module RecordFormats
       "Contacts",
       "Platforms",
       "Campaigns",
-      "Temporal",
       "ScienceKeywords",
       "Spatial",
       "SpatialInfo",
