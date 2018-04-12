@@ -35,7 +35,7 @@ module RecordFormats
       "TwoDCoordinateSystems",
       "OnlineResources",
       "AssociatedBrowseImages",
-      "AssociatedBrowseImageURLs",
+      "AssociatedBrowseImageUrls",
       "AdditionalAttributes"
     ]
 
@@ -189,8 +189,8 @@ module RecordFormats
       "OnlineResources/OnlineResource/Type",
       "OnlineResources/OnlineResource/MimeType",
       "DataFormat",
-      "AssociatedBrowseImageURLs/ProviderBrowseURL/URL",
-      "AssociatedBrowseImageURLs/ProviderBrowseURL/Description"
+      "AssociatedBrowseImageUrls/ProviderBrowseUrl/URL",
+      "AssociatedBrowseImageUrls/ProviderBrowseUrl/Description"
     ]
 
     CONTROLLED_ELEMENT_MAP = {
