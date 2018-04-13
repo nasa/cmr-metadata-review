@@ -17,7 +17,7 @@
             <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
               <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
             <% elsif bubble[:feedback] %>
-              <div class="<%= script_text_class %> bubble_opinion">F</div>
+              <div class="<%= script_text_class(bubble) %> bubble_opinion">F</div>
             <% else %>
               <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
             <% end %>
