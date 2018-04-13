@@ -144,8 +144,22 @@ class LegacyIngestor
   end
 
   def find_collection_for_granule(data_set_id)
+    find_collection_by_short_name(data_set_id) ||
+      find_collection_by_long_name(data_set_id) ||
+      (throw StandardError.new("No Collection can be found for #{data_set_id}"))
+  end
+
+  def find_collection_by_short_name(data_set_id)
     short_names = parse_short_names_for_granule(data_set_id)
-    Collection.find_by!(short_name: short_names)
+    Collection.find_by(short_name: short_names)
+  end
+
+  def find_collection_by_long_name(data_set_id)
+    long_names = parse_long_name_for_granules(data_set_id)
+    record_datas = RecordData.where(value: long_names)
+    record_datas.each do |data|
+      return data.record.recordable if data.record.collection?
+    end
   end
 
   def parse_short_names_for_granule(data_set_id)
@@ -153,6 +167,11 @@ class LegacyIngestor
     regex_set = data_set_id.scan(/\(([^)]+)\)/).flatten
     character_set = data_set_id.split(/[:,\.,-,\s]/)
     regex_set + character_set
+  end
+
+  def parse_long_name_for_granules(data_set_id)
+    return unless data_set_id
+    data_set_id.scan(/(.*).*\(G.*/).flatten.map(&:squish)
   end
 
   def report_errors
