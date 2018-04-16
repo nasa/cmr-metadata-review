@@ -98,7 +98,7 @@ class LegacyIngestor
   end
 
   def legacy_ingest_user
-    @legacy_ingest_user ||= User.find_by(email: "brian@element84.com")
+    @legacy_ingest_user ||= User.find_by(email: "brian@element84.com") || User.where(role: "admin").first
   end
 
   def get_granule_record(concept_id)
