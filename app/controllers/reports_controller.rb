@@ -59,7 +59,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data(render_to_string, filename: "dashboard_#{record.concept_id}_#{record.revision_id}.csv") }
+      format.csv { send_data(render_to_string, filename: "dashboard_#{@record.concept_id}_#{@record.revision_id}.csv") }
     end
   end
 end

@@ -3,7 +3,7 @@
 <%= CSV.generate_line(["Concept Id", "Short Name", "DAAC", "Review Close Date"]) %>
 <%= CSV.generate_line([@record.concept_id.partition('-').first, @record.short_name, @record.daac, @record.formatted_closed_date]) %>
 <%= CSV.generate_line(["Reviewer", "Date of Review"]) %>
-<% @reviews.each do |review| %>
+<% @record.reviews.each do |review| %>
   <%= CSV.generate_line([review.reviewer_email, review.formatted_date]) %>
 <% end %>
 
