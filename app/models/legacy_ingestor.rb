@@ -2,7 +2,6 @@ class LegacyIngestor
 
   attr_accessor :spreadsheet
   attr_accessor :granules
-  attr_accessor :daac
 
   COLLECTION_HEADER_ROW = 5
   GRANULE_HEADER_ROW    = 5
@@ -20,9 +19,8 @@ class LegacyIngestor
     "FFEA9999" => "red"
   }
 
-  def initialize(filename, daac, granules = false)
+  def initialize(filename, granules = false)
     @spreadsheet = RubyXL::Parser.parse(filename)
-    @daac        = daac
     @granules    = granules
   end
 
@@ -48,13 +46,13 @@ class LegacyIngestor
       begin
         if granules
           data_set_id = row.cells[0].value
-          concept_id  = parse_granule_concept_id(data_set_id)
+          concept_id, daac = parse_granule_concept_id(data_set_id)
           record      = get_granule_record(concept_id) || create_granule_record_outside_cmr(concept_id, data_set_id)
         else
           data_id    = row.cells[0].value
           url        = parse_url(data_id)
           concept_id, revision_id, data_format = Collection.parse_collection_url(url) if url
-
+          daac       = concept_id.split('-').last
           record     = get_collection_record(url) || create_collection_record_outside_cmr(concept_id, revision_id, data_format, data_id)
         end
 
@@ -79,6 +77,8 @@ class LegacyIngestor
       rescue StandardError => e
         if concept_id
           errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
+        elsif row.cells[1].value == "Collection Only"
+          errors << { concept_id: "Not Found", reason: "No Granule was reviewed for #{row.cells[0].value}"}
         else
           errors << { concept_id: "Not Found", reason: "No Concept ID found for #{row.cells[0].value}"}
         end
@@ -141,7 +141,8 @@ class LegacyIngestor
 
   def parse_granule_concept_id(concept_id_data)
     return unless concept_id_data
-    concept_id_data.match(/G\d+-#{daac}/)[0]
+    results = concept_id_data.match(/\((G\d+-(.*))\)/)
+    results.to_a[1..2]
   end
 
   def find_collection_for_granule(data_set_id)
