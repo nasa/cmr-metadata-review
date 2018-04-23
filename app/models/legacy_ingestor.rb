@@ -16,7 +16,8 @@ class LegacyIngestor
     "FFFFFFFF" => "green",
     "FF4A86E8" => "blue",
     "FFFFFF00" => "yellow",
-    "FFE06666" => "red"
+    "FFE06666" => "red",
+    "FFEA9999" => "red"
   }
 
   def initialize(filename, daac, granules = false)
