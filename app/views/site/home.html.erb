@@ -57,10 +57,10 @@
 
     <% if can?(:review_state, Record::STATE_IN_DAAC_REVIEW) %>
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons", locals: { report: true, cmr_updated: true } ) %>
+        <%= render(partial: "shared/record_buttons", locals: { report: true, close: can?(:close, Record) } ) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "in_daac_review", records: records_sorted_by_short_name(@records.in_daac_review), reviews: true, multiselect: true, title: "In DAAC Review" } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "in_daac_review", records: records_sorted_by_short_name(@records.in_daac_review), reviews: true, title: "In DAAC Review" } %>
     <% end %>
 
     <% if can?(:provide_feedback, Record) %>

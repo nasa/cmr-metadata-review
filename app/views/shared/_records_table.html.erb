@@ -1,6 +1,5 @@
 <% closed ||= false %>
 <% reviews ||= false %>
-<% multiselect ||= false %>
 
 <div class="table_backdrop">
   <div class="results_title">
@@ -43,11 +42,7 @@
                 <td class="center_text"><%= record.second_opinion_count %></td>
               <% end %>
 
-              <% if multiselect %>
-                <td class="center_text"><%= check_box_tag(:record_id, record.id) %></td>
-              <% else %>
-                <td class="center_text"><%= radio_button_tag(:record_id, record.id) %></td>
-              <% end %>
+              <td class="center_text"><%= check_box_tag("record_id[]", record.id) %></td>
               
             </tr>
           <% end %>

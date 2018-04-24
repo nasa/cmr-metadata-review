@@ -3,13 +3,12 @@ class CollectionsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :admin_only, only: [:hide, :refresh]
-  before_filter :find_record, only: [:hide, :refresh]
+  before_filter :find_record, only: [:show, :hide, :refresh]
   before_filter :collection_only, only: :refresh
 
   def show
-    if params[:record_id]
-      record = Record.find(params[:record_id])
-      collection = get_collection_from_record(record)
+    if @record
+      collection = get_collection_from_record(@record)
 
       @concept_id = collection.concept_id
       @collection_records = collection.get_records.order(:revision_id).reverse_order
@@ -130,7 +129,8 @@ class CollectionsController < ApplicationController
   private
 
   def find_record
-    @record = Record.find(params[:record_id])
+    @record = Record.find(params[:record_id].try(:first) || params[:record_id])
+    redirect_to home_path unless @record
   end
 
   def collection_only

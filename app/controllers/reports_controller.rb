@@ -53,7 +53,7 @@ class ReportsController < ApplicationController
   end
 
   def single
-    @record = Record.find(params[:record_id])
+    @record = Record.find(params[:record_id].try(:first) || params[:record_id])
     @metric_set = MetricSet.new([@record])
     @field_colors = @metric_set.color_counts
 

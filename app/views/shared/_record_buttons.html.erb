@@ -1,15 +1,15 @@
 <% report ||= false %>
-<% cmr_updated ||= false %>
+<% close ||= false %>
 
 <div class="navigate_buttons">
   <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
 
-  <% if current_user.admin %>
-    <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
+  <% if close %>
+    <%= submit_tag("Close", class: "closeButton", formaction: batch_complete_records_path, disabled: true, data: { confirm: "Close the selected Record(s)?" }) %>
   <% end %>
 
-  <% if cmr_updated %>
-    <%= submit_tag("CMR Updated", class: "cmrUpdateButton", formaction: cmr_updated, disabled: true, data: { confirm: "Have these records been updated in the CMR and can now be marked as closed?"}) %>
+  <% if current_user.admin %>
+    <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
   <% end %>
 
   <% if report %>

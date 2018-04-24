@@ -29,7 +29,7 @@ class RecordsController < ApplicationController
   end
 
   def complete
-    if completion_success
+    if completion_success(@record)
       flash[:notice] = "Record has been successfully updated."
       redirect_to collection_path(id:1, record_id: @record.id)
     else
@@ -96,30 +96,44 @@ class RecordsController < ApplicationController
     redirect_to :back
   end
 
+  def batch_complete
+    @records = Record.find(Array(params[:record_id]))
+      
+    success = false
+    @records.each do |r|
+      success = completion_success(r)
+      break unless success
+    end
+    
+    flash[:notice] = "Records were successfully updated" if success
+    
+    redirect_to (request.referrer || home_path)
+  end
+
   private
 
   def find_record
-    @record = Record.find_by(id: params[:id]) || Record.find_by(id: params[:record_id])
+    @record = Record.find_by(id: params[:id]) || Record.find_by(id: (params[:record_id].try(:first) || params[:record_id]))
     redirect_to home_path unless @record
   end
 
-  def completion_success
-    if !can?(:review_state, @record.state.to_sym)
+  def completion_success(record)
+    if !can?(:review_state, record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"
       return false
     end
 
     begin
-      if @record.in_arc_review?
-        @record.complete_arc_review!
-      elsif @record.ready_for_daac_review?
-        @record.release_to_daac!
+      if record.in_arc_review?
+        record.complete_arc_review!
+      elsif record.ready_for_daac_review?
+        record.release_to_daac!
 
-        RecordNotifier.notify_released([@record])
+        RecordNotifier.notify_released([record])
       else
-        can?(:force_close, @record) ? @record.force_close! : @record.close!
+        can?(:force_close, @record) ? record.force_close! : record.close!
 
-        RecordNotifier.notify_closed([@record])
+        RecordNotifier.notify_closed([record])
       end
     rescue => e
       error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
