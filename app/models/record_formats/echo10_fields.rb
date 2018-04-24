@@ -11,7 +11,7 @@ module RecordFormats
       "SpatialInfo",
       "OnlineResources",
       "OnlineAccessURLs",
-      "CSDTDescription",
+      "CSDTDescriptions",
       "AdditionalAttributes",
       "CollectionAssociations",
       "Campaigns",
