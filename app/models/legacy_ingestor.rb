@@ -115,6 +115,10 @@ class LegacyIngestor
     end
 
     record = collection.records.create(revision_id: revision_id, format: data_format)
+
+    long_name = parse_long_name(collection_data)
+    record.add_long_name(long_name)
+
     Ingest.create(record: record, user: legacy_ingest_user, date_ingested: DateTime.now)
 
     record
@@ -132,6 +136,12 @@ class LegacyIngestor
   def parse_short_name(data_set_id)
     return unless data_set_id
     data_set_id.match(/.*\((.*)\) - https.*/)[1]
+  end
+
+  def parse_long_name(data_set_id)
+    return unless data_set_id
+    long_name = data_set_id.match(/(.*)\(.*\) - https.*/)
+    long_name[1].squish if long_name
   end
 
   def parse_url(data_set_id)

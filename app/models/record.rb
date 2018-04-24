@@ -748,6 +748,11 @@ class Record < ActiveRecord::Base
     review.mark_complete
   end
 
+  def add_long_name(long_name)
+    record_data = record_datas.find_or_create_by(column_name: long_name_field, daac: daac)
+    record_data.update_attributes(value: long_name)
+  end
+
   def umm_json_link
     "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end
