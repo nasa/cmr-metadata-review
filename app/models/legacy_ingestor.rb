@@ -77,7 +77,7 @@ class LegacyIngestor
       rescue StandardError => e
         if concept_id
           errors << { concept_id: concept_id, reason: "The legacy review could not be ingested: #{e.message}"}
-        elsif row.cells[1].value == "Collection Only"
+        elsif row.cells[1].value.downcase == "collection only"
           errors << { concept_id: "Not Found", reason: "No Granule was reviewed for #{row.cells[0].value}"}
         else
           errors << { concept_id: "Not Found", reason: "No Concept ID found for #{row.cells[0].value}"}
@@ -108,6 +108,8 @@ class LegacyIngestor
   end
 
   def create_collection_record_outside_cmr(concept_id, revision_id, data_format, collection_data)
+    # Change 'umm-json' to 'umm_json'
+    data_format = data_format.underscore
     collection = Collection.find_or_create_by(concept_id: concept_id)
     unless collection.short_name.present?
       short_name = parse_short_name(collection_data)
