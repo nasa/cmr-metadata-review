@@ -12,6 +12,7 @@ module RecordFormats
       "OnlineResources",
       "OnlineAccessURLs",
       "CSDTDescriptions",
+      "CSDTDescription",
       "AdditionalAttributes",
       "CollectionAssociations",
       "Campaigns",
