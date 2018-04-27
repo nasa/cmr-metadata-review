@@ -1,7 +1,0 @@
-<%= CSV.generate_line(["CMR Multiple Record Report"]) %>
-
-<%= CSV.generate_line(csv_titles).html_safe %>
-
-<% @records.each do |record| %>
-  <%= CSV.generate_line(generate_csv_line(record)).html_safe %>
-<% end %>
