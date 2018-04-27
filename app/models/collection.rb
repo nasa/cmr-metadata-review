@@ -150,6 +150,10 @@ class Collection < ActiveRecord::Base
     update_attributes(cmr_update: true) unless update?
   end
 
+  def long_name
+    records.last.long_name
+  end
+
   private
 
   def all_records_finished?

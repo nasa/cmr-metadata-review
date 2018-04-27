@@ -52,4 +52,8 @@ class Granule < ActiveRecord::Base
   def collection_short_name
     collection.short_name
   end
+
+  def collection_name
+  collection.long_name
+  end
 end
