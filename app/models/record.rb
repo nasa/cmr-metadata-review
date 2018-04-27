@@ -19,6 +19,7 @@ class Record < ActiveRecord::Base
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
   scope :campaign, ->(campaign) { joins(:record_datas).where(record_data: { value: campaign }).distinct }
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
+  scope :metadata_format, ->(format) { where(format: format) }
 
   REVIEW_ERRORS = {
     color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",
@@ -459,11 +460,11 @@ class Record < ActiveRecord::Base
     # Adding second opinions and feedback flags.
     opinion_values = get_opinions
     feedbacks = get_feedbacks
-    
+
     bubble_set = bubble_set.map do |bubble|
       bubble[:opinion] = opinion_values[bubble[:field_name]]
       bubble[:feedback] = feedbacks[bubble[:field_name]]
-      
+
       bubble
     end
 
@@ -603,7 +604,7 @@ class Record < ActiveRecord::Base
   def get_section(section_name)
     section_list = []
     all_titles = self.sorted_record_datas.map { |data| data.column_name }
-    one_section = all_titles.select {|title| title.match /^#{section_name}\//}
+    one_section = all_titles.select { |title| title.match(/^#{section_name}\//) }
     if one_section.any?
       return [[section_name, one_section]]
     else
