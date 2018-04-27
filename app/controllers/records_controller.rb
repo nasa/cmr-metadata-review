@@ -113,7 +113,7 @@ class RecordsController < ApplicationController
   private
 
   def find_record
-    @record = Record.find_by(id: params[:id]) || Record.find_by(id: (params[:record_id].try(:first) || params[:record_id]))
+    @record = Record.find_by(id: params[:id]) || Record.find_by(id: Array(params[:record_id]).first)
     redirect_to home_path unless @record
   end
 

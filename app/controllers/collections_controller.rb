@@ -129,7 +129,10 @@ class CollectionsController < ApplicationController
   private
 
   def find_record
-    @record = Record.find(params[:record_id].try(:first) || params[:record_id])
+    # :record_id can be either a single value or a list of IDs. We can only support a single value.
+    # Wrapping the paramter in Array ensures that we are working with an Array before getting
+    # the first value (Array([]) == []).
+    @record = Record.find(Array(params[:record_id]).first)
     redirect_to home_path unless @record
   end
 
