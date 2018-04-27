@@ -1,0 +1,26 @@
+<% path_for_form ||= home_path %>
+
+<div class="record_filters searchbox_area">
+  <p><strong>Filter Records:</strong></p>
+  <%= form_tag(path_for_form, method: "get") do %>
+    
+    <div class="record_filters__filters">
+      <% if can?(:access, :filter_daac) %>
+        <div class="record_filters__select">
+          <%= label_tag(:daac, "DAAC") %>
+          <%= select_tag(:daac, options_for_select(provider_select_list, selected: params[:daac])) %>
+        </div>
+      <% end %>
+
+      <div class="record_filters__select">
+        <%= label_tag(:campaign) %>
+        <%= select_tag(:campaign, options_for_select(campaign_select_list, selected: params[:campaign])) %>
+      </div>
+
+      <%= submit_tag("Filter", class: "selectButton") %>
+
+    </div>
+    
+  <% end %>
+
+</div>

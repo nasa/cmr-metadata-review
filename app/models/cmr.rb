@@ -393,7 +393,7 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.
 
 
-  def self.collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
+  def self.collection_search(free_text, provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 10)
     search_iterator = []
     collection_count = 0
 
@@ -447,7 +447,7 @@ class Cmr
 
 
   #chose to search json as xml parsing is way too slow when searching whole cmr
-  def self.json_collection_search(free_text, provider = ANY_KEYWORD, curr_page = "1", page_size = 10)
+  def self.json_collection_search(free_text, provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 10)
     search_iterator = []
 
     if free_text
@@ -455,7 +455,7 @@ class Cmr
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
       query_text_first_char = Cmr.api_url("collections", "json", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-      unless provider == ANY_KEYWORD
+      unless provider == ANY_DAAC_KEYWORD
         query_text = query_text + "&provider=#{provider}"
         query_text_first_char = query_text_first_char + "&provider=#{provider}"
       end
@@ -477,7 +477,7 @@ class Cmr
     return search_results, search_results.length
   end
 
-  def self.contained_collection_search(free_text = "", provider = ANY_KEYWORD, curr_page = "1", page_size = 2000)
+  def self.contained_collection_search(free_text = "", provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 2000)
     if free_text.nil?
       return [], 0
     end
