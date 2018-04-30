@@ -5,7 +5,7 @@
     <div class="report_drop_down">
     </div>
     <div class="report_buttons">
-      <%=link_to reports_single_path(format: :csv, record_id: @record.id), class: "report_button" do %>
+      <%=link_to reports_review_path(format: :csv, record_ids: @records.map(&:id)), class: "report_button" do %>
         <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
@@ -16,9 +16,10 @@
     </div>
   </div>
 
+  <% @records.each do |record| %>
     <div class="report_sub_title first_sub_title">
       <div class="title_box">
-        SINGLE RECORD VIEW
+        <%= record.concept_id %>-<%= record.revision_id %>
       </div>
       <div class="title_text">
 
@@ -32,7 +33,7 @@
         <div class="metrics_section">
           <%= render(partial: 'title_bar', locals: {title: "RECORD METRICS"}) %>
           <div class="surrounding_box">
-            <% if @record.collection? %>
+            <% if record.collection? %>
 
               <table>
                 <tr class="header_row">
@@ -45,13 +46,13 @@
                   <td>Review Close Date</td>
                 </tr>
                 <tr>
-                  <td><%= @record.concept_id.partition('-').first %></td>
-                  <td><%= @record.revision_id %></td>
-                  <td><%= @record.short_name %></td>
-                  <td><%= @record.daac %></td>
-                  <td><%= link_to "UMM", @record.umm_json_link %></td>
-                  <td><%= @record.format %></td>
-                  <td><%= @record.formatted_closed_date %></td>
+                  <td><%= record.concept_id.partition('-').first %></td>
+                  <td><%= record.revision_id %></td>
+                  <td><%= record.short_name %></td>
+                  <td><%= record.daac %></td>
+                  <td><%= link_to "UMM", record.umm_json_link %></td>
+                  <td><%= record.format %></td>
+                  <td><%= record.formatted_closed_date %></td>
                 </tr>
               </table>
 
@@ -59,7 +60,7 @@
 
             <% else %>
 
-              <% granule = @record.recordable %>
+              <% granule = record.recordable %>
               <table>
                 <tr class="header_row">
                   <td>Concept Id</td>
@@ -72,14 +73,14 @@
                   <td>Review Close Date</td>
                 </tr>
                 <tr>
-                  <td><%= @record.concept_id.partition('-').first %></td>
-                  <td><%= @record.revision_id %></td>
+                  <td><%= record.concept_id.partition('-').first %></td>
+                  <td><%= record.revision_id %></td>
                   <td><%= granule.collection_short_name %></td>
-                  <td><%= @record.daac %></td>
+                  <td><%= record.daac %></td>
                   <td><%= granule.collection_concept_id.partition('-').first %></td>
-                  <td><%= link_to "Native", @record.native_link %></td>
+                  <td><%= link_to "Native", record.native_link %></td>
                   <td>echo10</td>
-                  <td><%= @record.formatted_closed_date %></td>
+                  <td><%= record.formatted_closed_date %></td>
                 </tr>
               </table>
 
@@ -93,7 +94,7 @@
                 <td>Date of Review</td>
                 <td>Review Comment</td>
               </tr>
-              <% @record.reviews.each do |review| %>
+              <% record.reviews.each do |review| %>
                 <tr>
                   <td><%= review.reviewer_email %></td>
                   <td><%= review.formatted_date %></td>
@@ -106,6 +107,7 @@
 
         <div class="metrics_spacing"></div>
 
+        <% field_colors = get_field_colors(record) %>
         <div class="quality_row">
           <div class="surrounding_box quality_box">
             <%= render(partial: 'title_bottom_bar', locals: {title: "QUALITY OVERVIEW"}) %>
@@ -113,10 +115,10 @@
               <div class="data_text">
                 <p>NUMBER OF COLLECTION</p>
                 <p>ELEMENTS REVIEWED</p>
-                <p class="checked_num"><%=@field_colors.values.sum%></p>
+                <p class="checked_num"><%= field_colors.values.sum %></p>
               </div>
               <div class="doughnut_graph_container">
-                <canvas id="ChartFlagOriginal"></canvas>
+                <canvas id="ChartFlag<%= record.concept_id %>-<%= record.revision_id %>"></canvas>
               </div>
             </div>
             <div class="legend_area" id="original_quality_legend">
@@ -124,24 +126,24 @@
                 <div class="legend_item first_item">
                   <div class="color_box green">
                   </div>
-                  <p>ELEMENTS PASSED <br>(<%=@field_colors["green"]%>)</p>
+                  <p>ELEMENTS PASSED <br>(<%= field_colors["green"] %>)</p>
                 </div>
                 <div class="legend_item">
                   <div class="color_box yellow">
                   </div>
-                  <p>ELEMENTS WITH WARNINGS <br>(<%=@field_colors["yellow"]%>)</p>
+                  <p>ELEMENTS WITH WARNINGS <br>(<%= field_colors["yellow"] %>)</p>
                 </div>
               </div>
               <div class="legend_row">
                 <div class="legend_item first_item">
                   <div class="color_box blue">
                   </div>
-                  <p>ELEMENTS NOTED <br>(<%=@field_colors["blue"]%>)</p>
+                  <p>ELEMENTS NOTED <br>(<%= field_colors["blue"] %>)</p>
                 </div>
                 <div class="legend_item">
                   <div class="color_box red">
                   </div>
-                  <p>ELEMENTS FAILED <br>(<%=@field_colors["red"]%>)</p>
+                  <p>ELEMENTS FAILED <br>(<%= field_colors["red"] %>)</p>
                 </div>
               </div>
             </div>
@@ -152,9 +154,9 @@
 
       <%# templating the 3 sections using a short 2d array %>
       <%[
-          ["red_section", "RED", record_data_colors(@record, "red")],
-          ["yellow_section", "YELLOW", record_data_colors(@record, "yellow")],
-          ["blue_section", "BLUE", record_data_colors(@record, "blue")]
+          ["red_section", "RED", record_data_colors(record, "red")],
+          ["yellow_section", "YELLOW", record_data_colors(record, "yellow")],
+          ["blue_section", "BLUE", record_data_colors(record, "blue")]
         ].each do |section_name, color, elements| %>
 
         <section class="<%=section_name%>">
@@ -182,60 +184,15 @@
           </div>
 
         </section>
-
       <% end %>
 
       <div class="print_width">
       </div>
 
+      <script type="text/javascript">
+        <%= render partial: 'review_chart.js', locals: { record: record, field_colors: field_colors } %>
+      </script>
+
     </div>
+  <% end %>
 </div>
-
-
-<%# ChartFlagOriginal - pie chart of flag colors %>
-<script type="text/javascript">
-
-    var ctx = document.getElementById("ChartFlagOriginal");
-
-    var data = {
-      labels: [
-          "Red",
-          "Blue",
-          "Yellow",
-          "Green"
-      ],
-      datasets: [
-          {
-              data: [<%=@field_colors["red"]%>, <%=@field_colors["blue"]%>, <%=@field_colors["yellow"]%>, <%=@field_colors["green"]%>],
-              backgroundColor: [
-                  "#e84a34",
-                  "#1b75ae",
-                  "#ffce00",
-                  "#3ab841"
-              ],
-              hoverBackgroundColor: [
-                  "#e84a34",
-                  "#1b75ae",
-                  "#ffce00",
-                  "#3ab841"
-              ]
-          }]
-    };
-
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-          legend:{
-            display:false
-          },
-          maintainAspectRatio: false,
-          pieceLabel: {
-            mode: 'value',
-            fontSize: 18,
-            fontStyle: 'bold'
-          }
-        }
-      });
-
-</script>
