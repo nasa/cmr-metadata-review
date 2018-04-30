@@ -12,4 +12,5 @@ module SiteHelper
   def currator_feedback_records(records)
     records.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id })
   end
+  
 end

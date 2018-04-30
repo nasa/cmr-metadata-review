@@ -4,13 +4,13 @@ task :fill_test_data => :environment do
               'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
               ]
 
-  ANY_KEYWORD = 'DAAC: ANY'
+  ANY_DAAC_KEYWORD = 'DAAC: ANY'
 
   collection_count = 300
   record_count = 500
   record_data_count = 10000
 
-  search_iterator, count = Cmr.collection_search("", ANY_KEYWORD, "1", collection_count)
+  search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, "1", collection_count)
 
   added_collections = []
 
