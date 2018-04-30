@@ -26,33 +26,38 @@ class MultiRecordCsv
   def to_csv
     CSV.generate do |csv|
       csv << ["CMR Multiple Record Report"]
-      csv << ["Collections"]
 
-      # Collections
-      FORMATS.each do |metadata_format|
-        records_for_format = collections.metadata_format(metadata_format)
-        next if records_for_format.empty?
+      if collections.any?
+        csv << ["Collections"]
 
-        fields = determine_fields(records_for_format)
+        # Collections
+        FORMATS.each do |metadata_format|
+          records_for_format = collections.metadata_format(metadata_format)
+          next if records_for_format.empty?
 
-        csv << [metadata_format]
-        csv << csv_titles(fields)
+          fields = determine_fields(records_for_format)
 
-        records_for_format.each do |record|
-          csv << generate_csv_line(record, fields)
+          csv << [metadata_format]
+          csv << csv_titles(fields)
+
+          records_for_format.each do |record|
+            csv << generate_csv_line(record, fields)
+          end
+
+          csv << []
         end
-
-        csv << []
       end
 
       # Granules
-      csv << ["Granules"]
+      if granules.any?
+        csv << ["Granules"]
 
-      fields = determine_fields(granules)
+        fields = determine_fields(granules)
 
-      csv << csv_titles(fields)
-      granules.each do |record|
-        csv << generate_csv_line(record, fields)
+        csv << csv_titles(fields)
+        granules.each do |record|
+          csv << generate_csv_line(record, fields)
+        end
       end
     end
   end
