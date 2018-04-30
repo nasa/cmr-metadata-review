@@ -17,6 +17,7 @@ class Record < ActiveRecord::Base
   delegate :concept_id, to: :recordable
 
   scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
+  scope :campaign, ->(campaign) { joins(:record_datas).where(record_data: { value: campaign }).distinct }
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
 
   REVIEW_ERRORS = {

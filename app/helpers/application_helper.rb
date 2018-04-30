@@ -1,6 +1,7 @@
 module ApplicationHelper
 
-  ANY_KEYWORD = 'DAAC: ANY'
+  ANY_DAAC_KEYWORD = 'DAAC: ANY'
+  ANY_CAMPAIGN_KEYWORD = 'CAMPAIGN: ANY'
   SELECT_DAAC = 'Select DAAC'
   #providers are specified to identify only the records within EOSDIS
   PROVIDERS = ['NSIDCV0',
@@ -22,7 +23,7 @@ module ApplicationHelper
 
 
   def provider_select_list
-    daac_list(ANY_KEYWORD)
+    daac_list(ANY_DAAC_KEYWORD)
   end
 
   def select_daac_list
@@ -37,6 +38,15 @@ module ApplicationHelper
     records.sort_by do |record|
       record.recordable.short_name
     end
+  end
+
+  def campaign_select_list
+    select_list = [ANY_CAMPAIGN_KEYWORD]
+    
+    camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
+    select_list.concat(camps.map(&:value))
+
+    select_list
   end
 
   private

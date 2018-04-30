@@ -17,6 +17,26 @@
   padding-right:40px;
   padding-bottom:40px;
 
+  .record_filters {
+    margin-bottom: 30px;
+
+    &__filters {
+      display: flex;
+      flex-direction: row;      
+    }
+
+    &__select {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 20px 0 0;
+    }
+
+    .selectButton {
+      margin-top: auto;
+      height: 40px;
+    }
+  }
+
   .space_box {
     height:15px;
     width:80px;
@@ -28,6 +48,7 @@
     border-bottom-width: 1px;
     border-bottom-color: $gray-dark;
     padding-bottom: 20px;
+    margin-right: 20px;
 
     .search_button {
       height:38px;
