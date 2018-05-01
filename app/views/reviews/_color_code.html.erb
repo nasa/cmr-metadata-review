@@ -10,7 +10,7 @@
         <!-- Only one of the two divs below shown at once, managed by update_color_backgrounds -->
         <!-- Color selection version of contents -->
         <div class="color_code_background" id="color_code_background_<%=title%>">
-          <% ["green", "blue", "yellow", "red"].each do |color| %>
+          <% ["green", "blue", "yellow", "red", "gray"].each do |color| %>
             <div <%= enabled ? '' : 'data-disabled=true' %> class="color_code_button color_<%=color%>" id="color_button_<%=color%>_<%=title%>">
               <i class="color_code_icon fa fa-arrow-circle-right"></i>
             </div>
@@ -52,6 +52,7 @@
           <option <%= selected[2] %> value="blue">Blue</option>
           <option <%= selected[3] %> value="yellow">Yellow</option>
           <option <%= selected[4] %> value="red">Red</option>
+          <option <%= selected[5] %> value="gray">Gray</option>
         </select>
       </div>
     </td>

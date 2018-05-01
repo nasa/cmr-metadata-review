@@ -273,7 +273,7 @@
       while (counter < color_selects.length) {
         var color = color_selects[counter].value
         //Removing all BG colors from the cell
-        <% ["color_green", "color_yellow", "color_red", "color_blue"].each do |color_class| %>
+        <% ["color_green", "color_yellow", "color_red", "color_blue", "color_gray"].each do |color_class| %>
           color_cells[counter].classList.remove("<%=color_class%>");
         <% end %>
         //adding the class that corresponds to the color selected in the select input
