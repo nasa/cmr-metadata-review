@@ -30,7 +30,7 @@ function toggleAllButtons(form) {
   var formInput = 'form#' + form + ' input[name="record_id[]"]';
   var checkedFormInputs = $(formInput + ':checked')
   
-  var buttons = [{name: "select", multiSelect: false}, {name: "delete", multiSelect: false}, {name: "report", multiSelect: false}, {name: "close", multiSelect: true}, {name: "finished", multiSelect: false}, {name: "refresh", multiSelect: false}, {name: "cmrUpdate", multiSelect: false}];
+  var buttons = formButtons();
 
   buttons.forEach(function(button){
     var buttonId = 'form#' + form + ' .' + button.name + 'Button';
@@ -58,8 +58,21 @@ function addButtonActions(form) {
     showLoading("Refreshing Record");
   });
 
-  $(formId + ' .closeButton').click(function() {
+  $(formId + ' .completeButton').click(function() {
     $(formId).prop("method", "post");
     $(formId + ' input[name="_method"]').val("post");
   });
+
+}
+
+function formButtons() {
+  return [
+    {name: "select", multiSelect: false}, 
+    {name: "delete", multiSelect: false}, 
+    {name: "report", multiSelect: false}, 
+    {name: "complete", multiSelect: true}, 
+    {name: "finished", multiSelect: false}, 
+    {name: "refresh", multiSelect: false}, 
+    {name: "cmrUpdate", multiSelect: false}
+  ];
 }
