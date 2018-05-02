@@ -133,7 +133,6 @@ class CollectionsController < ApplicationController
     # Wrapping the paramter in Array ensures that we are working with an Array before getting
     # the first value (Array([]) == []).
     @record = Record.find(Array(params[:record_id]).first)
-    redirect_to home_path unless @record
   end
 
   def collection_only
