@@ -219,7 +219,7 @@ class LegacyIngestor
 
   def remove_nil_rows(rows)
     rows.map do |row|
-      row.cells.any? { |cell| cell.value.present? } ? row : nil
+      row.cells.any? { |cell| cell && cell.value.present? } ? row : nil
     end.compact!
   end
 
