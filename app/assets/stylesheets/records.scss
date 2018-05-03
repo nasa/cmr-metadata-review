@@ -24,6 +24,16 @@
       .review_comments {
         padding-left: 15px;
         padding-right: 15px;
+
+        &__headline {
+          font-weight: bold;
+        }
+
+        &__subheadline {
+          font-size: .8em;
+          font-style: italic;
+          text-transform: uppercase;
+        }
       }
 
       .single_comment {

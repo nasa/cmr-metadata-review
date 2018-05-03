@@ -27,6 +27,8 @@ class Ability
         can :access, :filter_daac
 
         can :search, :cmr
+
+        can :view_arc_comments, Review
       end
 
       if user.role.eql?("arc_curator")
@@ -46,6 +48,8 @@ class Ability
         can :access, :filter_daac
 
         can :search, :cmr
+
+        can :view_arc_comments, Review
       end
 
       if user.role.eql?("daac_curator")
