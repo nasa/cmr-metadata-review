@@ -400,7 +400,7 @@ class Cmr
     if free_text
       base_options = {"page_size" => page_size, "page_num" => curr_page}
       #setting the provider params
-      if provider == ANY_KEYWORD
+      if provider == ANY_DAAC_KEYWORD
         base_options["provider"] = PROVIDERS
       else
         base_options["provider"] = provider
@@ -482,7 +482,7 @@ class Cmr
       return [], 0
     end
 
-    if free_text == "" && provider == ANY_KEYWORD
+    if free_text == "" && provider == ANY_DAAC_KEYWORD
       all_collections = Collection.all_newest_revisions
       return all_collections, all_collections.length
     end
