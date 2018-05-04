@@ -109,19 +109,6 @@ class CmrTest < ActiveSupport::TestCase
     end
   end
 
-  describe "required_collection_field?" do
-    it "positively identifies a required field from string" do
-      assert_equal(true, Cmr.required_collection_field?("Platforms/Platform/Instruments/Instrument0/ShortName"))
-      assert_equal(true, Cmr.required_collection_field?("ShortName"))
-    end
-
-    it "returns false for none required field strings" do
-      assert_equal(false, Cmr.required_collection_field?("Platforms/Platform0/LongName"))
-      #Mispelling of required field, lower case S, was a previous bug.
-      assert_equal(false, Cmr.required_collection_field?("DatasetId"))
-    end
-  end
-
   describe "total_collection_count" do
     it "get the total number of collections from CMR" do
 
