@@ -41,7 +41,9 @@
                 <td class="center_text"><%= record.completed_review_count %></td>
                 <td class="center_text"><%= record.second_opinion_count %></td>
               <% end %>
-              <td class="center_text"><%= radio_button_tag(:record_id, record.id) %></td>
+
+              <td class="center_text"><%= check_box_tag("record_id[]", record.id) %></td>
+              
             </tr>
           <% end %>
         </table>

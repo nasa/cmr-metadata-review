@@ -11,27 +11,30 @@ $(document).on('turbolinks:load', function(){
   ];
 
   forms.forEach(function(form) {
-    var formInput = 'form#' + form + ' input[name="record_id"]';
+    var formInput = 'form#' + form + ' input[name="record_id[]"]';
     var formInputChecked = $(formInput + ':checked').val();
 
     addButtonActions(form);
 
     if (formInputChecked) {
-      enableAllButtons(form);
+      toggleAllButtons(form);
     } else {
       $(formInput).click(function(){
-        enableAllButtons(form);
+        toggleAllButtons(form);
       });
     }
   });
 });
 
-function enableAllButtons(form){
-  var buttons = ["select", "delete", "report", "finished", "refresh", "cmrUpdate"];
+function toggleAllButtons(form) {
+  var formInput = 'form#' + form + ' input[name="record_id[]"]';
+  var checkedFormInputs = $(formInput + ':checked')
+  
+  var buttons = formButtons();
 
   buttons.forEach(function(button){
-    var buttonId = 'form#' + form + ' .' + button + 'Button';
-    $(buttonId).prop("disabled", false);
+    var buttonId = 'form#' + form + ' .' + button.name + 'Button';
+    $(buttonId).prop("disabled", checkedFormInputs.length > 1 ? !button.multiSelect : checkedFormInputs.length === 0);
   });
 }
 
@@ -54,4 +57,22 @@ function addButtonActions(form) {
   $(formId + ' .refreshButton').click(function(){
     showLoading("Refreshing Record");
   });
+
+  $(formId + ' .completeButton').click(function() {
+    $(formId).prop("method", "post");
+    $(formId + ' input[name="_method"]').val("post");
+  });
+
+}
+
+function formButtons() {
+  return [
+    {name: "select", multiSelect: false}, 
+    {name: "delete", multiSelect: false}, 
+    {name: "report", multiSelect: false}, 
+    {name: "complete", multiSelect: true}, 
+    {name: "finished", multiSelect: false}, 
+    {name: "refresh", multiSelect: false}, 
+    {name: "cmrUpdate", multiSelect: false}
+  ];
 }

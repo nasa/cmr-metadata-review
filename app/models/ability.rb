@@ -28,6 +28,8 @@ class Ability
 
         can :search, :cmr
 
+        can :release_to_daac, Record
+
         can :view_review_comments, Review
         can :view_report_comments, Review
       end
