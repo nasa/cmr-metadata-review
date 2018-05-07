@@ -1,7 +1,7 @@
 module ReviewsHelper
 
   def color_selected_list(color)
-    select_list = ["","","","",""]
+    select_list = ["","","","","", ""]
     case color
     when "green"
       select_list[1] = "selected"
@@ -11,6 +11,8 @@ module ReviewsHelper
       select_list[3] = "selected"
     when "red"
       select_list[4] = "selected"
+    when "gray"
+      select_list[5] = "selected"
     else
       select_list[0] = "selected"
     end
