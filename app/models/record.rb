@@ -489,7 +489,7 @@ class Record < ActiveRecord::Base
     colors = self.get_colors
 
     colors.each do |key, value|
-      if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red")
+      if value == nil || !(value == "green" || value == "blue" || value == "yellow" || value == "red" || value == "gray")
         return false
       end
     end
