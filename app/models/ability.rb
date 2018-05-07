@@ -27,6 +27,8 @@ class Ability
         can :access, :filter_daac
 
         can :search, :cmr
+
+        can :release_to_daac, Record
       end
 
       if user.role.eql?("arc_curator")

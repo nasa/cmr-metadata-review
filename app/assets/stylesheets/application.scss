@@ -255,7 +255,7 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $red;
 }
 
-.closeButton {
+.completeButton {
   @include button_attributes;
   @include normal_button_sizing;
   @include button_disabled;
