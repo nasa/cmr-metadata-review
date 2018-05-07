@@ -28,7 +28,8 @@ class Ability
 
         can :search, :cmr
 
-        can :view_arc_comments, Review
+        can :view_review_comments, Review
+        can :view_report_comments, Review
       end
 
       if user.role.eql?("arc_curator")
@@ -49,7 +50,8 @@ class Ability
 
         can :search, :cmr
 
-        can :view_arc_comments, Review
+        can :view_review_comments, Review
+        can :view_report_comments, Review
       end
 
       if user.role.eql?("daac_curator")
@@ -60,6 +62,8 @@ class Ability
         can :close, Record
 
         can :review_state, Record::STATE_IN_DAAC_REVIEW
+
+        can :view_report_comments, Review
       end
 
     #

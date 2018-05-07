@@ -61,7 +61,8 @@ class ReviewsController < ApplicationController
     new_review = Review.new
     new_review.record_id = params['review']['record_id'].to_i
     new_review.user_id = params['review']['user_id'].to_i
-    new_review.comment = params['review']['comment']
+    new_review.review_comment = params['review']['review_comment']
+    new_review.report_comment = params['review']['report_comment']
     new_review.review_state = params['review']['review_state'].to_i
     new_review.review_completion_date = DateTime.now
     new_review.save
@@ -74,7 +75,8 @@ class ReviewsController < ApplicationController
     review = Review.find_by id: params["review"]["id"]
 
     review.review_completion_date = DateTime.now
-    review.comment = params["review"]["comment"]
+    review.review_comment = params["review"]["review_comment"]
+    review.report_comment = params["review"]["report_comment"]
     review.review_state = 1
     review.save
 
