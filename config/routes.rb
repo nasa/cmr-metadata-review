@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get "navigate"
       put "allow_updates"
       put "stop_updates"
+      post "batch_complete"
       delete "hide"
     end
   end

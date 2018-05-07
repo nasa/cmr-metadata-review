@@ -1,7 +1,12 @@
 <% report ||= false %>
+<% complete ||= false %>
 
 <div class="navigate_buttons">
   <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
+
+  <% if complete %>
+    <%= submit_tag(complete_title || "Close", class: "completeButton", formaction: batch_complete_records_path, disabled: true, data: { confirm: "Complete and transition the selected Record(s)?" }) %>
+  <% end %>
 
   <% if current_user.admin %>
     <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
