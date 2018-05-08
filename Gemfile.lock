@@ -39,6 +39,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
+    ansi (1.5.0)
     arel (6.0.4)
     aws-sdk (2.2.37)
       aws-sdk-resources (= 2.2.37)
@@ -105,6 +106,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
+    minitest-reporters (1.2.0)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     minitest-spec-rails (5.4.0)
       minitest (~> 5.0)
       rails (>= 4.1)
@@ -156,6 +162,7 @@ GEM
     rdoc (4.3.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+    ruby-progressbar (1.9.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -218,6 +225,7 @@ DEPENDENCIES
   httparty (~> 0.14.0)
   jbuilder (~> 2.0)
   jquery-rails
+  minitest-reporters
   minitest-spec-rails
   mocha
   pg (~> 0.17.1)

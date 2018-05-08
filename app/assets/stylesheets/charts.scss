@@ -325,6 +325,7 @@
 
 .quality_row {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 20px;
   .quality_box {
     margin-right: 20px;
@@ -347,6 +348,7 @@
 
 .score_section {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 
   .score_box {
