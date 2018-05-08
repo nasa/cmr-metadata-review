@@ -13,7 +13,7 @@
   <% end %>
 
   <% if report %>
-    <%= submit_tag("Get Review Report", class: "reportButton", formaction: reports_single_path, disabled: true) %>
+    <%= submit_tag("Get Review Report", class: "reportButton", formaction: reports_review_path, disabled: true) %>
   <% end %>
 
   <%= yield %>

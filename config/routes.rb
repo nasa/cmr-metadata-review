@@ -50,7 +50,6 @@ Rails.application.routes.draw do
   get '/reports/search', to: 'reports#search'
   get '/reports/selection', to: 'reports#selection'
   get '/reports/review', to: 'reports#review'
-  get '/reports/bulk', to: 'reports#bulk'
 
   #making a convenient path to the rdoc files
   if ENV['SHOW_DOCUMENTATION'] == 'true'
