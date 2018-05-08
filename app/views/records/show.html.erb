@@ -63,21 +63,24 @@
             <%= f.hidden_field :user_id, { :value => @user_review.user_id } %>
             <%= f.hidden_field :review_state, { :value => 1 } %>
           
-            <p class="review_comments__headline">ARC Review Comments:</p>
-            <p class="review_comments__subheadline">Visible only to ARC curators</p>
-            <%= f.text_area :review_comment, html: {id: :review_comment} %>
+            <% if can?(:create_review_comments, @user_review) %>
+              <p class="review_comments__headline">ARC Review Comments:</p>
+              <p class="review_comments__subheadline">Visible only to ARC curators (optional)</p>
+              <%= f.text_area :review_comment, html: {id: :review_comment} %>
+            <% end %>
 
-            <p class="review_comments__headline">Report Review Comments:</p>
-            <p class="review_comments__subheadline">Visible to all curators</p>
-            <%= f.text_area :report_comment, html: { id: :report_comment } %>
+            <% if can?(:create_report_comments, @user_review) %>
+              <p class="review_comments__headline">Report Review Comments:</p>
+              <p class="review_comments__subheadline">Visible to all curators (required)</p>
+              <%= f.text_area :report_comment, html: { id: :report_comment } %>
 
-            <% if @record.in_arc_review? %>
               <script type="text/javascript">
-                document.getElementById("review_review_comment").oninput = function() {
+                document.getElementById("review_report_comment").oninput = function() {
                   document.getElementById("review_complete_button").disabled = false;
                 }
               </script>
             <% end %>
+
           <% end %>
 
         <% end %>
