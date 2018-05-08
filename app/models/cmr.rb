@@ -161,24 +161,19 @@ class Cmr
     end
 
     raw_collection = Cmr.get_raw_collection(concept_id, data_format)
-    results_hash = flatten_collection(raw_collection)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
+    results_hash   = flatten_collection(raw_collection)
     # Dif10 records come in with some uneeded header values
-    nil_replaced_hash = Cmr.remove_header_values(nil_replaced_hash)
-    required_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
-    required_fields_hash
+    results_hash = Cmr.remove_header_values(results_hash)
+    Cmr.add_required_fields(results_hash, desired_fields)
   end
 
 
   def self.get_granule(concept_id)
     granule_raw_data = Cmr.get_raw_granule(concept_id)
     results_hash = flatten_collection(granule_raw_data)
-    nil_replaced_hash = Cmr.remove_nil_values(results_hash)
 
     desired_fields = RecordFormats::Echo10Fields::DESIRED_GRANULE_FIELDS
-    desired_fields_hash = Cmr.add_required_fields(nil_replaced_hash, desired_fields)
-
-    desired_fields_hash
+    Cmr.add_required_fields(results_hash, desired_fields)
   end
 
   # ====Params
@@ -261,32 +256,6 @@ class Cmr
     end
 
     granule_results["result"]["Granule"]
-  end
-
-
-  # ====Params
-  # accepts hash or array elements containing collection data
-  # ====Returns
-  # parameter with any nil contents removed
-  # ==== Method
-  # Method recursively travels through elements contained in parameter removing
-  # any nil values.
-  def self.remove_nil_values(collection_element)
-
-    if collection_element.is_a?(Hash)
-      #removing nil values from hash
-      collection_element.delete_if {|key,value| value.nil? }
-      #recurring through remaining values
-      collection_element.each do |key, value|
-          collection_element[key] = Cmr.remove_nil_values(value)
-      end
-    elsif collection_element.is_a?(Array)
-      #removing nils
-      collection_element = collection_element.select {|element| element }
-      #removing sub nils
-      collection_element = collection_element.map {|element| Cmr.remove_nil_values(element)}
-    end
-    collection_element
   end
 
   # ====Params

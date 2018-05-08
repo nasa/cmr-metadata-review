@@ -93,46 +93,7 @@ class RecordsControllerTest < ActionController::TestCase
       post :complete, id: record.id
 
       assert_equal "Record has been successfully updated.", flash[:notice]
-      assert_redirected_to collection_path(id: 1, concept_id: record.recordable.concept_id )
-    end
-  end
-
-  describe "POST #complete" do
-    it "will set an error when the user does not have permission to advance the record" do
-      user = User.find_by(email: "arc_curator@element84.com")
-      sign_in(user)
-      record = Record.find(12)
-
-      post :complete, id: record.id
-
-      assert_equal "You do not have permission to perform this action", flash[:alert]
-      assert_redirected_to record_path(record)
-    end
-
-    it "will set an error when record cannot move to the next stage" do
-      user = User.find_by(email: "abaker@element84.com")
-      sign_in(user)
-
-      Record.any_instance.stubs(color_coding_complete?: false)
-      record = Record.find(13)
-
-      post :complete, id: record.id
-
-      assert_equal "Not all columns have been flagged with a color, cannot close review.", flash[:alert]
-      assert_redirected_to record_path(record.id)
-    end
-
-    it "will send the user to the collection's page when successful" do
-      user = User.find_by(email: "abaker@element84.com")
-      sign_in(user)
-
-      Record.any_instance.stubs(close!: true)
-      record = Record.find(12)
-
-      post :complete, id: record.id
-
-      assert_equal "Record has been successfully updated.", flash[:notice]
-      assert_redirected_to collection_path(id: 1, concept_id: record.recordable.concept_id )
+      assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
   end
 end

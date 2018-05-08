@@ -25,7 +25,7 @@ class GranulesControllerTest < ActionController::TestCase
 
       delete :replace, id: granule.id, record_id: record.id
 
-      assert_redirected_to collection_path(id: 1, concept_id: collection.concept_id)
+      assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
       assert_equal "This granule is in review, and can no longer be changed to a different granule", flash[:alert]
     end
 
@@ -34,15 +34,15 @@ class GranulesControllerTest < ActionController::TestCase
       sign_in(user)
 
       granule = Granule.first
-      record  = granule.records.find(15)
+      record  = granule.records.find(16)
       collection = granule.collection
 
-      Granule.any_instance.expects(:delete_self)
+      Granule.any_instance.expects(:destroy)
       Collection.any_instance.expects(:add_granule)
 
       delete :replace, id: granule.id, record_id: record.id
 
-      assert_redirected_to collection_path(id: 1, concept_id: collection.concept_id)
+      assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
       assert_equal "A new granule has been selected for this collection", flash[:notice]
     end
   end

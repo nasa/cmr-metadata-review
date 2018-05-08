@@ -31,3 +31,5 @@
 #ignore python computed files
 *.pyc
 
+# Ignore test reports
+test/reports/*
