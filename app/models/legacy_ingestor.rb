@@ -2,6 +2,7 @@ class LegacyIngestor
 
   attr_accessor :spreadsheet
   attr_accessor :granules
+  attr_accessor :in_progress
 
   COLLECTION_HEADER_ROW = 5
   GRANULE_HEADER_ROW    = 5
@@ -16,12 +17,14 @@ class LegacyIngestor
     "FF4A86E8" => "blue",
     "FFFFFF00" => "yellow",
     "FFE06666" => "red",
-    "FFEA9999" => "red"
+    "FFEA9999" => "red",
+    "FFFF00FF" => "pink"
   }
 
-  def initialize(filename, granules = false)
+  def initialize(filename, options = {})
     @spreadsheet = RubyXL::Parser.parse(filename)
-    @granules    = granules
+    @granules    = options[:granules]
+    @in_progress = options[:in_progress]
   end
 
   def ingest_records!
@@ -60,18 +63,22 @@ class LegacyIngestor
 
         row.cells[1...checked_by].each_with_index do |cell, index|
           column_name    = headers[index+1]
-          data = {
-            recommendation: cell.value,
-            color:          COLORS[cell.fill_color]
-          }
+          color = COLORS[cell.fill_color]
+
+          data = { recommendation: cell.value }
+
+          if color == "pink"
+            data[:opinion] = true
+          else
+            data[:color] = color
+          end
 
           add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data, daac)
         end
 
-
         # Add additional comments as a review
         record.add_legacy_review(row.cells[checked_by].value, row.cells[comment_by].value, legacy_ingest_user)
-        record.close_legacy_review!
+        in_progress ? record.start_arc_review! : record.close_legacy_review!
       rescue ActiveRecord::RecordNotFound => e
         errors << { concept_id: concept_id, reason: e.message }
       rescue StandardError => e
