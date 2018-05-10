@@ -52,14 +52,12 @@ class ReportsController < ApplicationController
     end
   end
 
-  def single
-    @record = Record.find(Array(params[:record_id]).first)
-    @metric_set = MetricSet.new([@record])
-    @field_colors = @metric_set.color_counts
+  def review
+    @records = Record.where(id: params[:record_id])
 
     respond_to do |format|
       format.html
-      format.csv { send_data(render_to_string, filename: "dashboard_#{@record.concept_id}_#{@record.revision_id}.csv") }
+      format.csv { send_data(MultiRecordCsv.new(@records).to_csv, filename: "metrics_report_#{DateTime.now.to_i}.csv") }
     end
   end
 end

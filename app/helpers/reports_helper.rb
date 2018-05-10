@@ -53,4 +53,8 @@ module ReportsHelper
   def cmr_total_collection_count
     @cmr_total_collection_count ||= Cmr.total_collection_count(params[:daac])
   end
+
+  def get_field_colors(record)
+    MetricSet.new([record]).color_counts
+  end
 end

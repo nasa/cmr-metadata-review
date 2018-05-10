@@ -29,7 +29,7 @@ $(document).on('turbolinks:load', function(){
 function toggleAllButtons(form) {
   var formInput = 'form#' + form + ' input[name="record_id[]"]';
   var checkedFormInputs = $(formInput + ':checked')
-  
+
   var buttons = formButtons();
 
   buttons.forEach(function(button){
@@ -67,12 +67,12 @@ function addButtonActions(form) {
 
 function formButtons() {
   return [
-    {name: "select", multiSelect: false}, 
-    {name: "delete", multiSelect: false}, 
-    {name: "report", multiSelect: false}, 
-    {name: "complete", multiSelect: true}, 
-    {name: "finished", multiSelect: false}, 
-    {name: "refresh", multiSelect: false}, 
+    {name: "select", multiSelect: false},
+    {name: "delete", multiSelect: false},
+    {name: "report", multiSelect: true},
+    {name: "complete", multiSelect: true},
+    {name: "finished", multiSelect: false},
+    {name: "refresh", multiSelect: false},
     {name: "cmrUpdate", multiSelect: false}
   ];
 }
