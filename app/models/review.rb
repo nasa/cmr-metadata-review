@@ -2,6 +2,8 @@ class Review < ActiveRecord::Base
   belongs_to :record
   belongs_to :user
 
+  before_save :set_completion_date
+
   # ====Params   
   # None
   # ====Returns
@@ -11,7 +13,6 @@ class Review < ActiveRecord::Base
   def completed?
     return (self.review_state == 1 && !self.review_completion_date.nil?)
   end
-
 
   # ====Params   
   # None
@@ -74,6 +75,12 @@ class Review < ActiveRecord::Base
 
   def reviewer_email
     self.user.email
+  end
+
+  private
+
+  def set_completion_date
+    self.review_completion_date = DateTime.now
   end
 
 end
