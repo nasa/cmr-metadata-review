@@ -744,7 +744,7 @@ class Record < ActiveRecord::Base
     final_comment = "This review was imported from legacy data\n"
     final_comment += "Checked By: #{checked_by}"
     final_comment += "Additional Comments: #{comment}" if comment
-    review = reviews.create(user: user, comment: final_comment, review_state: 0)
+    review = reviews.create(user: user, report_comment: final_comment, review_state: 0)
     review.mark_complete
   end
 
