@@ -58,30 +58,22 @@ class ReviewsController < ApplicationController
         redirect_to record_path(id: params['review']['record_id'].to_i)
     end
 
-    new_review = Review.new
-    new_review.record_id = params['review']['record_id'].to_i
-    new_review.user_id = params['review']['user_id'].to_i
-    new_review.review_comment = params['review']['review_comment']
-    new_review.report_comment = params['review']['report_comment']
-    new_review.review_state = params['review']['review_state'].to_i
-    new_review.review_completion_date = DateTime.now
-    new_review.save
+    new_review = Review.create(review_params)
 
-    redirect_to record_path(id: params['review']['record_id'].to_i)
+    redirect_to record_path(id: new_review.record_id)
   end
 
   def update
-
     review = Review.find_by id: params["review"]["id"]
+    review.update(review_params)
 
-    review.review_completion_date = DateTime.now
-    review.review_comment = params["review"]["review_comment"]
-    review.report_comment = params["review"]["report_comment"]
-    review.review_state = 1
-    review.save
-
-    redirect_to record_path(id: params["review"]["record_id"])
+    redirect_to record_path(id: review.record_id)
   end
 
+  private
+
+  def review_params
+    params.require(:review).permit(:user_id, :record_id, :review_state, :report_comment, :review_comment)
+  end
 
 end
