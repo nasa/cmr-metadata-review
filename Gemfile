@@ -39,6 +39,9 @@ gem 'aasm', '~> 4.12.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'rubyXL'
+gem 'ruby-progressbar'
+
 
 group :test do
   gem 'minitest-spec-rails'

@@ -6,12 +6,12 @@ module RecordFormats
       "Contacts",
       "Platforms",
       "Campaigns",
-      "Temporal",
       "ScienceKeywords",
       "Spatial",
       "SpatialInfo",
       "OnlineResources",
       "OnlineAccessURLs",
+      "CSDTDescriptions",
       "CSDTDescription",
       "AdditionalAttributes",
       "CollectionAssociations",
@@ -36,7 +36,7 @@ module RecordFormats
       "TwoDCoordinateSystems",
       "OnlineResources",
       "AssociatedBrowseImages",
-      "AssociatedBrowseImageURLs",
+      "AssociatedBrowseImageUrls",
       "AdditionalAttributes"
     ]
 
@@ -142,8 +142,8 @@ module RecordFormats
       "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
       "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
       "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
-      "VerticalSpatialDomain/Type",
-      "VerticalSpatialDomain/Value",
+      "Spatial/VerticalSpatialDomain/Type",
+      "Spatial/VerticalSpatialDomain/Value",
       "Spatial/GranuleSpatialRepresentation",
       "SpatialInfo/HorizontalCoordinateSystem/GeodeticModel/HorizontalDatumName",
       "SpatialInfo/HorizontalCoordinateSystem/GeodeticModel/EllipsoidName",
@@ -168,10 +168,10 @@ module RecordFormats
       "Temporal/RangeDateTime/EndingDateTime",
       "Spatial/VerticalSpatialDomains/VerticalSpatialDomain/Type",
       "Spatial/VerticalSpatialDomains/VerticalSpatialDomain/Value",
-      "Spatial/HorizontalSpatialDomains/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
-      "Spatial/HorizontalSpatialDomains/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
-      "Spatial/HorizontalSpatialDomains/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
-      "Spatial/HorizontalSpatialDomains/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
+      "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/WestBoundingCoordinate",
+      "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/NorthBoundingCoordinate",
+      "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/EastBoundingCoordinate",
+      "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle/SouthBoundingCoordinate",
       "OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/OrbitalModelName",
       "OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/OrbitNumber",
       "OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/StartOrbitNumber",
@@ -190,8 +190,8 @@ module RecordFormats
       "OnlineResources/OnlineResource/Type",
       "OnlineResources/OnlineResource/MimeType",
       "DataFormat",
-      "AssociatedBrowseImageURLs/ProviderBrowseURL/URL",
-      "AssociatedBrowseImageURLs/ProviderBrowseURL/Description"
+      "AssociatedBrowseImageUrls/ProviderBrowseUrl/URL",
+      "AssociatedBrowseImageUrls/ProviderBrowseUrl/Description"
     ]
 
     CONTROLLED_ELEMENT_MAP = {

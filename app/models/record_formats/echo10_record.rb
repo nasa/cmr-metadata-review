@@ -6,6 +6,8 @@ module RecordFormats
   module Echo10Record
     include RecordFormats::Echo10Fields
 
+    LONG_NAME_FIELD = "LongName"
+
     def get_section_titles
       collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
     end
@@ -22,7 +24,7 @@ module RecordFormats
     # Accesses the record's RecordData attribute and then returns the value of the "LongName" field
     def long_name
       if collection?
-        get_column("LongName")
+        get_column(LONG_NAME_FIELD)
       else
         get_column("GranuleUR")
       end
@@ -93,6 +95,10 @@ module RecordFormats
 
     def controlled_element_map
       CONTROLLED_ELEMENT_MAP
+    end
+
+    def long_name_field
+      LONG_NAME_FIELD
     end
 
     private

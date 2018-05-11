@@ -6,6 +6,8 @@ module RecordFormats
   module Dif10Record
     include RecordFormats::Dif10Fields
 
+    LONG_NAME_FIELD = "Entry_Title"
+
     def get_section_titles
       SECTION_TITLES
     end
@@ -20,7 +22,7 @@ module RecordFormats
     # String
     # ==== Method
     def long_name
-      self.get_column("Entry_Title")
+      self.get_column(LONG_NAME_FIELD)
     end
 
     # ====Params
@@ -76,6 +78,10 @@ module RecordFormats
       else
         {}
       end
+    end
+
+    def long_name_field
+      LONG_NAME_FIELD
     end
 
     def controlled_element_map

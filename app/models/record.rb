@@ -60,6 +60,14 @@ class Record < ActiveRecord::Base
       transitions from: :in_daac_review, to: :closed
     end
 
+    event :close_legacy_review do
+      before do
+        write_closed_date
+      end
+
+      transitions from: :open, to: :closed
+    end
+
     event :finish do
       transitions from: :closed, to: :finished
     end
@@ -725,6 +733,24 @@ class Record < ActiveRecord::Base
         controlled_map[element] = controlled_element_map[element] if controlled_element_map.key?(element)
       end
     end
+  end
+
+  def update_legacy_data(column_name, data, daac)
+    record_data = record_datas.find_or_create_by(column_name: column_name, daac: daac)
+    record_data.update_attributes(data) if record_data
+  end
+
+  def add_legacy_review(checked_by, comment, user = User.find_by(role: "admin"))
+    final_comment = "This review was imported from legacy data\n"
+    final_comment += "Checked By: #{checked_by}"
+    final_comment += "Additional Comments: #{comment}" if comment
+    review = reviews.create(user: user, report_comment: final_comment, review_state: 0)
+    review.mark_complete
+  end
+
+  def add_long_name(long_name)
+    record_data = record_datas.find_or_create_by(column_name: long_name_field, daac: daac)
+    record_data.update_attributes(value: long_name)
   end
 
   def umm_json_link

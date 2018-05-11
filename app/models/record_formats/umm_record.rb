@@ -6,6 +6,8 @@ module RecordFormats
   module UmmRecord
     include RecordFormats::UmmFields
 
+    LONG_NAME_FIELD = "EntryTitle"
+
     def get_section_titles
       SECTION_TITLES
     end
@@ -15,7 +17,7 @@ module RecordFormats
     end
 
     def long_name
-      get_column("EntryTitle")
+      get_column(LONG_NAME_FIELD)
     end
 
     def short_name
@@ -37,6 +39,10 @@ module RecordFormats
 
     def controlled_element_map
       CONTROLLED_ELEMENT_MAP
+    end
+
+    def long_name_field
+      LONG_NAME_FIELD
     end
   end
 end

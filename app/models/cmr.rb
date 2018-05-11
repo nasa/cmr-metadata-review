@@ -8,7 +8,9 @@ class Cmr
 
   # A custom error raised when items can not be found in the CMR.
   class CmrError < StandardError
+  end
 
+  class UnsupportedFormatError < StandardError
   end
 
   # ====Params
@@ -148,8 +150,33 @@ class Cmr
   # then processes and returns the data
   # Automatically returns only the most recent revision of a collection
   # can add "&all_revisions=true&pretty=true" params to find specific revision
-
   def self.get_collection(concept_id, data_format = "echo10")
+    raw_collection = get_raw_collection(concept_id, data_format)
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.get_collection_by_url(url, data_format)
+    collection_data = cmr_request(url).parsed_response
+
+    if collection_data["errors"]
+      error_message = data_format == "umm_json" ? collection_data["errors"] : collection_data["error"]
+      raise CmrError.new(error_message)
+    end
+
+    collection_data_hash = data_format == "umm_json" ? JSON.parse(collection_data) : Hash.from_xml(collection_data)
+
+    raw_collection = if data_format == "echo10"
+      collection_data_hash["Collection"]
+    elsif data_format == "dif10"
+      collection_data_hash["DIF"]
+    elsif data_format == "umm_json"
+      collection_data_hash
+    end
+
+    format_collection(raw_collection, data_format)
+  end
+
+  def self.format_collection(raw_collection, data_format = "echo10")
     desired_fields = if data_format == "echo10"
       RecordFormats::Echo10Fields::DESIRED_FIELDS
     elsif data_format == "dif10"
@@ -160,20 +187,26 @@ class Cmr
       []
     end
 
-    raw_collection = Cmr.get_raw_collection(concept_id, data_format)
     results_hash   = flatten_collection(raw_collection)
     # Dif10 records come in with some uneeded header values
     results_hash = Cmr.remove_header_values(results_hash)
-    Cmr.add_required_fields(results_hash, desired_fields)
+    add_required_fields(results_hash, desired_fields)
   end
-
 
   def self.get_granule(concept_id)
     granule_raw_data = Cmr.get_raw_granule(concept_id)
-    results_hash = flatten_collection(granule_raw_data)
+    format_granule_data(granule_raw_data)
+  end
 
-    desired_fields = RecordFormats::Echo10Fields::DESIRED_GRANULE_FIELDS
-    Cmr.add_required_fields(results_hash, desired_fields)
+  def self.get_granule_with_collection_data(concept_id)
+    granule_data            = get_raw_granule_results(concept_id)
+    granule_data["Granule"] = format_granule_data(granule_data["Granule"])
+    granule_data
+  end
+
+  def self.format_granule_data(granule_raw_data)
+    results_hash      = flatten_collection(granule_raw_data)
+    add_required_fields(results_hash, RecordFormats::Echo10Fields::DESIRED_GRANULE_FIELDS)
   end
 
   # ====Params
@@ -189,7 +222,10 @@ class Cmr
     url = Cmr.api_url("collections", "atom", {"concept_id" => concept_id})
     collection_xml = Cmr.cmr_request(url).parsed_response
     collection_results = Hash.from_xml(collection_xml)["feed"]
-    raw_format = collection_results["entry"]["originalFormat"].downcase
+    raw_format = collection_results["entry"]["originalFormat"].downcase if collection_results["entry"]
+
+    raise CmrError.new("Native Format not found") unless raw_format
+
     if raw_format.include? "dif10"
       return "dif10"
     elsif raw_format.include? "echo10"
@@ -241,8 +277,12 @@ class Cmr
   # Only Echo10 records pull in granules pre business rules.
   # See Collection::INCLUDE_GRANULE_FORMATS
 
-
   def self.get_raw_granule(concept_id)
+    granule_results = get_raw_granule_results(concept_id)
+    granule_results["Granule"]
+  end
+
+  def self.get_raw_granule_results(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
@@ -255,7 +295,7 @@ class Cmr
       raise CmrError
     end
 
-    granule_results["result"]["Granule"]
+    granule_results["result"]
   end
 
   # ====Params

@@ -31,42 +31,70 @@ class Collection < ActiveRecord::Base
     record && !record.hidden?
   end
 
-  def self.create_new_record(concept_id, revision_id, current_user, granule = false)
-    native_format = Cmr.get_raw_collection_format(concept_id)
-    return unless SUPPORTED_FORMATS.include?(native_format)
+  def self.create_record(concept_id, revision_id, data_format, collection_data, options = {})
+    return unless SUPPORTED_FORMATS.include?(data_format)
 
-    collection_data = Cmr.get_collection(concept_id, native_format)
-    short_name = collection_data[SHORT_NAMES[native_format]]
+    short_name = collection_data[SHORT_NAMES[data_format]]
 
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes!(short_name: short_name)
 
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: native_format)
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format)
 
       daac = concept_id.split('-').last
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
           last_updated: DateTime.now,
-          column_name: key,
-          value: value,
-          order_count: i,
-          daac: daac
+          column_name:  key,
+          value:        value,
+          order_count:  i,
+          daac:         daac
         })
       end
 
-      Ingest.create(record: new_record, user: current_user, date_ingested: DateTime.now)
+      user = options[:user] || User.find_by(role: "admin")
+
+      Ingest.create(record: new_record, user: user, date_ingested: DateTime.now)
 
       # In production there is an egress issue with certain link types given in metadata
       # AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-      Timeout::timeout(20) {
-        new_record.create_script
-      }
+      Timeout::timeout(20) { new_record.create_script } if options[:run_script]
 
-      collection.add_granule(current_user) if granule
+      collection.add_granule(user) if options[:add_granule]
 
       new_record
     end
+  end
+
+  def self.create_new_record(concept_id, revision_id, user, add_granule = false)
+    native_format = Cmr.get_raw_collection_format(concept_id)
+
+    collection_data = Cmr.get_collection(concept_id, native_format)
+
+    options = {
+      add_granule: add_granule,
+      run_script:  true,
+      user:        user
+    }
+
+    create_record(concept_id, revision_id, native_format, collection_data, options)
+  end
+
+  def self.create_new_record_by_url(url, user = nil)
+    concept_id, revision_id, data_format = parse_collection_url(url)
+
+    # Change 'umm-json' to 'umm_json'
+    data_format = data_format.underscore
+    collection_data = Cmr.get_collection_by_url(url, data_format)
+    create_record(concept_id, revision_id, data_format, collection_data, user: user)
+  rescue Cmr::CmrError
+    false
+  end
+
+  def self.parse_collection_url(url)
+    match_data = url.match(/https:\/\/cmr\.earthdata\.nasa\.gov(:443)?\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/)
+    match_data[2..4]
   end
 
   def update?
