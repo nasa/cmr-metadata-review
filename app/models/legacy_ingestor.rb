@@ -64,10 +64,13 @@ class LegacyIngestor
         row.cells[1...checked_by].each_with_index do |cell, index|
           column_name    = headers[index+1]
           color = COLORS[cell.fill_color]
+          value = cell.value
 
           data = { recommendation: cell.value }
 
-          if color == "pink"
+          if value == "np"
+            data[:color] = "gray"
+          elsif color == "pink"
             data[:opinion] = true
           else
             data[:color] = color
