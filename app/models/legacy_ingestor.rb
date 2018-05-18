@@ -64,16 +64,19 @@ class LegacyIngestor
         row.cells[1...checked_by].each_with_index do |cell, index|
           column_name    = headers[index+1]
           color = COLORS[cell.fill_color]
+          value = cell.value
 
-          data = { recommendation: cell.value }
+          data = { recommendation: value }
 
-          if color == "pink"
+          if value == "np"
+            data[:color] = "gray"
+          elsif color == "pink"
             data[:opinion] = true
           else
             data[:color] = color
           end
 
-          add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data, daac)
+          add_field_errors(concept_id, column_name, value) unless record.update_legacy_data(column_name, data, daac)
         end
 
         # Add additional comments as a review
