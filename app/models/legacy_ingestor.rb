@@ -66,7 +66,7 @@ class LegacyIngestor
           color = COLORS[cell.fill_color]
           value = cell.value
 
-          data = { recommendation: cell.value }
+          data = { recommendation: value }
 
           if value == "np"
             data[:color] = "gray"
@@ -76,7 +76,7 @@ class LegacyIngestor
             data[:color] = color
           end
 
-          add_field_errors(concept_id, column_name, cell.value) unless record.update_legacy_data(column_name, data, daac)
+          add_field_errors(concept_id, column_name, value) unless record.update_legacy_data(column_name, data, daac)
         end
 
         # Add additional comments as a review
