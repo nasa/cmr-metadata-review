@@ -9,13 +9,12 @@
 
 
 class MetricSet
-  attr_accessor :record_set, :record_data_set
+  attr_accessor :record_data_set
 
   COLORS = ["red", "blue", "green", "yellow"]
 
   def initialize(record_set = [])
-    @record_set      = record_set
-    @record_data_set = RecordData.where(record: @record_set)
+    @record_data_set = RecordData.where(record: record_set)
   end
 
   # ====Params
