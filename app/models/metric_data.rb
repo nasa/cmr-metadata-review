@@ -51,45 +51,32 @@ class MetricData
   end
 
   def updated_count
-    records_arrays.reduce(0) do |sum, records|
-      value = records.count > 1 ? 1 : 0
-      sum + value
-    end
+    records.group(:recordable_id).count.values.sum { |record_count| record_count > 1 ? 1 : 0 }
   end
 
   def updated_collections_rereviewed
-    records_arrays.reduce(0) do |sum, records|
-      value = records.where(state: METRIC_STATES).count > 1 ? 1 : 0
-      sum + value
-    end
+    records.where(state: METRIC_STATES).group(:recordable_id).count.values.sum { |record_count| record_count > 1 ? 1 : 0 }
   end
 
   private
 
   # Provides earliest revision record for each Collection/Granule
   def original_revisions
-    records_arrays.map do |records|
-      records.where(state: METRIC_STATES).order("revision_id ASC").first
-    end.compact
+    records.where(state: METRIC_STATES).select('DISTINCT ON ("recordable_id") *').order(:recordable_id, revision_id: :asc).to_a
   end
 
   # Provides latest revision record for each Collection/Granule that is
   # still in the process of being reviewed
   def latest_in_progress_revisions
-    records_arrays.map do |records|
-      records.where(state: IN_PROGRESS_METRICS).order("revision_id DESC").first
-    end.compact
+    records.where(state: IN_PROGRESS_METRICS).select('DISTINCT ON ("recordable_id") *').order(:recordable_id, revision_id: :desc).to_a
   end
 
   # Provides final revision record for Collection/Granule
   def final_revisions
-    records_arrays.map do |records|
-      records.where(state: FINISHED_METRICS).order("revision_id DESC").first
-    end.compact
+    records.where(state: FINISHED_METRICS).select('DISTINCT ON ("recordable_id") *').order(:recordable_id, revision_id: :desc).to_a
   end
 
-  # Array of arrays of all records
-  def records_arrays
-    @records_arrays||= recordables.map(&:records)
+  def records
+    @records ||= Record.where(recordable: recordables)
   end
 end
