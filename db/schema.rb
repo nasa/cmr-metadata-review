@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504193120) do
+ActiveRecord::Schema.define(version: 20180522172822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20180504193120) do
     t.boolean  "feedback",       default: false
   end
 
+  add_index "record_data", ["column_name"], name: "index_record_data_on_column_name", using: :btree
   add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree
 
   create_table "records", force: :cascade do |t|
