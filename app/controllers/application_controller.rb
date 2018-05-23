@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Count Second Opinions here for every record
-    @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record).count
+    @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
 
     @records = @records.includes({ingest: :user}, :reviews)
 
