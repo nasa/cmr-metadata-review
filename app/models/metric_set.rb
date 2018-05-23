@@ -11,7 +11,8 @@
 class MetricSet
   attr_accessor :record_data_set
 
-  COLORS = ["red", "blue", "green", "yellow"]
+  COLORS           = ["red", "blue", "green", "yellow"]
+  NON_GREEN_COLORS = ["red", "blue", "yellow"]
 
   def initialize(record_set = [])
     @record_data_set = RecordData.where(record: record_set)
@@ -40,7 +41,7 @@ class MetricSet
   # This method queries the DB for the ten elements with the most errors
 
   def element_non_green_count
-    @record_data_set.where(color: ["red", "yellow", "blue"]).group(:column_name).order('count_all DESC').limit(10).count.to_a
+    @record_data_set.where(color: NON_GREEN_COLORS).group(:column_name).order('count_all DESC').limit(10).count.to_a
   end
 
   private
