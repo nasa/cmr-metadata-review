@@ -543,11 +543,6 @@ class Record < ActiveRecord::Base
     return false
   end
 
-  def second_opinion_count
-    opinion_values = self.get_opinions
-    return opinion_values.values.reduce(0) {|sum, value| value == true ? (sum + 1): sum }
-  end
-
   def flagged_reviews?
     color_count("red") > 0
   end
