@@ -41,9 +41,17 @@ class ApplicationController < ActionController::Base
       filtered_by?(:daac, ANY_DAAC_KEYWORD) ? Record.daac(params[:daac]) : Record.all
     end
 
-    if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD) 
+    if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
       @records = @records.campaign(params[:campaign])
     end
+
+    # Count Second Opinions here for every record
+    @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
+
+    @records = @records.includes({ingest: :user}, :reviews)
+
+    # Version ID is only field we need to render on the home page, so just load that
+    @records = @records.includes(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).references(:record_data)
   end
 
   private

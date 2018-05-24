@@ -42,7 +42,7 @@ module ApplicationHelper
 
   def campaign_select_list
     select_list = [ANY_CAMPAIGN_KEYWORD]
-    
+
     camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
     select_list.concat(camps.map(&:value))
 

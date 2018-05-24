@@ -32,18 +32,19 @@
               <td><%= record.recordable_type %></td>
               <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
-              <td class="center_text"><%= record.version_id %></td>
+              <!-- Only Version ID should be loaded -->
+              <td class="center_text"><%= record.record_datas.first.value%></td>
               <td><%= record.ingested_by %></td>
               <% if closed %>
                 <td><%= record.formatted_closed_date %></td>
               <% end %>
               <% if reviews %>
                 <td class="center_text"><%= record.completed_review_count %></td>
-                <td class="center_text"><%= record.second_opinion_count %></td>
+                <td class="center_text"><%= @second_opinion_counts[record.id].to_i %></td>
               <% end %>
 
               <td class="center_text"><%= check_box_tag("record_id[]", record.id) %></td>
-              
+
             </tr>
           <% end %>
         </table>
