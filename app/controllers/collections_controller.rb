@@ -101,7 +101,7 @@ class CollectionsController < ApplicationController
       rescue => ex
         Rails.logger.error
         ("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.backtrace}")
-        flash[:alert] = 'There was an error ingesting the record into the system'
+        flash[:alert] = "There was an error ingesting the record into the system #{ex.message}"
       end
     end
 

@@ -1,3 +1,3 @@
-class Errors
+module Errors
   class PythonError < StandardError; end
 end

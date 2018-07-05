@@ -99,7 +99,7 @@ module RecordFormats
         comment_hash = Record.format_script_comments(comment_hash, value_keys)
         comment_hash
       else
-        raise PythonError
+        raise Errors::PythonError
       end
     end
 
