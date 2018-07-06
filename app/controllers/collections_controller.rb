@@ -95,8 +95,12 @@ class CollectionsController < ApplicationController
         flash[:alert] = 'There was a read timeout error connecting to the CMR System, please try again'
       rescue Timeout::Error
         flash[:alert] = 'The pyCMR script timed out and the collection was unable to be ingested'
+      rescue Errors::PythonError
+        ("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error")
+        flash[:alert] = 'There was an python error checking metadata'
       rescue => ex
-        Rails.logger.error("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.backtrace}")
+        Rails.logger.error
+        ("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.backtrace}")
         flash[:alert] = 'There was an error ingesting the record into the system'
       end
     end
