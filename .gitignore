@@ -33,3 +33,10 @@
 
 # Ignore test reports
 test/reports/*
+
+# Rubymine
+.idea
+*.iml
+
+# Backup files
+*~
