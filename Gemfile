@@ -72,7 +72,8 @@ gem 'aws-sdk', '~> 2.2.37'
 #store env vars in the .env file
 gem 'dotenv-rails', '~> 2.1.1'
 
-gem 'font-awesome-sass'
+# Should use 5.0.13 but compatibility issues with SIT version of RH, has older GCC.    Eventualaly when they upgrade RH, we can move back to the latest
+gem 'font-awesome-sass', '5.0.9'
 
 
 group :development do
