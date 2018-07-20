@@ -2,18 +2,17 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-	describe "DAAC curator role" do
+  describe "DAAC curator role" do
 
-		it "is invalid without an associated DAAC" do
-			user = users(:user2)
-			user.role = "daac_curator"
+    it "is invalid without an associated DAAC" do
+      user = users(:user2)
+      user.role = "daac_curator"
+      assert_not user.valid?
+    end
 
-			assert_not user.valid?
-		end
+  end
 
-	end
-
-	describe "ARC curator role" do
+  describe "ARC curator role" do
 
     it "can see screen 'Awaiting Release to DAAC' but cannot release or delete a record" do
       arc_user = User.new
