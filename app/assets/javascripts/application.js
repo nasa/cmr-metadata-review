@@ -13,5 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require loading_modal.js
+//= require loading_modal
+//= require d3/d3.min
+//= require c3/c3
+//= require chart/chart
+//= require piecelabel/piecelabel
+
 //= require_tree .
