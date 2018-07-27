@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
   # https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef
   protect_from_forgery with: :exception
   # http_basic_authenticate_with name: "cmruser", password: "dashpass"
+  #
+  #
+
+  before_filter :set_cache_headers
+
+  # subclasses can override these default cache options by overriding this method.
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+  end
 
   rescue_from ActionController::RoutingError, :with => :render_404
   private
