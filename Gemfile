@@ -74,6 +74,8 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'font-awesome-sass'
 
+gem 'activerecord-session_store'
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
