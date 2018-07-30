@@ -75,6 +75,7 @@ gem 'dotenv-rails', '~> 2.1.1'
 gem 'font-awesome-sass'
 
 gem 'activerecord-session_store'
+gem 'whenever', require: false
 
 
 group :development do
