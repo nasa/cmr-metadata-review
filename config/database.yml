@@ -6,18 +6,11 @@
 #
 
 development:
-  host: localhost
+  host: postgresql
   adapter: postgresql
   database: cmrdash
   username: cmrdash
   password: dashpass
-
-#development:
-#  host: postgresql
-#  adapter: postgresql
-#  database: cmrdash
-#  username: cmrdash
-#  password: dashpass
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
