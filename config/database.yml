@@ -6,7 +6,7 @@
 #
 
 development:
-  host: postgresql
+  host: localhost
   adapter: postgresql
   database: cmrdash
   username: cmrdash
