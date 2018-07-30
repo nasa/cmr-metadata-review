@@ -6,10 +6,10 @@
 #
 
 development:
-  host: postgresql
+  host: localhost
   adapter: postgresql
-  database: arcsitdb
-  username: arcdashadmin
+  database: cmrdash
+  username: cmrdash
   password: dashpass
 
 #development:
