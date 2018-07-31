@@ -12,6 +12,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="wrapper">
 
 <% if notice %>
   <div id="notice_banner" class="eui-banner--info">
@@ -39,5 +40,7 @@
 
 <%= yield %>
 
+</div>
+<%= render(partial: 'shared/footer') %>
 </body>
 </html>
