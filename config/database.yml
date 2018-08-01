@@ -5,6 +5,7 @@
 #   gem 'sqlite3'
 #
 
+# defaults for development
 development:
   host: localhost
   adapter: postgresql
