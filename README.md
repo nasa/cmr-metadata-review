@@ -54,7 +54,7 @@ All development work is done on local copies of the code base.  Follow the steps
 
 6. The user should then navigate into the project directory and run the 'bundle install' command to install all needed dependencies (you might need to do the command `gem install bundler` to get the bundler gem).  Sometimes there are build conflicts on the local machine during this process.  Most solutions can be found on stack overflow.  If you encounter any bundle install failures, please post the error notice and solution here so they can be updated in the source directory.
 
-	1. If Puma is problimatic, try the following: `gem install puma -v '3.6.2' -- --with-opt-dir=/usr/local/opt/openssl`
+	1. If Puma is problematic (as observed on the Mac OS 10.13) , try the following: `gem install puma -v '3.6.2' -- --with-opt-dir=/usr/local/opt/openssl`. 
 
 7. Once installation of gems is complete, to create the Database the user should run the commands `rake db:create`, `rake db:migrate`, and rake `db:seed` in that order.  These commands will create the db required to run the project.
 
