@@ -38,6 +38,8 @@ All development work is done on local copies of the code base.  Follow the steps
 
 - If you run into the issue of `psql: FATAL: database "<user>" does not exist` - see [this link](https://stackoverflow.com/questions/17633422/psql-fatal-database-user-does-not-exist)
 
+- Some people may find they need to create an initial database to connect to with `/usr/local/opt/postgresql@9.6/bin/createdb -h localhost`
+
 4. From the PSQL console, you will need to add a `SUPERUSER` matching the username values shown in `config/database.yml` within the project repo.  The development & test DB's both are in local Postgres.  There are many ways to create a postgres db and superuser.  These links can help –  [here](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac) and [here](https://www.postgresql.org/docs/9.1/static/sql-createrole.html).
 
 - With user information from `config/database.yml`, the commands will look like: `CREATE ROLE <user> WITH SUPERUSER PASSWORD '<password>';`
@@ -51,6 +53,8 @@ All development work is done on local copies of the code base.  Follow the steps
 5. Start the Postgres server on your machine. This command will depend on how you installed.
 
 6. The user should then navigate into the project directory and run the 'bundle install' command to install all needed dependencies (you might need to do the command `gem install bundler` to get the bundler gem).  Sometimes there are build conflicts on the local machine during this process.  Most solutions can be found on stack overflow.  If you encounter any bundle install failures, please post the error notice and solution here so they can be updated in the source directory.
+
+	1. If Puma is problematic (as observed on the Mac OS 10.13) , try the following: `gem install puma -v '3.6.2' -- --with-opt-dir=/usr/local/opt/openssl`. 
 
 7. Once installation of gems is complete, to create the Database the user should run the commands `rake db:create`, `rake db:migrate`, and rake `db:seed` in that order.  These commands will create the db required to run the project.
 
