@@ -75,6 +75,8 @@ gem 'dotenv-rails', '~> 2.1.1'
 # Should use 5.0.13 but compatibility issues with SIT version of RH, has older GCC.    Eventualaly when they upgrade RH, we can move back to the latest
 gem 'font-awesome-sass', '5.0.9'
 gem 'font-awesome-rails'
+gem 'activerecord-session_store'
+gem 'whenever', require: false
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

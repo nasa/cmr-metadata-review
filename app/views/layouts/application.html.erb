@@ -12,32 +12,33 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="wrapper">
+    <% if notice %>
+      <div id="notice_banner" class="eui-banner--info">
+        <p class="eui-banner__message">
+          <%= notice %>
+          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("notice_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
+        </p>
+      </div>
+    <% end %>
 
-<% if notice %>
-  <div id="notice_banner" class="eui-banner--info">
-    <p class="eui-banner__message">
-      <%= notice %>
-      <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("notice_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-    </p>
+    <% if alert && alert != "" %>
+      <div id="alert_banner" class="eui-banner--danger">
+        <p class="eui-banner__message">
+          <%= alert %>
+          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("alert_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
+        </p>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+      function dismiss_banner(element_name) {
+        document.getElementById(element_name).style.display = "none";
+      }
+    </script>
+
+    <%= yield %>
   </div>
-<% end %>
-
-<% if alert && alert != "" %>
-  <div id="alert_banner" class="eui-banner--danger">
-    <p class="eui-banner__message">
-      <%= alert %>
-      <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("alert_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-    </p>
-  </div>
-<% end %>
-
-<script type="text/javascript">
-  function dismiss_banner(element_name) {
-    document.getElementById(element_name).style.display = "none";
-  }
-</script>
-
-<%= yield %>
-
+  <%= render(partial: 'shared/footer') %>
 </body>
 </html>
