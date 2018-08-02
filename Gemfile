@@ -78,7 +78,6 @@ gem 'font-awesome-sass', '5.0.9'
 gem 'activerecord-session_store'
 gem 'whenever', require: false
 
-
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
