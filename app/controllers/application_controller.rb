@@ -2,8 +2,18 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  # https://guides.rubyonrails.org/security.html#csrf-countermeasures
+  # https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef
   protect_from_forgery with: :exception
-  # http_basic_authenticate_with name: "cmruser", password: "dashpass"
+
+  private
+  def render_404(exception = nil)
+    if exception
+      logger.info "Rendering 404: #{exception.message}"
+    end
+
+    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+  end
 
 
   #saving error from CanCan for users going beyond allowed pages
