@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  # Added lockable on Aug 9, 2018
-  # https://github.com/plataformatec/devise/wiki/How-To:-Add-:lockable-to-Users
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
