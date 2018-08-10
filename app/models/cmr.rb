@@ -417,9 +417,9 @@ class Cmr
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
       options = base_options.clone
-      options["keyword"] = "?*#{free_text}?*"
+      options["keyword"] = "*#{free_text}*"
       options_first_char = base_options.clone
-      options_first_char["keyword"] = "#{free_text}?*"
+      options_first_char["keyword"] = "#{free_text}*"
 
       query_text = Cmr.api_url("collections", "echo10", options)
 
