@@ -22,5 +22,18 @@ module CmrMetadataReview
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    def load_version
+      version_file = "#{config.root}/version.txt"
+      if File.exist?(version_file)
+        return IO.read(version_file)
+      elsif File.exist?('.git/config') && `which git`.size > 0
+        version = `git rev-parse --short HEAD`
+        return version.strip
+      end
+      '(unknown)'
+    end
+
+    config.version = load_version
   end
 end

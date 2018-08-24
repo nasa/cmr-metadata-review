@@ -16,7 +16,7 @@
       </script>
     </div>
     <div class="report_buttons">
-      <%= link_to reports_provider_path(format: :csv, daac: params[:daac]), class: "report_button" do %>
+      <%= link_to reports_provider_path(format: :csv, daac: params[:daac]), data: {turbolinks: false}, class: "report_button" do %>
         <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>

@@ -407,6 +407,7 @@ class Cmr
     collection_count = 0
 
     if free_text
+      free_text = free_text.strip
       base_options = {"page_size" => page_size, "page_num" => curr_page}
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
@@ -417,9 +418,9 @@ class Cmr
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
       options = base_options.clone
-      options["keyword"] = "?*#{free_text}?*"
+      options["keyword"] = "*#{free_text}*"
       options_first_char = base_options.clone
-      options_first_char["keyword"] = "#{free_text}?*"
+      options_first_char["keyword"] = "#{free_text}*"
 
       query_text = Cmr.api_url("collections", "echo10", options)
 
@@ -434,6 +435,9 @@ class Cmr
         if search_results["hits"].to_i == 0
           raw_xml = Cmr.cmr_request(query_text_first_char).parsed_response
           search_results = Hash.from_xml(raw_xml)["results"]
+          if search_results["hits"].to_i > 0
+            Rails.logger.info("cmr search for #{free_text} with wildcard on suffix ONLY worked.")
+          end
         end
       rescue
         raise CmrError
