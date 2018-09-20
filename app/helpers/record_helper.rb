@@ -47,7 +47,8 @@ module RecordHelper
   end
 
   def disable_complete_button?(reviews, record)
-    completed_reviews(reviews) <= 1 || record.closed? || !reviewer_ok?(record)
+    false
+    # completed_reviews(reviews) <= 1 || record.closed? || !reviewer_ok?(record)
   end
 
   def script_class(field)
