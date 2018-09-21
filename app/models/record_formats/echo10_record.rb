@@ -73,23 +73,33 @@ module RecordFormats
       if raw_data.nil?
         raw_data = get_raw_data
       end
+      raw_data.each { |key, value|
+        if value.instance_of? String
+          value.gsub!('"', '')
+        end
+      }
+
       #escaping json for passing to python
-      record_json = raw_data.to_json.gsub("\"", "\\\"")
+      # https://stackoverflow.com/questions/28356308/escaping-single-quotes-for-shell
+      record_json = raw_data.to_json
+      record_json.gsub!("'", "'\\\\''")
+
       #running collection script in python
       #W option to silence warnings
       if collection?
-        script_results = `python -W ignore lib/CollectionChecker.py "#{record_json}"  `
+        script_results = `python -W ignore lib/CollectionChecker.py '#{record_json}'  `
       else
-        script_results = `python -W ignore lib/GranuleChecker.py "#{record_json}"`
+        script_results = `python -W ignore lib/GranuleChecker.py '#{record_json}'`
       end
 
-      unless script_results.nil?
+
+      unless script_results.to_s.empty?
         comment_hash = JSON.parse(script_results)
         value_keys = self.record_datas.map { |data| data.column_name }
         comment_hash = Record.format_script_comments(comment_hash, value_keys)
         comment_hash
       else
-        {}
+        raise Errors::PythonError
       end
     end
 
