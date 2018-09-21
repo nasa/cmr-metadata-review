@@ -47,7 +47,7 @@ class Ability
 
         can :provide_feedback, Record
 
-        can :review_state, [Record::STATE_OPEN, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
+        can :review_state, [Record::STATE_OPEN, Record::STATE_READY_FOR_DAAC_REVIEW, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
 
         can :replace_granule, Granule
 
