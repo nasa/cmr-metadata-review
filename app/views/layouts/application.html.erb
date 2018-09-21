@@ -6,37 +6,39 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
   <link href="https://cdn.earthdata.nasa.gov/eui/1.1.3/stylesheets/application.css" rel="stylesheet" />
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-
+  
+  <%# See https://guides.rubyonrails.org/security.html#csrf-countermeasures %>
+  <%# See https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="wrapper">
+    <% if notice %>
+      <div id="notice_banner" class="eui-banner--info">
+        <p class="eui-banner__message">
+          <%= notice %>
+          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("notice_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
+        </p>
+      </div>
+    <% end %>
 
-<% if notice %>
-  <div id="notice_banner" class="eui-banner--info">
-    <p class="eui-banner__message">
-      <%= notice %>
-      <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("notice_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-    </p>
+    <% if alert && alert != "" %>
+      <div id="alert_banner" class="eui-banner--danger">
+        <p class="eui-banner__message">
+          <%= alert %>
+          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("alert_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
+        </p>
+      </div>
+    <% end %>
+
+    <script type="text/javascript">
+      function dismiss_banner(element_name) {
+        document.getElementById(element_name).style.display = "none";
+      }
+    </script>
+
+    <%= yield %>
   </div>
-<% end %>
-
-<% if alert && alert != "" %>
-  <div id="alert_banner" class="eui-banner--danger">
-    <p class="eui-banner__message">
-      <%= alert %>
-      <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("alert_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-    </p>
-  </div>
-<% end %>
-
-<script type="text/javascript">
-  function dismiss_banner(element_name) {
-    document.getElementById(element_name).style.display = "none";
-  }
-</script>
-
-<%= yield %>
-
+  <%= render(partial: 'shared/footer') %>
 </body>
 </html>

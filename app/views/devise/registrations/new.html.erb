@@ -31,7 +31,7 @@
         <%= f.collection_select :role, User::ROLES, :to_s, :upcase %>
       </div>
 
-       <div id="daac_curator_fields" style="display:none;"" class="select_container">              
+      <div id="daac_curator_fields" style="display:none;" class="select_container">
         <%= f.label :role, "Associated DAAC*" %>
         <%= f.select :daac, provider_select_list  %>
       </div>
@@ -46,7 +46,7 @@
 </div>
 
 <script type="text/javascript">
-  $("select[name='user[role]'").on('change', function() {
+  $("select[name='user[role]']").on('change', function () {
     if (this.value === 'daac_curator') {
       $('#daac_curator_fields').show();
     } else {
