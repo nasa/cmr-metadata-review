@@ -105,7 +105,7 @@
                       </div>
 
                       <div>
-                        <% if granule_record.open? && can?(:replace_granule, granule_record.recordable) %>
+                        <% if can?(:replace_granule, granule_record.recordable) %>
                           <%= button_to "Ingest Different Granule", replace_granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: "smallSelectButton", id: "ingest_replace", data: { confirm: "Are you sure?" } %>
                         <% end %>
                       </div>
