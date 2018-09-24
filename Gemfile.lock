@@ -182,7 +182,7 @@ GEM
     rubyXL (3.3.29)
       nokogiri (>= 1.4.4)
       rubyzip (>= 1.1.6)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     safe_yaml (1.0.4)
     sass (3.5.7)
       sass-listen (~> 4.0.0)
@@ -265,6 +265,7 @@ DEPENDENCIES
   rdoc
   ruby-progressbar
   rubyXL
+  rubyzip (= 1.2.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   simplecov
