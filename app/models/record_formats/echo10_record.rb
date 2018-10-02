@@ -104,8 +104,7 @@ module RecordFormats
         else
           identifier = "Granule #{self.get_column("GranuleUR")}"
         end
-        Rails.logger.error("Python error occurred (#{identifier})")
-        raise Errors::PythonError
+        raise Errors::PythonError, "Python error occurred (#{identifier})"
       end
     end
 

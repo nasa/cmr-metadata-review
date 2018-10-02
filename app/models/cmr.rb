@@ -155,6 +155,17 @@ class Cmr
     format_collection(raw_collection, data_format)
   end
 
+  def self.convert_xml_to_hash(data_format, collection_data)
+    if data_format == "umm_json"
+      JSON.parse(collection_data)
+    else
+      doc = Nokogiri.XML(collection_data)
+      remove_empty_tags(doc)
+      Hash.from_xml(doc.to_s)
+    end
+  end
+
+
   def self.remove_empty_tags(node)
     # post order traversal of DOM to remove leaf nodes that have no content
     # i.e., <Instruments/>
@@ -175,13 +186,7 @@ class Cmr
       raise CmrError.new(error_message)
     end
 
-    if data_format == "umm_json"
-      collection_data_hash = JSON.parse(collection_data)
-    else
-      doc = Nokogiri.XML(collection_data)
-      remove_empty_tags(doc)
-      collection_data_hash = Hash.from_xml(doc.to_s)
-    end
+    collection_data_hash = convert_xml_to_hash(data_format, collection_data)
 
     raw_collection = if data_format == "echo10"
       collection_data_hash["Collection"]
@@ -267,13 +272,7 @@ class Cmr
     data = Cmr.cmr_request(url).parsed_response
 
     begin
-      if type == "umm_json"
-        collection_results = JSON.parse(data)
-      else
-        doc = Nokogiri.XML(data)
-        remove_empty_tags(doc)
-        collection_results = Hash.from_xml(doc.to_s)["results"]
-      end
+      collection_results = convert_xml_to_hash(type, data)["results"]
     rescue
       # Error raised when no results are found.  CMR returns an error hash instead of xml string
       raise CmrError
@@ -311,9 +310,7 @@ class Cmr
     granule_xml = Cmr.cmr_request(url).parsed_response
 
     begin
-      doc = Nokogiri.XML(granule_xml)
-      remove_empty_tags(doc)
-      granule_results = Hash.from_xml(doc.to_s)["results"]
+      granule_results = convert_xml_to_hash("echo10", granule_xml)["results"]
     rescue
       raise CmrError
     end
