@@ -99,7 +99,12 @@ module RecordFormats
         comment_hash = Record.format_script_comments(comment_hash, value_keys)
         comment_hash
       else
-        raise Errors::PythonError
+        if (collection?)
+          identifier = "Collection #{short_name} #{version_id}"
+        else
+          identifier = "Granule #{self.get_column("GranuleUR")}"
+        end
+        raise Errors::PythonError, "Python error occurred (#{identifier})"
       end
     end
 
