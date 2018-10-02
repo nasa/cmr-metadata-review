@@ -155,11 +155,11 @@ class Cmr
     format_collection(raw_collection, data_format)
   end
 
-  def self.remove_empty_tags(node, path)
+  def self.remove_empty_tags(node)
     # post order traversal of DOM to remove leaf nodes that have no content
     # i.e., <Instruments/>
     node.children.each do |child|
-      remove_empty_tags(child, path)
+      remove_empty_tags(child)
       # if is a leaf node and content is empty
       if child.count == 0 && child.content.gsub(/\s+/, '').empty?
         child.remove
@@ -179,7 +179,7 @@ class Cmr
       collection_data_hash = JSON.parse(collection_data)
     else
       doc = Nokogiri.XML(collection_data)
-      remove_empty_tags(doc, '')
+      remove_empty_tags(doc)
       collection_data_hash = Hash.from_xml(doc.to_s)
     end
 
@@ -271,7 +271,7 @@ class Cmr
         collection_results = JSON.parse(data)
       else
         doc = Nokogiri.XML(data)
-        remove_empty_tags(doc, '')
+        remove_empty_tags(doc)
         collection_results = Hash.from_xml(doc.to_s)["results"]
       end
     rescue
@@ -312,7 +312,7 @@ class Cmr
 
     begin
       doc = Nokogiri.XML(granule_xml)
-      remove_empty_tags(doc, '')
+      remove_empty_tags(doc)
       granule_results = Hash.from_xml(doc.to_s)["results"]
     rescue
       raise CmrError
