@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :lockable
+  # :database_authenticatable, :registerable,
+  # :recoverable, :rememberable, :trackable, :validatable, :lockable
+  devise :omniauthable, :omniauth_providers => [:urs]
 
   has_many :ingests
   has_many :comments
@@ -57,4 +58,30 @@ class User < ActiveRecord::Base
   def arc?
     admin || curator
   end
+
+  def self.from_omniauth(auth)
+
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    if !user
+      user = User.new
+      user.uid = auth.uid
+      user.role = 'arc_curator'
+      user.provider = auth.provider
+      user.email = auth.info.email
+      user.save
+    end
+    user
+  end
+
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
 end

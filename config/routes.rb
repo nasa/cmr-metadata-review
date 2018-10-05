@@ -2,13 +2,15 @@ Rails.application.routes.draw do
   scope format: false do
     get '/elb_status', to: 'site#elb_status'
 
-    devise_for :users, controllers: {
-        registrations: 'users/registrations'
+    devise_for :users, :controllers => {
+      :omniauth_callbacks => "login"
     }
+
+    get '/login', to: 'login#urs'
 
     devise_scope :user do
       root to: "devise/sessions#new"
-      get '/users/sign_out', to: 'users/sessions#destroy'
+      delete "/users/sign_out" => "devise/sessions#destroy"
     end
 
     get '/home', to: 'site#home'

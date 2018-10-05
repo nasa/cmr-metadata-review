@@ -77,6 +77,11 @@ gem 'font-awesome-sass', '5.0.9'
 gem 'font-awesome-rails'
 gem 'activerecord-session_store'
 gem 'whenever', require: false
+# gem 'oauth'
+gem 'oauth2'
+# gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -86,4 +91,5 @@ group :development do
   gem 'spring'
 
   gem 'rdoc'
+  gem 'httplog'
 end

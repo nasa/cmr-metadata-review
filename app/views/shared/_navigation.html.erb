@@ -37,21 +37,20 @@
           </ul>
         </li>
 
-        <li>
-          <%= link_to "#", class: "menu_link header_button" do %>
-            <i class="fa fa-sliders"></i>
-            <p>Account Options</p>
-          <% end %>
-          <ul class="eui-sub-menu">
-            <li><%= link_to "Edit Account", edit_user_registration_path %></li>
-            <% if current_user.admin %>
-              <li><%= link_to "Create User", new_user_registration_path %></li>
-              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
+        <% if current_user.admin %>
+          <li>
+            <%= link_to "#", class: "menu_link header_button" do %>
+              <i class="fa fa-sliders"></i>
+              <p>Account Options</p>
             <% end %>
-          </ul>
-        </li>
+            <ul class="eui-sub-menu">
+              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
+            </ul>
+          </li>
+        <% end %>
+
         <li>
-          <%= link_to destroy_user_session_path, class: "menu_link header_button" do %>
+          <%= link_to users_sign_out_path, class: "menu_link header_button", :method => 'delete' do %>
             <i class="eui-icon eui-fa-external-link-square"></i>
             <p>Logout</p>
           <% end %>
