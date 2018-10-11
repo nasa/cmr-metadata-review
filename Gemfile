@@ -42,12 +42,12 @@ gem 'aasm', '~> 4.12.0'
 gem 'rubyXL'
 gem 'ruby-progressbar'
 
-
 group :test do
   gem 'minitest-spec-rails'
   gem 'webmock'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
+  gem 'minitest-rails-capybara'
 end
 
 group :development, :test do

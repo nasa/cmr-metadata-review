@@ -8,9 +8,12 @@ Rails.application.routes.draw do
 
     get '/login', to: 'login#urs'
 
+    # https://github.com/plataformatec/devise/issues/1390
     devise_scope :user do
       root to: "devise/sessions#new"
       delete "/users/sign_out" => "devise/sessions#destroy"
+      get '/session/new(.:format)' => 'devise/sessions#new', as: :new_user_session
+      get '/session/sign_out(.:format)' => 'devise/sessions#destroy', as: :destroy_user_session
     end
 
     get '/home', to: 'site#home'
