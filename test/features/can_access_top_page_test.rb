@@ -1,22 +1,8 @@
 require "test_helper"
+Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
 class CanAccessTopPageTest < Capybara::Rails::TestCase
-  def mock_auth_hash
-    omniauth_hash = {'provider' => 'urs',
-                     'uid' => '12345',
-                     'info' => {
-                       'first_name' => 'chris',
-                       'last_name' => 'gokey',
-                       'email_address' => 'cgokey@sgt-inc.com',
-                     },
-                     'extra' => {'raw_info' =>
-                                   {'user_type' => 'my_user_type',
-                                    'organization' => 'NASA'
-                                   }
-                     }
-    }
-    OmniAuth.config.add_mock(:urs, omniauth_hash)
-  end
+  include OmniauthMacros
 
   describe "POST #urs" do
     before do
@@ -30,7 +16,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can sign in user with oauth account" do
         mock_auth_hash
         visit '/'
-        page.must_have_content("Login with Earth Data Login")
+        page.must_have_content("Login with Earthdata Login")
         click_link "Login"
         page.must_have_content("Logout")
       end
@@ -38,7 +24,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can handle authentication error" do
         OmniAuth.config.mock_auth[:urs] = :invalid_credentials
         visit '/'
-        page.must_have_content("Login with Earth Data Login")
+        page.must_have_content("Login with Earthdata Login")
         click_link "Login"
         page.must_have_content('Could not authenticate you from URS because "Invalid credentials".')
       end
