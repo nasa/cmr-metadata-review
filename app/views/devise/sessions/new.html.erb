@@ -19,7 +19,7 @@
       <%-
         display_name = OmniAuth::Utils.camelize(provider);
         if provider == :urs
-          display_name = "Earth Data Login"
+          display_name = "Earthdata Login"
         end
       %>
       <%= link_to "Login with #{display_name}", omniauth_authorize_path(resource_name, provider) %><br/>
