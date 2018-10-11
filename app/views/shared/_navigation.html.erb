@@ -50,7 +50,7 @@
         <% end %>
 
         <li>
-          <%= link_to users_sign_out_path, class: "menu_link header_button", :method => 'delete' do %>
+          <%= link_to destroy_user_session_path, class: "menu_link header_button" do %>
             <i class="eui-icon eui-fa-external-link-square"></i>
             <p>Logout</p>
           <% end %>

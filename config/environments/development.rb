@@ -51,27 +51,3 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
-
-HttpLog.configure do |config|
-  config.enabled = true
-  config.logger = Logger.new($stdout)
-  config.severity = Logger::Severity::DEBUG
-
-  config.log_connect = true
-  config.log_request = true
-  config.log_headers = true
-  config.log_data = true
-  config.log_status = true
-  config.log_response = true
-  config.log_benchmark = true
-
-  # ...or log all request as a single line by setting this to `true`
-  config.compact_log = false
-
-  # Prettify the output - see below
-  config.color = false
-
-  # Limit logging based on URL patterns
-  config.url_whitelist_pattern = /.*/
-  config.url_blacklist_pattern = nil
-end

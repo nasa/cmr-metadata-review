@@ -10,7 +10,7 @@ class LoginControllerTest < ActionController::TestCase
                      'info' => {
                        'first_name' => 'chris',
                        'last_name' => 'gokey',
-                       'email' => 'cgokey@sgt-inc.com',
+                       'email_address' => 'cgokey@sgt-inc.com',
                      },
                      'extra' => {'raw_info' =>
                                    {'user_type' => 'my_user_type',
@@ -33,11 +33,10 @@ class LoginControllerTest < ActionController::TestCase
     describe "#urs callback" do
       it "should successfully create a user" do
         mock_auth_hash
-        before = User.count
-        puts "#{User.count}"
+        before_count = User.count
         post :urs, provider: :urs
-        after = User.count
-        assert(after.must_equal(before + 1));
+        after_count = User.count
+        assert(after_count.must_equal(before_count + 1));
       end
     end
 

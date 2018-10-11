@@ -1,8 +1,4 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  # :database_authenticatable, :registerable,
-  # :recoverable, :rememberable, :trackable, :validatable, :lockable
   devise :omniauthable, :omniauth_providers => [:urs]
 
   has_many :ingests
@@ -67,7 +63,7 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.role = 'arc_curator'
       user.provider = auth.provider
-      user.email = auth.info.email
+      user.email = auth.info.email_address
       user.save
     end
     user
