@@ -69,7 +69,7 @@ gem 'whenever', require: false
 gem 'oauth2'
 gem 'omniauth-oauth2'
 
-gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git"
+gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", branch: "develop"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
