@@ -1,3 +1,7 @@
+# Need to override .env with .env.test
+# https://github.com/bkeepers/dotenv/issues/220
+Dotenv.overload(".env.#{Rails.env}")
+
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   # Prevent CSRF attacks by raising an exception.
