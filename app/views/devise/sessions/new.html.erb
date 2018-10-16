@@ -17,7 +17,7 @@
   <% if devise_mapping.omniauthable? %>
     <% resource_class.omniauth_providers.each do |provider| %>
       <%
-        display_name = OmniAuth::Utils.camelize(provider);
+        display_name = camelize_str(provider);
         if provider == :urs
           display_name = "Earthdata Login"
         end
