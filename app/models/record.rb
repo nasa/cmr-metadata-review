@@ -491,7 +491,7 @@ class Record < ActiveRecord::Base
   end
 
   def color_coding_complete?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 
@@ -511,7 +511,7 @@ class Record < ActiveRecord::Base
   end
 
   def has_enough_reviews?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 
@@ -519,7 +519,7 @@ class Record < ActiveRecord::Base
   end
 
   def no_second_opinions?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 
@@ -527,7 +527,7 @@ class Record < ActiveRecord::Base
   end
 
   def granule_completed?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 
@@ -548,7 +548,7 @@ class Record < ActiveRecord::Base
   end
 
   def updated_revision_if_needed?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 
@@ -556,7 +556,7 @@ class Record < ActiveRecord::Base
   end
 
   def no_feedback_requested?
-    if ENV['SIT_SKIP_DONE_CHECK'] == 'true'
+    if ENV['sit_skip_done_check'] == 'true'
       return true
     end
 

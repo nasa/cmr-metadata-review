@@ -11,8 +11,8 @@
     <% else %>
       METADATA ELEMENTS
     <% end %>
-    <% if ENV['SIT_ENV'] == 'true' %>
-       (SIT Environment)
+    <% if ENV['RAILS_ENV'] != 'production'%>
+      <h3><%= title %> (<%=ENV['RAILS_ENV'].upcase %> Environment)</h3>
     <% end %>
   </button>
 
