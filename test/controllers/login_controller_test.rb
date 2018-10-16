@@ -9,7 +9,7 @@ class LoginControllerTest < ActionController::TestCase
   describe "POST #urs" do
     before do
       mock_auth_hash
-      request.env["devise.mapping"] = Devise.mappings[:user] # If using Devise
+      request.env["devise.mapping"] = Devise.mappings[:user] 
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:urs]
     end
 
