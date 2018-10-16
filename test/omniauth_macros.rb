@@ -3,13 +3,13 @@ module OmniauthMacros
     omniauth_hash = {'provider' => 'urs',
                      'uid' => '12345',
                      'info' => {
-                       'first_name' => 'chris',
-                       'last_name' => 'gokey',
-                       'email_address' => 'cgokey@sgt-inc.com',
+                       'first_name' => 'john',
+                       'last_name' => 'smith',
+                       'email_address' => 'jsmith@someplace.com',
                      },
                      'extra' => {'raw_info' =>
                                    {'user_type' => 'my_user_type',
-                                    'organization' => 'NASA'
+                                    'organization' => 'my organization'
                                    }
                      }
     }
