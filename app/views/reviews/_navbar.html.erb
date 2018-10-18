@@ -11,9 +11,7 @@
     <% else %>
       METADATA ELEMENTS
     <% end %>
-    <% if ENV['SIT_ENV'] == 'true' %>
-       (SIT Environment)
-    <% end %>
+    <h3><%= title %> <%= get_environment_display_name %></h3>
   </button>
 
   <% if page == "navigation" %>
