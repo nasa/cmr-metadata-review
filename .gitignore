@@ -39,3 +39,5 @@ test/reports/*
 *.iml
 
 *~
+# Ignore application configuration
+/config/application.yml
