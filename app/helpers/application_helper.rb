@@ -61,7 +61,7 @@ module ApplicationHelper
 
   def get_environment_display_name
     env_name = ENV['RAILS_ENV']
-    if (env_name != nil && env_name != 'production')
+    if env_name != nil && env_name != 'production'
       "(#{env_name.upcase} Environment)"
     end
   end
