@@ -6,39 +6,12 @@
 </div>
  
 <div class="header_image">
-  
 </div>  
 
 <div class="log_in_box">
-  
-  <div class="box_tab">
-    LOG IN
-  </div>
-
-  <div class="form_box">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="">
-        <%= f.email_field :email, autofocus: true, placeholder: "Username or Email" %>
-      </div>
-
-      <div >
-        <%= f.password_field :password, autocomplete: "off", placeholder: "Password"  %>
-      </div>
-
-      <div class="form_buttons">
-        <div class="remember_button">
-        <% if devise_mapping.rememberable? -%>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-        <% end -%>
-        </div>
-        <div class="form_buttons">
-          <%= f.submit("Log in", class: 'selectButton') %>
-        </div>
-      </div>
+  <% if devise_mapping.omniauthable? %>
+    <% resource_class.omniauth_providers.each do |provider| %>
+      <%= link_to "Login with #{get_omniauth_provider_display_name(provider)}", omniauth_authorize_path(resource_name, provider) %><br/>
     <% end %>
-  </div>
-
-  <%= render "devise/shared/links" %>
-  
+  <% end %>
 </div>

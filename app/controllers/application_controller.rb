@@ -1,3 +1,7 @@
+# Need to override .env with .env.test
+# https://github.com/bkeepers/dotenv/issues/220
+Dotenv.overload(".env.#{Rails.env}")
+
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   # Prevent CSRF attacks by raising an exception.
@@ -68,6 +72,10 @@ class ApplicationController < ActionController::Base
 
   def filtered_by?(param, any_keyword)
     params[param] && params[param] != any_keyword
+  end
+
+  def new_session_path(scope)
+    new_user_session_path
   end
 
 end
