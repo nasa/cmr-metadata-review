@@ -40,3 +40,6 @@ test/reports/*
 
 # Backup files...
 *~
+
+# Ignore application configuration
+/config/application.yml

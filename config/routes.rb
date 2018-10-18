@@ -56,11 +56,6 @@ Rails.application.routes.draw do
     get '/reports/selection', to: 'reports#selection'
     get '/reports/review', to: 'reports#review'
 
-    #making a convenient path to the rdoc files
-    if ENV['SHOW_DOCUMENTATION'] == 'true'
-      get "/documentation" => redirect("/doc/index.html")
-    end
-
     # https://stackoverflow.com/questions/21654826/how-to-rescue-page-not-found-404-in-rails
     # The “a” is actually a parameter in the Rails 3 Route Globbing technique. For example,
     # if your url was /this-url-does-not-exist, then params[:a] equals “/this-url-does-not-exist”.
