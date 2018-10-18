@@ -1,12 +1,7 @@
 <div class="page_header">
   <div class="header_title">
-    <% if ENV['RAILS_ENV'] == 'production'%>
-      <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD</h3>
-    <% else %>
-      <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD (<%=ENV['RAILS_ENV'].upcase %> Environment)</h3>
-    <% end %>
+    <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD <%= get_environment_display_name %></h3>
   </div>
-
   <div class="clear_box"></div>
 </div>
  

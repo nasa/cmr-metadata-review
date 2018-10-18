@@ -11,9 +11,7 @@
     <% else %>
       METADATA ELEMENTS
     <% end %>
-    <% if ENV['RAILS_ENV'] != 'production'%>
-      <h3><%= title %> (<%=ENV['RAILS_ENV'].upcase %> Environment)</h3>
-    <% end %>
+    <h3><%= title %> <%= get_environment_display_name %></h3>
   </button>
 
   <% if page == "navigation" %>
