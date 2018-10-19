@@ -237,7 +237,11 @@ Devise.setup do |config|
 
   # ==> OmniAuth
   # Add a new OmniAuth provider.
-  config.omniauth :urs, ENV['CLIENT_ID'], ENV['CLIENT_SECRET']
+  config.omniauth :urs, ENV['urs_client_id'], ENV['urs_client_secret'], client_options: {
+    site: ENV['urs_site'],
+    authorize_url: ENV['urs_authorize_url'],
+    token_url: ENV['urs_token_url']
+  }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

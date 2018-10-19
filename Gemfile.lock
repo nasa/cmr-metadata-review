@@ -1,6 +1,6 @@
 GIT
   remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git
-  revision: 0d5ef1baf32840890be51c357f7a27db370c1acd
+  revision: d97effcfddae356020cadb7e402aa23695c187d6
   branch: develop
   specs:
     omniauth-urs (0.1.0)
