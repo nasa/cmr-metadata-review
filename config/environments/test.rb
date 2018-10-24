@@ -39,4 +39,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # cmr base url
+  config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
+
 end
