@@ -79,7 +79,8 @@ class Cmr
   end
 
   def self.current_revision_for(concept_id)
-    url = "https://cmr.earthdata.nasa.gov/search/collections.xml?concept_id[]=#{concept_id}"
+    base_url = Cmr.get_cmr_base_url
+    url = "#{base_url}/search/collections.xml?concept_id[]=#{concept_id}"
     result =  Cmr.cmr_request(url).parsed_response
 
     revision = -1
@@ -98,7 +99,8 @@ class Cmr
   # Queries cmr for collections updated since provided data, returns parsed response
 
   def self.collections_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    base_url = Cmr.get_cmr_base_url
+    raw_updated = Cmr.cmr_request("#{base_url}/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -566,7 +568,8 @@ class Cmr
   end
 
   def self.api_url(data_type = "collections", format_type = "echo10", options = {})
-    result = "https://cmr.earthdata.nasa.gov/search/" + data_type + "." + format_type + "?"
+    base_url = Cmr.get_cmr_base_url
+    result = "#{base_url}/search/" + data_type + "." + format_type + "?"
     options.each do |key, value|
       #using list with flatten so that a string and list will both work as values
       [value].flatten.each do |single_value|
@@ -609,6 +612,14 @@ class Cmr
     #removes if it starts with xlmns or xsi
     collection_hash.delete_if { |key, value| (key.to_s.match(/^xmlns/)) || (key.to_s.match(/^xsi/)) }
     collection_hash
+  end
+
+  def self.get_cmr_base_url
+    cmr_base_url = Rails.application.config.cmr_base_url
+    if cmr_base_url.nil?
+      cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+    end
+    cmr_base_url
   end
 
 end

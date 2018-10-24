@@ -93,7 +93,10 @@ class Collection < ActiveRecord::Base
   end
 
   def self.parse_collection_url(url)
-    match_data = url.match(/https:\/\/cmr\.earthdata\.nasa\.gov(:443)?\/search\/concepts\/(C\d*-.*)\/(\d*)\.(.*)/)
+    cmr_base_url = Cmr.get_cmr_base_url
+    regexp_str = "#{Regexp.escape(cmr_base_url)}(:443)?\\/search\\/concepts\\/(C\\d*-.*)\\/(\\d*)\\.(.*)"
+    regexp = Regexp.new(regexp_str)
+    match_data = regexp.match(url)
     match_data[2..4]
   end
 
