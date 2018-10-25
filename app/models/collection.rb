@@ -92,6 +92,7 @@ class Collection < ActiveRecord::Base
     false
   end
 
+  # returns concept_id, revision_id, data_format
   def self.parse_collection_url(url)
     cmr_base_url = Cmr.get_cmr_base_url
     regexp_str = "#{Regexp.escape(cmr_base_url)}(:443)?\\/search\\/concepts\\/(C\\d*-.*)\\/(\\d*)\\.(.*)"
