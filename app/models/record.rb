@@ -749,11 +749,13 @@ class Record < ActiveRecord::Base
   end
 
   def umm_json_link
-    "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
+    base_url = Cmr.get_cmr_base_url
+    "#{base_url}/search/concepts/#{self.concept_id}/#{self.revision_id}.umm-json"
   end
 
   def native_link
-    "https://cmr.earthdata.nasa.gov/search/concepts/#{self.concept_id}/#{self.revision_id}.native"
+    base_url = Cmr.get_cmr_base_url
+    "#{base_url}/search/concepts/#{self.concept_id}/#{self.revision_id}.native"
   end
 
   def related_granule_record
