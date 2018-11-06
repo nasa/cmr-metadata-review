@@ -15,8 +15,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -30,24 +28,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'httparty', '~> 0.14.0'
 gem 'aasm', '~> 4.12.0'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 gem 'rubyXL'
 gem 'ruby-progressbar'
-
 
 group :test do
   gem 'minitest-spec-rails'
   gem 'webmock'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
+  gem 'minitest-rails-capybara'
 end
 
 group :development, :test do
@@ -75,6 +64,11 @@ gem 'font-awesome-sass', '5.0.9'
 gem 'font-awesome-rails'
 gem 'activerecord-session_store'
 gem 'whenever', require: false
+gem 'oauth2'
+gem 'omniauth-oauth2'
+gem 'faraday_middleware'
+
+gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", branch: "develop"
 
 gem 'figaro'
 
