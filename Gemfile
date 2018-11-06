@@ -66,6 +66,7 @@ gem 'activerecord-session_store'
 gem 'whenever', require: false
 gem 'oauth2'
 gem 'omniauth-oauth2'
+gem 'faraday_middleware'
 
 gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", branch: "develop"
 

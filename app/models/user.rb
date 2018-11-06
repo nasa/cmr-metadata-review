@@ -56,14 +56,16 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     if !user
       user = User.new
       user.uid = auth.uid
-      user.role = 'arc_curator'
+      user.role = Cmr.getRole(auth.uid, auth.credentials["access_token"]);
       user.provider = auth.provider
       user.email = auth.info.email_address
+      user.save
+    else
+      user.role = Cmr.getRole(auth.uid, auth.credentials["access_token"]);
       user.save
     end
     user
