@@ -104,7 +104,7 @@ class AclDao
 
     def retrieve_json_from_url(url)
       conn = Faraday.new(:url => url) do |faraday|
-        faraday.headers['Echo-Token'] = "#{@access_token}:#{slpVL3U6ycqIxyyAkEHb1g}:#{ENV['urs_client_id']}"
+        faraday.headers['Echo-Token'] = "#{@access_token}:#{ENV['urs_client_id']}:#{ENV['urs_client_id']}"
         faraday.response :logger # log requests to $stdout
         faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
       end
