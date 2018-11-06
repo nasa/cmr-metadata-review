@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
       user = User.new
       user.uid = auth.uid
       user.role = Cmr.getRole(auth.uid, auth.credentials["access_token"]);
-      user.provider = auth.provider
+      user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
       user.email = auth.info.email_address
       user.save
     else

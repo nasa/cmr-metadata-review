@@ -60,56 +60,8 @@ class AclDao
   end
 
   private
-
-    def create_system_level_group(name, description, members)
-      data = {
-        "name": name,
-        "description": description,
-        "members": members
-      }
-      send_request_to_cmr(:POST,'/access-control/groups', data)
-
-    end
-
-    def create_provider_level_group(name, description, provider_id)
-      data = {
-        "name": name,
-        "provider_id": provider_id,
-        "description": description,
-      }
-      send_request_to_cmr(:POST, '/access-control/groups', data)
-    end
-
-    def delete_group(concept_id)
-      send_request_to_cmr(:DELETE, "/access-control/groups/#{concept_id}")
-    end
-
-    def add_group_members(concept_id, users)
-      send_request_to_cmr(:POST, "/access-control/groups/#{concept_id}/members", users)
-    end
-
-    def remove_group_members(concept_id, users)
-      send_request_to_cmr(:DELETE, "/access-control/groups/#{concept_id}/members", users)
-    end
-
-    def search_acls_by_target(target)
-      json = send_request_to_cmr(:GET , "/access-control/acls?target=#{target}")
-      json
-    end
-
     def search_acls_by_user(user_id, page_no)
       json = send_request_to_cmr(:GET , "/access-control/acls?permitted_user=#{user_id}&page_size=2000&page_num=#{page_no}")
-      json
-    end
-
-    def retrieve_json_from_url(url)
-      conn = Faraday.new(:url => url) do |faraday|
-        faraday.headers['Echo-Token'] = "#{@access_token}:#{ENV['urs_client_id']}:#{ENV['urs_client_id']}"
-        faraday.response :logger # log requests to $stdout
-        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
-      end
-      response = conn.get
-      json = JSON.parse(response.body)
       json
     end
 
