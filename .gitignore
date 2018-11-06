@@ -38,7 +38,9 @@ test/reports/*
 .idea
 *.iml
 
+# Backup files...
 *~
 tags
+
 # Ignore application configuration
 /config/application.yml
