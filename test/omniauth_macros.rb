@@ -11,7 +11,8 @@ module OmniauthMacros
                                    {'user_type' => 'my_user_type',
                                     'organization' => 'my organization'
                                    }
-                     }
+                     },
+                     'credentials' => {'access_token': '12345'}
     }
     OmniAuth.config.add_mock(:urs, omniauth_hash)
   end

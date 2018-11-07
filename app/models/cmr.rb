@@ -622,4 +622,11 @@ class Cmr
     cmr_base_url
   end
 
+  def self.getRole(uid, access_token)
+    acl = AclDao.new(access_token, ENV['urs_client_id'], Cmr.get_cmr_base_url)
+    role = acl.get_role(uid)
+    role
+  end
+
+
 end
