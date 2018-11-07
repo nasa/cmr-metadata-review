@@ -2,6 +2,11 @@ class LoginController < Devise::OmniauthCallbacksController
 
   def urs
     @user = User.from_omniauth(request.env["omniauth.auth"])
+
+    # before we sign user in, make sure two things:
+    # 1) the user is in database, they should be as the result of calling User.from_omniauth
+    # 2) A role has been assigned to the user.   In order to be given a role, they must have an ACL in CMR.  If they
+    # don't the role will be nil.
     if @user.persisted? && !@user.role.nil?
       sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, kind: "Earth Data Login") if is_navigational_format?

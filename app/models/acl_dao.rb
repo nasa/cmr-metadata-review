@@ -23,33 +23,18 @@ class AclDao
 
 
     roles = Set.new
-    items.each {|item|
-      if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
-        roles << "daac_curator"
-      end
-      if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
-        roles << "arc_curator"
-      end
-      if item['name'].end_with?"DASHBOARD_ADMIN"
-        roles << "admin"
-      end
-    }
+    items.each do |item|
+      roles << "daac_curator" if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
+      roles << "arc_curator" if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
+      roles << "admin" if item['name'].end_with?"DASHBOARD_ADMIN"
+    end
 
     #
     # returns the highest level role
     #
-
-    if (roles.include? "admin")
-      return "admin"
-    end
-
-    if (roles.include? "daac_curator")
-      return "daac_curator"
-    end
-
-    if (roles.include? "arc_curator")
-      return "arc_curator"
-    end
+    return "admin" if (roles.include? "admin")
+    return "daac_curator" if (roles.include? "daac_curator")
+    return "arc_curator" if (roles.include? "arc_curator")
 
     nil
 
