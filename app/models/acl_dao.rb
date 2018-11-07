@@ -16,11 +16,10 @@ class AclDao
     noPages = (results['hits']/2000).ceil
     items = Array.wrap(results['items'])
 
-    (2..noPages+1).each { |i|
+    (2..noPages+1).each do |i|
       results = search_acls_by_user(user_id, i)
       items += Array.wrap(results['items'])
-    }
-
+    end
 
     roles = Set.new
     items.each do |item|
