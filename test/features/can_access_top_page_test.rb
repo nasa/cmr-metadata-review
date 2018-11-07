@@ -11,7 +11,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       Rails.application.env_config["devise.mapping"] = Devise.mappings[:user] # If using Devise
       Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:urs]
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -19,7 +19,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
             'Echo-Token'=>'12345:',
             'User-Agent'=>'Faraday v0.15.3'
           }).
-        to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200213993-CMR", {"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200301611-CMR"}}]}', headers: {})
+        to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200213993-CMR", {"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200301611-CMR"}}]}', headers: {})
 
     end
 
@@ -27,7 +27,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can sign in user with oauth account with admin privileges" do
         mock_auth_hash
 
-        stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
+        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
           with(
             headers: {
               'Accept'=>'*/*',
@@ -35,7 +35,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
               'Echo-Token'=>'12345:',
               'User-Agent'=>'Faraday v0.15.3'
             }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
+          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
@@ -47,7 +47,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can sign in user with oauth account with arc curator privileges" do
         mock_auth_hash
 
-        stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
+        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
           with(
             headers: {
               'Accept'=>'*/*',
@@ -55,7 +55,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
               'Echo-Token'=>'12345:',
               'User-Agent'=>'Faraday v0.15.3'
             }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301610-CMR","identity_type":"System","name":"System - DASHBOARD_ARC_CURATOR","location":"https://cmr.sit.earthdata.nasa.gov:443/access-control/acls/ACL1200301610-CMR"}]}', headers: {})
+          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301610-CMR","identity_type":"System","name":"System - DASHBOARD_ARC_CURATOR","location":"'+Cmr.get_cmr_base_url+':443/access-control/acls/ACL1200301610-CMR"}]}', headers: {})
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
