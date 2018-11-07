@@ -32,9 +32,9 @@ class AclDao
     #
     # returns the highest level role
     #
-    return "admin" if (roles.include? "admin")
-    return "daac_curator" if (roles.include? "daac_curator")
-    return "arc_curator" if (roles.include? "arc_curator")
+    return "admin" if roles.include? "admin"
+    return "daac_curator" if roles.include? "daac_curator"
+    return "arc_curator" if roles.include? "arc_curator"
 
     nil
 
