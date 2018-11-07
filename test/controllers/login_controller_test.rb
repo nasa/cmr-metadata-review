@@ -5,7 +5,6 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 # https://gist.github.com/kinopyo/1338738
 class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
-
   describe "POST #urs" do
     before do
       mock_auth_hash

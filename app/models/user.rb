@@ -81,6 +81,4 @@ class User < ActiveRecord::Base
   def arc?
     admin || curator
   end
-
-
 end

@@ -36,7 +36,6 @@ class AclDao
     return "arc_curator" if roles.include? "arc_curator"
 
     nil
-
   end
 
   private
