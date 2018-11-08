@@ -11,52 +11,31 @@ class AclDao
 
     # Sets whether the user is a specific role type
     # Note: user could be all three.
-    user_is_daac_curator = false
-    user_is_arc_curator = true
-    user_is_admin = false
 
     results = search_acls_by_user(user_id, 1)
     noPages = (results['hits']/2000).ceil
-    items = results['items']
-    if (items.nil?)
-      return nil
-    end
+    items = Array.wrap(results['items'])
 
-    items = Array.wrap(items)
-    for i in 2..noPages+1
+    (2..noPages+1).each do |i|
       results = search_acls_by_user(user_id, i)
       items += Array.wrap(results['items'])
     end
 
-    items.each {|item|
-      if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
-        user_is_daac_curator = true
-      end
-      if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
-        user_is_arc_curator =  true
-      end
-      if item['name'].end_with?"DASHBOARD_ADMIN"
-        user_is_admin = true;
-      end
-    }
+    roles = Set.new
+    items.each do |item|
+      roles << "daac_curator" if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
+      roles << "arc_curator" if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
+      roles << "admin" if item['name'].end_with?"DASHBOARD_ADMIN"
+    end
 
     #
     # returns the highest level role
     #
-    role = nil
-    if (user_is_admin)
-      role = 'admin'
-    else
-      if (user_is_daac_curator)
-        role = 'daac_curator'
-      else
-        if (user_is_arc_curator)
-          role = 'arc_curator'
-        end
-      end
-    end
-    role
+    return "admin" if roles.include? "admin"
+    return "daac_curator" if roles.include? "daac_curator"
+    return "arc_curator" if roles.include? "arc_curator"
 
+    nil
   end
 
   private
