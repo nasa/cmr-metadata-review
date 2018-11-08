@@ -127,6 +127,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (2.1.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.5.9)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
