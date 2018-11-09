@@ -7,7 +7,8 @@ class AclDao
     @base_url = base_url
   end
 
-  def get_role(user_id)
+  # returns [role, daac_name]
+  def get_role_and_daac(user_id)
 
     # Sets whether the user is a specific role type
     # Note: user could be all three.
@@ -22,8 +23,14 @@ class AclDao
     end
 
     roles = Set.new
+
+    # this logic assumes that a user can only belong to 1 daac, which is the case with dashboard.
+    daac = nil
     items.each do |item|
-      roles << "daac_curator" if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
+      if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
+        daac = item['name'].match(/(.*)\-(.*)-(.*)/)[2].strip
+        roles << "daac_curator"
+      end
       roles << "arc_curator" if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
       roles << "admin" if item['name'].end_with?"DASHBOARD_ADMIN"
     end
@@ -31,9 +38,9 @@ class AclDao
     #
     # returns the highest level role
     #
-    return "admin" if roles.include? "admin"
-    return "daac_curator" if roles.include? "daac_curator"
-    return "arc_curator" if roles.include? "arc_curator"
+    return ["admin", nil] if roles.include? "admin"
+    return ["daac_curator",daac] if roles.include? "daac_curator"
+    return ["arc_curator", nil] if roles.include? "arc_curator"
 
     nil
   end
