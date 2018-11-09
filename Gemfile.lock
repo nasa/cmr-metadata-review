@@ -1,6 +1,6 @@
 GIT
   remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git
-  revision: 65ec1946755e2593f1bb1308a4d637818a0ec890
+  revision: be1bb964c5fec43628b4a9e5bf8772b4edf64469
   branch: develop
   specs:
     omniauth-urs (0.1.0)
@@ -127,8 +127,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (2.1.0)
-      crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)

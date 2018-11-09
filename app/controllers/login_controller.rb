@@ -9,13 +9,13 @@ class LoginController < Devise::OmniauthCallbacksController
     # don't the role will be nil.
     if @user.persisted? && !@user.role.nil?
       sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, kind: "Earth Data Login") if is_navigational_format?
+      set_flash_message(:notice, :success, kind: "Earthdata Login") if is_navigational_format?
     else
       redirect_to root_path
       if (@user.role.nil?)
-        flash.notice = "User is not provisioned with the proper ACLs.   Please contact the Operations team."
+        flash.notice = "User is not provisioned with the proper ACLs.   Please contact the Earthdata Operations team."
       else
-        flash.notice = "Could not authenticate from Earth Data Login"
+        flash.notice = "Could not authenticate from Earthdata Login"
       end
     end
   end
