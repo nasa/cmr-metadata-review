@@ -20,9 +20,7 @@ class User < ActiveRecord::Base
     user.email = auth.info.email_address
     role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials["access_token"])
     user.role = role
-    if daac and daac.length != 0
-      user.daac = daac
-    end
+    user.daac = daac if daac
     user.save!
     user
   end
