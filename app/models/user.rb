@@ -15,14 +15,15 @@ class User < ActiveRecord::Base
     if !user
       user = User.new
       user.uid = auth.uid
-      user.role = Cmr.getRole(auth.uid, auth.credentials["access_token"]);
       user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
-      user.email = auth.info.email_address
-      user.save
-    else
-      user.role = Cmr.getRole(auth.uid, auth.credentials["access_token"]);
-      user.save
     end
+    user.email = auth.info.email_address
+    role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials["access_token"])
+    user.role = role
+    if daac and daac.length != 0
+      user.daac = daac
+    end
+    user.save!
     user
   end
 
