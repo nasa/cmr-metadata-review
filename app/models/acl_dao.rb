@@ -28,8 +28,18 @@ class AclDao
     daac = nil
     items.each do |item|
       if item['name'].end_with?"DASHBOARD_DAAC_CURATOR"
-        daac = item['name'].match(/(.*)\-(.*)-(.*)/)[2].strip
+
+        if daac
+          # there is already daac assigned, this means CMR OPS team has provisioned a user with more than 1 DAAC
+          # so we should mentioned something in the logs.
+          Rails.logger.error("Error: User #{user_id} is already provisioned with a DAAC (#{daac})")
+        end
+
+        location = item['location']
+        acl = send_request_to_cmr :GET, location, nil
+        daac = acl['provider_identity']['provider_id']
         roles << "daac_curator"
+
       end
       roles << "arc_curator" if item['name'].end_with?"DASHBOARD_ARC_CURATOR"
       roles << "admin" if item['name'].end_with?"DASHBOARD_ADMIN"
