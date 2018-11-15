@@ -63,8 +63,10 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = {
+    location: 'log/emails'
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -80,6 +82,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # cmr base url
-  config.cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+  config.cmr_base_url = 'https://cmr.uat.earthdata.nasa.gov'
 
 end

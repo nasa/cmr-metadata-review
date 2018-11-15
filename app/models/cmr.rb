@@ -79,7 +79,8 @@ class Cmr
   end
 
   def self.current_revision_for(concept_id)
-    url = "https://cmr.earthdata.nasa.gov/search/collections.xml?concept_id[]=#{concept_id}"
+    base_url = Cmr.get_cmr_base_url
+    url = "#{base_url}/search/collections.xml?concept_id[]=#{concept_id}"
     result =  Cmr.cmr_request(url).parsed_response
 
     revision = -1
@@ -98,7 +99,8 @@ class Cmr
   # Queries cmr for collections updated since provided data, returns parsed response
 
   def self.collections_updated_since(date_string, page_num = 1)
-    raw_updated = Cmr.cmr_request("https://cmr.earthdata.nasa.gov/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
+    base_url = Cmr.get_cmr_base_url
+    raw_updated = Cmr.cmr_request("#{base_url}/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
 
@@ -155,6 +157,29 @@ class Cmr
     format_collection(raw_collection, data_format)
   end
 
+  def self.convert_xml_to_hash(data_format, collection_data)
+    if data_format == "umm_json"
+      JSON.parse(collection_data)
+    else
+      doc = Nokogiri.XML(collection_data)
+      remove_empty_tags(doc)
+      Hash.from_xml(doc.to_s)
+    end
+  end
+
+
+  def self.remove_empty_tags(node)
+    # post order traversal of DOM to remove leaf nodes that have no content
+    # i.e., <Instruments/>
+    node.children.each do |child|
+      remove_empty_tags(child)
+      # if is a leaf node and content is empty
+      if child.count == 0 && child.content.gsub(/\s+/, '').empty?
+        child.remove
+      end
+    end
+  end
+
   def self.get_collection_by_url(url, data_format)
     collection_data = cmr_request(url).parsed_response
 
@@ -163,7 +188,7 @@ class Cmr
       raise CmrError.new(error_message)
     end
 
-    collection_data_hash = data_format == "umm_json" ? JSON.parse(collection_data) : Hash.from_xml(collection_data)
+    collection_data_hash = convert_xml_to_hash(data_format, collection_data)
 
     raw_collection = if data_format == "echo10"
       collection_data_hash["Collection"]
@@ -249,7 +274,7 @@ class Cmr
     data = Cmr.cmr_request(url).parsed_response
 
     begin
-      collection_results = type == "umm_json" ? JSON.parse(data) : Hash.from_xml(data)["results"]
+      collection_results = convert_xml_to_hash(type, data)["results"]
     rescue
       # Error raised when no results are found.  CMR returns an error hash instead of xml string
       raise CmrError
@@ -285,8 +310,9 @@ class Cmr
   def self.get_raw_granule_results(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
+
     begin
-      granule_results = Hash.from_xml(granule_xml)["results"]
+      granule_results = convert_xml_to_hash("echo10", granule_xml)["results"]
     rescue
       raise CmrError
     end
@@ -542,7 +568,8 @@ class Cmr
   end
 
   def self.api_url(data_type = "collections", format_type = "echo10", options = {})
-    result = "https://cmr.earthdata.nasa.gov/search/" + data_type + "." + format_type + "?"
+    base_url = Cmr.get_cmr_base_url
+    result = "#{base_url}/search/" + data_type + "." + format_type + "?"
     options.each do |key, value|
       #using list with flatten so that a string and list will both work as values
       [value].flatten.each do |single_value|
@@ -586,5 +613,21 @@ class Cmr
     collection_hash.delete_if { |key, value| (key.to_s.match(/^xmlns/)) || (key.to_s.match(/^xsi/)) }
     collection_hash
   end
+
+  def self.get_cmr_base_url
+    cmr_base_url = Rails.application.config.cmr_base_url
+    if cmr_base_url.nil?
+      cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+    end
+    cmr_base_url
+  end
+
+  # returns [role, daac_name]
+  def self.get_role_and_daac(uid, access_token)
+    acl = AclDao.new(access_token, ENV['urs_client_id'], Cmr.get_cmr_base_url)
+    role, daac = acl.get_role_and_daac(uid)
+    [role, daac]
+  end
+
 
 end
