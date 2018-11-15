@@ -70,4 +70,8 @@ class ApplicationController < ActionController::Base
     params[param] && params[param] != any_keyword
   end
 
+  def new_session_path(scope)
+    new_user_session_path
+  end
+
 end

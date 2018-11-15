@@ -83,7 +83,7 @@ module RecordFormats
         comment_hash = Record.format_script_comments(comment_hash, value_keys)
         comment_hash
       else
-        raise Errors::PythonError
+        raise Errors::PythonError, "Python error occurred DIF10 (#{short_name})"
       end
     end
 
