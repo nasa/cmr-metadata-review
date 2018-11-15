@@ -607,7 +607,7 @@ class checkerRules():
                 return "Recommend providing a description for each Online Access URL."
         else:
             for i in range(0, length):
-                if val[i]['URLDescription'] == None:
+                if val[i].get('URLDescription') == None:
                     return "Recommend providing a description for each Online Access URL."
         return "OK - quality check"
 
