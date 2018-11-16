@@ -408,35 +408,35 @@ class Cmr
 
     if free_text
       free_text = free_text.strip
-      base_options = {"page_size" => page_size, "page_num" => curr_page}
+      base_options = {'page_size' => page_size, 'page_num' => curr_page}
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
-        base_options["provider"] = PROVIDERS
-        base_options["provider"] << "ARCTEST"
+        base_options['provider'] = PROVIDERS
+        base_options['provider'] << 'ARCTEST'
       else
-        base_options["provider"] = provider
+        base_options['provider'] = provider
       end
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
       options = base_options.clone
-      options["keyword"] = "*#{free_text}*"
+      options['keyword'] = "*#{free_text}*"
       options_first_char = base_options.clone
-      options_first_char["keyword"] = "#{free_text}*"
+      options_first_char['keyword'] = "#{free_text}*"
 
-      query_text = Cmr.api_url("collections", "echo10", options)
+      query_text = Cmr.api_url('collections', 'echo10', options)
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
-      query_text_first_char = Cmr.api_url("collections", "echo10", options_first_char)
+      query_text_first_char = Cmr.api_url('collections', 'echo10', options_first_char)
 
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
-        search_results = Hash.from_xml(raw_xml)["results"]
+        search_results = Hash.from_xml(raw_xml)['results']
 
         #rerun query with first wildcard removed
-        if search_results["hits"].to_i == 0
+        if search_results['hits'].to_i == 0
           raw_xml = Cmr.cmr_request(query_text_first_char).parsed_response
-          search_results = Hash.from_xml(raw_xml)["results"]
-          if search_results["hits"].to_i > 0
+          search_results = Hash.from_xml(raw_xml)['results']
+          if search_results['hits'].to_i > 0
             Rails.logger.info("cmr search for #{free_text} with wildcard on suffix ONLY worked.")
           end
         end
@@ -445,12 +445,12 @@ class Cmr
       end
 
 
-      collection_count = search_results["hits"].to_i
+      collection_count = search_results['hits'].to_i
 
-      if search_results["hits"].to_i > 1
-        search_iterator = search_results["result"]
-      elsif search_results["hits"].to_i == 1
-        search_iterator = [search_results["result"]]
+      if search_results['hits'].to_i > 1
+        search_iterator = search_results['result']
+      elsif search_results['hits'].to_i == 1
+        search_iterator = [search_results['result']]
       else
         search_iterator = []
       end
