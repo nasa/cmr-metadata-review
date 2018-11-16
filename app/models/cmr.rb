@@ -591,21 +591,23 @@ class Cmr
 
   def self.total_collection_count(daac = nil)
     if daac.nil?
-      options = {"page_size" => 1}
-      options["provider"] = PROVIDERS
-      url = Cmr.api_url("collections", "echo10", options)
+      options = {'page_size' => 1}
+      options['provider'] = PROVIDERS
+      options['provider'] << 'ARCTEST'
+      url = Cmr.api_url('collections', 'echo10', options)
     else
-      url = Cmr.api_url("collections", "echo10", {"page_size" => 1, "provider" => daac })
+      url = Cmr.api_url('collections', 'echo10', {'page_size' => 1,
+                                                  'provider' => daac })
     end
 
     total_results = Cmr.cmr_request(url)
     begin
-      results_hash = Hash.from_xml(total_results)["results"]
+      results_hash = Hash.from_xml(total_results)['results']
     rescue
-      Rails.logger.error("CMR Connection Error: Collection Count")
+      Rails.logger.error('CMR Connection Error: Collection Count')
       return 0
     end
-    results_hash["hits"].to_i
+    results_hash['hits'].to_i
   end
 
 
