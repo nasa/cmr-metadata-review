@@ -1,8 +1,5 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :lockable
+  devise :omniauthable, :omniauth_providers => [:urs]
 
   has_many :ingests
   has_many :comments
@@ -12,6 +9,32 @@ class User < ActiveRecord::Base
   validates_presence_of :daac, if: Proc.new { |u| u.role.eql?("daac_curator") }
 
   ROLES = %w[admin arc_curator daac_curator].freeze
+
+  def self.from_omniauth(auth)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    if !user
+      user = User.new
+      user.uid = auth.uid
+      user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
+    end
+    user.email = auth.info.email_address
+    role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials["access_token"])
+    user.role = role
+    user.daac = daac if daac
+    user.save!
+    user
+  end
+
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
 
   # ====Params
   # None

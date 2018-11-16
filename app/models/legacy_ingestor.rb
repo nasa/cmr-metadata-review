@@ -158,7 +158,7 @@ class LegacyIngestor
 
   def parse_url(data_set_id)
     return unless data_set_id
-    data_set_id.match(/https:\/\/cmr\.earthdata\.nasa\.gov(:443)?\/search\/concepts.*/)[0].squish
+    data_set_id.match(Regexp.new("#{Regexp.escape(Cmr.get_cmr_base_url)}(:443)?\\/search\\/concepts.*"))[0].squish
   end
 
   def parse_granule_concept_id(concept_id_data)

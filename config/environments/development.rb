@@ -17,18 +17,10 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = false
 
-  #config.action_mailer.delivery_method = :file
-  config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.smtp_settings = {
-    address: ENV['MAILER_SMTP_HOST'],
-    user_name: ENV['MAILER_SMTP_USER'],
-    password: ENV['MAILER_SMTP_PASSWORD'],
-    authentication: :login,
-    enable_starttls_auto: true,
-    port: 587
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = {
+    location: 'log/emails'
   }
-
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -52,4 +44,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # cmr base url
+  config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
+
 end

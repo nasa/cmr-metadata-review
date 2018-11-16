@@ -1,10 +1,6 @@
 <div class="page_header">
   <div class="header_title">
-    <% if ENV['SIT_ENV'] == 'true' %>
-      <h3><%= title %> (SIT Environment)</h3>
-    <% else %>
-      <h3><%= title %></h3>
-    <% end %>
+    <h3><%= title %> <%= get_environment_display_name %></h3>
     <% if current_user.admin %>
       <p>CMR Last Update: <%= RecordsUpdateLock.formatted_last_update %></p>
     <% end %>
@@ -37,19 +33,18 @@
           </ul>
         </li>
 
-        <li>
-          <%= link_to "#", class: "menu_link header_button" do %>
-            <i class="fa fa-sliders"></i>
-            <p>Account Options</p>
-          <% end %>
-          <ul class="eui-sub-menu">
-            <li><%= link_to "Edit Account", edit_user_registration_path %></li>
-            <% if current_user.admin %>
-              <li><%= link_to "Create User", new_user_registration_path %></li>
-              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
+        <% if current_user.admin %>
+          <li>
+            <%= link_to "#", class: "menu_link header_button" do %>
+              <i class="fa fa-sliders"></i>
+              <p>Account Options</p>
             <% end %>
-          </ul>
-        </li>
+            <ul class="eui-sub-menu">
+              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
+            </ul>
+          </li>
+        <% end %>
+
         <li>
           <%= link_to destroy_user_session_path, class: "menu_link header_button" do %>
             <i class="eui-icon eui-fa-external-link-square"></i>
