@@ -412,6 +412,7 @@ class Cmr
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
         base_options["provider"] = PROVIDERS
+        base_options["provider"] << "ARCTEST"
       else
         base_options["provider"] = provider
       end
