@@ -68,7 +68,7 @@ gem 'oauth2'
 gem 'omniauth-oauth2'
 gem 'faraday_middleware'
 
-gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", branch: "develop"
+gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.0.0"
 
 gem 'figaro'
 
