@@ -1,4 +1,4 @@
-/* 
+/*
 These styles are here only till a more proper Earthdata User Interface CSS
 integration can take place. Right now all this does is draw a footer.
 */
@@ -45,16 +45,18 @@ footer .badge {
     top: -2px
 }
 
+// https://css-tricks.com/couple-takes-sticky-footer/
+
 html, body {
     height: 100%;
 }
 
 .wrapper {
     min-height: 100%;
-    margin: 0 auto -102px
+    margin-bottom: -78px;
 }
 
 footer, .push {
-    /*height: 102px;*/
+    height: 45px; /* Need to push it up, otherwise off screen */
     clear: both
 }

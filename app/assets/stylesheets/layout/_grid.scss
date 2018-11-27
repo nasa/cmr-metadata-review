@@ -1,0 +1,92 @@
+@import "config/colors";
+@import "bourbon";
+@import "neat";
+
+/* ===================================================== *\
+   Grid
+\* ===================================================== */
+
+
+article {
+  @include row();
+
+  &.row-content {
+    @include outer-container;
+  }
+}
+
+// START NOTE: Will be refactored to .container after all pages have been established.
+
+main.dashboard {
+  // used for manage_collections and manage_cmr pages
+  background: $light-grey;
+  box-shadow: 0 -3px 3px rgba($true-black, 0.15);
+}
+
+section {
+  @include outer-container;
+}
+
+// END NOTE
+
+.col-1 { @include span-columns(1); }
+.col-2 { @include span-columns(2); }
+.col-3 { @include span-columns(3); }
+.col-4 { @include span-columns(4); }
+.col-5 { @include span-columns(5); }
+.col-6 { @include span-columns(6); }
+.col-7 { @include span-columns(7); }
+.col-8 { @include span-columns(8); }
+.col-9 { @include span-columns(9); }
+
+.content {
+  @include outer-container;
+}
+
+.row {
+  @include row();
+  position: relative;
+  padding: 0;
+
+  &.row-content {
+    background: $white;
+    box-shadow: 0 -3px 3px rgba($true-black, 0.15);
+    min-height: 300px;
+  }
+}
+
+.flex-center {
+  // Temporarily disable flexbox features due to PhantomJS incompatibility
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+// Flexbox Grid Classes
+
+// Space Between Two Elements
+.flex-row--sb {
+  display: flex;
+  justify-content: space-between;
+
+  // Fallback support
+  > *:first-child,
+  > *:last-child {
+    display: inline-block;
+  }
+
+  > *:last-child {
+    float: right;
+  }
+}
+
+// Items are packed toward the start line
+.flex-row--start {
+  display: flex;
+  justify-content: flex-start;
+}

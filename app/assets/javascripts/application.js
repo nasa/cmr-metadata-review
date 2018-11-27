@@ -18,5 +18,7 @@
 //= require c3/c3
 //= require chart/chart
 //= require piecelabel/piecelabel
+//= require eui-1.0.0/eui
+
 
 //= require_tree .

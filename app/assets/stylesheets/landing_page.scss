@@ -1,0 +1,203 @@
+@import "bourbon";
+@import "neat";
+@import "config/colors";
+
+header.landingpage-header {
+  margin-top: 30px;
+  display: block;
+  background-color: #2276ac;
+  background-image: -webkit-linear-gradient(#2276ac, #2070a3);
+  background-image: linear-gradient(#2276ac, #2070a3);
+  color: white;
+  padding: 0.5em 3.75em;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15)
+}
+
+header.landingpage-header::after {
+  clear: both;
+  content: "";
+  display: table
+}
+
+header.landingpage-header a:link, header.dashboard-header a:visited {
+  color: #f2f8fb
+}
+
+header.landingpage-header h1 {
+  font-size: 1.2em;
+  line-height: 1.2
+}
+
+header.landingpage-header #user-info p {
+  display: inline-block;
+  margin: 0
+}
+
+header.landingpage-header #user-info p strong {
+  padding-right: 5px
+}
+
+header.landingpage-header .subnav {
+  display: inline-block;
+  margin: 1em 1em 0 0
+}
+
+header.landingpage-header .fa {
+  margin-right: 0.625em
+}
+
+header.landingpage-header .header-tools {
+  display: block;
+  text-align: right;
+  margin-top: .5em;
+  margin-bottom: .5em
+}
+
+header.landingpage-header .header-tools::after {
+  clear: both;
+  content: "";
+  display: table
+}
+
+header.landingpage-header .header-tools #help {
+  display: none;
+  margin: 0;
+  margin-top: 0.5em;
+  font-size: 0.8em
+}
+
+header.landingpage-header .header-tools .eui-btn--blue {
+  background-color: #2582bd
+}
+
+header.landingpage-header .header-tools .eui-btn--blue:hover {
+  background-color: #2788c6
+}
+
+header.landingpage-header .header-tools .eui-btn--midnight-blue {
+  background-color: #33485d
+}
+
+header.landingpage-header .eui-masthead-logo {
+  display: block;
+  width: 100%;
+  padding: 1em 0
+}
+
+header.landingpage-header .eui-masthead-logo::after {
+  clear: both;
+  content: "";
+  display: table
+}
+
+header.landingpage-header .eui-masthead-logo a:link, header.landingpage-header .eui-masthead-logo a:visited {
+  background: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo.png) no-repeat left;
+  min-height: 64px;
+  color: white;
+  display: block;
+  -webkit-transition: background-image 0.1s linear;
+  transition: background-image 0.1s linear
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-webkit-min-device-pixel-ratio: 1.30208), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
+  header.landingpage-header .eui-masthead-logo a:link, header.landingpage-header .eui-masthead-logo a:visited {
+    background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_2x.png);
+    background-size: auto 50px
+  }
+}
+
+header.landingpage-header .eui-masthead-logo a:hover {
+  background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_hover.png)
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-webkit-min-device-pixel-ratio: 1.30208), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
+  header.landingpage-header .eui-masthead-logo a:hover {
+    background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_hover_2x.png)
+  }
+}
+
+header.landingpage-header .eui-masthead-logo h1 {
+  font-weight: 100
+}
+
+header.landingpage-header .eui-masthead-logo.eui-application-logo h1 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 2em;
+  letter-spacing: 1px
+}
+
+header.landingpage-header .eui-masthead-logo.eui-application-logo a:link {
+  padding-top: 28px;
+  padding-left: 72px
+}
+
+header.landingpage-header #user-info {
+  display: block;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 0.8em;
+  background-color: #2c93d5;
+  padding: .2em .6em .3em .6em;
+  border-radius: 5px;
+  margin-bottom: 1em
+}
+
+header.landingpage-header #user-info::after {
+  clear: both;
+  content: "";
+  display: table
+}
+
+header.landingpage-header #user-info #profile-link .prof-link-container {
+  margin-top: .1em
+}
+
+header.landingpage-header #user-info #profile-link .hoverOver {
+  color: #e8ecec
+}
+
+header.landingpage-header #user-info #profile-link #dropdown-caret {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg)
+}
+
+header.landingpage-header .daac {
+  position: relative;
+  background-color: #2276ac
+}
+
+body {
+  background: linear-gradient(to top, #fff , #fff 20%, transparent 50%), url(LANCE_header_MODISAqua2.jpg) no-repeat;
+  height: 100%;
+}
+
+.landing_page {
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
