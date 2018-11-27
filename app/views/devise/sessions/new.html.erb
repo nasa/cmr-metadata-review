@@ -1,17 +1,56 @@
-<div class="page_header">
-  <div class="header_title">
-    <h3>WELCOME TO THE COMMON METADATA REPOSITORY (CMR) DASHBOARD <%= get_environment_display_name %></h3>
-  </div>
-  <div class="clear_box"></div>
-</div>
- 
-<div class="header_image">
-</div>  
+<header class="landingpage-header" role="eui-banner">
+  <div class="content">
+    <div class="col-6">
+      <div class="eui-masthead-logo eui-application-logo" id="masthead-logo">
+        <a href="/">
+          <h1>CMR Metadata Curation Dashboard</h1>
+        </a>
+      </div>
+    </div>
+    <div class="col-6 header-tools">
+      <a href="#" id="help"><i class="fa fa-question-circle"></i>Help</a>
 
-<div class="log_in_box">
-  <% if devise_mapping.omniauthable? %>
-    <% resource_class.omniauth_providers.each do |provider| %>
-      <%= link_to "Login with #{get_omniauth_provider_display_name(provider)}", omniauth_authorize_path(resource_name, provider) %><br/>
-    <% end %>
-  <% end %>
+      <% if devise_mapping.omniauthable? %>
+        <% resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to "Login with #{get_omniauth_provider_display_name(provider)}", omniauth_authorize_path(resource_name, provider), class: "eui-btn--blue" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<noscript>
+  <div id='javascript_warning' class="eui-banner--danger">
+    <p class="eui-banner__message">
+      <strong> JavaScript is disabled! </strong> JavaScript must be enabled for some features to work.
+    </p>
+  </div>
+</noscript>
+
+
+
+<div class="landing_page">
+<div id="main-content">
+  <main class="welcome" role="main">
+    <div class="row row-header">
+      <div class="content">
+        <section class="dashboard-about-text highlight">
+          <h2>About the CMR Metadata Curation Dashboard</h2>
+          <p>The CMR Metadata Curation Dashboard is used to curate NASA EOSDIS collection and granule level metadata
+            in the CMR for correctness, completeness and consistency. A series of initial automated metadata quality
+            checks are performed when ingesting a selected record into the tool, after which the record is available
+            for manual review. Metadata reviewers perform manual quality checks in the tool, with the option to flag
+            identified issues as high (red), medium (yellow), or low (blue) priority. Additionally, the tool allows
+            reviewers to leave specific recommendations on how to resolve identified issues. Metrics are tracked for
+            all of the data entered into the tool (e.g. number of high, medium, and low priority issues flagged)
+            allowing for the generation of reports on the fly. Detailed reports can be generated for individual record
+            reviews, which summarize the number of red, yellow and blue flagged elements along with recommendations
+            made on how to resolve identified issues. Higher level reports, summarizing metrics across all records in
+            the tool or from a certain data provider, can also be generated. Reports can be shared directly in the
+            tool with other users.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
 </div>
