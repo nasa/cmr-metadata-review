@@ -40,5 +40,4 @@ USER cmrdash
 RUN bash -l /scripts/install_ruby.sh
 WORKDIR /home/cmrdash/cmr-metadata-review
 CMD tail -f /dev/null
-#CMD ["bash", "-l"]
 
