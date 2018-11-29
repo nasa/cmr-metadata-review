@@ -17,9 +17,11 @@
 </div>
 <div class="wrapper">
   <%= yield %>
+  <div class="push">
+</div>
+  <!-- For pushing the footer to the bottom of a page with minimal content -->
 </div>
 <%= render(partial: 'shared/footer') %>
-<div class="push"> <!-- For pushing the footer to the bottom of a page with minimal content --></div>
 <!-- Scripts that should be loaded in the footer to allow for faster page loads -->
 <script id="feedback-tag" src="https://fbm.earthdata.nasa.gov/for/MMT/feedback.js"></script>
 <script type="text/javascript">

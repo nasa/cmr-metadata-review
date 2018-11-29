@@ -1,7 +1,14 @@
 class LoginController < Devise::OmniauthCallbacksController
 
   def urs
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+
+    begin
+      @user = User.from_omniauth(request.env["omniauth.auth"])
+    rescue Cmr::CmrError => e
+      redirect_to root_path
+      flash.notice = e.message
+      return
+    end
 
     # before we sign user in, make sure two things:
     # 1) the user is in database, they should be as the result of calling User.from_omniauth

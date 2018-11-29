@@ -1,5 +1,3 @@
-@import "variables";
-
 .center_text {
   text-align: center;
 }
@@ -11,9 +9,12 @@
 
 .curation_box {
   border-radius: 10px;
+  border: solid 2px;
   background-color:white;
   width:1000px;
-  margin: 50px auto;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
   padding-left:40px;
   padding-right:40px;
   padding-bottom:40px;

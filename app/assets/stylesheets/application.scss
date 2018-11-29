@@ -10,302 +10,31 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  *= require eui-1.0.9/eui
  */
 
+@import "bourbon";
+@import "neat";
 @import "config/colors";
-@import "variables";
+@import "config/variables";
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "base/elements";
 @import "layout/grid";
 @import "layout/spacing";
 @import "layout/tophat2";
+@import "layout/footer";
 @import "components/masthead";
-@import "components/skip-nav";
+@import "components/general";
+@import "base/elements";
+@import "pages/charts";
+@import "pages/cmr-search";
+@import "pages/curation-home";
+@import "pages/landing-page";
+@import "pages/new-collection";
+@import "pages/records";
+@import "pages/reports";
+@import "pages/reviews";
+@import "pages/show-collection";
+@import "common/base";
 
-
-body {
-   -webkit-font-smoothing: antialiased;
-   font-family: 'Open Sans', sans-serif !important;
-   background-color: $gray-light;
-}
-
-p {
-     margin: 0px;
-}
-
-a,
-button {
-  &:focus {
-    outline: 0;
-  }
-}
-
-.clearfix {
-  clear: both;
-}
-
-.notice {
-
-}
-
-.alert {
-
-}
-
-.clear_box {
-  clear: both;
-}
-
-//overwriting the normal eui menu styles.
-.eui-menu.menu_override {
-  // position:absolute;
-  // top:8px;
-  // right:25px;
-
-
-  .menu_link {
-    padding-top:23px;
-    min-height: 70px;
-    &:hover {
-      background-color: $sky-blue;
-    }
-  }
-
-  .menu_sublink {
-    background-color: $blue-dark;
-    padding-top:10px;
-    min-height: 0px;
-  }
-}
-
-.header_button {
-  color: white;
-  display: inline-block;
-  background-color: $blue-dark;
-  border:none;
-
-  i {
-    display: inline-block;
-  }
-  p {
-    display: inline-block;
-  }
-}
-
-.page_header {
-  margin-top:30px; /* otherwise bleeds into tophat */
-  display: -webkit-flex; /* Safari */
-  -webkit-justify-content: space-between; /* Safari 6.1+ */
-  display: flex;
-  justify-content: space-between;
-
-  color: white;
-
-  background-color: $blue-dark;
-  width:100%;
-  min-height: 80px;
-
-  .header_title {
-    display: flex;
-    flex-direction: column;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-    padding-top: 25px;
-    padding-left: 40px;
-    p {
-      position: relative;
-      bottom: 1px;
-      padding-top: 0px;
-      font-size: 11px;
-      font-weight: 100;
-    }
-  }
-
-  .header_menu {
-    margin-top: 9px;
-    margin-right: 40px;
-  }
-
-  h3 {
-    margin: 0px;
-  }
-}
-
-h1 {
-  margin: 0px;
-}
-
-table {
-    border: 1px solid #323232;
-    background: white;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-table th {
-    padding: 0.5em;
-    border: 1px solid #989898;
-    background-color: #cbcbcb;
-    text-align: left;
-}
-
-tr:nth-child(even) {background: $gray-light}
-tr:nth-child(odd) {background: #FFF}
-
-.record_review_text {
-  font-size: 0.7em;
-  max-height: 150px;
-  overflow: auto;
-}
-
-.record_review_text {
-  font-size: 0.7em;
-  max-height: 150px;
-  overflow: auto;
-}
-
-
-.processing_modal {
-  position: fixed;
-  top: 20%;
-  left: 40%;
-  background-color: $gray-light;
-  min-height: 150px;
-  min-width: 20%;
-  text-align: center;
-  padding-top: 20px;
-  border: 1px solid;
-  line-height: 2.5;
-  z-index: z("modal-base");
-}
-
-.processing_modal_cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: z("modal-cover");
-}
-
-
-
-@mixin button_attributes {
-
-  color: white;
-  border: 1px solid rgba(50, 50, 50, 0.15);
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-  transition: background 0.15s ease-in-out;
-  outline: none;
-
-  -webkit-appearance: button;
-  cursor: pointer;
-}
-
-@mixin normal_button_sizing {
-  padding: 0.5em 1em;
-  border-radius: 7px;
-}
-
-@mixin small_button_sizing {
-  font-size: 0.9em;
-  border-radius: 5px;
-}
-
-@mixin button_disabled {
-  &:disabled {
-    background-color:$gray-light;
-    color: $disabled-gray-light;
-  }
-}
-
-
-
-.selectButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color:$green-light;
-}
-
-.smallSelectButton {
-  @include button_attributes;
-  @include small_button_sizing;
-  @include button_disabled;
-  background-color:$green-light;
-}
-
-.deleteButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $red;
-}
-
-.completeButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $green-light; 
-}
-
-.reportButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $blue-dark;
-}
-
-.finishedButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $blue-dark;
-}
-
-.refreshButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $blue-dark;
-}
-
-.cmrUpdateButton {
-  @include button_attributes;
-  @include normal_button_sizing;
-  @include button_disabled;
-  background-color: $blue-dark;
-}
-
-.flag_green {
-  background-color: $review-green;
-  color: white;
-}
-
-.flag_blue {
-  background-color: $review-blue;
-  color: white;
-}
-
-.flag_yellow {
-  background-color: $review-yellow;
-  color: black;
-}
-
-.flag_red {
-  background-color: $review-red;
-  color: white;
-}
-
-.flag_gray {
-  background-color: $review-gray;
-  color: white;
-}
