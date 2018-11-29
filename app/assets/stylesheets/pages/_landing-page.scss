@@ -1,9 +1,4 @@
-@import "bourbon";
-@import "neat";
-@import "config/colors";
-
 header.landingpage-header {
-  margin-top: 30px;
   display: block;
   background-color: #2276ac;
   background-image: -webkit-linear-gradient(#2276ac, #2070a3);
@@ -174,9 +169,7 @@ body {
 }
 
 .landing_page {
-  height: 100%;
 }
-
 
 
 
