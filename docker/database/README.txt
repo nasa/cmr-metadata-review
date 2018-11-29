@@ -1,4 +1,4 @@
-These instructions setup the postgresql database for use by the dashboard (or other apps)
+SETTING UP A POSTGRESQL DATABASE IN A DOCKER CONTAINER FOR USE BY DASHBOARD (or other apps)
 
 You'll first need to first create a user defined bridged network and
 then build the container:
