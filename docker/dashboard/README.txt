@@ -6,19 +6,9 @@ If you haven't already, create a bridged network:
 Then build the container.   Note the postgresql container must already be started.
 > ./container.sh build
 
-
-Before you start the container for the first time, you'll need to
-check out a local copy of the "cmr-metadata-review" repository into
-this directory.  The startup scripts create a volume mapping your
-local directory into the container.  This will allow you to modify
-files on your locally (using dreamweaver, bbedit, etc.) and have these
-modifications appear in the container as well.
-
-> git clone https://<your userid>@github.com/nasa/cmr-metadata-review.git
-> git checkout <your branch>
-
-Next copy the database.yml and application.yml file provided to you into the
-cmr-metadata-review/config directory.
+Before starting the container, be sure you have a copy the
+database.yml and application.yml file provided to you and placed in
+the cmr-metadata-review/config directory.
 
 Now you are all set to start the container.
 > ./container.sh start

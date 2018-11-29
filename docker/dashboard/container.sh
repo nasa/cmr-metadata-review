@@ -12,7 +12,7 @@ build() {
 
 start() {
     echo starting
-    docker container run --volume `pwd`/cmr-metadata-review:/home/cmrdash/cmr-metadata-review:rw --network cmrdash \
+    docker container run --volume `pwd`/../..:/home/cmrdash/cmr-metadata-review:rw --network cmrdash \
 	--name cmrdash -p3000:3000 -d cmrdash
 }
 
