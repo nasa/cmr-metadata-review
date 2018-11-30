@@ -420,6 +420,7 @@
     background-color: transparent;
     resize: none;
     outline: none;
+    height: 300px;
   }
 
   .flag_flexbox {
@@ -592,4 +593,8 @@
   &__text {
     font-weight: bold;
   }
+}
+
+.review-page {
+  margin-bottom: 50px;
 }
