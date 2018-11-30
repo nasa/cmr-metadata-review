@@ -121,11 +121,11 @@ ActiveRecord::Schema.define(version: 20180829195404) do
     t.datetime "updated_at",                          null: false
     t.string   "role"
     t.string   "daac"
-    t.string   "provider"
-    t.string   "uid"
     t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

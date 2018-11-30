@@ -2,43 +2,51 @@
 <html>
 <head>
   <title>CmrMetadataReview</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-  <link href="https://cdn.earthdata.nasa.gov/eui/1.1.3/stylesheets/application.css" rel="stylesheet" />
-  
+  <link href="https://cdn.earthdata.nasa.gov/eui/1.1.3/stylesheets/application.css" rel="stylesheet"/>
   <%# See https://guides.rubyonrails.org/security.html#csrf-countermeasures %>
   <%# See https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="wrapper">
-    <% if notice %>
-      <div id="notice_banner" class="eui-banner--info">
-        <p class="eui-banner__message">
-          <%= notice %>
-          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("notice_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-        </p>
-      </div>
-    <% end %>
+<!--<div id="gradient"></div>-->
+<div class="th-wrapper">
+  <header id="earthdata-tophat2"/>
+</div>
+<div class="wrapper">
+  <%= yield %>
+  <div class="push">
+</div>
+  <!-- For pushing the footer to the bottom of a page with minimal content -->
+</div>
+<%= render(partial: 'shared/footer') %>
+<!-- Scripts that should be loaded in the footer to allow for faster page loads -->
+<script id="feedback-tag" src="https://fbm.earthdata.nasa.gov/for/MMT/feedback.js"></script>
+<script type="text/javascript">
+  (function () {
+    var initFeedback = function () {
+      window.feedback.init({showIcon: false});
+    }
+    if (window.feedback) {
+      initFeedback();
+    }
+    else {
+      document.getElementById('feedback-tag').onload = initFeedback;
+    }
+  })();
+</script>
 
-    <% if alert && alert != "" %>
-      <div id="alert_banner" class="eui-banner--danger">
-        <p class="eui-banner__message">
-          <%= alert %>
-          <a href="javascript:void(0)" class="eui-banner__dismiss" onclick='dismiss_banner("alert_banner")' title="Dismiss banner"><i class="eui-icon eui-fa-times-circle"></i></a>
-        </p>
-      </div>
-    <% end %>
+<!-- Tophat -->
+<script src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
+        id="earthdata-tophat-script"
+        data-show-fbm="true"
+        data-show-status="true"
+        data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications">
+</script>
 
-    <script type="text/javascript">
-      function dismiss_banner(element_name) {
-        document.getElementById(element_name).style.display = "none";
-      }
-    </script>
+<!-- End tophat -->
 
-    <%= yield %>
-  </div>
-  <%= render(partial: 'shared/footer') %>
 </body>
 </html>

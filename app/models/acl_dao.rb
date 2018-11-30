@@ -14,6 +14,10 @@ class AclDao
     # Note: user could be all three.
 
     results = search_acls_by_user(user_id, 1)
+    if results['errors']
+      Rails.logger.error("Error retrieving ACLs from CMR for #{user_id}, error=#{results['errors']}")
+      raise Cmr::CmrError.new("Error retrieving ACLs from CMR for #{user_id}")
+    end
     noPages = (results['hits']/2000).ceil
     items = Array.wrap(results['items'])
 
