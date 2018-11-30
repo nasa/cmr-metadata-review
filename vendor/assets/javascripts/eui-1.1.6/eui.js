@@ -3,41 +3,41 @@
 (function ($) {
   "use strict";
 
-  $.fn.presence = function(){
+  $.fn.presence = function () {
     return this.length > 0 ? this : false;
-  }
+  };
 
   $.fn.flyout = function () {
     var $this, $tab, $list, openClass;
 
-    $this = this;
-    $tab = this.find(".eui-flyout__tab");
-    $list = this.find("ul");
+    $this = $(this);
+    $tab = $this.find(".eui-flyout__tab");
+    $list = $this.find("ul");
     openClass = "visible";
 
     $tab.on("click", function () {
       if ($list.hasClass(openClass)) {
-        $this.animate({right: -$list.width()}, function () {
+        $this.animate({right: -$list.width() }, function () {
           $this.css({right: 0});
           $list.toggleClass(openClass);
         });
       } else {
         $list.toggleClass(openClass);
-        $this.css({right: -$list.width()});
+        $this.css({right: -$list.width() });
         $this.animate({right: 0});
       }
-      var $flyoutIcon = $this.find(".eui-flyout__tab-nub i");
+      var $flyoutIcon = $this.find(".eui-flyout__tab-nub i"),
+        $span = $flyoutIcon.find('.eui-sr-only');
 
-      $flyoutIcon.toggleClass("ed-fa-caret-left")
-        .toggleClass("ed-fa-caret-right");
 
-      var $span = $flyoutIcon.find('.eui-sr-only');
+      $flyoutIcon.toggleClass("eui-fa-caret-left")
+        .toggleClass("eui-fa-caret-right");
 
       if ($span.length === 1) {
-        var className = $flyoutIcon.attr("class");
-        if (className.contains("ed-fa-caret-left")) {
+
+        if ($flyoutIcon.hasClass("eui-fa-caret-left")) {
           $span[0].innerText = $span[0].textContent = 'Show flyout';
-        } else if (className.contains("ed-fa-caret-right")) {
+        } else if ($flyoutIcon.hasClass("eui-fa-caret-right")) {
           $span[0].innerText = $span[0].textContent = 'Hide flyout';
         }
       }
@@ -59,10 +59,27 @@
   //poi keyboard interactions
   $(function () {
     //keypress on point
-    $(".point").keypress(function (e) {
+    $(".eui-point").keypress(function (e) {
       if (e.which === 13 || e.which === 32) {
         e.preventDefault();
         $(this).toggleClass("visible");
+      }
+    });
+  });
+
+  //supermenu keyboard interactions
+  $(function () {
+    //tabkey to supermenu item and any submenu items
+    $("li").focusin(function () {
+      $(this).addClass("eui-supermenu-open");
+    });
+  });
+
+  $(function () {
+    //close block when li or subcomponents no longer have focus
+    $("li").focusout(function (e) {
+      if ($(this).has(e.relatedTarget).length === 0) {
+        $(this).removeClass("eui-supermenu-open");
       }
     });
   });
@@ -105,14 +122,34 @@
     });
   });
 
+  // Button group dropdown
+  $(function () {
+    $('.toggle-button-group').bind('click', function (e) {
+      e.stopPropagation();
+      jQuery(this).parent().find('.button-group--dropdown').slideToggle('fast');
+    });
+  });
+
+  // Button group dropdown hiding (click off and ESC)
+  $(function () {
+    $(document).click(function () {
+      $(".button-group--dropdown").hide();
+    });
+    $(document).keyup(function (e) {
+      if (e.keyCode === 27) {
+        $(".button-group--dropdown").hide();
+      }
+    });
+  });
+
   $(function () {
 
     $(".eui-flyout").flyout();
 
-  // FUNCTIONALITY: #Banner dismissal
+    // FUNCTIONALITY: #Banner dismissal
     $('.eui-banner__dismiss').on('click', function () {
-      var totalMessages = $(this).parents('[class^=eui-banner--]').find('.eui-banner__message').length;
-      var thisMessage = $(this).parents('.eui-banner__message');
+      var totalMessages = $(this).parents('[class^=eui-banner--]').find('.eui-banner__message').length,
+        thisMessage = $(this).parents('.eui-banner__message');
 
       if ($(thisMessage).length > 0 && totalMessages > 1) {
         $(thisMessage).remove();
@@ -121,18 +158,22 @@
       }
     });
 
-  // FUNCTIONALITY: #Accordion
+    // FUNCTIONALITY: #Accordion
+
+    function toggleAccordion($container) {
+      $container.find('.eui-accordion__body').slideToggle('fast', function () {
+        $container.toggleClass('is-closed');
+      });
+    }
 
     // Basic Accordion Functionality
-    $(".eui-accordion__header").click(function() {
-      $(this).siblings(".eui-accordion__body").slideToggle("fast");
-      $(this).closest(".eui-accordion").toggleClass("is-closed");
+    $(".eui-accordion__header").click(function () {
+      toggleAccordion($(this).closest('.eui-accordion'));
     });
 
-    $(".eui-accordion__icon").on("keyup", function(e) {
-      if (e.keyCode == 13 || e.keyCode == 32) {
-        $(this).parent().siblings(".accordion__body").slideToggle("fast");
-        $(this).closest(".eui-accordion").toggleClass("is-closed");
+    $(".eui-accordion__icon").on("keyup", function (e) {
+      if (e.keyCode === 13 || e.keyCode === 32) {
+        toggleAccordion($(this).closest('.eui-accordion'));
       }
     });
 
@@ -146,8 +187,8 @@
     }
 
     function checkAccordionValidity(urlHash) {
-      var accordionId = $("#" + urlHash);
-      var accordionName = $("[name='" + urlHash + "']");
+      var accordionId = $("#" + urlHash),
+        accordionName = $("[name='" + urlHash + "']");
 
       if (accordionId.length > 0) {
         openHashAccordion(accordionId);
@@ -162,13 +203,13 @@
       checkAccordionValidity(hash);
     }
 
-    $("a[href*='#']").on("click", function() {
-      var linkHref = $(this).attr("href");
-      var linkHash = linkHref.substring(linkHref.indexOf("#") + 1);
+    $("a[href*='#']").on("click", function () {
+      var linkHref = $(this).attr("href"),
+        linkHash = linkHref.substring(linkHref.indexOf("#") + 1);
       checkAccordionValidity(linkHash);
     });
 
-  // FUNCTIONALITY: #Sidebar menu
+    // FUNCTIONALITY: #Sidebar menu
     $('.toggle-extended-content').bind('click', function (e) {
       jQuery(this).parent().find('.extended-content').slideToggle('fast', function () {
         if ($('.toggle-extended-content a').hasClass('open')) {
@@ -182,6 +223,42 @@
       e.preventDefault();
     });
   });
+
+
+  $(function() {
+
+      /**
+       * adjustFeatureGrid
+       *
+       * This will dynamically adjust the height of the description section of each
+       * card in the feature grid.
+       */
+      function adjustFeatureGrid() {
+
+          $(".eui-feature-grid-row__image").each(function(){
+              var $content = $(this).find(".eui-feature-grid-row__content");
+              var $title = $(this).find(".eui-feature-grid-row__title");
+              var $evtDate = $(this).find(".eui-feature-grid-row__event-date");
+              var $desc = $(this).find(".eui-feature-grid-row__description");
+
+              var titleHeight = $title.outerHeight(true);
+              var contentHeight = $content.height();
+              var evtDateHeight = 0;
+
+              if($evtDate.length > 0) {evtDateHeight = $evtDate.outerHeight(true);}
+
+              var availableHeight = contentHeight - (titleHeight + evtDateHeight);
+              $desc.css("height", availableHeight + "px");
+          });
+      }
+
+      adjustFeatureGrid();
+
+      $(window).resize(adjustFeatureGrid);
+
+  });
+
+
 }(jQuery));
 ;(function () {
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -191,7 +268,7 @@
 
 	euiga('create', 'UA-62340125-3', 'auto', {'name': 'eui_tracker'});
 	euiga('eui_tracker.send', 'pageview');
-	euiga('eui_tracker.send', 'event', 'eui', 'loaded', '1.0.0');
+	euiga('eui_tracker.send', 'event', 'eui', 'loaded', '1.1.6');
 })();;// leanModal v1.1 by Ray Stone - http://finelysliced.com.au
 // Dual licensed under the MIT and GPL
 
