@@ -12,4 +12,4 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( chart.js )
 Rails.application.config.assets.precompile += %w( c3.js )
 Rails.application.config.assets.precompile += %w( piecelabel.js )
-Rails.application.config.assets.precompile += %w( netinsight_2.3/ntpagetag.js )
+# Rails.application.config.assets.precompile += %w( netinsight_2.3/ntpagetag.js )
