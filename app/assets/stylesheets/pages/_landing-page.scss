@@ -90,7 +90,7 @@ header.landingpage-header .eui-masthead-logo::after {
 }
 
 header.landingpage-header .eui-masthead-logo a:link, header.landingpage-header .eui-masthead-logo a:visited {
-  background: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo.png) no-repeat left;
+  background: url(eui/logos/app-logo.png) no-repeat left;
   min-height: 64px;
   color: white;
   display: block;
@@ -100,18 +100,18 @@ header.landingpage-header .eui-masthead-logo a:link, header.landingpage-header .
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-webkit-min-device-pixel-ratio: 1.30208), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
   header.landingpage-header .eui-masthead-logo a:link, header.landingpage-header .eui-masthead-logo a:visited {
-    background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_2x.png);
+    background-image: url(eui/logos/app-logo_2x.png);
     background-size: auto 50px
   }
 }
 
 header.landingpage-header .eui-masthead-logo a:hover {
-  background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_hover.png)
+  background-image: url(eui/logos/app-logo_hover.png)
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-webkit-min-device-pixel-ratio: 1.30208), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
   header.landingpage-header .eui-masthead-logo a:hover {
-    background-image: url(https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/app-logo_hover_2x.png)
+    background-image: url(eui/logos/app-logo_hover_2x.png)
   }
 }
 
