@@ -8,6 +8,10 @@ header.landingpage-header {
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.15)
 }
 
+header.landingpage-header h1 {
+  white-space: nowrap;
+}
+
 header.landingpage-header::after {
   clear: both;
   content: "";
