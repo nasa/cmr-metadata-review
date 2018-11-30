@@ -1,424 +1,423 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: REVIEW"}) %>
 
-<div class="review_background">
- <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
+<div class="review-page">
+  <div class="review_background">
+   <%= render(partial: 'navbar', locals: {page: "review", record: @collection_record, user_email: current_user.email}) %>
 
-  <div class="toggle_area">
-    <!-- bubbles and drop down navigation -->
-    <div>
-      <div class="bubble_title">
-        <p class="bubble_title_text"><%= @section_title %></p>
+    <div class="toggle_area">
+      <!-- bubbles and drop down navigation -->
+      <div>
+        <div class="bubble_title">
+          <p class="bubble_title_text"><%= @section_title %></p>
+        </div>
+        <!-- bubbles -->
+        <div class="bubble_title">
+          <% @bubble_data.each do |bubble| %>
+            <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
+              <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
+              <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
+                <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
+              <% elsif bubble[:feedback] %>
+                <div class="<%= script_text_class(bubble) %> bubble_opinion">F</div>
+              <% else %>
+                <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <!-- bubbles -->
-      <div class="bubble_title">
-        <% @bubble_data.each do |bubble| %>
-          <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
-            <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
-            <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
-              <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
-            <% elsif bubble[:feedback] %>
-              <div class="<%= script_text_class(bubble) %> bubble_opinion">F</div>
-            <% else %>
-              <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
-            <% end %>
-          </div>
+
+        <!-- Render the filters used to isolate specific review fields. -->
+        <%= render partial: 'filters', locals: { record: @record, section_titles: @section_titles } %>
+
+    <div class="clearfix"></div>
+  </div>
+
+  <div >
+    <div class="scroll_table" id="scroll_table">
+
+    <table class="review_table">
+      <tr class="section_title_row">
+      <th class="headcol first_headcol"></th>
+
+        <!-- for each of shown value list, create td for value -->
+        <% @section_titles.each do |title| %>
+          <td class="title_column column_<%=title%>">
+            <div class="title_text">
+              <div>
+                <%= split_on_capitals(title) %>
+              </div>
+              <% if @controlled_notices[title] %>
+                <i class="fa fa-asterisk controlled_icon tooltip">
+                  <p class="tooltiptext"><%=@controlled_notices[title]%></p>
+                </i>
+              <% end %>
+            </div>
+            <div class="widthGrab">
+              <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            </div>
+          </td>
         <% end %>
-      </div>
-    </div>
+      </tr>
 
-      <!-- Render the filters used to isolate specific review fields. -->
-      <%= render partial: 'filters', locals: { record: @record, section_titles: @section_titles } %>
-
-  <div class="clearfix"></div>
-</div>
-
-<!-- Data/review area -->
-<section >
-
-    <div >
-      <div class="scroll_table" id="scroll_table">
-
-      <table class="review_table">
-        <tr class="section_title_row">
-        <th class="headcol first_headcol"></th>
-
-          <!-- for each of shown value list, create td for value -->
+        <tr class="auto_line_row line_row">
+          <th class="headcol headcol__script-row">
+          </th>
           <% @section_titles.each do |title| %>
-            <td class="title_column column_<%=title%>">
-              <div class="title_text">
-                <div>
-                  <%= split_on_capitals(title) %>
-                </div>
-                <% if @controlled_notices[title] %>
-                  <i class="fa fa-asterisk controlled_icon tooltip">
-                    <p class="tooltiptext"><%=@controlled_notices[title]%></p>
-                  </i>
+            <td class="column_<%=title%>">
+            </td>
+          <% end %>
+        </tr>
+
+
+        <tr>
+          <th class="headcol headcol__script-row multi_line">Required by Schema and/or UMM</th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+              <div class="umm_required_cell">
+                <% if @record.field_required?(title) %>
+                  <i class="eui-icon eui-check-o review_check"></i>
                 <% end %>
               </div>
-              <div class="widthGrab">
-                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+        <th class="headcol headcol__script-row">FLAGGED BY SCRIPT</th>
+          <!-- for each of shown value list, create td for value -->
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+              <div class="script_check_cell">
+                <% if @flagged_by_script[title] %>
+                  <i class="eui-icon eui-check-o review_check"></i>
+                <% end %>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+        <th class="headcol headcol__script-row">SCRIPT RESULT</th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+              <div><%= raw @script_values[title] %></div>
+            </td>
+          <% end %>
+        </tr>
+
+        <% if !@previous_values.empty? %>
+          <tr>
+            <th class="headcol headcol__script-row">PREVIOUS VALUE</th>
+              <% @section_titles.each do |title| %>
+                <td class="column_<%=title%>">
+                  <div>
+                    <%= format_new_lines(@previous_values[title]) %>
+                  </div>
+                </td>
+              <% end %>
+            </tr>
+        <% end %>
+
+        <tr>
+          <th class="headcol headcol__script-row">CURRENT VALUE</th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+              <div>
+              <%= format_new_lines(@current_values[title]) %>
               </div>
             </td>
           <% end %>
         </tr>
 
-          <tr class="auto_line_row line_row">
-            <th class="headcol headcol__script-row">
-            </th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-              </td>
-            <% end %>
-          </tr>
-
-
+        <% if !@previous_values.empty? %>
           <tr>
-            <th class="headcol headcol__script-row multi_line">Required by Schema and/or UMM</th>
+            <th class="headcol headcol__script-row">PREVIOUS REVISION RECOMMENDATION</th>
             <% @section_titles.each do |title| %>
               <td class="column_<%=title%>">
-                <div class="umm_required_cell">
-                  <% if @record.field_required?(title) %>
-                    <i class="eui-icon eui-check-o review_check"></i>
-                  <% end %>
+                <div class="previous_recommendation_cell">
+                <%= string_html_format(@previous_recommendations[title]) %>
                 </div>
               </td>
             <% end %>
           </tr>
-          <tr>
-          <th class="headcol headcol__script-row">FLAGGED BY SCRIPT</th>
-            <!-- for each of shown value list, create td for value -->
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div class="script_check_cell">
-                  <% if @flagged_by_script[title] %>
-                    <i class="eui-icon eui-check-o review_check"></i>
-                  <% end %>
-                </div>
-              </td>
-            <% end %>
-          </tr>
-          <tr>
-          <th class="headcol headcol__script-row">SCRIPT RESULT</th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div><%= raw @script_values[title] %></div>
-              </td>
-            <% end %>
-          </tr>
-
-          <% if !@previous_values.empty? %>
-            <tr>
-              <th class="headcol headcol__script-row">PREVIOUS VALUE</th>
-                <% @section_titles.each do |title| %>
-                  <td class="column_<%=title%>">
-                    <div>
-                      <%= format_new_lines(@previous_values[title]) %>
-                    </div>
-                  </td>
-                <% end %>
-              </tr>
-          <% end %>
-
-          <tr>
-            <th class="headcol headcol__script-row">CURRENT VALUE</th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-                <div>
-                <%= format_new_lines(@current_values[title]) %>
-                </div>
-              </td>
-            <% end %>
-          </tr>
-
-          <% if !@previous_values.empty? %>
-            <tr>
-              <th class="headcol headcol__script-row">PREVIOUS REVISION RECOMMENDATION</th>
-              <% @section_titles.each do |title| %>
-                <td class="column_<%=title%>">
-                  <div class="previous_recommendation_cell">
-                  <%= string_html_format(@previous_recommendations[title]) %>
-                  </div>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-
-          <tr class="input_line_row line_row">
-            <th class="inputlabelcol"></th>
-            <th class="headcol">
-            </th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-              </td>
-            <% end %>
-          </tr>
-
-          <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
-
-          <tr class="input_line_row line_row">
-            <th class="inputlabelcol"></th>
-            <th class="headcol headcol__user-row">
-            </th>
-            <% @section_titles.each do |title| %>
-              <td class="column_<%=title%>">
-              </td>
-            <% end %>
-          </tr>
-
-          <% if can?(:request_opinions, @record) && (@record.open? || @record.in_arc_review? || @record.ready_for_daac_review?) %>
-            <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
-          <% end %>
-
-          <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
-
-          <% if can?(:discuss_justification, @record) %>
-            <%= render partial: 'discussion_and_justification', locals: { discussions: @justification_discussions, section_titles: @section_titles } %>
-          <% end %>
-
-          <% if can?(:provide_feedback, @record) && (@record.in_daac_review? || @record.closed?) %>
-            <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
-            <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
-          <% end %>
-
-        </table>
-
-        </div>
-      </div>
-
-  </section>
-
-  <script type="text/javascript">
-    //This is adding the ability to drag to adjust column widths
-    //all column widths are determine by the top row of table, with class title_column
-    (function setupWidthAdjustment() {
-      var tableTitles = document.getElementById('scroll_table').getElementsByClassName('title_column');
-      var widthGrabs = document.getElementsByClassName('widthGrab');
-      //since the grabbers have to be absolutely position, setting correct dynamic height once table loads.
-      for (var i=0; i < widthGrabs.length; i++) {
-        widthGrabs[i].style.height = tableTitles[0].offsetHeight.toString() + 'px';
-      }
-      //function scope bools to keep track of state during move events
-      var changeWidthBool = false;
-      var targetElement = null;
-      var originalXPosition = 0;
-      var totalXMovement = 0;
-      var originalWidth = 0;
-      var minWidth = 200;
-
-      //needed to set the index in the onmousedown event
-      function findInHtmlCollection(element, collection) {
-        for (var i = 0; i < collection.length; i++) {
-          if (element.parentNode == collection[i].parentNode) {
-            return i;
-          }
-        }
-        return -1;
-      }
-
-      //setting the clicked column as the one to be adjusted.
-      for (var i = 0; i < widthGrabs.length; i++) {
-        var index = parseInt(i.toString());
-        widthGrabs[i].onmousedown = function(e) {
-          changeWidthBool = true;
-          var index = findInHtmlCollection(e.currentTarget, widthGrabs);
-          targetElement = tableTitles[index];
-          originalWidth = tableTitles[index].offsetWidth;
-          originalXPosition = e.screenX;
-          e.preventDefault();
-        }
-      }
-
-      //clearing state variables
-      document.addEventListener('mouseup', function(e) {
-         changeWidthBool = false;
-         targetElement = null;
-         originalXPosition = 0;
-         totalXMovement = 0;
-         originalWidth = 0;
-      }, false);
-
-      //for each x mouse move, find the new total width and set the column.
-      document.addEventListener('mousemove', function(e) {
-        try {
-          if (changeWidthBool) {
-            e.preventDefault();
-            if (targetElement != null) {
-                totalXMovement = -( originalXPosition - e.screenX );
-                if ((originalWidth + totalXMovement) > minWidth) {
-                  var newWidth = (originalWidth + totalXMovement).toString() + 'px';
-                  targetElement.children[0].style.width = newWidth;
-                }
-            }
-          }
-        } catch (e) {
-          console.log('Column Width Change Failure');
-        }
-      }, false);
-    })();
-
-
-    //sets all of the flag colors on page loads and updates
-    function update_color_backgrounds() {
-      //hidden select inputs
-      var color_selects = document.getElementsByClassName("color_code_select");
-      //full td cell
-      var color_cells = document.getElementsByClassName("color_code_cell");
-      //the div containing the color selecting icons
-      var color_button_sets = document.getElementsByClassName("color_code_background");
-      //the divs containing the x out option to remove a selected color
-      var color_cancels = document.getElementsByClassName("color_cancel_selection");
-
-      var counter = 0;
-      //iterating over all the hidden color select inputs
-      while (counter < color_selects.length) {
-        var color = color_selects[counter].value
-        //Removing all BG colors from the cell
-        <% ["color_green", "color_yellow", "color_red", "color_blue", "color_gray"].each do |color_class| %>
-          color_cells[counter].classList.remove("<%=color_class%>");
         <% end %>
-        //adding the class that corresponds to the color selected in the select input
-        color_cells[counter].classList.add("color_" + color.toString());
-        //if no color selected, show the set of color icons to click
-        if (color == "") {
-          color_button_sets[counter].style.display = "flex";
-          color_cancels[counter].style.display = "none";
-        //if color is selected, hide color icons, and show the x out button to remove color selection
-        } else {
-          color_button_sets[counter].style.display = "none";
-          color_cancels[counter].style.display = "block";
-        }
-        counter = counter + 1;
-      }
-    }
 
-    update_color_backgrounds();
-  </script>
+        <tr class="input_line_row line_row">
+          <th class="inputlabelcol"></th>
+          <th class="headcol">
+          </th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+            </td>
+          <% end %>
+        </tr>
 
+        <%= render partial: 'recommendation', locals: { enabled: can?(:recommend_changes, @record), recommendations: @recommendations, section_titles: @section_titles } %>
 
+        <tr class="input_line_row line_row">
+          <th class="inputlabelcol"></th>
+          <th class="headcol headcol__user-row">
+          </th>
+          <% @section_titles.each do |title| %>
+            <td class="column_<%=title%>">
+            </td>
+          <% end %>
+        </tr>
 
-  <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
-    <%= hidden_field_tag(:section_index, params["section_index"]) %>
-    <% if !@marked_done %>
+        <% if can?(:request_opinions, @record) && (@record.open? || @record.in_arc_review? || @record.ready_for_daac_review?) %>
+          <%= render partial: 'requires_opinion', locals: { second_opinions: @second_opinions, section_titles: @section_titles } %>
+        <% end %>
 
-      <div class="save_button_review">
-        <button type="submit" id="save_review_button" class="form_save_button selectButton">
-          <span class="save_review_text">
-            Save Review
-          </span>
-          <span class="save_review_icon">
-            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-          </span>
-        </button>
+        <%= render partial: 'color_code', locals: { enabled: can?(:recommend_changes, @record), section_titles: @section_titles } %>
+
+        <% if can?(:discuss_justification, @record) %>
+          <%= render partial: 'discussion_and_justification', locals: { discussions: @justification_discussions, section_titles: @section_titles } %>
+        <% end %>
+
+        <% if can?(:provide_feedback, @record) && (@record.in_daac_review? || @record.closed?) %>
+          <%= render partial: 'requires_feedback', locals: { feedbacks: @feedbacks, section_titles: @section_titles } %>
+          <%= render partial: 'feedback_discussion', locals: { discussions: @feedback_discussions, section_titles: @section_titles } %>
+        <% end %>
+
+      </table>
+
       </div>
-
-      <script type="text/javascript">
-        // Setting as disbled until someone triggers an "activateSaveButton" action
-        document.getElementById("save_review_button").disabled = true;
-
-        document.getElementById("save_review_button").onclick = function() {
-          showLoading("Saving Record Review");
-        }
-
-        function activateSaveButton() {
-          document.getElementById('save_review_button').disabled = false;
-        }
-      </script>
-    <% end %>
-
-  <% end %>
-
-
-
-  <section class="detail_footer">
-
-    <div id="review_top_button" class="review_top_button">
-      <span class="review_top_text">
-        Back To Top
-      </span>
-      <span class="review_top_icon">
-        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-      </span>
     </div>
 
+
     <script type="text/javascript">
-      document.getElementById('review_top_button').onclick = function() {
-        window.scrollTo(0,0);
+      //This is adding the ability to drag to adjust column widths
+      //all column widths are determine by the top row of table, with class title_column
+      (function setupWidthAdjustment() {
+        var tableTitles = document.getElementById('scroll_table').getElementsByClassName('title_column');
+        var widthGrabs = document.getElementsByClassName('widthGrab');
+        //since the grabbers have to be absolutely position, setting correct dynamic height once table loads.
+        for (var i=0; i < widthGrabs.length; i++) {
+          widthGrabs[i].style.height = tableTitles[0].offsetHeight.toString() + 'px';
+        }
+        //function scope bools to keep track of state during move events
+        var changeWidthBool = false;
+        var targetElement = null;
+        var originalXPosition = 0;
+        var totalXMovement = 0;
+        var originalWidth = 0;
+        var minWidth = 200;
+
+        //needed to set the index in the onmousedown event
+        function findInHtmlCollection(element, collection) {
+          for (var i = 0; i < collection.length; i++) {
+            if (element.parentNode == collection[i].parentNode) {
+              return i;
+            }
+          }
+          return -1;
+        }
+
+        //setting the clicked column as the one to be adjusted.
+        for (var i = 0; i < widthGrabs.length; i++) {
+          var index = parseInt(i.toString());
+          widthGrabs[i].onmousedown = function(e) {
+            changeWidthBool = true;
+            var index = findInHtmlCollection(e.currentTarget, widthGrabs);
+            targetElement = tableTitles[index];
+            originalWidth = tableTitles[index].offsetWidth;
+            originalXPosition = e.screenX;
+            e.preventDefault();
+          }
+        }
+
+        //clearing state variables
+        document.addEventListener('mouseup', function(e) {
+           changeWidthBool = false;
+           targetElement = null;
+           originalXPosition = 0;
+           totalXMovement = 0;
+           originalWidth = 0;
+        }, false);
+
+        //for each x mouse move, find the new total width and set the column.
+        document.addEventListener('mousemove', function(e) {
+          try {
+            if (changeWidthBool) {
+              e.preventDefault();
+              if (targetElement != null) {
+                  totalXMovement = -( originalXPosition - e.screenX );
+                  if ((originalWidth + totalXMovement) > minWidth) {
+                    var newWidth = (originalWidth + totalXMovement).toString() + 'px';
+                    targetElement.children[0].style.width = newWidth;
+                  }
+              }
+            }
+          } catch (e) {
+            console.log('Column Width Change Failure');
+          }
+        }, false);
+      })();
+
+
+      //sets all of the flag colors on page loads and updates
+      function update_color_backgrounds() {
+        //hidden select inputs
+        var color_selects = document.getElementsByClassName("color_code_select");
+        //full td cell
+        var color_cells = document.getElementsByClassName("color_code_cell");
+        //the div containing the color selecting icons
+        var color_button_sets = document.getElementsByClassName("color_code_background");
+        //the divs containing the x out option to remove a selected color
+        var color_cancels = document.getElementsByClassName("color_cancel_selection");
+
+        var counter = 0;
+        //iterating over all the hidden color select inputs
+        while (counter < color_selects.length) {
+          var color = color_selects[counter].value
+          //Removing all BG colors from the cell
+          <% ["color_green", "color_yellow", "color_red", "color_blue", "color_gray"].each do |color_class| %>
+            color_cells[counter].classList.remove("<%=color_class%>");
+          <% end %>
+          //adding the class that corresponds to the color selected in the select input
+          color_cells[counter].classList.add("color_" + color.toString());
+          //if no color selected, show the set of color icons to click
+          if (color == "") {
+            color_button_sets[counter].style.display = "flex";
+            color_cancels[counter].style.display = "none";
+          //if color is selected, hide color icons, and show the x out button to remove color selection
+          } else {
+            color_button_sets[counter].style.display = "none";
+            color_cancels[counter].style.display = "block";
+          }
+          counter = counter + 1;
+        }
       }
+
+      update_color_backgrounds();
     </script>
 
 
-    <%= render(partial: 'legend') %>
 
-  </section>
+    <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
+      <%= hidden_field_tag(:section_index, params["section_index"]) %>
+      <% if !@marked_done %>
+
+        <div class="save_button_review">
+          <button type="submit" id="save_review_button" class="form_save_button selectButton">
+            <span class="save_review_text">
+              Save Review
+            </span>
+            <span class="save_review_icon">
+              <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <script type="text/javascript">
+          // Setting as disbled until someone triggers an "activateSaveButton" action
+          document.getElementById("save_review_button").disabled = true;
+
+          document.getElementById("save_review_button").onclick = function() {
+            showLoading("Saving Record Review");
+          }
+
+          function activateSaveButton() {
+            document.getElementById('save_review_button').disabled = false;
+          }
+        </script>
+      <% end %>
+
+    <% end %>
 
 
-  <script type="text/javascript">
-    //resizing the discussion header div
 
-    function adjustDiscussionCellHeight() {
-      // Sets the height of a discussion row's lead column to the
-      // tallest sibling (i.e. the column with the longest - or tallest - discussion).
-      $('.headcol--discussion').each(function() {
-        var siblings = $(this).siblings();
-        var maxHeight = Math.max.apply(null, siblings.map(function() {
-          return $(this).outerHeight();
-        }).get());
+    <section class="detail_footer">
 
-        // Adds 1 px to account for borders.
-        $(this).css("height", maxHeight + 1);
-        $(this).css("lineHeight", 'normal');
-        $(this).css("paddingTop", '12px');
-      });
-    }
+      <div id="review_top_button" class="review_top_button">
+        <span class="review_top_text">
+          Back To Top
+        </span>
+        <span class="review_top_icon">
+          <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+        </span>
+      </div>
 
-    function adjustHeaderRowTextPosition() {
-      //turning htmlelement collection into array
-      var rows =  Array.prototype.slice.call( document.getElementsByTagName('tr'))
-      //getting an array of heights in px
-      var heights = rows.map(function(row) {
-        var tdArr = row.getElementsByTagName('td')
-        for (var i=0; i < tdArr.length; i ++) {
-          //adding display check for when first row hidden due to filters
-          if (tdArr[i].style.display != 'none') {
-            return row.getElementsByTagName('td')[i].offsetHeight;
+      <script type="text/javascript">
+        document.getElementById('review_top_button').onclick = function() {
+          window.scrollTo(0,0);
+        }
+      </script>
+
+
+      <%= render(partial: 'legend') %>
+
+    </section>
+
+
+    <script type="text/javascript">
+      //resizing the discussion header div
+
+      function adjustDiscussionCellHeight() {
+        // Sets the height of a discussion row's lead column to the
+        // tallest sibling (i.e. the column with the longest - or tallest - discussion).
+        $('.headcol--discussion').each(function() {
+          var siblings = $(this).siblings();
+          var maxHeight = Math.max.apply(null, siblings.map(function() {
+            return $(this).outerHeight();
+          }).get());
+
+          // Adds 1 px to account for borders.
+          $(this).css("height", maxHeight + 1);
+          $(this).css("lineHeight", 'normal');
+          $(this).css("paddingTop", '12px');
+        });
+      }
+
+      function adjustHeaderRowTextPosition() {
+        //turning htmlelement collection into array
+        var rows =  Array.prototype.slice.call( document.getElementsByTagName('tr'))
+        //getting an array of heights in px
+        var heights = rows.map(function(row) {
+          var tdArr = row.getElementsByTagName('td')
+          for (var i=0; i < tdArr.length; i ++) {
+            //adding display check for when first row hidden due to filters
+            if (tdArr[i].style.display != 'none') {
+              return row.getElementsByTagName('td')[i].offsetHeight;
+            }
+          }
+        });
+
+        for (var i = 0; i < (rows.length); i++) {
+          var headcol = rows[i].getElementsByTagName('th')[0];
+          //added a pixel to each row hieght to make the borders look smoother
+          headcol.style.height = (heights[i] + 1).toString() + 'px';
+          //used padding top and line height to center the text
+          headcol.style.paddingTop = '0px';
+          if (headcol.classList.value.match(/multi_line/)) {
+            headcol.style.lineHeight = (heights[i]/2 + 1).toString() + 'px';
+          } else {
+            headcol.style.lineHeight = (heights[i] + 1).toString() + 'px';
           }
         }
-      });
 
-      for (var i = 0; i < (rows.length); i++) {
-        var headcol = rows[i].getElementsByTagName('th')[0];
-        //added a pixel to each row hieght to make the borders look smoother
-        headcol.style.height = (heights[i] + 1).toString() + 'px';
-        //used padding top and line height to center the text
-        headcol.style.paddingTop = '0px';
-        if (headcol.classList.value.match(/multi_line/)) {
-          headcol.style.lineHeight = (heights[i]/2 + 1).toString() + 'px';
-        } else {
-          headcol.style.lineHeight = (heights[i] + 1).toString() + 'px';
+        //setting the height of the discussion <th> element on page load.
+        adjustDiscussionCellHeight();
+      }
+
+      adjustHeaderRowTextPosition();
+
+      //used to automatically flag a cell green if recommendation starts with OK string
+      function recommendationMonitor(textarea) {
+        if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
+          var columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
+          turnColumnGreen(columnName);
         }
       }
 
-      //setting the height of the discussion <th> element on page load.
-      adjustDiscussionCellHeight();
-    }
-
-    adjustHeaderRowTextPosition();
-
-    //used to automatically flag a cell green if recommendation starts with OK string
-    function recommendationMonitor(textarea) {
-      if (textarea.value.match(/^ok|Ok|OK|oK$/)) {
-        var columnName = textarea.name.match(/recommendation\[(.*)\]/)[1];
-        turnColumnGreen(columnName);
+      //used to automatically flag a cell green if recommendation starts with OK string
+      function turnColumnGreen(columnName) {
+        var colorTD = document.getElementById("color_code_" + columnName);
+        //changing the select value
+        colorTD.value = 'green';
+        update_color_backgrounds();
       }
-    }
+    </script>
 
-    //used to automatically flag a cell green if recommendation starts with OK string
-    function turnColumnGreen(columnName) {
-      var colorTD = document.getElementById("color_code_" + columnName);
-      //changing the select value
-      colorTD.value = 'green';
-      update_color_backgrounds();
-    }
-  </script>
+  </div>
 
 </div>
