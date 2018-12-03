@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    user.access_token = auth.credentials["access_token"]
+
     if !user
       user = User.new
       user.uid = auth.uid
@@ -34,6 +36,25 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  def active_for_authentication?
+    super && check_if_account_active
+  end
+
+  def check_if_account_active
+    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+      faraday.request :url_encoded # form-encode POST params
+      faraday.headers['Authorization'] = "Bearer #{self.access_token}"
+      faraday.response :logger # log requests to $stdout
+      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+    end
+    response = conn.get "/api/users/#{uid}?calling_application=#{ENV['urs_client_id']}"
+    return response.status == 200
+  end
+
+  def inactive_message
+    "Sorry, this account has been deactivated."
   end
 
   # ====Params
