@@ -12,14 +12,16 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
-    user.access_token = auth.credentials["access_token"]
 
-    if !user
+    unless user
       user = User.new
       user.uid = auth.uid
       user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
     end
+    user.access_token = auth.credentials["access_token"]
+    user.refresh_token = auth.credentials["refresh_token"]
     user.email = auth.info.email_address
+
     role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials["access_token"])
     user.role = role
     user.daac = daac if daac
@@ -43,18 +45,38 @@ class User < ActiveRecord::Base
   end
 
   def check_if_account_active
-    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
-      faraday.request :url_encoded # form-encode POST params
-      faraday.headers['Authorization'] = "Bearer #{self.access_token}"
-      faraday.response :logger # log requests to $stdout
-      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+    response = get_user_info
+    if response.status != 200
+      error = JSON.parse(response.body)['error']
+      if error && error == 'invalid_token'
+        refresh_access_token
+        response = get_user_info
+      end
     end
-    response = conn.get "/api/users/#{uid}?calling_application=#{ENV['urs_client_id']}"
-    return response.status == 200
+    response.status == 200
   end
 
   def inactive_message
     "Sorry, this account has been deactivated."
+  end
+
+  def refresh_access_token
+    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+      faraday.request :url_encoded # form-encode POST params
+      faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
+      faraday.response :logger # log requests to $stdout
+      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+    end
+    response = conn.post "/oauth/token",
+                         # calling_interface: ENV['urs_client_id'],
+                         grant_type: "refresh_token",
+                         refresh_token: refresh_token
+
+    json = JSON.parse(response.body)
+
+    self.access_token = json["access_token"]
+    self.refresh_token = json["refresh_token"]
+    save!
   end
 
   # ====Params
@@ -100,5 +122,18 @@ class User < ActiveRecord::Base
 
   def arc?
     admin || curator
+  end
+
+  private
+
+  def get_user_info
+    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+      faraday.request :url_encoded # form-encode POST params
+      faraday.headers['Authorization'] = "Bearer #{access_token}"
+      faraday.response :logger # log requests to $stdout
+      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+    end
+    response = conn.get "/api/users/#{uid}?calling_application=#{ENV['urs_client_id']}"
+    return response
   end
 end
