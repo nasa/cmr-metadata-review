@@ -46,38 +46,24 @@ class User < ActiveRecord::Base
 
   def check_if_account_active
     return true if Rails.env.test?
-    response = get_user_info
-    if response.status != 200
-      error = JSON.parse(response.body)['error']
+
+    status, json = Cmr.get_user_info(current_user)
+
+    if status != 200
+      error = json['error']
       if error && error == 'invalid_token'
-        refresh_access_token
-        response = get_user_info
+        access_token, refresh_token = Cmr.get_access_token_and_refresh_token
+        self.access_token = access_token
+        self.refresh_token = refresh_token
+        self.save!
+        status, _json = get_user_info(current_user)
       end
     end
-    response.status == 200
+    return status == 200
   end
 
   def inactive_message
     "Sorry, this account has been deactivated."
-  end
-
-  def refresh_access_token
-    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
-      faraday.request :url_encoded # form-encode POST params
-      faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
-      faraday.response :logger # log requests to $stdout
-      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
-    end
-    response = conn.post "/oauth/token",
-                         # calling_interface: ENV['urs_client_id'],
-                         grant_type: "refresh_token",
-                         refresh_token: refresh_token
-
-    json = JSON.parse(response.body)
-
-    self.access_token = json["access_token"]
-    self.refresh_token = json["refresh_token"]
-    save!
   end
 
   # ====Params
@@ -125,16 +111,4 @@ class User < ActiveRecord::Base
     admin || curator
   end
 
-  private
-
-  def get_user_info
-    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
-      faraday.request :url_encoded # form-encode POST params
-      faraday.headers['Authorization'] = "Bearer #{access_token}"
-      faraday.response :logger # log requests to $stdout
-      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
-    end
-    response = conn.get "/api/users/#{uid}?calling_application=#{ENV['urs_client_id']}"
-    return response
-  end
 end
