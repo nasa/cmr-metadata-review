@@ -5,7 +5,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
   include OmniauthMacros
 
   before do
-    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [404, JSON.parse('{"error":"invalid_token"}')]
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
     Cmr.stubs(:get_access_token_and_refresh_token).with().returns ['[the access token]', '[the refresh token]']
   end
 
