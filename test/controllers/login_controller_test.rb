@@ -5,6 +5,12 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 # https://gist.github.com/kinopyo/1338738
 class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
+
+  setup do
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['abc', 'def']
+  end
+
   describe "POST #urs" do
     before do
       mock_auth_hash
@@ -21,8 +27,6 @@ class LoginControllerTest < ActionController::TestCase
 
       request.env["devise.mapping"] = Devise.mappings[:user]
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:urs]
-
-
     end
 
 

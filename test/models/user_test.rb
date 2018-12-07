@@ -2,6 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
+
   describe "DAAC curator role" do
 
     it "is invalid without an associated DAAC" do
@@ -30,5 +31,31 @@ class UserTest < ActiveSupport::TestCase
 
     end
   end
+
+  describe "check active for authentication" do
+
+    it "the account is active" do
+      user = users(:user2)
+      user.role = "daac_curator"
+
+      Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+      assert user.active_for_authentication? == true
+    end
+
+    it "the account is inactive" do
+      user = users(:user2)
+      user.role = "daac_curator"
+      user.daac = 'LARC'
+
+      Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [404, JSON.parse('{"error":"invalid_token"}')]
+      Cmr.stubs(:get_access_token_and_refresh_token).with().returns ['[the access token]', '[the refresh token]']
+      assert user.active_for_authentication? == false
+    end
+
+
+  end
+
+
+
 
 end

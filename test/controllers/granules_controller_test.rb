@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class GranulesControllerTest < ActionController::TestCase
+
+  setup do
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['abc', 'def']
+  end
+
   describe "DELETE #replace" do
     it "prevents DAAC curators from replacing the Granule" do
       user = User.find_by role: "daac_curator"

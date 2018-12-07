@@ -45,9 +45,9 @@ class User < ActiveRecord::Base
   end
 
   def check_if_account_active
-    return true if Rails.env.test?
+    # return true if Rails.env.test?
 
-    status, json = Cmr.get_user_info(current_user)
+    status, json = Cmr.get_user_info(self)
 
     if status != 200
       error = json['error']
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
         self.access_token = access_token
         self.refresh_token = refresh_token
         self.save!
-        status, _json = get_user_info(current_user)
+        status, _json = Cmr.get_user_info(self)
       end
     end
     return status == 200

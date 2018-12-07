@@ -25,7 +25,8 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
 
     describe "access top page" do
       it "can sign in user with oauth account with admin privileges" do
-        mock_auth_hash
+
+      mock_auth_hash
 
         stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
           with(

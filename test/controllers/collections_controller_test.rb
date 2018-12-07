@@ -5,6 +5,10 @@ class CollectionsControllerTest < ActionController::TestCase
 
   setup do
     @cmr_base_url = Cmr.get_cmr_base_url
+
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['abc', 'def']
+
   end
 
   describe "GET #show" do

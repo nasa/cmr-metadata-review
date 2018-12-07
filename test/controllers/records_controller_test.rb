@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class RecordsControllerTest < ActionController::TestCase
+  setup do
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['abc', 'def']
+  end
   describe "POST #create" do
     it "updates record data from review params" do
       @tester = User.find_by_email("abaker@element84.com")
