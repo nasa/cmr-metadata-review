@@ -1,5 +1,4 @@
 require 'test_helper'
-
 Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
 # https://gist.github.com/kinopyo/1338738
@@ -7,8 +6,7 @@ class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
 
   setup do
-    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
-    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['abc', 'def']
+    stub_acl_access
   end
 
   describe "POST #urs" do

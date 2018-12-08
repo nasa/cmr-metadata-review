@@ -15,6 +15,11 @@ module OmniauthMacros
                      'credentials' => {'access_token': '12345'}
     }
     OmniAuth.config.add_mock(:urs, omniauth_hash)
-
   end
+
+  def stub_acl_access
+    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
+    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['access_token', 'refresh_token']
+  end
+
 end
