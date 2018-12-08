@@ -6,7 +6,7 @@ class ReportsControllerTest < ActionController::TestCase
 
   setup do
     @cmr_base_url = Cmr.get_cmr_base_url
-    stub_acl_access
+    stub_urs_access
   end
 
   describe "GET #home" do  

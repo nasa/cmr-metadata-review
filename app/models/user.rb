@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     if status != 200
       error = json['error']
       if error && error == 'invalid_token'
-        access_token, refresh_token = Cmr.get_access_token_and_refresh_token
+        access_token, refresh_token = Cmr.refresh_access_token
         self.access_token = access_token
         self.refresh_token = refresh_token
         self.save!

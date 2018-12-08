@@ -17,9 +17,10 @@ module OmniauthMacros
     OmniAuth.config.add_mock(:urs, omniauth_hash)
   end
 
-  def stub_acl_access
+  # This stubs access to URS for retrieving user_info and tokens
+  def stub_urs_access
     Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
-    Cmr.stubs(:get_access_token_and_refresh_token).with{|*args| args[0]}.returns ['access_token', 'refresh_token']
+    Cmr.stubs(:refresh_access_token).with{|*args| args[0]}.returns ['access_token', 'refresh_token']
   end
 
 end

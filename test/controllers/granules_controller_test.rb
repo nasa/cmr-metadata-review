@@ -5,7 +5,7 @@ class GranulesControllerTest < ActionController::TestCase
   include OmniauthMacros
 
   setup do
-    stub_acl_access
+    stub_urs_access
   end
 
   describe "DELETE #replace" do
