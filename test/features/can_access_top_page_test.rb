@@ -5,7 +5,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
   include OmniauthMacros
 
   before do
-    stub_urs_accesss
+    stub_urs_access
   end
 
   describe "POST #urs" do
