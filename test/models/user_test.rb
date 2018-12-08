@@ -46,11 +46,14 @@ class UserTest < ActiveSupport::TestCase
       user = users(:user2)
       user.role = "daac_curator"
       user.daac = 'LARC'
+      user.access_token = '[access_token]'
+      user.refresh_token = '[refresh_token]'
 
-      Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [404, JSON.parse('{"error":"invalid_token"}')]
-      Cmr.stubs(:refresh_access_token).with().returns ['[the access token]', '[the refresh token]']
+      Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [401, JSON.parse('{"error":"invalid_token"}')]
+      Cmr.stubs(:refresh_access_token).with{ |*args| args[0]}.returns ['[the access token]', '[the refresh token]']
       assert user.active_for_authentication? == false
     end
+
 
 
   end
