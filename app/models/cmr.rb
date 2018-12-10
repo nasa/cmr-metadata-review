@@ -633,7 +633,7 @@ class Cmr
   end
 
   # returns the new [access_token, refresh_token]
-  def self.refresh_access_token(refresh_token)
+  def self.refresh_access_token(current_user)
     conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
       faraday.request :url_encoded # form-encode POST params
       faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
@@ -642,7 +642,7 @@ class Cmr
     end
     response = conn.post "/oauth/token",
                          grant_type: "refresh_token",
-                         refresh_token: refresh_token
+                         refresh_token: current_user.refresh_token
 
     json = JSON.parse(response.body)
     [json["access_token"], json["refresh_token"]]

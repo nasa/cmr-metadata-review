@@ -12,15 +12,37 @@ module OmniauthMacros
                                     'organization' => 'my organization'
                                    }
                      },
-                     'credentials' => {'access_token': '12345'}
+                     'credentials' => {'access_token': 'accesstoken'}
     }
     OmniAuth.config.add_mock(:urs, omniauth_hash)
   end
 
-  # This stubs access to URS for retrieving user_info and tokens
-  def stub_urs_access
-    Cmr.stubs(:get_user_info).with{ |*args| args[0]}.returns [200, nil]
-    Cmr.stubs(:refresh_access_token).with{|*args| args[0]}.returns ['access_token', 'refresh_token']
+  def stub_urs_access(user)
+    ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
+    ENV['urs_client_id'] = 'clientid'
+    ENV['urs_client_secret'] = 'clientsecret'
+
+    stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{user.uid}?calling_application=clientid").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Authorization'=>'Bearer '+user.access_token,
+          'User-Agent'=>'Faraday v0.15.3'
+        }).
+      to_return(status: 200, body: "{}", headers: {})
+
+    stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
+      with(
+        body: {"grant_type"=>"refresh_token", "refresh_token"=>"refreshtoken"},
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
+          'Content-Type'=>'application/x-www-form-urlencoded',
+          'User-Agent'=>'Faraday v0.15.3'
+        }).
+      to_return(status: 200, body: %Q({"access_token":"accesstoken","refresh_token":"refreshtoken"}), headers: {})
   end
 
 end

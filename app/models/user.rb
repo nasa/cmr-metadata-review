@@ -45,14 +45,12 @@ class User < ActiveRecord::Base
   end
 
   def check_if_account_active
-    # return true if Rails.env.test?
-
     status, json = Cmr.get_user_info(self)
 
     if status != 200
       error = json['error']
       if error && error == 'invalid_token'
-        access_token, refresh_token = Cmr.refresh_access_token(self.refresh_token)
+        access_token, refresh_token = Cmr.refresh_access_token(self)
         self.access_token = access_token
         self.refresh_token = refresh_token
         self.save!
