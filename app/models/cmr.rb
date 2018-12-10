@@ -634,31 +634,44 @@ class Cmr
 
   # returns the new [access_token, refresh_token]
   def self.refresh_access_token(current_user)
-    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
-      faraday.request :url_encoded # form-encode POST params
-      faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
-      faraday.response :logger # log requests to $stdout
-      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
-    end
-    response = conn.post "/oauth/token",
-                         grant_type: "refresh_token",
-                         refresh_token: current_user.refresh_token
+    begin
+      conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+        faraday.request :url_encoded # form-encode POST params
+        faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
+        faraday.response :logger # log requests to $stdout
+        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+      end
+      response = conn.post "/oauth/token",
+                           grant_type: "refresh_token",
+                           refresh_token: current_user.refresh_token
 
-    json = JSON.parse(response.body)
-    [json["access_token"], json["refresh_token"]]
+      json = JSON.parse(response.body)
+      [json["access_token"], json["refresh_token"]]
+    rescue => e
+      message = %Q({"error":"#{e.message}", "uid":"#{current_user.uid}", "description":"Error refreshing access token"})
+      Rails.logger.error(message)
+      [500, message]
+    end
   end
 
   # returns [http status code, json body]
   def self.get_user_info(current_user)
-    conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
-      faraday.request :url_encoded # form-encode POST params
-      faraday.headers['Authorization'] = "Bearer #{current_user.access_token}"
-      faraday.response :logger # log requests to $stdout
-      faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+    begin
+      conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+        faraday.request :url_encoded # form-encode POST params
+        faraday.headers['Authorization'] = "Bearer #{current_user.access_token}"
+        faraday.response :logger # log requests to $stdout
+        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+      end
+      response = conn.get "/api/users/#{current_user.uid}",
+                          calling_application: ENV['urs_client_id']
+      [response.status, JSON.parse(response.body)]
+    rescue => e
+      message = %Q({"error":"#{e.message}", "uid":"#{current_user.uid}", "description":"Error retreiving user info from URS"})
+      Rails.logger.error(message)
+      [500, message]
     end
-    response = conn.get "/api/users/#{current_user.uid}",
-                        calling_application: ENV['urs_client_id']
-    [response.status, JSON.parse(response.body)]
+
   end
 
 
