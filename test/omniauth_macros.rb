@@ -17,17 +17,17 @@ module OmniauthMacros
     OmniAuth.config.add_mock(:urs, omniauth_hash)
   end
 
-  def stub_urs_access(user)
+  def stub_urs_access(uid, access_token, refresh_token)
     ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
     ENV['urs_client_id'] = 'clientid'
     ENV['urs_client_secret'] = 'clientsecret'
 
-    stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{user.uid}?calling_application=clientid").
+    stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{uid}?calling_application=clientid").
       with(
         headers: {
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'Authorization'=>'Bearer '+user.access_token,
+          'Authorization'=>'Bearer '+access_token,
           'User-Agent'=>'Faraday v0.15.3'
         }).
       to_return(status: 200, body: "{}", headers: {})
@@ -42,7 +42,7 @@ module OmniauthMacros
           'Content-Type'=>'application/x-www-form-urlencoded',
           'User-Agent'=>'Faraday v0.15.3'
         }).
-      to_return(status: 200, body: %Q({"access_token":"accesstoken","refresh_token":"refreshtoken"}), headers: {})
+      to_return(status: 200, body: %Q({"access_token":"#{access_token}","refresh_token":"#{refresh_token}"}), headers: {})
   end
 
 end

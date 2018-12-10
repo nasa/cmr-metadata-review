@@ -38,7 +38,7 @@ class UserTest < ActiveSupport::TestCase
     it "the account is active" do
       user = users(:user2)
       user.role = "daac_curator"
-      stub_urs_access(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
       assert user.active_for_authentication? == true
     end
 
@@ -49,7 +49,7 @@ class UserTest < ActiveSupport::TestCase
       user.access_token = 'accesstoken'
       user.refresh_token = 'refreshtoken'
 
-      stub_urs_access(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
       stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{user.uid}?calling_application=clientid").
         with(
           headers: {

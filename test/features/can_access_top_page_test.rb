@@ -11,19 +11,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       Rails.application.env_config["devise.mapping"] = Devise.mappings[:user] # If using Devise
       Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:urs]
 
-      ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
-      ENV['urs_client_id'] = 'clientid'
-      ENV['urs_client_secret'] = 'clientsecret'
-
-      stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/12345?calling_application=clientid").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Authorization'=>'Bearer accesstoken',
-            'User-Agent'=>'Faraday v0.15.3'
-          }).
-        to_return(status: 200, body: "{}", headers: {})
+      stub_urs_access('12345', 'accesstoken', 'refreshtoken')
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
         with(
