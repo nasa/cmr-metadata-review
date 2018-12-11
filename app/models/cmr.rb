@@ -648,10 +648,10 @@ class Cmr
                            grant_type: "refresh_token",
                            refresh_token: current_user.refresh_token
 
-      json = JSON.parse(response.body)
-
       LogHelper::json_log(:info, "Calling external resource (refresh_access_token) with #{ENV['urs_site']}/oauth/token",
-               "status=#{response.status}, contents=#{response.body}")
+                          "status=#{response.status}, contents=#{response.body}")
+
+      json = JSON.parse(response.body)
 
       [json["access_token"], json["refresh_token"]]
     rescue => e
