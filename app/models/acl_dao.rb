@@ -1,4 +1,6 @@
 class AclDao
+  include LogHelper
+
   attr_accessor :access_token, :client_id, :base_url
 
   def initialize(token, client_id, base_url)
@@ -15,13 +17,11 @@ class AclDao
 
     results = search_acls_by_user(user_id, 1)
     if results['errors']
-      message = %Q({"error":"#{results['errors']}", "uid":"#{user_id}", "description":"Error retrieving ACLs from CMR for #{user_id}"})
-      Rails.logger.error(Cmr::truncate_cmr_tokens(message))
+      LogHelper::json_log(:error, "Error retrieving ACLs from CMR for #{user_id}", results['errors'])
       raise Cmr::CmrError.new("Error retrieving ACLs from CMR for #{user_id}")
     end
     unless results['hits']
-      message = %Q("error":"Error retrieving ACLs from CMR for #{user_id}", "uid":"#{user_id}"})
-      Rails.logger.error(Cmr::truncate_cmr_tokens(message))
+      LogHelper::json_log(:error, "Error retrieving ACLs from CMR for #{user_id}", nil)
       raise Cmr::CmrError.new("Error retrieving ACLs from CMR for #{user_id}")
     end
     noPages = (results['hits']/2000).ceil
@@ -89,11 +89,7 @@ class AclDao
         when :GET
           response = conn.get endpoint, data
       end
-      message = %Q({"action":"call_external_resource", "method":"send_request_to_cmr",
-          "url":"#{@base_url}/#{endpoint}", "response_code":#{response.status},
-          "response": "#{response.body}"});
-      Rails.logger.info(Cmr::truncate_cmr_tokens(message))
-
+      LogHelper::json_log(:info, "Calling external resource (send_request_to_cmr) with #{@base_url}/#{endpoint}", "response.status=#{response.status}, body=#{response.body}")
       json = JSON.parse(response.body)
       json
     end

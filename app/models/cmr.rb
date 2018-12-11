@@ -1,6 +1,7 @@
 class Cmr
   include ApplicationHelper
   include CmrHelper
+  include LogHelper
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
@@ -24,10 +25,7 @@ class Cmr
   def self.cmr_request(url)
     begin
       contents = HTTParty.get(url, timeout: TIMEOUT_MARGIN)
-      message = %Q({"action":"call_external_resource", "method":"cmr_request",
-          "url":#{url},
-          "response": "#{Cmr::truncate_string(contents, 200)}"});
-      Rails.logger.info(message)
+      LogHelper::json_log(:info, "Calling external resource (cmr_request) with #{url}", "contents=#{contents}")
       return contents
     rescue Net::ReadTimeout
       nil
@@ -651,10 +649,9 @@ class Cmr
                            refresh_token: current_user.refresh_token
 
       json = JSON.parse(response.body)
-      message = %Q({"action":"call_external_resource", "method":"refresh_access_token",
-          "url":"#{ENV['urs_site']}/oauth/token", "response_code":#{response.status},
-          "response": "#{response.body}"});
-      Rails.logger.info(message)
+
+      LogHelper::json_log(:info, "Calling external resource (refresh_access_token) with #{ENV['urs_site']}/oauth/token",
+               "status=#{response.status}, contents=#{response.body}")
 
       [json["access_token"], json["refresh_token"]]
     rescue => e
@@ -675,27 +672,17 @@ class Cmr
       end
       response = conn.get "/api/users/#{current_user.uid}",
                           calling_application: ENV['urs_client_id']
-      message = %Q({"action":"call_external_resource", "method":"get_user_info",
-          "url":"#{ENV['urs_site']}/api/users/#{current_user.uid}", "response_code":#{response.status},
-          "response": "#{response.body}"});
-      Rails.logger.info(message)
+
+      LogHelper::json_log(:info, "Calling external resource (get_user_info) with #{ENV['urs_site']}/api/users/#{current_user.uid}",
+               "status=#{response.status}, contents=#{response.body}")
+
       [response.status, JSON.parse(response.body)]
     rescue => e
-      message = %Q({"error":"#{e.message}", "uid":"#{current_user.uid}", "description":"Error retreiving user info from URS"})
-      Rails.logger.error(message)
-      [500, message]
+      LogHelper::json_log(:error, "Error retreiving user info from URS for #{current_user.uid}", e.message);
     end
 
   end
 
-  def self.truncate_cmr_tokens(message)
-    return message.gsub(/Token \[(.*)\]/) {Cmr::truncate_string($1, 10)}
-
-  end
-
-  def self.truncate_string(string, max)
-    string.length > max ? "#{string[0...max]}..." : string
-  end
 
 
 
