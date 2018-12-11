@@ -655,8 +655,8 @@ class Cmr
 
       [json["access_token"], json["refresh_token"]]
     rescue => e
-      message = %Q({"error":"#{e.message}", "uid":"#{current_user.uid}", "description":"Error refreshing access token"})
-      Rails.logger.error(message)
+      message = "Error refreshing access token for #{current_user.uid}"
+      LogHelper::json_log(:error, message, e.message)
       [500, message]
     end
   end
