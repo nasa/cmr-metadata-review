@@ -1,7 +1,6 @@
 class Cmr
   include ApplicationHelper
   include CmrHelper
-  include LogHelper
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
@@ -25,12 +24,15 @@ class Cmr
   def self.cmr_request(url)
     begin
       contents = HTTParty.get(url, timeout: TIMEOUT_MARGIN)
-      LogHelper::json_log(:info, "Calling external resource (cmr_request) with #{url}", "contents=#{contents}")
+      truncated_contents = ApplicationHelper::truncate_string(contents, 200)
+      Rails.logger.info("cmr_request - Calling external resource with #{url}, contents=#{truncated_contents}")
       return contents
     rescue Net::ReadTimeout
+      Rails.logger.error("cmr_request - ReadTimeout calling #{url}")
       nil
     end
   end
+
 
   # ====Params
   # User object
@@ -648,15 +650,17 @@ class Cmr
                            grant_type: "refresh_token",
                            refresh_token: current_user.refresh_token
 
-      LogHelper::json_log(:info, "Calling external resource (refresh_access_token) with #{ENV['urs_site']}/oauth/token",
-                          "status=#{response.status}, contents=#{response.body}")
+      msg = "refresh_access_token - Calling external resource with "
+      msg += "#{ENV['urs_site']}/oauth/token, status=#{response.status}, "
+      msg += "contents=#{response.body}"
+      Rails.logger.info(msg)
 
       json = JSON.parse(response.body)
 
       [json["access_token"], json["refresh_token"]]
     rescue => e
       message = "Error refreshing access token for #{current_user.uid}"
-      LogHelper::json_log(:error, message, e.message)
+      Rails.logger.error( "refresh_access_token - #{message}, details=#{e.message}")
       [500, message]
     end
   end
@@ -673,18 +677,15 @@ class Cmr
       response = conn.get "/api/users/#{current_user.uid}",
                           calling_application: ENV['urs_client_id']
 
-      LogHelper::json_log(:info, "Calling external resource (get_user_info) with #{ENV['urs_site']}/api/users/#{current_user.uid}",
-               "status=#{response.status}, contents=#{response.body}")
-
+      msg = "get_user_info - Calling external resource with "
+      msg += "#{ENV['urs_site']}/api/users/#{current_user.uid}, "
+      msg += "status=#{response.status}, contents=#{response.body}"
+      Rails.logger.info(msg)
       [response.status, JSON.parse(response.body)]
     rescue => e
-      LogHelper::json_log(:error, "Error retreiving user info from URS for #{current_user.uid}", e.message);
+      Rails.logger.error("get_user_info - Error retreiving user info from URS for #{current_user.uid}, message=#{e.message}");
     end
-
   end
-
-
-
 
 
 end
