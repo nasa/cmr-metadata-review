@@ -34,9 +34,10 @@ RUN chmod o-r /root/.pgpass
 # Install CmrDash Source           #
 ####################################
 
-
+RUN echo
 RUN /scripts/install_db.sh
 USER cmrdash
+WORKDIR /home/cmrdash
 RUN bash -l /scripts/install_ruby.sh
 WORKDIR /home/cmrdash/cmr-metadata-review
 CMD tail -f /dev/null
