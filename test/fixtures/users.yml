@@ -43,3 +43,8 @@ podaac_daac_curator:
   email: podaac_daac@element84.com
   daac: PODAAC
   role: daac_curator
+old_devise_user:
+  id: 6
+  email: bjones@someplace.com
+  role: arc_curator
+

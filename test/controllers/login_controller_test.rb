@@ -7,12 +7,12 @@ class LoginControllerTest < ActionController::TestCase
 
   describe "POST #urs" do
     before do
-      mock_auth_hash
+      mock_normal_edl_user
       ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
       ENV['urs_client_id'] = 'clientid'
       ENV['urs_client_secret'] = 'clientsecret'
 
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=12345").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
         with(
           headers: {
             'Accept' => '*/*',
@@ -29,9 +29,9 @@ class LoginControllerTest < ActionController::TestCase
 
     describe "#urs callback" do
       it "should successfully create a user" do
-        mock_auth_hash
+        mock_normal_edl_user
 
-        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/12345?calling_application=clientid").
+        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?calling_application=clientid").
           with(
             headers: {
               'Accept' => '*/*',

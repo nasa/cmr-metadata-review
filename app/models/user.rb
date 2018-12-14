@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :omniauthable, :omniauth_providers => [:urs]
+  devise :omniauthable, omniauth_providers: [:urs]
 
   has_many :ingests
   has_many :comments
@@ -11,18 +11,19 @@ class User < ActiveRecord::Base
   ROLES = %w[admin arc_curator daac_curator].freeze
 
   def self.from_omniauth(auth)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    user = User.where(provider: auth.provider, uid: auth.uid).first
 
     unless user
-      user = User.new
-      user.uid = auth.uid
-      user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
+      user = User.where(email: auth.info.email_address).first
+      user ||= User.new
     end
-    user.access_token = auth.credentials["access_token"]
-    user.refresh_token = auth.credentials["refresh_token"]
+    user.uid = auth.uid
+    user.provider = auth.provider # this is omniauth provider type, i.e., value=URS
+    user.access_token = auth.credentials['access_token']
+    user.refresh_token = auth.credentials['refresh_token']
     user.email = auth.info.email_address
 
-    role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials["access_token"])
+    role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials['access_token'])
     user.role = role
     user.daac = daac if daac
     user.save!
