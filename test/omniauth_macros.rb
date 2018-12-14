@@ -1,7 +1,7 @@
 module OmniauthMacros
-  def mock_auth_hash
+  def mock_normal_edl_user
     omniauth_hash = {'provider' => 'urs',
-                     'uid' => '12345',
+                     'uid' => 'normaluser',
                      'info' => {
                        'first_name' => 'john',
                        'last_name' => 'smith',
@@ -16,6 +16,44 @@ module OmniauthMacros
     }
     OmniAuth.config.add_mock(:urs, omniauth_hash)
   end
+
+  def mock_existing_devise_user
+    omniauth_hash = {'provider' => 'urs',
+                     'uid' => 'existingdeviseuser',
+                     'info' => {
+                       'first_name' => 'Bob',
+                       'last_name' => 'Jones',
+                       'email_address' => 'bjones@someplace.com',
+                     },
+                     'extra' => {'raw_info' =>
+                                   {'user_type' => 'my_user_type',
+                                    'organization' => 'my organization'
+                                   }
+                     },
+                     'credentials' => {'access_token': 'accesstoken'}
+    }
+    OmniAuth.config.add_mock(:urs, omniauth_hash)
+  end
+
+  def mock_new_devise_user
+    omniauth_hash = {'provider' => 'urs',
+                     'uid' => 'newdeviseuser',
+                     'info' => {
+                       'first_name' => 'Billy',
+                       'last_name' => 'Smith',
+                       'email_address' => 'bsmith@someplace.com',
+                     },
+                     'extra' => {'raw_info' =>
+                                   {'user_type' => 'my_user_type',
+                                    'organization' => 'my organization'
+                                   }
+                     },
+                     'credentials' => {'access_token': 'accesstoken'}
+    }
+    OmniAuth.config.add_mock(:urs, omniauth_hash)
+  end
+
+
 
   def stub_urs_access(uid, access_token, refresh_token)
     ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
