@@ -14,6 +14,7 @@ class AclDao
     # Note: user could be all three.
 
     results = search_acls_by_user(user_id, 1)
+
     unless results['hits']
       Rails.logger.error("get_role_and_daac - Error retrieving ACLs from CMR for #{user_id}")
       if results['errors']
