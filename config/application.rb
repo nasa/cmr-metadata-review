@@ -23,6 +23,8 @@ module CmrMetadataReview
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     
+    config.middleware.insert_after "Rails::Rack::Logger", "MiddlewareHealthcheck"
+
     def load_version
       version_file = "#{config.root}/version.txt"
       if File.exist?(version_file)
