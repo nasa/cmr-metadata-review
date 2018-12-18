@@ -126,6 +126,8 @@ ActiveRecord::Schema.define(version: 20181212185411) do
     t.datetime "locked_at"
     t.string   "provider"
     t.string   "uid"
+    t.string   "access_token"
+    t.string   "refresh_token"
     t.string   "name"
   end
 
