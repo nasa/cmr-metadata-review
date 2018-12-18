@@ -66,4 +66,8 @@ module ApplicationHelper
     end
   end
 
+  def self.truncate_string(string, max)
+    string.length > max ? "#{string[0...max]}..." : string
+  end
+
 end

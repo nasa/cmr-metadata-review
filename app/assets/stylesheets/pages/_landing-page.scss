@@ -175,33 +175,30 @@ body {
 .landing_page {
 }
 
-/* User information and role 
----------------------------------------*/
+#user-info {
+  @include row();
+  display: inline-flex;
+  margin-left: 65%;
+  font-size: 0.8em;
+  background-color: lighten($ocean-blue, 10%);
+  padding: .2em .6em .3em .6em;
+  border-radius: 5px;
+  margin-bottom: 1em;
 
-  #user-info {
-    @include row();
-    display: inline-flex;
-    margin-left: 65%;
-    font-size: 0.8em;
-    background-color: lighten($ocean-blue, 10%);
-    padding: .2em .6em .3em .6em;
-    border-radius: 5px;
-    margin-bottom: 1em;
+  #profile-link {
+    .prof-link-container {
+      margin-top: .1em;
+    }
 
-    #profile-link {
-      .prof-link-container {
-        margin-top: .1em;
-      }
+    .hoverOver {
+      color: lighten($dolphin-grey, 30%);
+    }
 
-      .hoverOver {
-        color: lighten($dolphin-grey, 30%);
-      }
-
-      #dropdown-caret {
-        transform: rotate(0deg);
-      }
+    #dropdown-caret {
+      transform: rotate(0deg);
     }
   }
+}
 
 h2 {
   #badge-container {
