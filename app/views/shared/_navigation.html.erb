@@ -6,12 +6,14 @@
     <% end %>
   </div>
 
-  <div>
-    <div><%= current_user.name %></div>
-    <div><%= current_user.role %></div>
-  </div>
-
   <div class="header_menu">
+    <section id="user-info">
+        <div class="prof-link-container">
+            <div><strong><%= current_user.name %></strong>
+                 <span class="eui-badge--sm daac"><%= current_user.role %></span>
+            </div>
+        </div>
+    </section>
     <nav class="eui-menu menu_override">
       <ul>
         <li>
@@ -59,7 +61,9 @@
       </ul>
     </nav>
   </div>
-</div>
+  </div>
+
+
 
 <div class="header_image">
 
