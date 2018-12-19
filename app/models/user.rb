@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
     auth.info['first_name'] = '' if auth.info['first_name'].nil?
     auth.info['last_name'] = '' if auth.info['last_name'].nil?
     user.name = auth.info['first_name']+' '+auth.info['last_name']
+    user.name = user.name.strip
     user.save!
     user
   end
