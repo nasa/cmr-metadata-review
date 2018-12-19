@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
     role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials['access_token'])
     user.role = role
     user.daac = daac if daac
+    user.name = "#{auth.info['first_name']} #{auth.info['last_name']}"
+    user.name = user.name.strip
     user.save!
     user
   end
