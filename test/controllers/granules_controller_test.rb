@@ -1,10 +1,14 @@
 require 'test_helper'
+Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
 class GranulesControllerTest < ActionController::TestCase
+  include OmniauthMacros
+
   describe "DELETE #replace" do
     it "prevents DAAC curators from replacing the Granule" do
       user = User.find_by role: "daac_curator"
       sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       granule = Granule.first
       record  = granule.records.find(5)
@@ -36,6 +40,7 @@ class GranulesControllerTest < ActionController::TestCase
     it "will delete and replace the granule" do
       user = User.find_by role: "admin"
       sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       granule = Granule.first
       record  = granule.records.find(16)

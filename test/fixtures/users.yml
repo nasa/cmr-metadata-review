@@ -1,25 +1,50 @@
 user1:
   id: 1
+  uid: 1
+  provider: urs
+  access_token: accesstoken
+  refresh_token: refreshtoken
   email: abaker@element84.com
   role: admin
 
 user2:
   id: 2
+  uid: 2
+  provider: urs
+  access_token: accesstoken
+  refresh_token: refreshtoken
   email: test@element84.com
 
 arc_curator:
   id: 3
+  uid: 3
+  provider: urs
+  access_token: accesstoken
+  refresh_token: refreshtoken
   email: arc_curator@element84.com
   role: arc_curator
 
 lance_daac_curator:
   id: 4
+  uid: 4
+  provider: urs
+  access_token: accesstoken
+  refresh_token: refreshtoken
   email: lance_daac@element84.com
   daac: LANCEAMSR2
   role: daac_curator
 
 podaac_daac_curator:
   id: 5
+  uid: 5
+  access_token: accesstoken
+  refresh_token: refreshtoken
+  provider: urs
   email: podaac_daac@element84.com
   daac: PODAAC
   role: daac_curator
+old_devise_user:
+  id: 6
+  email: bjones@someplace.com
+  role: arc_curator
+

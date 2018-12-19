@@ -23,11 +23,16 @@ class Cmr
 
   def self.cmr_request(url)
     begin
-      HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+      contents = HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+      truncated_contents = ApplicationHelper::truncate_string(contents, 200)
+      Rails.logger.info("cmr_request - Calling external resource with #{url}, contents=#{truncated_contents}")
+      return contents
     rescue Net::ReadTimeout
+      Rails.logger.error("cmr_request - ReadTimeout calling #{url}")
       nil
     end
   end
+
 
   # ====Params
   # User object
@@ -630,6 +635,56 @@ class Cmr
     acl = AclDao.new(access_token, ENV['urs_client_id'], Cmr.get_cmr_base_url)
     role, daac = acl.get_role_and_daac(uid)
     [role, daac]
+  end
+
+  # returns the new [access_token, refresh_token]
+  def self.refresh_access_token(current_user)
+    begin
+      conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+        faraday.request :url_encoded # form-encode POST params
+        faraday.headers['Authorization'] = 'Basic ' + ["#{ENV['urs_client_id']}:#{ENV['urs_client_secret']}"].pack('m0')
+        faraday.response :logger # log requests to $stdout
+        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+      end
+      response = conn.post "/oauth/token",
+                           grant_type: "refresh_token",
+                           refresh_token: current_user.refresh_token
+
+      msg = "refresh_access_token - Calling external resource with "
+      msg += "#{ENV['urs_site']}/oauth/token, status=#{response.status}, "
+      msg += "contents=#{response.body}"
+      Rails.logger.info(msg)
+
+      json = JSON.parse(response.body)
+
+      [json["access_token"], json["refresh_token"]]
+    rescue => e
+      message = "Error refreshing access token for #{current_user.uid}"
+      Rails.logger.error( "refresh_access_token - #{message}, details=#{e.message}")
+      [500, message]
+    end
+  end
+
+  # returns [http status code, json body]
+  def self.get_user_info(current_user)
+    begin
+      conn = Faraday.new(:url => "#{ENV['urs_site']}") do |faraday|
+        faraday.request :url_encoded # form-encode POST params
+        faraday.headers['Authorization'] = "Bearer #{current_user.access_token}"
+        faraday.response :logger # log requests to $stdout
+        faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
+      end
+      response = conn.get "/api/users/#{current_user.uid}",
+                          calling_application: ENV['urs_client_id']
+
+      msg = "get_user_info - Calling external resource with "
+      msg += "#{ENV['urs_site']}/api/users/#{current_user.uid}, "
+      msg += "status=#{response.status}, contents=#{response.body}"
+      Rails.logger.info(msg)
+      [response.status, JSON.parse(response.body)]
+    rescue => e
+      Rails.logger.error("get_user_info - Error retreiving user info from URS for #{current_user.uid}, message=#{e.message}");
+    end
   end
 
 
