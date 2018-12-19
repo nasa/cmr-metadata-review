@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 # create a status checkup interface
 class MiddlewareHealthcheck
@@ -8,7 +8,7 @@ class MiddlewareHealthcheck
 
   # this is the Middleware handler
   def call(env)
-    if env['PATH_INFO'.freeze] == '/status'.freeze
+    if env['PATH_INFO'] == '/status'
       handle_health_check_call
     else
       @app.call(env)
