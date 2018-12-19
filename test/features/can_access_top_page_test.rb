@@ -91,6 +91,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         visit '/'
         page.must_have_content("Login with Earthdata Login")
         click_link "Login"
+        page.must_have_content("john smith")
         page.must_have_content("Logout")
         page.must_have_content("Account Options")
         page.must_have_content("Unreviewed Records:")
