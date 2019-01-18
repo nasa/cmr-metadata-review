@@ -6,13 +6,50 @@ class CollectionsController < ApplicationController
   before_filter :find_record, only: [:show, :hide, :refresh]
   before_filter :collection_only, only: :refresh
 
+  # TODO: This will be deleted before we merge to master
+  def runTest
+    Granule.all.each do |granule|
+      if Cmr.raw_granule?(granule.concept_id)
+        raw_granule_results = Cmr.get_raw_granule_results(granule.concept_id)
+        latest_revision_in_cmr = raw_granule_results['revision_id'].to_i
+        highest = 0
+        granule.records.each do |record|
+          highest = record.revision_id.to_i > highest ? record.revision_id.to_i : highest
+        end
+        if (highest > latest_revision_in_cmr)
+          puts "collection=#{granule.collection.concept_id}"
+          break;
+        end
+        break
+      end
+    end
+  end
+
   def show
+    runTest
     if @record
       collection = get_collection_from_record(@record)
 
       @concept_id = collection.concept_id
       @collection_records = collection.get_records.order(:revision_id).reverse_order
       @granule_objects = Granule.where(collection: collection)
+
+      # iterates through the granule objects, setting:
+      #   1) the latest revision number in cmr
+      #   2) whether the granule has been deleted in cmr
+      # This information is used in the view to provide some indicator to the user
+      # if the granule has a new revision or the granule has been deleted.
+      @granule_objects.each do |granule|
+        if Cmr.raw_granule?(granule.concept_id)
+          raw_granule_results = Cmr.get_raw_granule_results(granule.concept_id)
+          granule.latest_revision_in_cmr = raw_granule_results['revision_id']
+          granule.deleted_in_cmr = false
+          granule.save!
+        else
+          granule.deleted_in_cmr = true
+          granule.save!
+        end
+      end
     else
       flash[:alert] = "No record_id provided to find record details"
       redirect_to home_path

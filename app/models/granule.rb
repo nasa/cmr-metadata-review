@@ -74,6 +74,39 @@ class Granule < ActiveRecord::Base
     false
   end
 
+  # Adds a new granule revision record to the specified granule
+  def self.add_new_revision_to_granule(granule, current_user = User.find_by(role: "admin"))
+    granule_info = Cmr.get_granule_with_collection_data(granule.concept_id)
+    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+
+    return false unless collection
+
+    granule_data = granule_info["Granule"]
+
+    Granule.transaction do
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
+
+      granule_data.each_with_index do |(key, value), i|
+        granule_record.record_datas.create(
+          last_updated: DateTime.now,
+          column_name:  key,
+          value:        value,
+          order_count:  i,
+          daac:         daac_from_concept_id(granule.concept_id)
+        )
+        granule_record.save!
+      end
+
+
+      granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
+      granule_ingest.save!
+      granule.save!
+      true
+    end
+  rescue Cmr::CmrError
+    false
+  end
+
   def self.daac_from_concept_id(concept_id)
     concept_id.partition('-').last
   end
