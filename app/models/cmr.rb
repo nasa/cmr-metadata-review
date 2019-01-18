@@ -329,6 +329,15 @@ class Cmr
     granule_results["result"]
   end
 
+  # returns true if a granule with the specified concept id exists in cmr
+  def self.raw_granule?(concept_id)
+    url = Cmr.api_url('granules', 'echo10', 'concept_id': concept_id)
+    granule_xml = Cmr.cmr_request(url).parsed_response
+    granule_results = convert_xml_to_hash('echo10', granule_xml)['results']
+    granule_results['hits'].to_i.positive?
+  end
+
+
   # ====Params
   # Hash containing collection data
   # ====Returns

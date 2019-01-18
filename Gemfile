@@ -84,4 +84,5 @@ group :development do
   gem 'spring'
   gem 'rdoc'
   gem 'rubyzip', '1.2.2'
+  gem 'rails-erd'
 end

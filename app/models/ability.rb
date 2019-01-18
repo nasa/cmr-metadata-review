@@ -23,6 +23,8 @@ class Ability
         can :close, Record
 
         can :replace_granule, Granule
+        can :delete_granule, Granule
+        can :create_granule, Collection
 
         can :access, :filter_daac
 
