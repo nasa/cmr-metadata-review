@@ -18,6 +18,11 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   #
+  #
+  def get_stub(file_name)
+    file = "#{Rails.root}/test/stubs/#{file_name}"
+    File.read(file)
+  end
 end
 
 class ActionController::TestCase

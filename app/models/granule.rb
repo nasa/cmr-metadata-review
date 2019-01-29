@@ -45,6 +45,9 @@ class Granule < ActiveRecord::Base
     granules_components
   end
 
+  # I don't like that this can return two different kinds of values.
+  # It will return false if the concept id is a collection or if there is an error
+  # Otherwise, will return the granule_record.   I think it should return nil and test for it.
   def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
     collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
@@ -74,12 +77,11 @@ class Granule < ActiveRecord::Base
     false
   end
 
-  # Adds a new granule revision record to the specified granule
+  # Fetches the latest revision for the granule, creates a review of it, then returns the granule record.
   def self.add_new_revision_to_granule(granule, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule.concept_id)
-    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
-
-    return false unless collection
+    collection = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+    return nil unless collection
 
     granule_data = granule_info["Granule"]
 
@@ -89,22 +91,20 @@ class Granule < ActiveRecord::Base
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
-          column_name:  key,
-          value:        value,
-          order_count:  i,
-          daac:         daac_from_concept_id(granule.concept_id)
+          column_name: key,
+          value: value,
+          order_count: i,
+          daac: daac_from_concept_id(granule.concept_id)
         )
         granule_record.save!
       end
 
-
       granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_ingest.save!
       granule.save!
-      true
+
+      granule_record
     end
-  rescue Cmr::CmrError
-    false
   end
 
   def self.daac_from_concept_id(concept_id)

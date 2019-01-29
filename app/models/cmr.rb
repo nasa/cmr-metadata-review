@@ -190,7 +190,7 @@ class Cmr
 
     if collection_data["errors"]
       error_message = data_format == "umm_json" ? collection_data["errors"] : collection_data["error"]
-      raise CmrError.new(error_message)
+      raise CmrError, error_message
     end
 
     collection_data_hash = convert_xml_to_hash(data_format, collection_data)
@@ -235,7 +235,7 @@ class Cmr
   end
 
   def self.format_granule_data(granule_raw_data)
-    results_hash      = flatten_collection(granule_raw_data)
+    results_hash = flatten_collection(granule_raw_data)
     add_required_fields(results_hash, RecordFormats::Echo10Fields::DESIRED_GRANULE_FIELDS)
   end
 
@@ -280,12 +280,14 @@ class Cmr
 
     begin
       collection_results = convert_xml_to_hash(type, data)["results"]
-    rescue
+    rescue => e
       # Error raised when no results are found.  CMR returns an error hash instead of xml string
-      raise CmrError
+      raise CmrError, e.message
     end
 
-    raise CmrError if collection_results["hits"].to_i == 0
+    if collection_results["hits"].to_i == 0
+      raise CmrError, "CMR returned 0 hits for #{concept_id}, type=echo10"
+    end
 
     if type == "echo10"
       collection_results["result"]["Collection"]
@@ -318,12 +320,12 @@ class Cmr
 
     begin
       granule_results = convert_xml_to_hash("echo10", granule_xml)["results"]
-    rescue
-      raise CmrError
+    rescue => e
+      raise CmrError, e.message
     end
 
     if granule_results["hits"].to_i == 0
-      raise CmrError
+      raise CmrError, "CMR returned 0 hits for #{concept_id}"
     end
 
     granule_results["result"]
@@ -380,8 +382,8 @@ class Cmr
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       Hash.from_xml(granule_xml)["results"]
-    rescue
-      raise CmrError
+    rescue => e
+      raise CmrError, e.message
     end
   end
 
@@ -480,8 +482,8 @@ class Cmr
             Rails.logger.info("cmr search for #{free_text} with wildcard on suffix ONLY worked.")
           end
         end
-      rescue
-        raise CmrError
+      rescue => e
+        raise CmrError, e.message
       end
 
 
@@ -523,8 +525,8 @@ class Cmr
           raw_json = Cmr.cmr_request(query_text_first_char).parsed_response
           search_results = raw_json["feed"]["entry"]
         end
-      rescue
-        raise CmrError
+      rescue => e
+        raise CmrError, e.message
       end
     end
 
