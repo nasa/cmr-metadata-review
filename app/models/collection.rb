@@ -133,8 +133,6 @@ class Collection < ActiveRecord::Base
       granules_components = Granule.assemble_granule_components(concept_id, granules_count, self, current_user)
     end
 
-    save_success = false
-
     #saving all the related collection and granule data in a combined transaction
     granules_components.flatten.each {|savable_object|
       if savable_object.is_a?(Array)
@@ -155,14 +153,6 @@ class Collection < ActiveRecord::Base
         record.create_script
       end
     }
-    save_success = true
-
-
-    if !save_success
-      return -1
-    end
-
-    return 0
   end
 
   def add_granule_with_concept_id(current_user, concept_id)
@@ -174,7 +164,7 @@ class Collection < ActiveRecord::Base
     granules_count = 1
 
     record = self.records[0]
-    native_format = self.records[0].format
+    native_format = record.format
 
 
     #only selecting granules for certain formats per business rules
@@ -182,8 +172,6 @@ class Collection < ActiveRecord::Base
       #creating all the Granule related objects
       granules_components = Granule.assemble_granule_components(concept_id, granules_count, self, current_user)
     end
-
-    save_success = false
 
     #saving all the related collection and granule data in a combined transaction
     granules_components.flatten.each {|savable_object|
@@ -205,14 +193,6 @@ class Collection < ActiveRecord::Base
         record.create_script
       end
     }
-    save_success = true
-
-
-    if !save_success
-      return -1
-    end
-
-    return 0
   end
 
 

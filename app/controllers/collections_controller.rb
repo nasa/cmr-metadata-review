@@ -6,27 +6,7 @@ class CollectionsController < ApplicationController
   before_filter :find_record, only: [:show, :hide, :refresh]
   before_filter :collection_only, only: :refresh
 
-  # TODO: This will be deleted before we merge to master
-  def runTest
-    Granule.all.each do |granule|
-      if Cmr.raw_granule?(granule.concept_id)
-        raw_granule_results = Cmr.get_raw_granule_results(granule.concept_id)
-        latest_revision_in_cmr = raw_granule_results['revision_id'].to_i
-        highest = 0
-        granule.records.each do |record|
-          highest = record.revision_id.to_i > highest ? record.revision_id.to_i : highest
-        end
-        if (highest > latest_revision_in_cmr)
-          puts "collection=#{granule.collection.concept_id}"
-          break;
-        end
-        break
-      end
-    end
-  end
-
   def show
-    runTest
     if @record
       collection = get_collection_from_record(@record)
 
@@ -35,7 +15,7 @@ class CollectionsController < ApplicationController
       @granule_objects = Granule.where(collection: collection)
 
       # iterates through the granule objects, setting:
-      #   1) the latest revision number in cmr
+      #   1) the latest revision number found in cmr
       #   2) whether the granule has been deleted in cmr
       # This information is used in the view to provide some indicator to the user
       # if the granule has a new revision or the granule has been deleted.
@@ -60,7 +40,8 @@ class CollectionsController < ApplicationController
     if can?(:search, :cmr)
       begin
         @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"])
-      rescue Cmr::CmrError
+      rescue Cmr::CmrError => e
+        Rails.logger.error("Error retrieving from CMR, #{e.message}")
         flash[:alert] = 'There was an error connecting to the CMR System, please try again'
         redirect_to home_path
         return
@@ -96,7 +77,8 @@ class CollectionsController < ApplicationController
       collection_data = Cmr.get_collection(params["concept_id"])
       @short_name = collection_data["ShortName"]
       @granule_count = Cmr.collection_granule_count(@concept_id)
-    rescue Cmr::CmrError
+    rescue Cmr::CmrError => e
+      Rails.logger.error("Error retrieving from CMR, #{e.message}")
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       redirect_to home_path
       return
@@ -124,7 +106,8 @@ class CollectionsController < ApplicationController
         Collection.create_new_record(params[:concept_id], params[:revision_id], current_user, true)
 
         flash[:notice] = "The selected collection has been successfully ingested into the system"
-      rescue Cmr::CmrError
+      rescue Cmr::CmrError => e
+        Rails.logger.error("Error retrieving from CMR, #{e.message}")
         flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       rescue Net::OpenTimeout
         flash[:alert] = 'There was an open timeout error connecting to the CMR System, please try again'
