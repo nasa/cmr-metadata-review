@@ -92,7 +92,7 @@ class CollectionsControllerTest < ActionController::TestCase
     # checks if the #ingest_pull_latest id is in the HTML exactly twice indicating
     # there is a new revision to pull.
     get :show, id: 1, record_id: 1
-    assert_select '#ingest_pull_latest', count:2
+    assert_select '.import_new_revision', count:2
   end
 end
 
