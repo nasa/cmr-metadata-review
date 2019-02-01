@@ -21,10 +21,14 @@ module CollectionsHelper
       highest_revision_id = revision_id if revision_id > highest_revision_id
     end
     if highest_revision_id < granule.latest_revision_in_cmr.to_i
-      return link_to("Import New Revision #{granule.latest_revision_in_cmr}",
+      if can?(:create_granule, Collection)
+        return link_to("Import New Revision #{granule.latest_revision_in_cmr}",
                      pull_latest_granule_path(granule.id),
-                     method: :post, class: 'import_new_revision', id: 'ingest_pull_latest',
+                     method: :post, class: 'import_new_revision',
                      data: { confirm: 'Are you sure?' })
+      else
+        return content_tag('span', "[Latest Revision #{granule.latest_revision_in_cmr}]")
+      end
     else
       return ''
     end

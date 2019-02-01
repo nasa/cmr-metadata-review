@@ -13,8 +13,8 @@
 
   <div class="group_box left_box">
 
-      <h3>Collection Revisions</h3>
-      <% @collection_records.each_with_index do |record, index| %>
+    <h3>Collection Revisions</h3>
+    <% @collection_records.each_with_index do |record, index| %>
 
       <table cellpadding="5" border="1">
 
@@ -26,23 +26,23 @@
 
         <tr>
           <td>
-                <table cellpadding="5" border="1">
-                    <tr>
-                        <td>Reviewer</td>
-                        <td>Status</td>
-                        <td>Completion Date</td>
-                    </tr>
+            <table cellpadding="5" border="1">
+              <tr>
+                <td>Reviewer</td>
+                <td>Status</td>
+                <td>Completion Date</td>
+              </tr>
 
 
-                  <% record.reviews.each do |review| %>
-                    <tr>
-                        <td><%= review.user.email %></td>
-                        <td><%= review.state_string %></td>
-                        <td><%= review.formatted_date %></td>
-                    </tr>
+              <% record.reviews.each do |review| %>
+                <tr>
+                  <td><%= review.user.email %></td>
+                  <td><%= review.state_string %></td>
+                  <td><%= review.formatted_date %></td>
+                </tr>
 
-                  <% end %>
-                </table>
+              <% end %>
+            </table>
 
             <div class="review_actions">
 
@@ -57,79 +57,93 @@
         </tr>
 
       </table>
-      <% end %>
+    <% end %>
 
   </div>
 
-  <% if @granule_objects.count > 0%>
+  <% if @granule_objects.count > 0 %>
     <div class="group_box">
       <div>
         <% if can?(:create_granule, @granule_objects.first.collection) %>
           <h3>
             Granules
-            <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule", data: { confirm: "Are you sure?" } %>
+            <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule_button", data: {confirm: "Are you sure?"} %>
           </h3>
         <% end %>
       </div>
       <% @granule_objects.each_with_index do |granule, index| %>
-          <% granule.records.each do |granule_record| %>
-            <table cellpadding="5" border="1">
+        <% granule.records.each do |granule_record| %>
+          <table cellpadding="5" border="1">
 
-              <tr>
-                <th>
-                  <h4>
-                    <div>Concept ID: <%= granule_record.concept_id %>
-                      <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+            <tr>
+              <th>
+                <h4>
+                  <div>Concept ID: <%= granule_record.concept_id %>
+                    <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+                  </div>
+                  <div>Revision_ID: <%= granule_record.revision_id %>
+                    <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                  </div>
+                </h4>
+              </th>
+            </tr>
+
+            <tr>
+              <td>
+                <table cellpadding="5" border="1">
+                  <tr>
+                    <td>Reviewer</td>
+                    <td>Status</td>
+                    <td>Completion Date</td>
+                  </tr>
+
+
+                  <% granule_record.reviews.each do |review| %>
+                    <tr>
+                      <td><%= review.user.email %></td>
+                      <td><%= review.state_string %></td>
+                      <td><%= review.formatted_date %></td>
+                    </tr>
+
+                  <% end %>
+                </table>
+
+                <div class="review_actions">
+                  <div class="ingest_score">
+                    <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
+                  </div>
+
+                  <div id="granule_review_link">
+                    <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
+                  </div>
+                  <% if can?(:delete_granule, granule_record.recordable) %>
+                    &nbsp;
+                    <input class="smallSelectButton" type="button" id="delete-granule-modal" name="delete-granule-modal-id" href="#delete-granule-modal-id" value="Delete Granule"/>
+
+                    <div id="delete-granule-modal-id" class="eui-modal-content confirm-modal">
+                      <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+                      <p>
+                        Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
+                      </p>
+                      <p>
+                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>
+                        &nbsp;
+                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button"  value="No"/></a>
+                      </p>
+                      </p>
                     </div>
-                    <div>Revision_ID: <%= granule_record.revision_id %>
-                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                    </div>
-                  </h4>
-                </th>
-              </tr>
 
-              <tr>
-                <td>
-                  <table cellpadding="5" border="1">
-                      <tr>
-                          <td>Reviewer</td>
-                          <td>Status</td>
-                          <td>Completion Date</td>
-                      </tr>
-
-
-                    <% granule_record.reviews.each do |review| %>
-                      <tr>
-                          <td><%= review.user.email %></td>
-                          <td><%= review.state_string %></td>
-                          <td><%= review.formatted_date %></td>
-                      </tr>
-
-                    <% end %>
-                  </table>
-
-                  <div class="review_actions">
-                    <div class="ingest_score">
-                      <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
-                    </div>
-
-                    <div>
-                      <div id="granule_review_link">
-                        <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
-                      </div>
-                      <div>
-                        <% if can?(:delete_granule, granule_record.recordable) %>
-                          <%= button_to "Delete Granule", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: "smallSelectButton", id: "delete_granule", data: { confirm: "Are you sure?" } %>
-                        <% end %>
-                      </div>
-                    </div>
+                    <script>
+                      $('#delete-granule-modal').leanModal()
+                    </script>
+                  <% end %>
                 </div>
-                </td>
-              </tr>
+              </td>
+            </tr>
 
-            </table>
-          <% end %>
+          </table>
         <% end %>
+      <% end %>
 
     </div>
   <% else %>
@@ -139,7 +153,7 @@
         <% if can?(:create_granule, @record.recordable) %>
           <h3>
             Granules
-            <%= button_to "Ingest New Random Granule", granule_path(:id => @record.recordable.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule", data: { confirm: "Are you sure?" } %>
+            <%= button_to "Ingest New Random Granule", granules_path(:id => @record.recordable.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule_button", data: {confirm: "Are you sure?"} %>
           </h3>
         <% end %>
       </div>

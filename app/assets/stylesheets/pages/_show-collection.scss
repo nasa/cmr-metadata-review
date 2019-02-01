@@ -83,16 +83,13 @@
 .indicator_for_granule_deleted_in_cmr {
   color: red;
 }
-
-.ingest_new_granule {
+.indicator_for_has_new_granule_revision {
+  color: blue;
+}
+.ingest_new_granule_button {
   display: inline;
 }
 
-#delete_granule {
-  margin-left: 2px;
-}
 
-.import_new_revision {
-  color: blue;
-}
+
 
