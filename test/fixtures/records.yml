@@ -13,18 +13,21 @@ granule:
   recordable_type: "Granule"
   revision_id: "1"
   state: "in_arc_review"
+  format: "echo10"
 
 metric1:
   id: 10
   recordable_id: 2
   recordable_type: "Collection"
   revision_id: "8"
+  format: "dif10"
 
 metric2:
   id: 11
   recordable_id: 3
   recordable_type: "Collection"
   revision_id: "8"
+  format: "dif10"
 
 in_daac_review:
   id: 12
@@ -32,6 +35,7 @@ in_daac_review:
   recordable_type: "Collection"
   revision_id: "8"
   state: "in_daac_review"
+  format: "dif10"
 
 in_arc_review:
   id: 13
@@ -39,6 +43,7 @@ in_arc_review:
   recordable_type: "Collection"
   revision_id: "6"
   state: "in_arc_review"
+  format: "dif10"
 
 podaac_in_daac_review:
   id: 14
@@ -46,6 +51,7 @@ podaac_in_daac_review:
   recordable_type: "Collection"
   revision_id: "7"
   state: "in_daac_review"
+  format: "dif10"
 
 closed:
   id: 15
@@ -53,6 +59,7 @@ closed:
   recordable_type: "Collection"
   revision_id: 4
   state: "closed"
+  format: "dif10"
 
 open_granule:
   id: 16
@@ -60,4 +67,6 @@ open_granule:
   recordable_type: "Granule"
   revision_id: "6"
   state: "open"
+  format: "echo10"
+
 
