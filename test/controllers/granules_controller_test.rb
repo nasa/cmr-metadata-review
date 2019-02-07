@@ -21,7 +21,6 @@ class GranulesControllerTest < ActionController::TestCase
       granule = collection.granules.first
       record  = granule.records.find(16)
       no_granules_before = granule.records.count
-      Record.any_instance.expects(:destroy)
       delete :destroy, id: granule.id, record_id: record.id
       no_granules_after = granule.records.count
       assert_equal no_granules_after, (no_granules_before - 1)
@@ -98,12 +97,11 @@ class GranulesControllerTest < ActionController::TestCase
       # after we do post, there should be 3 granule revisions, 1,6, and the new
       # revision stubbed above, #15
       granule = Granule.first
+      records = granule.records
       records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
       no_granules_after = granule.records.count
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new granule revision has been added for this collection.", flash[:notice]
-      records = granule.records;
-      records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
       assert_equal records.last.revision_id,"15"
 
     end
