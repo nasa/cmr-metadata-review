@@ -13,8 +13,8 @@ class GranulesController < ApplicationController
     collection = Collection.find(params[:id])
     authorize! :create_granule, collection
     begin
-      collection.add_granule_with_concept_id(current_user, collection.concept_id)
-      flash[:notice] = collection.granules.count > 0 ?  "A new random granule has been added for this collection" : "No Granules Available!"
+      granule = collection.add_granule_with_concept_id(current_user, collection.concept_id)
+      flash[:notice] = granule.nil? ? "No Granules Available!" : "A new random granule has been added for this collection"
       redirect_to collection_path(id: 1, record_id: collection.records.first.id)
     rescue ActiveRecord::ActiveRecordError => e
       flash[:notice] = 'Sorry, Error occurred creating granule review.'
