@@ -4,6 +4,109 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class GranulesControllerTest < ActionController::TestCase
   include OmniauthMacros
 
+  describe "DELETE #delete" do
+    it "deletes a selected granule record from a collection" do
+      user = User.find_by role: "admin"
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      user = User.find_by role: "admin"
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      # This test first retrieves how many granules revisions exist for a given collection.
+      # Then removes  the record id #16
+      # It then asserts that the no granule records left is 1 less.
+      collection = Collection.find(1)
+      granule = collection.granules.first
+      record  = granule.records.find(16)
+      no_granules_before = granule.records.count
+      delete :destroy, id: granule.id, record_id: record.id
+      no_granules_after = granule.records.count
+      assert_equal no_granules_after, (no_granules_before - 1)
+
+
+      assert_equal "Granule has been deleted.", flash[:notice]
+    end
+  end
+
+  describe "POST #create" do
+    it "creates a new random granule for a collection" do
+
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
+
+
+
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.xml'), headers: {})
+
+      user = User.find_by role: "admin"
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      # This test grabs the collection with id #1, calls POST create which in turn pulls a random granule from
+      # CMR and associates it with this collection.   If successful, the # of granules for this collection
+      # should increase by 1.
+      collection = Collection.find(1)
+      no_granules_before = collection.granules.count
+      post :create, id: collection.id
+      no_granules_after = collection.granules.count
+      assert_equal no_granules_after, (no_granules_before + 1)
+      assert_equal "A new random granule has been added for this collection", flash[:notice]
+    end
+  end
+
+  describe "POST #pull_latest" do
+    it "pulls in the latest revision of a granule for a collection." do
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
+
+
+      user = User.find_by role: "admin"
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      # before we do post, there should be 2 granule revisions, 1 and 6
+      granule = Granule.first
+      records = granule.records
+      records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
+      records = granule.records.order(:revision_id)
+      no_granules_before = records.count
+      assert_equal records.last.revision_id,"6"
+      post :pull_latest, id: granule.id
+
+      # after we do post, there should be 3 granule revisions, 1,6, and the new
+      # revision stubbed above, #15
+      granule = Granule.first
+      records = granule.records
+      records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
+      no_granules_after = granule.records.count
+      assert_equal no_granules_after, (no_granules_before + 1)
+      assert_equal "A new granule revision has been added for this collection.", flash[:notice]
+      assert_equal records.last.revision_id,"15"
+
+    end
+  end
+
   describe "DELETE #replace" do
     it "prevents DAAC curators from replacing the Granule" do
       user = User.find_by role: "daac_curator"
@@ -13,6 +116,7 @@ class GranulesControllerTest < ActionController::TestCase
       granule = Granule.first
       record  = granule.records.find(5)
 
+      # This method ensures that DAAC curators can not replace granule records.
       delete :replace, id: granule.id, record_id: record.id
 
       assert_redirected_to general_home_path

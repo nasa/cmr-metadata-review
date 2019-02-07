@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results>
+  <hits>1</hits>
+  <took>25</took>
+  <result concept-id="G226250-GHRC" collection-concept-id="C222702-GHRC" revision-id="1"
+  format="application/echo10+xml">
+  <Granule>
+    <GranuleUR>Ndaily2004.246_cum_cglitn_v2.hdf</GranuleUR>
+    <InsertTime>2007-11-27T17:06:08.000Z</InsertTime>
+    <LastUpdate>2007-11-27T17:06:08.000Z</LastUpdate>
+    <Collection>
+      <ShortName>daylightn</ShortName>
+      <VersionId>1</VersionId>
+    </Collection>
+    <DataGranule>
+      <SizeMBDataGranule>0.402059555053711</SizeMBDataGranule>
+      <DayNightFlag>UNSPECIFIED</DayNightFlag>
+      <ProductionDateTime>2007-11-27T17:06:08.000Z</ProductionDateTime>
+    </DataGranule>
+    <Temporal>
+      <RangeDateTime>
+        <BeginningDateTime>2004-09-02T00:00:00.000Z</BeginningDateTime>
+        <EndingDateTime>2004-09-02T23:59:59.000Z</EndingDateTime>
+      </RangeDateTime>
+    </Temporal>
+    <Spatial>
+      <HorizontalSpatialDomain>
+        <Geometry>
+          <BoundingRectangle>
+            <WestBoundingCoordinate>-130</WestBoundingCoordinate>
+            <NorthBoundingCoordinate>53</NorthBoundingCoordinate>
+            <EastBoundingCoordinate>-60</EastBoundingCoordinate>
+            <SouthBoundingCoordinate>20</SouthBoundingCoordinate>
+          </BoundingRectangle>
+        </Geometry>
+      </HorizontalSpatialDomain>
+    </Spatial>
+    <Price>0</Price>
+    <OnlineResources>
+      <OnlineResource>
+        <URL>http://lightning.nsstc.nasa.gov/cgi-bin/nldn/nldn_cal.pl?1998+January</URL>
+        <Type>Browse</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>http://ghrc.nsstc.nasa.gov/uso/ds_docs/nldn/lightning_dataset.html</URL>
+        <Type>Guide</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>http://lightning.nsstc.nasa.gov/data/</URL>
+        <Type>Homepage</Type>
+      </OnlineResource>
+    </OnlineResources>
+    <Orderable>true</Orderable>
+    <DataFormat>HDF</DataFormat>
+    <Visible>true</Visible>
+  </Granule>
+</result></results>

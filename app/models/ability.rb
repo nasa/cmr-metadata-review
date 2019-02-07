@@ -23,6 +23,8 @@ class Ability
         can :close, Record
 
         can :replace_granule, Granule
+        can :delete_granule, Granule
+        can :create_granule, Collection
 
         can :access, :filter_daac
 
@@ -50,6 +52,8 @@ class Ability
         can :review_state, [Record::STATE_OPEN, Record::STATE_READY_FOR_DAAC_REVIEW, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
 
         can :replace_granule, Granule
+        can :delete_granule, Granule
+        can :create_granule, Collection
 
         can :access, :filter_daac
 

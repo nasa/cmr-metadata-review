@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :granules do
       member do
         delete "replace"
+        post "pull_latest"
       end
     end
     resources :comments

@@ -5,6 +5,7 @@ first:
   recordable_type: "Collection"
   revision_id: "8"
   state: "open"
+  format: "echo10"
 
 granule:
   id: 5

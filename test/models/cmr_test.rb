@@ -25,7 +25,8 @@ class CmrTest < ActiveSupport::TestCase
       error = false
       begin
         collection = Cmr.get_collection("junk-name")
-      rescue Cmr::CmrError
+      rescue Cmr::CmrError => e
+        Rails.logger.error(e.message)
         error = true
       end
 
@@ -38,7 +39,8 @@ class CmrTest < ActiveSupport::TestCase
       error = false
       begin
         collection = Cmr.get_collection("C1000000042-LANCEAMSR3")
-      rescue Cmr::CmrError
+      rescue Cmr::CmrError => e
+        Rails.logger.error(e.message)
         error = true
       end
 

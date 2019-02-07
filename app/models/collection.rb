@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Collection < ActiveRecord::Base
   has_many :records, :as => :recordable
   has_many :granules
@@ -5,14 +7,14 @@ class Collection < ActiveRecord::Base
   SUPPORTED_FORMATS = ["dif10", "echo10", "umm_json"]
   INCLUDE_GRANULE_FORMATS = ["dif10", "echo10", "umm_json"]
   SHORT_NAMES = {
-    "dif10"    => "Entry_ID/Short_Name",
-    "echo10"   => "ShortName",
+    "dif10" => "Entry_ID/Short_Name",
+    "echo10" => "ShortName",
     "umm_json" => "ShortName"
   }
 
   extend RecordRevision
 
-  scope :finished, -> { where(cmr_update: false) }
+  scope :finished, -> {where(cmr_update: false)}
 
   def get_records
     records.visible
@@ -45,12 +47,12 @@ class Collection < ActiveRecord::Base
       daac = concept_id.split('-').last
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
-          last_updated: DateTime.now,
-          column_name:  key,
-          value:        value,
-          order_count:  i,
-          daac:         daac
-        })
+                                         last_updated: DateTime.now,
+                                         column_name: key,
+                                         value: value,
+                                         order_count: i,
+                                         daac: daac
+                                       })
       end
 
       user = options[:user] || User.find_by(role: "admin")
@@ -59,7 +61,7 @@ class Collection < ActiveRecord::Base
 
       # In production there is an egress issue with certain link types given in metadata
       # AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-      Timeout::timeout(40) { new_record.create_script } if options[:run_script]
+      Timeout::timeout(40) {new_record.create_script} if options[:run_script]
 
       collection.add_granule(user) if options[:add_granule]
 
@@ -74,8 +76,8 @@ class Collection < ActiveRecord::Base
 
     options = {
       add_granule: add_granule,
-      run_script:  true,
-      user:        user
+      run_script: true,
+      user: user
     }
 
     create_record(concept_id, revision_id, native_format, collection_data, options)
@@ -124,45 +126,78 @@ class Collection < ActiveRecord::Base
     granules_count = 1
     native_format = self.records[0].format
 
-      #checking that no granule exists for previously imported/deleted records.
-      if self.granules.count == 0
-        #only selecting granules for certain formats per business rules
-        if Collection::INCLUDE_GRANULE_FORMATS.include? native_format
-            #creating all the Granule related objects
-            granules_components = Granule.assemble_granule_components(self.concept_id, granules_count, self, current_user)
-        end
-      end
 
-      save_success = false
-      #saving all the related collection and granule data in a combined transaction
-        granules_components.flatten.each { |savable_object|
-                                              if savable_object.is_a?(Array)
-                                                savable_object.each do |savable_item|
-                                                  savable_item.save!
-                                                end
-                                              else
-                                                savable_object.save!
-                                              end
-                                          }
-
-        #In production there is an egress issue with certain link types given in metadata
-        #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-        Timeout::timeout(20) {
-          #getting list of records for script
-          granule_records = granules_components.flatten.select { |savable_object| savable_object.is_a?(Record) }
-          granule_records.each do |record|
-            record.create_script
-          end
-        }
-        save_success = true
-
-
-    if !save_success
-      return -1
+    #only selecting granules for certain formats per business rules
+    if Collection::INCLUDE_GRANULE_FORMATS.include? native_format
+      #creating all the Granule related objects
+      granules_components = Granule.assemble_granule_components(concept_id, granules_count, self, current_user)
     end
 
-    return 0
+    #saving all the related collection and granule data in a combined transaction
+    granules_components.flatten.each {|savable_object|
+      if savable_object.is_a?(Array)
+        savable_object.each do |savable_item|
+          savable_item.save!
+        end
+      else
+        savable_object.save!
+      end
+    }
+
+    #In production there is an egress issue with certain link types given in metadata
+    #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+    Timeout::timeout(20) {
+      #getting list of records for script
+      granule_records = granules_components.flatten.select {|savable_object| savable_object.is_a?(Record)}
+      granule_records.each do |record|
+        record.create_script
+      end
+    }
   end
+
+  def add_granule_with_concept_id(current_user, concept_id)
+    if current_user.nil?
+      current_user = User.find_by(email: 'abaker@element84.com')
+    end
+
+    granules_components = []
+    granules_count = 1
+
+    record = self.records[0]
+    native_format = record.format
+
+
+    #only selecting granules for certain formats per business rules
+    if Collection::INCLUDE_GRANULE_FORMATS.include? native_format
+      #creating all the Granule related objects
+      granules_components = Granule.assemble_granule_components(concept_id, granules_count, self, current_user)
+    end
+
+    #saving all the related collection and granule data in a combined transaction
+    granules_components.flatten.each {|savable_object|
+      if savable_object.is_a?(Array)
+        savable_object.each do |savable_item|
+          savable_item.save!
+        end
+      else
+        savable_object.save!
+      end
+    }
+
+
+    #In production there is an egress issue with certain link types given in metadata
+    #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
+    Timeout::timeout(20) {
+      #getting list of records for script
+      granule_records = granules_components.flatten.select {|savable_object| savable_object.is_a?(Record)}
+      granule_records.each do |record|
+        record.create_script
+      end
+
+    }
+    granules_components[0] # returns the granule object
+  end
+
 
   def refresh!(current_user)
     latest_revision = Cmr.current_revision_for(concept_id)
@@ -189,6 +224,6 @@ class Collection < ActiveRecord::Base
   private
 
   def all_records_finished?
-    records.visible.all? { |r| r.state == Record::STATE_FINISHED.to_s }
+    records.visible.all? {|r| r.state == Record::STATE_FINISHED.to_s}
   end
 end
