@@ -88,8 +88,7 @@ class GranulesControllerTest < ActionController::TestCase
       # before we do post, there should be 2 granule revisions, 1 and 6
       granule = Granule.first
       records = granule.records
-      records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
-      records = granule.records.order(:revision_id)
+      records = records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
       no_granules_before = records.count
       assert_equal records.last.revision_id,"6"
       post :pull_latest, id: granule.id
@@ -98,7 +97,8 @@ class GranulesControllerTest < ActionController::TestCase
       # revision stubbed above, #15
       granule = Granule.first
       records = granule.records
-      records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
+      records = records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
+
       no_granules_after = granule.records.count
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new granule revision has been added for this collection.", flash[:notice]

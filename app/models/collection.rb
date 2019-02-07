@@ -166,7 +166,6 @@ class Collection < ActiveRecord::Base
     record = self.records[0]
     native_format = record.format
 
-
     #only selecting granules for certain formats per business rules
     if Collection::INCLUDE_GRANULE_FORMATS.include? native_format
       #creating all the Granule related objects
@@ -195,7 +194,7 @@ class Collection < ActiveRecord::Base
       end
 
     }
-    granules_components[0] # returns the granule object
+    return granules_components.flatten[0] # returns the granule object
   end
 
 
