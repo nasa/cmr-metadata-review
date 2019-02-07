@@ -116,26 +116,20 @@
                   <div id="granule_review_link">
                     <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
                   </div>
-                  <% if can?(:delete_granule, granule_record.recordable) %>
-                    &nbsp;
-                    <input class="smallSelectButton" type="button" id="delete-granule-modal" name="delete-granule-modal-id" href="#delete-granule-modal-id" value="Delete Granule"/>
+                  <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
+                    <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
+                    <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%=modal_id %>" href="#<%=modal_id%>" value="Delete Granule"/>
 
-                    <div id="delete-granule-modal-id" class="eui-modal-content confirm-modal">
+                    <div id="<%=modal_id%>" class="eui-modal-content confirm-modal">
                       <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
                       <p>
                         Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
                       </p>
                       <p>
-                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>
-                        &nbsp;
-                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button"  value="No"/></a>
-                      </p>
+                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
+                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button"  value="No"/></a> </p>
                       </p>
                     </div>
-
-                    <script>
-                      $('#delete-granule-modal').leanModal()
-                    </script>
                   <% end %>
                 </div>
               </td>
