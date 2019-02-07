@@ -1,0 +1,47 @@
+/* CSS for the confirm dialog box. */
+#lean_overlay {
+  position: fixed;
+  z-index:100;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: $true-black;
+  display: none;
+}
+
+.confirm-modal {
+  margin-top: 100px;
+}
+
+.confirm-yes-button {
+  float: left;
+}
+
+.confirm-no-button {
+  margin: .3em 0;
+  padding: .6em;
+}
+
+.modal-close {
+  float: right;
+  margin-top: -1em;
+}
+
+.float-r {
+  float: right;
+}
+
+.is-invisible {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.confirm-modal-button {
+  /* used by javascript to attach function to the button */
+}
+
