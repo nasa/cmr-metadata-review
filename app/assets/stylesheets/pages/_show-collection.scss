@@ -18,11 +18,13 @@
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: $gray-dark;
+    display: inline-block;
 
     h3 {
       margin-bottom: 5px;
       margin-top: 5px;
     }
+
   }
 
   .left_box {
@@ -88,6 +90,11 @@
 }
 .ingest_new_granule_button {
   display: inline;
+}
+
+.edit_collection_in_mmt_link {
+  float: right;
+  margin-right: 50px;
 }
 
 
