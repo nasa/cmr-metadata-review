@@ -31,29 +31,7 @@ class CollectionsControllerTest < ActionController::TestCase
       collection_records = assigns(:collection_records)
       assert_equal(3, collection_records.length)
     end
-
-    it "contains a link to mmt collection record" do
-      sign_in(user)
-      stub_urs_access(user.uid, user.access_token, user.refresh_token)
-
-      #stubbing all requests for raw_data
-      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
-
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200,
-                  body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
-                  headers: {})
-
-      get :show, id: 1, record_id: 1
-      assert_select '.edit_collection_in_mmt_link', count:1
-    end
-
+    
     it "redirects when no concept id is provided" do
       #redirects no record_id
       get :show, id: 1
