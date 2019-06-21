@@ -41,6 +41,9 @@ group :test do
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
   gem 'minitest-rails-capybara'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  gem 'launchy'
 end
 
 group :development, :test do
