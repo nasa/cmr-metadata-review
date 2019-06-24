@@ -34,5 +34,16 @@ module CollectionsHelper
     end
   end
 
+  def link_for_edit_collection_in_mmt(concept_id)
+    env_name = ENV.fetch('RAILS_ENV', '').downcase
+    case env_name
+      when 'sit'
+        "https://mmt.sit.earthdata.nasa.gov/collections/#{concept_id}"
+      when 'uat'
+        "https://mmt.uat.earthdata.nasa.gov/collections/#{concept_id}"
+      else
+        "https://mmt.earthdata.nasa.gov/collections/#{concept_id}"
+    end
 
+  end
 end
