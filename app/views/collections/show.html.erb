@@ -10,7 +10,7 @@
       <h3>Format: <%= @collection_records.first.format %></h3>
     </div>
     <div class="edit_collection_in_mmt_link">
-      <%= button_to link_for_edit_collection_in_mmt(@concept_id), class: 'eui-btn--blue', target: '_blank', method: :get do %>
+      <%= link_to link_for_edit_collection_in_mmt(@concept_id), class: 'eui-btn--blue', target: '_blank', method: :get do %>
         <i class='fa fa-external-link'></i>&nbsp;&nbsp;EDIT COLLECTION IN MMT
       <% end %>
     </div>
