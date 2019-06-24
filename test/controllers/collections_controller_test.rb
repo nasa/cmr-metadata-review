@@ -31,7 +31,7 @@ class CollectionsControllerTest < ActionController::TestCase
       collection_records = assigns(:collection_records)
       assert_equal(3, collection_records.length)
     end
-
+    
     it "redirects when no concept id is provided" do
       #redirects no record_id
       get :show, id: 1
