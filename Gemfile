@@ -42,7 +42,7 @@ group :test do
   gem 'minitest-reporters', '1.3.0'
   gem 'minitest-rails-capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'launchy'
 end
 
