@@ -27,7 +27,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         find('#open > div > div.navigate_buttons > input').click
 
         # Tests to see if the edit collection in mmt link is there.
-        page.must_have_button('EDIT COLLECTION IN MMT')
+        page.must_have_link('EDIT COLLECTION IN MMT')
       end
     end
   end
