@@ -82,7 +82,7 @@ class GranuleOutputJSON():
         try:
             result[str] = self.checkerRules.checkTemporalBeginningTime(metadata['Temporal']['RangeDateTime']['BeginningDateTime'])
         except:
-            result = "np"
+            result[str] = "np"
         # ================
         str = 'Temporal/RangeDateTime/EndingDateTime'
         try:
@@ -107,9 +107,12 @@ class GranuleOutputJSON():
             if metadata['OrbitCalculatedSpatialDomains'] != None and metadata['OrbitCalculatedSpatialDomains'][
                 'OrbitCalculatedSpatialDomain'] != None:
                 length = len(metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'])
-                result[str] = self.checkerRules.checkEquatorCrossingTime(
-                    metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'][
-                        'EquatorCrossingDateTime'], length)
+                try:
+                  result[str] = self.checkerRules.checkEquatorCrossingTime(
+                      metadata['OrbitCalculatedSpatialDomains']['OrbitCalculatedSpatialDomain'][
+                          'EquatorCrossingDateTime'], length)
+                except:
+                  result[str]= "np"
             else:
                 result[str] = "np"
         except:
