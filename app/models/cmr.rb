@@ -279,7 +279,9 @@ class Cmr
     data = Cmr.cmr_request(url).parsed_response
 
     begin
-      collection_results = convert_xml_to_hash(type, data)["results"]
+      collection_results = convert_xml_to_hash(type, data)
+       # dif and echo return results subelement but umm does not
+      collection_results = collection_results['results'] unless collection_results['results'].nil?
     rescue => e
       # Error raised when no results are found.  CMR returns an error hash instead of xml string
       raise CmrError, e.message
@@ -412,6 +414,8 @@ class Cmr
       granule_data_list = []
 
       #getting a random list of granules addresses within available amount
+      # CMR limits the page depth to 1,000,000, see ticket CMRARC-480
+      total_granules = [1000000, total_granules].min
       granules_picked = (0...total_granules).to_a.shuffle.take(granule_count)
       granules_picked.each do |granule_address|
         #have to add 1 because cmr pages are 1 indexed
