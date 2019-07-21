@@ -19,6 +19,30 @@ class RecordsController < ApplicationController
     redirect_to (request.referrer || home_path)
   end
 
+  def associate_granule_to_collection
+    @record = Record.find_by id:params[:id]
+    collection = Collection.find_by id: @record.recordable_id
+    associated_granule_revision = params[:associated_granule_revision]
+    (concept_id, revision_id) = associated_granule_revision.split('/')
+    if concept_id == 'Undefined'
+      flash[:notice] = "This revision #{@record.revision_id} associated granule will be marked as undefined."
+      @record.associated_granule_concept_id = nil
+      @record.associated_granule_revision_id = nil
+    else
+      if concept_id == 'No Granule Review'
+        flash[:notice] = "This revision #{@record.revision_id} associated granule will be marked as 'No Granule Review'"
+        @record.associated_granule_concept_id = concept_id
+        @record.associated_granule_revision_id = nil
+      else
+        flash[:notice] = "Granule #{associated_granule_revision} has been successfully associated to this collection revision #{@record.revision_id}. "
+        @record.associated_granule_concept_id = concept_id
+        @record.associated_granule_revision_id = revision_id unless revision_id.nil?
+      end
+    end
+    @record.save!
+    redirect_to collection_path(id:collection.id, record_id: @record.id)
+  end
+
   def show
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map

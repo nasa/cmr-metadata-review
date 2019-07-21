@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     resources :records do
       member do
         post "complete"
+        post "associate_granule_to_collection"
       end
 
       collection do

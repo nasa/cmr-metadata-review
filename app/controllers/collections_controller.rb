@@ -30,6 +30,17 @@ class CollectionsController < ApplicationController
           granule.save!
         end
       end
+
+      # determine the values possible for linking collections to granules
+      @associated_granules_options = []
+      @granule_objects.each do |granule|
+        granule.records.each do |record|
+          option_val = "#{granule.concept_id}/#{record.revision_id}"
+          @associated_granules_options << [option_val, option_val]
+        end
+      end
+      @associated_granules_options << "No Granule Review"
+      @associated_granules_options << "Undefined"
     else
       flash[:alert] = "No record_id provided to find record details"
       redirect_to home_path
