@@ -280,8 +280,10 @@ class Cmr
 
     begin
       collection_results = convert_xml_to_hash(type, data)
-       # dif and echo return results subelement but umm does not
-      collection_results = collection_results['results'] unless collection_results['results'].nil?
+      # dif10 and echo10 return results subelement but umm does not
+      if type != 'umm_json'
+        collection_results = collection_results['results']
+      end
     rescue => e
       # Error raised when no results are found.  CMR returns an error hash instead of xml string
       raise CmrError, e.message
@@ -642,6 +644,7 @@ class Cmr
     if cmr_base_url.nil?
       cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     end
+    cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     cmr_base_url
   end
 
