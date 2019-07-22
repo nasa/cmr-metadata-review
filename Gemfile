@@ -38,6 +38,7 @@ gem 'rubyXL'
 gem 'ruby-progressbar'
 
 group :test do
+  gem 'database_cleaner'
   gem 'minitest-spec-rails'
   gem 'webmock'
   gem 'mocha'
