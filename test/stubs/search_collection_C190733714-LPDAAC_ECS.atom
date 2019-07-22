@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed esipdiscovery:version="1.2" xmlns="http://www.w3.org/2005/Atom"
+      xmlns:dc="http://purl.org/dc/terms/"
+      xmlns:echo="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html#atom"
+      xmlns:esipdiscovery="http://commons.esipfed.org/ns/discovery/1.2/"
+      xmlns:georss="http://www.georss.org/georss/10"
+      xmlns:gml="http://www.opengis.net/gml"
+      xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/">
+  <updated>2019-07-22T16:03:09.346Z</updated>
+  <id>https://cmr.earthdata.nasa.gov:443/search/collections.atom?concept_id=C190733714-LPDAAC_ECS&amp;pretty=true</id>
+  <title type="text">ECHO dataset metadata</title>
+  <entry>
+    <id>C190733714-LPDAAC_ECS</id>
+    <title type="text">ASTER L1B Registered Radiance at the Sensor V003</title>
+    <summary type="text">The Advanced Spaceborne Thermal Emission and Reflection Radiometer (ASTER) Level-1B (AST_L1B) Registered Radiance at the Sensor data product is radiometrically calibrated and geometrically co-registered. Application of intra-telescope and inter-telescope registration corrections for all bands are relative to the reference band for each telescope: Visible and Near Infrared (VNIR) Band 2, Shortwave Infrared (SWIR) Band 6, and Thermal Infrared (TIR) Band 11.</summary>
+    <updated/>
+    <echo:datasetId>ASTER L1B Registered Radiance at the Sensor V003</echo:datasetId>
+    <echo:shortName>AST_L1B</echo:shortName>
+    <echo:versionId>003</echo:versionId>
+    <echo:originalFormat>UMM_JSON</echo:originalFormat>
+    <echo:dataCenter>LPDAAC_ECS</echo:dataCenter>
+    <echo:organization>LP DAAC</echo:organization>
+    <echo:processingLevelId>1B</echo:processingLevelId>
+    <time:start>2000-03-04T20:34:04.000Z</time:start>
+    <link href="https://doi.org/10.5067/ASTER/AST_L1B.003"
+          hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/metadata#"/>
+    <link href="https://lpdaac.usgs.gov" hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/metadata#"/>
+    <link href="http://asterweb.jpl.nasa.gov/" hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/metadata#"/>
+    <link
+      href="https://search.earthdata.nasa.gov/search?q=AST_L1B+V003"
+      hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+    <link
+      href="https://lpdaac.usgs.gov/documents/70/AST_L1_ATBD.pdf"
+      hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/documentation#"/>
+    <link
+      href="https://lpdaac.usgs.gov/documents/69/AST_L1_User_Guide_V3.pdf"
+      hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/documentation#"/>
+    <link
+      href="https://asterweb.jpl.nasa.gov/content/03_data/04_Documents/ASTERHigherLevelUserGuideVer2May01.pdf"
+      hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/documentation#"/>
+    <link
+      href="https://lpdaac.usgs.gov/documents/175/ASTER_L1_Product_Specifications.pdf"
+      hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/documentation#"/>
+    <echo:coordinateSystem>CARTESIAN</echo:coordinateSystem>
+    <echo:orbitParameters/>
+    <georss:box>-90 -180 90 180</georss:box>
+    <echo:onlineAccessFlag>true</echo:onlineAccessFlag>
+    <echo:browseFlag>false</echo:browseFlag>
+    <echo:hasVariables>true</echo:hasVariables>
+    <echo:hasFormats>false</echo:hasFormats>
+    <echo:hasTransforms>true</echo:hasTransforms>
+    <echo:hasSpatialSubsetting>true</echo:hasSpatialSubsetting>
+    <echo:hasTemporalSubsetting>false</echo:hasTemporalSubsetting>
+  </entry>
+</feed>
