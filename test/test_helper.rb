@@ -11,6 +11,9 @@ require 'minitest/mock'
 require 'webmock/minitest'
 require 'minitest/reporters'
 require 'minitest/rails/capybara'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
