@@ -94,6 +94,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.3)
     devise (4.6.1)
       bcrypt (~> 3.0)
@@ -320,6 +321,7 @@ DEPENDENCIES
   bourbon
   cancan (~> 1.6.10)
   coffee-rails (~> 4.1.0)
+  database_cleaner
   devise
   execjs (~> 2.7.0)
   faraday_middleware
