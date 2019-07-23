@@ -53,7 +53,7 @@
         <% end %>
 
         <li>
-          <%= link_to destroy_user_session_path, class: "menu_link header_button" do %>
+          <%= link_to destroy_user_session_path, method: :post, class: "menu_link header_button" do %>
             <i class="eui-icon eui-fa-external-link-square"></i>
             <p>Logout</p>
           <% end %>
