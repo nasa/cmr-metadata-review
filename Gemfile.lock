@@ -1,5 +1,7 @@
-PATH
-  remote: /Users/cgokey/src/omniauth-urs
+GIT
+  remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git
+  revision: 4e845f84cb2edadb7e15a564536c5414f88e7eb4
+  tag: release/v1.1.0
   specs:
     omniauth-urs (0.1.0)
       omniauth (~> 1.0)
