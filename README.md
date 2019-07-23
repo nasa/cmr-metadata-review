@@ -1,6 +1,12 @@
 # CMR Metadata Review
-
 The CMR Metadata Review tool is used to curate NASA EOSDIS collection and granule level metadata in CMR for correctness, completeness and consistency.
+
+## Security Warning
+Note : There is a security warning flagging one of the gem's used in this application "omniauth", see here: https://github.com/omniauth/omniauth/pull/809.
+We've taken the following steps to mitigate this security vulnerability until a official fix comes out:
+1. add gem 'omniauth-rails_csrf_protection' 
+2. change omniauth links to method: :post
+3. for each change add # TODO: remove once https://github.com/omniauth/omniauth/pull/809 is resolved
 
 ## Synopsis
 
