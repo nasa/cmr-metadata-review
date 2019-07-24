@@ -25,6 +25,17 @@ module CmrMetadataReview
     
     config.middleware.insert_after "Rails::Rack::Logger", "MiddlewareHealthcheck"
 
+    policies = [
+      #'default-src ' + ['\'self\''].join(' '),
+      'script-src-elem ' + ['\'self\'',
+        "\'unsafe-inline\'",
+        #"\'nonce-view012345\'",
+        "www.google-analytics.com",
+        "fbm.earthdata.nasa.gov",
+        "cdn.earthdata.nasa.gov"].join(' ')
+    ]
+    config.action_dispatch.default_headers.merge!( 'Content-Security-Policy' => policies.join("; ") )
+
     def load_version
       version_file = "#{config.root}/version.txt"
       if File.exist?(version_file)
