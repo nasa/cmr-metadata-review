@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     # https://github.com/plataformatec/devise/issues/1390
     devise_scope :user do
       root to: "devise/sessions#new"
-      post '/session/new' => 'devise/sessions#new', as: :new_user_session
-      post '/session/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
+      get '/session/new' => 'devise/sessions#new', as: :new_user_session
+      get '/session/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
     end
 
     get '/home', to: 'site#home'
