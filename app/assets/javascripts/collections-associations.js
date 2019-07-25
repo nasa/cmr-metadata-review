@@ -10,9 +10,11 @@ $(document).on('turbolinks:load', function() {
 
   $(".granule_revision")
     .mouseover(function (event) {
+      // todo: handle UI feedback for drag/drop
       // event.target.addClass("mouse_over_draggable");
     })
     .mouseout(function (event) {
+      // todo: handle UI feedback for drag/drop
       // event.target.removeClass("mouse_over_draggable");
     });
 
@@ -26,12 +28,13 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-// $( "#collection_revision" ).droppable( "option", "accept", "#granule_revision" );
   $(".collection_revision").droppable({
     over: function (event, ui) {
+      // todo: handle UI feedback for drag/drop
       // event.target.addClass("revision_id_over_collection");
     },
     out: function (event, ui) {
+      // todo: handle UI feedback for drag/drop
       // event.target.removeClass("revision_id_over_collection");
     },
     drop: function (event, ui) {
