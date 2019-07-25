@@ -1,7 +1,5 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: COLLECTION"}) %>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="record_show_box">
@@ -33,13 +31,16 @@
           <tr>
             <th>
               <h4>Revision ID: <%= record.revision_id %></h4>
-              <form accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
-                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                <h4>Granule Rev ID: <%= record.associated_granule_revision_id %>
-                    <%= select_tag(:associated_granule_revision, options_for_select(@associated_granules_options, get_associated_granule_option(record))) %>
-                    <button type="submit">Apply</button>
-                </h4>
-              </form>
+              <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                  <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <h4>Granule Rev ID: <%= select_tag(:associated_granule_value,
+                                                   options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
+                  </h4>
+                </form>
+              <% else %>
+                <h4>Revision ID: <%= record.associated_granule_value %></h4>
+              <% end %>
             </th>
           </tr>
 
@@ -102,7 +103,7 @@
                     <div>Concept ID: <%= granule_record.concept_id %>
                       <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
                     </div>
-                    <div id="granule_revision"  granule_option_id="<%= granule_record.recordable.concept_id %>/<%= granule_record.revision_id %>">Revision_ID: <%= granule_record.revision_id %>
+                    <div class="granule_revision"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
                       <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
                     </div>
                   </h4>
@@ -180,15 +181,23 @@
 <script>
   var revisionIdElement;
 
-  $( "#granule_revision" )
+  $( ".associated_granule_value" ).change(function(event) {
+    var target = event.target;
+    var revision_id = target.getAttribute("revision_id");
+    var form_id = "#form-"+revision_id;
+    $(form_id).submit()
+  });
+
+  $( ".granule_revision" )
     .mouseover(function(event) {
-      event.target.addClass("mouse_over_draggable");
+      // event.target.addClass("mouse_over_draggable");
     })
     .mouseout(function(event) {
-      event.target.removeClass("mouse_over_draggable");
+      // event.target.removeClass("mouse_over_draggable");
     });
 
-  $( "#granule_revision" ).draggable({
+  <% if can?(:associate_granule_to_collection, @record.recordable) %>
+  $( ".granule_revision" ).draggable({
     start: function( event, ui ) {
       revisionIdElement = event.target;
     },
@@ -197,14 +206,15 @@
       revisionIdElement.style.left = 0;
     }
   });
+  <% end %>
   
   // $( "#collection_revision" ).droppable( "option", "accept", "#granule_revision" );
   $( ".collection_revision" ).droppable({
     over: function( event, ui ) {
-      event.target.addClass("revision_id_over_collection");
+      // event.target.addClass("revision_id_over_collection");
     },
     out: function( event, ui) {
-      event.target.removeClass("revision_id_over_collection");
+      // event.target.removeClass("revision_id_over_collection");
     },
     drop: function( event, ui ) {
       var granuleId = revisionIdElement.getAttribute("granule_option_id");
