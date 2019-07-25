@@ -48,14 +48,19 @@ module CollectionsHelper
   end
 
   def get_associated_granule_option(record)
-      if record.associated_granule_concept_id.nil?
-        'Undefined'
+    associated_granule_value = record.associated_granule_value
+
+    if associated_granule_value.nil?
+      'Undefined'
+    elsif associated_granule_value == 'No Granule Review'
+      'No Granule Review'
+    else
+      granule_record = Record.find_by id: associated_granule_value
+      if !granule_record.nil?
+        granule_record.id
       else
-        if record.associated_granule_concept_id == 'No Granule Review'
-          'No Granule Review'
-        else
-          "#{record.associated_granule_concept_id}/#{record.associated_granule_revision_id}"
-        end
+        'Undefined'
       end
+    end
   end
 end
