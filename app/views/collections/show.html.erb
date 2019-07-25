@@ -1,7 +1,5 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: COLLECTION"}) %>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <div class="record_show_box">
   <div class="space_box"></div>
 
@@ -103,9 +101,17 @@
                     <div>Concept ID: <%= granule_record.concept_id %>
                       <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
                     </div>
-                    <div class="granule_revision"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
-                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                    </div>
+
+                    <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                      <div class="granule_revision"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% else %>
+                      <div class="granule_revision_nodragdrop"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% end %>
+
                   </h4>
                 </th>
               </tr>
@@ -177,51 +183,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-  var revisionIdElement;
-
-  $( ".associated_granule_value" ).change(function(event) {
-    var target = event.target;
-    var revision_id = target.getAttribute("revision_id");
-    var form_id = "#form-"+revision_id;
-    $(form_id).submit()
-  });
-
-  $( ".granule_revision" )
-    .mouseover(function(event) {
-      // event.target.addClass("mouse_over_draggable");
-    })
-    .mouseout(function(event) {
-      // event.target.removeClass("mouse_over_draggable");
-    });
-
-  <% if can?(:associate_granule_to_collection, @record.recordable) %>
-  $( ".granule_revision" ).draggable({
-    start: function( event, ui ) {
-      revisionIdElement = event.target;
-    },
-    stop: function( event, ui) {
-      revisionIdElement.style.top = 0;
-      revisionIdElement.style.left = 0;
-    }
-  });
-  <% end %>
-  
-  // $( "#collection_revision" ).droppable( "option", "accept", "#granule_revision" );
-  $( ".collection_revision" ).droppable({
-    over: function( event, ui ) {
-      // event.target.addClass("revision_id_over_collection");
-    },
-    out: function( event, ui) {
-      // event.target.removeClass("revision_id_over_collection");
-    },
-    drop: function( event, ui ) {
-      var granuleId = revisionIdElement.getAttribute("granule_option_id");
-      $(event.target).find("h4 select").val(granuleId).change();
-      revisionIdElement.style.top = 0;
-      revisionIdElement.style.left = 0;
-    }
-  });
-</script>
-
