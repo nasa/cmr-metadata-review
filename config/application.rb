@@ -25,6 +25,14 @@ module CmrMetadataReview
     
     config.middleware.insert_after "Rails::Rack::Logger", "MiddlewareHealthcheck"
 
+    # Content Security Policy controls which javascript can be run in the
+    # application with the goal of preventing Cross Site Scripting. The
+    # parameter is new and legacy code will need to be updated. Change the
+    # settings here to test your code under the new restrictions by commenting 
+    # out the 'unsafe-inline' command. The goal is to be able to operate without
+    # the 'unsafe-inline' command. If you must use a nonce then uncomment that
+    # line and use the value indicated. To impliment a global default rule, use
+    # the first line.
     policies = [
       #'default-src ' + ['\'self\''].join(' '),
       'script-src-elem ' + ['\'self\'',
