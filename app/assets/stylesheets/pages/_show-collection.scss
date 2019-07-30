@@ -101,13 +101,15 @@
   width: 200px;
 }
 
+
 .revision_id_over_collection {
-  border: 1px;
+  border-style: solid;
+  border-width: 2px;
   border-color: yellow;
 }
 
 .mouse_over_draggable {
-  cursor: move;
+  cursor: grab;
 }
 
 

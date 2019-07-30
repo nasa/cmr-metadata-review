@@ -1,4 +1,5 @@
-$(document).on('turbolinks:load', function() {
+console.log("before document ready");
+$( document ).on('ready', function() {
   var revisionIdElement;
 
   $(".associated_granule_value").change(function (event) {
@@ -10,12 +11,10 @@ $(document).on('turbolinks:load', function() {
 
   $(".granule_revision")
     .mouseover(function (event) {
-      // todo: handle UI feedback for drag/drop
-      // event.target.addClass("mouse_over_draggable");
+      $(event.target).addClass("mouse_over_draggable");
     })
     .mouseout(function (event) {
-      // todo: handle UI feedback for drag/drop
-      // event.target.removeClass("mouse_over_draggable");
+      $(event.target).removeClass("mouse_over_draggable");
     });
 
   $(".granule_revision").draggable({
@@ -30,12 +29,10 @@ $(document).on('turbolinks:load', function() {
 
   $(".collection_revision").droppable({
     over: function (event, ui) {
-      // todo: handle UI feedback for drag/drop
-      // event.target.addClass("revision_id_over_collection");
+      $(event.target).find("th").addClass("revision_id_over_collection");
     },
     out: function (event, ui) {
-      // todo: handle UI feedback for drag/drop
-      // event.target.removeClass("revision_id_over_collection");
+      $(event.target).find("th").removeClass("revision_id_over_collection");
     },
     drop: function (event, ui) {
       var granuleId = revisionIdElement.getAttribute("granule_option_id");
@@ -44,4 +41,5 @@ $(document).on('turbolinks:load', function() {
       revisionIdElement.style.left = 0;
     }
   });
-})
+
+});
