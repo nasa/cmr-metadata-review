@@ -28,17 +28,19 @@
 
           <tr>
             <th>
-              <h4>Revision ID: <%= record.revision_id %></h4>
-              <% if can?(:associate_granule_to_collection, @record.recordable) %>
+              <div class="collection_review_box">
+                <h4>Revision ID: <%= record.revision_id %></h4>
+                <% if can?(:associate_granule_to_collection, @record.recordable) %>
                   <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                    <h4>Granule Rev ID: <%= select_tag(:associated_granule_value,
-                                                   options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
-                  </h4>
-                </form>
-              <% else %>
-                <h4>Revision ID: <%= record.associated_granule_value %></h4>
-              <% end %>
+                    <h4>Granule Rev ID: <%= select_tag("associated_granule_value",
+                                                       options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
+                    </h4>
+                  </form>
+                <% else %>
+                  <h4>Revision ID: <%= record.associated_granule_value %></h4>
+                <% end %>
+              </div>
             </th>
           </tr>
 
