@@ -27,6 +27,7 @@ Capybara.register_driver :headless_chrome do |app|
     # This makes javascript console logs available, but doesn't cause them to appear in real time
     # to display javascript logs in the rspec output, add `puts page.driver.browser.manage.logs.get(:browser)`
     # in the desired test location
+    # w3c: false is needed for retrieving javascript console messages.
     loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
     chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,1500], w3c: false}
 
