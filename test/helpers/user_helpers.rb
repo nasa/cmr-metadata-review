@@ -12,7 +12,7 @@ module Helpers
     end
 
     def wait_for_jQuery(secs = Capybara.default_max_wait_time)
-      ActiveSupport::Notifications.instrument 'mmt.performance', activity: 'Helpers::AjaxHelpers#wait_for_jQuery' do
+      ActiveSupport::Notifications.instrument 'cmrdash.performance', activity: 'Helpers::AjaxHelpers#wait_for_jQuery' do
         Timeout.timeout(secs) do
           loop until finished_all_jQuery_requests?
         end
