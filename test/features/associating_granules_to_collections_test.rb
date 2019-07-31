@@ -43,7 +43,6 @@ class AssociatingGranulesToCollectionTest < Capybara::Rails::TestCase
         check 'record_id_'
         find('#open > div > div.navigate_buttons > input').click
         all("#associated_granule_value")[1].first("option").click
-        page.save_and_open_screenshot
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 8.')
         first("#associated_granule_value").find("option[value='Undefined']").click
         page.must_have_content("associated granule will be marked as 'Undefined'")
