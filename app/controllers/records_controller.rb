@@ -19,6 +19,38 @@ class RecordsController < ApplicationController
     redirect_to (request.referrer || home_path)
   end
 
+  def associate_granule_to_collection
+    @record = Record.find_by id:params[:id]
+    collection = Collection.find_by id: @record.recordable_id
+    associated_granule_value = params[:associated_granule_value]
+
+    success = false
+    if associated_granule_value == 'Undefined'
+      flash[:notice] = "This revision #{@record.revision_id} associated granule will be marked as 'Undefined'"
+      success = @record.update(associated_granule_value: nil)
+    elsif associated_granule_value == 'No Granule Review'
+      flash[:notice] = "This revision #{@record.revision_id} associated granule will be marked as 'No Granule Review'"
+      success = @record.update(associated_granule_value: associated_granule_value)
+    elsif associated_granule_value == 'Granule Review Deleted!'
+      flash[:notice] = "This revision #{@record.revision_id} associated granule is marked as 'Granule Review Deleted!"
+      success = @record.update(associated_granule_value: associated_granule_value)
+    else
+      granule_record = Record.find_by id: associated_granule_value
+      if !granule_record.nil?
+        granule = Granule.find_by id: granule_record.recordable_id
+        granule_concept_id = granule.concept_id
+        granule_revision_id = granule_record.revision_id
+        success = @record.update(associated_granule_value: granule_record.id)
+        flash[:notice] = "Granule #{granule_concept_id}/#{granule_revision_id} has been successfully associated to this collection revision #{@record.revision_id}. "
+      end
+    end
+    unless success
+      flash[:notice] = 'An error occurred associating granule to the collection'
+      Rails.logger.info "An error occurred associated granule to the collection, value=#{associated_granule_value}"
+    end
+    redirect_to collection_path(id:collection.id, record_id: @record.id)
+  end
+
   def show
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map

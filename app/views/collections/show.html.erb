@@ -15,7 +15,7 @@
       <% end %>
     </div>
   </div>
-    
+
   <div class="space_box"></div>
 
   <div class="group_box left_box">
@@ -23,47 +23,62 @@
     <h3>Collection Revisions</h3>
     <% @collection_records.each_with_index do |record, index| %>
 
-      <table cellpadding="5" border="1">
+      <div class="collection_revision">
+        <table cellpadding="5" border="1">
 
-        <tr>
-          <th>
-            <h4>Revision ID: <%= record.revision_id %></h4>
-          </th>
-        </tr>
+          <tr>
+            <th>
+              <div class="collection_review_box">
+                <h4>Revision ID: <%= record.revision_id %></h4>
+                <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                  <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <h4>Granule Rev ID: <%= select_tag("associated_granule_value",
+                                                       options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
+                    </h4>
+                  </form>
+                <% else %>
+                  <h4>Revision ID: <%= record.associated_granule_value %></h4>
+                <% end %>
+              </div>
+            </th>
+          </tr>
 
-        <tr>
-          <td>
-            <table cellpadding="5" border="1">
-              <tr>
-                <td>Reviewer</td>
-                <td>Status</td>
-                <td>Completion Date</td>
-              </tr>
-
-
-              <% record.reviews.each do |review| %>
+          <tr>
+            <td>
+              <table cellpadding="5" border="1">
                 <tr>
-                  <td><%= review.user.email %></td>
-                  <td><%= review.state_string %></td>
-                  <td><%= review.formatted_date %></td>
+                  <td>Reviewer</td>
+                  <td>Status</td>
+                  <td>Completion Date</td>
                 </tr>
 
-              <% end %>
-            </table>
 
-            <div class="review_actions">
+                <% record.reviews.each do |review| %>
+                  <tr>
+                    <td><%= review.user.email %></td>
+                    <td><%= review.state_string %></td>
+                    <td><%= review.formatted_date %></td>
+                  </tr>
 
-              <div class="ingest_score">
-                <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
+                <% end %>
+              </table>
+
+              <div class="review_actions">
+
+                <div class="ingest_score">
+                  <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
+                </div>
+
+                <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
               </div>
 
-              <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
-            </div>
+            </td>
+          </tr>
 
-          </td>
-        </tr>
+        </table>
+      </div>
 
-      </table>
     <% end %>
 
   </div>
@@ -80,69 +95,78 @@
       </div>
       <% @granule_objects.each_with_index do |granule, index| %>
         <% granule.records.each do |granule_record| %>
-          <table cellpadding="5" border="1">
+            <table cellpadding="5" border="1">
 
-            <tr>
-              <th>
-                <h4>
-                  <div>Concept ID: <%= granule_record.concept_id %>
-                    <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
-                  </div>
-                  <div>Revision_ID: <%= granule_record.revision_id %>
-                    <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                  </div>
-                </h4>
-              </th>
-            </tr>
+              <tr>
+                <th>
+                  <h4>
+                    <div>Concept ID: <%= granule_record.concept_id %>
+                      <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+                    </div>
 
-            <tr>
-              <td>
-                <table cellpadding="5" border="1">
-                  <tr>
-                    <td>Reviewer</td>
-                    <td>Status</td>
-                    <td>Completion Date</td>
-                  </tr>
+                    <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                      <div class="granule_revision"  title="Drag revision over to associate with collection record" granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% else %>
+                      <div class="granule_revision_nodragdrop"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% end %>
 
+                  </h4>
+                </th>
+              </tr>
 
-                  <% granule_record.reviews.each do |review| %>
+              <tr>
+                <td>
+                  <table cellpadding="5" border="1">
                     <tr>
-                      <td><%= review.user.email %></td>
-                      <td><%= review.state_string %></td>
-                      <td><%= review.formatted_date %></td>
+                      <td>Reviewer</td>
+                      <td>Status</td>
+                      <td>Completion Date</td>
                     </tr>
 
-                  <% end %>
-                </table>
 
-                <div class="review_actions">
-                  <div class="ingest_score">
-                    <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
-                  </div>
+                    <% granule_record.reviews.each do |review| %>
+                      <tr>
+                        <td><%= review.user.email %></td>
+                        <td><%= review.state_string %></td>
+                        <td><%= review.formatted_date %></td>
+                      </tr>
 
-                  <div id="granule_review_link">
-                    <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
-                  </div>
-                  <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
-                    <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
-                    <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%=modal_id %>" href="#<%=modal_id%>" value="Delete Granule"/>
+                    <% end %>
+                  </table>
 
-                    <div id="<%=modal_id%>" class="eui-modal-content confirm-modal">
-                      <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
-                      <p>
-                        Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
-                      </p>
-                      <p>
-                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
-                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button"  value="No"/></a> </p>
-                      </p>
+                  <div class="review_actions">
+                    <div class="ingest_score">
+                      <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
                     </div>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
 
-          </table>
+                    <div id="granule_review_link">
+                      <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
+                    </div>
+                    <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
+                      <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
+                      <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
+
+                      <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+                        <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+                        <p>
+                          Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
+                        </p>
+                        <p>
+                          <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
+                          <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="No"/></a>
+                        </p>
+                        </p>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
         <% end %>
       <% end %>
 
