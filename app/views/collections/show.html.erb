@@ -105,7 +105,7 @@
                     </div>
 
                     <% if can?(:associate_granule_to_collection, @record.recordable) %>
-                      <div class="granule_revision"  title="Drag over collection record to associate." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                      <div class="granule_revision"  title="Drag revision over to associate with collection record" granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
                         <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
                       </div>
                     <% else %>
