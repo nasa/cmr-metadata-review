@@ -33,9 +33,9 @@ in_daac_review:
   id: 12
   recordable_id: 1
   recordable_type: "Collection"
-  revision_id: "8"
+  revision_id: "9"
   state: "in_daac_review"
-  format: "dif10"
+  format: "echo10"
 
 in_arc_review:
   id: 13

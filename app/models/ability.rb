@@ -25,6 +25,7 @@ class Ability
         can :replace_granule, Granule
         can :delete_granule, Granule
         can :create_granule, Collection
+        can :associate_granule_to_collection, Collection
 
         can :access, :filter_daac
 
@@ -54,6 +55,7 @@ class Ability
         can :replace_granule, Granule
         can :delete_granule, Granule
         can :create_granule, Collection
+        can :associate_granule_to_collection, Collection
 
         can :access, :filter_daac
 

@@ -30,19 +30,12 @@ Capybara.register_driver :headless_chrome do |app|
     # This makes javascript console logs available, but doesn't cause them to appear in real time
     # to display javascript logs in the rspec output, add `puts page.driver.browser.manage.logs.get(:browser)`
     # in the desired test location
-    loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' }
-  )
+    # w3c: false is needed for retrieving javascript console messages.
+    loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,1500], w3c: false}
 
-  # disable-gpu option is temporarily necessary, possibly only for Windows
-  # https://developers.google.com/web/updates/2017/04/headless-chrome#cli
-  # no-sandbox was necessary for another application's Docker container for CI/CD
-  # https://about.gitlab.com/2017/12/19/moving-to-headless-chrome/
-  # https://developers.google.com/web/updates/2017/04/headless-chrome#faq
-  options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu no-sandbox --window-size=1500,1500]
   )
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities, options: options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
 end
 
 # setting headless_chrome as default driver, can be changed to run not headless

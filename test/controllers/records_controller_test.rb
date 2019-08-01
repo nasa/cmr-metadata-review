@@ -105,5 +105,20 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal "Record has been successfully updated.", flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
+
+    it "associates a granule to a collection" do
+      user = User.find_by(email: "abaker@element84.com")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      Record.any_instance.stubs(close!: true)
+      record = Record.find(1)
+
+      post :associate_granule_to_collection, id: record.id, associated_granule_value: 16
+
+      assert_equal "Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ", flash[:notice]
+      assert_redirected_to collection_path(id: 1, record_id: record.id)
+    end
   end
+
 end
