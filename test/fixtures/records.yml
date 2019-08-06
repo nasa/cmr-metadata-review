@@ -34,6 +34,7 @@ in_daac_review:
   recordable_id: 1
   recordable_type: "Collection"
   revision_id: "9"
+  associated_granule_value: 16
   state: "in_daac_review"
   format: "echo10"
 

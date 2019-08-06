@@ -70,11 +70,6 @@ end
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   OmniAuth.config.test_mode = true
-
-  before do
-    DatabaseCleaner.start
-  end
-
   after do
     DatabaseCleaner.clean
   end
