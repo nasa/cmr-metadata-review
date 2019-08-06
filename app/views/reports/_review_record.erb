@@ -1,0 +1,178 @@
+<div class="report_sub_title first_sub_title">
+  <div class="title_box">
+    <%= record.concept_id %>-<%= record.revision_id %>
+  </div>
+  <div class="title_text">
+
+  </div>
+</div>
+
+<div class="stats_area">
+
+  <section class="report_overall">
+
+    <div class="metrics_section">
+      <%= render(partial: 'title_bar', locals: {title: "RECORD METRICS"}) %>
+      <div class="surrounding_box">
+        <% if record.collection? %>
+
+          <table>
+            <tr class="header_row">
+              <td>Concept Id</td>
+              <td>Revision Id</td>
+              <td>Short Name</td>
+              <td>DAAC</td>
+              <td>Source File</td>
+              <td>Format</td>
+              <td>Review Close Date</td>
+            </tr>
+            <tr>
+              <td><%= record.concept_id.partition('-').first %></td>
+              <td><%= record.revision_id %></td>
+              <td><%= record.short_name %></td>
+              <td><%= record.daac %></td>
+              <td><%= link_to "UMM", record.umm_json_link %></td>
+              <td><%= record.format %></td>
+              <td><%= record.formatted_closed_date %></td>
+            </tr>
+          </table>
+
+          <br>
+
+        <% else %>
+
+          <% granule = record.recordable %>
+          <table>
+            <tr class="header_row">
+              <td>Concept Id</td>
+              <td>Revision Id</td>
+              <td>Short Name</td>
+              <td>DAAC</td>
+              <td>Collection Concept Id</td>
+              <td>Source File</td>
+              <td>Format</td>
+              <td>Review Close Date</td>
+            </tr>
+            <tr>
+              <td><%= record.concept_id.partition('-').first %></td>
+              <td><%= record.revision_id %></td>
+              <td><%= granule.collection_short_name %></td>
+              <td><%= record.daac %></td>
+              <td><%= granule.collection_concept_id.partition('-').first %></td>
+              <td><%= link_to "Native", record.native_link %></td>
+              <td>echo10</td>
+              <td><%= record.formatted_closed_date %></td>
+            </tr>
+          </table>
+
+          <br>
+
+        <% end %>
+
+        <table>
+          <tr class="header_row">
+            <td>Reviewer</td>
+            <td>Date of Review</td>
+            <td>Review Comment</td>
+          </tr>
+          <% record.reviews.each do |review| %>
+            <tr>
+              <td><%= review.reviewer_email %></td>
+              <td><%= review.formatted_date %></td>
+              <td><%= review.report_comment %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <div class="metrics_spacing"></div>
+
+
+    <% field_colors = get_field_colors(record) %>
+    <div class="quality_row">
+      <div class="surrounding_box quality_box">
+        <%= render(partial: 'title_bottom_bar', locals: {title: "QUALITY OVERVIEW"}) %>
+        <div class="data_area">
+          <div class="data_text">
+            <p>NUMBER OF COLLECTION</p>
+            <p>ELEMENTS REVIEWED</p>
+            <p class="checked_num"><%= field_colors.values.sum %></p>
+          </div>
+          <div class="doughnut_graph_container">
+            <canvas id="ChartFlag<%= record.concept_id %>-<%= record.revision_id %>"></canvas>
+          </div>
+        </div>
+        <div class="legend_area" id="original_quality_legend">
+          <div class="legend_row">
+            <div class="legend_item first_item">
+              <div class="color_box green">
+              </div>
+              <p>ELEMENTS PASSED <br>(<%= field_colors["green"] %>)</p>
+            </div>
+            <div class="legend_item">
+              <div class="color_box yellow">
+              </div>
+              <p>ELEMENTS WITH WARNINGS <br>(<%= field_colors["yellow"] %>)</p>
+            </div>
+          </div>
+          <div class="legend_row">
+            <div class="legend_item first_item">
+              <div class="color_box blue">
+              </div>
+              <p>ELEMENTS NOTED <br>(<%= field_colors["blue"] %>)</p>
+            </div>
+            <div class="legend_item">
+              <div class="color_box red">
+              </div>
+              <p>ELEMENTS FAILED <br>(<%= field_colors["red"] %>)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <%# templating the 3 sections using a short 2d array %>
+  <% [
+       ["red_section", "RED", record_data_colors(record, "red")],
+       ["yellow_section", "YELLOW", record_data_colors(record, "yellow")],
+       ["blue_section", "BLUE", record_data_colors(record, "blue")]
+     ].each do |section_name, color, elements| %>
+
+    <section class="<%= section_name %>">
+
+      <div class="single_color_table_holder">
+        <div class="title_holder">
+          <p class=<%= "#{section_name}_tab" %>><%= "#{color} FLAGGED ELEMENTS" %></p>
+        </div>
+        <div class="surrounding_box">
+          <table class="flag_table">
+            <tr class="header_row">
+              <td>Element</td>
+              <td>Value</td>
+              <td>Recommendation</td>
+            </tr>
+            <% elements.each do |element| %>
+              <tr>
+                <td><%= element.column_name %></td>
+                <td><%= element.value %></td>
+                <td><%= element.recommendation %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  <% end %>
+
+  <div class="print_width">
+  </div>
+
+  <script type="text/javascript">
+    <%= render partial: 'review_chart.js', locals: { record: record, field_colors: field_colors } %>
+  </script>
+
+</div>

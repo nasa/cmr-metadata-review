@@ -117,3 +117,45 @@ metric4:
   opinion: true
   flag: ["Accessibility"]
   recommendation: "ok"
+
+in_daac_review_short_name:
+  id: 20
+  record_id: 12
+  column_name: "ShortName"
+  value: "A2_DySno_NRTb"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+
+in_daac_review_long_name:
+  id: 21
+  record_id: 12
+  column_name: "LongName"
+  value: "Test_Long_Name"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+
+in_daac_review_version_id:
+  id: 22
+  record_id: 12
+  column_name: "VersionId"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
