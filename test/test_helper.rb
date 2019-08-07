@@ -11,9 +11,6 @@ require 'minitest/mock'
 require 'webmock/minitest'
 require 'minitest/reporters'
 require 'minitest/rails/capybara'
-require 'database_cleaner'
-
-DatabaseCleaner.strategy = :transaction
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
@@ -70,14 +67,6 @@ end
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   OmniAuth.config.test_mode = true
-
-  before do
-    DatabaseCleaner.start
-  end
-
-  after do
-    DatabaseCleaner.clean
-  end
 end
 
 # Checks for pending migrations before tests are run.

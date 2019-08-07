@@ -29,7 +29,6 @@ class LoginControllerTest < ActionController::TestCase
 
     describe "#urs callback" do
       it "should successfully create a user" do
-        DatabaseCleaner.clean
         mock_normal_edl_user
 
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?calling_application=clientid").
