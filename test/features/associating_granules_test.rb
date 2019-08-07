@@ -14,6 +14,8 @@ class AssociatingGranulesTest < FeatureTest
           headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby'}
         )
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
+      DatabaseCleaner.clean
+
     end
 
     describe 'associate granules to collections' do
