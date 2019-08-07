@@ -14,8 +14,6 @@ class AssociatingGranulesTest < FeatureTest
           headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby'}
         )
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
-      DatabaseCleaner.clean
-
     end
 
     describe 'associate granules to collections' do
@@ -25,7 +23,7 @@ class AssociatingGranulesTest < FeatureTest
 
         all('#record_id_')[0].click
         find('#open > div > div.navigate_buttons > input').click
-        first("#associated_granule_value").first("option").click
+        first("#associated_granule_value").find("option[value='5']").click
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
       end
 
@@ -45,8 +43,8 @@ class AssociatingGranulesTest < FeatureTest
 
         all('#record_id_')[0].click
         find('#open > div > div.navigate_buttons > input').click
-        all("#associated_granule_value")[1].first("option").click
-        page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 8.')
+        first("#associated_granule_value").find("option[value='5']").click
+        page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
         first("#associated_granule_value").find("option[value='Undefined']").click
         page.must_have_content("associated granule will be marked as 'Undefined'")
       end
@@ -60,7 +58,7 @@ class AssociatingGranulesTest < FeatureTest
 
         all('#record_id_')[1].click
         find('#in_daac_review > div > div.navigate_buttons > input.selectButton').click
-        all("#associated_granule_value")[0].first("option").click
+        first("#associated_granule_value").find("option[value='5']").click
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
         visit '/home'
         all('#record_id_')[1].click
