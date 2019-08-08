@@ -57,7 +57,7 @@ class ReportsController < ApplicationController
     @granule_associations = {}
     @records.each do |record|
       value = record.associated_granule_value
-      if value.nil? || value == 'Undefined'
+      if value.nil? || value.empty? || value == 'Undefined'
         @granule_associations[record.id] = 'Undefined'
       elsif value == 'No Granule Review'
         @granule_associations[record.id] = value

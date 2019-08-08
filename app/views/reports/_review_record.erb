@@ -16,7 +16,7 @@
       <div class="surrounding_box">
         <% if record.collection? %>
 
-          <table>
+          <table class="metrics_header">
             <tr class="header_row">
               <td>Concept Id</td>
               <td>Revision Id</td>
@@ -37,12 +37,10 @@
             </tr>
           </table>
 
-          <br>
-
         <% else %>
 
           <% granule = record.recordable %>
-          <table>
+          <table class="metrics_header">
             <tr class="header_row">
               <td>Concept Id</td>
               <td>Revision Id</td>
@@ -64,8 +62,6 @@
               <td><%= record.formatted_closed_date %></td>
             </tr>
           </table>
-
-          <br>
 
         <% end %>
 
