@@ -33,9 +33,11 @@ class MultiRecordCsv
           # Get a list of all granules
           records_for_format.each do |record|
             associated_granule_value = record.associated_granule_value
-            next unless !associated_granule_value.nil? &&
-                        associated_granule_value != 'Undefined' &&
-                        associated_granule_value != 'No Granule Review'
+            if associated_granule_value.empty?        ||
+              associated_granule_value == 'Undefined' ||
+              associated_granule_value == 'No Granule Review'
+              next
+            end
             granules << Record.where(id: associated_granule_value).first
           end
 
