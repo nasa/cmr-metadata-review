@@ -54,6 +54,18 @@ class ReportsController < ApplicationController
 
   def review
     @records = Record.where(id: params[:record_id])
+    @granule_associations = {}
+    @records.each do |record|
+      value = record.associated_granule_value
+      if value.nil? || value.empty? || value == 'Undefined'
+        @granule_associations[record.id] = 'Undefined'
+      elsif value == 'No Granule Review'
+        @granule_associations[record.id] = value
+      else
+        granule_record = Record.where(id: value).first
+        @granule_associations[record.id] = granule_record
+      end
+    end
 
     respond_to do |format|
       format.html
