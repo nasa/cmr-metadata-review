@@ -28,7 +28,7 @@
           <p class="granule_association_message">No Granule Review</p>
         </div>
       <% else %>
-        <%= render(partial: 'review_record', locals: {record: @granule_associations[record.id]}) %>
+        <% = render(partial: 'review_record', locals: {record: @granule_associations[record.id]}) %>
       <% end %>
     <% end %>
   <% end %>
