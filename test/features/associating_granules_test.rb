@@ -23,6 +23,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
         all('#record_id_')[0].click # Selects the first collection record in the list
         find('#open > div > div.navigate_buttons > input').click # click the See Review Details button
+        first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
         first("#associated_granule_value").find("option[value='5']").click # Click in select box for what granule to associate
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
       end
@@ -33,6 +34,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
         all('#record_id_')[0].click # Selects the first collection record in the list
         find('#open > div > div.navigate_buttons > input').click # click the See Review Details button
+        first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
         first("#associated_granule_value").find("option[value='No Granule Review']").click # Clicks No Granule Review Option
         page.must_have_content("associated granule will be marked as 'No Granule Review'")
       end
@@ -47,6 +49,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
         all('#record_id_')[1].click # Selects the checkbox in "in daac review"
         find('#in_daac_review > div > div.navigate_buttons > input.selectButton').click # Clicks the See Review Details button
+        first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
         first("#associated_granule_value").find("option[value='5']").click # Click in select box for what granule to associate
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
         visit '/home' # go back to home page
@@ -68,6 +71,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
       all('#record_id_')[0].click # select the first collection in the list
       find('#open > div > div.navigate_buttons > input').click # click the See Review Details button
+      first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
       first("#associated_granule_value").find("option[value='5']").click # select the granule to associate with the collection
       page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
       first("#associated_granule_value").find("option[value='Undefined']").click # select undefined to set it back
