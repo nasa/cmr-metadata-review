@@ -24,6 +24,7 @@ class AssociatingGranulesToCollectionTest < Capybara::Rails::TestCase
         wait_for_jQuery(5)
         check 'record_id_'
         find('#open > div > div.navigate_buttons > input').click
+        first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
         first("#associated_granule_value").first("option").click
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
       end
@@ -33,6 +34,7 @@ class AssociatingGranulesToCollectionTest < Capybara::Rails::TestCase
         wait_for_jQuery(5)
         check 'record_id_'
         find('#open > div > div.navigate_buttons > input').click
+        first("#associated_granule_value").find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
         first("#associated_granule_value").find("option[value='No Granule Review']").click
         page.must_have_content("associated granule will be marked as 'No Granule Review'")
       end
