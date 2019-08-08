@@ -54,7 +54,7 @@ class ReportsControllerTest < ActionController::TestCase
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
     post :review, format: :csv, record_id: 12
     assert_response :success
-    assert_equal "text/csv", response.content_type
+    assert_equal "application/csv", response.content_type
   end
 
 
