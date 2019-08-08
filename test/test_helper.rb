@@ -29,7 +29,7 @@ Capybara.register_driver :headless_chrome do |app|
     # in the desired test location
     # w3c: false is needed for retrieving javascript console messages.
     loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,2500], w3c: false}
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,1500], w3c: false}
 
   )
   Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
@@ -38,8 +38,8 @@ end
 # setting headless_chrome as default driver, can be changed to run not headless
 Capybara.default_driver = :headless_chrome
 Capybara.javascript_driver = :headless_chrome
-# Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
 
+# Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
 WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: 'chromedriver.storage.googleapis.com'
