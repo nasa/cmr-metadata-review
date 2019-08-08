@@ -93,7 +93,12 @@ class AclDao
     msg += "#{@base_url}/#{endpoint}, response.status=#{response.status}, "
     msg += "body=#{response.body}"
     Rails.logger.info(msg)
-    json = JSON.parse(response.body)
+    json = {}
+    begin
+      json = JSON.parse(response.body)
+    rescue JSON::ParserError
+      Rails.logger.info "Error parsing JSON response from CMR retrieving ACLs.  response=#{response.body}"
+    end
     json
   end
 end
