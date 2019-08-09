@@ -69,7 +69,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data(MultiRecordCsv.new(@records).to_csv, filename: "metrics_report_#{DateTime.now.to_i}.csv") }
+      format.csv { send_data(MultiRecordCsv.new(@records).to_csv, filename: "metrics_report_#{DateTime.now.to_i}.csv", type: "application/csv", disposition: 'attachment') }
     end
   end
 end
