@@ -2,29 +2,29 @@
   text-align: center;
 }
 
-.table_scroll {
+.table-scroll {
    max-height: 290px;
    overflow-y: auto;
 }
 
 .curation_box {
-  border-radius: 10px;
+  background-color: white;
   border: solid 2px;
-  background-color:white;
-  width:1000px;
+  border-radius: 10px;
   margin: auto;
-  margin-top: 20px;
   margin-bottom: 50px;
-  padding-left:40px;
-  padding-right:40px;
-  padding-bottom:40px;
+  margin-top: 20px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  width: 1000px;
 
   .record_filters {
     margin-bottom: 30px;
 
     &__filters {
       display: flex;
-      flex-direction: row;      
+      flex-direction: row;
     }
 
     &__select {
@@ -34,73 +34,82 @@
     }
 
     .selectButton {
-      margin-top: auto;
       height: 40px;
+      margin-top: auto;
     }
   }
 
   .space_box {
-    height:15px;
-    width:80px;
+    height: 15px;
+    width: 80px;
   }
 
   .searchbox_area {
-    font-size: 0.8em;
     border-bottom: solid;
     border-bottom-width: 1px;
     border-bottom-color: $gray-dark;
+    font-size: 0.8em;
     padding-bottom: 20px;
     margin-right: 20px;
 
     .search_button {
-      height:38px;
-      width:38px;
-      font-size:1.2em;
+      height: 38px;
+      width: 38px;
+      font-size: 1.2em;
     }
 
     select {
+      height: 38px;
+      padding-left: 1 0px;
       width: 150px;
-      padding-left:10px;
-      height:38px;
     }
 
     button {
-      background-color:$green-light;
-      border:none;
+      background-color: $green-light;
+      border: 0;
       color: white;
     }
 
     input[type=text] {
-      height:38px;
-      width:623px;
+      height: 38px;
+      width: 623px;
     }
   }
 
 
 
   input[type=radio] {
-    -webkit-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
-    -moz-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0) 0 0 0;
+    -moz-box-shadow: rgba(0, 0, 0, 0) 0 0 0;
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0;
   }
 
 
-  .results_area {
+  .results-area {
     margin-top: 20px;
 
-    .results_title {
+    .results-title {
       margin-bottom: 20px;
     }
 
-    .table_backdrop {
-      padding: 10px;
+    .table-backdrop {
+      background-color: $home-backdrop;
       margin: -10px;
       margin-bottom: 20px;
-      background-color: $home-backdrop;
+      padding: 10px;
     }
 
     table {
       font-size: 0.8em;
+    }
+
+    table.results-table {
+      border: 1px;
+      font-size: .8em;
+
+      td {
+        padding: 5px;
+      }
     }
 
   }
@@ -112,7 +121,7 @@
     }
   }
 
-  .navigate_buttons {
+  .navigate-buttons {
     input[type=submit] {
       margin-right: 10px;
     }
