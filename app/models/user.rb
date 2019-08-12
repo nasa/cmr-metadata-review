@@ -82,34 +82,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  # ====Params
-  # None
-  # ====Returns
-  # Whether or not the User is an admin.
-  # ==== Method
+  # TODO: are these comments still valid?
   # This method checks if the user is a "admin", which is a legacy role name. It's only
   # intended for backwards compatibility. For new code, use the 'role' attribute directly.
   def admin
-    role.eql?("admin")
+    role == 'admin'
   end
 
-  # ====Params
-  # None
-  # ====Returns
-  # Whether or not the User is a curator.
-  # ==== Method
+  # TODO: are these comments still valid?
   # This method checks if the user is a "curator", which is a legacy role name. It's only
   # intended for backwards compatibility. For new code, use the 'role' attribute directly.
   def curator
-    role.eql?("arc_curator")
+    role == 'arc_curator'
   end
 
   def daac_curator?
-    role == "daac_curator"
+    role == 'daac_curator'
   end
 
   def arc?
     admin || curator
   end
-
 end

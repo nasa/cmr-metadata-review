@@ -37,14 +37,13 @@ module CollectionsHelper
   def link_for_edit_collection_in_mmt(concept_id)
     env_name = ENV.fetch('RAILS_ENV', '').downcase
     case env_name
-      when 'sit'
-        "https://mmt.sit.earthdata.nasa.gov/collections/#{concept_id}"
-      when 'uat'
-        "https://mmt.uat.earthdata.nasa.gov/collections/#{concept_id}"
-      else
-        "https://mmt.earthdata.nasa.gov/collections/#{concept_id}"
+    when 'sit', 'development', 'test'
+      "https://mmt.sit.earthdata.nasa.gov/collections/#{concept_id}"
+    when 'uat'
+      "https://mmt.uat.earthdata.nasa.gov/collections/#{concept_id}"
+    else
+      "https://mmt.earthdata.nasa.gov/collections/#{concept_id}"
     end
-
   end
 
   def get_associated_granule_option(record)
@@ -56,11 +55,7 @@ module CollectionsHelper
       'No Granule Review'
     else
       granule_record = Record.find_by id: associated_granule_value
-      if !granule_record.nil?
-        granule_record.id
-      else
-        'Undefined'
-      end
+      granule_record.nil? ? 'Undefined' : granule_record.id
     end
   end
 end
