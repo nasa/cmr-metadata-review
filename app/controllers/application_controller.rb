@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
 
   def filtered_records
     @records = if current_user.daac_curator?
-      Record.daac(current_user.daac)
-    else
-      filtered_by?(:daac, ANY_DAAC_KEYWORD) ? Record.daac(params[:daac]) : Record.all
-    end
+                 Record.daac(current_user.daac)
+               else
+                 filtered_by?(:daac, ANY_DAAC_KEYWORD) ? Record.daac(params[:daac]) : Record.all
+               end
 
     if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
       @records = @records.campaign(params[:campaign])

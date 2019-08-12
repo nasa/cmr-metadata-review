@@ -39,7 +39,7 @@ All development work is done on local copies of the code base.  Follow the steps
 
 - Some people may find they need to create an initial database to connect to with `/usr/local/opt/postgresql@9.6/bin/createdb -h localhost`
 
-4. From the PSQL console, you will need to add a `SUPERUSER` matching the username values shown in `config/database.yml` within the project repo.  The development & test DB's both are in local Postgres.  There are many ways to create a postgres db and superuser.  These links can help –  [here](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac) and [here](https://www.postgresql.org/docs/9.1/static/sql-createrole.html).
+4. From the PSQL console, you will need to add a `SUPERUSER` matching the username values shown in `config/database.yml` within the project repo. The development & test DB's both are in local Postgres. There are many ways to create a postgres db and superuser.  These links can help –  [here](https://launchschool.com/blog/how-to-install-postgresql-on-a-mac) and [here](https://www.postgresql.org/docs/9.1/static/sql-createrole.html).
 
 - With user information from `config/database.yml`, the commands will look like: `CREATE ROLE <user> WITH SUPERUSER PASSWORD '<password>';`
 
@@ -51,20 +51,25 @@ All development work is done on local copies of the code base.  Follow the steps
 
 5. Start the Postgres server on your machine. This command will depend on how you installed.
 
-6. The user should then navigate into the project directory and run the 'bundle install' command to install all needed dependencies (you might need to do the command `gem install bundler` to get the bundler gem).  Sometimes there are build conflicts on the local machine during this process.  Most solutions can be found on stack overflow.  If you encounter any bundle install failures, please post the error notice and solution here so they can be updated in the source directory.
+6. The user should then navigate into the project directory and run the 'bundle install' command to install all needed dependencies (you might need to do the command `gem install bundler` to get the bundler gem). Sometimes there are build conflicts on the local machine during this process.  Most solutions can be found on stack overflow. If you encounter any bundle install failures, please post the error notice and solution here so they can be updated in the source directory.
 
-	1. If Puma is problematic (as observed on the Mac OS 10.13) , try the following: `gem install puma -v '3.6.2' -- --with-opt-dir=/usr/local/opt/openssl`. 
+	1. If Puma is problematic (as observed on the Mac OS 10.13) , try the following: `gem install puma -v '3.6.2' -- --with-opt-dir=/usr/local/opt/openssl`.
 
-7. Once installation of gems is complete, to create the Database the user should run the commands `rake db:create`, `rake db:migrate`, and rake `db:seed` in that order.  These commands will create the db required to run the project.
+7. Once installation of gems is complete, to create the Database the user should run the commands `rake db:create`, `rake db:migrate`, and rake `db:seed` in that order. These commands will create the db required to run the project.
+
+- The `seeds.rb` file currently will only seed some user data required for testing.
 
 8. To ensure that you've created the proper databases – you can go back into the psql console and use the command `\l`
 
-9. An ENV file will be needed before starting the server.  This file can only be obtained from a teammate on the project, it does not reside on the repo.  Once received, copy the file into your repo at the top level and name it `.env`
-The .env is set to be ignored by git.  However, if somehow you accidentally commit the env file or send the env file to the cloud repo, let someone on the team know immediately.  All env variables will need to be reset across platforms to ensure safety of the system.
+9. An application.yml file will be needed before starting the server.  This file can only be obtained from a teammate on the project, it does not reside on the repo.  Once received, copy the file into your config folder. The application.yml is set to be ignored by git.  However, if somehow you accidentally commit the file or send the file to the cloud repo, let someone on the team know immediately.  All env variables will need to be reset across platforms to ensure safety of the system.
 
-10.   The last piece of software that needs to be installed is python.   The production version uses 2.7.   Using pip you'll need to install the "requests" package, e.g,:
+10. The last piece of software that needs to be installed is python. The production version uses 2.7. Using pip you'll need to install the "requests" package, e.g,:
 /usr/bin/pip install requests
 
-11. Now the project should be ready to go.  Navigate to the home directory and execute `rails s` to start the server.
+11. Now the project should be ready to go. Navigate to the home directory and execute `rails s` to start the server.
 
-12. The homepage will be served at the address `localhost:3000` in your browser.  The seeded (default) master username and password will be shown in the seeds.rb file.  This can be changed locally to whatever you want.
+12. The homepage will be served at the address `localhost:3000` in your browser. To use the tool locally you will need to:
+
+- Register for an [Earthdata Login account](https://sit.urs.earthdata.nasa.gov/) for the SIT environment.
+
+- Request ACL permissions to access the tool in the SIT environment by emailing [Earthdata Support](mailto:support@earthdata.nasa.gov). In order to Ingest collections into the tool, you may need Admin or Arc Curator permissions as well.
