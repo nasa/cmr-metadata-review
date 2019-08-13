@@ -52,6 +52,14 @@ class Record < ActiveRecord::Base
       transitions from: :in_daac_review, to: :closed, guards: [:updated_revision_if_needed?, :no_feedback_requested?]
     end
 
+    event :revert do
+      before do
+        revert_closed_date unless read_attribute(:closed_date).nil?
+      end
+      transitions from: :in_daac_review, to: :ready_for_daac_review
+      transitions from: :closed, to: :in_daac_review
+    end
+
     event :force_close do
       before do
         write_closed_date
@@ -94,6 +102,11 @@ class Record < ActiveRecord::Base
   def write_closed_date
     write_attribute(:closed_date, DateTime.now)
   end
+
+  def revert_closed_date
+    write_attribute(:closed_date, nil)
+  end
+
 
   # ====Params
   # None
