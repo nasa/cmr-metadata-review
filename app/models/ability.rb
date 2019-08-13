@@ -5,7 +5,7 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
       user ||= User.new # guest user (not logged in)
-      if user.role.eql?('admin')
+      if user.admin?
         can :access, :curate
         can :access, :create_user
 
@@ -40,7 +40,7 @@ class Ability
 
       end
 
-      if user.role.eql?('arc_curator')
+      if user.arc_curator?
         can :access, :curate
 
         can :request_opinions, Record
@@ -68,7 +68,7 @@ class Ability
 
       end
 
-      if user.role.eql?('daac_curator')
+      if user.daac_curator?
         can :access, :curate
 
         can :provide_feedback, Record

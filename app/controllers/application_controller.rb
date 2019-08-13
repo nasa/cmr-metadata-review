@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_only
-    unless current_user.admin
+    unless current_user.admin?
       flash[:alert] = "You do not have permission to perform this action"
       redirect_to home_path
     end

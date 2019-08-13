@@ -82,17 +82,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  # TODO: are these comments still valid?
-  # This method checks if the user is a "admin", which is a legacy role name. It's only
-  # intended for backwards compatibility. For new code, use the 'role' attribute directly.
-  def admin
+  def admin?
     role == 'admin'
   end
 
-  # TODO: are these comments still valid?
-  # This method checks if the user is a "curator", which is a legacy role name. It's only
-  # intended for backwards compatibility. For new code, use the 'role' attribute directly.
-  def curator
+  def arc_curator?
     role == 'arc_curator'
   end
 
@@ -101,6 +95,6 @@ class User < ActiveRecord::Base
   end
 
   def arc?
-    admin || curator
+    admin? || arc_curator?
   end
 end

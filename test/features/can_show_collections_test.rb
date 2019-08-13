@@ -56,9 +56,6 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
   describe 'when the user is a Daac Curator' do
     before do
       OmniAuth.config.test_mode = true
-      # TODO: looking at the uids in user.yml, this user's provider doesn't seem
-      # to match the provider of the collection that shows up in screenshots,
-      # but this is the uid that works.
       mock_login(role: 'daac_curator', uid: 5)
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC")
@@ -71,7 +68,6 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
     it 'can see link for editing mmt' do
       visit '/home'
 
-      # save_and_open_screenshot
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
         check('record_id_')
