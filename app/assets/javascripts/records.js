@@ -63,6 +63,10 @@ function addButtonActions(form) {
     $(formId + ' input[name="_method"]').val("post");
   });
 
+  $(formId + ' .revertButton').click(function(){
+    $(formId).prop("method", "post");
+    $(formId + ' input[name="_method"]').val("revert");
+  });
 }
 
 function formButtons() {
@@ -73,6 +77,7 @@ function formButtons() {
     {name: "complete", multiSelect: true},
     {name: "finished", multiSelect: false},
     {name: "refresh", multiSelect: false},
-    {name: "cmrUpdate", multiSelect: false}
+    {name: "cmrUpdate", multiSelect: false},
+    {name: "revert", multiSelect: false}
   ];
 }
