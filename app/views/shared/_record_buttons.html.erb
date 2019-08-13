@@ -8,7 +8,7 @@
     <%= submit_tag(complete_title || "Close", class: "completeButton", formaction: batch_complete_records_path, disabled: true, data: { confirm: "Complete and transition the selected Record(s)?" }) %>
   <% end %>
 
-  <% if current_user.admin %>
+  <% if current_user.admin? %>
     <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
   <% end %>
 
