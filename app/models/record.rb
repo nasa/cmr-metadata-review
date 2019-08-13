@@ -1,6 +1,6 @@
-#Record is the ActiveRecord representation of a record retrieved from the CMR
-#An individual record can be identified by a unique concept-id and revision-id combination
-#Record is a child of both Collection and Granule
+# Record is the ActiveRecord representation of a record retrieved from the CMR
+# An individual record can be identified by a unique concept-id and revision-id combination
+# Record is a child of both Collection and Granule
 
 class Record < ActiveRecord::Base
   include AASM
@@ -79,6 +79,35 @@ class Record < ActiveRecord::Base
     event :hide do
       transitions from: [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review, :closed, :finished], to: :hidden
     end
+  end
+
+  # ====Params
+  # Hash from automated script output,
+  # List of keys in record data
+  # ====Returns
+  # Hash of recordData values
+  # ==== Method
+  # This method takes the raw output of the automated script, and attaches it
+  # to a recordData value hash
+  # Method is necessary because automated script will only produce one result for
+  # "Platforms/Platform/ShortName" etc.
+  # and the recordData hash needs that result connected to all platform keys
+  # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
+  def self.format_script_comments(comment_hash, value_keys)
+    comment_keys = comment_hash.keys
+
+    comment_keys.each do |comment_field|
+      value_keys.each do |value_field|
+        # the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
+        # if so, it adds the comment value to the fields.
+        # so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
+        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
+          comment_hash[value_field] = comment_hash[comment_field]
+        end
+      end
+    end
+
+    return comment_hash
   end
 
   def load_format_module
@@ -209,35 +238,6 @@ class Record < ActiveRecord::Base
 
   def get_raw_data
     collection? ? Cmr.get_raw_collection(concept_id) : Cmr.get_raw_granule(concept_id)
-  end
-
-  # ====Params
-  # Hash from automated script output,
-  # List of keys in record data
-  # ====Returns
-  # Hash of recordData values
-  # ==== Method
-  # This method takes the raw output of the automated script, and attaches it
-  # to a recordData value hash
-  # Method is necessary because automated script will only produce one result for
-  # "Platforms/Platform/ShortName" etc.
-  # and the recordData hash needs that result connected to all platform keys
-  # "Platforms/Platform0/ShortName", "Platforms/Platform1/ShortName" etc
-  def self.format_script_comments(comment_hash, value_keys)
-    comment_keys = comment_hash.keys
-
-    comment_keys.each do |comment_field|
-      value_keys.each do |value_field|
-        #the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
-        #if so, it adds the comment value to the fields.
-        #so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
-        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
-          comment_hash[value_field] = comment_hash[comment_field]
-        end
-      end
-    end
-
-    return comment_hash
   end
 
   # ====Params

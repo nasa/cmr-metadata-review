@@ -28,8 +28,7 @@ class UserTest < ActiveSupport::TestCase
       #User should not be able to release a record to DAAC
       assert_not ability.can?(:release_to_daac, Record)
       #User should not be able to delete a record
-      assert_not arc_user.admin
-
+      assert_not arc_user.admin?
     end
   end
 

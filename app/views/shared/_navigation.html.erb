@@ -1,7 +1,7 @@
 <div class="page_header">
   <div class="header_title">
     <h3><%= title %> <%= get_environment_display_name %></h3>
-    <% if current_user.admin %>
+    <% if current_user.admin? %>
       <p>CMR Last Update: <%= RecordsUpdateLock.formatted_last_update %></p>
     <% end %>
   </div>
@@ -40,7 +40,7 @@
           </ul>
         </li>
 
-        <% if current_user.admin %>
+        <% if current_user.admin? %>
           <li>
             <%= link_to "#", class: "menu_link header_button" do %>
               <i class="fa fa-sliders"></i>
@@ -68,5 +68,3 @@
 </div>
 
 <%= render(partial: 'shared/notice_message') %>
-
-
