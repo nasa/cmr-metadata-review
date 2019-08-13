@@ -3,8 +3,8 @@ class RecordsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :ensure_curation
-  before_filter :admin_only, only: [:stop_updates, :allow_updates]
-  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :hide]
+  before_filter :admin_only, only: [:stop_updates, :allow_updates, :revert]
+  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :hide, :revert]
   before_filter :filtered_records, only: :finished
 
   def refresh
@@ -103,6 +103,23 @@ class RecordsController < ApplicationController
 
   def finished
     @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
+  end
+
+  def revert
+    begin
+      success = @record.revert!
+    rescue Exception => e
+      Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
+      success = false
+    end
+
+    if success
+      flash[:notice] = "The record #{@record.concept_id} was successfully updated."
+    else
+      flash[:notice] = "Sorry, encountered an error reverting #{record.concept_id}"
+    end
+
+    redirect_to home_path
   end
 
   def stop_updates
