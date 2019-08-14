@@ -121,4 +121,34 @@ class RecordsControllerTest < ActionController::TestCase
     end
   end
 
+  describe "POST #revert" do
+
+    it "can reopen a closed record" do
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      record = Record.find(15)
+      assert_equal Record::STATE_CLOSED.to_s, record.state
+      post :revert, id: record.id
+      record = Record.find(15)
+      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
+    end
+
+
+    it "can revert a record from in daac review back to ready for daac review" do
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      record = Record.find(12)
+      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
+      post :revert, id: record.id
+      record = Record.find(12)
+      assert_equal Record::STATE_READY_FOR_DAAC_REVIEW.to_s, record.state
+    end
+
+  end
+
+
 end
