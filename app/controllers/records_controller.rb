@@ -4,19 +4,16 @@ class RecordsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_curation
   before_filter :admin_only, only: [:stop_updates, :allow_updates, :revert]
-  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :hide, :revert]
+  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert]
   before_filter :filtered_records, only: :finished
 
   def refresh
-    # a list of records added in update in format of
-    # [["concept_id1", "revision_id1"], ["concept_id2", "revision_id2"]]
-    total_added_records, total_failed_records = Cmr.update_collections(current_user)
-
-    flash[:notice] = Cmr.format_added_records_list(total_added_records).html_safe
-    if !total_failed_records.empty?
-      flash[:alert] = Cmr.format_failed_records_list(total_failed_records).html_safe
+    added_records, failed_records = Cmr.update_collections(current_user)
+    flash[:notice] = Cmr.format_added_records_list(added_records).html_safe
+    unless failed_records.empty?
+      flash[:alert] = Cmr.format_failed_records_list(failed_records).html_safe
     end
-    redirect_to (request.referrer || home_path)
+    redirect_to(request.referrer || home_path)
   end
 
   def associate_granule_to_collection
@@ -139,9 +136,13 @@ class RecordsController < ApplicationController
   end
 
   def hide
-    @record.hide!
-    flash[:notice] = "Revision #{@record.revision_id} of Concept ID #{@record.concept_id} Deleted"
-
+    @records = Record.where(id: params[:record_id])
+    msg = 'Deleted the following collections: '
+    @records.each do |record|
+      record.hide!
+      msg += "#{record.concept_id}/#{record.revision_id} "
+    end
+    flash[:notice] = msg
     redirect_to :back
   end
 
