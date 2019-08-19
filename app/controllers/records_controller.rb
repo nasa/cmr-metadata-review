@@ -113,7 +113,7 @@ class RecordsController < ApplicationController
     if success
       flash[:notice] = "The record #{@record.concept_id} was successfully updated."
     else
-      flash[:notice] = "Sorry, encountered an error reverting #{record.concept_id}"
+      flash[:notice] = "Sorry, encountered an error reverting #{@record.concept_id}"
     end
 
     redirect_to home_path
