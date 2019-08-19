@@ -51,6 +51,8 @@ class Cmr
     failed_records = []
     processed = []
 
+    map = self.get_cmr_revision_map
+
     records.each do |record|
       collection = record.recordable
       next if processed.include? collection.concept_id
@@ -58,7 +60,7 @@ class Cmr
 
       record = collection.records.where('state != ?', Record::STATE_HIDDEN.to_s).order("revision_id DESC").first
       latest_revision_id = record.nil? ? -1 : record.revision_id.to_i
-      cmr_revision_id = Cmr.get_raw_collection_meta(record.concept_id)['revision-id'].to_i
+      cmr_revision_id = map[record.concept_id].to_i
       if cmr_revision_id > latest_revision_id
         begin
           Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
@@ -80,6 +82,41 @@ class Cmr
     update_lock.save!
     [added_records, failed_records]
   end
+
+  #
+  # Queries CMR and returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
+  #
+  def self.get_cmr_revision_map
+    max_page_size = 2000
+    page_no = 1
+    no_pages = 1
+    map = {}
+
+    while  page_no <= no_pages
+      conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
+        faraday.response :logger
+        faraday.adapter Faraday.default_adapter
+      end
+      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}&pretty=true"
+      headers = response.headers
+      if page_no == 1
+        no_hits = headers['cmr-hits'].to_i
+        no_pages = (no_hits / max_page_size) + 1
+      end
+      dict = JSON.parse(response.body)
+      items = dict['items']
+      items.each do |item|
+        meta = item["meta"]
+        map[meta['concept-id']] = meta['revision-id']
+      end
+
+      page_no += 1
+    end
+
+    map
+
+  end
+
 
   def self.current_revision_for(concept_id)
     base_url = Cmr.get_cmr_base_url
