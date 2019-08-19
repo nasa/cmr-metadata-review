@@ -1,5 +1,6 @@
 <% report ||= false %>
 <% complete ||= false %>
+<% complete_title ||= '' %>
 
 <div class="navigate-buttons">
   <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
@@ -10,7 +11,10 @@
 
   <% if current_user.admin? %>
     <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
-  <% end %>
+    <% if complete_title == 'Close' and current_user.admin? %>
+      <%= submit_tag("Revert", class: "revertButton", formaction: revert_records_path, disabled: true, data: {confirm: "Revert this record?"}) %>
+    <% end %>
+<% end %>
 
   <% if report %>
     <%= submit_tag("Get Review Report", class: "reportButton", formaction: reports_review_path, disabled: true) %>
