@@ -20,7 +20,7 @@ class RecordsController < ApplicationController
   end
 
   def associate_granule_to_collection
-    @record = Record.find_by id:params[:id]
+    @record = Record.find_by id: params[:id]
     collection = Collection.find_by id: @record.recordable_id
     associated_granule_value = params[:associated_granule_value]
 
@@ -48,7 +48,7 @@ class RecordsController < ApplicationController
       flash[:notice] = 'An error occurred associating granule to the collection'
       Rails.logger.info "An error occurred associated granule to the collection, value=#{associated_granule_value}"
     end
-    redirect_to collection_path(id:collection.id, record_id: @record.id)
+    redirect_to collection_path(id: collection.id, record_id: @record.id)
   end
 
   def show
@@ -63,8 +63,9 @@ class RecordsController < ApplicationController
   def complete
     if completion_success(@record)
       flash[:notice] = "Record has been successfully updated."
-      redirect_to collection_path(id:1, record_id: @record.id)
+      redirect_to collection_path(id: 1, record_id: @record.id)
     else
+      flash[:notice] = 'Record failed to update.'
       redirect_to record_path(@record)
     end
   end
@@ -106,19 +107,23 @@ class RecordsController < ApplicationController
   end
 
   def revert
-    begin
+    success = false
+    Record.transaction do
       success = @record.revert!
-    rescue Exception => e
+      success = revert_granule(@record) if success
+
+      # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
+      raise ActiveRecord::Rollback, ' rollback Error reverting!' unless success
+    rescue StandardError => e
       Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
       success = false
     end
 
-    if success
-      flash[:notice] = "The record #{@record.concept_id} was successfully updated."
-    else
-      flash[:notice] = "Sorry, encountered an error reverting #{@record.concept_id}"
-    end
-
+    flash[:notice] = if success
+                       "The record #{@record.concept_id} was successfully updated."
+                     else
+                       "Sorry, encountered an error reverting #{@record.concept_id}"
+                     end
     redirect_to home_path
   end
 
@@ -147,15 +152,15 @@ class RecordsController < ApplicationController
 
   def batch_complete
     @records = Record.find(Array(params[:record_id]))
-      
+
     success = false
     @records.each do |r|
       success = completion_success(r)
       break unless success
     end
-    
+
     flash[:notice] = "Records were successfully updated" if success
-    
+
     redirect_to (request.referrer || home_path)
   end
 
@@ -167,27 +172,81 @@ class RecordsController < ApplicationController
   end
 
   def completion_success(record)
-    if !can?(:review_state, record.state.to_sym)
+    unless can?(:review_state, record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"
       return false
     end
 
     begin
       if record.in_arc_review?
-        record.complete_arc_review!
+        success = record.complete_arc_review!
       elsif record.ready_for_daac_review?
-        record.release_to_daac!
-
-        RecordNotifier.notify_released([record])
-      else
+        success = false
+        Record.transaction do
+          begin
+            case record.recordable_type
+            when 'Granule'
+              success = release_granule_record_to_daacs(record)
+            when 'Collection'
+              success = release_collection_record_to_daacs(record)
+            else
+              Rails.logger.error("Error encountered releasing record, type not known, #{record.recordable_type}")
+              success = false
+            end
+          rescue StandardError => e
+            Rails.logger.error("Error encountered releasing record #{@record.concept_id}, #{e.message}")
+            success = false
+          end
+          # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
+          raise ActiveRecord::Rollback, 'Error releasing record!' unless success
+        end
+        RecordNotifier.notify_released([record]) if success
+      else # in daac review
         can?(:force_close, @record) ? record.force_close! : record.close!
-
         RecordNotifier.notify_closed([record])
+        success = true
       end
+      success
     rescue => e
-      error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
+      error_messages = e.failures.uniq.map {|failure| Record::REVIEW_ERRORS[failure]}
       flash[:alert] = error_messages.join(" ")
       false
+    end
+  end
+
+  def revert_granule(record)
+    success = false
+    if !record.associated_granule_value.nil? && is_number?(record.associated_granule_value)
+      granule_record = Record.find_by id: record.associated_granule_value
+      if granule_record.in_daac_review? # double check it is in this state
+        success = granule_record.revert!
+      end
+    else
+      success = true # no granule to revert, so return success
+    end
+    success
+  end
+
+  # User chose to release granule record, also release the associated collection record
+  def release_granule_record_to_daacs(granule_record)
+    collection_record = Record.find_by associated_granule_value: granule_record.id
+    # release the assoc collection record
+    success = collection_record.release_to_daac! unless collection_record.nil?
+    if success
+      # release the granule record
+      success = granule_record.release_to_daac! # release the granule record
+    end
+    success
+  end
+
+  # User chose to release collection record, also release the associated granule record
+  def release_collection_record_to_daacs(collection_record)
+    if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
+      # release the assoc granule record
+      granule_record = Record.find_by id: collection_record.associated_granule_value
+      granule_record.release_to_daac! ? collection_record.release_to_daac! : false
+    else
+      collection_record.release_to_daac! # release the collection record
     end
   end
 

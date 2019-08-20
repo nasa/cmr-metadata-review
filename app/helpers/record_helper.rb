@@ -1,5 +1,9 @@
 module RecordHelper
 
+  def is_number?(object)
+    true if Float(object) rescue false
+  end
+
   def empty_contents(value)
     new_value = nil
 

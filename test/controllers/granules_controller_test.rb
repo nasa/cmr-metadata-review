@@ -69,9 +69,9 @@ class GranulesControllerTest < ActionController::TestCase
     end
   end
 
-  describe "POST #pull_latest" do
-    it "pulls in the latest revision of a granule for a collection." do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+  describe 'POST #pull_latest' do
+    it 'pulls in the latest revision of a granule for a collection.' do
+      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC').
         with(
           headers: {
             'Accept'=>'*/*',
@@ -81,28 +81,27 @@ class GranulesControllerTest < ActionController::TestCase
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
 
-      user = User.find_by role: "admin"
+      user = User.find_by role: 'admin'
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       # before we do post, there should be 2 granule revisions, 1 and 6
       granule = Granule.first
       records = granule.records
-      records = records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
-      no_granules_before = records.count
-      assert_equal records.last.revision_id,"6"
+      array = records.map { |a| a.revision_id }
+      assert_includes array, '1'
+      assert_includes array, '6'
+      assert_not_includes array, '15'
+
       post :pull_latest, id: granule.id
 
       # after we do post, there should be 3 granule revisions, 1,6, and the new
-      # revision stubbed above, #15
+      # revision stubbed above, #25
       granule = Granule.first
       records = granule.records
-      records = records.sort { |a,b| a.revision_id.to_i <=> b.revision_id.to_i }
-
-      no_granules_after = granule.records.count
-      assert_equal no_granules_after, (no_granules_before + 1)
-      assert_equal "A new granule revision has been added for this collection.", flash[:notice]
-      assert_equal records.last.revision_id,"15"
+      array = records.map { |a| a.revision_id }
+      assert_equal 'A new granule revision has been added for this collection.', flash[:notice]
+      assert_includes array, '25'
 
     end
   end
