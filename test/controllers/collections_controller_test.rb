@@ -29,7 +29,7 @@ class CollectionsControllerTest < ActionController::TestCase
 
       get :show, id: 1, record_id: 1
       collection_records = assigns(:collection_records)
-      assert_equal(3, collection_records.length)
+      assert_equal(4, collection_records.length)
     end
     
     it "redirects when no concept id is provided" do
@@ -62,11 +62,8 @@ class CollectionsControllerTest < ActionController::TestCase
                 body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
                 headers: {})
 
-    # The fixtures indicate collection C1000000020-LANCEAMSR2 has 2 granule revisions for G30920-GHRC, we are
-    # stubbing the request so when GET show action is called and checks to see if these revisions are still there,
-    # it will return 0 hits.
     get :show, id: 1, record_id: 1
-    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count:2,
+    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count:4,
                   :text => '[Granule Not Found in CMR]'
   end
 
@@ -87,12 +84,8 @@ class CollectionsControllerTest < ActionController::TestCase
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
-    # As part of the fixtures, this collection has 2 existing granule revisions #1 and #6
-    # The stubbed request provides a new revision that can be pulled, #15, so the test
-    # checks if the #ingest_pull_latest id is in the HTML exactly twice indicating
-    # there is a new revision to pull.
     get :show, id: 1, record_id: 1
-    assert_select '.import_new_revision', count:2
+    assert_select '.import_new_revision', count:4
   end
 end
 
