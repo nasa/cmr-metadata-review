@@ -69,4 +69,26 @@ open_granule:
   state: "open"
   format: "echo10"
 
+in_daac_review_granule:
+  id: 17
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "19"
+  state: "in_daac_review"
+  format: "echo10"
 
+in_ready_for_daac_review_collection:
+  id: 18
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "20"
+  state: "ready_for_daac_review"
+  format: "echo10"
+
+in_ready_for_daac_review_granule:
+  id: 19
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "21"
+  state: "ready_for_daac_review"
+  format: "echo10"
