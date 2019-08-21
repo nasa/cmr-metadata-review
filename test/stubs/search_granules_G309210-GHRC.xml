@@ -2,7 +2,7 @@
 <results>
   <hits>1</hits>
   <took>29</took>
-  <result concept-id="G309210-GHRC" collection-concept-id="C1000000020-LANCEAMSR2" revision-id="15"
+  <result concept-id="G309210-GHRC" collection-concept-id="C1000000020-LANCEAMSR2" revision-id="25"
           format="application/echo10+xml">
     <Granule>
       <GranuleUR>AMSR_2_L3_DailySnow_P00_20190102.he5</GranuleUR>

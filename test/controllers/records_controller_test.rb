@@ -163,6 +163,55 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
     end
 
+    it 'revert both collection and assoc granule record' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      assert_equal Record.find(12).state, 'in_daac_review'
+      assert_equal Record.find(17).state, 'in_daac_review'
+      post :associate_granule_to_collection, id: 12, associated_granule_value: 17
+      assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
+      post :revert, id: 12
+      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
+      assert_equal Record.find(12).state, 'ready_for_daac_review'
+      assert_equal Record.find(17).state, 'ready_for_daac_review'
+    end
+
+    it 'roundtrip release to daac both a collection and assoc granule record and then revert it' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      assert_equal Record.find(18).state, 'ready_for_daac_review'
+      assert_equal Record.find(19).state, 'ready_for_daac_review'
+      post :associate_granule_to_collection, id: 18, associated_granule_value: 19
+      assert_equal 'Granule G309210-GHRC/21 has been successfully associated to this collection revision 20. ', flash[:notice]
+      post :complete, id: 18
+      assert_equal 'Record has been successfully updated.', flash[:notice]
+      assert_equal Record.find(18).state, 'in_daac_review'
+      assert_equal Record.find(19).state, 'in_daac_review'
+      post :revert, id: 18
+      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
+      assert_equal Record.find(18).state, 'ready_for_daac_review'
+      assert_equal Record.find(19).state, 'ready_for_daac_review'
+    end
+
+    it 'roundtrip release to daac just a collection record with no assoc granule record and then revert it' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      assert_equal Record.find(18).state, 'ready_for_daac_review'
+      post :complete, id: 18
+      assert_equal 'Record has been successfully updated.', flash[:notice]
+      assert_equal Record.find(18).state, 'in_daac_review'
+      post :revert, id: 18
+      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
+      assert_equal Record.find(18).state, 'ready_for_daac_review'
+    end
+
+
+
+
+
 
   end
 
