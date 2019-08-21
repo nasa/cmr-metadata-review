@@ -109,21 +109,21 @@ class RecordsController < ApplicationController
   def revert
     success = false
     Record.transaction do
-      success = @record.revert!
-      success = revert_granule(@record) if success
-
+      begin
+        success = @record.revert!
+        success = revert_granule(@record) if success
+      rescue StandardError => e
+        Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
+        success = false
+      end
       # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
       raise ActiveRecord::Rollback, ' rollback Error reverting!' unless success
-    rescue StandardError => e
-      Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
-      success = false
     end
-
     flash[:notice] = if success
-                       "The record #{@record.concept_id} was successfully updated."
-                     else
-                       "Sorry, encountered an error reverting #{@record.concept_id}"
-                     end
+                     "The record #{@record.concept_id} was successfully updated."
+                   else
+                     "Sorry, encountered an error reverting #{@record.concept_id}"
+                   end
     redirect_to home_path
   end
 
@@ -181,26 +181,7 @@ class RecordsController < ApplicationController
       if record.in_arc_review?
         success = record.complete_arc_review!
       elsif record.ready_for_daac_review?
-        success = false
-        Record.transaction do
-          begin
-            case record.recordable_type
-            when 'Granule'
-              success = release_granule_record_to_daacs(record)
-            when 'Collection'
-              success = release_collection_record_to_daacs(record)
-            else
-              Rails.logger.error("Error encountered releasing record, type not known, #{record.recordable_type}")
-              success = false
-            end
-          rescue StandardError => e
-            Rails.logger.error("Error encountered releasing record #{@record.concept_id}, #{e.message}")
-            success = false
-          end
-          # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
-          raise ActiveRecord::Rollback, 'Error releasing record!' unless success
-        end
-        RecordNotifier.notify_released([record]) if success
+        success = release_record_for_daac_review(record)
       else # in daac review
         can?(:force_close, @record) ? record.force_close! : record.close!
         RecordNotifier.notify_closed([record])
@@ -208,10 +189,28 @@ class RecordsController < ApplicationController
       end
       success
     rescue => e
-      error_messages = e.failures.uniq.map {|failure| Record::REVIEW_ERRORS[failure]}
-      flash[:alert] = error_messages.join(" ")
+      flash[:alert] = e.message
       false
     end
+  end
+
+  def release_record_for_daac_review(record)
+    success = false
+    Record.transaction do
+      case record.recordable_type
+      when 'Granule'
+        success = release_granule_record_to_daacs(record)
+      when 'Collection'
+        success = release_collection_record_to_daacs(record)
+      else
+        Rails.logger.error("Error encountered releasing record, type not known, #{record.recordable_type}")
+        success = false
+      end
+      # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
+      raise ActiveRecord::Rollback, 'Error releasing record!' unless success
+    end
+    RecordNotifier.notify_released([record]) if success
+    success
   end
 
   # Check if collection record has assoc granule, if so, revert it.
@@ -240,6 +239,7 @@ class RecordsController < ApplicationController
     if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
       # release the assoc granule record
       granule_record = Record.find_by id: collection_record.associated_granule_value
+      granule_record.state = 'ready_for_daac_review' # dashboard data maybe inconsistent, so force this record to be in this state.
       granule_record.release_to_daac! ? collection_record.release_to_daac! : false
     else
       collection_record.release_to_daac! # release the collection record
