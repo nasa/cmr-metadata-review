@@ -188,7 +188,7 @@ class RecordsController < ApplicationController
         success = true
       end
       success
-    rescue  => e
+    rescue StandardError => e
       if e.respond_to?(:failures)
         error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
         flash[:alert] = error_messages.join(" ")
