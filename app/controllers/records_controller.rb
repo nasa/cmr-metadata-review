@@ -214,29 +214,25 @@ class RecordsController < ApplicationController
     end
   end
 
-  def revert_granule(record)
-    success = false
-    if !record.associated_granule_value.nil? && is_number?(record.associated_granule_value)
-      granule_record = Record.find_by id: record.associated_granule_value
-      if granule_record.in_daac_review? # double check it is in this state
-        success = granule_record.revert!
-      end
+  # Check if collection record has assoc granule, if so, revert it.
+  def revert_granule(collection_record)
+    if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
+      granule_record = Record.find_by id: collection_record.associated_granule_value
+      granule_record.revert!
     else
-      success = true # no granule to revert, so return success
+      true # doesn't have a granule, so return success
     end
-    success
   end
 
   # User chose to release granule record, also release the associated collection record
   def release_granule_record_to_daacs(granule_record)
     collection_record = Record.find_by associated_granule_value: granule_record.id
     # release the assoc collection record
-    success = collection_record.release_to_daac! unless collection_record.nil?
-    if success
-      # release the granule record
-      success = granule_record.release_to_daac! # release the granule record
+    if !collection_record.nil?
+      collection_record.release_to_daac! ? granule_record.release_to_daac! : false
+    else
+      granule_record.release_to_daac!
     end
-    success
   end
 
   # User chose to release collection record, also release the associated granule record
