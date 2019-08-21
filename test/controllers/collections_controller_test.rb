@@ -63,7 +63,7 @@ class CollectionsControllerTest < ActionController::TestCase
                 headers: {})
 
     get :show, id: 1, record_id: 1
-    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count:4,
+    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 4,
                   :text => '[Granule Not Found in CMR]'
   end
 
@@ -85,7 +85,7 @@ class CollectionsControllerTest < ActionController::TestCase
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
     get :show, id: 1, record_id: 1
-    assert_select '.import_new_revision', count:4
+    assert_select '.import_new_revision', count: 4
   end
 end
 
