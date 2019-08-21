@@ -244,7 +244,7 @@ class RecordsController < ApplicationController
     if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
       # release the assoc granule record
       granule_record = Record.find_by id: collection_record.associated_granule_value
-      granule_record.state = 'ready2_for_daac_review' # dashboard data maybe inconsistent, so force this record to be in this state.
+      granule_record.state = 'ready_for_daac_review' # dashboard data maybe inconsistent, so force this record to be in this state.
 
       granule_record.release_to_daac! ? collection_record.release_to_daac! : false
     else
