@@ -1,0 +1,29 @@
+{
+  "hits" : 1,
+  "took" : 78,
+  "items" : [ {
+    "meta" : {
+      "has-variables" : false,
+      "native-id" : "WBD",
+      "provider-id" : "SCIOPS",
+      "concept-type" : "collection",
+      "granule-count" : 0,
+      "has-temporal-subsetting" : false,
+      "concept-id" : "C1000000020-LANCEAMSR2",
+      "has-spatial-subsetting" : false,
+      "revision-date" : "2016-06-28T02:49:00Z",
+      "user-id" : "mmorahan",
+      "deleted" : false,
+      "revision-id" : 21,
+      "has-transforms" : false,
+      "has-formats" : false,
+      "format" : "application/dif+xml"
+    },
+    "umm" : {
+      "entry-title" : "World Biodiversity Database",
+      "entry-id" : "WBD",
+      "short-name" : "WBD",
+      "version-id" : "Not provided"
+    }
+  }]
+}

@@ -3,6 +3,7 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
 class RecordsControllerTest < ActionController::TestCase
   include OmniauthMacros
+  include RecordHelper
 
   describe "POST #create" do
     it "updates record data from review params" do
@@ -208,10 +209,53 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
 
+    # I've mocked a cmr response that returns a revision id 21 which is a newer revision that currently in fixtures.   The test
+    # should post to Records#refresh and it should find this record, detect it is newer and ingest the new record.
+    it 'refresh record with id # with new record from cmr' do
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&pretty=true&updated_since=1971-01-01T12:00:00-04:00").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Faraday v0.15.3'
+          }).
+        to_return(status: 200, body: get_stub('search_collections.umm-json_C1000000020-LANCEAMSR2.json'), headers: {'cmr-hits':1} )
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.atom?concept_id=C1000000020-LANCEAMSR2").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_collections.atom_C1000000020-LANCEAMSR2.xml'), headers: {})
+
+      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1000000020-LANCEAMSR2').
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_collections.umm_json_raw_C1000000020-LANCEAMSR2.json'), headers: {})
+
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      collection = Collection.find_by concept_id: 'C1000000020-LANCEAMSR2'
+      records = collection.records
+      array = records.map(&:revision_id)
+      assert_not_includes array, '21'
+      post :refresh
+      assert_equal "The following records and revision id's have been added C1000000020-LANCEAMSR2 - 21 ", flash[:notice]
+      collection = Collection.find_by concept_id: 'C1000000020-LANCEAMSR2'
+      records = collection.records
+      array = records.map(&:revision_id)
+      assert_includes array, '21'
 
 
-
-
+    end
 
   end
 

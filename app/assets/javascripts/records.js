@@ -72,7 +72,7 @@ function addButtonActions(form) {
 function formButtons() {
   return [
     {name: "select", multiSelect: false},
-    {name: "delete", multiSelect: false},
+    {name: "delete", multiSelect: true},
     {name: "report", multiSelect: true},
     {name: "complete", multiSelect: true},
     {name: "finished", multiSelect: false},
