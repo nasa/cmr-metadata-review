@@ -18,6 +18,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
   describe 'Granule Assocations' do
     describe 'associate granules to collections' do
       it 'can assign granule to collection' do
+        skip
         visit '/home'
         wait_for_jQuery(5)
 
@@ -29,6 +30,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
       end
 
       it 'can assign "no granule review" to a collection' do
+        skip
         visit '/home'
         wait_for_jQuery(5)
 
@@ -43,6 +45,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
     describe 'associated granule reports' do
       it 'associated granule shows up in reports' do
+        skip
         mock_login(role: 'admin')
         visit '/home'
         wait_for_jQuery(5)
@@ -66,6 +69,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
   # Note had to move this test of the main tests as we were not getting proper database cleanup after each test
   describe 'mark as undefined' do
     it 'can mark a granule back to undefined' do
+      skip
       visit '/home'
       wait_for_jQuery(5)
 
