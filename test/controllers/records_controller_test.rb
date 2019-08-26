@@ -208,12 +208,45 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
 
+    it "refresh record with id # with new record from cmr" do
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&pretty=true&updated_since=1971-01-01T12:00:00-04:00").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Faraday v0.15.3'
+          }).
+        to_return(status: 200, body: '{"hits" : 20089,"took" : 31, "items" : [ {"meta" : {
+          "has-variables" : false,
+          "native-id" : "Skylab-05",
+          "provider-id" : "SCIOPS",
+          "concept-type" : "collection",
+          "granule-count" : 0,
+          "has-temporal-subsetting" : false,
+          "concept-id" : "C1200202841-SCIOPS",
+          "has-spatial-subsetting" : false,
+          "revision-date" : "2016-06-28T02:42:13Z",
+          "user-id" : "mmorahan",
+          "deleted" : false,
+          "revision-id" : 1,
+          "has-transforms" : false,
+          "has-formats" : false,
+          "format" : "application/dif+xml"
+        },
+        "umm" : {
+          "entry-title" : "X-ray Images of the Solar Corona from the Skylab S-054 Telescope",
+          "entry-id" : "Skylab-05",
+          "short-name" : "Skylab-05",
+          "version-id" : "Not provided"
+        }
+      ]}', headers: {"cmr-hits":1})
 
-
-
-
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      post :refresh
+    end
 
   end
-
 
 end
