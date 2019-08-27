@@ -51,6 +51,7 @@ class Cmr
     failed_records = []
     processed = []
 
+    # Returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
     map = self.get_cmr_revision_map
 
     records.each do |record|
@@ -58,13 +59,15 @@ class Cmr
       next if processed.include? collection.concept_id
       processed << collection.concept_id
 
-      record = collection.records.where('state != ?', Record::STATE_HIDDEN.to_s).order('revision_id DESC').first
-      latest_revision_id = record.nil? ? -1 : record.revision_id.to_i
+      records = collection.records.where('state != ?', Record::STATE_HIDDEN.to_s).order('revision_id DESC')
+      ids = records.map { |a| a.revision_id.to_i }
+      ids = ids.sort!
+      latest_revision_id = ids.empty? ? -1 : ids.last
       cmr_revision_id = map[record.concept_id].to_i
 
       if cmr_revision_id > latest_revision_id
         begin
-          Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
+          new_record = Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
           added_records << [record.concept_id, cmr_revision_id]
           Rails.logger.info "refresh-record NEW #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
         rescue Timeout::Error
