@@ -3,7 +3,6 @@ Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 
 class RecordsControllerTest < ActionController::TestCase
   include OmniauthMacros
-  include RecordHelper
 
 
   describe 'POST #create' do
@@ -218,7 +217,7 @@ class RecordsControllerTest < ActionController::TestCase
     # I've mocked a cmr response that returns a revision id 21 which is a newer revision that currently in fixtures.   The test
     # should post to Records#refresh and it should find this record, detect it is newer and ingest the new record.
     it 'refresh record with id # with new record from cmr' do
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&pretty=true&updated_since=1971-01-01T12:00:00-04:00").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&updated_since=1971-01-01T12:00:00-04:00").
         with(
           headers: {
             'Accept'=>'*/*',
