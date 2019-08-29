@@ -52,7 +52,7 @@ class Cmr
     processed = []
 
     # Returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
-    map = self.get_cmr_revision_map
+    cmr_revision_map = self.get_cmr_revision_map
 
     records.each do |record|
       collection = record.recordable
@@ -61,9 +61,9 @@ class Cmr
 
       records = collection.records.where('state != ?', Record::STATE_HIDDEN.to_s).order('revision_id DESC')
       ids = records.map { |a| a.revision_id.to_i }
-      ids = ids.sort!
+      ids.sort!
       latest_revision_id = ids.empty? ? -1 : ids.last
-      cmr_revision_id = map[record.concept_id].to_i
+      cmr_revision_id = cmr_revision_map[record.concept_id].to_i
 
       if cmr_revision_id > latest_revision_id
         begin
@@ -94,14 +94,15 @@ class Cmr
     max_page_size = 2000
     page_no = 1
     no_pages = 1
-    map = {}
+    cmr_revision_map = {}
+
+    conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
+      faraday.response :logger
+      faraday.adapter Faraday.default_adapter
+    end
 
     while  page_no <= no_pages
-      conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
-        faraday.response :logger
-        faraday.adapter Faraday.default_adapter
-      end
-      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}&pretty=true"
+      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}"
       headers = response.headers
       if page_no == 1
         no_hits = headers['cmr-hits'].to_i
@@ -111,13 +112,13 @@ class Cmr
       items = dict['items']
       items.each do |item|
         meta = item['meta']
-        map[meta['concept-id']] = meta['revision-id']
+        cmr_revision_map[meta['concept-id']] = meta['revision-id']
       end
 
       page_no += 1
     end
 
-    map
+    cmr_revision_map
 
   end
 
@@ -155,7 +156,7 @@ class Cmr
   # Retrieves the most recent revision of a collection from the CMR
   # then processes and returns the data
   # Automatically returns only the most recent revision of a collection
-  # can add "&all_revisions=true&pretty=true" params to find specific revision
+  # can add "&all_revisions=true" params to find specific revision
   def self.get_collection(concept_id, data_format = "echo10")
     raw_collection = get_raw_collection(concept_id, data_format)
     format_collection(raw_collection, data_format)
