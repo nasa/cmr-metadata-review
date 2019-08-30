@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:georss="http://www.georss.org/georss/10"
+      xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/"
+      xmlns:echo="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html#atom"
+      xmlns:esipdiscovery="http://commons.esipfed.org/ns/discovery/1.2/" xmlns:gml="http://www.opengis.net/gml"
+      esipdiscovery:version="1.2" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/">
+  <updated>2019-08-26T19:18:34.428Z</updated>
+  <id>https://cmr.sit.earthdata.nasa.gov:443/search/collections.atom?concept_id=C1000000020-LANCEAMSR2</id>
+  <title type="text">ECHO dataset metadata</title>
+  <entry>
+    <id>C1000000020-LANCEAMSR2</id>
+    <title type="text">CHRIS_TEST - ASTER Level 1 precision terrain corrected registered at-sensor radiance V003</title>
+    <summary type="text">The Advanced Spaceborne Thermal Emission and Reflection Radiometer (ASTER) Level 1 Precision
+      Terrain Corrected Registered At-Sensor Radiance (AST_L1T) data contains calibrated at-sensor radiance, which
+      corresponds with the ASTER Level 1B (AST_L1B) (https://doi.org/10.5067/ASTER/AST_L1B.003), that has been
+      geometrically corrected, and rotated to a north-up UTM projection. The AST_L1T is created from a single resampling
+      of the corresponding ASTER L1A (AST_L1A) (https://doi.org/10.5067/ASTER/AST_L1A.003) product. The bands available
+      in the AST_L1T depend on the bands in the AST_L1A and can include up to three Visible and Near Infrared (VNIR)
+      bands, six Shortwave Infrared (SWIR) bands, and five Thermal Infrared (TIR) bands. The AST_L1T dataset does not
+      include the aft-looking VNIR band 3.
+
+      The precision terrain correction process incorporates GLS2000 digital elevation data with derived ground control
+      points (GCPs) to achieve topographic accuracy for all daytime scenes where correlation statistics reach a minimum
+      threshold. Alternate levels of correction are possible (systematic terrain, systematic, or precision) for scenes
+      acquired at night or that otherwise represent a reduced quality ground image (e.g., cloud cover).
+
+      For daytime images, if the VNIR or SWIR telescope collected data and precision correction was attempted, each
+      precision terrain corrected image will have an accompanying independent quality assessment. It will include the
+      geometric correction available for distribution in both as a text file and a single band browse images with the
+      valid GCPs overlaid.
+
+      This multi-file product also includes georeferenced full resolution browse images. The number of browse images and
+      the band combinations of the images depends on the bands available in the corresponding (AST_L1A)
+      (https://doi.org/10.5067/ASTER/AST_L1A.003) dataset.
+    </summary>
+    <updated>2015-09-14T09:50:26.094Z</updated>
+    <echo:datasetId>CHRIS_TEST - ASTER Level 1 precision terrain corrected registered at-sensor radiance V003
+    </echo:datasetId>
+    <echo:shortName>CHRIS_TEST_AST_L1T</echo:shortName>
+    <echo:versionId>003</echo:versionId>
+    <echo:originalFormat>UMM_JSON</echo:originalFormat>
+    <echo:dataCenter>ARCTEST</echo:dataCenter>
+    <echo:archiveCenter>LP DAAC</echo:archiveCenter>
+    <echo:organization>LP DAAC</echo:organization>
+    <echo:processingLevelId>1T</echo:processingLevelId>
+    <time:start>2000-03-04T00:00:00.000Z</time:start>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/metadata#" hreflang="en-US"
+          href="https://doi.org/10.5067/ASTER/AST_L1T.003"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/data#" hreflang="en-US"
+          href="https://e4ftl01.cr.usgs.gov/ASTT/AST_L1T.003/"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/data#" hreflang="en-US" href="http://glovis.usgs.gov/"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/data#" hreflang="en-US" href="http://earthexplorer.usgs.gov/"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/metadata#" hreflang="en-US" href="https://lpdaac.usgs.gov/"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/metadata#" hreflang="en-US"
+          href="http://asterweb.jpl.nasa.gov/"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/data#" hreflang="en-US"
+          href="https://search.earthdata.nasa.gov/search?q=AST_L1T+V003"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/browse#" hreflang="en-US"
+          href="https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2018.03.08/AST_L1T_00303062018180844_20180307193746_11920_BR.2.VNIR.jpg"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US"
+          href="https://lpdaac.usgs.gov/documents/72/AST_L1T_ATBD.pdf"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US"
+          href="https://lpdaac.usgs.gov/documents/71/AST_L1T_User_Guide_V3.pdf"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US"
+          href="https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/aster_l1t_product_specification.pdf"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US"
+          href="https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/AST_L1T_Quick_Reference_Guide.pdf"></link>
+    <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US"
+          href="https://unit.aist.go.jp/igg/rs-rg/ASTERSciWeb_AIST/en/documnts/users_guide/part1/pdf/Part2_5.1E.pdf"></link>
+    <echo:coordinateSystem>CARTESIAN</echo:coordinateSystem>
+    <echo:orbitParameters></echo:orbitParameters>
+    <georss:box>-90 -180 90 180</georss:box>
+    <echo:onlineAccessFlag>true</echo:onlineAccessFlag>
+    <echo:browseFlag>true</echo:browseFlag>
+    <echo:hasVariables>false</echo:hasVariables>
+    <echo:hasFormats>false</echo:hasFormats>
+    <echo:hasTransforms>false</echo:hasTransforms>
+    <echo:hasSpatialSubsetting>false</echo:hasSpatialSubsetting>
+    <echo:hasTemporalSubsetting>false</echo:hasTemporalSubsetting>
+  </entry>
+</feed>
