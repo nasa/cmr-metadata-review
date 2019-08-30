@@ -8,10 +8,13 @@ class RecordsController < ApplicationController
   before_filter :filtered_records, only: :finished
 
   def refresh
-    added_records, failed_records = Cmr.update_collections(current_user)
+    added_records, deleted_records, failed_records = Cmr.update_collections(current_user)
     flash[:notice] = Cmr.format_added_records_list(added_records).html_safe
     unless failed_records.empty?
       flash[:alert] = Cmr.format_failed_records_list(failed_records).html_safe
+    end
+    unless deleted_records.empty?
+      flash[:alert] = Cmr.format_deleted_records_list(deleted_records).html_safe
     end
     redirect_to(request.referrer || home_path)
   end
