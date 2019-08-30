@@ -7,7 +7,7 @@
       xmlns:gml="http://www.opengis.net/gml"
       xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/">
   <updated>2019-07-22T16:03:09.346Z</updated>
-  <id>https://cmr.earthdata.nasa.gov:443/search/collections.atom?concept_id=C190733714-LPDAAC_ECS&amp;pretty=true</id>
+  <id>https://cmr.earthdata.nasa.gov:443/search/collections.atom?concept_id=C190733714-LPDAAC_ECS</id>
   <title type="text">ECHO dataset metadata</title>
   <entry>
     <id>C190733714-LPDAAC_ECS</id>

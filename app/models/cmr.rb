@@ -37,51 +37,94 @@ class Cmr
   # ====Params
   # User object
   # ====Returns
-  # Array of Records
+  # [Array of Added Records, Array of Failed Records]
   # ==== Method
-  # Takes the date of last update from the RecordsUpdateLock model
-  # Queries the CMR for all records that have been updated since the "last update" minus one day.
-  # checks the updated records list for records which have the same concept_id as as record in our system
-  # Queries CMR again to download and ingest all updated records with matching concept_id
-  # returns all of the updated records which match a concept_id
+  # Gets a List of All Records in Open, In Arc Review, and Ready for DAAC Review
+  # Determines what the latest revision id is for each record
+  # Queries CMR to determine the latest revision id for the record
+  # If Cmr revision id isn't the latest, we pull the latest and ingest it.
 
   def self.update_collections(current_user)
+    records = Record.where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"
+
+    added_records = []
+    failed_records = []
+    deleted_records = []
+    processed = []
+
+    # Returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
+    cmr_revision_map = self.get_cmr_revision_map
+
+    records.each do |record|
+      collection = record.recordable
+      next if processed.include? collection.concept_id
+      processed << collection.concept_id
+
+      records = collection.records.where('state != ?', Record::STATE_HIDDEN.to_s).order('revision_id DESC')
+      ids = records.map { |a| a.revision_id.to_i }
+      ids.sort!
+      latest_revision_id = ids.empty? ? -1 : ids.last
+      cmr_revision_id = cmr_revision_map[record.concept_id].to_i
+
+      if cmr_revision_id > latest_revision_id
+        begin
+          new_record = Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
+          added_records << [record.concept_id, cmr_revision_id]
+          Rails.logger.info "refresh-record NEW #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
+        rescue Timeout::Error
+          Rails.logger.error("refresh-record py-cmr timeout error #{record.concept_id} #{record.revision_id}")
+          failed_records << [record.concept_id, cmr_revision_id]
+        rescue StandardError => e
+          Rails.logger.error("refresh-record error #{record.concept_id} #{record.revision_id} #{e.message}")
+          failed_records << [record.concept_id, cmr_revision_id]
+        end
+      else
+        Rails.logger.info "refresh-record EXISTS #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
+        deleted_records << [record.concept_id, latest_revision_id]
+      end
+    end
+
     update_lock = RecordsUpdateLock.find_by id: 1
-    if update_lock.nil?
-      #subtracting a year so that any older records picked up from an artificially setup starting set of records
-      update_lock = RecordsUpdateLock.new(id: 1, last_update: (DateTime.now - 365.days))
-    end
-
-    last_date = update_lock.get_last_update
-    #getting date into format
-    #taking last update and going back a day to give cmr time to update
-    search_date = (last_date - 1.days).to_s.slice(/[0-9]+-[0-9]+-[0-9]+/)
-    page_num = 1
-    result_count = 0
-    total_results = Float::INFINITY
-    #will return this list of added records for logging/presentation
-    total_added_records = []
-    total_failed_records = []
-
-    #only 2000 results returned at a time, so have to loop through requests
-    while result_count < total_results
-      raw_results = Cmr.collections_updated_since(search_date, page_num)
-      total_results = raw_results["results"]["hits"].to_i
-      added_records, failed_records = Cmr.process_updated_collections(raw_results, current_user)
-      total_added_records = total_added_records.concat(added_records)
-      total_failed_records = total_failed_records.concat(failed_records)
-
-      result_count = result_count + 2000
-      page_num = page_num + 1
-    end
-
-    if total_failed_records.empty?
-      update_lock.last_update = DateTime.now
-      update_lock.save!
-    end
-
-    return total_added_records, total_failed_records
+    update_lock.last_update = DateTime.now
+    update_lock.save!
+    [added_records, deleted_records, failed_records]
   end
+
+  #
+  # Queries CMR and returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
+  #
+  def self.get_cmr_revision_map
+    max_page_size = 2000
+    page_no = 1
+    no_pages = 1
+    cmr_revision_map = {}
+
+    conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
+      faraday.response :logger
+      faraday.adapter Faraday.default_adapter
+    end
+
+    while  page_no <= no_pages
+      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}"
+      headers = response.headers
+      if page_no == 1
+        no_hits = headers['cmr-hits'].to_i
+        no_pages = (no_hits / max_page_size) + 1
+      end
+      dict = JSON.parse(response.body)
+      items = dict['items']
+      items.each do |item|
+        meta = item['meta']
+        cmr_revision_map[meta['concept-id']] = meta['revision-id']
+      end
+
+      page_no += 1
+    end
+
+    cmr_revision_map
+
+  end
+
 
   def self.current_revision_for(concept_id)
     base_url = Cmr.get_cmr_base_url
@@ -108,46 +151,6 @@ class Cmr
     raw_updated = Cmr.cmr_request("#{base_url}/search/collections.xml?page_num=#{page_num.to_s}&page_size=2000&updated_since=#{date_string.to_s}T00:00:00.000Z").parsed_response
   end
 
-
-  # ====Params
-  # hash of CMR response, User object
-  # ====Returns
-  # Array of records
-  # ==== Method
-  # Filters provided CMR response to only the records that match concept_id's already in system
-  # Ingests and saves all new records
-  # Returns Array of the added record objects.
-
-  def self.process_updated_collections(raw_results, current_user)
-    # Mapping to hashes of concept_id/revision_id
-    updated_collection_data = raw_results["results"]["references"]["reference"].map {|entry| {concept_id: entry["id"], revision_id: entry["revision_id"]} }
-    all_collections = Collection.pluck(:concept_id)
-
-    # Reducing to only the ones in system
-    contained_collections = updated_collection_data.select {|data| all_collections.include? data[:concept_id] }
-
-    # Will return this list of added records for logging/presentation
-    added_records = []
-    failed_records = []
-
-    # Importing the new ones if any
-    contained_collections.each do |data|
-      begin
-        if Collection.update?(data[:concept_id]) && !Collection.record_exists?(data[:concept_id], data[:revision_id])
-          Collection.create_new_record(data[:concept_id], data[:revision_id], current_user)
-          added_records << [data[:concept_id], data[:revision_id]]
-        end
-      rescue Timeout::Error
-        Rails.logger.error("PyCMR Error: On CMR Update Revision #{data["revision_id"]}, Concept_id #{data["concept_id"]} had timeout error")
-        failed_records << [data[:concept_id], data[:revision_id]]
-      rescue
-        failed_records << [data[:concept_id], data[:revision_id]]
-      end
-    end
-
-    [added_records, failed_records]
-  end
-
   # ====Params
   # string concept_id, string data_type
   # ====Returns
@@ -156,13 +159,13 @@ class Cmr
   # Retrieves the most recent revision of a collection from the CMR
   # then processes and returns the data
   # Automatically returns only the most recent revision of a collection
-  # can add "&all_revisions=true&pretty=true" params to find specific revision
+  # can add "&all_revisions=true" params to find specific revision
   def self.get_collection(concept_id, data_format = "echo10")
     raw_collection = get_raw_collection(concept_id, data_format)
     format_collection(raw_collection, data_format)
   end
 
-  def self.convert_xml_to_hash(data_format, collection_data)
+  def self.convert_to_hash(data_format, collection_data)
     if data_format == "umm_json"
       JSON.parse(collection_data)
     else
@@ -193,7 +196,7 @@ class Cmr
       raise CmrError, error_message
     end
 
-    collection_data_hash = convert_xml_to_hash(data_format, collection_data)
+    collection_data_hash = convert_to_hash(data_format, collection_data)
 
     raw_collection = if data_format == "echo10"
       collection_data_hash["Collection"]
@@ -279,7 +282,7 @@ class Cmr
     data = Cmr.cmr_request(url).parsed_response
 
     begin
-      collection_results = convert_xml_to_hash(type, data)
+      collection_results = convert_to_hash(type, data)
       # dif10 and echo10 return results subelement but umm does not
       if type != 'umm_json'
         collection_results = collection_results['results']
@@ -302,6 +305,14 @@ class Cmr
     end
   end
 
+  def self.get_raw_collection_meta(concept_id)
+    url  = Cmr.api_url('collections', 'umm_json', {'concept_id' => concept_id})
+    data = Cmr.cmr_request(url).parsed_response
+    collection_results = convert_to_hash('umm_json', data)
+    collection_results['items'].first['meta']
+  end
+
+
   # ====Params
   # string, string
   # ====Returns
@@ -323,7 +334,7 @@ class Cmr
     granule_xml = Cmr.cmr_request(url).parsed_response
 
     begin
-      granule_results = convert_xml_to_hash("echo10", granule_xml)["results"]
+      granule_results = convert_to_hash("echo10", granule_xml)["results"]
     rescue => e
       raise CmrError, e.message
     end
@@ -339,7 +350,7 @@ class Cmr
   def self.raw_granule?(concept_id)
     url = Cmr.api_url('granules', 'echo10', 'concept_id': concept_id)
     granule_xml = Cmr.cmr_request(url).parsed_response
-    granule_results = convert_xml_to_hash('echo10', granule_xml)['results']
+    granule_results = convert_to_hash('echo10', granule_xml)['results']
     granule_results['hits'].to_i.positive?
   end
 
@@ -584,6 +595,17 @@ class Cmr
       return ""
     end
     output_string = "The following records and revision id\'s failed ingest due to pyCMR failure "
+    list.each do |record_list|
+      output_string += "#{record_list[0]} - #{record_list[1]} "
+    end
+    return output_string
+  end
+
+  def self.format_deleted_records_list(list)
+    if list.empty?
+      return ""
+    end
+    output_string = "The following records and revision id\'s were deleted "
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end
