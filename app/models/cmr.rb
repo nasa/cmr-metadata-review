@@ -49,6 +49,7 @@ class Cmr
 
     added_records = []
     failed_records = []
+    deleted_records = []
     processed = []
 
     # Returns a dictionary [ConceptId:LatestRevisionId] of every collection record in CMR.
@@ -79,12 +80,14 @@ class Cmr
         end
       else
         Rails.logger.info "refresh-record EXISTS #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
+        deleted_records << [record.concept_id, latest_revision_id]
       end
     end
+
     update_lock = RecordsUpdateLock.find_by id: 1
     update_lock.last_update = DateTime.now
     update_lock.save!
-    [added_records, failed_records]
+    [added_records, deleted_records, failed_records]
   end
 
   #
@@ -592,6 +595,17 @@ class Cmr
       return ""
     end
     output_string = "The following records and revision id\'s failed ingest due to pyCMR failure "
+    list.each do |record_list|
+      output_string += "#{record_list[0]} - #{record_list[1]} "
+    end
+    return output_string
+  end
+
+  def self.format_deleted_records_list(list)
+    if list.empty?
+      return ""
+    end
+    output_string = "The following records and revision id\'s were deleted "
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end
