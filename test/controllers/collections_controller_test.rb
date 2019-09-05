@@ -18,7 +18,7 @@ class CollectionsControllerTest < ActionController::TestCase
       #stubbing all requests for raw_data
       stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C1000000020-LANCEAMSR2.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+      stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -51,7 +51,7 @@ class CollectionsControllerTest < ActionController::TestCase
     #stubbing all requests for raw_data
     stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
-    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+    stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
       with(
         headers: {
           'Accept'=>'*/*',
@@ -75,7 +75,7 @@ class CollectionsControllerTest < ActionController::TestCase
       with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
-    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+    stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
       with(
         headers: {
           'Accept'=>'*/*',

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       member do
         delete "replace"
         post "pull_latest"
+        post "ingest_specific"
       end
     end
     resources :comments

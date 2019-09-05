@@ -9,7 +9,7 @@
       <h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
       <h3>Format: <%= @collection_records.first.format %></h3>
     </div>
-    
+
     <% if can?(:view_edit_in_mmt_link, @record.recordable) %>
       <div class="edit_collection_in_mmt_link">
         <%= link_to link_for_edit_collection_in_mmt(@concept_id), class: 'eui-btn--blue', target: '_blank', method: :get do %>
@@ -23,7 +23,7 @@
 
   <div class="group_box left_box">
 
-    <h3>Collection Revisions</h3>
+    <h3 class="collection_revision_header">Collection Revisions</h3>
     <% @collection_records.each_with_index do |record, index| %>
 
       <div class="collection_revision">
@@ -92,7 +92,22 @@
         <% if can?(:create_granule, @granule_objects.first.collection) %>
           <h3>
             Granules
-            <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule_button", data: {confirm: "Are you sure?"} %>
+            <div>
+              <% modal_id = "ingest-specific-granule-modal-id" %>
+              <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton ingest_buttons", id: "ingest_create", data: {confirm: "Are you sure?"} %>
+              <input class="smallSelectButton confirm-modal-button ingest_buttons" type="button" id="ingest-specific-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Ingest Specific Granule"/>
+            </div>
+
+            <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+              <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+              <%= form_tag(ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post") do %>
+                <p>
+                  Enter Granule Concept ID: <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
+                </p>
+                <input type="submit" value="OK" class="smallSelectButton confirm-no-button"> &nbsp;
+                <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
+            <% end %>
+            </div>
           </h3>
         <% end %>
       </div>
