@@ -111,4 +111,20 @@ class GranulesController < ApplicationController
       redirect_to collection_path(id: 1, record_id: collection.records.first.id)
     end
   end
+
+  def ingest_specific
+      collection = Collection.find(params[:id])
+      authorize! :create_granule, collection
+      concept_id = params["granule_concept_id"]
+      begin
+        Granule.ingest_specific(concept_id, current_user)
+        flash[:notice] = "Granule #{concept_id} ingested."
+      rescue Cmr::CmrError => e
+        flash[:notice] = "Sorry, granule #{concept_id} could not be found in CMR."
+      rescue StandardError => e
+        flash[:notice] = "Sorry, granule #{concept_id} could not be ingested."
+        Rails.logger.error("Sorry, granule #{concept_id} could not be ingested.  error=#{e.message}")
+      end
+      redirect_to collection_path(id: 1, record_id: collection.records.first.id)
+  end
 end
