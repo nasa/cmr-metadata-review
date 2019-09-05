@@ -207,13 +207,5 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
-
-
-
-
-
-
   end
-
-
 end
