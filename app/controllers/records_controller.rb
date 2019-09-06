@@ -146,9 +146,15 @@ class RecordsController < ApplicationController
   def hide
     @records = Record.where(id: params[:record_id])
     msg = 'Deleted the following collections: '
+
+    msgItems = []
     @records.each do |record|
       record.hide!
-      msg += "#{record.concept_id}/#{record.revision_id} "
+      msgItems << "#{record.concept_id}/#{record.revision_id}"
+    end
+    msgItems.sort!
+    msgItems.each do |message|
+      msg += message + ' '
     end
     flash[:notice] = msg
     redirect_to :back
