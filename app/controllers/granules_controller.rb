@@ -121,8 +121,7 @@ class GranulesController < ApplicationController
       record = collection.granules.find_by concept_id: granule_concept_id
       unless record.nil?
         flash[:notice] = "Sorry, granule review #{granule_concept_id} already exists!"
-        redirect_to collection_path(id: 1, record_id: collection.records.first.id)
-        return
+        redirect_to collection_path(id: 1, record_id: collection.records.first.id) and return
       end
 
       begin
