@@ -333,6 +333,10 @@ class Cmr
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
 
+    if granule_xml.nil?
+      raise CmrError.new, "Sorry, granule #{concept_id} could not be found in CMR."
+    end
+
     begin
       granule_results = convert_to_hash("echo10", granule_xml)["results"]
     rescue => e
