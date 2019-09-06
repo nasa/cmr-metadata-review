@@ -33,7 +33,7 @@ class GranulesControllerTest < ActionController::TestCase
   describe "POST #create" do
     it "creates a new random granule for a collection" do
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -44,7 +44,7 @@ class GranulesControllerTest < ActionController::TestCase
 
 
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -71,7 +71,7 @@ class GranulesControllerTest < ActionController::TestCase
 
   describe 'POST #pull_latest' do
     it 'pulls in the latest revision of a granule for a collection.' do
-      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC').
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -91,7 +91,7 @@ class GranulesControllerTest < ActionController::TestCase
       array = records.map { |a| a.revision_id }
       assert_includes array, '1'
       assert_includes array, '6'
-      assert_not_includes array, '15'
+      assert_not_includes array, '25'
 
       post :pull_latest, id: granule.id
 
@@ -157,5 +157,66 @@ class GranulesControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
       assert_equal "A new granule has been selected for this collection", flash[:notice]
     end
+  end
+
+  describe "POST #ingest_specific" do
+    it "can ingest a specifc granule review not found in CMR" do
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=somegranule").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: "", headers: {})
+
+      post :ingest_specific, id: 1, granule_concept_id: "somegranule"
+      assert_equal 'Sorry, granule somegranule could not be found in CMR.', flash[:notice]
+    end
+
+    it "can ingest a specifc granule review found in CMR and test that you cannot import the granule again (duplicate)" do
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G226251-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226251-GHRC.xml"), headers: {})
+
+      post :ingest_specific, id: 1, granule_concept_id: "G226251-GHRC"
+      assert_equal 'Granule G226251-GHRC ingested.', flash[:notice]
+      post :ingest_specific, id: 1, granule_concept_id: "G226251-GHRC"
+      assert_equal 'Sorry, granule review G226251-GHRC already exists!', flash[:notice]
+
+    end
+
+    it "prevents ingested a specific granule not belong to the collection." do
+      user = User.find_by(role: "admin")
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G226250-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.xml"), headers: {})
+
+      post :ingest_specific, id: 1, granule_concept_id: "G226250-GHRC"
+      assert_equal 'Granule record does not belong to this collection.', flash[:notice]
+
+    end
+
   end
 end
