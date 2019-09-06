@@ -107,10 +107,16 @@ class Granule < ActiveRecord::Base
     end
   end
 
-  def self.ingest_specific(granule_concept_id, current_user = User.find_by(role: "admin"))
+  def self.ingest_specific(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
     collection = Collection.find_by(concept_id: granule_info["collection_concept_id"])
-    return nil unless collection
+
+    if granule_info["collection_concept_id"] != collection_concept_id
+      raise Cmr::CmrError.new, 'Granule record does not belong to this collection.'
+    end
+    if collection.nil?
+      raise Cmr::CmrError.new, 'Collection record associated with granule could not be found in system.'
+    end
 
     granule_data = granule_info["Granule"]
 
