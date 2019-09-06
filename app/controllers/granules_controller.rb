@@ -125,7 +125,7 @@ class GranulesController < ApplicationController
       end
 
       begin
-        Granule.ingest_specific(collection_concept_id, granule_concept_id, current_user)
+        Granule.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user)
         flash[:notice] = "Granule #{granule_concept_id} ingested."
       rescue Cmr::CmrError => e
         flash[:notice] = e.message
