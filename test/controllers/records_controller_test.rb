@@ -281,7 +281,5 @@ class RecordsControllerTest < ActionController::TestCase
       post :hide, { 'record_id': [1,12]}
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 C1000000020-LANCEAMSR2/9 ', flash[:notice]
     end
-
-
   end
 end
