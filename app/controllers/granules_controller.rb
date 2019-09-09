@@ -118,21 +118,22 @@ class GranulesController < ApplicationController
       collection_concept_id = collection.concept_id
       granule_concept_id = params["granule_concept_id"]
 
-      record = collection.granules.find_by concept_id: granule_concept_id
-      unless record.nil?
-        flash[:notice] = "Sorry, granule review #{granule_concept_id} already exists!"
-        redirect_to collection_path(id: 1, record_id: collection.records.first.id) and return
-      end
+      granule = collection.granules.find_by concept_id: granule_concept_id
 
-      begin
-        Granule.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user)
-        flash[:notice] = "Granule #{granule_concept_id} ingested."
-      rescue Cmr::CmrError => e
-        flash[:notice] = e.message
-      rescue StandardError => e
-        flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested."
-        Rails.logger.error("Sorry, granule #{granule_concept_id} could not be ingested.  error=#{e.message}")
+      if granule.nil? || granule.records.where('state != ?', Record::STATE_HIDDEN.to_s).count.zero?
+        begin
+          Granule.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user)
+          flash[:notice] = "Granule #{granule_concept_id} ingested."
+        rescue Cmr::CmrError => e
+          flash[:notice] = e.message
+        rescue StandardError => e
+          flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested."
+          Rails.logger.error("Sorry, granule #{granule_concept_id} could not be ingested.  error=#{e.message}")
+        end
+        redirect_to collection_path(id: 1, record_id: collection.records.first.id)
+      else
+        flash[:notice] = "Sorry, granule review #{granule_concept_id} already exists!"
+        redirect_to collection_path(id: 1, record_id: collection.records.first.id)
       end
-      redirect_to collection_path(id: 1, record_id: collection.records.first.id)
   end
 end
