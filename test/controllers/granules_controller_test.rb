@@ -172,10 +172,10 @@ class GranulesControllerTest < ActionController::TestCase
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent'=>'Ruby'
           }).
-        to_return(status: 200, body: "", headers: {})
+        to_return(status: 400, body: '<?xml version="1.0" encoding="UTF-8"?><errors><error>Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.</error></errors>', headers: {"content-type":"application/xml"})
 
       post :ingest_specific, id: 1, granule_concept_id: "somegranule"
-      assert_equal 'Sorry, granule somegranule could not be found in CMR.', flash[:notice]
+      assert_equal 'Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.', flash[:notice]
     end
 
     it "can ingest a specifc granule review found in CMR and test that you cannot import the granule again (duplicate)" do
