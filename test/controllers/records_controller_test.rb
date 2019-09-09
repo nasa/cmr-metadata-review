@@ -120,63 +120,6 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
-  end
-
-  describe 'POST #revert' do
-
-    it 'can reopen a closed record' do
-      user = User.find_by(role: 'admin')
-      sign_in(user)
-      stub_urs_access(user.uid, user.access_token, user.refresh_token)
-
-      record = Record.find(15)
-      assert_equal Record::STATE_CLOSED.to_s, record.state
-      post :revert, id: record.id
-      record = Record.find(15)
-      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
-    end
-
-
-    it 'can revert a record from in daac review back to ready for daac review' do
-      user = User.find_by(role: 'admin')
-      sign_in(user)
-      stub_urs_access(user.uid, user.access_token, user.refresh_token)
-
-      record = Record.find(12)
-      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
-      post :revert, id: record.id
-      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
-      record = Record.find(12)
-      assert_equal Record::STATE_READY_FOR_DAAC_REVIEW.to_s, record.state
-
-    end
-
-    it "reverting a record not 'in daac review' or 'closed' results in no change" do
-      user = User.find_by(role: 'admin')
-      sign_in(user)
-      stub_urs_access(user.uid, user.access_token, user.refresh_token)
-
-      record = Record.find(13)
-      assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
-      post :revert, id: record.id
-      assert_equal 'Sorry, encountered an error reverting C1000000020-LANCEAMSR2', flash[:notice]
-      record = Record.find(13)
-      assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
-    end
-
-    it 'revert both collection and assoc granule record' do
-      user = User.find_by(role: 'admin')
-      sign_in(user)
-      stub_urs_access(user.uid, user.access_token, user.refresh_token)
-      assert_equal Record.find(12).state, 'in_daac_review'
-      assert_equal Record.find(17).state, 'in_daac_review'
-      post :associate_granule_to_collection, id: 12, associated_granule_value: 17
-      assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
-      post :revert, id: 12
-      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
-      assert_equal Record.find(12).state, 'ready_for_daac_review'
-      assert_equal Record.find(17).state, 'ready_for_daac_review'
-    end
 
     it 'roundtrip release to daac both a collection and assoc granule record and then revert it' do
       user = User.find_by(role: 'admin')
@@ -208,8 +151,59 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
+  end
 
+  describe 'POST #revert ' do
+    it 'can reopen a closed record' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
+      record = Record.find(15)
+      assert_equal Record::STATE_CLOSED.to_s, record.state
+      post :revert, id: record.id
+      record = Record.find(15)
+      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
+    end
+    it "reverting a record not 'in daac review' or 'closed' results in no change" do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      record = Record.find(13)
+      assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
+      post :revert, id: record.id
+      assert_equal 'Sorry, encountered an error reverting C1000000020-LANCEAMSR2', flash[:notice]
+      record = Record.find(13)
+      assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
+    end
+
+    it 'revert both collection and assoc granule record' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      assert_equal Record.find(12).state, 'in_daac_review'
+      assert_equal Record.find(17).state, 'in_daac_review'
+      post :associate_granule_to_collection, id: 12, associated_granule_value: 17
+      assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
+      post :revert, id: 12
+      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
+      assert_equal Record.find(12).state, 'ready_for_daac_review'
+      assert_equal Record.find(17).state, 'ready_for_daac_review'
+    end
+
+    it 'can revert a record from in daac review back to ready for daac review' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      record = Record.find(12)
+      assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
+      post :revert, id: record.id
+      assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
+      record = Record.find(12)
+      assert_equal Record::STATE_READY_FOR_DAAC_REVIEW.to_s, record.state
+    end
   end
 
   describe 'POST#refresh' do
