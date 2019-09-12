@@ -1,4 +1,4 @@
-class CreateIngests < ActiveRecord::Migration
+class CreateIngests < ActiveRecord::Migration[4.2]
   def change
     create_table :ingests do |t|
       t.belongs_to :record, index: true, null: false

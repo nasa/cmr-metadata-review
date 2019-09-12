@@ -1,4 +1,4 @@
-class RemoveAdminAndCuratorFromUsers < ActiveRecord::Migration
+class RemoveAdminAndCuratorFromUsers < ActiveRecord::Migration[4.2]
   
   class User < ActiveRecord::Base
   end

@@ -2,7 +2,7 @@
 # An individual record can be identified by a unique concept-id and revision-id combination
 # Record is a child of both Collection and Granule
 
-class Record < ActiveRecord::Base
+class Record < ApplicationRecord
   include AASM
   include RecordHelper
 

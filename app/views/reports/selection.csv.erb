@@ -1,7 +1,7 @@
 <%= CSV.generate_line(["CMR Selection Report"]) %>
 
 <%= CSV.generate_line(["Selected Records"]) %>
-<% @collections.concat(@granules).each do |record| %>
+<% @collections.to_a.concat(@granules.to_a).each do |record| %>
   <%= CSV.generate_line([record.concept_id, record.short_name]) %>
 <% end %>
 
