@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Collection < ActiveRecord::Base
+class Collection < ApplicationRecord
   has_many :records, :as => :recordable
   has_many :granules
 

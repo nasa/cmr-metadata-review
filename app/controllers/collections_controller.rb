@@ -1,10 +1,10 @@
 class CollectionsController < ApplicationController
 
-  before_filter :authenticate_user!
-  before_filter :ensure_curation
-  before_filter :admin_only, only: [:hide, :refresh]
-  before_filter :find_record, only: [:show, :hide, :refresh]
-  before_filter :collection_only, only: :refresh
+  before_action :authenticate_user!
+  before_action :ensure_curation
+  before_action :admin_only, only: [:hide, :refresh]
+  before_action :find_record, only: [:show, :hide, :refresh]
+  before_action :collection_only, only: :refresh
 
   def show
     if @record

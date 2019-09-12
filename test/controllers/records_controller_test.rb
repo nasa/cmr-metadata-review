@@ -13,7 +13,7 @@ class RecordsControllerTest < ActionController::TestCase
 
       #sample update params
       #posting with a record id param of 1
-      post :update, { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'not ok', 'LongName'=>'ok' }, 'opinion'=>{ 'VersionId'=>'on' }, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'red', 'LongName'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'LongName'=>'new comment' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
+      post :update, params: { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'not ok', 'LongName'=>'ok' }, 'opinion'=>{ 'VersionId'=>'on' }, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'red', 'LongName'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'LongName'=>'new comment' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
 
       record = Record.find_by id: 1
       #broken out sections of params below to compare to tests
@@ -41,10 +41,10 @@ class RecordsControllerTest < ActionController::TestCase
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
 
       #using the same post data from update record test
-      post :update, { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'not ok', 'InsertTime'=>'ok', 'LastUpdate'=>'ok', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'opinion'=>{ 'InsertTime'=>'on' }, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'red', 'InsertTime'=>'green', 'LastUpdate'=>'green', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'new comment', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
+      post :update, params: { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'not ok', 'InsertTime'=>'ok', 'LastUpdate'=>'ok', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'opinion'=>{ 'InsertTime'=>'on' }, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'red', 'InsertTime'=>'green', 'LastUpdate'=>'green', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'new comment', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
 
       #now posting new empty params to clear choices
-      post :update, { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'opinion'=>{}, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
+      post :update, params: { 'redirect_index'=>'0', 'recommendation'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'opinion'=>{}, 'color_code'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'discussion'=>{ 'ShortName'=>'', 'VersionId'=>'', 'InsertTime'=>'', 'LastUpdate'=>'', 'LongName'=>'', 'DataSetId'=>'', 'Description'=>'', 'CollectionDataType'=>'', 'Orderable'=>'', 'Visible'=>'', 'ProcessingLevelId'=>'', 'ArchiveCenter'=>'', 'CitationForExternalPublication'=>'', 'Price'=>'', 'SpatialKeywords/Keyword'=>'', 'TemporalKeywords/Keyword'=>'', 'AssociatedDIFs/DIF/EntryId'=>'', 'MetadataStandardName'=>'', 'MetadataStandardVersion'=>'', 'DatasetId'=>'', 'DataFormat'=>'' }, 'utf8'=>'✓', '_method'=>'put', 'authenticity_token'=>'rKpXaDgn6x9I1T3gNZ4cpEYZZsWORy4gnLAPTNsZIaRWxFWRM6trFGVDe8BkL8kklhC00LikvGn1Uau2KAA4fg==', 'section_index'=>'0', 'commit'=>'Save Review', 'controller'=>'records', 'action'=>'update', 'id'=>'1' }
 
       record = Record.find_by id: 1
       #broken out sections of params below to compare to tests
@@ -73,7 +73,7 @@ class RecordsControllerTest < ActionController::TestCase
 
       record = Record.find(12)
 
-      post :complete, id: record.id
+      post :complete, params: { id: record.id }
 
       assert_equal 'You do not have permission to perform this action', flash[:alert]
       assert_redirected_to record_path(record)
@@ -87,7 +87,7 @@ class RecordsControllerTest < ActionController::TestCase
       Record.any_instance.stubs(color_coding_complete?: false)
       record = Record.find(13)
 
-      post :complete, id: record.id
+      post :complete, params: { id: record.id }
 
       assert_equal 'Not all columns have been flagged with a color, cannot close review.', flash[:alert]
       assert_redirected_to record_path(record.id)
@@ -101,7 +101,7 @@ class RecordsControllerTest < ActionController::TestCase
       Record.any_instance.stubs(close!: true)
       record = Record.find(12)
 
-      post :complete, id: record.id
+      post :complete, params: { id: record.id }
 
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
@@ -115,7 +115,7 @@ class RecordsControllerTest < ActionController::TestCase
       Record.any_instance.stubs(close!: true)
       record = Record.find(1)
 
-      post :associate_granule_to_collection, id: record.id, associated_granule_value: 16
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
 
       assert_equal 'Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
@@ -127,13 +127,13 @@ class RecordsControllerTest < ActionController::TestCase
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
       assert_equal Record.find(18).state, 'ready_for_daac_review'
       assert_equal Record.find(19).state, 'ready_for_daac_review'
-      post :associate_granule_to_collection, id: 18, associated_granule_value: 19
+      post :associate_granule_to_collection, params: { id: 18, associated_granule_value: 19 }
       assert_equal 'Granule G309210-GHRC/21 has been successfully associated to this collection revision 20. ', flash[:notice]
-      post :complete, id: 18
+      post :complete, params: { id: 18 }
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'in_daac_review'
       assert_equal Record.find(19).state, 'in_daac_review'
-      post :revert, id: 18
+      post :revert, params: { id: 18 }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
       assert_equal Record.find(19).state, 'ready_for_daac_review'
@@ -144,10 +144,10 @@ class RecordsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
       assert_equal Record.find(18).state, 'ready_for_daac_review'
-      post :complete, id: 18
+      post :complete, params: { id: 18 }
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'in_daac_review'
-      post :revert, id: 18
+      post :revert, params: { id: 18 }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
@@ -161,7 +161,7 @@ class RecordsControllerTest < ActionController::TestCase
 
       record = Record.find(15)
       assert_equal Record::STATE_CLOSED.to_s, record.state
-      post :revert, id: record.id
+      post :revert, params: { id: record.id }
       record = Record.find(15)
       assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
     end
@@ -172,7 +172,7 @@ class RecordsControllerTest < ActionController::TestCase
 
       record = Record.find(13)
       assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
-      post :revert, id: record.id
+      post :revert, params: { id: record.id }
       assert_equal 'Sorry, encountered an error reverting C1000000020-LANCEAMSR2', flash[:notice]
       record = Record.find(13)
       assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
@@ -184,9 +184,9 @@ class RecordsControllerTest < ActionController::TestCase
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
       assert_equal Record.find(12).state, 'in_daac_review'
       assert_equal Record.find(17).state, 'in_daac_review'
-      post :associate_granule_to_collection, id: 12, associated_granule_value: 17
+      post :associate_granule_to_collection, params: { id: 12, associated_granule_value: 17 }
       assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
-      post :revert, id: 12
+      post :revert, params: { id: 12 }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(12).state, 'ready_for_daac_review'
       assert_equal Record.find(17).state, 'ready_for_daac_review'
@@ -199,7 +199,7 @@ class RecordsControllerTest < ActionController::TestCase
 
       record = Record.find(12)
       assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
-      post :revert, id: record.id
+      post :revert, params: { id: record.id }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       record = Record.find(12)
       assert_equal Record::STATE_READY_FOR_DAAC_REVIEW.to_s, record.state
@@ -264,7 +264,7 @@ class RecordsControllerTest < ActionController::TestCase
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
       @request.env['HTTP_REFERER'] = 'http://foo.com'
-      post :hide, { 'record_id': 1 }
+      post :hide, params: { 'record_id': 1 }
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 ', flash[:notice]
     end
     it 'it deletes multiple records' do
@@ -272,7 +272,7 @@ class RecordsControllerTest < ActionController::TestCase
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
       @request.env['HTTP_REFERER'] = 'http://foo.com'
-      post :hide, { 'record_id': [1,12]}
+      post :hide, params: { 'record_id': [1,12]}
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 C1000000020-LANCEAMSR2/9 ', flash[:notice]
     end
   end

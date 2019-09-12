@@ -1,4 +1,4 @@
-class PostgresUniqueColumnSets < ActiveRecord::Migration
+class PostgresUniqueColumnSets < ActiveRecord::Migration[4.2]
     def self.up
       execute "ALTER TABLE reviews ADD UNIQUE (record_id, user_id)"
     end

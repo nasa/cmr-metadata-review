@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~>4.2.11'
+gem 'rails', '>= 5.0.0.rc2', '< 5.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
-gem 'pg', '~> 0.17.1', group: [:test, :development, :production]
+gem 'pg', '~> 0.18.0', group: [:test, :development, :production]
 
 
 # Use SCSS for stylesheets
@@ -58,7 +58,7 @@ end
 gem 'simplecov', :require => false, :group => :test
 
 #using puma server instead of webBrick
-gem 'puma', '~> 3.6.2'
+gem 'puma', '~> 3.8.0'
 #base authentication gem
 gem 'devise'
 #setting user permissions for pages
@@ -81,6 +81,7 @@ gem 'faraday_middleware'
 gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.1.0"
 
 gem 'figaro'
+gem 'rails-controller-testing'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

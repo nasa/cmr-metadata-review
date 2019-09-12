@@ -1,4 +1,4 @@
-class AddRoleToUsers < ActiveRecord::Migration
+class AddRoleToUsers < ActiveRecord::Migration[4.2]
 
   class User < ActiveRecord::Base
   end
