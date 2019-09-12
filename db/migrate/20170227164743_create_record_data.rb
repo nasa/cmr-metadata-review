@@ -1,4 +1,4 @@
-class CreateRecordData < ActiveRecord::Migration
+class CreateRecordData < ActiveRecord::Migration[4.2]
   def change
     create_table :record_data do |t|
       t.belongs_to :record, index: true, null: false

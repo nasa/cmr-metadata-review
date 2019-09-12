@@ -27,20 +27,20 @@ class CollectionsControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
-      get :show, id: 1, record_id: 1
+      get :show, params: { id: 1, record_id: 1 }
       collection_records = assigns(:collection_records)
       assert_equal(4, collection_records.length)
     end
     
     it "redirects when no concept id is provided" do
       #redirects no record_id
-      get :show, id: 1
+      get :show, params: { id: 1 }
       assert_equal(response.code, "302")
     end
 
     it "redirects when no collection is found" do
       #redirects no collection found
-      get :show, id: 1, record_id: "xyz"
+      get :show, params: { id: 1, record_id: "xyz" }
       assert_equal(response.code, "302")
     end
 
@@ -62,7 +62,7 @@ class CollectionsControllerTest < ActionController::TestCase
                 body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
                 headers: {})
 
-    get :show, id: 1, record_id: 1
+    get :show, params: { id: 1, record_id: 1 }
     assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 4,
                   :text => '[Granule Not Found in CMR]'
   end
@@ -84,7 +84,7 @@ class CollectionsControllerTest < ActionController::TestCase
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
-    get :show, id: 1, record_id: 1
+    get :show, params: { id: 1, record_id: 1 }
     assert_select '.import_new_revision', count: 4
   end
 end
@@ -110,7 +110,7 @@ describe "POST #create" do
       #Making sure record does not exist before ingest
       assert_equal(0, (Collection.where concept_id: "C222702-GHRC").length)
 
-      post :create, concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1
+      post :create, params: { concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1 }
 
       #redirects after creation
       assert_equal("302", response.code)
@@ -127,7 +127,7 @@ describe "POST #create" do
       stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
       stub_request(:get, /.*granules.*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
-      post :create, concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1
+      post :create, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
       assert_equal("302", response.code)
       assert_equal(1, (Collection.where concept_id: "C190733714-LPDAAC_ECS").length)
 

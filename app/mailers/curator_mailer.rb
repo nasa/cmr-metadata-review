@@ -1,4 +1,4 @@
-class CuratorMailer < ActionMailer::Base
+class CuratorMailer < ApplicationMailer
 
   def released_records(users, records)
 #    @records = records

@@ -21,7 +21,7 @@ class GranulesControllerTest < ActionController::TestCase
       granule = collection.granules.first
       record  = granule.records.find(16)
       no_granules_before = granule.records.count
-      delete :destroy, id: granule.id, record_id: record.id
+      delete :destroy, params: { id: granule.id, record_id: record.id }
       no_granules_after = granule.records.count
       assert_equal no_granules_after, (no_granules_before - 1)
 
@@ -62,7 +62,7 @@ class GranulesControllerTest < ActionController::TestCase
       # should increase by 1.
       collection = Collection.find(1)
       no_granules_before = collection.granules.count
-      post :create, id: collection.id
+      post :create, params: { id: collection.id }
       no_granules_after = collection.granules.count
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new random granule has been added for this collection", flash[:notice]
@@ -93,7 +93,7 @@ class GranulesControllerTest < ActionController::TestCase
       assert_includes array, '6'
       assert_not_includes array, '25'
 
-      post :pull_latest, id: granule.id
+      post :pull_latest, params: { id: granule.id }
 
       # after we do post, there should be 3 granule revisions, 1,6, and the new
       # revision stubbed above, #25
@@ -116,7 +116,7 @@ class GranulesControllerTest < ActionController::TestCase
       record  = granule.records.find(5)
 
       # This method ensures that DAAC curators can not replace granule records.
-      delete :replace, id: granule.id, record_id: record.id
+      delete :replace, params: { id: granule.id, record_id: record.id }
 
       assert_redirected_to general_home_path
       assert_equal "You are not authorized to access this page.", flash[:alert]
@@ -134,7 +134,7 @@ class GranulesControllerTest < ActionController::TestCase
     #   record  = granule.records.find(5)
     #   collection = granule.collection
     #
-    #   delete :replace, id: granule.id, record_id: record.id
+    #   delete :replace, params: { id: granule.id, record_id: record.id }
     #
     #   assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
     #   assert_equal "This granule is in review, and can no longer be changed to a different granule", flash[:alert]
@@ -152,7 +152,7 @@ class GranulesControllerTest < ActionController::TestCase
       Granule.any_instance.expects(:destroy)
       Collection.any_instance.expects(:add_granule)
 
-      delete :replace, id: granule.id, record_id: record.id
+      delete :replace, params: { id: granule.id, record_id: record.id }
 
       assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
       assert_equal "A new granule has been selected for this collection", flash[:notice]
@@ -174,7 +174,7 @@ class GranulesControllerTest < ActionController::TestCase
           }).
         to_return(status: 400, body: '<?xml version="1.0" encoding="UTF-8"?><errors><error>Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.</error></errors>', headers: {"content-type":"application/xml"})
 
-      post :ingest_specific, id: 1, granule_concept_id: "somegranule"
+      post :ingest_specific, params: { id: 1, granule_concept_id: "somegranule" }
       assert_equal 'Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.', flash[:notice]
     end
 
@@ -192,9 +192,9 @@ class GranulesControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub("search_granules_G226251-GHRC.xml"), headers: {})
 
-      post :ingest_specific, id: 1, granule_concept_id: "G226251-GHRC"
+      post :ingest_specific, params: { id: 1, granule_concept_id: "G226251-GHRC" }
       assert_equal 'Granule G226251-GHRC ingested.', flash[:notice]
-      post :ingest_specific, id: 1, granule_concept_id: "G226251-GHRC"
+      post :ingest_specific, params: { id: 1, granule_concept_id: "G226251-GHRC" }
       assert_equal 'Sorry, granule review G226251-GHRC already exists!', flash[:notice]
 
     end
@@ -213,7 +213,7 @@ class GranulesControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.xml"), headers: {})
 
-      post :ingest_specific, id: 1, granule_concept_id: "G226250-GHRC"
+      post :ingest_specific, params: { id: 1, granule_concept_id: "G226250-GHRC" }
       assert_equal 'Granule record does not belong to this collection.', flash[:notice]
 
     end

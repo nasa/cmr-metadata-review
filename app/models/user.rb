@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:urs]
 
   has_many :ingests

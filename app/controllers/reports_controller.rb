@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   include ReportsHelper
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def home
     @metric_data         = MetricData.new(Collection.all)
