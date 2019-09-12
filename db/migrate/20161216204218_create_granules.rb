@@ -1,4 +1,4 @@
-class CreateGranules < ActiveRecord::Migration
+class CreateGranules < ActiveRecord::Migration[4.2]
   def up
     create_table :granules do |t|
       t.string   :concept_id, null: false

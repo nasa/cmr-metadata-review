@@ -1,9 +1,9 @@
 class SiteController < ApplicationController
   include SiteHelper
 
-  before_filter :authenticate_user!, :except => [:elb_status]
-  before_filter :ensure_curation, :except => [:general_home, :elb_status]
-  before_filter :filtered_records, only: :home
+  before_action :authenticate_user!, :except => [:elb_status]
+  before_action :ensure_curation, :except => [:general_home, :elb_status]
+  before_action :filtered_records, only: :home
 
   def home
   end

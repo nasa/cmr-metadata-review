@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -29,28 +28,25 @@ ActiveRecord::Schema.define(version: 20190723171041) do
     t.string   "column_name",             null: false
     t.string   "comment"
     t.integer  "category",    default: 0
+    t.index ["record_id"], name: "index_discussions_on_record_id", using: :btree
+    t.index ["user_id"], name: "index_discussions_on_user_id", using: :btree
   end
-
-  add_index "discussions", ["record_id"], name: "index_discussions_on_record_id", using: :btree
-  add_index "discussions", ["user_id"], name: "index_discussions_on_user_id", using: :btree
 
   create_table "granules", force: :cascade do |t|
     t.string  "concept_id",             null: false
     t.integer "collection_id"
     t.string  "latest_revision_in_cmr"
     t.boolean "deleted_in_cmr"
+    t.index ["collection_id"], name: "index_granules_on_collection_id", using: :btree
   end
-
-  add_index "granules", ["collection_id"], name: "index_granules_on_collection_id", using: :btree
 
   create_table "ingests", force: :cascade do |t|
     t.integer  "record_id",     null: false
     t.integer  "user_id",       null: false
     t.datetime "date_ingested", null: false
+    t.index ["record_id"], name: "index_ingests_on_record_id", using: :btree
+    t.index ["user_id"], name: "index_ingests_on_user_id", using: :btree
   end
-
-  add_index "ingests", ["record_id"], name: "index_ingests_on_record_id", using: :btree
-  add_index "ingests", ["user_id"], name: "index_ingests_on_user_id", using: :btree
 
   create_table "record_data", force: :cascade do |t|
     t.integer  "record_id",                      null: false
@@ -65,10 +61,9 @@ ActiveRecord::Schema.define(version: 20190723171041) do
     t.string   "recommendation", default: ""
     t.integer  "order_count",    default: 0
     t.boolean  "feedback",       default: false
+    t.index ["column_name"], name: "index_record_data_on_column_name", using: :btree
+    t.index ["record_id"], name: "index_record_data_on_record_id", using: :btree
   end
-
-  add_index "record_data", ["column_name"], name: "index_record_data_on_column_name", using: :btree
-  add_index "record_data", ["record_id"], name: "index_record_data_on_record_id", using: :btree
 
   create_table "records", force: :cascade do |t|
     t.integer  "recordable_id",                         null: false
@@ -78,9 +73,8 @@ ActiveRecord::Schema.define(version: 20190723171041) do
     t.string   "format",                   default: ""
     t.string   "state"
     t.string   "associated_granule_value"
+    t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
   end
-
-  add_index "records", ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id", using: :btree
 
   create_table "records_update_locks", force: :cascade do |t|
     t.datetime "last_update", null: false
@@ -93,21 +87,19 @@ ActiveRecord::Schema.define(version: 20190723171041) do
     t.integer  "review_state",                        null: false
     t.string   "review_comment",         default: ""
     t.string   "report_comment",         default: ""
+    t.index ["record_id", "user_id"], name: "reviews_record_id_user_id_key", unique: true, using: :btree
+    t.index ["record_id"], name: "index_reviews_on_record_id", using: :btree
+    t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
   end
-
-  add_index "reviews", ["record_id", "user_id"], name: "reviews_record_id_user_id_key", unique: true, using: :btree
-  add_index "reviews", ["record_id"], name: "index_reviews_on_record_id", using: :btree
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+    t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
   end
-
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -132,10 +124,9 @@ ActiveRecord::Schema.define(version: 20190723171041) do
     t.string   "access_token"
     t.string   "refresh_token"
     t.string   "name"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
 end

@@ -2,8 +2,8 @@
 # reviews and not modifying CMR in anyway.
 class GranulesController < ApplicationController
 
-  before_filter :authenticate_user!
-  before_filter :ensure_curation
+  before_action :authenticate_user!
+  before_action :ensure_curation
 
   def show
   end

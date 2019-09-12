@@ -1,0 +1,2 @@
+# app/views/layouts/mailer.text.erb
+<%= yield %>

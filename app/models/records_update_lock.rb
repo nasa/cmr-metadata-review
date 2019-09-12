@@ -1,4 +1,4 @@
-class RecordsUpdateLock < ActiveRecord::Base
+class RecordsUpdateLock < ApplicationRecord
 
   def get_last_update
     if !self.last_update
