@@ -7,6 +7,5 @@
 #  This way data of a similar type can be saved for all fields of a record in one object, RecordData.
 
 class RecordData < ApplicationRecord
-  belongs_to :datable, :polymorphic => true
   belongs_to :record
 end
