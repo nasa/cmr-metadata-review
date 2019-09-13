@@ -46,7 +46,7 @@ WebMock.disable_net_connect!(
 )
 # WebMock.allow_net_connect!
 WebMock.after_request(real_requests_only: true) do |request_signature, response|
-  unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.include?('chromedriver.storage.googleapis.com')
+  unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.to_s.include?('chromedriver.storage.googleapis.com')
     puts "Request #{request_signature} was made. \nrequest headers=#{request_signature.headers}\nresponse body=#{response.body}"
   end
 end
