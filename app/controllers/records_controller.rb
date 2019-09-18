@@ -1,11 +1,11 @@
 class RecordsController < ApplicationController
   include RecordHelper
 
-  before_filter :authenticate_user!
-  before_filter :ensure_curation
-  before_filter :admin_only, only: [:stop_updates, :allow_updates, :revert]
-  before_filter :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert]
-  before_filter :filtered_records, only: :finished
+  before_action :authenticate_user!
+  before_action :ensure_curation
+  before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
+  before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert]
+  before_action :filtered_records, only: :finished
 
   def refresh
     added_records, deleted_records, failed_records = Cmr.update_collections(current_user)
@@ -157,7 +157,7 @@ class RecordsController < ApplicationController
       msg += message + ' '
     end
     flash[:notice] = msg
-    redirect_to :back
+    redirect_back(fallback_location: home_path)
   end
 
   def batch_complete

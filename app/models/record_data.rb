@@ -6,7 +6,6 @@
 #  So all of the keys will match the fields of the related record, and the data will vary depending on the direct parent (flags, opionions, colors, etc)      
 #  This way data of a similar type can be saved for all fields of a record in one object, RecordData.
 
-class RecordData < ActiveRecord::Base
-  belongs_to :datable, :polymorphic => true
+class RecordData < ApplicationRecord
   belongs_to :record
 end

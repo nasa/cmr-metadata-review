@@ -7,7 +7,7 @@ module DiscussionCategory
   FEEDBACK = 1
 end
 
-class Discussion < ActiveRecord::Base
+class Discussion < ApplicationRecord
   belongs_to :record
   belongs_to :user
 

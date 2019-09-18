@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_curation
-    authorize! :access, :curate
+    throw(:abort) unless authorize! :access, :curate
   end
 
   def admin_only

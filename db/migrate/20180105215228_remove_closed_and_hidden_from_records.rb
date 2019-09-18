@@ -1,4 +1,4 @@
-class RemoveClosedAndHiddenFromRecords < ActiveRecord::Migration
+class RemoveClosedAndHiddenFromRecords < ActiveRecord::Migration[4.2]
   def up
     remove_column :records, :hidden
     remove_column :records, :closed
