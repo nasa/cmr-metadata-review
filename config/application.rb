@@ -10,6 +10,7 @@ Bundler.require(*Rails.groups)
 module CmrMetadataReview
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    # https://stackoverflow.com/questions/50102584/upgrading-rails-what-am-i-to-do-with-new-framework-defaults-file
     config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.
