@@ -1,4 +1,4 @@
-class AddStateToRecords < ActiveRecord::Migration
+class AddStateToRecords < ActiveRecord::Migration[4.2]
 
   def up
     add_column :records, :state, :string
