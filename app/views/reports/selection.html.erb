@@ -35,7 +35,7 @@
             <td>Concept Id</td>
             <td>Short Name</td>
           </tr>
-          <% @collections.concat(@granules).each do |recordable| %>
+          <% @collections.to_a.concat(@granules.to_a).each do |recordable| %>
             <tr>
               <td>
                 <%=recordable.concept_id%>
