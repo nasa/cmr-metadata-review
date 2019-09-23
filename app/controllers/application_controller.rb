@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # https://guides.rubyonrails.org/security.html#csrf-countermeasures
   # https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :exception, prepend: true
 
   private
   def render_404(exception = nil)
