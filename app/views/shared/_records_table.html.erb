@@ -5,7 +5,8 @@
   <div class="results-title">
     <p><strong><%= title %>:</strong></p>
   </div>
-  <%= form_tag(collection_path(id: 1), method: :put, id: form_id) do %>
+  <%= form_with( url: collection_path(id: 1), method: :put, local: true,  id: form_id, authenticity_token: false) do %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="results-table-container">
       <div class="table-scroll">
         <table class="results-table">

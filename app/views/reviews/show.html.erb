@@ -293,7 +293,8 @@
 
 
 
-    <%= form_tag(record_path(id: params[:id]) , {method: "put", id: "field_form"}) do %>
+    <%= form_with( url: record_path(id: params[:id]) , method: "put", id: "field_form", local: true, authenticity_token: false) do %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <%= hidden_field_tag(:section_index, params["section_index"]) %>
       <% if !@marked_done %>
 

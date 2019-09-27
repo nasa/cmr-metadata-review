@@ -26,14 +26,17 @@
         <% if @granule_count < 3 %>
           <% if @granule_count < 1 %>
             <p>No Granules Associated with This Collection</p>
-            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+
+            <%= form_with( url: collections_path , method: "post", id: "collection_form", local:true, authenticity_token: false ) do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= submit_tag("Ingest Collection Without Granule", id: 'ingest_submit', class: 'selectButton') %>
             <% end %>
           <% else %>
             <p>Total Granules in this Collection: <%= @granule_count %></p>
-            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+            <%= form_with( url: collections_path ,  method: "post", id: "collection_form", local: true, authenticity_token: false) do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
@@ -42,8 +45,9 @@
           <% end %>
         <% else %>
           <p>Total Granules in this Collection: <%= @granule_count %></p>
-          <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
-              <%= hidden_field_tag(:concept_id, @concept_id) %>
+          <%= form_with( url: collections_path , method: "post", id: "collection_form", local: true, authenticity_token: false) do %>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
               <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit', class: 'selectButton') %>
