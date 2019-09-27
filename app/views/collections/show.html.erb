@@ -100,7 +100,8 @@
 
             <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
               <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
-              <%= form_tag(ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post") do %>
+            <%= form_with( url: ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post", local:true, authenticity_token: false) do %>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <p>
                   Enter Granule Concept ID: <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
                 </p>

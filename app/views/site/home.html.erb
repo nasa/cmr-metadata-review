@@ -7,7 +7,8 @@
     <div class="searchbox_area">
       <p><strong>Search the CMR Database for Data Ingest:</strong></p>
 
-      <%= form_tag(collections_search_path, method: "get") do %>
+      <%= form_with( url: collections_search_path, method: "get", local: true, authenticity_token: false) do %>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
         <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
         <%= text_field_tag(:free_text) %>
         <%= hidden_field_tag(:curr_page, "1") %>
