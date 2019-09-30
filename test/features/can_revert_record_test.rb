@@ -16,6 +16,8 @@ class CanRevertRecordTest < Capybara::Rails::TestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
 
+    # Note although the test below mimics the workflow in CMRARC-494, we could not get capybara to replicate it,
+    # but still figured it was worth including as an additional test in any case.
     it 'can revert a record, mimics workflow in issue CMRARC-484' do
       visit '/home'
 
