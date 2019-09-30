@@ -8,8 +8,7 @@
       <p><strong>Search the CMR:</strong></p>
     </div>
 
-    <%= form_with( url: collections_search_path, id: 'cmr_search', method: "get", local:true, authenticity_token: false) do %>
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= form_with( url: collections_search_path, id: 'cmr_search', method: "get", local:true) do %>
       <%= select_tag(:provider,options_for_select(provider_select_list, :selected => params[:provider])) %>
       <%= text_field_tag(:free_text, params[:free_text]) %>
       <%= hidden_field_tag(:curr_page, "1") %>
@@ -67,8 +66,7 @@
 
             <div class="bottom_row">
               <div class="select_collection">
-                <%= form_with( url: new_collection_path , method: "get", id: 'ingest_form', local: true, authenticity_token: false) do %>
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <%= form_with( url: new_collection_path , method: "get", id: 'ingest_form', local: true) do %>
                   <%= hidden_field_tag(:concept_id, "") %>
                   <%= hidden_field_tag(:revision_id, "") %>
                   <%= submit_tag("Select Collection", id: 'ingest_submit', class: 'selectButton') %>

@@ -2,8 +2,7 @@
 
 <div class="record_filters searchbox_area">
   <p><strong>Filter Records:</strong></p>
-  <%= form_with( url: path_for_form, method: "get", local: true, authenticity_token: false) do %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= form_with( url: path_for_form, method: "get", local: true) do %>
     <div class="record_filters__filters">
       <% if can?(:access, :filter_daac) %>
         <div class="record_filters__select">
