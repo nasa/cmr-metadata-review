@@ -8,8 +8,7 @@
       <p><strong>Search the Metadata Review System:</strong></p>
     </div>
 
-    <%= form_with( url: reports_search_path, method: "get", local: true, authenticity_token: false) do %>
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= form_with( url: reports_search_path, method: "get", local: true) do %>
       <%= select_tag(:provider,options_for_select(provider_select_list, :selected => params[:provider])) %>
       <%= text_field_tag(:free_text, params[:free_text]) %>
       <%= hidden_field_tag(:curr_page, "1") %>
@@ -35,8 +34,7 @@
 
         <div class="bottom_row">
           <div class="select_collection">
-            <%= form_with( url: reports_selection_path ,  method: "get", id: 'select_form', local: true, authenticity_token: false) do %>
-              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= form_with( url: reports_selection_path ,  method: "get", id: 'select_form', local: true) do %>
               <%= hidden_field_tag(:records, "", id: "records_holder") %>
               <%= button_tag("Select Records", id: 'select_submit') %>
             <% end %>
