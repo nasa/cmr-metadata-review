@@ -73,3 +73,16 @@ All development work is done on local copies of the code base.  Follow the steps
 - Register for an [Earthdata Login account](https://sit.urs.earthdata.nasa.gov/) for the SIT environment.
 
 - Request ACL permissions to access the tool in the SIT environment by emailing [Earthdata Support](mailto:support@earthdata.nasa.gov). In order to Ingest collections into the tool, you may need Admin or Arc Curator permissions as well.
+
+## Other Known Issues
+
+During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific 
+workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,
+they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the
+token, rather we should explicitly include it ourselves. i.e.,
+`<%= hidden_field_tag :authenticity_token, form_authenticity_token %>`
+Note: The above work-around is not necessary on GET requests, only POST, PUT, and DELETE.
+
+See [https://bugs.earthdata.nasa.gov/browse/CMRARC-484] and [https://github.com/rails/rails/issues/24257]
+for more details.
+
