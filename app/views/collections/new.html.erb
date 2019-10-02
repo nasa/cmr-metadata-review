@@ -26,14 +26,30 @@
         <% if @granule_count < 3 %>
           <% if @granule_count < 1 %>
             <p>No Granules Associated with This Collection</p>
-            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+
+
+            <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
+            <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
+            <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
+            <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
+            <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
+            <!-- token, rather we should explicitly include it ourselves. -->
+            <%= form_with( url: collections_path , method: "post", id: "collection_form", local:true, authenticity_token: false ) do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= submit_tag("Ingest Collection Without Granule", id: 'ingest_submit', class: 'selectButton') %>
             <% end %>
           <% else %>
             <p>Total Granules in this Collection: <%= @granule_count %></p>
-            <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
+            <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
+            <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
+            <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
+            <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
+            <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
+            <!-- token, rather we should explicitly include it ourselves. -->
+            <%= form_with( url: collections_path ,  method: "post", id: "collection_form", local: true, authenticity_token: false) do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
@@ -42,8 +58,15 @@
           <% end %>
         <% else %>
           <p>Total Granules in this Collection: <%= @granule_count %></p>
-          <%= form_tag( collections_path ,  {method: "post", id: "collection_form"}) do %>
-              <%= hidden_field_tag(:concept_id, @concept_id) %>
+          <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
+          <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
+          <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
+          <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
+          <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
+          <!-- token, rather we should explicitly include it ourselves. -->
+          <%= form_with( url: collections_path , method: "post", id: "collection_form", local: true, authenticity_token: false) do %>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= hidden_field_tag(:concept_id, @concept_id) %>
               <%= hidden_field_tag(:revision_id, @revision_id) %>
               <%= hidden_field_tag(:granulesCount, '1') %>
               <%= submit_tag("Ingest Collection With Granule", id: 'ingest_submit', class: 'selectButton') %>
