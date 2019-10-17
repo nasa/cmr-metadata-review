@@ -1,10 +1,17 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: HOME"}) %>
 
+<script>
+  window.hello = function() {
+    alert("hi!");
+  }
+</script>
+
 <div class="curation_box">
 
   <div class="space_box"></div>
   <% if can?(:search, :cmr) %>
     <div class="searchbox_area">
+      <%= react_component("HelloWorld", {onClick: 'hello' }) %>
       <p><strong>Search the CMR Database for Data Ingest:</strong></p>
 
       <%= form_with( url: collections_search_path, method: "get", local: true) do %>

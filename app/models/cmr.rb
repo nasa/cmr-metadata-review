@@ -33,6 +33,14 @@ class Cmr
     end
   end
 
+  def self.get_raw_concept(concept_id, revision_id = nil)
+    url = if revision_id.nil?
+            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}"
+          else
+            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}/#{revision_id}"
+          end
+    Cmr.cmr_request(url).body
+  end
 
   # ====Params
   # User object
@@ -670,6 +678,7 @@ class Cmr
     if cmr_base_url.nil?
       cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     end
+    cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     cmr_base_url
   end
 

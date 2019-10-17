@@ -93,3 +93,6 @@ group :development do
   gem 'rubyzip', '1.3.0'
   gem 'rails-erd'
 end
+
+gem 'webpacker'
+gem 'react-rails'
