@@ -5,7 +5,7 @@ class parseRange():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/temporalresolutionrange/temporalresolutionrange.csv?ed_wiki_keywords_page"
-        response = urllib2.urlopen(ResourcesTypeURL)
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
         data = csv.reader(response)
 
         self.Temporal_Resolution_Range = []

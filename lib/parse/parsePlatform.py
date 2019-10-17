@@ -5,7 +5,7 @@ class parsePlatform():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
-        response = urllib2.urlopen(ResourcesTypeURL)
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
         data = csv.reader(response)
 
         self.entity = []
