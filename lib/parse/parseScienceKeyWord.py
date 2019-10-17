@@ -6,7 +6,7 @@ class parseScienceKeyWord():
     def __init__(self):
 
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.csv"
-        response = urllib2.urlopen(ResourcesTypeURL)
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
         f = csv.reader(response)
 
         self.Topic = []
