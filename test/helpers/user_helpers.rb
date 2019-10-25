@@ -11,14 +11,6 @@ module Helpers
       ApplicationController.any_instance.stubs(:current_user).returns(user)
     end
 
-    def wait_for_jQuery(secs = Capybara.default_max_wait_time)
-      ActiveSupport::Notifications.instrument 'cmrdash.performance', activity: 'Helpers::AjaxHelpers#wait_for_jQuery' do
-        Timeout.timeout(secs) do
-          loop until finished_all_jQuery_requests?
-        end
-      end
-    end
-
     def finished_all_jQuery_requests?
       # puts "checking jQuery requests. no active calls? #{page.evaluate_script('jQuery.active').zero?}"
       page.evaluate_script('jQuery.active').zero?

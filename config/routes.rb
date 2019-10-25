@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :reviews
     resources :records do
       member do
+        get "copy_prior_recommendations"
         post "complete"
         post "associate_granule_to_collection"
       end

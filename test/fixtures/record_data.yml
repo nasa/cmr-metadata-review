@@ -159,3 +159,82 @@ in_daac_review_version_id:
   flag: []
   recommendation: "ok"
 
+copy_recomendations1_record_data_a:
+  id: 23
+  record_id: 20
+  column_name: "ShortName"
+  value: "A2_DySno_NRT"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations1_record_data_b:
+  id: 24
+  record_id: 20
+  column_name: "LongName"
+  value: "Test_Long_Name"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations1_record_data_c:
+  id: 25
+  record_id: 20
+  column_name: "VersionId"
+  value: "0"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations2_record_data_a:
+  id: 26
+  record_id: 21
+  column_name: "ShortName"
+  value: "A2_DySno_NRT"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations2_record_data_b:
+  id: 27
+  record_id: 21
+  column_name: "LongName"
+  value: "Test_Long_Name"
+  daac: "PODAAC"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations2_record_data_c:
+  id: 28
+  record_id: 21
+  column_name: "VersionId"
+  value: "1"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
+
