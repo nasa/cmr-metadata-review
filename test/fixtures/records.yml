@@ -93,7 +93,7 @@ in_ready_for_daac_review_granule:
   state: "ready_for_daac_review"
   format: "echo10"
 
-copy_test1:
+copy_recommendations1:
   id: 20
   recordable_id: 1
   recordable_type: "Collection"
@@ -101,7 +101,7 @@ copy_test1:
   state: "open"
   format: "echo10"
 
-copy_test2:
+copy_recommendations2:
   id: 21
   recordable_id: 1
   recordable_type: "Collection"
