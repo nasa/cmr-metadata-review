@@ -802,7 +802,7 @@ class Record < ApplicationRecord
   end
 
   # Takes the recommendations from the prior record and copies them into the existing record.
-  # Note: the recommendations include color,feedback, last_updated, opinion, recommendation field
+  # Note: the recommendations include color,feedback, last_updated, opinion, recommendation field, discussions
   def copy_recommendations(prior_record)
     return 0, 0 if prior_record.nil?
     current = get_column_record_data_map(self)
