@@ -33,6 +33,14 @@ class Cmr
     end
   end
 
+  def self.get_raw_concept(concept_id, revision_id = nil)
+    url = if revision_id.nil?
+            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}"
+          else
+            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}/#{revision_id}"
+          end
+    Cmr.cmr_request(url).body
+  end
 
   # ====Params
   # User object
@@ -85,6 +93,10 @@ class Cmr
     end
 
     update_lock = RecordsUpdateLock.find_by id: 1
+    if update_lock.nil?
+      update_lock = RecordsUpdateLock.new
+      update_lock.id = 1
+    end
     update_lock.last_update = DateTime.now
     update_lock.save!
     [added_records, deleted_records, failed_records]
@@ -609,7 +621,7 @@ class Cmr
     if list.empty?
       return ""
     end
-    output_string = "The following records and revision id\'s were deleted "
+    output_string = "The following records and revision id\'s are no longer in CMR."
     list.each do |record_list|
       output_string += "#{record_list[0]} - #{record_list[1]} "
     end

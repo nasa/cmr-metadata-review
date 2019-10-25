@@ -4,7 +4,7 @@ class RecordsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_curation
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
-  before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert]
+  before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
   before_action :filtered_records, only: :finished
 
   def refresh
@@ -172,6 +172,17 @@ class RecordsController < ApplicationController
     flash[:notice] = "Records were successfully updated" if success
 
     redirect_to (request.referrer || home_path)
+  end
+
+  def copy_prior_recommendations
+    prior_record = @record.prior_revision_record
+    if prior_record.nil?
+      flash[:notice] = 'No prior revision could be found!'
+    else
+      copied, not_copied = @record.copy_recommendations(prior_record)
+      flash[:notice] = "Successfully copied #{copied}/#{copied + not_copied} recommendations."
+    end
+    redirect_back(fallback_location: home_path)
   end
 
   private

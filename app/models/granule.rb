@@ -6,8 +6,11 @@ class Granule < ActiveRecord::Base
 
   delegate :update?, :short_name, to: :collection
 
-  def get_records
-    records.visible
+  def get_records(descending = true)
+    visible_records = records.visible
+    sorted_records = visible_records.sort_by { |record| record.revision_id.to_i }
+    sorted_records.reverse! if descending
+    sorted_records
   end
 
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)

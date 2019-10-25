@@ -2,7 +2,7 @@
   border-radius: 10px;
   border: solid 2px;
   background-color:white;
-  width:950px;
+  width:1100px;
   margin: 50px auto;
   padding-left:40px;
   padding-right:40px;
@@ -40,7 +40,7 @@
 
   .group_box {
     display: inline-block;
-    width:400px;
+    width:490px;
 
     h3 {
       font-size:1em;
@@ -124,6 +124,19 @@
 .mouse_over_draggable {
   cursor: grab;
 }
+
+.review_buttons_row {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+.see_collection_review_button {
+  float: left;
+  margin-right: 5px;
+}
+
 
 
 
