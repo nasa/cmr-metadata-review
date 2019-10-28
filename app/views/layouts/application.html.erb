@@ -8,8 +8,10 @@
   <%# See https://guides.rubyonrails.org/security.html#csrf-countermeasures %>
   <%# See https://medium.com/rubyinside/a-deep-dive-into-csrf-protection-in-rails-19fa0a42c0ef %>
   <%= csrf_meta_tags %>
+  <%= render partial: 'shared/google_tag_manager_head' %>
 </head>
 <body>
+<%= render partial: 'shared/google_tag_manager_body' %>
 <!--<div id="gradient"></div>-->
 <div class="th-wrapper">
   <header id="earthdata-tophat2"/>
