@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Collection < ApplicationRecord
+class Collection < Metadata
   has_many :records, :as => :recordable
   has_many :granules
 
@@ -15,13 +15,6 @@ class Collection < ApplicationRecord
   extend RecordRevision
 
   scope :finished, -> {where(cmr_update: false)}
-
-  def get_records(descending = true)
-    visible_records = records.visible
-    sorted_records = visible_records.sort_by { |record| record.revision_id.to_i }
-    sorted_records.reverse! if descending
-    sorted_records
-  end
 
   # ====Params
   # string concept_id,
