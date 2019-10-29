@@ -36,7 +36,7 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
 
       # this use case will copy recommendations from a prior revision but if we try it again, it will verify
       # the button is disabled so we can't perform the action again.
-      it 'copies recommendations.' do
+      it 'prevents user from pressing the copy recommendations button twice.' do
         visit '/home'
 
         within '#open' do
@@ -55,7 +55,7 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
 
 
       # this verifies the button is not there if there is no prior revision.
-      it 'doesnt include copy prior recommendations link if there is no prior record' do
+      it 'prevents the copy from recommendations button from appearing if there is no prior revision' do
         visit '/home'
 
         within '#open' do
