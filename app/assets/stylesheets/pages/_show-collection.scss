@@ -2,7 +2,7 @@
   border-radius: 10px;
   border: solid 2px;
   background-color:white;
-  width:1100px;
+  width:950px;
   margin: 50px auto;
   padding-left:40px;
   padding-right:40px;
@@ -32,7 +32,7 @@
   }
 
   .collection_revision_header {
-    height: 90px;
+    height: 95px;
     line-height: 90px;
     vertical-align: middle;
     font-size: 1em;
@@ -40,7 +40,7 @@
 
   .group_box {
     display: inline-block;
-    width:490px;
+    width:400px;
 
     h3 {
       font-size:1em;
@@ -125,19 +125,17 @@
   cursor: grab;
 }
 
-.review_buttons_row {
-  height: 40px;
-  line-height: 40px;
+.granule_revision_id_label {
+  margin-bottom: 10px;
+}
+
+.collection_granule_revision_row {
+  height: 55px;
+  display:block;
+  overflow:hidden;
   vertical-align: middle;
-  font-size: 1em;
+
 }
-
-.see_collection_review_button {
-  float: left;
-  margin-right: 5px;
-}
-
-
 
 
 

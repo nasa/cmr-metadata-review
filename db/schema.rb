@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_23_171041) do
+ActiveRecord::Schema.define(version: 2019_10_28_200642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_07_23_171041) do
     t.string "format", default: ""
     t.string "state"
     t.string "associated_granule_value"
+    t.string "copy_recommendations_note"
     t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id"
   end
 

@@ -30,7 +30,7 @@
         <table cellpadding="5" border="1">
 
           <tr>
-            <th>
+            <th class="collection_granule_revision_row">
               <div class="collection_review_box">
                 <h4>Revision ID: <%= record.revision_id %></h4>
                 <% if can?(:associate_granule_to_collection, @record.recordable) %>
@@ -73,12 +73,7 @@
                   <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
                 </div>
 
-                <div class="review_buttons_row">
-                <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton see_collection_review_button", method: :get %>
-                <% if can?(:copy_recommendations, @record) && !record.prior_revision_record.nil? %>
-                  <%= link_to "Copy Prior Recommendations", copy_prior_recommendations_record_path(record.id), class: "copy_prior_recommendations_link", data: {confirm: "Are you sure?"}, method: :get %>
-                <% end %>
-                </div>
+                <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
               </div>
 
             </td>
@@ -111,15 +106,14 @@
               <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
               <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
               <!-- token, rather we should explicitly include it ourselves. -->
-              <%= form_with(url: ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post", local: true, authenticity_token: false) do %>
+              <%= form_with( url: ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post", local:true, authenticity_token: false) do %>
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <p>
-                  Enter Granule Concept ID:
-                  <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
+                  Enter Granule Concept ID: <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
                 </p>
                 <input type="submit" value="OK" class="smallSelectButton confirm-no-button"> &nbsp;
                 <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
-              <% end %>
+            <% end %>
             </div>
           </h3>
         <% end %>
@@ -129,7 +123,7 @@
           <table cellpadding="5" border="1">
 
             <tr>
-              <th>
+              <th class="collection_granule_revision_row">
                 <h4>
                   <div>Concept ID: <%= granule_record.concept_id %>
                     <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
@@ -192,9 +186,6 @@
                       </p>
                       </p>
                     </div>
-                  <% end %>
-                  <% if can?(:copy_recommendations, granule_record) && !granule_record.prior_revision_record.nil? %>
-                    <%= link_to "Copy Prior Recommendations", copy_prior_recommendations_record_path(granule_record.id), class: "copy_prior_recommendations_link", data: {confirm: "Are you sure?"}, method: :get %>
                   <% end %>
                 </div>
               </td>

@@ -180,7 +180,8 @@ class RecordsController < ApplicationController
       flash[:notice] = 'No prior revision could be found!'
     else
       copied, not_copied = @record.copy_recommendations(prior_record)
-      flash[:notice] = "Successfully copied #{copied}/#{copied + not_copied} recommendations."
+      Rails.logger.info "Successfully copied #{copied}/#{copied + not_copied} recommendations."
+      flash[:notice] = 'Successfully copied recommendations.'
     end
     redirect_back(fallback_location: home_path)
   end
