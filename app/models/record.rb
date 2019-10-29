@@ -828,15 +828,9 @@ class Record < ApplicationRecord
       current_data.save
       copied += 1
     end
-    discussions = prior_record.discussions
-
-    if self.discussions.empty? # prevent duplicate discussions if they accidently copy recommendations again.
-      discussions.each do |discussion|
-        message = Discussion.new(record: self, user: discussion.user, column_name: discussion.column_name, date: discussion.date, comment: discussion.comment, category: discussion.category)
-        message.save
-        copied += 1
-      end
-    end
+    copy_recommendations_date = Time.now.strftime("%m/%d/%Y at %I:%M%p")
+    self.copy_recommendations_note = "Copied recommendations from revision #{prior_record.revision_id} on #{copy_recommendations_date}"
+    save
     [copied, not_copied]
   end
 
