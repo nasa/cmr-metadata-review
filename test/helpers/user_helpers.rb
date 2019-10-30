@@ -10,11 +10,5 @@ module Helpers
       ApplicationController.any_instance.stubs(:user_signed_in).returns(true)
       ApplicationController.any_instance.stubs(:current_user).returns(user)
     end
-
-    def finished_all_jQuery_requests?
-      # puts "checking jQuery requests. no active calls? #{page.evaluate_script('jQuery.active').zero?}"
-      page.evaluate_script('jQuery.active').zero?
-    end
-
   end
 end
