@@ -63,8 +63,9 @@ module RecordHelper
   end
 
   def record_is_in_progress(record)
-    array = [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s]
-    array.include?(record.state)
+    [Record::STATE_OPEN.to_s,
+     Record::STATE_IN_ARC_REVIEW.to_s,
+     Record::STATE_READY_FOR_DAAC_REVIEW.to_s].include?(record.state)
   end
 
   def should_show_copy_recommendations_button?(record)
