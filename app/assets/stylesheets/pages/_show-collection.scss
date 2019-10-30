@@ -126,12 +126,26 @@
 }
 
 .collection_granule_revision_row {
-  height: 55px;
-  display:block;
-  overflow:hidden;
+  height: 60px;
   vertical-align: middle;
-
 }
+
+.revision_table {
+  border: 1px;
+}
+
+.revision_table td {
+  padding: 5px;
+}
+
+.revision_review_table {
+  border: 1px;
+}
+
+.revision_review_table td {
+  padding: 5px;
+}
+
 
 
 
