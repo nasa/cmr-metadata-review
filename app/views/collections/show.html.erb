@@ -27,8 +27,7 @@
     <% @collection_records.each_with_index do |record, index| %>
 
       <div id="collection_revision_<%= record.revision_id %>" class="collection_revision">
-        <table cellpadding="5" border="1">
-
+        <table class="revision_table">
           <tr>
             <th class="collection_granule_revision_row">
               <div class="collection_review_box">
@@ -49,7 +48,7 @@
 
           <tr>
             <td>
-              <table cellpadding="5" border="1">
+              <table class="revision_review_table">
                 <tr>
                   <td>Reviewer</td>
                   <td>Status</td>
@@ -120,7 +119,7 @@
       </div>
       <% @granule_objects.each_with_index do |granule, index| %>
         <% granule.get_records.each do |granule_record| %>
-          <table cellpadding="5" border="1">
+          <table class="revision_table">
 
             <tr>
               <th class="collection_granule_revision_row">
@@ -145,7 +144,7 @@
 
             <tr>
               <td>
-                <table cellpadding="5" border="1">
+                <table class="revision_review_table">
                   <tr>
                     <td>Reviewer</td>
                     <td>Status</td>
