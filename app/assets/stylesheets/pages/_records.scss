@@ -350,3 +350,14 @@
       }
     }
 }
+
+.copy_prior_revision_note {
+  font-size: smaller;
+  font-style: italic;
+  height: 30px;
+}
+
+.review_buttons_row input.eui-btn--disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

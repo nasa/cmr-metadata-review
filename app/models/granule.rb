@@ -1,14 +1,10 @@
-class Granule < ActiveRecord::Base
+class Granule < Metadata
   has_many :records, as: :recordable, dependent: :destroy
   belongs_to :collection
 
   extend RecordRevision
 
   delegate :update?, :short_name, to: :collection
-
-  def get_records
-    records.visible
-  end
 
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
     #returns a list of granule data

@@ -61,4 +61,18 @@ module RecordHelper
   def script_text_class(field)
     field[:script] && current_user.arc? ? "script_text" : "no_script_text"
   end
+
+  def record_in_progress?(record)
+    [Record::STATE_OPEN.to_s,
+     Record::STATE_IN_ARC_REVIEW.to_s,
+     Record::STATE_READY_FOR_DAAC_REVIEW.to_s].include?(record.state)
+  end
+
+  def should_show_copy_recommendations_button?(record)
+    can?(:copy_recommendations, record) && !record.prior_revision_record.nil? && record_in_progress?(record)
+  end
+
+  def copy_recommendations_active_class(record)
+    record.copy_recommendations_note.nil? ? 'eui-btn--green' : 'eui-btn--disabled'
+  end
 end
