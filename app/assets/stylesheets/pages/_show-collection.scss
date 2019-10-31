@@ -32,7 +32,7 @@
   }
 
   .collection_revision_header {
-    height: 90px;
+    height: 95px;
     line-height: 90px;
     vertical-align: middle;
     font-size: 1em;
@@ -123,6 +123,27 @@
 
 .mouse_over_draggable {
   cursor: grab;
+}
+
+.collection_granule_revision_row {
+  height: 60px;
+  vertical-align: middle;
+}
+
+.revision_table {
+  border: 1px;
+}
+
+.revision_table td {
+  padding: 5px;
+}
+
+.revision_review_table {
+  border: 1px;
+}
+
+.revision_review_table td {
+  padding: 5px;
 }
 
 

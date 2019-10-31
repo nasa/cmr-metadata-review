@@ -24,7 +24,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
         within '#open' do
           # checks the check box next to the first collection record in the table
-          check 'record_id_'
+          find(:css, "#record_id_[value='1']").set(true)
 
           within '.navigate-buttons' do
             click_on 'See Review Detail'
@@ -54,8 +54,8 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
       visit '/home'
 
       within '#open' do
-        # checks the check box next to the first collection record in the table
-        check('record_id_')
+        # checks the check box next to the first collection record in the tables
+        find(:css, "#record_id_[value='1']").set(true)
 
         within '.navigate-buttons' do
           click_on 'See Review Detail'

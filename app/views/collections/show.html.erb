@@ -26,11 +26,10 @@
     <h3 class="collection_revision_header">Collection Revisions</h3>
     <% @collection_records.each_with_index do |record, index| %>
 
-      <div class="collection_revision">
-        <table cellpadding="5" border="1">
-
+      <div id="collection_revision_<%= record.revision_id %>" class="collection_revision">
+        <table class="revision_table">
           <tr>
-            <th>
+            <th class="collection_granule_revision_row">
               <div class="collection_review_box">
                 <h4>Revision ID: <%= record.revision_id %></h4>
                 <% if can?(:associate_granule_to_collection, @record.recordable) %>
@@ -49,7 +48,7 @@
 
           <tr>
             <td>
-              <table cellpadding="5" border="1">
+              <table class="revision_review_table">
                 <tr>
                   <td>Reviewer</td>
                   <td>Status</td>
@@ -119,79 +118,79 @@
         <% end %>
       </div>
       <% @granule_objects.each_with_index do |granule, index| %>
-        <% granule.records.each do |granule_record| %>
-            <table cellpadding="5" border="1">
+        <% granule.get_records.each do |granule_record| %>
+          <table class="revision_table">
 
-              <tr>
-                <th>
-                  <h4>
-                    <div>Concept ID: <%= granule_record.concept_id %>
-                      <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+            <tr>
+              <th class="collection_granule_revision_row">
+                <h4>
+                  <div>Concept ID: <%= granule_record.concept_id %>
+                    <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+                  </div>
+
+                  <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                    <div class="granule_revision" title="Drag revision over to associate with collection record." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
                     </div>
+                  <% else %>
+                    <div class="granule_revision_nodragdrop" granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                    </div>
+                  <% end %>
 
-                    <% if can?(:associate_granule_to_collection, @record.recordable) %>
-                      <div class="granule_revision"  title="Drag revision over to associate with collection record." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
-                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                      </div>
-                    <% else %>
-                      <div class="granule_revision_nodragdrop"  granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
-                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                      </div>
-                    <% end %>
+                </h4>
+              </th>
+            </tr>
 
-                  </h4>
-                </th>
-              </tr>
+            <tr>
+              <td>
+                <table class="revision_review_table">
+                  <tr>
+                    <td>Reviewer</td>
+                    <td>Status</td>
+                    <td>Completion Date</td>
+                  </tr>
 
-              <tr>
-                <td>
-                  <table cellpadding="5" border="1">
+
+                  <% granule_record.reviews.each do |review| %>
                     <tr>
-                      <td>Reviewer</td>
-                      <td>Status</td>
-                      <td>Completion Date</td>
+                      <td><%= review.user.email %></td>
+                      <td><%= review.state_string %></td>
+                      <td><%= review.formatted_date %></td>
                     </tr>
 
+                  <% end %>
+                </table>
 
-                    <% granule_record.reviews.each do |review| %>
-                      <tr>
-                        <td><%= review.user.email %></td>
-                        <td><%= review.state_string %></td>
-                        <td><%= review.formatted_date %></td>
-                      </tr>
-
-                    <% end %>
-                  </table>
-
-                  <div class="review_actions">
-                    <div class="ingest_score">
-                      <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
-                    </div>
-
-                    <div id="granule_review_link">
-                      <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
-                    </div>
-                    <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
-                      <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
-                      <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
-
-                      <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
-                        <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
-                        <p>
-                          Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
-                        </p>
-                        <p>
-                          <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
-                          <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="No"/></a>
-                        </p>
-                        </p>
-                      </div>
-                    <% end %>
+                <div class="review_actions">
+                  <div class="ingest_score">
+                    <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
                   </div>
-                </td>
-              </tr>
 
-            </table>
+                  <div id="granule_review_link">
+                    <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
+                  </div>
+                  <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
+                    <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
+                    <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
+
+                    <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+                      <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+                      <p>
+                        Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
+                      </p>
+                      <p>
+                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
+                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="No"/></a>
+                      </p>
+                      </p>
+                    </div>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+
+          </table>
         <% end %>
       <% end %>
 

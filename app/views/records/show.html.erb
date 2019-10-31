@@ -4,10 +4,22 @@
 <!-- everything below the nav -->
 <section class="record_review_data">
   <div class="outer_flexbox">
+
+
     <!-- container of metadata sections -->
     <div class="section_container outer_flex_item_left">
       <!-- header for sections -->
+
       <div class="section_header">
+        <div class="review_buttons_row">
+          <% if should_show_copy_recommendations_button?(@record) %>
+            <%= button_to "Copy Prior Recommendations", copy_prior_recommendations_record_path(@record.id), class: copy_recommendations_active_class(@record), disabled: !@record.copy_recommendations_note.nil?, data: {confirm: "Are you sure?"}, method: :get %>
+            <div class="copy_prior_revision_note">
+              <%= @record.copy_recommendations_note %>
+            </div>
+          <% end %>
+        </div>
+
         <h3>METADATA ELEMENTS</h3>
       </div>
 

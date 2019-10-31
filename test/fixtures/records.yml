@@ -92,3 +92,19 @@ in_ready_for_daac_review_granule:
   revision_id: "21"
   state: "ready_for_daac_review"
   format: "echo10"
+
+copy_recommendations1:
+  id: 20
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "4"
+  state: "open"
+  format: "echo10"
+
+copy_recommendations2:
+  id: 21
+  recordable_id: 1
+  recordable_type: "Collection"
+  revision_id: "5"
+  state: "open"
+  format: "echo10"

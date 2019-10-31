@@ -204,8 +204,8 @@ class Record < ApplicationRecord
   end
 
   def get_previous_revision
-    # a set of fellow records sorted by revision id in ascending order
-    collection_records = self.recordable.records.order(:revision_id).to_a
+    # a set of records sorted by revision id in ascending order
+    collection_records = self.recordable.get_records(false)
     self_index = collection_records.index { |record| record.revision_id == self.revision_id }
     # self is first revision id or is not found
     if self_index < 1
@@ -777,4 +777,61 @@ class Record < ApplicationRecord
     granule = recordable.granules.first
     (granule.records.sort { |x,y| y.id.to_i <=> x.id.to_i }).first if granule
   end
+
+  # returns the revision before this one.
+  def prior_revision_record
+    prior_record = nil
+
+    records = self.recordable.get_records(false)
+
+    records.each do |record|
+      break if self.id == record.id
+      prior_record = record
+    end
+    prior_record
+  end
+
+  # Helper method to return a map of all column names/record data objects for the specified record.
+  # Returns column_name:record_data
+  def get_column_record_data_map(record)
+    record_data_map = {}
+    record.record_datas.each do |data|
+      record_data_map[data.column_name] = data
+    end
+    record_data_map
+  end
+
+  # Takes the recommendations from the prior record and copies them into the existing record.
+  # Note: the recommendations include color,feedback, last_updated, opinion, recommendation field, discussions
+  def copy_recommendations(prior_record)
+    return 0, 0 if prior_record.nil?
+    current = get_column_record_data_map(self)
+    prior = get_column_record_data_map(prior_record)
+    copied = 0
+    not_copied = 0
+    current.keys.each do |column_name|
+      current_value = current[column_name].value
+      prior_value = prior[column_name].value
+
+      unless current_value.eql? prior_value
+        not_copied += 1
+        next
+      end
+
+      current_data = current[column_name]
+      prior_data = prior[column_name]
+      current_data.color = prior_data.color
+      current_data.feedback = prior_data.feedback
+      current_data.last_updated = prior_data.last_updated
+      current_data.opinion = prior_data.opinion
+      current_data.recommendation = prior_data.recommendation
+      current_data.save
+      copied += 1
+    end
+    copy_recommendations_date = Time.now.strftime("%m/%d/%Y at %I:%M%p")
+    self.copy_recommendations_note = "Copied recommendations from revision #{prior_record.revision_id} on #{copy_recommendations_date}"
+    save
+    [copied, not_copied]
+  end
+
 end

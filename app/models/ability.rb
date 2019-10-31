@@ -12,6 +12,7 @@ class Ability
         can :request_feedback, Record
         can :request_opinions, Record
         can :recommend_changes, Record
+        can :copy_recommendations, Record
 
         can :discuss_justification, Record
 
@@ -45,10 +46,9 @@ class Ability
 
         can :request_opinions, Record
         can :recommend_changes, Record
-
         can :discuss_justification, Record
-
         can :provide_feedback, Record
+        can :copy_recommendations, Record
 
         can :review_state, [Record::STATE_OPEN, Record::STATE_READY_FOR_DAAC_REVIEW, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
 

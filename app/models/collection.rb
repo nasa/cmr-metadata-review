@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Collection < ApplicationRecord
+class Collection < Metadata
   has_many :records, :as => :recordable
   has_many :granules
 
@@ -15,10 +15,6 @@ class Collection < ApplicationRecord
   extend RecordRevision
 
   scope :finished, -> {where(cmr_update: false)}
-
-  def get_records
-    records.visible
-  end
 
   # ====Params
   # string concept_id,
