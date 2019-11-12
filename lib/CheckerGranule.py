@@ -2,7 +2,7 @@ import csv
 import urllib2
 import socket
 from datetime import *
-
+import Constants
 
 PlatformURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
 InstrumentURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
@@ -274,7 +274,7 @@ class checkerRules():
         #print "Input of checkPlatformShortName() is ..."
         PlatformKeys = list()
         PlatformLongNames = list()
-        response = urllib2.urlopen(PlatformURL, timeout=5)
+        response = urllib2.urlopen(PlatformURL, timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two line information
         next(data)
@@ -529,7 +529,7 @@ class checkerRules():
         #print "Input of checkCampaignShortName() is ..."
         CampaignKeys = list()
         CampaignLongNames = list()
-        response = urllib2.urlopen(ProjectURL, timeout=5)
+        response = urllib2.urlopen(ProjectURL, timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two line information
         next(data)
@@ -572,7 +572,7 @@ class checkerRules():
             if val == None:
                 return "np"
             try:
-                connection = urllib2.urlopen(val, timeout=5)
+                connection = urllib2.urlopen(val, timeout=Constants.TIMEOUT)
                 if connection:
                     realURL = connection.geturl()
                     connection.close()
@@ -585,7 +585,7 @@ class checkerRules():
                 if val[i]['URL'] == None:
                     return "np"
                 try:
-                    connection = urllib2.urlopen(val[i]['URL'], timeout=5)
+                    connection = urllib2.urlopen(val[i]['URL'], timeout=Constants.TIMEOUT)
                     if connection:
                         realURL = connection.geturl()
                         connection.close()
@@ -668,7 +668,7 @@ class checkerRules():
     def checkOnlineResourceType(self, val, length):
         #print "Input of checkOnlineResourceType() is ..."
         ResourcesTypes = list()
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two row information
         next(data)
