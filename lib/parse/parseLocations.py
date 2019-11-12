@@ -1,11 +1,12 @@
 import csv
 import urllib2
+import Constants
 
 class parseLocations():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/locations/locations.csv"
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constants.TIMEOUT)
         data = csv.reader(response)
 
         self.Location_Category = []

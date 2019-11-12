@@ -17,6 +17,7 @@ import json
 import csv
 import urllib2
 
+import Constants
 from CheckerCollection import checkerRules
 from CSVCollection import CollectionOutputCSVBackup
 from JsonCollection import CollectionOutputJSON
@@ -27,7 +28,7 @@ class Checker():
         #print "Fetch all Science Keywords ..."
         SciKeyWords = [[], [], [], [], [], [], []]
         # SciCategoryKeys, SciTopicKeys, SciTermKeys, SciVarL1Keys, SciVarL2Keys, SciVarL3Keys, SciDetailVar
-        response = urllib2.urlopen(self.urls['ScienceKeywordURL'], timeout=5)
+        response = urllib2.urlopen(self.urls['ScienceKeywordURL'], timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two line information
         next(data)
@@ -48,7 +49,7 @@ class Checker():
         #print "Fetch all Platforms ..."
         Platforms = [[], [], [], []]
         # Category, Series_Entity, Short_Name, Long_Name
-        response = urllib2.urlopen(self.urls['PlatformURL'], timeout=5)
+        response = urllib2.urlopen(self.urls['PlatformURL'], timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two line information
         next(data)
@@ -66,7 +67,7 @@ class Checker():
         #print "Fetch all Instruments ..."
         InstrKeyWords = [[], [], [], [], [], []]
         # Category, SciTopicKeys, SciTermKeys, SciVarL1Keys, SciVarL2Keys, SciVarL3Keys, SciDetailVar
-        response = urllib2.urlopen(self.urls['InstrumentURL'], timeout=5)
+        response = urllib2.urlopen(self.urls['InstrumentURL'], timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first two line information
         next(data)

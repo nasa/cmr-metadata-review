@@ -21,12 +21,13 @@ import sys
 import csv
 import json
 import urllib2
+import Constants
 
 def fetchAllInstrs():
     #print "Fetch all Instruments ..."
     InstrKeyWords = [[],[],[],[],[],[]]
     # Category, SciTopicKeys, SciTermKeys, SciVarL1Keys, SciVarL2Keys, SciVarL3Keys, SciDetailVar
-    response = urllib2.urlopen(InstrumentURL, timeout=5)
+    response = urllib2.urlopen(InstrumentURL, timeout=Constants.TIMEOUT)
     data = csv.reader(response)
     next(data)  # Skip the first two line information
     next(data)

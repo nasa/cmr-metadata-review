@@ -1,11 +1,13 @@
 import csv
 import urllib2
+import Constants
 
 class parseRuncontenttype():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
+
+        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constants.TIMEOUT)
         data = csv.reader(response)
         self.Type = []
         self.Subtype = []

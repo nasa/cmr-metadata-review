@@ -1,12 +1,13 @@
 import csv
 import urllib2
+import Constants
 
 class parseInstrument():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=5)
-        data = csv.reader(response)
+        response = urllib2.urlopen(ResourcesTypeURL)
+        data = csv.reader(response, timeout=Constant.TIMEOUT)
         self.Class_ = []
         self.Type = []
         self.Category = []
