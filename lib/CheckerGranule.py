@@ -3,6 +3,7 @@ import urllib2
 import socket
 from datetime import *
 
+LINK_CHECK_TIMEOUT = 5
 
 PlatformURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
 InstrumentURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
@@ -572,7 +573,7 @@ class checkerRules():
             if val == None:
                 return "np"
             try:
-                connection = urllib2.urlopen(val)
+                connection = urllib2.urlopen(val, timeout=LINK_CHECK_TIMEOUT)
                 if connection:
                     realURL = connection.geturl()
                     connection.close()
@@ -585,7 +586,7 @@ class checkerRules():
                 if val[i]['URL'] == None:
                     return "np"
                 try:
-                    connection = urllib2.urlopen(val[i]['URL'])
+                    connection = urllib2.urlopen(val[i]['URL'], timeout=LINK_CHECK_TIMEOUT)
                     if connection:
                         realURL = connection.geturl()
                         connection.close()

@@ -75,7 +75,7 @@
             <tr>
               <td><%= review.reviewer_email %></td>
               <td><%= review.formatted_date %></td>
-              <td><%= review.report_comment %></td>
+              <td class="report_comment"><%= review.report_comment %></td>
             </tr>
           <% end %>
         </table>
@@ -154,7 +154,7 @@
               <tr>
                 <td><%= element.column_name %></td>
                 <td><%= element.value %></td>
-                <td><%= element.recommendation %></td>
+                <td class="recommendation_comment"><%= element.recommendation %></td>
               </tr>
             <% end %>
           </table>
