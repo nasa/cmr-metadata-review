@@ -1,13 +1,11 @@
 import csv
 import urllib2
-import Constants
 
 class parseProvider():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv"
-
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constants.TIMEOUT)
+        response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
         self.Bucket_Level0 = []

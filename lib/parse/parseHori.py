@@ -1,12 +1,11 @@
 import csv
 import urllib2
-import Constant
 
 class parseHori():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/horizontalresolutionrange/horizontalresolutionrange.csv?ed_wiki_keywords_page"
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constant.TIMEOUT)
+        response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
         self.Horizontal_Resolution_Range = []
