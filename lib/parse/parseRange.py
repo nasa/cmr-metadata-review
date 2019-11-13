@@ -1,12 +1,11 @@
 import csv
 import urllib2
-import Constants
 
 class parseRange():
 
     def __init__(self):
         ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/temporalresolutionrange/temporalresolutionrange.csv?ed_wiki_keywords_page"
-        response = urllib2.urlopen(ResourcesTypeURL, timeout=Constants.TIMEOUT)
+        response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
         self.Temporal_Resolution_Range = []
