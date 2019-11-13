@@ -4,6 +4,8 @@ import socket
 from datetime import *
 import re
 
+LINK_CHECK_TIMEOUT = 5
+
 class checkerRules():
 
     def __init__(self,urls):
@@ -101,7 +103,7 @@ class checkerRules():
 
         for url in urls:
             try:
-                connection = urllib2.urlopen(url)
+                connection = urllib2.urlopen(url, timeout=LINK_CHECK_TIMEOUT)
                 if connection:
                     connection.close()
             except (urllib2.HTTPError, urllib2.URLError) as e:
@@ -169,7 +171,7 @@ class checkerRules():
     def checkProcCenter(self, val):
         #print 'Input of checkProcCenter() is ' + val
         DateCents = list()
-        response = urllib2.urlopen(self.urls['ArchiveCenterURL'])
+        response = urllib2.urlopen(self.urls['ArchiveCenterURL'], timeout=LINK_CHECK_TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first line information
         next(data)
@@ -200,7 +202,7 @@ class checkerRules():
     def checkArchiveCenter(self, val):
         #print "Input of checkArchiveCenter() is " + val
         ArchCents = list()
-        response = urllib2.urlopen(self.urls['ArchiveCenterURL'])
+        response = urllib2.urlopen(self.urls['ArchiveCenterURL'], timeout=LINK_CHECK_TIMEOUT)
         data = csv.reader(response)
         next(data)  # Skip the first line information
         next(data)
@@ -225,7 +227,7 @@ class checkerRules():
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', val)
         for url in urls:
             try:
-                connection = urllib2.urlopen(url)
+                connection = urllib2.urlopen(url, timeout=LINK_CHECK_TIMEOUT)
                 if connection:
                     connection.close()
             except (urllib2.HTTPError, urllib2.URLError) as e:
@@ -786,7 +788,7 @@ class checkerRules():
             if val.startswith('ftp://'):
                 return "Please replace the current ftp link with a link to directly download the data via https. The link should run through URS and point as directly to the data as possible (i.e. the user should not have to click through sub directories to access data pertinent to this collection)."
             try:
-                connection = urllib2.urlopen(val)
+                connection = urllib2.urlopen(val, timeout=LINK_CHECK_TIMEOUT)
                 if connection:
                     connection.close()
             except (urllib2.HTTPError, urllib2.URLError) as e:
@@ -798,7 +800,7 @@ class checkerRules():
                 if val[i]['URL'].startswith('ftp://'):
                     return "Please replace the current ftp link with a link to directly download the data via https. The link should run through URS and point as directly to the data as possible (i.e. the user should not have to click through sub directories to access data pertinent to this collection)."
                 try:
-                    connection = urllib2.urlopen(val[i]['URL'])
+                    connection = urllib2.urlopen(val[i]['URL'], timeout=LINK_CHECK_TIMEOUT)
                     if connection:
                         connection.close()
                 except (urllib2.HTTPError, urllib2.URLError, socket.timeout) as e:
