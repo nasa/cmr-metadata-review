@@ -2,7 +2,7 @@
   border-radius: 10px;
   border: solid 2px;
   background-color:white;
-  width:950px;
+  width:1000px;
   margin: 50px auto;
   padding-left:40px;
   padding-right:40px;
@@ -32,8 +32,15 @@
   }
 
   .collection_revision_header {
-    height: 95px;
-    line-height: 90px;
+    height: 60px;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 1em;
+  }
+
+  .granules_revision_header {
+    height: 60px;
+    line-height: 60px;
     vertical-align: middle;
     font-size: 1em;
   }
@@ -106,7 +113,6 @@
 }
 
 .edit_collection_in_mmt_link {
-  float: right;
   margin-right: 50px;
 }
 
@@ -146,6 +152,18 @@
   padding: 5px;
 }
 
+.group_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.record_show_header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
 
 
 
