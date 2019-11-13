@@ -3,7 +3,7 @@
 <div class="record_show_box">
   <div class="space_box"></div>
 
-  <div>
+  <div class="record_show_header">
     <div class="collection_title">
       <h3>Concept ID: <%= @concept_id %></h3>
       <h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
@@ -21,124 +21,29 @@
 
   <div class="space_box"></div>
 
-  <div class="group_box left_box">
+  <div class="group_container">
+    <div class="group_box left_box">
 
-    <h3 class="collection_revision_header">Collection Revisions</h3>
-    <% @collection_records.each_with_index do |record, index| %>
+      <h3 class="collection_revision_header">Collection Revisions</h3>
+      <% @collection_records.each_with_index do |record, index| %>
 
-      <div id="collection_revision_<%= record.revision_id %>" class="collection_revision">
-        <table class="revision_table">
-          <tr>
-            <th class="collection_granule_revision_row">
-              <div class="collection_review_box">
-                <h4>Revision ID: <%= record.revision_id %></h4>
-                <% if can?(:associate_granule_to_collection, @record.recordable) %>
-                  <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
-                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                    <h4>Granule Rev ID: <%= select_tag("associated_granule_value",
-                                                       options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
-                    </h4>
-                  </form>
-                <% else %>
-                  <h4>Revision ID: <%= record.associated_granule_value %></h4>
-                <% end %>
-              </div>
-            </th>
-          </tr>
-
-          <tr>
-            <td>
-              <table class="revision_review_table">
-                <tr>
-                  <td>Reviewer</td>
-                  <td>Status</td>
-                  <td>Completion Date</td>
-                </tr>
-
-
-                <% record.reviews.each do |review| %>
-                  <tr>
-                    <td><%= review.user.email %></td>
-                    <td><%= review.state_string %></td>
-                    <td><%= review.formatted_date %></td>
-                  </tr>
-
-                <% end %>
-              </table>
-
-              <div class="review_actions">
-
-                <div class="ingest_score">
-                  <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
-                </div>
-
-                <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
-              </div>
-
-            </td>
-          </tr>
-
-        </table>
-      </div>
-
-    <% end %>
-
-  </div>
-
-  <% if @granule_objects.count > 0 %>
-    <div class="group_box">
-      <div>
-        <% if can?(:create_granule, @granule_objects.first.collection) %>
-          <h3>
-            Granules
-            <div>
-              <% modal_id = "ingest-specific-granule-modal-id" %>
-              <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton ingest_buttons", id: "ingest_create", data: {confirm: "Are you sure?"} %>
-              <input class="smallSelectButton confirm-modal-button ingest_buttons" type="button" id="ingest-specific-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Ingest Specific Granule"/>
-            </div>
-
-            <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
-              <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
-              <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
-              <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
-              <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
-              <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
-              <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
-              <!-- token, rather we should explicitly include it ourselves. -->
-              <%= form_with( url: ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post", local:true, authenticity_token: false) do %>
-                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                <p>
-                  Enter Granule Concept ID: <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
-                </p>
-                <input type="submit" value="OK" class="smallSelectButton confirm-no-button"> &nbsp;
-                <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
-            <% end %>
-            </div>
-          </h3>
-        <% end %>
-      </div>
-      <% @granule_objects.each_with_index do |granule, index| %>
-        <% granule.get_records.each do |granule_record| %>
+        <div id="collection_revision_<%= record.revision_id %>" class="collection_revision">
           <table class="revision_table">
-
             <tr>
               <th class="collection_granule_revision_row">
-                <h4>
-                  <div>Concept ID: <%= granule_record.concept_id %>
-                    <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
-                  </div>
-
+                <div class="collection_review_box">
+                  <h4>Revision ID: <%= record.revision_id %></h4>
                   <% if can?(:associate_granule_to_collection, @record.recordable) %>
-                    <div class="granule_revision" title="Drag revision over to associate with collection record." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
-                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                    </div>
+                    <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                      <h4>Granule Rev ID: <%= select_tag("associated_granule_value",
+                                                         options_for_select(@associated_granules_options, get_associated_granule_option(record)), {class: "associated_granule_value", revision_id: "#{record.revision_id}"}) %>
+                      </h4>
+                    </form>
                   <% else %>
-                    <div class="granule_revision_nodragdrop" granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
-                      <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
-                    </div>
+                    <h4>Revision ID: <%= record.associated_granule_value %></h4>
                   <% end %>
-
-                </h4>
+                </div>
               </th>
             </tr>
 
@@ -152,7 +57,7 @@
                   </tr>
 
 
-                  <% granule_record.reviews.each do |review| %>
+                  <% record.reviews.each do |review| %>
                     <tr>
                       <td><%= review.user.email %></td>
                       <td><%= review.state_string %></td>
@@ -163,49 +68,148 @@
                 </table>
 
                 <div class="review_actions">
+
                   <div class="ingest_score">
-                    <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
+                    <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
                   </div>
 
-                  <div id="granule_review_link">
-                    <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
-                  </div>
-                  <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
-                    <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
-                    <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
-
-                    <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
-                      <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
-                      <p>
-                        Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
-                      </p>
-                      <p>
-                        <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
-                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="No"/></a>
-                      </p>
-                      </p>
-                    </div>
-                  <% end %>
+                  <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
                 </div>
+
               </td>
             </tr>
 
           </table>
-        <% end %>
+        </div>
+
       <% end %>
 
     </div>
-  <% else %>
 
-    <div class="group_box">
-      <div>
-        <% if can?(:create_granule, @record.recordable) %>
-          <h3>
-            Granules
-            <%= button_to "Ingest New Random Granule", granules_path(:id => @record.recordable.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule_button", data: {confirm: "Are you sure?"} %>
-          </h3>
+    <% if @granule_objects.count > 0 %>
+      <div class="group_box">
+        <div>
+          <% if can?(:create_granule, @granule_objects.first.collection) %>
+            <h3>
+              Granules
+              <div>
+                <% modal_id = "ingest-specific-granule-modal-id" %>
+                <%= button_to "Ingest New Random Granule", granules_path(:id => @granule_objects.first.collection.id), method: :post, class: "smallSelectButton ingest_buttons", id: "ingest_create", data: {confirm: "Are you sure?"} %>
+                <input class="smallSelectButton confirm-modal-button ingest_buttons" type="button" id="ingest-specific-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Ingest Specific Granule"/>
+              </div>
+
+              <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+                <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+                <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
+                <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
+                <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
+                <!-- workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,-->
+                <!-- they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the-->
+                <!-- token, rather we should explicitly include it ourselves. -->
+                <%= form_with( url: ingest_specific_granule_path(:id => @granule_objects.first.collection.id), method: "post", local:true, authenticity_token: false) do %>
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <p>
+                    Enter Granule Concept ID: <input type="text" id="granule_concept_id" name="granule_concept_id" width="100px">
+                  </p>
+                  <input type="submit" value="OK" class="smallSelectButton confirm-no-button"> &nbsp;
+                  <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
+                <% end %>
+              </div>
+            </h3>
+          <% else %>
+            <h3 class="granules_revision_header">Granules</h3>
+          <% end %>
+        </div>
+        <% @granule_objects.each_with_index do |granule, index| %>
+          <% granule.get_records.each do |granule_record| %>
+            <table class="revision_table">
+
+              <tr>
+                <th class="collection_granule_revision_row">
+                  <h4>
+                    <div>Concept ID: <%= granule_record.concept_id %>
+                      <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
+                    </div>
+
+                    <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                      <div class="granule_revision" title="Drag revision over to associate with collection record." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% else %>
+                      <div class="granule_revision_nodragdrop" granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
+                        <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
+                      </div>
+                    <% end %>
+
+                  </h4>
+                </th>
+              </tr>
+
+              <tr>
+                <td>
+                  <table class="revision_review_table">
+                    <tr>
+                      <td>Reviewer</td>
+                      <td>Status</td>
+                      <td>Completion Date</td>
+                    </tr>
+
+
+                    <% granule_record.reviews.each do |review| %>
+                      <tr>
+                        <td><%= review.user.email %></td>
+                        <td><%= review.state_string %></td>
+                        <td><%= review.formatted_date %></td>
+                      </tr>
+
+                    <% end %>
+                  </table>
+
+                  <div class="review_actions">
+                    <div class="ingest_score">
+                      <p>Granule Review Status: <%= granule_record.closed? ? "Closed" : "In Process" %></p>
+                    </div>
+
+                    <div id="granule_review_link">
+                      <%= button_to "See Granule Review Details", record_path(granule_record.id), class: "smallSelectButton", method: :get %>
+                    </div>
+                    <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
+                      <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
+                      <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
+
+                      <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+                        <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+                        <p>
+                          Are you sure you want to delete granule revision #<%= granule_record.revision_id %>?
+                        </p>
+                        <p>
+                          <%= button_to "Yes", granule_path(granule_record.recordable_id, record_id: granule_record.id), method: :delete, class: 'smallSelectButton confirm-yes-button' %>&nbsp;
+                          <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="No"/></a>
+                        </p>
+                        </p>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          <% end %>
         <% end %>
+
       </div>
-    </div>
-  <% end %>
+    <% else %>
+
+      <div class="group_box">
+        <div>
+          <% if can?(:create_granule, @record.recordable) %>
+            <h3>
+              Granules
+              <%= button_to "Ingest New Random Granule", granules_path(:id => @record.recordable.id), method: :post, class: "smallSelectButton", id: "ingest_create", form_class: "ingest_new_granule_button", data: {confirm: "Are you sure?"} %>
+            </h3>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
