@@ -4,7 +4,7 @@ import socket
 from datetime import *
 import re
 
-LINK_CHECK_TIMEOUT=5
+LINK_CHECK_TIMEOUT = 5
 
 class checkerRules():
 
