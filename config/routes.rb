@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   scope format: false do
     get '/elb_status', to: 'site#elb_status'
+    get '/acls', to: 'acls#index'
 
     devise_for :users, :controllers => {
       :omniauth_callbacks => "login"

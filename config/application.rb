@@ -1,7 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
-require  './app/middleware/middleware_healthcheck'
+#require  './app/middleware/middleware_healthcheck'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,7 +26,7 @@ module CmrMetadataReview
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.middleware.insert_after Rails::Rack::Logger, MiddlewareHealthcheck
+ #   config.middleware.insert_after Rails::Rack::Logger, MiddlewareHealthcheck
 
     # Content Security Policy controls which javascript can be run in the
     # application with the goal of preventing Cross Site Scripting. The

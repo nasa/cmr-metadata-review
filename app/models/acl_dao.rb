@@ -64,16 +64,61 @@ class AclDao
     nil
   end
 
+  def get_all_groups(user_id)
+
+    # Sets whether the user is a specific role type
+    # Note: user could be all three.
+
+    results = search_acls_by_user(user_id, 1)
+
+    unless results['hits']
+      Rails.logger.error("get_role_and_daac - Error retrieving ACLs from CMR for #{user_id}")
+      if results['errors']
+        Rails.logger.error("get_role_and_daac - errors for #{user_id}=#{results['errors']}")
+      end
+      raise Cmr::CmrError.new, "Error retrieving ACLs from CMR for #{user_id}"
+    end
+
+    noPages = (results['hits'] / 2000).ceil
+    items = Array.wrap(results['items'])
+
+    (2..noPages + 1).each do |i|
+      results = search_acls_by_user(user_id, i)
+      items += Array.wrap(results['items'])
+    end
+
+    groups = []
+    items.each do |item|
+      next unless item['name'].end_with?('DASHBOARD_DAAC_CURATOR', 'DASHBOARD_ARC_CURATOR', 'DASHBOARD_ADMIN')
+
+      acl = send_request_to_cmr :GET, "#{item['location']}", nil
+      group_permissions = acl['group_permissions']
+      provider_identity = acl['provider_identity']
+      group_permissions.each do |permission|
+        provider_id = provider_identity.nil? ? nil : provider_identity['provider_id']
+        i = { identity_type: item['identity_type'],
+              provider: provider_id,
+              name: item['name'].from(item['name'].rindex('- ') + 2),
+              group_id: permission['group_id'] }
+        groups << i
+      end
+    end
+
+    groups
+  end
 
   private
 
   def search_acls_by_user(user_id, page_no)
-    json = send_request_to_cmr(:GET, "/access-control/acls?permitted_user=#{user_id}&page_size=2000&page_num=#{page_no}")
-    json
+    if user_id.nil?
+      send_request_to_cmr(:GET, "/access-control/acls?page_size=2000&page_num=#{page_no}")
+           else
+      send_request_to_cmr(:GET, "/access-control/acls?permitted_user=#{user_id}&page_size=2000&page_num=#{page_no}")
+    end
   end
 
   def send_request_to_cmr(action, endpoint, data = nil)
-    conn = Faraday.new(:url => @base_url) do |faraday|
+    conn = Faraday.new(url: @base_url) do |faraday|
       faraday.headers['Echo-Token'] = "#{@access_token}:#{ENV['urs_client_id']}"
       faraday.request :json
       faraday.response :logger # log requests to $stdout

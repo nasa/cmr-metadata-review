@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class RecordsController < ApplicationController
   include RecordHelper
 
   before_action :authenticate_user!
   before_action :ensure_curation
-  before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
-  before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
+  before_action :admin_only, only: %i[stop_updates allow_updates revert]
+  before_action :find_record, only: %i[show complete update stop_updates allow_updates revert copy_prior_recommendations]
   before_action :filtered_records, only: :finished
 
   def refresh
@@ -36,17 +38,26 @@ class RecordsController < ApplicationController
       success = @record.update(associated_granule_value: associated_granule_value)
     else
       granule_record = Record.find_by id: associated_granule_value
-      if !granule_record.nil?
+      unless granule_record.nil?
         granule = Granule.find_by id: granule_record.recordable_id
         granule_concept_id = granule.concept_id
         granule_revision_id = granule_record.revision_id
-        success = @record.update(associated_granule_value: granule_record.id)
-        flash[:notice] = "Granule #{granule_concept_id}/#{granule_revision_id} has been successfully associated to this collection revision #{@record.revision_id}. "
+
+        Record.transaction do
+          granule_record.state = @record.state
+          granule_record.save!
+          @record.update(associated_granule_value: granule_record.id)
+          @record.save!
+          success = true
+          flash[:notice] = "Granule #{granule_concept_id}/#{granule_revision_id} has been successfully associated to this collection revision #{@record.revision_id}. " if success
+        rescue StandardError => e
+          Rails.logger.error("Error encountered associating granule #{granule_record.concept_id} with #{@record.concept_id}. message=#{e.message}, backtrace=#{e.backtrace}")
+          success = false
+        end
       end
     end
     unless success
       flash[:notice] = 'An error occurred associating granule to the collection'
-      Rails.logger.info "An error occurred associated granule to the collection, value=#{associated_granule_value}"
     end
     redirect_to collection_path(id: collection.id, record_id: @record.id)
   end
@@ -55,14 +66,14 @@ class RecordsController < ApplicationController
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
 
-    @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
+    @reviews = @record.reviews.select(&:completed?).sort_by(&:review_completion_date)
 
     @user_review = @record.review(current_user.id)
   end
 
   def complete
     if completion_success(@record)
-      flash[:notice] = "Record has been successfully updated."
+      flash[:notice] = 'Record has been successfully updated.'
       redirect_to collection_path(id: 1, record_id: @record.id)
     else
       flash[:notice] = 'Record failed to update.'
@@ -72,20 +83,20 @@ class RecordsController < ApplicationController
 
   def update
     if @record.closed? || @record.finished?
-      if !params["redirect_index"].nil?
-        redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
+      if !params['redirect_index'].nil?
+        redirect_to review_path(id: params['id'], section_index: params['redirect_index'])
         return
       else
-        redirect_to record_path(id: params["id"], section_index: params["section_index"])
+        redirect_to record_path(id: params['id'], section_index: params['section_index'])
         return
       end
     end
 
     #update result will == true if any updates were made to record on save
-    update_result = @record.update_from_review(current_user, params["section_index"], params["recommendation"], params["color_code"], params["opinion"], params["discussion"], params["feedback"], params["feedback_discussion"])
+    update_result = @record.update_from_review(current_user, params['section_index'], params['recommendation'], params['color_code'], params['opinion'], params['discussion'], params['feedback'], params['feedback_discussion'])
 
     if update_result == -1
-      flash[:error] = "Values were not updated in the system.  Please resave changes."
+      flash[:error] = 'Values were not updated in the system.  Please resave changes.'
     elsif update_result == true
       #creating a review is one is not yet recorded
       #.review will create a review if one not found.
@@ -95,10 +106,10 @@ class RecordsController < ApplicationController
       @record.start_arc_review! if @record.open?
     end
 
-    if params["redirect_index"].nil?
-      redirect_to record_path(id: params["id"], section_index: params["redirect_index"])
+    if params['redirect_index'].nil?
+      redirect_to record_path(id: params['id'], section_index: params['redirect_index'])
     else
-      redirect_to review_path(id: params["id"], section_index: params["redirect_index"])
+      redirect_to review_path(id: params['id'], section_index: params['redirect_index'])
     end
   end
 
@@ -109,18 +120,15 @@ class RecordsController < ApplicationController
   def revert
     success = false
     Record.transaction do
-      begin
-        success = @record.revert!
-        success = revert_granule(@record) if success
-      rescue StandardError => e
-        Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
-        success = false
-      end
-      # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
-      raise ActiveRecord::Rollback, ' rollback Error reverting!' unless success
+      raise ActiveRecord::Rollback unless @record.revert!
+      revert_granule(@record)
+      success = true
+    rescue StandardError => e
+      Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
+      success = false
     end
     flash[:notice] = if success
-                     "The record #{@record.concept_id} was successfully updated."
+                       "The record #{@record.concept_id} was successfully updated."
                    else
                      "Sorry, encountered an error reverting #{@record.concept_id}"
                    end
@@ -169,7 +177,7 @@ class RecordsController < ApplicationController
       break unless success
     end
 
-    flash[:notice] = "Records were successfully updated" if success
+    flash[:notice] = 'Records were successfully updated' if success
 
     redirect_to (request.referrer || home_path)
   end
@@ -195,7 +203,7 @@ class RecordsController < ApplicationController
 
   def completion_success(record)
     unless can?(:review_state, record.state.to_sym)
-      flash[:alert] = "You do not have permission to perform this action"
+      flash[:alert] = 'You do not have permission to perform this action'
       return false
     end
 
@@ -213,7 +221,7 @@ class RecordsController < ApplicationController
     rescue StandardError => e
       if e.respond_to?(:failures)
         error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
-        flash[:alert] = error_messages.join(" ")
+        flash[:alert] = error_messages.join(' ')
       else
         flash[:alert] = e.message
       end
@@ -244,7 +252,8 @@ class RecordsController < ApplicationController
   def revert_granule(collection_record)
     if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
       granule_record = Record.find_by id: collection_record.associated_granule_value
-      granule_record.revert!
+      granule_record.state = collection_record.state
+      granule_record.save!
     else
       true # doesn't have a granule, so return success
     end
