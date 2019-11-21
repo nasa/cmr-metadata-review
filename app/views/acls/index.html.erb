@@ -1,0 +1,35 @@
+<div class="user_groups_container">
+  <h1>ACL Management</h1>
+  <table>
+    <th>Identity</th>
+    <th>Provider</th>
+    <th>Role</th>
+    <th>Users</th>
+    <th>Permissions</th>
+
+    <% @groups.each do |group| %>
+    <tr>
+      <td>
+        <%= group[:identity_type] %>
+      </td>
+      <td>
+        <%= group[:provider] %>
+      </td>
+      <td>
+        <%= group[:name] %>
+      </td>
+      <td>
+        <%= link_to 'Users', link_for_groups_in_mmt(group[:group_id]) %>
+      </td>
+      <td>
+        <% if group[:identity_type].start_with? 'Provider' %>
+          <%= link_to 'Permissions', link_for_provider_identity_permissions(group[:group_id]) %>
+        <% end %>
+        <% if group[:identity_type].start_with? 'System' %>
+          <%= link_to 'Permissions', link_for_system_identity_permissions(group[:group_id]) %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</div>
