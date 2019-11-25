@@ -53,7 +53,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
     end
   end
 
-  # These is the second set of tests, where we by default setup a feedback record.
+  # These is the second set of tests, where we include a feedback record.
   # It performs the following tests:
   # 1) Initial setup of the feedback record as a daac curator
   # 2) Verifies the record shows up in the required curator feedback section for daac curators
