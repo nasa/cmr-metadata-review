@@ -23,7 +23,6 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
     it 'verifies no records in Requires Curator Feedback section.' do
       visit '/home'
       within '#provide_feedback' do
-        page.save_and_open_screenshot
         assert has_no_content?('C1000000020-LANCEAMSR2')
       end
     end
