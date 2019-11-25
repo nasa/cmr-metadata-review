@@ -205,7 +205,7 @@ class RecordsController < ApplicationController
       elsif record.ready_for_daac_review?
         success = release_record_for_daac_review(record)
       else # in daac review
-        can?(:force_close, @record) ? record.force_close! : record.close!
+        can?(:force_close, record) ? record.force_close! : record.close!
         RecordNotifier.notify_closed([record])
         success = true
       end
