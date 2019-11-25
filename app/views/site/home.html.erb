@@ -68,7 +68,7 @@
         <%= render(partial: "shared/record_buttons") %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "provide_feedback", records: currator_feedback_records(@records), reviews: true, title: "Requires Curator Feedback Records" } %>
+      <%= render partial: "shared/records_table", locals: {form_id: "provide_feedback", records: curator_feedback_records(@records), reviews: true, title: "Requires Curator Feedback Records" } %>
     <% end %>
   </div>
 </div>

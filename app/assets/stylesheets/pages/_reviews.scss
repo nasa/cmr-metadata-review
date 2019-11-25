@@ -595,6 +595,19 @@
   }
 }
 
+.review-toggle-disabled {
+  width:100%;
+  padding: 10px;
+
+  &__cell {
+    background-color: #e7d1ff;
+  }
+
+  &__text {
+    font-weight: bold;
+  }
+}
+
 .review-page {
   margin-bottom: 50px;
 }
