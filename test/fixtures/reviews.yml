@@ -1,0 +1,15 @@
+first:
+  record_id: 12
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 0
+  user_id: 3
+
+second:
+  record_id: 12
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 0
+  user_id: 1

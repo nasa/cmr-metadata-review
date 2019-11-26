@@ -54,8 +54,8 @@ class ApplicationController < ActionController::Base
 
     @records = @records.includes({ingest: :user}, :reviews)
 
-    # Version ID is only field we need to render on the home page, so just load that
-    @records = @records.includes(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).references(:record_data)
+    # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
+    @records = @records.includes(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).or(@records.includes(:record_datas).where(record_data: {feedback:true})).references(:record_data)
   end
 
   private
