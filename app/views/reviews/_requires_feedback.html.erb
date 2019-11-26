@@ -1,29 +1,17 @@
 <tr class="user_input">
 
   <th class="headcol headcol__user-row">Feedback</th>
-  
   <% section_titles.each do |title| %>
     <td class="no_padding column_<%=title%>">
-      <div id="feedback_cell_<%= title %>" class="<%= feedback_cell_class(current_user) %>"
-           onclick='feedbackClickHandler("feedback_cell_<%= title %>", "feedback_check_<%= title %>", "feedback_text_<%= title %>", "feedback_icon_<%= title %>", <%= current_user.daac_curator? %>)'>
-        <input style="visibility: hidden;" type="checkbox" id="feedback_check_<%= title %>" name="feedback[<%= title %>]" form="field_form">
-        <p id="feedback_text_<%= title %>">
-          <i id="feedback_icon_<%= title %>" class="fa fa-comments"></i>
+      <div id="feedback_cell_<%= title %>" class="<%= feedback_cell_class(current_user, feedbacks[title]) %>" column_value="<%= title %>" daac_curator="<%= current_user.daac_curator? %>" onclick="feedbackClickHandler(this)">
+      <input style="visibility: hidden;" type="checkbox" id="feedback_check_<%= title %>" name="feedback[<%= title %>]" form="field_form" <%= feedbacks[title] ? "checked"  : "" %>>
+        <p id="feedback_text_<%= title %>" class="<%= feedbacks[title] ? "review-toggle__text" : "" %>">
+          <i id="feedback_icon_<%= title %>" class="<%= feedbacks[title] ? "eui-icon eui-check-o" : "fa fa-comments" %>"></i>
           Request Reviewer Feedback
         </p>
       </div>
     </td>
-
-    <script type="text/javascript">
-      <% if feedbacks[title] %>
-        document.getElementById("feedback_check_<%= title %>").checked = true;
-        document.getElementById("feedback_cell_<%= title %>").classList.add("review-toggle__cell");
-        document.getElementById("feedback_text_<%= title %>").classList.add("review-toggle__text");
-        document.getElementById("feedback_icon_<%= title %>").className = "eui-icon eui-check-o";
-      <% end %>
-
-    </script>
-  <% end %>
+<% end %>
 
 </tr>
 
