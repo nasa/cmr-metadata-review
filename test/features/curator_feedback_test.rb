@@ -6,14 +6,11 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
 
   before do
     OmniAuth.config.test_mode = true
-    mock_login(id: 5) # daac curator
-
     stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC")
       .with(
         headers: { 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby' }
       )
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
-
   end
 
   # This is the base case there are no feedback records, so this:
@@ -21,6 +18,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
   # 2) Verifies only daac curators can click the curator feedback button
   describe 'Curator Feedback with no feedback fields' do
     it 'verifies no records in Requires Curator Feedback section.' do
+      mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
         assert has_no_content?('C1000000020-LANCEAMSR2')
@@ -28,7 +26,6 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
     end
 
     it 'only daac curators can click the curator feedback button' do
-      OmniAuth.config.test_mode = true
       mock_login(role: "admin") # admin
 
       visit '/home'
@@ -61,6 +58,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
   # 4) Verifies the record disappears once the record is closed.
   describe 'Curator Feedback with a field requesting feedback' do
     before do
+      mock_login(id: 5) # daac curator
       visit '/home'
       within '#in_daac_review' do
         check 'record_id_'
@@ -86,6 +84,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
     end
 
     it 'verifies the record shows up in Requires Curator Feedback section for the daac curator.' do
+      mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
         assert has_content?('C1000000020-LANCEAMSR2')

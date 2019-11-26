@@ -32,15 +32,11 @@ module ReviewsHelper
   end
 
   def format_new_lines(string)
-    unless string.nil?
-      return (raw string.gsub("\n", '<br>'))
-    end
+    return (raw string.gsub("\n", '<br>')) unless string.nil?
   end 
 
   def replace_links(values_hash)
-    if values_hash.nil?
-      return {}
-    end
+    return {} if values_hash.nil?
     
     new_values_hash = {}
     values_hash.each do |key, value|
@@ -49,12 +45,15 @@ module ReviewsHelper
     values_hash
   end
   
-  def feedback_cell_class(current_user)
-    if current_user.daac_curator?
-      'feedback_cell review-toggle'
-    else
-      'feedback_cell review-toggle-disabled'
-    end
+  def feedback_cell_class(current_user, feedback_title)
+    feedback_class =  'request_review_feedback'
+    feedback_class += if current_user.daac_curator?
+                        ' feedback_cell review-toggle'
+                      else
+                        ' feedback_cell review-toggle-disabled'
+                      end
+    feedback_class += ' review-toggle__cell' if feedback_title
+    feedback_class
   end
 
 end
