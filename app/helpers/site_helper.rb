@@ -9,7 +9,7 @@ module SiteHelper
     records_sorted_by_short_name(daac_records)
   end
 
-  def currator_feedback_records(records)
-    records.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id })
+  def curator_feedback_records(records)
+    records.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id }).where.not(state: 'closed')
   end
 end
