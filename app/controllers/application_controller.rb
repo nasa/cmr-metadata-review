@@ -53,10 +53,7 @@ class ApplicationController < ActionController::Base
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
 
     # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
-    # record_set1 = @records.left_outer_joins(:record_datas).where("record_data.column_name IN (?, ?, ?) or record_data.feedback = ?", 'VersionId', 'Entry_ID/Version', 'Version', true).distinct;
-    record_set1 = @records.left_outer_joins(:record_datas).where("record_data.column_name IN (?, ?, ?), 'VersionId', 'Entry_ID/Version', 'Version'").distinct
-    @records = record_set1
-                 #.or(record_set2)
+    @records = @records.joins(:record_datas).where("record_data.column_name IN (?, ?, ?) OR feedback = ?", 'VersionId', 'Entry_ID/Version', 'Version', true).distinct
   end
 
   private
