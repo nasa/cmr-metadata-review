@@ -51,15 +51,11 @@ class ApplicationController < ActionController::Base
 
     # # Count Second Opinions here for every record
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
-    @records = @records.includes({ingest: :user}, :reviews)
 
-    record_set1 = @records.left_outer_joins(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).references(:record_data)
-    record_set2 = @records.left_outer_joins(:record_datas).where(record_data: { feedback: true }).references(:record_data)
-    @records = record_set1.or(record_set2).distinct
-
-    #
-    # # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
-    # @records = @records.includes(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).references(:record_data).or(@records.includes(:record_datas).where(record_data: { feedback: true })).references(:record_data)
+    # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
+    record_set1 = @records.left_outer_joins(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).distinct
+    record_set2 = @records.left_outer_joins(:record_datas).where(record_data: { feedback: true }).distinct
+    @records = record_set1.or(record_set2)
   end
 
   private
