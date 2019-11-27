@@ -106,6 +106,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
         assert has_content?('C1000000020-LANCEAMSR2')
       end
       within '#in_daac_review' do
+        page.save_and_open_screenshot
         check 'record_id_'
         within '.navigate-buttons' do
           accept_alert do
