@@ -172,6 +172,9 @@ class Record < ApplicationRecord
     end
   end
 
+  def version
+    self.record_datas.where(column_name: ['VersionId', 'Entry_ID/Version', 'Version']).first.value
+  end
 
   # ====Params
   # None
