@@ -173,7 +173,8 @@ class Record < ApplicationRecord
   end
 
   def version
-    self.record_datas.where(column_name: ['VersionId', 'Entry_ID/Version', 'Version']).first.value
+    data = record_datas.where(column_name: ['VersionId', 'Entry_ID/Version', 'Version']).first
+    data.nil? ? 'n/a' : data.value
   end
 
   # ====Params

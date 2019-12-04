@@ -49,11 +49,11 @@ class ApplicationController < ActionController::Base
       @records = @records.campaign(params[:campaign])
     end
 
-    # # Count Second Opinions here for every record
+    # Count Second Opinions here for every record
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
 
-    # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
-    @records = @records.joins(:record_datas).where("record_data.column_name IN (?, ?, ?) OR feedback = ?", 'VersionId', 'Entry_ID/Version', 'Version', true).distinct
+    # only include collection records
+    @records = @records.where(recordable_type: 'Collection').distinct
   end
 
   private
