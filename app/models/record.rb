@@ -810,9 +810,12 @@ class Record < ApplicationRecord
     copied = 0
     not_copied = 0
     current.keys.each do |column_name|
+      if prior[column_name].nil?
+        not_copied += 1
+        next
+      end
       current_value = current[column_name].value
       prior_value = prior[column_name].value
-
       unless current_value.eql? prior_value
         not_copied += 1
         next
