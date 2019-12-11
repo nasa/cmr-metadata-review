@@ -22,7 +22,6 @@ class CanRevertRecordTest < Capybara::Rails::TestCase
       visit '/home'
 
       within '#in_daac_review' do
-        page.save_and_open_page
         all('#record_id_')[0].click
         within '.navigate-buttons' do
           click_on 'See Review Detail'
