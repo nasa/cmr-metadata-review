@@ -198,8 +198,21 @@ copy_recomendations1_record_data_c:
   flag: []
   recommendation: "ok"
 
-copy_recomendations2_record_data_a:
+copy_recomendations1_record_data_d:
   id: 26
+  record_id: 20
+  column_name: "Keyword"
+  value: "Column not in revision 5"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
+
+copy_recomendations2_record_data_a:
+  id: 27
   record_id: 21
   column_name: "ShortName"
   value: "A2_DySno_NRT"
@@ -212,7 +225,7 @@ copy_recomendations2_record_data_a:
   recommendation: "ok"
 
 copy_recomendations2_record_data_b:
-  id: 27
+  id: 28
   record_id: 21
   column_name: "LongName"
   value: "Test_Long_Name"
@@ -225,7 +238,7 @@ copy_recomendations2_record_data_b:
   recommendation: "ok"
 
 copy_recomendations2_record_data_c:
-  id: 28
+  id: 29
   record_id: 21
   column_name: "VersionId"
   value: "1"
@@ -237,4 +250,16 @@ copy_recomendations2_record_data_c:
   flag: []
   recommendation: "ok"
 
+copy_recomendations2_record_data_d:
+  id: 30
+  record_id: 21
+  column_name: "EntryTitle"
+  value: "Column not in revision 4"
+  daac: "PODAAC"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: true
+  flag: []
+  recommendation: "ok"
 

@@ -191,7 +191,7 @@ GEM
       bourbon (>= 4.0)
       sass (>= 3.3)
     nio4r (2.5.1)
-    nokogiri (1.10.5)
+    nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.1)
       faraday (>= 0.8, < 0.16.0)
