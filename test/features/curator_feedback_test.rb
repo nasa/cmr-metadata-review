@@ -30,7 +30,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
 
       visit '/home'
       within '#in_daac_review' do
-        check 'record_id_'
+        all('#record_id_')[0].click
         within '.navigate-buttons' do
           click_on 'See Review Detail'
         end
@@ -106,7 +106,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
         assert has_content?('C1000000020-LANCEAMSR2')
       end
       within '#in_daac_review' do
-        check 'record_id_'
+        all('#record_id_')[0].click
         within '.navigate-buttons' do
           accept_alert do
             click_on 'Close'

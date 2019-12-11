@@ -52,10 +52,8 @@ class ApplicationController < ActionController::Base
     # Count Second Opinions here for every record
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
 
-    @records = @records.includes({ingest: :user}, :reviews)
-
-    # Version ID, Version, or Feedback records are the only field we need to render on the home page, so just load that
-    @records = @records.includes(:record_datas).where(record_data: { column_name: ['VersionId', 'Entry_ID/Version', 'Version']}).or(@records.includes(:record_datas).where(record_data: {feedback:true})).references(:record_data)
+    # only include collection records
+    @records = @records.where(recordable_type: 'Collection').distinct
   end
 
   private

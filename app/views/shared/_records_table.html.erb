@@ -41,7 +41,7 @@
               <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <!-- Only Version ID should be loaded -->
-              <td class="center_text"><%= record.record_datas.first.value%></td>
+              <td class="center_text"><%= record.version%></td>
               <td><%= record.ingested_by %></td>
               <% if closed %>
                 <td><%= record.formatted_closed_date %></td>
@@ -57,9 +57,7 @@
           <% end %>
         </table>
       </div>
-
       <br>
-
       <%= content_for :form_buttons %>
     </div>
   <% end %>

@@ -172,6 +172,10 @@ class Record < ApplicationRecord
     end
   end
 
+  def version
+    data = record_datas.where(column_name: ['VersionId', 'Entry_ID/Version', 'Version']).first
+    data.nil? ? 'n/a' : data.value
+  end
 
   # ====Params
   # None
