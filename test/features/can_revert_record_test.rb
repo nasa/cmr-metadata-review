@@ -22,7 +22,7 @@ class CanRevertRecordTest < Capybara::Rails::TestCase
       visit '/home'
 
       within '#in_daac_review' do
-        check 'record_id_'
+        all('#record_id_')[0].click
         within '.navigate-buttons' do
           click_on 'See Review Detail'
         end
@@ -30,7 +30,7 @@ class CanRevertRecordTest < Capybara::Rails::TestCase
       click_on 'Curation Home'
 
       within '#in_daac_review' do
-        check 'record_id_'
+        all('#record_id_')[0].click
         within '.navigate-buttons' do
           click_on 'Revert'
         end
