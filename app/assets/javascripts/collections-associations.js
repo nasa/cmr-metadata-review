@@ -1,4 +1,3 @@
-console.log("before document ready");
 $( document ).on('ready', function() {
   var revisionIdElement;
 
