@@ -57,7 +57,7 @@ class Collection < Metadata
 
       # In production there is an egress issue with certain link types given in metadata
       # AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-      Timeout::timeout(40) {new_record.create_script} if options[:run_script]
+      Timeout::timeout(90) {new_record.create_script} if options[:run_script]
 
       collection.add_granule(user) if options[:add_granule]
 
