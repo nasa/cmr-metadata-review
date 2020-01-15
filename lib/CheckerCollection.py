@@ -896,7 +896,7 @@ class checkerRules():
 
                 if connection:
                     connection.close()
-            except (urllib2.HTTPError, urllib2.URLError, socket.timeout) as e:
+            except (urllib2.HTTPError, urllib2.URLError, socket.timeout, ValueError) as e:
                 return "Broken link: " + val
         else:
             for i in range(0, length):
@@ -905,11 +905,11 @@ class checkerRules():
                         return "np"
                     if val[i]['URL'].startswith('ftp://'):
                         return "Please replace the current ftp link with a link to directly download the data via https. The link should run through URS and point as directly to the data as possible (i.e. the user should not have to click through sub directories to access data pertinent to this collection)."
-                    connection = urllib2.urlopen(val[i]['URL'], timeout=5)
+                    connection = urllib2.urlopen(val[i]['URL'], timeout=LINK_CHECK_TIMEOUT)
                     if connection:
                         connection.close()
 
-                except (urllib2.HTTPError, urllib2.URLError, socket.timeout) as e:
+                except (urllib2.HTTPError, urllib2.URLError, socket.timeout, ValueError) as e:
                     msg += "Broken link: " + val[i]['URL'] + ";"
                     brokenURLcount += 1
                     # return "Broken link: " + val[i]['URL']
