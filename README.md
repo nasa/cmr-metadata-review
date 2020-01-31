@@ -33,7 +33,7 @@ All development work is done on local copies of the code base.  Follow the steps
 
 - You will then be prompted for your password
 
-- I you run into the issue of `password authentication failed for user` – try the command `psql -U postgres -h localhost` and enter in the password for your computer
+- If you run into the issue of `password authentication failed for user` – try the command `psql -U postgres -h localhost` and enter in the password for your computer.  If that command does not work, you may find it easier to alter the pg_hba.conf file.  The location of this file varies based on where the postgres is trying to run from.  It should be located in the data directory.  Using `ps aux | grep postgres` should list the active processes, one of which should contain something vaguely like: ' /usr/local/opt/postgresql@9.6/bin/postgres -D /usr/local/var/postgresql@9.6'.  The location after the -D is the data directory for the instance that is currently running.  After you alter that file, you will need to restart postgres for the changes to take effect.  
 
 - If you run into the issue of `psql: FATAL: database "<user>" does not exist` - see [this link](https://stackoverflow.com/questions/17633422/psql-fatal-database-user-does-not-exist)
 
@@ -76,7 +76,7 @@ All development work is done on local copies of the code base.  Follow the steps
 
 ## Other Known Issues
 
-During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific 
+During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific
 workflow:  if a user clicks See Review Details, then clicks Curation Home, then clicks Revert Record,
 they will get a Invalid Authenticity Token.   Workaround is to tell form_with it should not auto include the
 token, rather we should explicitly include it ourselves. i.e.,
@@ -85,4 +85,3 @@ Note: The above work-around is not necessary on GET requests, only POST, PUT, an
 
 See [https://bugs.earthdata.nasa.gov/browse/CMRARC-484] and [https://github.com/rails/rails/issues/24257]
 for more details.
-
