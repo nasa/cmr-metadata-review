@@ -15,13 +15,13 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "collections", force: :cascade do |t|
+  create_table "collections", id: :serial, force: :cascade do |t|
     t.string "concept_id", null: false
     t.string "short_name", default: ""
     t.boolean "cmr_update", default: true
   end
 
-  create_table "discussions", force: :cascade do |t|
+  create_table "discussions", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
     t.datetime "date", null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["user_id"], name: "index_discussions_on_user_id"
   end
 
-  create_table "granules", force: :cascade do |t|
+  create_table "granules", id: :serial, force: :cascade do |t|
     t.string "concept_id", null: false
     t.integer "collection_id"
     t.string "latest_revision_in_cmr"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["collection_id"], name: "index_granules_on_collection_id"
   end
 
-  create_table "ingests", force: :cascade do |t|
+  create_table "ingests", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
     t.datetime "date_ingested", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["user_id"], name: "index_ingests_on_user_id"
   end
 
-  create_table "record_data", force: :cascade do |t|
+  create_table "record_data", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.string "value", default: ""
     t.string "daac"
@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["record_id"], name: "index_record_data_on_record_id"
   end
 
-  create_table "records", force: :cascade do |t|
-    t.integer "recordable_id", null: false
+  create_table "records", id: :serial, force: :cascade do |t|
     t.string "recordable_type", null: false
+    t.integer "recordable_id", null: false
     t.string "revision_id", null: false
     t.datetime "closed_date"
     t.string "format", default: ""
@@ -77,11 +77,11 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id"
   end
 
-  create_table "records_update_locks", force: :cascade do |t|
+  create_table "records_update_locks", id: :serial, force: :cascade do |t|
     t.datetime "last_update", null: false
   end
 
-  create_table "reviews", force: :cascade do |t|
+  create_table "reviews", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
     t.datetime "review_completion_date"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_200642) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
