@@ -38,7 +38,6 @@ class Ability
         can :view_review_comments, Review
         can :create_report_comments, Review
         can :view_report_comments, Review
-
       end
 
       if user.arc_curator?
@@ -65,7 +64,6 @@ class Ability
         can :view_review_comments, Review
         can :create_report_comments, Review
         can :view_report_comments, Review
-
       end
 
       if user.daac_curator?
@@ -81,6 +79,8 @@ class Ability
         can :view_report_comments, Review
 
         can :view_edit_in_mmt_link, Collection
+
+        can :update_email_preferences, User, user.id == :id
       end
 
     #

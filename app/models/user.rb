@@ -97,4 +97,15 @@ class User < ApplicationRecord
   def arc?
     admin? || arc_curator?
   end
+
+  def save_email_preference(selection)
+    if selection == 'never'
+      self.email_preference = nil
+    elsif %w[biweekly].include?(selection)
+      self.email_preference = selection
+    else
+      return false
+    end
+    save
+  end
 end
