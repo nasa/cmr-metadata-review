@@ -27,6 +27,9 @@ Rails.application.routes.draw do
 
     get '/collections_search', to: 'collections#search'
 
+    get 'user/email_preferences' => 'user#email_preferences', as: 'email_preferences'
+    post 'user/email_preferences/update' => 'user#update_email_preferences', as: 'update_email_preferences'
+
     resources :granules do
       member do
         delete "replace"
