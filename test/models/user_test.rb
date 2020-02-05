@@ -12,6 +12,14 @@ class UserTest < ActiveSupport::TestCase
       assert_not user.valid?
     end
 
+    it "can see the e-mail preferences page" do
+      user = User.new
+      user.id = 8
+      user.role = 'daac_curator'
+
+      ability = Ability.new(user)
+      assert ability.can?(:update_email_preferences, user)
+    end
   end
 
   describe "ARC curator role" do
@@ -63,6 +71,19 @@ class UserTest < ActiveSupport::TestCase
       # given the stub above says always return 401,
       # the user will still be deactivated.
       assert user.active_for_authentication? == false
+    end
+  end
+
+  describe "saving user email preferences" do
+    it "can save user email preferences" do
+      user = User.new
+      user.id = 8
+      user.role = 'daac_curator'
+      assert user.email_preference == nil
+      user.save_email_preference('biweekly')
+      assert user.email_preference == 'biweekly'
+      user.save_email_preference('never')
+      assert user.email_preference == nil
     end
   end
 end

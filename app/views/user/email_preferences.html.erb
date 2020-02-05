@@ -1,0 +1,17 @@
+<%= render(partial: 'shared/navigation', locals: {title: "E-MAIL PREFERENCES"}) %>
+
+<div class="preferences_box">
+  <fieldset>
+    <%= form_tag(update_email_preferences_path) %>
+    <h5>I would like the Curation Dashboard to send me e-mails summarizing available reports that are relevant to my DAAC:</h5>
+    <p>
+      <%= radio_button_tag('email_preference', 'biweekly', @selected == 'biweekly', {'class' => 'email_preference_option'}) %>
+      <label for="email_preference_biweekly">Biweekly</label>
+      <%= radio_button_tag('email_preference', 'never', @selected.nil?, {'class' => 'email_preference_option'}) %>
+      <label for="email_preference_never">Never</label>
+    </p>
+    <p>
+      <%= submit_tag("Save Preferences", id: 'save_preferences', class: 'selectButton') %>
+    </p>
+  </fieldset>
+</div>

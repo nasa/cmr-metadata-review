@@ -40,15 +40,20 @@
           </ul>
         </li>
 
-        <% if current_user.admin? %>
+        <% if current_user.admin? || (Rails.configuration.email_preference_feature_toggle && current_user.daac_curator?) %>
           <li>
             <%= link_to "#", class: "menu_link header_button" do %>
               <i class="fa fa-sliders"></i>
               <p>Account Options</p>
             <% end %>
-            <ul class="eui-sub-menu">
-              <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
-            </ul>
+              <ul class="eui-sub-menu">
+                <% if current_user.admin? %>
+                  <li id="record_refresh"><%= link_to "Refresh Records", record_refresh_path %></li>
+                <% end %>
+                <% if current_user.daac_curator? %>
+                  <li id="email_preferences"><%= link_to "E-mail Preferences", email_preferences_path %></li>
+                <% end %>
+              </ul>
           </li>
         <% end %>
 
