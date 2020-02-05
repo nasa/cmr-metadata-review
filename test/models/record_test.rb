@@ -178,4 +178,20 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
+  describe "released_to_daac_date" do
+    it "updates the record's released_to_daac_date when releasing" do
+      record = Record.first
+      assert_nil record.released_to_daac_date
+      record.update_released_to_daac_date
+      assert_in_delta record.released_to_daac_date, Time.zone.now, 10
+    end
+
+    it "removes the record's released_to_daac_date when reverting" do
+      record = Record.first
+      record.released_to_daac_date = Time.zone.now
+      assert_not_nil record.released_to_daac_date
+      record.remove_released_to_daac_date
+      assert_nil record.released_to_daac_date
+    end
+  end
 end

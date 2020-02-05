@@ -143,11 +143,14 @@ class RecordsControllerTest < ActionController::TestCase
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      assert_nil Record.find(18).released_to_daac_date
       assert_equal Record.find(18).state, 'ready_for_daac_review'
       post :complete, params: { id: 18 }
+      assert_in_delta Record.find(18).released_to_daac_date, Time.zone.now, 10
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'in_daac_review'
       post :revert, params: { id: 18 }
+      assert_nil Record.find(18).released_to_daac_date
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
