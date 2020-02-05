@@ -41,7 +41,7 @@ class Record < ApplicationRecord
     end
 
     event :release_to_daac do
-      transitions from: :ready_for_daac_review, to: :in_daac_review
+      transitions from: :ready_for_daac_review, to: :in_daac_review, after: [:update_released_to_daac_date]
     end
 
     event :close do
@@ -56,7 +56,7 @@ class Record < ApplicationRecord
       before do
         revert_closed_date unless read_attribute(:closed_date).nil?
       end
-      transitions from: :in_daac_review, to: :ready_for_daac_review
+      transitions from: :in_daac_review, to: :ready_for_daac_review, after: [:remove_released_to_daac_date]
       transitions from: :closed, to: :in_daac_review
     end
 
@@ -434,7 +434,20 @@ class Record < ApplicationRecord
     0
   end
 
+  # ===Params
+  # None
+  # ===Returns
+  # None
+  # ===Method
+  # Updates released_to_daac_date to the current time.
+  # Intended to be called in an after block to the aasm transition
+  def update_released_to_daac_date
+    self.released_to_daac_date = Time.zone.now
+  end
 
+  def remove_released_to_daac_date
+    self.released_to_daac_date = nil
+  end
 
   def add_script_comment(script_hash)
     script_hash.each do |key, value|
