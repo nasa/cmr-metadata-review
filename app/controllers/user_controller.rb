@@ -1,7 +1,7 @@
 class UserController < ApplicationController
   def email_preferences
     redirect_to root_path unless can?(:update_email_preferences, current_user)
-    @selected = current_user.email_preference
+    @current_preference = current_user.email_preference
   end
 
   def update_email_preferences
