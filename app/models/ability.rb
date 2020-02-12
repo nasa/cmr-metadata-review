@@ -80,7 +80,7 @@ class Ability
 
         can :view_edit_in_mmt_link, Collection
 
-        can :update_email_preferences, User, user.id == :id
+        can :update_email_preferences, user
       end
 
     #
