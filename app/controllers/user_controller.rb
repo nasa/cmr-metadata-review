@@ -8,6 +8,7 @@ class UserController < ApplicationController
     if can?(:update_email_preferences, current_user) && current_user.save_email_preference(params[:email_preference])
       redirect_to(email_preferences_path, notice: 'E-mail frequency preference updated.')
     else
+      Rails.logger.error "User: #{current_user.uid}:#{current_user.role} attempted to update email preferences and failed."
       redirect_to(email_preferences_path, alert: 'E-mail frequency preference could not be updated.')
     end
   end
