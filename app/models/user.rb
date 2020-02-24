@@ -101,11 +101,40 @@ class User < ApplicationRecord
   def save_email_preference(selection)
     if selection == 'never'
       self.email_preference = nil
-    elsif %w[biweekly].include?(selection)
+    elsif %w[daily weekly biweekly monthly].include?(selection)
       self.email_preference = selection
     else
       return false
     end
     save
+  end
+
+  def self.released_records_digest_conductor(now: Time.now)
+    emails_sent = 0
+    # Adding more options should be as simple as implementing the logic to add
+    # the correct timing to this current_recipients array.
+    current_recipients = ['daily']
+    # wday returns 0-6 where 1 is Monday
+    current_recipients << 'weekly' if now.wday == 1
+    current_recipients << 'biweekly' if now.wday == 1 && ((1..7).to_a.include?(now.day) || (15..21).to_a.include?(now.day))
+    current_recipients << 'monthly' if now.wday == 1 && (1..7).to_a.include?(now.day)
+
+    daacs = User.where(email_preference: current_recipients).pluck(:daac).uniq
+
+    # For each daac where anyone receives an e-mail...
+    daacs.each do |daac|
+      # Find each curator who should receive an e-mail today
+      recipients = User.where(email_preference: current_recipients, daac: daac)
+
+      # Find relevant records
+      records = Record.where(state: :in_daac_review, daac: daac).order(released_to_daac_date: :desc)
+
+      next if records.blank?
+
+      # Send e-mails
+      DaacCuratorMailer.released_records_digest_notification(recipients, records, daac).deliver_now
+      emails_sent += 1
+    end
+    emails_sent
   end
 end

@@ -15,7 +15,7 @@ class Granule < Metadata
     granules_to_save.each do |granule_data|
       #creating the granule and related record
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"])
+      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]))
       new_granule_record.save
 
       granule_record_data_list = []
@@ -29,7 +29,6 @@ class Granule < Metadata
         granule_record_data.column_name = key
         granule_record_data.value = value
         granule_record_data.order_count = i
-        granule_record_data.daac = daac_from_concept_id(granule_data["concept_id"])
         granule_record_data_list.push(granule_record_data)
       end
 
@@ -56,13 +55,13 @@ class Granule < Metadata
       granule        = Granule.create(concept_id: granule_concept_id, collection: collection)
       granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
 
+      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
           column_name:  key,
           value:        value,
           order_count:  i,
-          daac:         daac_from_concept_id(granule_concept_id)
         )
       end
 
@@ -84,13 +83,13 @@ class Granule < Metadata
     Granule.transaction do
       granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
 
+      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
           column_name: key,
           value: value,
           order_count: i,
-          daac: daac_from_concept_id(granule.concept_id)
         )
         granule_record.save!
       end
@@ -120,13 +119,13 @@ class Granule < Metadata
       granule = Granule.new(concept_id: granule_concept_id, collection: collection)
       granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
 
+      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
           column_name: key,
           value: value,
           order_count: i,
-          daac: daac_from_concept_id(granule.concept_id)
         )
         granule_record.save!
       end

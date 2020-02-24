@@ -84,6 +84,7 @@ Rails.application.configure do
   # https://github.com/ankane/secure_rails against host header injection
   config.action_controller.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}
   config.action_controller.asset_host = 'https://cmr-dashboard.uat.earthdata.nasa.gov'
+  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}  
 
 
   # cmr base url

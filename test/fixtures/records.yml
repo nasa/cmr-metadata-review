@@ -6,7 +6,8 @@ first:
   revision_id: "8"
   state: "open"
   format: "echo10"
-
+  daac: PODAAC
+  
 granule:
   id: 5
   recordable_id: 1
@@ -14,21 +15,24 @@ granule:
   revision_id: "1"
   state: "in_arc_review"
   format: "echo10"
-
+  daac: PODAAC
+  
 metric1:
   id: 10
   recordable_id: 2
   recordable_type: "Collection"
   revision_id: "8"
   format: "dif10"
-
+  daac: PODAAC
+  
 metric2:
   id: 11
   recordable_id: 3
   recordable_type: "Collection"
   revision_id: "8"
   format: "dif10"
-
+  daac: PODAAC
+  
 in_daac_review:
   id: 12
   recordable_id: 1
@@ -36,6 +40,7 @@ in_daac_review:
   revision_id: "9"
   state: "in_daac_review"
   format: "echo10"
+  daac: PODAAC
 
 in_arc_review:
   id: 13
@@ -100,7 +105,8 @@ copy_recommendations1:
   revision_id: "4"
   state: "open"
   format: "echo10"
-
+  daac: PODAAC
+  
 copy_recommendations2:
   id: 21
   recordable_id: 1
@@ -108,3 +114,31 @@ copy_recommendations2:
   revision_id: "5"
   state: "open"
   format: "echo10"
+  daac: PODAAC
+  
+digest_email_collection:
+  id: 22
+  recordable_id: 4
+  recordable_type: Collection
+  state: in_daac_review
+  revision_id: 1
+  released_to_daac_date: 2002-10-31 00:00:00 -0500
+  daac: OB_DAAC
+  
+digest_email_granule:
+  id: 23
+  recordable_id: 2
+  recordable_type: Granule
+  state: in_daac_review
+  revision_id: 1
+  released_to_daac_date: 2002-10-31 00:00:00 -0500
+  daac: OB_DAAC
+  
+digest_email_collection2:
+  id: 24
+  recordable_id: 4
+  recordable_type: Collection
+  state: in_daac_review
+  revision_id: 1
+  released_to_daac_date: 2002-10-31 00:00:00 -0500
+  daac: NSIDC

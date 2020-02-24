@@ -263,3 +263,23 @@ copy_recomendations2_record_data_d:
   flag: []
   recommendation: "ok"
 
+digest_email_granule_granule_ur:
+  id: 31
+  record_id: 23
+  column_name: GranuleUR
+  value: Test GranuleUR
+  daac: OB_DAAC
+
+digest_email_collection_short_name:
+  id: 32
+  record_id: 22
+  column_name: ShortName
+  value: Test Short Name
+  daac: OB_DAAC
+  
+digest_email_collection2_short_name:
+  id: 33
+  record_id: 24
+  column_name: ShortName
+  value: Test Short Name
+  daac: NSIDC

@@ -102,6 +102,3 @@ class AclDao
     json
   end
 end
-
-
-

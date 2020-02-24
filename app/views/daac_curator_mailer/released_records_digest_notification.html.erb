@@ -1,0 +1,28 @@
+<h1 class='styled-heading'>Reports Are Waiting on Your Review</h1>
+<div class= 'email-message'>
+  <p><%= "#{@daac} Curators," %></p>
+  <p>The following Curation Dashboard reports are available for your review:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Record Name</th>
+        <th>Date Released</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @records.first(50).each do |record| %>
+        <tr>
+          <td><%= link_to(record.collection? ? record.short_name : record.long_name, reports_review_url(record_id: record.id)) %></td>
+          <td><%= record.released_to_daac_date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p>You can view all available (<%= @records.count %>) reports in the Curation Dashboard by going <%= link_to 'here', home_url %></p>
+</div>
+
+<div class="email-footer">
+  <img src="https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/meatball.png" alt="Meatball" class="image-center" />
+</div>
