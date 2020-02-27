@@ -127,7 +127,7 @@ class User < ApplicationRecord
       recipients = User.where(email_preference: current_recipients, daac: daac)
 
       # Find relevant records
-      records = Record.joins(:record_datas).where(state: :in_daac_review, record_data: { column_name: ["ShortName", "GranuleUR"], daac: daac }).order(released_to_daac_date: :desc)
+      records = Record.where(state: :in_daac_review, daac: daac).order(released_to_daac_date: :desc)
 
       next if records.blank?
 

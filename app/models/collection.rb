@@ -41,13 +41,13 @@ class Collection < Metadata
       new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format)
 
       daac = concept_id.split('-').last
+      new_record.daac = daac
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
                                          last_updated: DateTime.now,
                                          column_name: key,
                                          value: value,
                                          order_count: i,
-                                         daac: daac
                                        })
       end
 

@@ -2,3 +2,8 @@ first:
   id: 1
   concept_id: "G309210-GHRC"
   collection_id: 1
+  
+daac_curator_mailer_granule:
+  id: 2
+  concept_id: "G309210-OB_DAAC"
+  collection_id: 4
