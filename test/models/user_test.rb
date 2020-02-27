@@ -104,8 +104,8 @@ class UserTest < ActiveSupport::TestCase
         User.released_records_digest_conductor(now: Time.new(2020, 2, 10))
 
         assert_equal @email_count + 2, ActionMailer::Base.deliveries.count
-        assert_equal [User.find(8).email], ActionMailer::Base.deliveries[@email_count].to
-        assert_equal [User.find(7).email], ActionMailer::Base.deliveries[@email_count + 1].to
+        assert_equal [User.find(7).email], ActionMailer::Base.deliveries[@email_count].to
+        assert_equal [User.find(8).email], ActionMailer::Base.deliveries[@email_count + 1].to
       end
     end
 

@@ -3,7 +3,6 @@ first:
   record_id: 1
   column_name: "ShortName"
   value: "A2_DySno_NRT"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -17,7 +16,6 @@ second:
   record_id: 5
   column_name: "ShortName"
   value: "A2_DySno_NRT2"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -31,7 +29,6 @@ fourth:
   record_id: 1
   column_name: "LongName"
   value: "Test_Long_Name"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -45,7 +42,6 @@ fifth:
   record_id: 5
   column_name: "LongName"
   value: "Test_Long_Name2"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -58,7 +54,6 @@ sixth:
   record_id: 1
   column_name: "VersionId"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -71,7 +66,6 @@ metric1:
   record_id: 10
   column_name: "VersionId"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "yellow"
   script_comment: "ok"
@@ -84,7 +78,6 @@ metric2:
   record_id: 10
   column_name: "ShortName"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "red"
   script_comment: "ok"
@@ -97,7 +90,6 @@ metric3:
   record_id: 11
   column_name: "VersionId"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "yellow"
   script_comment: "ok"
@@ -110,7 +102,6 @@ metric4:
   record_id: 11
   column_name: "ShortName"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "red"
   script_comment: "ok"
@@ -123,7 +114,6 @@ in_daac_review_short_name:
   record_id: 12
   column_name: "ShortName"
   value: "A2_DySno_NRTb"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -137,7 +127,6 @@ in_daac_review_long_name:
   record_id: 12
   column_name: "LongName"
   value: "Test_Long_Name"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -151,7 +140,6 @@ in_daac_review_version_id:
   record_id: 12
   column_name: "VersionId"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -164,7 +152,6 @@ copy_recomendations1_record_data_a:
   record_id: 20
   column_name: "ShortName"
   value: "A2_DySno_NRT"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -177,7 +164,6 @@ copy_recomendations1_record_data_b:
   record_id: 20
   column_name: "LongName"
   value: "Test_Long_Name"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -190,7 +176,6 @@ copy_recomendations1_record_data_c:
   record_id: 20
   column_name: "VersionId"
   value: "0"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -203,7 +188,6 @@ copy_recomendations1_record_data_d:
   record_id: 20
   column_name: "Keyword"
   value: "Column not in revision 5"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -216,7 +200,6 @@ copy_recomendations2_record_data_a:
   record_id: 21
   column_name: "ShortName"
   value: "A2_DySno_NRT"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -229,7 +212,6 @@ copy_recomendations2_record_data_b:
   record_id: 21
   column_name: "LongName"
   value: "Test_Long_Name"
-  daac: "PODAAC"
   last_updated: null
   color: "green"
   script_comment: "ok"
@@ -242,7 +224,6 @@ copy_recomendations2_record_data_c:
   record_id: 21
   column_name: "VersionId"
   value: "1"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -255,7 +236,6 @@ copy_recomendations2_record_data_d:
   record_id: 21
   column_name: "EntryTitle"
   value: "Column not in revision 4"
-  daac: "PODAAC"
   last_updated: null
   color: "white"
   script_comment: "ok"
@@ -268,18 +248,15 @@ digest_email_granule_granule_ur:
   record_id: 23
   column_name: GranuleUR
   value: Test GranuleUR
-  daac: OB_DAAC
 
 digest_email_collection_short_name:
   id: 32
   record_id: 22
   column_name: ShortName
   value: Test Short Name
-  daac: OB_DAAC
   
 digest_email_collection2_short_name:
   id: 33
   record_id: 24
   column_name: ShortName
   value: Test Short Name
-  daac: NSIDC
