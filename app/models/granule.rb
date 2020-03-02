@@ -53,9 +53,8 @@ class Granule < Metadata
 
     Granule.transaction do
       granule        = Granule.create(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
-      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
@@ -81,9 +80,8 @@ class Granule < Metadata
     granule_data = granule_info["Granule"]
 
     Granule.transaction do
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
-      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
@@ -117,9 +115,8 @@ class Granule < Metadata
 
     Granule.transaction do
       granule = Granule.new(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"])
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
-      granule_record.daac = daac_from_concept_id(granule.concept_id)
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
           last_updated: DateTime.now,
