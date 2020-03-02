@@ -55,6 +55,7 @@ digest_email_daac_curator_1:
   name: First Fake Name
   email: fake_daac_curator1@fake.com
   email_preference: 'daily'
+  role: 'daac_curator'
   
 digest_email_daac_curator_2:
   id: 8
@@ -62,17 +63,20 @@ digest_email_daac_curator_2:
   name: Second Fake Name
   email: fake_daac_curator2@fake.com
   email_preference: 'weekly'
-  
+  role: 'daac_curator'
+    
 digest_email_daac_curator_3:
   id: 9
   daac: OB_DAAC
   name: Second Fake Name
   email: fake_daac_curator3@fake.com
   email_preference: 'biweekly'
-  
+  role: 'daac_curator'
+    
 digest_email_daac_curator_4:
   id: 10
   daac: OB_DAAC
   name: Second Fake Name
   email: fake_daac_curator4@fake.com
   email_preference: 'monthly'
+  role: 'daac_curator'
