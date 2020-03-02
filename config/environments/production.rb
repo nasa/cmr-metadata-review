@@ -87,8 +87,9 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = false
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.perform_deliveries = false
+  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.earthdata.nasa.gov'}
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -116,7 +117,6 @@ Rails.application.configure do
   # https://github.com/ankane/secure_rails against host header injection
   config.action_controller.default_url_options = {host: 'https://cmr-dashboard.earthdata.nasa.gov'}
   config.action_controller.asset_host = 'https://cmr-dashboard.earthdata.nasa.gov'
-  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.earthdata.nasa.gov'}
 
   # cmr base url
   config.cmr_base_url = 'https://cmr.earthdata.nasa.gov'
@@ -124,6 +124,5 @@ Rails.application.configure do
   # Google Tag Manager ID for EOSDIS usage stats
   config.tag_manager_id = 'GTM-WNP7MLF'
 
-  config.email_preference_feature_toggle = false
-
+  config.email_preference_feature_toggle = true
 end

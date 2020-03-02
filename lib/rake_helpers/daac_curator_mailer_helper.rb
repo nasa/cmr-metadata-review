@@ -7,6 +7,12 @@ class DaacCuratorMailerOrchestration
     current_recipients << 'biweekly' if now.wday == 1 && ((1..7).to_a.include?(now.day) || (15..21).to_a.include?(now.day))
     current_recipients << 'monthly' if now.wday == 1 && (1..7).to_a.include?(now.day)
 
+    # This could be populated from the record table based on records that are in
+    # daac review, but the record table in prod is > ~10k rows, so this is
+    # presumed to be the faster way. If we need to investigate performance of
+    # cron based e-mail delivery, we might consider this, but rendering the
+    # e-mail takes up > 90% of the 220ish ms it takes to process an e-mail 
+    # in dev
     daacs = User.where(role: 'daac_curator', email_preference: current_recipients).pluck(:daac).uniq
 
     # For each daac where anyone receives an e-mail...
