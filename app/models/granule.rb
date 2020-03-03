@@ -135,10 +135,6 @@ class Granule < Metadata
     end
   end
 
-  def self.daac_from_concept_id(concept_id)
-    concept_id.partition('-').last
-  end
-
   def collection_concept_id
     collection.concept_id
   end

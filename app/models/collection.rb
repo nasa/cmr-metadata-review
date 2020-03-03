@@ -37,8 +37,7 @@ class Collection < Metadata
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes!(short_name: short_name)
-      daac = concept_id.split('-').last
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac)
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id))
 
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
