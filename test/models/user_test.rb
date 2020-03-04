@@ -76,9 +76,7 @@ class UserTest < ActiveSupport::TestCase
 
   describe "saving user email preferences" do
     it "can save user email preferences" do
-      user = User.new
-      user.id = 8
-      user.role = 'daac_curator'
+      user = User.new(id: 8, role: 'daac_curator')
       assert user.email_preference == nil
       user.save_email_preference('biweekly')
       assert user.email_preference == 'biweekly'

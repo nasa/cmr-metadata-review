@@ -8,4 +8,7 @@ class Metadata < ApplicationRecord
     sorted_records
   end
 
+  def self.daac_from_concept_id(concept_id)
+    concept_id.partition('-').last
+  end
 end

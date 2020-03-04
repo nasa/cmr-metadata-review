@@ -63,10 +63,7 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :file
-  config.action_mailer.file_settings = {
-    location: 'log/emails'
-  }
+  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}  
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -85,7 +82,6 @@ Rails.application.configure do
   config.action_controller.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}
   config.action_controller.asset_host = 'https://cmr-dashboard.uat.earthdata.nasa.gov'
 
-
   # cmr base url
   config.cmr_base_url = 'https://cmr.uat.earthdata.nasa.gov'
 
@@ -93,5 +89,4 @@ Rails.application.configure do
   config.tag_manager_id = 'GTM-WNP7MLF'
 
   config.email_preference_feature_toggle = true
-
 end

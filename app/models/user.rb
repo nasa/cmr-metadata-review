@@ -101,7 +101,7 @@ class User < ApplicationRecord
   def save_email_preference(selection)
     if selection == 'never'
       self.email_preference = nil
-    elsif %w[biweekly].include?(selection)
+    elsif %w[daily weekly biweekly monthly].include?(selection)
       self.email_preference = selection
     else
       return false

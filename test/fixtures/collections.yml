@@ -12,3 +12,9 @@ metric2:
   id: 3
   concept_id: "metric3-PODAAC"
   short_name: "metric3"
+  
+daac_curator_mailer_collection:
+  id: 4
+  concept_id: "daac_curator_mailer_collection-OB_DAAC"
+  short_name: "daac_curator_mailer_collection"
+  

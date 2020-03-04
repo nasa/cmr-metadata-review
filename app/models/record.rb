@@ -16,7 +16,7 @@ class Record < ApplicationRecord
 
   delegate :concept_id, to: :recordable
 
-  scope :daac, ->(daac) { joins(:record_datas).where(record_data: { daac: daac }).distinct }
+  scope :daac, ->(daac) { where(daac: daac) }
   scope :campaign, ->(campaign) { joins(:record_datas).where(record_data: { value: campaign }).distinct }
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
   scope :metadata_format, ->(format) { where(format: format) }
@@ -665,10 +665,6 @@ class Record < ApplicationRecord
 
   def has_short_name?
     self.short_name != ""
-  end
-
-  def daac
-    self.concept_id.partition('-').last
   end
 
   def cmr_update?
