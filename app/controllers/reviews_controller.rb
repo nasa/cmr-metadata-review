@@ -28,9 +28,9 @@ class ReviewsController < ApplicationController
     @bubble_data = []
     bubble_map = @record.bubble_map
     @section_titles.each do |title|
-        unless bubble_map[title].nil?
-            @bubble_data.push(bubble_map[title])
-        end
+      unless bubble_map[title].nil?
+        @bubble_data.push(bubble_map[title])
+      end
     end
 
     @flagged_by_script = @record.binary_script_values
@@ -55,7 +55,7 @@ class ReviewsController < ApplicationController
   def create
     #making sure we dont make duplicate review
     if !Review.where(user_id: params['review']['user_id'].to_i, record_id: params['review']['record_id'].to_i).first.nil?
-        redirect_to record_path(id: params['review']['record_id'].to_i)
+      redirect_to record_path(id: params['review']['record_id'].to_i)
     end
 
     new_review = Review.create(review_params)

@@ -155,6 +155,35 @@
 
   </head>
   <body>
-    <%= yield %>
+    <h1 class='styled-heading'>Reports Are Waiting on Your Review</h1>
+<div class= 'email-message'>
+  <p>OB_DAAC Curators,</p>
+  <p>The following Curation Dashboard reports are available for your review:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Record Name</th>
+        <th>Date Released</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><a href="http://localhost:3000/reports/review?record_id=22">Test Short Name</a></td>
+          <td>2002-10-31 05:00:00 UTC</td>
+        </tr>
+        <tr>
+          <td><a href="http://localhost:3000/reports/review?record_id=23">Test GranuleUR</a></td>
+          <td>2002-10-31 05:00:00 UTC</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p>You can view all available (2) reports in the Curation Dashboard by going <a href="http://localhost:3000/home">here</a></p>
+</div>
+
+<div class="email-footer">
+  <img src="https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/meatball.png" alt="Meatball" class="image-center" />
+</div>
   </body>
 </html>

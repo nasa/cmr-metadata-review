@@ -206,7 +206,6 @@ class RecordsController < ApplicationController
         success = release_record_for_daac_review(record)
       else # in daac review
         can?(:force_close, record) ? record.force_close! : record.close!
-        RecordNotifier.notify_closed([record])
         success = true
       end
       success
@@ -236,7 +235,6 @@ class RecordsController < ApplicationController
       # special case kind of exception: the database transaction will be rolled back, without passing on the exception.
       raise ActiveRecord::Rollback, 'Error releasing record!' unless success
     end
-    RecordNotifier.notify_released([record]) if success
     success
   end
 
