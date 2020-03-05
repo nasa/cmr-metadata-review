@@ -1,7 +1,7 @@
 # Use this file to easily define all of your cron jobs.
 
+# Need to set the path so that the machine can find bundle to run the rake task
 ruby_path = File.expand_path('..', %x(which ruby))
-
 env :PATH, "#{ruby_path}:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin"
 
 set :output, 'log/session_cleanup_cron.log'
