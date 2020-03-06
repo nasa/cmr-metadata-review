@@ -173,7 +173,7 @@
           <td>2002-10-31 05:00:00 UTC</td>
         </tr>
         <tr>
-          <td><a href="http://localhost:3000/reports/review?record_id=23">Test GranuleUR</a></td>
+          <td><a href="http://localhost:3000/reports/review?record_id=25">Test Short Name3</a></td>
           <td>2002-10-31 05:00:00 UTC</td>
         </tr>
     </tbody>

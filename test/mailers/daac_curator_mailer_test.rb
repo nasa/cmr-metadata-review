@@ -5,7 +5,7 @@ class DaacCuratorMailerTest < ActionMailer::TestCase
 
   describe 'released_records_digest_notification email appearance' do
     it 'correctly populates the fields of an email' do
-      email = DaacCuratorMailer.released_records_digest_notification([User.find(7), User.find(8)], [Record.find(22), Record.find(23)], 'OB_DAAC')
+      email = DaacCuratorMailer.released_records_digest_notification([User.find(7), User.find(8)], [Record.find(22), Record.find(25)], 'OB_DAAC')
 
       assert_emails 1 do
         email.deliver_now

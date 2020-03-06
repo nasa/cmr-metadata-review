@@ -13,7 +13,7 @@
     <tbody>
       <% @records.first(50).each do |record| %>
         <tr>
-          <td><%= link_to(record.collection? ? record.short_name : record.long_name, reports_review_url(record_id: record.id)) %></td>
+          <td><%= link_to(record.short_name, reports_review_url(record_id: record.id)) %></td>
           <td><%= record.released_to_daac_date %></td>
         </tr>
       <% end %>
