@@ -80,3 +80,16 @@ digest_email_daac_curator_4:
   email: fake_daac_curator4@fake.com
   email_preference: 'monthly'
   role: 'daac_curator'
+
+mdq_curator_1:
+  id: 11
+  name: Fake Name
+  email: mdq_curator@fake.com
+  role: 'mdq_curator'
+
+mdq_daac_1:
+  id: 12
+  daac: JAXA
+  name: Fake Name
+  email: mdq_daac@fake.com
+  role: 'daac_curator'

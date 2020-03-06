@@ -53,7 +53,11 @@ class Cmr
   # If Cmr revision id isn't the latest, we pull the latest and ingest it.
 
   def self.update_collections(current_user)
-    records = Record.where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"
+    if current_user.mdq_curator?
+      records = Record.all_records(:mdq_mode).where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"
+    else
+      records = Record.all_records(:arc_mode).where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"
+    end
 
     added_records = []
     failed_records = []
@@ -477,7 +481,7 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.
 
 
-  def self.collection_search(free_text, provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 10)
+  def self.collection_search(free_text, provider = ANY_DAAC_KEYWORD, provider_list = ApplicationHelper::ARC_PROVIDERS, curr_page = "1", page_size = 10)
     search_iterator = []
     collection_count = 0
 
@@ -486,8 +490,7 @@ class Cmr
       base_options = {'page_size' => page_size, 'page_num' => curr_page}
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
-        base_options['provider'] = PROVIDERS
-        base_options['provider'] << 'ARCTEST'
+        base_options['provider'] = provider_list
       else
         base_options['provider'] = provider
       end
@@ -566,13 +569,13 @@ class Cmr
     return search_results, search_results.length
   end
 
-  def self.contained_collection_search(free_text = "", provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 2000)
+  def self.contained_collection_search(free_text = "", provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 2000, application_mode = :arc_mode)
     if free_text.nil?
       return [], 0
     end
 
     if free_text == "" && provider == ANY_DAAC_KEYWORD
-      all_collections = Collection.all_newest_revisions
+      all_collections = Collection.all_newest_revisions(application_mode)
       return all_collections, all_collections.length
     end
 
@@ -589,7 +592,7 @@ class Cmr
     #changing all results to just the concept_id
     total_search_iterator.map! {|entry| entry["id"] }
     #going through all newest revisions in system and selecting those that were returned in the CMR search results
-    total_search_iterator = Collection.all_newest_revisions.select {|record| total_search_iterator.include? record.concept_id }
+    total_search_iterator = Collection.all_newest_revisions(application_mode).select {|record| total_search_iterator.include? record.concept_id }
 
     return total_search_iterator, total_search_iterator.length
   end
@@ -649,11 +652,10 @@ class Cmr
   # Contacts CMR and obtains the total number of collections in the system for the EOSDIS daacs.
   # If Daac short name provided, only returns the total collections of that Daac.
 
-  def self.total_collection_count(daac = nil)
+  def self.total_collection_count(daac = nil, provider_list)
     if daac.nil?
       options = {'page_size' => 1}
-      options['provider'] = PROVIDERS
-      options['provider'] << 'ARCTEST'
+      options['provider'] = provider_list
       url = Cmr.api_url('collections', 'echo10', options)
     else
       url = Cmr.api_url('collections', 'echo10', {'page_size' => 1,

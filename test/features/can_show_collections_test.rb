@@ -84,7 +84,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
-        check('record_id_')
+        all('#record_id_')[0].click
 
         within '.navigate-buttons' do
           click_on 'See Review Detail'

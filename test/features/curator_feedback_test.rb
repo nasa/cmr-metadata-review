@@ -61,7 +61,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
       mock_login(id: 5) # daac curator
       visit '/home'
       within '#in_daac_review' do
-        check 'record_id_'
+        all('#record_id_')[0].click
         within '.navigate-buttons' do
           click_on 'See Review Detail'
         end

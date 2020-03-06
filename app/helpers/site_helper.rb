@@ -12,4 +12,12 @@ module SiteHelper
   def curator_feedback_records(records)
     records.joins(:record_datas, :reviews).where(record_data: { feedback: true}, reviews: { user_id: current_user.id }).where.not(state: 'closed')
   end
+
+  def title_for_in_review_records()
+    if application_mode == :mdq_mode
+      'In MDQ Review Records'
+    else
+      'In ARC Review Records'
+    end
+  end
 end

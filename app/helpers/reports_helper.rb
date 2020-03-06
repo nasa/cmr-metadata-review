@@ -1,11 +1,17 @@
 module ReportsHelper
+  include ApplicationHelper
+
+  def provider_list
+    application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
+  end
 
   def records_with_reviews_by_month
     begin_date = (Date.today - 10.months).beginning_of_month
     end_date   = Date.today.end_of_month
 
-    # Finds the records with reviews completed that month
-    records = Record.joins(:reviews).where("reviews.review_completion_date >= :begin_date AND reviews.review_completion_date <= :end_date",
+
+    # Finds the records with reviews completed that month #
+    records = Record.all_records(application_mode).joins(:reviews).where("reviews.review_completion_date >= :begin_date AND reviews.review_completion_date <= :end_date",
       begin_date: begin_date, end_date: end_date)
 
     # Counts the unique records that have a review in the month
@@ -29,14 +35,13 @@ module ReportsHelper
   end
 
   def closed_records_count
-    closed = Record.closed
+    closed = Record.all_records(application_mode).closed
     closed = closed.daac(params[:daac]) if params[:daac]
-
     closed.count
   end
 
   def finished_records_count
-    finished = Record.finished
+    finished = Record.all_records(application_mode).finished
     finished = finished.daac(params[:daac]) if params[:daac]
 
     finished.count
@@ -44,14 +49,14 @@ module ReportsHelper
 
   def collection_finished_count
     @collection_finished_count ||= if params[:daac]
-      Collection.by_daac(params[:daac]).finished.count
-    else
-      Collection.finished.count
-    end
+                                     Collection.by_daac(params[:daac]).finished.count
+                                   else
+                                     Collection.all_metadata(application_mode).finished.count
+                                   end
   end
 
-  def cmr_total_collection_count
-    @cmr_total_collection_count ||= Cmr.total_collection_count(params[:daac])
+  def cmr_total_collection_count()
+    @cmr_total_collection_count ||= Cmr.total_collection_count(params[:daac], provider_list)
   end
 
   def get_field_colors(record)
