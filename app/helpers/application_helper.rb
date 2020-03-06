@@ -45,6 +45,10 @@ module ApplicationHelper
     end
   end
 
+  def provider_list
+    application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
+  end
+
   def provider_select_list()
     providers = daac_list(ANY_DAAC_KEYWORD)
     if Rails.env == 'production'

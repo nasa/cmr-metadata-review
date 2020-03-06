@@ -481,7 +481,9 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.
 
 
-  def self.collection_search(free_text, provider = ANY_DAAC_KEYWORD, provider_list = ApplicationHelper::ARC_PROVIDERS, curr_page = "1", page_size = 10)
+  def self.collection_search(free_text, provider, provider_list, curr_page="1", page_size=10)
+    provider = ANY_DAAC_KEYWORD if provider.nil?
+
     search_iterator = []
     collection_count = 0
 

@@ -1,10 +1,6 @@
 module ReportsHelper
   include ApplicationHelper
 
-  def provider_list
-    application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
-  end
-
   def records_with_reviews_by_month
     begin_date = (Date.today - 10.months).beginning_of_month
     end_date   = Date.today.end_of_month

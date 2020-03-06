@@ -56,7 +56,6 @@ class MdqCuratorTest < Capybara::Rails::TestCase
         within '#in_daac_review' do
           assert has_content? 'mdq_curator_collection'
           assert has_no_content? 'arc_curator_collection'
-          screenshot_and_open_image
         end
       end
     end
