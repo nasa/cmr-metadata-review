@@ -10,6 +10,6 @@ every 1.day, at: '4:00 am' do
 end
 
 set :output, 'log/digest_emails.log'
-every 1.day, at: '2:00 am' do
+every 10.minutes do
   rake 'daac_curator_emails_cron:send_emails'
 end
