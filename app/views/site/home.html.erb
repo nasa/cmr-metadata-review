@@ -43,7 +43,7 @@
         <%= render(partial: "shared/record_buttons") %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "in_arc_review", records: records_sorted_by_short_name(@records.in_arc_review), reviews: true, title: "In ARC Review Records" } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "in_arc_review", records: records_sorted_by_short_name(@records.in_arc_review), reviews: true, title: title_for_in_review_records() } %>
     <% end %>
 
 

@@ -3,31 +3,64 @@ module ApplicationHelper
   ANY_DAAC_KEYWORD = 'DAAC: ANY'
   ANY_CAMPAIGN_KEYWORD = 'CAMPAIGN: ANY'
   SELECT_DAAC = 'Select DAAC'
-  #providers are specified to identify only the records within EOSDIS
-  PROVIDERS = ['NSIDCV0',
-              'ORNL_DAAC',
-              'LARC_ASDC',
-              'LARC',
-              'LAADS',
-              'GES_DISC',
-              'GHRC',
-              'SEDAC',
-              'ASF',
-              'LPDAAC_ECS',
-              'LANCEMODIS',
-              'NSIDC_ECS',
-              'OB_DAAC',
-              'CDDIS',
-              'LANCEAMSR2',
-              'PODAAC']
 
+  #providers are specified to identify only the records within EOSDIS which ARC team curates
+  ARC_PROVIDERS = ['NSIDCV0',
+                   'ORNL_DAAC',
+                   'LARC_ASDC',
+                   'LARC',
+                   'LAADS',
+                   'GES_DISC',
+                   'GHRC',
+                   'SEDAC',
+                   'ASF',
+                   'LPDAAC_ECS',
+                   'LANCEMODIS',
+                   'NSIDC_ECS',
+                   'OB_DAAC',
+                   'CDDIS',
+                   'LANCEAMSR2',
+                   'PODAAC',
+                   'ARCTEST']
 
-  def provider_select_list
-    daac_list(ANY_DAAC_KEYWORD)
+  #providers are specified to identify only the records within EOSDIS which MDQ team curates
+  MDQ_PROVIDERS = ['SCIOPS',
+                   'NOAA_NCEI',
+                   'JAXA',
+                   'ISRO',
+                   'AU_AADC',
+                   'ESA',
+                   'EUMETSA',
+                   'MDQTEST']
+
+  def application_mode
+    if current_user.role == 'mdq_curator'
+      :mdq_mode
+    else
+      if current_user.daac.nil?
+        :arc_mode
+      else
+        MDQ_PROVIDERS.include? current_user.daac ? :mdq_mode : :arc_mode
+      end
+    end
   end
 
-  def select_daac_list
-    daac_list(SELECT_DAAC)
+  def provider_select_list()
+    providers = daac_list(ANY_DAAC_KEYWORD)
+    if Rails.env == 'production'
+      providers.delete(%w[ARCTEST ARCTEST])
+      providers.delete(%w[MDQTEST MDQTEST])
+    end
+    providers
+  end
+
+  def select_daac_list()
+    providers = daac_list(SELECT_DAAC)
+    if Rails.env == 'production'
+      providers.delete(%w[ARCTEST ARCTEST])
+      providers.delete(%w[MDQTEST MDQTEST])
+    end
+    providers
   end
 
   def string_html_format(string)
@@ -53,8 +86,14 @@ module ApplicationHelper
 
   def daac_list(select_text)
     select_list = [select_text]
-    PROVIDERS.each do |provider|
-      select_list.push([provider, provider])
+    if application_mode == :mdq_mode
+      MDQ_PROVIDERS.each do |provider|
+        select_list.push([provider, provider])
+      end
+    else
+      ARC_PROVIDERS.each do |provider|
+        select_list.push([provider, provider])
+      end
     end
     select_list
   end

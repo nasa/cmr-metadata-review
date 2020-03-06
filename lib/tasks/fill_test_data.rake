@@ -10,7 +10,7 @@ task :fill_test_data => :environment do
   record_count = 500
   record_data_count = 10000
 
-  search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, "1", collection_count)
+   search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, "1", collection_count)
 
   added_collections = []
 

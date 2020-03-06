@@ -73,5 +73,7 @@ Rails.application.configure do
 
   config.email_preference_feature_toggle = true
 
+  config.mdq_enabled_feature_toggle = true
+
   config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
 end

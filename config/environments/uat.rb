@@ -89,4 +89,6 @@ Rails.application.configure do
   config.tag_manager_id = 'GTM-WNP7MLF'
 
   config.email_preference_feature_toggle = true
+
+  config.mdq_enabled_feature_toggle = true
 end

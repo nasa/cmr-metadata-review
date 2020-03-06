@@ -4,8 +4,8 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    @metric_data         = MetricData.new(Collection.all)
-    @granule_metric_data = MetricData.new(Granule.all)
+    @metric_data         = MetricData.new(Collection.all_metadata(application_mode))
+    @granule_metric_data = MetricData.new(Granule.all_metadata(application_mode))
 
     respond_to do |format|
       format.html
@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
 
   def search
     begin
-      @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page])
+      @search_iterator, @collection_count = Cmr.contained_collection_search(params[:free_text], params[:provider], params[:curr_page], 2000, application_mode)
     rescue Cmr::CmrError, Net::OpenTimeout, Net::ReadTimeout
       flash[:alert] = 'There was an error connecting to the CMR System, please try again'
       redirect_to reports_search_path
@@ -40,7 +40,7 @@ class ReportsController < ApplicationController
   def selection
     concept_ids = params[:records].split(",")
 
-    @collections = Collection.where(concept_id: concept_ids)
+    @collections = Collection.all_metadata(application_mode).where(concept_id: concept_ids)
     @granules    = @collections.map(&:granules).flatten
 
     @metric_data         = MetricData.new(@collections)

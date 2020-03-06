@@ -51,6 +51,7 @@ class AclDao
 
       end
       roles << "arc_curator" if item['name'].end_with? "DASHBOARD_ARC_CURATOR"
+      roles << "mdq_curator" if item['name'].end_with? "DASHBOARD_MDQ_CURATOR"
       roles << "admin" if item['name'].end_with? "DASHBOARD_ADMIN"
     end
 
@@ -60,6 +61,7 @@ class AclDao
     return ["admin", nil] if roles.include? "admin"
     return ["daac_curator", daac] if roles.include? "daac_curator"
     return ["arc_curator", nil] if roles.include? "arc_curator"
+    return ["mdq_curator", nil] if roles.include? "mdq_curator"
 
     nil
   end
