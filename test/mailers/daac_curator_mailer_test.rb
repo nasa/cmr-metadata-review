@@ -12,7 +12,7 @@ class DaacCuratorMailerTest < ActionMailer::TestCase
       end
 
       assert_equal ['fake_daac_curator1@fake.com', 'fake_daac_curator2@fake.com'], email.to
-      assert_equal ['no-reply@cmr-dashboard.earthdata.nasa.gov'], email.from
+      assert_equal ['no-reply@earthdata.nasa.gov'], email.from
       assert_equal 'Summary of Reports Available to OB_DAAC', email.subject
       assert_equal read_fixture('released_records_digest_notification_text_part').join, email.text_part.body.to_s
       assert_equal read_fixture('released_records_digest_notification_html_part').join, email.html_part.body.to_s
