@@ -89,5 +89,5 @@ Rails.application.configure do
   config.tag_manager_id = 'GTM-WNP7MLF'
 
   config.email_preference_feature_toggle = true
-  config.default_email_domain = 'cmr-dashboard.earthdata.nasa.gov'
+  config.default_email_domain = 'earthdata.nasa.gov'
 end
