@@ -18,3 +18,8 @@ daac_curator_mailer_collection:
   concept_id: "daac_curator_mailer_collection-OB_DAAC"
   short_name: "daac_curator_mailer_collection"
   
+daac_curator_mailer_collection2:
+  id: 5
+  concept_id: "daac_curator_mailer_collection2-OB_DAAC"
+  short_name: "daac_curator_mailer_collection2"
+  
