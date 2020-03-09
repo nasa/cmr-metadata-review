@@ -142,3 +142,12 @@ digest_email_collection2:
   revision_id: 1
   released_to_daac_date: 2002-10-31 00:00:00 -0500
   daac: NSIDC
+  
+digest_email_collection3:
+  id: 25
+  recordable_id: 5
+  recordable_type: Collection
+  state: in_daac_review
+  revision_id: 1
+  released_to_daac_date: 2002-10-31 00:00:00 -0500
+  daac: OB_DAAC

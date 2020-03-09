@@ -259,4 +259,10 @@ digest_email_collection2_short_name:
   id: 33
   record_id: 24
   column_name: ShortName
-  value: Test Short Name
+  value: Test Short Name2
+  
+digest_email_collection3_short_name:
+  id: 34
+  record_id: 25
+  column_name: ShortName
+  value: Test Short Name3
