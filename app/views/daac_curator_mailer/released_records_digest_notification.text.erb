@@ -4,7 +4,7 @@ The following Curation Dashboard reports are available for your review:
 
 <%= sprintf("%-32.30s%-26.26s%s\r\n", 'Record Name', 'Date Released', 'Available At') %>
 <% @records.each do |record| %>
-<%= sprintf("%-32.30s%-26.26s%s\r\n", record.collection? ? record.short_name : record.long_name, record.released_to_daac_date, reports_review_url(record_id: record.id)) %>
+<%= sprintf("%-32.30s%-26.26s%s\r\n", record.short_name, record.released_to_daac_date, reports_review_url(record_id: record.id)) %>
 <% end %>
 
 You can view all available (<%= @records.count %>) reports in the Curation Dashboard by going to: <%= home_url %>

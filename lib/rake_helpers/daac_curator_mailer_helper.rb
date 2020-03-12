@@ -18,7 +18,7 @@ class DaacCuratorMailerOrchestration
     # For each daac where anyone receives an e-mail...
     daacs.each do |daac|
       # Find relevant records or abort
-      records = Record.where(state: :in_daac_review, daac: daac).order(released_to_daac_date: :desc)
+      records = Record.where(state: :in_daac_review, recordable_type: 'Collection', daac: daac).order(released_to_daac_date: :desc)
       next if records.blank?
 
       # Find each curator who should receive an e-mail today

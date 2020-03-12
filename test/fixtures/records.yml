@@ -143,32 +143,42 @@ digest_email_collection2:
   released_to_daac_date: 2002-10-31 00:00:00 -0500
   daac: NSIDC
 
-mdq_enabled_collection1:
+digest_email_collection3:
   id: 25
   recordable_id: 5
+  recordable_type: Collection
+  state: in_daac_review
+  revision_id: 1
+  released_to_daac_date: 2002-10-31 00:00:00 -0500
+  daac: OB_DAAC
+
+mdq_enabled_collection1:
+  id: 26
+  recordable_id: 6
   recordable_type: Collection
   state: in_arc_review
   revision_id: 1
   daac: JAXA
 
 mdq_enabled_collection2:
-  id: 26
-  recordable_id: 6
+  id: 27
+  recordable_id: 7
   recordable_type: Collection
   state: in_arc_review
   revision_id: 1
   daac: PODAAC
 
 mdq_enabled_collection3:
-  id: 27
-  recordable_id: 5
+  id: 28
+  recordable_id: 6
   recordable_type: Collection
   state: in_daac_review
   revision_id: 1
   daac: JAXA
+
 mdq_enabled_collection4:
-  id: 28
-  recordable_id: 6
+  id: 29
+  recordable_id: 7
   recordable_type: Collection
   state: in_daac_review
   revision_id: 1

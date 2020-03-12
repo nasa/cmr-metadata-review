@@ -275,7 +275,7 @@ class Cmr
 
     raise CmrError.new("Native Format not found") unless raw_format
 
-    if raw_format.include? "dif10"
+    if raw_format.include? "dif10" or raw_format.include? "dif"
       return "dif10"
     elsif raw_format.include? "echo10"
       return "echo10"
@@ -577,7 +577,7 @@ class Cmr
     end
 
     if free_text == "" && provider == ANY_DAAC_KEYWORD
-      all_collections = Collection.all_newest_revisions(application_mode)
+      all_collections = Collection.all_newest_revisions(nil, application_mode)
       return all_collections, all_collections.length
     end
 
@@ -594,7 +594,7 @@ class Cmr
     #changing all results to just the concept_id
     total_search_iterator.map! {|entry| entry["id"] }
     #going through all newest revisions in system and selecting those that were returned in the CMR search results
-    total_search_iterator = Collection.all_newest_revisions(application_mode).select {|record| total_search_iterator.include? record.concept_id }
+    total_search_iterator = Collection.all_newest_revisions(nil, application_mode).select {|record| total_search_iterator.include? record.concept_id }
 
     return total_search_iterator, total_search_iterator.length
   end

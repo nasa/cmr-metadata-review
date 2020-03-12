@@ -674,10 +674,6 @@ class Record < ApplicationRecord
     self.short_name != ""
   end
 
-  def daac
-    self.concept_id.partition('-').last
-  end
-
   def cmr_update?
     self.recordable.update?
   end
