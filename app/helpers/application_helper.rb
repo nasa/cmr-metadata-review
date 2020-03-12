@@ -33,18 +33,13 @@ module ApplicationHelper
                    'EUMETSA',
                    'MDQTEST']
 
+  # The application mode is determined by the logged in user's role.   If they are a "mdq_curator" the mode will be :mdq_mode.
+  # If they are an arc_curator, admin, the application_mode will be :arc_mode.   The mode will causing the filtering of
+  # collections, granules based on a specific provider list.   
   def application_mode
-    if current_user.role == 'mdq_curator'
-      :mdq_mode
-    else
-      if current_user.daac.nil?
-        :arc_mode
-      else
-        MDQ_PROVIDERS.include? current_user.daac ? :mdq_mode : :arc_mode
-      end
-    end
+    current_user.mdq_curator? ? :mdq_mode : :arc_mode
   end
-
+  
   def provider_list
     application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
   end

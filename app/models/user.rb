@@ -92,7 +92,15 @@ class User < ApplicationRecord
   end
 
   def mdq_curator?
-    role == 'mdq_curator'
+    if role == 'mdq_curator'
+      true
+    else
+      if daac.nil?
+        false
+      else
+        ApplicationHelper::MDQ_PROVIDERS.include? daac ? true : false
+      end
+    end
   end
 
   def daac_curator?

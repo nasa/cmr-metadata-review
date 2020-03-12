@@ -6,7 +6,7 @@ Record Name                     Date Released             Available At
 
 Test Short Name                 2002-10-31 05:00:00 UTC   http://localhost:3000/reports/review?record_id=22
 
-Test GranuleUR                  2002-10-31 05:00:00 UTC   http://localhost:3000/reports/review?record_id=23
+Test Short Name3                2002-10-31 05:00:00 UTC   http://localhost:3000/reports/review?record_id=25
 
 
 You can view all available (2) reports in the Curation Dashboard by going to: http://localhost:3000/home

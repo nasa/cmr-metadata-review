@@ -9,7 +9,7 @@
     <%= submit_tag(complete_title || "Close", class: "completeButton", formaction: batch_complete_records_path, disabled: true, data: { confirm: "Complete and transition the selected Record(s)?" }) %>
   <% end %>
 
-  <% if current_user.admin? %>
+  <% if current_user.admin? || current_user.role == 'mdq_curator' %>
     <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
     <% if complete_title == 'Close' and current_user.admin? %>
       <%= submit_tag("Revert", class: "revertButton", formaction: revert_records_path, disabled: true, data: {confirm: "Revert this record?"}) %>

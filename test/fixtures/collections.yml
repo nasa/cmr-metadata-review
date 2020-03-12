@@ -18,12 +18,17 @@ daac_curator_mailer_collection:
   concept_id: "daac_curator_mailer_collection-OB_DAAC"
   short_name: "daac_curator_mailer_collection"
 
-mdq_enabled_collection1:
+daac_curator_mailer_collection2:
   id: 5
+  concept_id: "daac_curator_mailer_collection2-OB_DAAC"
+  short_name: "daac_curator_mailer_collection2"
+
+mdq_enabled_collection1:
+  id: 6
   concept_id: "mdq_curator_collection"
   short_name: "mdq_curator_collection"
 
 mdq_enabled_collection2:
-  id: 6
+  id: 7
   concept_id: "arc_curator_collection"
   short_name: "arc_curator_collection"
