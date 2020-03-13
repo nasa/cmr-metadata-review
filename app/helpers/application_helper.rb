@@ -3,31 +3,65 @@ module ApplicationHelper
   ANY_DAAC_KEYWORD = 'DAAC: ANY'
   ANY_CAMPAIGN_KEYWORD = 'CAMPAIGN: ANY'
   SELECT_DAAC = 'Select DAAC'
-  #providers are specified to identify only the records within EOSDIS
-  PROVIDERS = ['NSIDCV0',
-              'ORNL_DAAC',
-              'LARC_ASDC',
-              'LARC',
-              'LAADS',
-              'GES_DISC',
-              'GHRC',
-              'SEDAC',
-              'ASF',
-              'LPDAAC_ECS',
-              'LANCEMODIS',
-              'NSIDC_ECS',
-              'OB_DAAC',
-              'CDDIS',
-              'LANCEAMSR2',
-              'PODAAC']
 
+  #providers are specified to identify only the records within EOSDIS which ARC team curates
+  ARC_PROVIDERS = ['NSIDCV0',
+                   'ORNL_DAAC',
+                   'LARC_ASDC',
+                   'LARC',
+                   'LAADS',
+                   'GES_DISC',
+                   'GHRC',
+                   'SEDAC',
+                   'ASF',
+                   'LPDAAC_ECS',
+                   'LANCEMODIS',
+                   'NSIDC_ECS',
+                   'OB_DAAC',
+                   'CDDIS',
+                   'LANCEAMSR2',
+                   'PODAAC',
+                   'ARCTEST']
 
-  def provider_select_list
-    daac_list(ANY_DAAC_KEYWORD)
+  #providers are specified to identify only the records within EOSDIS which MDQ team curates
+  MDQ_PROVIDERS = ['SCIOPS',
+                   'NOAA_NCEI',
+                   'JAXA',
+                   'ISRO',
+                   'AU_AADC',
+                   'ESA',
+                   'EUMETSA',
+                   'MDQTEST']
+
+  # The application mode is determined by the logged in user's role or the associated daac.   If they are a
+  # "mdq_curator" or a "daac_curator" who is associated with a daac in the MDQ_PROVIDERS list, then the mode will
+  # be :mdq_mode. If they are an "arc_curator", "admin", or a "daac_curator" associated with a daac in the ARC_PROVIDERS
+  # list the application_mode will be :arc_mode.   The mode will causing the filtering of collections, granules
+  # based on a specific provider list.
+  def application_mode
+    current_user.mdq_user? ? :mdq_mode : :arc_mode
+  end
+  
+  def provider_list
+    application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
   end
 
-  def select_daac_list
-    daac_list(SELECT_DAAC)
+  def provider_select_list()
+    providers = daac_list(ANY_DAAC_KEYWORD)
+    if Rails.env == 'production'
+      providers.delete(%w[ARCTEST ARCTEST])
+      providers.delete(%w[MDQTEST MDQTEST])
+    end
+    providers
+  end
+
+  def select_daac_list()
+    providers = daac_list(SELECT_DAAC)
+    if Rails.env == 'production'
+      providers.delete(%w[ARCTEST ARCTEST])
+      providers.delete(%w[MDQTEST MDQTEST])
+    end
+    providers
   end
 
   def string_html_format(string)
@@ -53,8 +87,14 @@ module ApplicationHelper
 
   def daac_list(select_text)
     select_list = [select_text]
-    PROVIDERS.each do |provider|
-      select_list.push([provider, provider])
+    if application_mode == :mdq_mode
+      MDQ_PROVIDERS.each do |provider|
+        select_list.push([provider, provider])
+      end
+    else
+      ARC_PROVIDERS.each do |provider|
+        select_list.push([provider, provider])
+      end
     end
     select_list
   end

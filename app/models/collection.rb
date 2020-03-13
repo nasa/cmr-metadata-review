@@ -65,6 +65,8 @@ class Collection < Metadata
   def self.create_new_record(concept_id, revision_id, user, add_granule = false)
     native_format = Cmr.get_raw_collection_format(concept_id)
 
+    # change this so it fetches the dif10 format instead, since dashboard doesn't support dif9
+    native_format = native_format == 'dif' ? 'dif10' : native_format
     collection_data = Cmr.get_collection(concept_id, native_format)
 
     options = {

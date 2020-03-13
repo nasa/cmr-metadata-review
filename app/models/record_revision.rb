@@ -59,8 +59,8 @@ module RecordRevision
   # Queries all records of the param type from DB
   # Then filters them to return a list of only the newest revision id for each collection in the system or by DAAC.
 
-  def all_newest_revisions(daac_short_name = nil)
-    all_revisions = self.ordered_revisions(daac_short_name)
+  def all_newest_revisions(daac_short_name = nil, application_mode = :arc_mode)
+    all_revisions = self.ordered_revisions(daac_short_name, application_mode)
     record_lists = all_revisions.values
     newest_records = record_lists.map { |record_list| record_list[0] }
     newest_records
@@ -75,8 +75,8 @@ module RecordRevision
   # Sorts the sublists based on record id with the assumption that newer revisions are ingested after older ones.
   # Do not want to rely on revision ids since they may not be numbers
 
-  def ordered_revisions(daac_short_name = nil)
-    collection_records = all_records.where(state: MetricData::METRIC_STATES)
+  def ordered_revisions(daac_short_name = nil, application_mode = :arc_mode)
+    collection_records = all_records(application_mode).where(state: MetricData::METRIC_STATES)
 
     collection_records = collection_records.daac(daac_short_name) if daac_short_name
 
@@ -104,8 +104,8 @@ module RecordRevision
   # ==== Method
   # returns all records found in the DB of type collection
 
-  def all_records
-    Record.where(recordable_type: name).visible
+  def all_records(application_mode)
+    Record.all_records(application_mode).where(recordable_type: name).visible
   end
 
 
