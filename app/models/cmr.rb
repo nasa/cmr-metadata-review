@@ -275,7 +275,7 @@ class Cmr
 
     raise CmrError.new("Native Format not found") unless raw_format
 
-    if raw_format.include? "dif10" or raw_format.include? "dif"
+    if raw_format.include? "dif10"
       return "dif10"
     elsif raw_format.include? "echo10"
       return "echo10"
