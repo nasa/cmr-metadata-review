@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates_presence_of :daac, if: Proc.new { |u| u.role.eql?("daac_curator") }
 
-  ROLES = %w[admin arc_curator daac_curator].freeze
+  ROLES = %w[admin arc_curator mdq_curator daac_curator].freeze
 
   def self.from_omniauth(auth)
     user = User.where(provider: auth.provider, uid: auth.uid).first
@@ -75,7 +75,8 @@ class User < ApplicationRecord
   # Iterates through all collection records and returns an Array
   # containing only the records for which the user has not attached a completed review.
   def records_not_reviewed
-    Collection.all_records.select do |record|
+    application_mode = self.mdq_user? ? :mdq_mode : :arc_mode
+    Collection.all_records(application_mode).select do |record|
       (record.reviews.select do |review|
         (review.user == self && review.review_state == 1)
       end).empty?
@@ -88,6 +89,18 @@ class User < ApplicationRecord
 
   def arc_curator?
     role == 'arc_curator'
+  end
+
+  def mdq_user?
+    if role == 'mdq_curator'
+      true
+    else
+      if daac.nil?
+        false
+      else
+        ApplicationHelper::MDQ_PROVIDERS.include? daac ? true : false
+      end
+    end
   end
 
   def daac_curator?

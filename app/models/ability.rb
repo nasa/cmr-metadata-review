@@ -66,6 +66,32 @@ class Ability
         can :view_report_comments, Review
       end
 
+      if user.mdq_user?
+        can :access, :curate
+
+        can :request_opinions, Record
+        can :recommend_changes, Record
+        can :discuss_justification, Record
+        can :provide_feedback, Record
+        can :copy_recommendations, Record
+
+        can :review_state, [Record::STATE_OPEN, Record::STATE_READY_FOR_DAAC_REVIEW, Record::STATE_IN_ARC_REVIEW, Record::STATE_CLOSED, Record::STATE_FINISHED]
+
+        can :replace_granule, Granule
+        can :delete_granule, Granule
+        can :create_granule, Collection
+        can :associate_granule_to_collection, Collection
+
+        can :access, :filter_daac
+
+        can :search, :cmr
+
+        can :create_review_comments, Review
+        can :view_review_comments, Review
+        can :create_report_comments, Review
+        can :view_report_comments, Review
+      end
+
       if user.daac_curator?
         can :access, :curate
 

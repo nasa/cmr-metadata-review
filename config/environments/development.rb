@@ -72,6 +72,7 @@ Rails.application.configure do
   config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
 
   config.email_preference_feature_toggle = true
+  config.mdq_enabled_feature_toggle = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
   config.default_email_domain = 'earthdata.nasa.gov'

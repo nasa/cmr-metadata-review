@@ -16,6 +16,13 @@ class Record < ApplicationRecord
 
   delegate :concept_id, to: :recordable
 
+  scope :all_records, ->(application_mode) {
+    if Rails.configuration.mdq_enabled_feature_toggle
+      application_mode == :mdq_mode ? where(daac: ApplicationHelper::MDQ_PROVIDERS).distinct : where(daac: ApplicationHelper::ARC_PROVIDERS).distinct
+    else
+      self.all
+    end
+  }
   scope :daac, ->(daac) { where(daac: daac) }
   scope :campaign, ->(campaign) { joins(:record_datas).where(record_data: { value: campaign }).distinct }
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
