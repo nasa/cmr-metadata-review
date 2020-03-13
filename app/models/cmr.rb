@@ -53,7 +53,7 @@ class Cmr
   # If Cmr revision id isn't the latest, we pull the latest and ingest it.
 
   def self.update_collections(current_user)
-    if current_user.mdq_curator?
+    if current_user.mdq_user?
       records = Record.all_records(:mdq_mode).where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"
     else
       records = Record.all_records(:arc_mode).where state: [Record::STATE_OPEN.to_s, Record::STATE_IN_ARC_REVIEW.to_s, Record::STATE_READY_FOR_DAAC_REVIEW.to_s], recordable_type: "Collection"

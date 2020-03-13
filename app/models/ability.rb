@@ -66,7 +66,7 @@ class Ability
         can :view_report_comments, Review
       end
 
-      if user.mdq_curator?
+      if user.mdq_user?
         can :access, :curate
 
         can :request_opinions, Record

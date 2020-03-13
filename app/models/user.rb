@@ -75,7 +75,7 @@ class User < ApplicationRecord
   # Iterates through all collection records and returns an Array
   # containing only the records for which the user has not attached a completed review.
   def records_not_reviewed
-    application_mode = self.mdq_curator? ? :mdq_mode : :arc_mode
+    application_mode = self.mdq_user? ? :mdq_mode : :arc_mode
     Collection.all_records(application_mode).select do |record|
       (record.reviews.select do |review|
         (review.user == self && review.review_state == 1)
@@ -91,7 +91,7 @@ class User < ApplicationRecord
     role == 'arc_curator'
   end
 
-  def mdq_curator?
+  def mdq_user?
     if role == 'mdq_curator'
       true
     else
