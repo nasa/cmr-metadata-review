@@ -9,15 +9,13 @@ class MdqCuratorTest < Capybara::Rails::TestCase
   end
 
   # turning on the feature toggle will filter records based on the provider list associated with the application mode.
-  # The application mode is determined by the logged in user's role.   If they are a "mdq_curator" the mode will be :mdq_mode.
-  # If they are an arc_curator, admin, the application_mode will be :arc_mode.   The mode will causing the filtering of
-  # collections, granules based on a specific provider list.   This could affect performance and why we have made this a
-  # feature toggle.
-  describe 'mdq_enabled feature toggle - true' do
-    before do
-      Rails.configuration.mdq_enabled_feature_toggle = true
-    end
+  # The application mode is determined by the logged in user's role or the associated daac.   If they are a
+  # "mdq_curator" or a "daac_curator" who is associated with a daac in the MDQ_PROVIDERS list, then the the mode will
+  # be :mdq_mode. If they are an "arc_curator", "admin", or a "daac_curator" associated with a daac in the ARC_PROVIDERS
+  # list the application_mode will be :arc_mode.   The mode will causing the filtering of collections, granules
+  # based on a specific provider list.  This could affect performance and why we have made this a feature toggle.
 
+  describe 'mdq_enabled feature toggle - true' do
     describe 'Access to mdq records' do
       before do
         mock_login(role: "mdq_curator") # mdq curator
@@ -81,6 +79,10 @@ class MdqCuratorTest < Capybara::Rails::TestCase
   describe 'mdq_enabled feature toggle - false' do
     before do
       Rails.configuration.mdq_enabled_feature_toggle = false
+    end
+
+    after do
+      Rails.configuration.mdq_enabled_feature_toggle = true
     end
 
     describe 'Access to mdq records' do
