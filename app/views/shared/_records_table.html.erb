@@ -19,11 +19,9 @@
         <table class="results-table">
           <tr>
             <th>Concept_ID</th>
-            <th>Type</th>
             <th class="center_text">Revision_ID</th>
             <th>ShortName</th>
             <th class="center_text">Version</th>
-            <th>Ingested By</th>
             <% if reviews %>
               <th class="center_text"># Completed Reviews</th>
               <th class="center_text"># Second Reviews Requested</th>
@@ -37,12 +35,10 @@
           <% records.each do |record| %>
             <tr>
               <td><%= record.concept_id %></td>
-              <td><%= record.recordable_type %></td>
               <td class="center_text"><%= record.revision_id %></td>
               <td><%= record.recordable.short_name %></td>
               <!-- Only Version ID should be loaded -->
               <td class="center_text"><%= record.version%></td>
-              <td><%= record.ingested_by %></td>
               <% if closed %>
                 <td><%= record.formatted_closed_date %></td>
               <% end %>
