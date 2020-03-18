@@ -71,7 +71,7 @@ class Collection < Metadata
 
     options = {
       add_granule: add_granule,
-      run_script: true,
+      run_script: false,
       user: user
     }
 

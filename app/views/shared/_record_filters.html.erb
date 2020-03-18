@@ -13,7 +13,7 @@
 
       <div class="record_filters__select">
         <%= label_tag(:campaign) %>
-        <%= select_tag(:campaign, options_for_select(campaign_select_list, selected: params[:campaign])) %>
+        <%= select_tag(:campaign, options_for_select(campaign_select_list(form: path_for_form), selected: params[:campaign])) %>
       </div>
 
       <%= submit_tag("Filter", class: "selectButton") %>

@@ -74,10 +74,23 @@ module ApplicationHelper
     end
   end
 
-  def campaign_select_list
+  def campaign_select_list(form:)
     select_list = [ANY_CAMPAIGN_KEYWORD]
 
-    camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
+    if current_user.daac_curator?
+      daac = current_user.daac
+      state = form == home_path ? :in_daac_review : [:finished, :closed]
+    elsif current_user.mdq_curator?
+      daac = MDQ_PROVIDERS
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
+    else
+      # User is an arc_curator or admin, so should get the arc list
+      daac = ARC_PROVIDERS
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
+    end
+
+    camps = RecordData.where(column_name: %w[Campaigns/Campaign/ShortName Projects/ShortName ]).joins(:record).where(records: {state: state, daac: daac}).select(:value).distinct.order(:value)
+    # camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
     select_list.concat(camps.map(&:value))
 
     select_list
