@@ -111,7 +111,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    docile (1.3.1)
+    docile (1.3.2)
     erubi (1.9.0)
     execjs (2.7.0)
     faraday (0.15.3)
@@ -143,7 +143,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.6)
     jwt (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -260,7 +259,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    rdoc (4.3.0)
+    rdoc (6.2.1)
     regexp_parser (1.6.0)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
@@ -283,17 +282,15 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sdoc (0.4.2)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
+    sdoc (1.1.0)
+      rdoc (>= 5.0)
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
-    simplecov (0.16.1)
+    simplecov (0.18.5)
       docile (~> 1.1)
-      json (>= 1.8, < 3)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.2)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     spring (2.0.2)
       activesupport (>= 4.2)
     sprockets (3.7.2)
@@ -379,7 +376,7 @@ DEPENDENCIES
   rubyXL
   rubyzip (= 1.3.0)
   sass-rails (~> 5.0)
-  sdoc (~> 0.4.0)
+  sdoc
   selenium-webdriver
   simplecov
   spring
