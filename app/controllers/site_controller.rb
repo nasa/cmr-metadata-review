@@ -6,6 +6,13 @@ class SiteController < ApplicationController
   before_action :filtered_records, only: :home
 
   def home
+    records = Record.where(daac: nil)
+    return if records.count.zero?
+
+    Rails.logger.info("Found #{records.count} record(s) which do not have a DAAC. All records should have a DAAC, please investigate the source of this.")
+    records.each do |record|
+      Rails.logger.info("Record without DAAC: #{record.inspect}")
+    end
   end
 
   def general_home
