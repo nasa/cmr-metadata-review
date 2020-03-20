@@ -7,8 +7,9 @@ class SiteController < ApplicationController
 
   def home
     records = Record.where(daac: nil)
-    return if records.count == 0
-    Rails.logger.info("Found #{records.count} record(s) which do not have a DAAC. All records should have a DAAC, please investigate the source of this.") if records.count != 0
+    return if records.count.zero?
+
+    Rails.logger.info("Found #{records.count} record(s) which do not have a DAAC. All records should have a DAAC, please investigate the source of this.")
     records.each do |record|
       Rails.logger.info("Record without DAAC: #{record.inspect}")
     end
