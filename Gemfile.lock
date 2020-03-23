@@ -1,12 +1,27 @@
 GIT
-  remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git
-  revision: 4e845f84cb2edadb7e15a564536c5414f88e7eb4
-  tag: release/v1.1.0
+  remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-edl.git
+  revision: 7c74a33667562e2cc8783fef806e5a2a81841e33
+  branch: 7c74a33667562e2cc8783fef806e5a2a81841e33
   specs:
     omniauth-urs (0.1.0)
-      omniauth (~> 1.0)
+      omniauth-eed2 (~> 1.0)
       omniauth-oauth2 (~> 1.0)
-      omniauth-rails_csrf_protection
+
+GIT
+  remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-eed2.git
+  revision: ede2818bacf9cf036845075a930c681d2642da5b
+  ref: ede2818bacf9cf036845075a930c681d2642da5b
+  specs:
+    omniauth-eed2 (1.9.1)
+      hashie (>= 3.4.6)
+      rack (>= 1.6.2, < 3)
+
+GIT
+  remote: https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-oauth2-eed2.git
+  revision: 8ae6bf86c3cf2909ef09f2efa64cd075f1b828ce
+  specs:
+    omniauth-oauth2 (1.6.0)
+      oauth2 (~> 1.4)
 
 GEM
   remote: https://rubygems.org/
@@ -128,7 +143,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (0.3.7)
-    hashie (3.6.0)
+    hashie (3.4.6)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (1.8.2)
@@ -143,7 +158,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    jwt (2.1.0)
+    jwt (2.2.1)
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.4.0)
@@ -192,21 +207,12 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    oauth2 (1.4.1)
-      faraday (>= 0.8, < 0.16.0)
+    oauth2 (1.4.4)
+      faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
-      rack (>= 1.6.2, < 3)
-    omniauth-oauth2 (1.6.0)
-      oauth2 (~> 1.1)
-      omniauth (~> 1.9)
-    omniauth-rails_csrf_protection (0.1.2)
-      actionpack (>= 4.2)
-      omniauth (>= 1.3.1)
     orm_adapter (0.5.0)
     pg (0.18.4)
     pry (0.11.3)
@@ -351,6 +357,7 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   font-awesome-sass (= 5.0.9)
+  hashie (= 3.4.6)
   httparty (~> 0.14.0)
   jbuilder (~> 2.0)
   jquery-rails
@@ -361,8 +368,8 @@ DEPENDENCIES
   minitest-spec-rails
   mocha
   neat
-  oauth2
-  omniauth-oauth2
+  omniauth-eed2!
+  omniauth-oauth2!
   omniauth-urs!
   pg (~> 0.18.0)
   pry-byebug

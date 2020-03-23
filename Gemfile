@@ -7,6 +7,7 @@ gem 'rails', '~> 5.2.4'
 gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
 gem 'pg', '~> 0.18.0', group: [:test, :development, :production]
+gem 'hashie', '3.4.6'
 
 
 # Use SCSS for stylesheets
@@ -74,12 +75,11 @@ gem 'font-awesome-sass', '5.0.9'
 gem 'font-awesome-rails'
 gem 'activerecord-session_store'
 gem 'whenever', require: false
-gem 'oauth2'
-gem 'omniauth-oauth2'
+gem 'omniauth-eed2', :git => 'https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-eed2.git', ref: 'ede2818bacf9cf036845075a930c681d2642da5b'
+gem 'omniauth-oauth2', :git => 'https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-oauth2-eed2.git'
+gem 'omniauth-urs', :git => 'https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-edl.git', branch: '7c74a33667562e2cc8783fef806e5a2a81841e33'
+
 gem 'faraday_middleware'
-
-gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.1.0"
-
 gem 'figaro'
 gem 'rails-controller-testing'
 
