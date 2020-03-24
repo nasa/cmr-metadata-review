@@ -1,17 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
 
-  before_action :check_for_holes
-  after_action :check_for_holes
-
-  def check_for_holes
-    if @hole_count
-      raise 'DAAC leak' if @hole_count != Record.where(daac: nil).count
-    else
-      @hole_count = Record.where(daac: nil).count
-    end
-  end
-
   private
   def render_404(exception = nil)
     if exception
