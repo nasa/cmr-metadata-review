@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function(){
+$( document ).on('ready turbolinks:load', function() {
 
   var forms = [
     "open",
