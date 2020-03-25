@@ -1,4 +1,4 @@
-$( document ).on('ready', function() {
+$( document ).on('ready turbolinks:load', function() {
   var revisionIdElement;
 
   $(".associated_granule_value").change(function (event) {
