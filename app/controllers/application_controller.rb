@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
   end
 
-
   #saving error from CanCan for users going beyond allowed pages
   rescue_from CanCan::AccessDenied do |exception|
     if current_user
@@ -48,8 +47,9 @@ class ApplicationController < ActionController::Base
                  Record.all_records(application_mode)
                end
 
+
     if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
-      @records = @records.campaign(params[:campaign])
+      @records = filter_by_campaign
     end
 
     # Count Second Opinions here for every record
@@ -69,4 +69,10 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  def filter_by_campaign
+    ids = @records.select do |record|
+            clean_up_campaign(record.record_datas.where(column_name: CAMPAIGN_COLUMNS).first.value).include?(params[:campaign])
+          end.map(&:id)
+    Record.where(id: ids)
+  end
 end

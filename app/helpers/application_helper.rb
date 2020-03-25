@@ -33,6 +33,13 @@ module ApplicationHelper
                    'EUMETSA',
                    'MDQTEST']
 
+  # Campaigns/Campaign/ShortName comes from ECHO10
+  # Projects/ShortName comes from UMM-JSON
+  # Project/Short_Name comes from DIF10
+  CAMPAIGN_COLUMNS = %w[Campaigns/Campaign/ShortName 
+                        Projects/ShortName 
+                        Project/Short_Name]
+
   # The application mode is determined by the logged in user's role or the associated daac.   If they are a
   # "mdq_curator" or a "daac_curator" who is associated with a daac in the MDQ_PROVIDERS list, then the mode will
   # be :mdq_mode. If they are an "arc_curator", "admin", or a "daac_curator" associated with a daac in the ARC_PROVIDERS
@@ -89,9 +96,9 @@ module ApplicationHelper
       state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
     end
 
-    camps = RecordData.where(column_name: %w[Campaigns/Campaign/ShortName Projects/ShortName ]).joins(:record).where(records: {state: state, daac: daac}).select(:value).distinct.order(:value)
-    # camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
-    select_list.concat(camps.map(&:value))
+    campaigns = RecordData.where(column_name: CAMPAIGN_COLUMNS)
+                          .joins(:record).where(records: { state: state, daac: daac }).select(:value).distinct
+    select_list.concat(campaigns.map { |campaign| clean_up_campaign(campaign.value) }.flatten.sort)
 
     select_list
   end
@@ -123,4 +130,14 @@ module ApplicationHelper
     string.length > max ? "#{string[0...max]}..." : string
   end
 
+  def filter_by_campaign
+    
+  end
+
+  # When a record has multiples, Dashboard stores them in the value field
+  # formatted like: "• <value1>\n• <value2>\n ..."
+  # Returns an array like: [value1, value2, ...]
+  def clean_up_campaign(campaign)
+    campaign.tr('•', '').split("\n").each(&:strip)
+  end
 end
