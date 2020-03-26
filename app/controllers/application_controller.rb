@@ -47,19 +47,14 @@ class ApplicationController < ActionController::Base
                  Record.all_records(application_mode)
                end
 
+    # only include collection records
+    @records = @records.where(recordable_type: 'Collection').distinct
 
-    if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
-      @records = filter_by_campaign
-    end
+    @records = @records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
 
     # Count Second Opinions here for every record
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
-
-    # only include collection records
-    @records = @records.where(recordable_type: 'Collection').distinct
   end
-
-  private
 
   def filtered_by?(param, any_keyword)
     params[param] && params[param] != any_keyword
@@ -67,12 +62,5 @@ class ApplicationController < ActionController::Base
 
   def new_session_path(scope)
     new_user_session_path
-  end
-
-  def filter_by_campaign
-    ids = @records.select do |record|
-            clean_up_campaign(record.record_datas.where(column_name: CAMPAIGN_COLUMNS).first.value).include?(params[:campaign])
-          end.map(&:id)
-    Record.where(id: ids)
   end
 end

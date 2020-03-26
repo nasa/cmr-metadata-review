@@ -1,4 +1,10 @@
 module RecordHelper
+  # Campaigns/Campaign/ShortName comes from ECHO10
+  # Projects/ShortName comes from UMM-JSON
+  # Project/Short_Name comes from DIF10
+  CAMPAIGN_COLUMNS = %w[Campaigns/Campaign/ShortName
+                        Projects/ShortName
+                        Project/Short_Name]
 
   def is_number?(object)
     true if Float(object) rescue false
@@ -74,5 +80,14 @@ module RecordHelper
 
   def copy_recommendations_active_class(record)
     record.copy_recommendations_note.nil? ? 'eui-btn--green' : 'eui-btn--disabled'
+  end
+
+  # When a record has multiples, Dashboard stores them in the value field
+  # formatted like: "• <value1>\n• <value2>\n ..."
+  # Returns an array like: [value1, value2, ...]
+  def clean_up_campaign(campaign)
+    return [] if campaign.nil?
+
+    campaign.tr('•', '').split("\n").each(&:strip!)
   end
 end

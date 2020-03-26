@@ -6,6 +6,9 @@ class Granule < Metadata
 
   delegate :update?, :short_name, to: :collection
 
+  # TODO: These granule ingest methods have a lot of similarities.  We should
+  # figure out if there's some way to condense this code to make it easier to
+  # maintain.
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
     #returns a list of granule data
     granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
@@ -15,7 +18,7 @@ class Granule < Metadata
     granules_to_save.each do |granule_data|
       #creating the granule and related record
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]))
+      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]), campaign: extract_campaign(granule_data))
       new_granule_record.save
 
       granule_record_data_list = []
@@ -43,6 +46,7 @@ class Granule < Metadata
   # I don't like that this can return two different kinds of values.
   # It will return false if the concept id is a collection or if there is an error
   # Otherwise, will return the granule_record.   I think it should return nil and test for it.
+  # This is only being used in the legacy ingest
   def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
     collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
@@ -53,7 +57,7 @@ class Granule < Metadata
 
     Granule.transaction do
       granule        = Granule.create(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
@@ -80,7 +84,7 @@ class Granule < Metadata
     granule_data = granule_info["Granule"]
 
     Granule.transaction do
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
@@ -115,7 +119,7 @@ class Granule < Metadata
 
     Granule.transaction do
       granule = Granule.new(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(

@@ -21,4 +21,9 @@ class Metadata < ApplicationRecord
   def self.daac_from_concept_id(concept_id)
     concept_id.partition('-').last
   end
+
+  def self.extract_campaign(collection_data)
+    keyword = RecordHelper::CAMPAIGN_COLUMNS.select { |column| collection_data.keys.include?(column)}
+    ApplicationController.helpers.clean_up_campaign(collection_data[keyword[0]])
+  end
 end

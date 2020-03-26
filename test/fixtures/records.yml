@@ -183,3 +183,97 @@ mdq_enabled_collection4:
   state: in_daac_review
   revision_id: 1
   daac: PODAAC
+  
+campaign_collection1:
+  id: 30
+  recordable_id: 8
+  recordable_type: Collection
+  state: in_daac_review
+  revision_id: 1
+  daac: PODAAC
+  campaign:
+    - TESTCAMP1
+    - TESTCAMP2
+  
+campaign_collection2:
+    id: 31
+    recordable_id: 9
+    recordable_type: Collection
+    state: in_daac_review
+    revision_id: 1
+    daac: PODAAC
+    campaign:
+      - TESTCAMP2
+  
+campaign_collection3:
+    id: 32
+    recordable_id: 10
+    recordable_type: Collection
+    state: in_daac_review
+    revision_id: 1
+    daac: OB_DAAC
+    campaign:
+      - TESTCAMP1
+      
+campaign_collection4:
+  id: 33
+  recordable_id: 8
+  recordable_type: Collection
+  state: open
+  revision_id: 1
+  daac: PODAAC
+  campaign:
+    - TESTCAMP3
+    - TESTCAMP4
+  
+campaign_collection5:
+    id: 34
+    recordable_id: 9
+    recordable_type: Collection
+    state: open
+    revision_id: 1
+    daac: PODAAC
+    campaign:
+      - TESTCAMP4
+  
+campaign_collection6:
+    id: 35
+    recordable_id: 10
+    recordable_type: Collection
+    state: open
+    revision_id: 1
+    daac: OB_DAAC
+    campaign:
+      - TESTCAMP3
+      
+campaign_collection7:
+  id: 36
+  recordable_id: 11
+  recordable_type: Collection
+  state: open
+  revision_id: 1
+  daac: JAXA
+  campaign:
+    - TESTCAMP5
+    - TESTCAMP6
+  
+campaign_collection8:
+    id: 37
+    recordable_id: 12
+    recordable_type: Collection
+    state: open
+    revision_id: 1
+    daac: SCIOPS
+    campaign:
+      - TESTCAMP6
+  
+campaign_collection9:
+    id: 38
+    recordable_id: 13
+    recordable_type: Collection
+    state: open
+    revision_id: 1
+    daac: JAXA
+    campaign:
+      - TESTCAMP5
+    

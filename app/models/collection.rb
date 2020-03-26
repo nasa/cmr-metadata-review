@@ -37,7 +37,7 @@ class Collection < Metadata
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes!(short_name: short_name)
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id))
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id), campaign: extract_campaign(collection_data))
 
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
@@ -71,7 +71,7 @@ class Collection < Metadata
 
     options = {
       add_granule: add_granule,
-      run_script: false,
+      run_script: true,
       user: user
     }
 
