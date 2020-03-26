@@ -266,3 +266,10 @@ digest_email_collection3_short_name:
   record_id: 25
   column_name: ShortName
   value: Test Short Name3
+
+associating_granule_to_collection:
+  id: 35
+  record_id: 16
+  column_name: ShortName
+  value: Test Short Name3
+  opinion: true

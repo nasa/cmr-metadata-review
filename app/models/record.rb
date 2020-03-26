@@ -28,11 +28,22 @@ class Record < ApplicationRecord
   scope :visible, -> { where.not(state: Record::STATE_HIDDEN) }
   scope :metadata_format, ->(format) { where(format: format) }
 
+  after_update :update_associated_granule_state
+
+  def update_associated_granule_state
+    unless previous_changes['state'].nil?
+      if recordable_type == 'Collection' && has_associated_granule?(self)
+        granule_record = Record.find_by id: self.associated_granule_value
+        granule_record.state = self.state
+        granule_record.save
+      end
+    end
+  end
+
   REVIEW_ERRORS = {
     color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",
     has_enough_reviews?: "A review needs two completed reviews to be closed, cannot close review.",
-    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags.",
-    granule_completed?: "The Collection's related Granule must be marked complete before the Collection can be completed."
+    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags."
   }
 
   aasm column: 'state', whiny_persistence: false do
@@ -44,11 +55,11 @@ class Record < ApplicationRecord
     end
 
     event :complete_arc_review do
-      transitions from: :in_arc_review, to: :ready_for_daac_review, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?, :granule_completed?]
+      transitions from: :in_arc_review, to: :ready_for_daac_review, guards: [:color_coding_complete?, :has_enough_reviews?]
     end
 
     event :release_to_daac do
-      transitions from: :ready_for_daac_review, to: :in_daac_review, after: [:update_released_to_daac_date]
+      transitions from: :ready_for_daac_review, to: :in_daac_review, guards: [:color_coding_complete?, :has_enough_reviews?, :no_second_opinions?], after: [:update_released_to_daac_date]
     end
 
     event :close do
@@ -561,23 +572,6 @@ class Record < ApplicationRecord
     end
 
     return !(self.get_opinions.select {|key,value| value == true}).any?
-  end
-
-  def granule_completed?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
-    if granule? ||
-       self.recordable.try(:granules).nil? ||
-       (self.recordable.granules.count == 0) ||
-       (self.recordable.granules.first.records.first.nil?) ||
-       (!self.recordable.granules.first.records.first.open? && !self.recordable.granules.first.records.first.in_arc_review?)
-
-      return true
-    end
-
-    return false
   end
 
   def flagged_reviews?

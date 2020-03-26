@@ -135,9 +135,11 @@
         };
       </script>
 
-      <%= button_to complete_record_path, disabled: disable_complete_button?(@reviews, @record), id: "done_button", class: "eui-btn eui-btn--round eui-btn--sm mark_complete_button" do %>
-        <p class="button_text"><%= complete_button_text(@record) %></p>
-        <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
+      <% if @record.recordable_type == 'Collection' %>
+        <%= button_to complete_record_path, disabled: disable_complete_button?(@reviews, @record), id: "done_button", class: "eui-btn eui-btn--round eui-btn--sm mark_complete_button" do %>
+          <p class="button_text"><%= complete_button_text(@record) %></p>
+          <i class="eui-icon eui-fa-link button_symbol complete_symbol"></i>
+        <% end %>
       <% end %>
     </div>
     <div class="clearfix"></div>
