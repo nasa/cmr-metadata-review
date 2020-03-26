@@ -37,9 +37,17 @@ class RecordsController < ApplicationController
     else
       granule_record = Record.find_by id: associated_granule_value
       if !granule_record.nil?
+        success, messages = granule_valid?(granule_record, @record.state)
+        unless success
+          flash[:alert] = messages.join('<br>').html_safe
+          flash[:notice] = 'Failed to associate granule.'
+          redirect_to collection_path(id: collection.id, record_id: @record.id)
+          return
+        end
         granule = Granule.find_by id: granule_record.recordable_id
         granule_concept_id = granule.concept_id
         granule_revision_id = granule_record.revision_id
+        granule_record.state = @record.state
         success = @record.update(associated_granule_value: granule_record.id)
         flash[:notice] = "Granule #{granule_concept_id}/#{granule_revision_id} has been successfully associated to this collection revision #{@record.revision_id}. "
       end
@@ -54,9 +62,7 @@ class RecordsController < ApplicationController
   def show
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
-
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
-
     @user_review = @record.review(current_user.id)
   end
 
@@ -111,7 +117,6 @@ class RecordsController < ApplicationController
     Record.transaction do
       begin
         success = @record.revert!
-        success = revert_granule(@record) if success
       rescue StandardError => e
         Rails.logger.error("Error encountered reverting #{@record.concept_id}, #{e.message}")
         success = false
@@ -193,6 +198,25 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
+  def granule_valid?(granule_record, collection_state)
+    return true if %w(open in_arc_review).include?(collection_state)
+    success = true
+    messages = []
+    unless granule_record.color_coding_complete?
+      messages << 'Not all columns in the associated granule have been flagged with a color!'
+      success = false
+    end
+    unless granule_record.has_enough_reviews?
+      messages << 'The associated granule needs two completed reviews.'
+      success = false
+    end
+    if %w(ready_for_daac_review in_daac_review).include?(collection_state) && !granule_record.no_second_opinions?
+      messages << 'Some columns in the associated granule still need a second opinion review.  Please clear all second opinion flags'
+      success = false
+    end
+    [success, messages]
+  end
+
   def completion_success(record)
     unless can?(:review_state, record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"
@@ -200,6 +224,15 @@ class RecordsController < ApplicationController
     end
 
     begin
+      if has_associated_granule? record
+        granule_record = Record.find_by id: record.associated_granule_value
+        success, messages = granule_valid?(granule_record, record.state)
+        unless success
+          flash[:alert] = messages.join('<br>').html_safe
+          return false
+        end
+      end
+
       if record.in_arc_review?
         success = record.complete_arc_review!
       elsif record.ready_for_daac_review?
@@ -223,10 +256,7 @@ class RecordsController < ApplicationController
   def release_record_for_daac_review(record)
     success = false
     Record.transaction do
-      case record.recordable_type
-      when 'Granule'
-        success = release_granule_record_to_daacs(record)
-      when 'Collection'
+      if record.recordable_type == 'Collection'
         success = release_collection_record_to_daacs(record)
       else
         Rails.logger.error("Error encountered releasing record, type not known, #{record.recordable_type}")
@@ -238,38 +268,8 @@ class RecordsController < ApplicationController
     success
   end
 
-  # Check if collection record has assoc granule, if so, revert it.
-  def revert_granule(collection_record)
-    if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
-      granule_record = Record.find_by id: collection_record.associated_granule_value
-      granule_record.revert!
-    else
-      true # doesn't have a granule, so return success
-    end
-  end
-
-  # User chose to release granule record, also release the associated collection record
-  def release_granule_record_to_daacs(granule_record)
-    collection_record = Record.find_by associated_granule_value: granule_record.id
-    # release the assoc collection record
-    if !collection_record.nil?
-      collection_record.release_to_daac! ? granule_record.release_to_daac! : false
-    else
-      granule_record.release_to_daac!
-    end
-  end
-
-  # User chose to release collection record, also release the associated granule record
   def release_collection_record_to_daacs(collection_record)
-    if !collection_record.associated_granule_value.nil? && is_number?(collection_record.associated_granule_value)
-      # release the assoc granule record
-      granule_record = Record.find_by id: collection_record.associated_granule_value
-      granule_record.state = 'ready_for_daac_review' # dashboard data maybe inconsistent, so force this record to be in this state.
-
-      granule_record.release_to_daac! ? collection_record.release_to_daac! : false
-    else
-      collection_record.release_to_daac! # release the collection record
-    end
+    collection_record.release_to_daac!
   end
 
 end

@@ -146,6 +146,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_nil Record.find(18).released_to_daac_date
       assert_equal Record.find(18).state, 'ready_for_daac_review'
       post :complete, params: { id: 18 }
+      puts "flash=#{flash[:alert]}"
       assert_in_delta Record.find(18).released_to_daac_date, Time.zone.now, 10
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'in_daac_review'
@@ -188,6 +189,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(12).state, 'in_daac_review'
       assert_equal Record.find(17).state, 'in_daac_review'
       post :associate_granule_to_collection, params: { id: 12, associated_granule_value: 17 }
+      puts "flash=#{flash['alert']}"
       assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
       post :revert, params: { id: 12 }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]

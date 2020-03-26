@@ -31,6 +31,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
         page.must_have_content('Granule G309210-GHRC/1 has been successfully associated to this collection revision 9.')
       end
 
+
       it 'can assign "no granule review" to a collection' do
         visit '/home'
 
@@ -47,7 +48,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
     end
 
-    describe 'associated granule reports' do
+    describe 'associated granule reports', js: true do
       it 'associated granule shows up in reports' do
         mock_login(role: 'admin')
         visit '/home'
@@ -73,6 +74,8 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
         page.must_have_content('RECORD METRICS') # verify it has report metrics
         page.assert_selector('.checked_num', count: 2) # of elements reviewed appears twice.
       end
+
+
     end
   end
 
@@ -96,6 +99,29 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
       page.must_have_content("associated granule will be marked as 'Undefined'")
     end
   end
+
+  describe 'perform checks associating granule to collection' do
+    it 'checks has reviewers, all colors, and no second opinions' do
+      mock_login(role: 'admin')
+      visit '/home'
+
+      within '#in_daac_review' do
+        all('#record_id_')[0].click # select the record again in "in daac review"
+        find('div > div.navigate-buttons > input.selectButton').click # Clicks the See Review Details button
+      end
+
+      within '#form-9' do
+        first('#associated_granule_value').find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
+        first('#associated_granule_value').find("option[value='16']").click # Click in select box for what granule to associate
+      end
+
+      page.must_have_content('The associated granule needs two completed reviews')
+      page.must_have_content('Not all columns in the associated granule have been flagged with a color!')
+      page.must_have_content('Some columns in the associated granule still need a second opinion review.')
+
+    end
+  end
+
 end
 
 
