@@ -8,12 +8,11 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
     OmniAuth.config.test_mode = true
   end
 
-  describe 'Campaign Filtering', js: true do
+  describe 'Campaign Filtering' do
     describe 'when the user is an Arc Curator' do
       before do
         mock_login(id: 3) # arc curator
         visit home_path
-        screenshot_and_save_page
       end
 
       it 'has the expected campaigns in the filter box' do

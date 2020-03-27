@@ -15,9 +15,11 @@ class EmailPreferenceTest < Capybara::Rails::TestCase
 
     it 'a daac curator can see and access the e-mail preferences page' do
       visit home_path
+      puts 'Asserting Account Options'
       assert has_content?('Account Options')
       find('.account_options').hover
       click_on('E-mail Preferences')
+      puts 'Asserting prompt text'
       assert has_content?('I would like the Curation Dashboard to send me e-mails summarizing available reports that are relevant to my DAAC:')
     end
 
