@@ -22,7 +22,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
       it 'cannot see link for editing mmt' do
         visit '/home'
 
-        within '#open' do
+        within '#in_arc_review' do
           # checks the check box next to the first collection record in the table
           find(:css, "#record_id_[value='1']").set(true)
 
@@ -53,7 +53,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
     it 'cannot see link for editing mmt' do
       visit '/home'
 
-      within '#open' do
+      within '#in_arc_review' do
         # checks the check box next to the first collection record in the tables
         find(:css, "#record_id_[value='1']").set(true)
 

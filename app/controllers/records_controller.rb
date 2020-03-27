@@ -37,7 +37,7 @@ class RecordsController < ApplicationController
     else
       granule_record = Record.find_by id: associated_granule_value
       if !granule_record.nil?
-        success, messages = granule_valid?(granule_record, @record.state)
+        success, messages = granule_valid?(granule_record, @record.state, true)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
           flash[:notice] = 'Failed to associate granule.'
@@ -47,7 +47,7 @@ class RecordsController < ApplicationController
         granule = Granule.find_by id: granule_record.recordable_id
         granule_concept_id = granule.concept_id
         granule_revision_id = granule_record.revision_id
-        granule_record.state = @record.state
+        granule_record.update(state: @record.state)
         success = @record.update(associated_granule_value: granule_record.id)
         flash[:notice] = "Granule #{granule_concept_id}/#{granule_revision_id} has been successfully associated to this collection revision #{@record.revision_id}. "
       end
@@ -198,8 +198,8 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
-  def granule_valid?(granule_record, collection_state)
-    return true if %w(open in_arc_review).include?(collection_state)
+  def granule_valid?(granule_record, collection_state, associating_flag)
+    return true if %w(open in_arc_review).include?(collection_state) && associating_flag
     success = true
     messages = []
     unless granule_record.color_coding_complete?
@@ -226,7 +226,7 @@ class RecordsController < ApplicationController
     begin
       if has_associated_granule? record
         granule_record = Record.find_by id: record.associated_granule_value
-        success, messages = granule_valid?(granule_record, record.state)
+        success, messages = granule_valid?(granule_record, record.state, false)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
           return false
