@@ -122,8 +122,7 @@
         </div>
         <% @granule_objects.each_with_index do |granule, index| %>
           <% granule.get_records.each do |granule_record| %>
-            <table class="revision_table">
-
+            <table id="granule_revision_<%= granule_record.revision_id %>" class="revision_table">
               <tr>
                 <th class="collection_granule_revision_row">
                   <h4>
