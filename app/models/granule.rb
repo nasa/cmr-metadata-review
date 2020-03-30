@@ -18,8 +18,7 @@ class Granule < Metadata
     granules_to_save.each do |granule_data|
       #creating the granule and related record
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]), campaign: extract_campaign(granule_data))
-      new_granule_record.save
+      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]))
 
       granule_record_data_list = []
 
@@ -34,6 +33,8 @@ class Granule < Metadata
         granule_record_data.order_count = i
         granule_record_data_list.push(granule_record_data)
       end
+      new_granule_record.campaign = ApplicationController.helpers.clean_up_campaign(new_granule_record.campaign_from_record_data)
+      new_granule_record.save
 
       granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: DateTime.now)
       #pushing the list of granule parts into the granule_components list for a return value
@@ -57,7 +58,7 @@ class Granule < Metadata
 
     Granule.transaction do
       granule        = Granule.create(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
@@ -67,6 +68,8 @@ class Granule < Metadata
           order_count:  i,
         )
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_record
@@ -84,7 +87,7 @@ class Granule < Metadata
     granule_data = granule_info["Granule"]
 
     Granule.transaction do
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
@@ -95,6 +98,8 @@ class Granule < Metadata
         )
         granule_record.save!
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_ingest.save!
@@ -119,7 +124,7 @@ class Granule < Metadata
 
     Granule.transaction do
       granule = Granule.new(concept_id: granule_concept_id, collection: collection)
-      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), campaign: extract_campaign(granule_data))
+      granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id))
 
       granule_data.each_with_index do |(key, value), i|
         granule_record.record_datas.create(
@@ -130,6 +135,8 @@ class Granule < Metadata
         )
         granule_record.save!
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_ingest.save!

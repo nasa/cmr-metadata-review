@@ -28,6 +28,9 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         assert has_content?('campaign_test_collection_1-PODAAC')
         assert has_content?('campaign_test_collection_2-PODAAC')
         assert has_content?('campaign_test_collection_3-OB_DAAC')
+        assert has_no_content?('campaign_test_collection_4-JAXA')
+        assert has_no_content?('campaign_test_collection_5-SCIOPS')
+        assert has_no_content?('campaign_test_collection_6-JAXA')
       end
 
       describe 'when the user filters some records' do
@@ -40,6 +43,9 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
           assert has_content?('campaign_test_collection_1-PODAAC')
           assert has_no_content?('campaign_test_collection_2-PODAAC')
           assert has_content?('campaign_test_collection_3-OB_DAAC')
+          assert has_no_content?('campaign_test_collection_4-JAXA')
+          assert has_no_content?('campaign_test_collection_5-SCIOPS')
+          assert has_no_content?('campaign_test_collection_6-JAXA')
         end
 
         describe 'when the user removes the filter' do
@@ -73,6 +79,9 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
       end
 
       it 'can see unfiltered records' do
+        assert has_no_content?('campaign_test_collection_1-PODAAC')
+        assert has_no_content?('campaign_test_collection_2-PODAAC')
+        assert has_no_content?('campaign_test_collection_3-OB_DAAC')
         assert has_content?('campaign_test_collection_4-JAXA')
         assert has_content?('campaign_test_collection_5-SCIOPS')
         assert has_content?('campaign_test_collection_6-JAXA')
@@ -85,6 +94,9 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         end
 
         it 'can see filtered records' do
+          assert has_no_content?('campaign_test_collection_1-PODAAC')
+          assert has_no_content?('campaign_test_collection_2-PODAAC')
+          assert has_no_content?('campaign_test_collection_3-OB_DAAC')
           assert has_content?('campaign_test_collection_4-JAXA')
           assert has_no_content?('campaign_test_collection_5-SCIOPS')
           assert has_content?('campaign_test_collection_6-JAXA')

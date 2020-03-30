@@ -1,11 +1,4 @@
 module RecordHelper
-  # Campaigns/Campaign/ShortName comes from ECHO10
-  # Projects/ShortName comes from UMM-JSON
-  # Project/Short_Name comes from DIF10
-  CAMPAIGN_COLUMNS = %w[Campaigns/Campaign/ShortName
-                        Projects/ShortName
-                        Project/Short_Name]
-
   def is_number?(object)
     true if Float(object) rescue false
   end

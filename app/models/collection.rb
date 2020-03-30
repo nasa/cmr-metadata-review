@@ -37,7 +37,7 @@ class Collection < Metadata
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes!(short_name: short_name)
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id), campaign: extract_campaign(collection_data))
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id))
 
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
@@ -47,6 +47,8 @@ class Collection < Metadata
                                          order_count: i,
                                        })
       end
+      new_record.campaign = ApplicationController.helpers.clean_up_campaign(new_record.campaign_from_record_data)
+      new_record.save
 
       user = options[:user] || User.find_by(role: "admin")
 

@@ -82,7 +82,7 @@ module ApplicationHelper
       state = form == home_path ? :in_daac_review : [:finished, :closed]
     elsif current_user.mdq_curator?
       daac = MDQ_PROVIDERS
-      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review] : [:finished, :closed]
     elsif current_user.arc_curator?
       daac = ARC_PROVIDERS
       state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review] : [:finished, :closed]
