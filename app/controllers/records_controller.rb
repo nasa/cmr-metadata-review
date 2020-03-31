@@ -37,7 +37,7 @@ class RecordsController < ApplicationController
     else
       granule_record = Record.find_by id: associated_granule_value
       unless granule_record.nil?
-        success, messages = associated_granule_valid?(granule_record, @record.state, true)
+        success, messages = can_associate_granule?(granule_record, @record.state)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
           flash[:notice] = 'Failed to associate granule.'
@@ -207,7 +207,7 @@ class RecordsController < ApplicationController
     begin
       if record.has_associated_granule?
         granule_record = Record.find_by id: record.associated_granule_value
-        success, messages = associated_granule_valid?(granule_record, record.state, false)
+        success, messages = can_mark_granule_complete?(granule_record, record.state)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
           return false

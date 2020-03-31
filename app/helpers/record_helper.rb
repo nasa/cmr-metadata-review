@@ -4,18 +4,33 @@ module RecordHelper
     true if Float(object) rescue false
   end
 
-  # manually provides validation checks for the associated granule record based on the state of the collection.
-  # if associated_flag is true AND the granule and the collection state is in ready_for_daac_review or in_daac_review
-  # and the checks fail, it will return false.   The application called should then not associate the record.
-  #
-  # if the associated_flag is false - the caller is trying to mark the collection record complete and wants to
-  # check if the associated granule passes it checks as well.
-  #
-  # finally only time it should check second opinions is if the record is moving to in_daac_review.
-  def associated_granule_valid?(granule_record, collection_state, associating_flag)
+  # checks if the granule can be associated
+  # note if the checks fail, the caller should not associate the granule record to the collection.
+  def can_associate_granule?(granule_record, collection_state)
     # it is ok to associate granule records without checks if in open or in_arc_review
-    return [true, nil] if %w(open in_arc_review).include?(collection_state) && associating_flag
+    return [true, nil] if %w(open in_arc_review).include?(collection_state)
 
+    success = true
+    messages = []
+    unless granule_record.color_coding_complete?
+      messages << 'Not all columns in the associated granule have been flagged with a color!'
+      success = false
+    end
+    unless granule_record.has_enough_reviews?
+      messages << 'The associated granule needs two completed reviews.'
+      success = false
+    end
+    if %w(in_daac_review).include?(collection_state) && !granule_record.no_second_opinions?
+      messages << 'Some columns in the associated granule still need a second opinion review.  Please clear all second opinion flags'
+      success = false
+    end
+    [success, messages]
+  end
+
+  # checks if the granule can be marked complete
+  # note: marking a record complete checks to see if it can move to the next state.
+  def can_mark_granule_complete?(granule_record, collection_state)
+    # it is ok to associate granule records without checks if in open or in_arc_review
     success = true
     messages = []
     unless granule_record.color_coding_complete?
