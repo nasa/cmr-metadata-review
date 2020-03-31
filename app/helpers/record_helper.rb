@@ -29,7 +29,7 @@ module RecordHelper
 
   # checks if the granule can be marked complete
   # note: marking a record complete checks to see if it can move to the next state.
-  def can_mark_granule_complete?(granule_record, collection_state)
+  def can_mark_associated_granule_complete?(granule_record, collection_state)
     # it is ok to associate granule records without checks if in open or in_arc_review
     success = true
     messages = []

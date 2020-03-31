@@ -207,7 +207,7 @@ class RecordsController < ApplicationController
     begin
       if record.has_associated_granule?
         granule_record = Record.find_by id: record.associated_granule_value
-        success, messages = can_mark_granule_complete?(granule_record, record.state)
+        success, messages = can_mark_associated_granule_complete?(granule_record, record.state)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
           return false
