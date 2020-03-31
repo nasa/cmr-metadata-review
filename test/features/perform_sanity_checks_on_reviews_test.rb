@@ -13,15 +13,14 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
         headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby'}
       )
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
+
+    OmniAuth.config.test_mode = true
+    mock_login(role: 'arc_curator')
+    visit '/home'
   end
 
   describe 'performs "mark complete" on a collection record and granule record' do
     before do
-      OmniAuth.config.test_mode = true
-      mock_login(role: 'arc_curator')
-
-      visit '/home'
-
       # link granule to collection for remaining tests
       assert_equal Record.find_by(id: 1).state, 'in_arc_review'
 
@@ -136,21 +135,12 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
   end
 
   describe 'viewing the granule review, the buttons "Mark Complete","Release to DAAC", "CMR Updated" etc. are no longer present.' do
-    before do
-      OmniAuth.config.test_mode = true
-      mock_login(role: 'arc_curator')
-    end
-
     it 'verify correct buttons appear' do
-
-      visit '/home'
-
       # Select First Collection in In Arc Review
       see_collection_review_details('#in_arc_review', 0)
       see_granule_revision_details(6)
       assert_css '#review_complete_button'
       assert_no_css '#done_button'
-
     end
   end
 end
