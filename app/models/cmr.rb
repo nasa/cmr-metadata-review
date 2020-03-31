@@ -371,7 +371,7 @@ class Cmr
     url = Cmr.api_url('granules', 'echo10', 'concept_id': concept_id)
     response = Cmr.cmr_request(url)
     if response.code != 200
-      Rails.logger info "Error retrieving raw granule #{concept_id}, error=#{response.parsed_response}"
+      Rails.logger.info "Error retrieving raw granule #{concept_id}, error=#{response.parsed_response}"
       return false
     end
     granule_hash = convert_to_hash('echo10', response.parsed_response)
