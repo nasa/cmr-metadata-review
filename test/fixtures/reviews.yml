@@ -13,3 +13,83 @@ second:
   review_completion_date: <%=DateTime.now%>
   review_state: 0
   user_id: 1
+
+completed_review1:
+  record_id: 19
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 3
+
+completed_review2:
+  record_id: 19
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 1
+
+completed_review3:
+  record_id: 17
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 3
+
+completed_review4:
+  record_id: 17
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 1
+
+completed_review5:
+  record_id: 5
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 3
+
+completed_review6:
+  record_id: 5
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 1
+
+completed_review7:
+  record_id: 18
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 3
+
+completed_review8:
+  record_id: 18
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 1
+
+completed_review9:
+  record_id: 1
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 4
+
+completed_review10:
+  record_id: 16
+  report_comment: my report comment
+  review_comment: my review comment
+  review_completion_date: <%=DateTime.now%>
+  review_state: 1
+  user_id: 1
