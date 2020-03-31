@@ -48,7 +48,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
     end
 
-    describe 'associated granule reports', js: true do
+    describe 'associated granule reports' do
       it 'associated granule shows up in reports' do
         mock_login(role: 'admin')
         visit '/home'
@@ -121,5 +121,4 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
 
     end
   end
-
 end
