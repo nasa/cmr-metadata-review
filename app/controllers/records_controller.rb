@@ -36,7 +36,7 @@ class RecordsController < ApplicationController
       success = @record.update(associated_granule_value: associated_granule_value)
     else
       granule_record = Record.find_by id: associated_granule_value
-      if !granule_record.nil?
+      unless granule_record.nil?
         success, messages = granule_valid?(granule_record, @record.state, true)
         unless success
           flash[:alert] = messages.join('<br>').html_safe
@@ -205,7 +205,7 @@ class RecordsController < ApplicationController
     end
 
     begin
-      if has_associated_granule? record
+      if record.has_associated_granule?
         granule_record = Record.find_by id: record.associated_granule_value
         success, messages = granule_valid?(granule_record, record.state, false)
         unless success
