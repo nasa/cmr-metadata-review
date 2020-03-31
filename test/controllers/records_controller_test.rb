@@ -154,6 +154,69 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
+
+    it 'marks complete while checking BOTH the collection review AND the associated granule review.' do
+      user = User.find_by(email: 'arc_curator@element84.com')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      record = Record.find(1)
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
+      assert_equal 'Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ', flash[:notice]
+      post :complete, params: { id: record.id }
+      assert_equal 'Not all columns in the associated granule have been flagged with a color!<br>The associated granule needs two completed reviews.', flash[:alert]
+      assert_equal 'Record failed to update.', flash[:notice]
+    end
+
+    it 'will not flag second opinions until it hits ready for daac review state.' do
+      user = User.find_by(email: 'arc_curator@element84.com')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      record = Record.find(1)
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
+      assert_equal 'Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ', flash[:notice]
+
+      # current record is in "in_arc_review, second opinions check not flagged
+      post :complete, params: { id: record.id }
+      assert_no_match 'Some columns in the associated granule still need a second opinion review', flash[:alert]
+
+      # current record now in "ready_for_daac_review"", second opinions check is flagged
+      record.update(state: 'ready_for_daac_review')
+      post :complete, params: { id: record.id }
+      assert_match 'Some columns in the associated granule still need a second opinion review', flash[:alert]
+      assert_equal 'Record failed to update.', flash[:notice]
+    end
+
+    it 'will moves the granule review state forward along with the collection view' do
+      user = User.find_by(email: 'arc_curator@element84.com')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      record = Record.find(1)
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
+      assert_equal 'Granule G309210-GHRC/6 has been successfully associated to this collection revision 8. ', flash[:notice]
+
+      # Update color for granule record data
+      r = RecordData.find_by id: 35
+      r.update(color: 'red')
+
+      # Assign additional review to granule
+      granule_review = Record.find(16).add_review(2)
+      granule_review.mark_complete
+
+      # Update color for collection record data
+      r = RecordData.find_by id: 9
+      r.update(color: 'red')
+
+      # Assign additional review to collection
+      collection_review = Record.find(1).add_review(2)
+      collection_review.mark_complete
+
+      # No errors, so complete should move it to ready_for_daac_review
+      post :complete, params: { id: record.id }
+      assert Record.find(1).state, Record.find(16).state
+      assert Record.find(1).state, 'ready_for_daac_review'
+    end
+
+
   end
 
   describe 'POST #revert ' do
@@ -279,4 +342,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 C1000000020-LANCEAMSR2/9 ', flash[:notice]
     end
   end
+
+
+
 end

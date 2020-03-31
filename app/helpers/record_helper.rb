@@ -3,6 +3,50 @@ module RecordHelper
     true if Float(object) rescue false
   end
 
+  # checks if the granule can be associated
+  # note if the checks fail, the caller should not associate the granule record to the collection.
+  def can_associate_granule?(granule_record, collection_state)
+    # it is ok to associate granule records without checks if in open or in_arc_review
+    return [true, nil] if %w(open in_arc_review).include?(collection_state)
+
+    success = true
+    messages = []
+    unless granule_record.color_coding_complete?
+      messages << 'Not all columns in the associated granule have been flagged with a color!'
+      success = false
+    end
+    unless granule_record.has_enough_reviews?
+      messages << 'The associated granule needs two completed reviews.'
+      success = false
+    end
+    if %w(in_daac_review).include?(collection_state) && !granule_record.no_second_opinions?
+      messages << 'Some columns in the associated granule still need a second opinion review.  Please clear all second opinion flags'
+      success = false
+    end
+    [success, messages]
+  end
+
+  # checks if the associated granule can be marked complete
+  # note: marking a record complete checks to see if it can move to the next state.
+  def can_mark_associated_granule_complete?(granule_record, collection_state)
+    # it is ok to associate granule records without checks if in open or in_arc_review
+    success = true
+    messages = []
+    unless granule_record.color_coding_complete?
+      messages << 'Not all columns in the associated granule have been flagged with a color!'
+      success = false
+    end
+    unless granule_record.has_enough_reviews?
+      messages << 'The associated granule needs two completed reviews.'
+      success = false
+    end
+    if %w(ready_for_daac_review in_daac_review).include?(collection_state) && !granule_record.no_second_opinions?
+      messages << 'Some columns in the associated granule still need a second opinion review.  Please clear all second opinion flags'
+      success = false
+    end
+    [success, messages]
+  end
+
   def empty_contents(value)
     new_value = nil
 

@@ -53,6 +53,20 @@ class ReviewsController < ApplicationController
   end
 
   def create
+    record_id = params['review']['record_id']
+    record = Record.find_by id: record_id
+    messages = []
+
+    unless record.color_coding_complete?
+      messages << 'Note, not all columns have been flagged with a color, be sure this is done before marking this review complete.'
+    end
+    unless record.no_second_opinions?
+      messages << 'Note, some columns still need a second opinion review.  Please clear all second opinion flags before releasing this record to the daac.'
+    end
+    if messages.any?
+      flash[:alert] = messages.join('<br>').html_safe
+    end
+
     #making sure we dont make duplicate review
     if !Review.where(user_id: params['review']['user_id'].to_i, record_id: params['review']['record_id'].to_i).first.nil?
       redirect_to record_path(id: params['review']['record_id'].to_i)
