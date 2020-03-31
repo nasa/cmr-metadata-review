@@ -15,12 +15,13 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
 
     OmniAuth.config.test_mode = true
-    mock_login(role: 'arc_curator')
-    visit '/home'
   end
 
   describe 'performs "mark complete" on a collection record and granule record' do
     before do
+      mock_login(role: 'arc_curator')
+      visit '/home'
+
       # link granule to collection for remaining tests
       assert_equal Record.find_by(id: 1).state, 'in_arc_review'
 
@@ -38,13 +39,16 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
       # We should see some informative issues.  These won't prevent saving the review.
       assert has_content? 'Note, not all columns have been flagged with a color, be sure this is done before marking this review complete.'
       assert has_content? 'Note, some columns still need a second opinion review.'
+
+      click_button 'MARK AS DONE'
     end
 
     describe 'on granule record' do
+
       # in this case short name, long name are marked with a color, but version id is not in the granule
-      it 'checks granule review during mark as done and produces error' do
+      # lets fix the granule first
+      it 'checks to see if it produces error' do
         # Now click MARK AS DONE
-        click_button 'MARK AS DONE'
         assert_equal Record.find_by(id: 1).state, 'in_arc_review'
         assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
 
@@ -53,79 +57,90 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
         assert has_content?('The associated granule needs two completed reviews')
         assert has_content? 'Record failed to update.'
         assert_no_css '#done_button[disabled]' # still enabled
-      end
-
-      it 'fixes granule' do
-        # Lets back out to fix the granule issues.
-        find('#nav_back_button').click
-
-        see_granule_revision_details(6)
-        assign_review_comments('my review comment', 'my report comment')
-
-        # Now lets fix issue #1 and make sure the column has a flagged color
-        click_button 'Collection Info'
-
-        find('#color_button_green_ShortName').click
-        find('.review-toggle__text').click
-        #
-        # Lets save the review and back out again.
-        click_button 'Save Review'
-
-        find('#nav_back_button').click
-        find('#nav_back_button').click
-
-        # Lets view the collection review details again
-        see_collection_revision_details(8)
-
-        # Now click mark as done should reveal a new error, this time with the collection.
-        click_button 'MARK AS DONE'
-
-        assert_equal Record.find_by(id: 1).state, 'in_arc_review'
-        assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
-
-        # only collection errors left
-        assert has_no_content? 'Not all columns in the associated granule have been flagged with a color!'
-        assert has_no_content? 'The associated granule needs two completed reviews'
-        assert has_content? 'Not all columns have been flagged with a color, cannot close review.'
-        assert has_content? 'Record failed to update.'
-
-        describe 'on the collection' do
-          it 'fixes the collection and produces success message - should ignore second opinion checks' do
-            # fixes collections
-            see_collection_revision_details(8)
-            click_button 'MARK AS DONE'
-            click_button 'Collection Info'
-            find('#color_button_green_VersionId').click
-            click_button 'Save Review'
+        
+        describe 'granule is fixed' do
+          before do
+            # Lets back out to fix the granule issues.
             find('#nav_back_button').click
 
-            # produces success message
+            see_granule_revision_details(6)
+            assign_review_comments('my review comment', 'my report comment')
+
+            # Now lets fix issue #1 and make sure the column has a flagged color
+            click_button 'Collection Info'
+
+            find('#color_button_green_ShortName').click
+            find('.review-toggle__text').click
+            #
+            # Lets save the review and back out again.
+            click_button 'Save Review'
+
+            find('#nav_back_button').click
+            find('#nav_back_button').click
+
+            # Lets view the collection review details again
+            see_collection_revision_details(8)
+
+            # Now click mark as done should reveal a new error, this time with the collection.
             click_button 'MARK AS DONE'
-            assert_equal Record.find_by(id: 1).state, 'ready_for_daac_review'
+          end
+
+          it 'verifies only collection errors are left' do
+
+            screenshot_and_open_image
+            assert_equal Record.find_by(id: 1).state, 'in_arc_review'
             assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
-            assert has_content? 'Record has been successfully updated.'
 
-            describe 'tries to release to daac' do
-              it 'releases to daac' do
-                # Now lets try to release to daac, it should fail because collection should fail the second opinion check,
-                # which is only checked when being released to a daac
+            # only collection errors left
+            assert has_no_content? 'Not all columns in the associated granule have been flagged with a color!'
+            assert has_no_content? 'The associated granule needs two completed reviews'
+            assert has_content? 'Not all columns have been flagged with a color, cannot close review.'
+            assert has_content? 'Record failed to update.'
+
+            describe 'on the collection' do
+              before do
+                # fixes collections
                 see_collection_revision_details(8)
-
-                # Now the button should say "RELEASE TO DAAC" since we are in ready_for_daac_review state
-                click_button 'RELEASE TO DAAC'
-                assert has_content? 'Record failed to update.'
-                assert has_content? 'Some columns still need a second opinion review, cannot close review.'
-
-                # Lets fix this now
+                click_button 'MARK AS DONE'
                 click_button 'Collection Info'
-                find('.review-toggle__text').click
+                find('#color_button_green_VersionId').click
                 click_button 'Save Review'
                 find('#nav_back_button').click
 
-                click_button 'RELEASE TO DAAC'
-                assert has_content? 'Record has been successfully updated.'
-                assert_equal Record.find_by(id: 1).state, 'in_daac_review'
+                # produces success message
+                click_button 'MARK AS DONE'
+              end
+
+              it 'fixes the collection and produces success message - should ignore second opinion checks' do
+                assert_equal Record.find_by(id: 1).state, 'ready_for_daac_review'
                 assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
+                assert has_content? 'Record has been successfully updated.'
+              end
+
+              describe 'tries to release to daac' do
+                before do
+                  # Now lets try to release to daac, it should fail because collection should fail the second opinion check,
+                  # which is only checked when being released to a daac
+                  see_collection_revision_details(8)
+
+                  # Now the button should say "RELEASE TO DAAC" since we are in ready_for_daac_review state
+                  click_button 'RELEASE TO DAAC'
+                end
+                it 'releases to daac' do
+                  assert has_content? 'Record failed to update.'
+                  assert has_content? 'Some columns still need a second opinion review, cannot close review.'
+
+                  # Lets fix this now
+                  click_button 'Collection Info'
+                  find('.review-toggle__text').click
+                  click_button 'Save Review'
+                  find('#nav_back_button').click
+
+                  click_button 'RELEASE TO DAAC'
+                  assert has_content? 'Record has been successfully updated.'
+                  assert_equal Record.find_by(id: 1).state, 'in_daac_review'
+                  assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
+                end
               end
             end
           end
@@ -135,6 +150,11 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
   end
 
   describe 'viewing the granule review, the buttons "Mark Complete","Release to DAAC", "CMR Updated" etc. are no longer present.' do
+    before do
+      mock_login(role: 'arc_curator')
+      visit '/home'
+    end
+
     it 'verify correct buttons appear' do
       # Select First Collection in In Arc Review
       see_collection_review_details('#in_arc_review', 0)
