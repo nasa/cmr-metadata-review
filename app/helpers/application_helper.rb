@@ -91,7 +91,7 @@ module ApplicationHelper
       state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
     end
 
-    select_list.concat(Record.where(daac: daac, state: state).pluck(:campaign).flatten.uniq.sort)
+    select_list.concat(Record.where(daac: daac, state: state, recordable_type: 'Collection').pluck(:campaign).flatten.uniq.sort)
 
     select_list
   end
