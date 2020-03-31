@@ -4,7 +4,15 @@ module RecordHelper
     true if Float(object) rescue false
   end
 
-  def granule_valid?(granule_record, collection_state, associating_flag)
+  # manually provides validation checks for the associated granule record based on the state of the collection.
+  # if associated_flag is true AND the granule and the collection state is in ready_for_daac_review or in_daac_review
+  # and the checks fail, it will return false.   The application called should then not associate the record.
+  #
+  # if the associated_flag is false - the caller is trying to mark the collection record complete and wants to
+  # check if the associated granule passes it checks as well.
+  #
+  # finally only time it should check second opinions is if the record is moving to in_daac_review.
+  def associated_granule_valid?(granule_record, collection_state, associating_flag)
     # it is ok to associate granule records without checks if in open or in_arc_review
     return [true, nil] if %w(open in_arc_review).include?(collection_state) && associating_flag
 
