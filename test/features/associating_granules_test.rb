@@ -74,8 +74,6 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
         page.must_have_content('RECORD METRICS') # verify it has report metrics
         page.assert_selector('.checked_num', count: 2) # of elements reviewed appears twice.
       end
-
-
     end
   end
 
@@ -118,7 +116,6 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
       page.must_have_content('The associated granule needs two completed reviews')
       page.must_have_content('Not all columns in the associated granule have been flagged with a color!')
       page.must_have_content('Some columns in the associated granule still need a second opinion review.')
-
     end
   end
 end
