@@ -4,10 +4,6 @@ module RecordHelper
     true if Float(object) rescue false
   end
 
-  def has_associated_granule?(record)
-    record.associated_granule_value.present? && is_number?(record.associated_granule_value)
-  end
-
   def granule_valid?(granule_record, collection_state, associating_flag)
     # it is ok to associate granule records without checks if in open or in_arc_review
     return [true, nil] if %w(open in_arc_review).include?(collection_state) && associating_flag

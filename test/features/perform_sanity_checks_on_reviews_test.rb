@@ -57,7 +57,7 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
         assert has_content?('The associated granule needs two completed reviews')
         assert has_content? 'Record failed to update.'
         assert_no_css '#done_button[disabled]' # still enabled
-        
+
         describe 'granule is fixed' do
           before do
             # Lets back out to fix the granule issues.
