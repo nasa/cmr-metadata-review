@@ -47,6 +47,8 @@ class Collection < Metadata
                                          order_count: i,
                                        })
       end
+      new_record.campaign = ApplicationController.helpers.clean_up_campaign(new_record.campaign_from_record_data)
+      new_record.save
 
       user = options[:user] || User.find_by(role: "admin")
 

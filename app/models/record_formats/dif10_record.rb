@@ -45,6 +45,10 @@ module RecordFormats
       self.get_column("Entry_ID/Version")
     end
 
+    def campaign_from_record_data
+      get_column('Project/Short_Name')
+    end
+
     # There are currently only scripts for DIF10 collections.
     def create_script(raw_data = nil)
       if raw_data.nil?
