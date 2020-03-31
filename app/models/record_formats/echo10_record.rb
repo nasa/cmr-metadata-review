@@ -50,6 +50,10 @@ module RecordFormats
       self.get_column("VersionId")
     end
 
+    def campaign_from_record_data
+      get_column('Campaigns/Campaign/ShortName')
+    end
+
     def create_script(raw_data = nil)
       if raw_data.nil?
         raw_data = get_raw_data

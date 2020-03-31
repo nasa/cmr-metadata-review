@@ -6,6 +6,9 @@ class Granule < Metadata
 
   delegate :update?, :short_name, to: :collection
 
+  # TODO: These granule ingest methods have a lot of similarities.  We should
+  # figure out if there's some way to condense this code to make it easier to
+  # maintain.
   def self.assemble_granule_components(concept_id, granules_count, collection_object, current_user)
     #returns a list of granule data
     granules_to_save = Cmr.random_granules_from_collection(concept_id, granules_count)
@@ -16,7 +19,6 @@ class Granule < Metadata
       #creating the granule and related record
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
       new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]))
-      new_granule_record.save
 
       granule_record_data_list = []
 
@@ -31,6 +33,8 @@ class Granule < Metadata
         granule_record_data.order_count = i
         granule_record_data_list.push(granule_record_data)
       end
+      new_granule_record.campaign = ApplicationController.helpers.clean_up_campaign(new_granule_record.campaign_from_record_data)
+      new_granule_record.save
 
       granule_ingest = Ingest.new(record: new_granule_record, user: current_user, date_ingested: DateTime.now)
       #pushing the list of granule parts into the granule_components list for a return value
@@ -43,6 +47,7 @@ class Granule < Metadata
   # I don't like that this can return two different kinds of values.
   # It will return false if the concept id is a collection or if there is an error
   # Otherwise, will return the granule_record.   I think it should return nil and test for it.
+  # This is only being used in the legacy ingest
   def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
     collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
@@ -63,6 +68,8 @@ class Granule < Metadata
           order_count:  i,
         )
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_record
@@ -91,6 +98,8 @@ class Granule < Metadata
         )
         granule_record.save!
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_ingest.save!
@@ -126,6 +135,8 @@ class Granule < Metadata
         )
         granule_record.save!
       end
+      granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
+      granule_record.save
 
       granule_ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
       granule_ingest.save!

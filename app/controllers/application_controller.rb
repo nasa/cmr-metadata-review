@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+
   private
   def render_404(exception = nil)
     if exception
@@ -8,7 +9,6 @@ class ApplicationController < ActionController::Base
 
     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
   end
-
 
   #saving error from CanCan for users going beyond allowed pages
   rescue_from CanCan::AccessDenied do |exception|
@@ -47,18 +47,14 @@ class ApplicationController < ActionController::Base
                  Record.all_records(application_mode)
                end
 
-    if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
-      @records = @records.campaign(params[:campaign])
-    end
+    # only include collection records
+    @records = @records.where(recordable_type: 'Collection').distinct
+
+    @records = @records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
 
     # Count Second Opinions here for every record
     @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
-
-    # only include collection records
-    @records = @records.where(recordable_type: 'Collection').distinct
   end
-
-  private
 
   def filtered_by?(param, any_keyword)
     params[param] && params[param] != any_keyword
@@ -67,5 +63,4 @@ class ApplicationController < ActionController::Base
   def new_session_path(scope)
     new_user_session_path
   end
-
 end
