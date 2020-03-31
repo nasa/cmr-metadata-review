@@ -32,10 +32,9 @@ class Record < ApplicationRecord
 
   def update_associated_granule_state
     unless previous_changes['state'].nil?
-      if recordable_type == 'Collection' && has_associated_granule?(self)
-        granule_record = Record.find_by id: self.associated_granule_value
-        granule_record.state = self.state
-        granule_record.save
+      if collection? && has_associated_granule?(self)
+        granule_record = Record.find_by id: associated_granule_value
+        granule_record.update(state: state)
       end
     end
   end

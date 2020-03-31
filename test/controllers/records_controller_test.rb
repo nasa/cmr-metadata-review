@@ -156,7 +156,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
 
-    it 'Mark complete checks on BOTH the collection review AND the associated granule review.' do
+    it 'marks complete while checking BOTH the collection review AND the associated granule review.' do
       user = User.find_by(email: 'arc_curator@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -252,7 +252,6 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(12).state, 'in_daac_review'
       assert_equal Record.find(17).state, 'in_daac_review'
       post :associate_granule_to_collection, params: { id: 12, associated_granule_value: 17 }
-      puts "flash=#{flash['alert']}"
       assert_equal 'Granule G309210-GHRC/19 has been successfully associated to this collection revision 9. ', flash[:notice]
       post :revert, params: { id: 12 }
       assert_equal 'The record C1000000020-LANCEAMSR2 was successfully updated.', flash[:notice]

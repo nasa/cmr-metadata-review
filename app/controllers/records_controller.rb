@@ -199,7 +199,9 @@ class RecordsController < ApplicationController
   end
 
   def granule_valid?(granule_record, collection_state, associating_flag)
-    return true if %w(open in_arc_review).include?(collection_state) && associating_flag
+    # it is ok to associate granule records without checks if in open or in_arc_review
+    return [true, nil] if %w(open in_arc_review).include?(collection_state) && associating_flag
+
     success = true
     messages = []
     unless granule_record.color_coding_complete?
@@ -256,7 +258,7 @@ class RecordsController < ApplicationController
   def release_record_for_daac_review(record)
     success = false
     Record.transaction do
-      if record.recordable_type == 'Collection'
+      if record.collection?
         success = release_collection_record_to_daacs(record)
       else
         Rails.logger.error("Error encountered releasing record, type not known, #{record.recordable_type}")

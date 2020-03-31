@@ -123,5 +123,3 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
   end
 
 end
-
-

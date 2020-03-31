@@ -5,7 +5,7 @@ module RecordHelper
   end
 
   def has_associated_granule?(record)
-    !record.associated_granule_value.nil? && is_number?(record.associated_granule_value) ? true : false
+    record.associated_granule_value.present? && is_number?(record.associated_granule_value) ? true : false
   end
 
   def empty_contents(value)
