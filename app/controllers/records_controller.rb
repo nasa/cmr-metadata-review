@@ -198,27 +198,6 @@ class RecordsController < ApplicationController
     redirect_to home_path unless @record
   end
 
-  def granule_valid?(granule_record, collection_state, associating_flag)
-    # it is ok to associate granule records without checks if in open or in_arc_review
-    return [true, nil] if %w(open in_arc_review).include?(collection_state) && associating_flag
-
-    success = true
-    messages = []
-    unless granule_record.color_coding_complete?
-      messages << 'Not all columns in the associated granule have been flagged with a color!'
-      success = false
-    end
-    unless granule_record.has_enough_reviews?
-      messages << 'The associated granule needs two completed reviews.'
-      success = false
-    end
-    if %w(ready_for_daac_review in_daac_review).include?(collection_state) && !granule_record.no_second_opinions?
-      messages << 'Some columns in the associated granule still need a second opinion review.  Please clear all second opinion flags'
-      success = false
-    end
-    [success, messages]
-  end
-
   def completion_success(record)
     unless can?(:review_state, record.state.to_sym)
       flash[:alert] = "You do not have permission to perform this action"

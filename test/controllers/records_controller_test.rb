@@ -146,7 +146,6 @@ class RecordsControllerTest < ActionController::TestCase
       assert_nil Record.find(18).released_to_daac_date
       assert_equal Record.find(18).state, 'ready_for_daac_review'
       post :complete, params: { id: 18 }
-      puts "flash=#{flash[:alert]}"
       assert_in_delta Record.find(18).released_to_daac_date, Time.zone.now, 10
       assert_equal 'Record has been successfully updated.', flash[:notice]
       assert_equal Record.find(18).state, 'in_daac_review'
