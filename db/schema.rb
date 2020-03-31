@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_17_191737) do
+ActiveRecord::Schema.define(version: 2020_03_25_115245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2020_03_17_191737) do
     t.string "copy_recommendations_note"
     t.datetime "released_to_daac_date"
     t.string "daac"
+    t.string "campaign", default: [], null: false, array: true
     t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id"
   end
 

@@ -9,7 +9,7 @@
       <% content_for :form_buttons do %>
         <%= render "shared/record_buttons" %>
       <% end %>
-
+      <%= render partial: "shared/record_filters", locals: { path_for_form: finished_records_path } %>
       <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records), title: "DAAC Completed Records"} %>
     <% else %>
       <%= render partial: "shared/record_filters", locals: { path_for_form: finished_records_path } %>

@@ -41,7 +41,7 @@ module ApplicationHelper
   def application_mode
     current_user.mdq_user? ? :mdq_mode : :arc_mode
   end
-  
+
   def provider_list
     application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS
   end
@@ -74,11 +74,24 @@ module ApplicationHelper
     end
   end
 
-  def campaign_select_list
+  def campaign_select_list(form:)
     select_list = [ANY_CAMPAIGN_KEYWORD]
 
-    camps = RecordData.select(:value).where(column_name: "Campaigns/Campaign/ShortName").where.not(value: "").order(:value).distinct
-    select_list.concat(camps.map(&:value))
+    if current_user.daac_curator?
+      daac = current_user.daac
+      state = form == home_path ? :in_daac_review : [:finished, :closed]
+    elsif current_user.mdq_curator?
+      daac = MDQ_PROVIDERS
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review] : [:finished, :closed]
+    elsif current_user.arc_curator?
+      daac = ARC_PROVIDERS
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review] : [:finished, :closed]
+    elsif current_user.admin?
+      daac = ARC_PROVIDERS
+      state = form == home_path ? [:open, :in_arc_review, :ready_for_daac_review, :in_daac_review] : [:finished, :closed]
+    end
+
+    select_list.concat(Record.where(daac: daac, state: state).pluck(:campaign).flatten.uniq.sort)
 
     select_list
   end
@@ -109,5 +122,4 @@ module ApplicationHelper
   def self.truncate_string(string, max)
     string.length > max ? "#{string[0...max]}..." : string
   end
-
 end

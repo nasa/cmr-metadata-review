@@ -1,5 +1,4 @@
 module RecordHelper
-
   def is_number?(object)
     true if Float(object) rescue false
   end
@@ -74,5 +73,14 @@ module RecordHelper
 
   def copy_recommendations_active_class(record)
     record.copy_recommendations_note.nil? ? 'eui-btn--green' : 'eui-btn--disabled'
+  end
+
+  # When a record has multiples, Dashboard stores them in the value field
+  # formatted like: "• <value1>\n• <value2>\n ..."
+  # Returns an array like: [value1, value2, ...]
+  def clean_up_campaign(campaign)
+    return [] if campaign.nil?
+
+    campaign.tr('•', '').split("\n").each(&:strip!)
   end
 end

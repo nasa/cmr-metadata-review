@@ -91,6 +91,10 @@ class User < ApplicationRecord
     role == 'arc_curator'
   end
 
+  def mdq_curator?
+    role == 'mdq_curator'
+  end
+
   def mdq_user?
     if role == 'mdq_curator'
       true

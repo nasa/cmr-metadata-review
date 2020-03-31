@@ -28,6 +28,10 @@ module RecordFormats
       get_column("Version")
     end
 
+    def campaign_from_record_data
+      get_column('Projects/ShortName')
+    end
+
     # There is no script yet for UMM collections
     def create_script(raw_data = nil)
       nil
