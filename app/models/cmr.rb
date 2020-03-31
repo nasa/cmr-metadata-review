@@ -369,8 +369,10 @@ class Cmr
   # returns true if a granule with the specified concept id exists in cmr
   def self.raw_granule?(concept_id)
     url = Cmr.api_url('granules', 'echo10', 'concept_id': concept_id)
-    granule_xml = Cmr.cmr_request(url).parsed_response
-    granule_results = convert_to_hash('echo10', granule_xml)['results']
+    response = Cmr.cmr_request(url)
+    return false if response.code != 200
+    granule_hash = convert_to_hash('echo10', response.parsed_response)
+    granule_results = granule_hash['results']
     granule_results['hits'].to_i.positive?
   end
 
@@ -686,6 +688,7 @@ class Cmr
     if cmr_base_url.nil?
       cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     end
+    cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     cmr_base_url
   end
 
