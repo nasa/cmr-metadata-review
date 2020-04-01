@@ -557,10 +557,6 @@ class Record < ApplicationRecord
   end
 
   def has_enough_reviews?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
     return self.completed_review_count > 1
   end
 
@@ -573,10 +569,6 @@ class Record < ApplicationRecord
   end
 
   def updated_revision_if_needed?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
     flagged_reviews? ? Cmr.current_revision_for(concept_id) > self.revision_id.to_i : true
   end
 
