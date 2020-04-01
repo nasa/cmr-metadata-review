@@ -541,10 +541,6 @@ class Record < ApplicationRecord
   end
 
   def color_coding_complete?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
     colors = self.get_colors
 
     colors.each do |key, value|
@@ -569,10 +565,6 @@ class Record < ApplicationRecord
   end
 
   def no_second_opinions?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
     return !(self.get_opinions.select {|key,value| value == true}).any?
   end
 
@@ -589,10 +581,6 @@ class Record < ApplicationRecord
   end
 
   def no_feedback_requested?
-    if ENV['sit_skip_done_check'] == 'true'
-      return true
-    end
-
     (get_feedbacks.find { |key, value| value }).nil?
   end
 
