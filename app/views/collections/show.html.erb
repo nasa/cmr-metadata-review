@@ -33,7 +33,7 @@
               <th class="collection_granule_revision_row">
                 <div class="collection_review_box">
                   <h4>Revision ID: <%= record.revision_id %></h4>
-                  <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                  <% if can?(:associate_granule_to_collection, @collection) %>
                     <form id="form-<%= record.revision_id %>" accept-charset="UTF-8" action="<%= associate_granule_to_collection_record_path(record.id) %>" method="post">
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                       <h4>Granule Rev ID: <%= select_tag("associated_granule_value",
@@ -130,7 +130,7 @@
                       <span class="indicator_for_granule_deleted_in_cmr"><%= indicator_for_granule_deleted_in_cmr(granule) %></span>
                     </div>
 
-                    <% if can?(:associate_granule_to_collection, @record.recordable) %>
+                    <% if can?(:associate_granule_to_collection, @collection) %>
                       <div class="granule_revision" title="Drag revision over to associate with collection record." granule_option_id="<%= granule_record.id %>">Revision_ID: <%= granule_record.revision_id %>
                         <span class="indicator_for_has_new_granule_revision"><%= indicator_for_has_new_granule_revision(granule) %></span>
                       </div>

@@ -25,7 +25,7 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
       # link granule to collection for remaining tests
       assert_equal Record.find_by(id: 1).state, 'in_arc_review'
 
-      see_collection_review_details('#in_arc_review', 0)
+      see_collection_review_details('#in_arc_review', 1)
       associate_granule_to_collection(16, 8)
       assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
 
@@ -157,7 +157,7 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
 
     it 'verify correct buttons appear' do
       # Select First Collection in In Arc Review
-      see_collection_review_details('#in_arc_review', 0)
+      see_collection_review_details('#in_arc_review', 1)
       see_granule_revision_details(6)
       assert_css '#review_complete_button'
       assert_no_css '#done_button'
