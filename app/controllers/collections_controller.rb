@@ -9,11 +9,11 @@ class CollectionsController < ApplicationController
 
   def show
     if @record
-      collection = get_collection_from_record(@record)
+      @collection = get_collection_from_record(@record)
 
-      @concept_id = collection.concept_id
-      @collection_records = collection.get_records
-      @granule_objects = Granule.where(collection: collection)
+      @concept_id = @collection.concept_id
+      @collection_records = @collection.get_records
+      @granule_objects = Granule.where(collection: @collection)
 
       # iterates through the granule objects, setting:
       #   1) the latest revision number found in cmr

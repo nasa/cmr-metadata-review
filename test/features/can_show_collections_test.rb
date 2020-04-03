@@ -3,6 +3,8 @@ Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
 class CanShowCollectionsTest < Capybara::Rails::TestCase
   include Helpers::UserHelpers
+  include Helpers::CollectionsHelper
+  include Helpers::HomeHelper
 
   describe 'Showing Collections' do
 
@@ -17,6 +19,33 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
           )
           .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
 
+      end
+
+      it 'can show collection' do
+        visit '/home'
+        see_collection_review_details('#open', 20)
+        see_collection_revision_details(4)
+        assert has_content? 'METADATA ELEMENTS'
+      end
+
+      it 'back button works when viewing collection review' do
+        visit '/home'
+        see_collection_review_details('#open', 20)
+        see_collection_revision_details(4)
+        assert has_content? 'METADATA ELEMENTS'
+        find('#nav_back_button').click
+        assert has_content? 'Collection Revisions'
+        assert has_content? 'Granule Rev ID'
+      end
+
+      it 'back button works when viewing granule review' do
+        visit '/home'
+        see_collection_review_details('#open', 20)
+        see_granule_revision_details(21)
+        assert has_content? 'METADATA ELEMENTS'
+        find('#nav_back_button').click
+        assert has_content? 'Collection Revisions'
+        assert has_content? 'Granule Rev ID'
       end
 
       it 'cannot see link for editing mmt' do
