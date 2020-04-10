@@ -47,6 +47,8 @@ All development work is done on local copies of the code base.  Follow the steps
 
 - To see if you have a successfully created a user, use the command `\du` in the psql console
 
+- If you have error connecting with the two  accounts, run the following command to grant login right: `ALTER ROLE "<user>" WITH LOGIN;`
+
 - After you have finished creating the users, exit out of the psql console with the command `\q`
 
 5. Start the Postgres server on your machine. This command will depend on how you installed.
