@@ -7,7 +7,7 @@ module RecordHelper
   # note if the checks fail, the caller should not associate the granule record to the collection.
   def can_associate_granule?(granule_record, collection_state)
     # it is ok to associate granule records without checks if in open or in_arc_review
-    return [true, nil] if %w(open in_arc_review).include?(collection_state)
+    return [true, nil] if %w(open in_arc_review closed).include?(collection_state)
 
     success = true
     messages = []
