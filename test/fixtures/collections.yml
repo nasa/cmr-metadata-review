@@ -63,3 +63,8 @@ campaign_collection6:
   concept_id: "campaign_test_collection_6-JAXA"
   short_name: "Campaign Test Short Name 6"
 
+collection_with_association:
+  id: 14
+  concept_id: "status_update_test_collection_1-SCIOPS"
+  short_name: "Granule Status Update Test Collection 1"
+

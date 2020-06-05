@@ -276,4 +276,30 @@ campaign_collection9:
     daac: JAXA
     campaign:
       - TESTCAMP5
+
+associated_granule_record:
+  id: 39
+  recordable_id: 3
+  recordable_type: "Granule"
+  revision_id: "1"
+  state: "in_daac_review"
+  format: "dif10"
+
+collection_with_association_rev_1:
+  id: 40
+  recordable_id: 14
+  recordable_type: "Collection"
+  revision_id: "1"
+  state: "in_daac_review"
+  format: "dif10"
+  associated_granule_value: 39
+
+collection_with_association_rev_2:
+  id: 41
+  recordable_id: 14
+  recordable_type: "Collection"
+  revision_id: "2"
+  state: "in_daac_review"
+  format: "dif10"
+  associated_granule_value: 39
     
