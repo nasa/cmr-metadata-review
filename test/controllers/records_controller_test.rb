@@ -341,8 +341,17 @@ class RecordsControllerTest < ActionController::TestCase
       post :hide, params: { 'record_id': [1,12]}
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 C1000000020-LANCEAMSR2/9 ', flash[:notice]
     end
+    it 'ensure associate granule record not hidden, see CMRARC-586' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+      record_rev_2 = Record.find(41)
+      post :hide, params: { 'record_id': [41]}
+      granule_record_id = record_rev_2.associated_granule_value
+      granule_record = Record.find(granule_record_id)
+      assert_equal granule_record.state, 'in_daac_review'
+    end
   end
 
-
-
 end
+
