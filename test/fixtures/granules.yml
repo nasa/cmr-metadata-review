@@ -7,3 +7,8 @@ daac_curator_mailer_granule:
   id: 2
   concept_id: "G309210-OB_DAAC"
   collection_id: 4
+
+associated_granule:
+  id: 3
+  concept_id: "G239650-SCIOPS"
+  collection_id: 14
