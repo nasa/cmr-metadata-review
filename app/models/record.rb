@@ -32,7 +32,7 @@ class Record < ApplicationRecord
 
   def update_associated_granule_state
     unless previous_changes['state'].nil?
-      if collection? && has_associated_granule? && state != Record::STATE_HIDDEN
+      if collection? && has_associated_granule? && state != Record::STATE_HIDDEN.to_s
         granule_record = Record.find_by id: associated_granule_value
         granule_record.update(state: state)
       end
