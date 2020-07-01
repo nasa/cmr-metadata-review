@@ -12,16 +12,24 @@
 
       <div class="section_header">
         <div class="review_buttons_row">
-          <% if should_show_copy_recommendations_button?(@record) %>
-            <%= button_to "Copy Prior Recommendations", copy_prior_recommendations_record_path(@record.id), class: copy_recommendations_active_class(@record), disabled: !@record.copy_recommendations_note.nil?, data: {confirm: "Are you sure?"}, method: :get %>
-            <div class="copy_prior_revision_note">
-              <%= @record.copy_recommendations_note %>
-            </div>
-          <% end %>
+          <% modal_id = "copy_prior_recommendations-modal-id-#{@record.id}" %>
+          <input class="<%=copy_recommendations_active_class(@record)%>" type="button" id="copy_prior_recommendations_button" name="<%= modal_id %>" href="#<%= modal_id %>" value="Copy Prior Recommendations"/>
+          <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
+            <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
+            <form method="get" action="<%=copy_prior_recommendations_record_path(@record.id)%>">
+              <br>
+              Concept ID: <input type="text" id="concept_id" name="concept_id" value="<%= @record.concept_id %>"/><br>
+              Revision ID: <input type="text" id="revision_id" name="revision_id" value="<%= @prior_record_revision_id %>"/>
+              <p>
+              <input class="smallSelectButton eui-btn--green" type="submit" value="Copy Recommendations">
+                <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
+              </p>
+            </form>
+          </div>
         </div>
-
         <h3>METADATA ELEMENTS</h3>
       </div>
+
 
       <!-- two coulmns holder -->
       <div class="flex_container">
