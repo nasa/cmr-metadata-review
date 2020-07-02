@@ -119,7 +119,7 @@ module RecordHelper
   end
 
   def copy_recommendations_active_class(record)
-    record.copy_recommendations_note.nil? ? 'eui-btn--green' : 'eui-btn--disabled'
+    record.copy_recommendations_note.nil? ? 'eui-btn--green confirm-modal-button' : 'eui-btn--disabled'
   end
 
   # When a record has multiples, Dashboard stores them in the value field

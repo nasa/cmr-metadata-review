@@ -64,6 +64,8 @@ class RecordsController < ApplicationController
     @bubble_data = @record.bubble_map
     @reviews = (@record.reviews.select {|review| review.completed?}).sort_by(&:review_completion_date)
     @user_review = @record.review(current_user.id)
+    prior_record = @record.prior_revision_record
+    @prior_record_revision_id = prior_record.nil? ? '' : prior_record.revision_id
   end
 
   def complete
@@ -180,7 +182,10 @@ class RecordsController < ApplicationController
   end
 
   def copy_prior_recommendations
-    prior_record = @record.prior_revision_record
+    concept_id = params[:concept_id]
+    rev_id = params[:revision_id]
+    prior_record = Collection.find_record(concept_id, rev_id)
+    #prior_record = @record.prior_revision_record
     if prior_record.nil?
       flash[:notice] = 'No prior revision could be found!'
     else
