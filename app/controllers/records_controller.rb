@@ -148,7 +148,34 @@ class RecordsController < ApplicationController
     redirect_to finished_records_path
   end
 
+  def unhide
+    puts "Unhiding records...#{params.keys}"
+    record_ids = params["unhide_form_record_ids"].split(' ').map(&:to_i)
+
+    @records = Record.where(id: record_ids)
+    msg = 'Undeleted the following collections: '
+
+    msgItems = []
+    @records.each do |record|
+      record.update(state: params[:unhide_form_id])
+      msgItems << "#{record.concept_id}/#{record.revision_id}"
+    end
+    msgItems.sort!
+    msgItems.each do |message|
+      msg += message + ' '
+    end
+    flash[:notice] = msg
+    redirect_to home_path
+  end
+
+
   def hide
+    Rails.logger.info("#{current_user.uid} - Deleted the following record ids: #{params[:record_id]}")
+
+    @unhide_form_record_ids = {}
+    session[:unhide_form_id] = params[:unhide_form_id]
+    session[:unhide_record_ids] = params[:record_id]
+
     @records = Record.where(id: params[:record_id])
     msg = 'Deleted the following collections: '
 
@@ -162,7 +189,8 @@ class RecordsController < ApplicationController
       msg += message + ' '
     end
     flash[:notice] = msg
-    redirect_back(fallback_location: home_path)
+    redirect_to home_path
+    # redirect_back(fallback_location: home_path)
   end
 
   def batch_complete

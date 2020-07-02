@@ -91,8 +91,10 @@ module RecordFormats
       #running collection script in python
       #W option to silence warnings
       if collection?
+        File.write('/tmp/echo_c.txt', record_json)
         script_results = `python -W ignore lib/CollectionChecker.py '#{record_json}'  `
       else
+        File.write('/tmp/echo_g.txt', record_json)
         script_results = `python -W ignore lib/GranuleChecker.py '#{record_json}'`
       end
 
