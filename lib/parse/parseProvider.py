@@ -4,7 +4,7 @@ import urllib2
 class parseProvider():
 
     def __init__(self):
-        ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv"
+        ResourcesTypeURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv"
         response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
