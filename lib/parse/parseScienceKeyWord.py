@@ -5,7 +5,7 @@ class parseScienceKeyWord():
 
     def __init__(self):
 
-        ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.csv"
+        ResourcesTypeURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv"
         response = urllib2.urlopen(ResourcesTypeURL)
         f = csv.reader(response)
 

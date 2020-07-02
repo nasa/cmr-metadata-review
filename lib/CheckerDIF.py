@@ -530,7 +530,7 @@ class checkerRules():
     def check_Organization_Name_Short_Name(self,val):
         result = self.providerCSV.getColumn(val)
         if (result == None):
-            return "It is recommended that the Organization Short Name be compliant with GCMD vocabulary. Choose a valid Organization Short Name name from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv All records from the same DAAC should have the same Organization Short Name for consistency."
+            return "It is recommended that the Organization Short Name be compliant with GCMD vocabulary. Choose a valid Organization Short Name name from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv All records from the same DAAC should have the same Organization Short Name for consistency."
         if (self.providerCSV.getShortName(val)):
             return "OK - quality check"
         else:
@@ -541,7 +541,7 @@ class checkerRules():
             return "np - Recommend providing an Organization Long Name if applicable."
         result = self.providerCSV.getColumn(val)
         if(result == None):
-            "It is recommended that the Organization Long Name be compliant with GCMD vocabulary. Choose a valid Organization Long Name name from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv All records from the same DAAC should have the same Organization Long Name for consistency."
+            "It is recommended that the Organization Long Name be compliant with GCMD vocabulary. Choose a valid Organization Long Name name from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv All records from the same DAAC should have the same Organization Long Name for consistency."
         if(self.providerCSV.getLongName(val)):
             return val + ": incorrect position in hierarchy"
         return "OK"
@@ -614,14 +614,14 @@ class checkerRules():
 
     def check_Related_URL_item_Content_Type(self,val):
         if(val == None):
-            return "Provide a URL type for all Related URLs. Choose a type from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+            return "Provide a URL type for all Related URLs. Choose a type from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
 
         if (self.ruContentType.getType(val)):
             if(val.lower() == 'get data'):
                 return "0"
             return "1"
         else:
-            return "Invalid types: " + val + "URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors please choose an appropriate URL Content Type from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+            return "Invalid types: " + val + "URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors please choose an appropriate URL Content Type from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
 
     def check_Related_URL_Content_Type(self,val):
         val = val.split(';')
@@ -649,7 +649,7 @@ class checkerRules():
             return 'np'
         result = self.ruContentType.getColumn(val)
         if(result == None):
-            return "Invalid types: " + val + "URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type subtype from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+            return "Invalid types: " + val + "URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type subtype from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
         if(self.ruContentType.getSubType(val)):
             if(val.lower() in listA):
                 return "OK - one point for data accessability score for providing an advanced service for visualization subsetting or aggregation"

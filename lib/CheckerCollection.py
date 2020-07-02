@@ -181,11 +181,11 @@ class checkerRules():
         if val == None:
             return 'np'
         if(val == "GHRC"):
-            return "Currently listed as \"GHRC.\" This is a controlled vocabulary field and a value should be chosen from the GCMD \"Data Centers\" keyword list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. According to GCMD the Processing Center should be listed as \"NASA/MSFC/GHRC\". GCMD should be contacted for a change request if GHRC does not agree with this nomenclature."
+            return "Currently listed as \"GHRC.\" This is a controlled vocabulary field and a value should be chosen from the GCMD \"Data Centers\" keyword list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv. According to GCMD the Processing Center should be listed as \"NASA/MSFC/GHRC\". GCMD should be contacted for a change request if GHRC does not agree with this nomenclature."
         if val in DateCents:
             return "OK"
         else:
-            return "It is recommended that the ProcessingCenter name be compliant with GCMD vocabulary. Choose a valid ProcessingCenter name from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. All records from the same DAAC should have the same ProcessingCenter name for consistency."
+            return "It is recommended that the ProcessingCenter name be compliant with GCMD vocabulary. Choose a valid ProcessingCenter name from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv. All records from the same DAAC should have the same ProcessingCenter name for consistency."
 
     def checkProcLevelID(self, val):
         #print 'Input of checkProcLevelID() is ' + val
@@ -214,11 +214,11 @@ class checkerRules():
         if val == None:
             return 'np'
         if(val == "GHRC"):
-            return "Currently listed as \"GHRC.\" This is a controlled vocabulary field and a value should be chosen from the GCMD \"Data Centers\" keyword list: https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. According to GCMD the Archive Center should be listed as \"NASA/MSFC/GHRC\". GCMD should be contacted for a change request if GHRC does not agree with this nomenclature."
+            return "Currently listed as \"GHRC.\" This is a controlled vocabulary field and a value should be chosen from the GCMD \"Data Centers\" keyword list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv. According to GCMD the Archive Center should be listed as \"NASA/MSFC/GHRC\". GCMD should be contacted for a change request if GHRC does not agree with this nomenclature."
         if val in ArchCents:
             return 'OK'
         else:
-            return 'It is recommended that the Archive Center name be compliant with GCMD vocabulary. Choose a valid Archive Center name from the following list: http://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv. All records from the same DAAC should have the same archive center name for consistency.'
+            return 'It is recommended that the Archive Center name be compliant with GCMD vocabulary. Choose a valid Archive Center name from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv. All records from the same DAAC should have the same archive center name for consistency.'
 
     def checkExtPub(self, val):
         #print "Input of checkExtPub() is " + val
@@ -271,7 +271,7 @@ class checkerRules():
         #     val = ', '.join(val)
 
         if val == None:
-            return "Recommend providing a spatial keyword from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/locations/locations.csv"
+            return "Recommend providing a spatial keyword from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv"
 
         SpatialKeys = list()
         response = urllib2.urlopen(self.urls['LocationKeywordURL'])
