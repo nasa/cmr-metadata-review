@@ -1,11 +1,26 @@
 <% closed ||= false %>
 <% reviews ||= false %>
 
+<script type="text/javascript">
+  function checkAll(table_name)
+  {
+    var table = document.getElementById (table_name);
+    var form_id = table.getAttribute("form_id")
+    var checkboxes = table.querySelectorAll ('input[type=checkbox]');
+    for (var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = !checkboxes[i].checked
+    toggleAllButtons(form_id)
+  }
+</script>
+
+
 <div class="table-backdrop">
   <div class="results-title">
     <p><strong><%= title %>:</strong></p>
   </div>
 
+  <div align="right">
+    <a href="javascript:void(0);" onclick="checkAll('<%= title %>')">Select All</a>
+  </div>
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
   <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
   <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
@@ -14,9 +29,11 @@
   <!-- token, rather we should explicitly include it ourselves. -->
   <%= form_with( url: collection_path(id: 1), method: :put, local: true,  id: form_id, authenticity_token: false) do %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
     <div class="results-table-container">
       <div class="table-scroll">
-        <table class="results-table">
+        <table id="<%= title %>" form_id="<%= form_id %>" class="results-table">
+
           <tr>
             <th>Concept_ID</th>
             <th class="center_text">Revision_ID</th>

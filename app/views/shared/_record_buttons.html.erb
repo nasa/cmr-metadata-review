@@ -11,6 +11,13 @@
 
   <% if current_user.admin? || current_user.role == 'mdq_curator' %>
     <%= submit_tag("Delete Record", class: "deleteButton", formaction: hide_records_path, disabled: true, data: { confirm: "Delete this Record from the System?"}) %>
+
+    <%= hidden_field_tag("unhide_form_id", form_id) %>
+    <% if @unhide_record_ids.present? && @unhide_record_ids.key?(form_id) %>
+      <%= hidden_field_tag("unhide_form_record_ids", @unhide_record_ids[form_id]) %>
+      <%= submit_tag("Undelete", class: "undeleteButton", formaction: unhide_records_path, disabled: false, data: { confirm: "Undelete last action?"}) %>
+    <% end %>
+
     <% if complete_title == 'Close' and current_user.admin? %>
       <%= submit_tag("Revert", class: "revertButton", formaction: revert_records_path, disabled: true, data: {confirm: "Revert this record?"}) %>
     <% end %>

@@ -5,10 +5,10 @@ from datetime import *
 
 LINK_CHECK_TIMEOUT = 5
 
-PlatformURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
-InstrumentURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
-ProjectURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/projects/projects.csv"
-ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+PlatformURL = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv"
+InstrumentURL = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv"
+ProjectURL = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/projects?format=csv"
+ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
 
 class checkerRules():
 

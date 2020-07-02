@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         post "revert"
         post "batch_complete"
         delete "hide"
+        put "unhide"
       end
     end
 

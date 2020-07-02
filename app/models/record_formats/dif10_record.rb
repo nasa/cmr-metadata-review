@@ -75,6 +75,7 @@ module RecordFormats
       record_json.gsub!("'", "'\\\\''")
       #running collection script in python
       #W option to silence warnings
+      File.write('/tmp/dif_c.txt', record_json)
       if collection?
         script_results = `python -W ignore lib/CollectionCheckerDIF.py '#{record_json}'  `
       else
