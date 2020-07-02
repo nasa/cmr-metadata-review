@@ -85,13 +85,13 @@ class Checker():
     def __init__(self):
         self.urls = {}
 
-        self.urls['LocationKeywordURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/locations/locations.csv"
-        self.urls['ScienceKeywordURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.csv"
-        self.urls['ArchiveCenterURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/providers/providers.csv"
-        self.urls['PlatformURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
-        self.urls['InstrumentURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
-        self.urls['ProjectURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/projects/projects.csv"
-        self.urls['ResourcesTypeURL'] = "https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+        self.urls['LocationKeywordURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/locations?format=csv"
+        self.urls['ScienceKeywordURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv"
+        self.urls['ArchiveCenterURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/providers?format=csv"
+        self.urls['PlatformURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv"
+        self.urls['InstrumentURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv"
+        self.urls['ProjectURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/projects?format=csv"
+        self.urls['ResourcesTypeURL'] = "https://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
         self.urls['ArchtoURLs'] = {'SEDAC': 'http://sedac.ciesin.columbia.edu/data/set/',
                               'GHRC': 'https://fcportal.nsstc.nasa.gov/pub',
                               'NSIDC': 'http://nsidc.org/data/',
