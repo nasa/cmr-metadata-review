@@ -156,7 +156,7 @@ class CollectionOutputCSVBackup():
         try:
             result += self.checkerRules.checkSpatialKey(metadata['SpatialKeywords']['Keyword']) + ', , , , , , , '
         except KeyError:
-            result += 'Recommend providing a spatial keyword from the following keywords list: http://gcmdservices.gsfc.nasa.gov/static/kms/locations/locations.csv' + ', , , , , , , '
+            result += 'Recommend providing a spatial keyword from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv' + ', , , , , , , '
         except:
             result += 'np' + ', , , , , , , '
         # ================

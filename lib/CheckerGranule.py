@@ -5,10 +5,10 @@ from datetime import *
 
 LINK_CHECK_TIMEOUT = 5
 
-PlatformURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/platforms/platforms.csv"
-InstrumentURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/instruments/instruments.csv"
-ProjectURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/projects/projects.csv"
-ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+PlatformURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv"
+InstrumentURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv"
+ProjectURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects?format=csv"
+ResourcesTypeURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
 
 class checkerRules():
 
@@ -683,20 +683,20 @@ class checkerRules():
         result = ""
         if length == 1:
             if val == None:
-                return "Provide a URL Type for all Online Resource URLs. Choose a type from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv;"
+                return "Provide a URL Type for all Online Resource URLs. Choose a type from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv;"
             elif val not in ResourcesTypes:
-                return "Invalid types: " + val + " URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv;"
+                return "Invalid types: " + val + " URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv;"
         else:
             for i in range(0, length):
                 try:
                     if val[i]['URL'] != None:
                         try:
                             if val[i]['Type'] == None:
-                                result += "Provide a URL Type for all Online Resource URLs. Choose a type from the following list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+                                result += "Provide a URL Type for all Online Resource URLs. Choose a type from the following list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
                                 result += ";"
                             elif val[i]['Type'] not in ResourcesTypes:
                                 result += "Invalid types: " + val[i][
-                                    'Type'] + " URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type from the following keywords list: https://gcmdservices.gsfc.nasa.gov/static/kms/rucontenttype/rucontenttype.csv"
+                                    'Type'] + " URL Types are translated to GCMD vocabulary in CMR. In order to avoid translation errors; please choose an appropriate URL Content Type from the following keywords list: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype?format=csv"
                                 result += ";"
                             elif (val[i]['Type'] in listA):
                                 result += "OK - one point for data accessability score for providing an advanced service for visualization;subsetting or aggregation;"

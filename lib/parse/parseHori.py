@@ -4,7 +4,7 @@ import urllib2
 class parseHori():
 
     def __init__(self):
-        ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/horizontalresolutionrange/horizontalresolutionrange.csv?ed_wiki_keywords_page"
+        ResourcesTypeURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/horizontalresolutionrange?format=csv"
         response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
