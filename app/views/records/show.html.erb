@@ -18,7 +18,7 @@
             <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
             <form method="get" action="<%=copy_prior_recommendations_record_path(@record.id)%>">
               <br>
-              Concept ID: <input type="text" id="concept_id" name="concept_id" value="<%= @record.concept_id %>"/><br>
+              Concept ID: <input type="text" id="concept_id" name="concept_id" value="<%= @prior_record_revision_id == '' ? '' : @record.concept_id %>"/><br>
               Revision ID: <input type="text" id="revision_id" name="revision_id" value="<%= @prior_record_revision_id %>"/>
               <p>
               <input class="smallSelectButton eui-btn--green" type="submit" value="Copy Recommendations">
