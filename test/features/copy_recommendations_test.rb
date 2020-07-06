@@ -28,9 +28,8 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
         within '#collection_revision_5' do
           click_on "See Collection Review Details"
         end
-        accept_alert do
-          click_on "Copy Prior Recommendations"
-        end
+        click_on "Copy Prior Recommendations"
+        click_on "Copy Recommendations"
         page.must_have_content('Successfully copied recommendations')
       end
 
@@ -46,16 +45,14 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
         within '#collection_revision_5' do
           click_on "See Collection Review Details"
         end
-        refute_selector("input[value='Copy Prior Recommendations']:disabled")
-        accept_alert do
-          click_on "Copy Prior Recommendations"
-        end
-        assert_selector("input[value='Copy Prior Recommendations']:disabled")
+        click_on "Copy Prior Recommendations"
+        click_on "Copy Recommendations"
+        assert has_css?("input[class='eui-btn--disabled'][value='Copy Prior Recommendations']")
       end
 
 
-      # this verifies the button is not there if there is no prior revision.
-      it 'prevents the copy from recommendations button from appearing if there is no prior revision' do
+      # this verifies the revision id text field and the concept id text field are empty if there is no prior revision.
+      it 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
         visit '/home'
 
         within '#open' do
@@ -65,7 +62,28 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
         within '#collection_revision_4' do
           click_on "See Collection Review Details"
         end
-        page.wont_have_css "input[value='Copy Prior Recommendations']"
+        assert has_css? "input[value='Copy Prior Recommendations']"
+        click_on "Copy Prior Recommendations"
+        assert has_css?("input[type='text'][name='concept_id'][value='']")
+        assert has_css?("input[type='text'][name='revision_id'][value='']")
+        click_on "Copy Recommendations"
+        page.must_have_content('No prior revision could be found!')
+      end
+
+      it 'copies recommendations from a concept id and revision id.' do
+        visit '/home'
+        within '#open' do
+          all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"
+          find('div > div.navigate-buttons > input.selectButton').click # Clicks the See Review Details button
+        end
+        within '#collection_revision_5' do
+          click_on "See Collection Review Details"
+        end
+        click_on "Copy Prior Recommendations"
+        fill_in 'concept_id', with: 'C1000000020-LANCEAMSR2'
+        fill_in 'revision_id', with: '5'
+        click_on "Copy Recommendations"
+        page.must_have_content('Successfully copied recommendations')
       end
 
     end
