@@ -51,8 +51,8 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
       end
 
 
-      # this verifies the revision id text field is empty if there is no prior revision.
-      it 'verifies the revision id text field is empty if there is no prior revision' do
+      # this verifies the revision id text field and the concept id text field are empty if there is no prior revision.
+      it 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
         visit '/home'
 
         within '#open' do
@@ -64,8 +64,26 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
         end
         assert has_css? "input[value='Copy Prior Recommendations']"
         click_on "Copy Prior Recommendations"
-        assert has_css?("input[type='text'][name='concept_id'][value='C1000000020-LANCEAMSR2']")
+        assert has_css?("input[type='text'][name='concept_id'][value='']")
         assert has_css?("input[type='text'][name='revision_id'][value='']")
+        click_on "Copy Recommendations"
+        page.must_have_content('No prior revision could be found!')
+      end
+
+      it 'copies recommendations from a concept id and revision id.' do
+        visit '/home'
+        within '#open' do
+          all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"
+          find('div > div.navigate-buttons > input.selectButton').click # Clicks the See Review Details button
+        end
+        within '#collection_revision_5' do
+          click_on "See Collection Review Details"
+        end
+        click_on "Copy Prior Recommendations"
+        fill_in 'concept_id', with: 'C1000000020-LANCEAMSR2'
+        fill_in 'revision_id', with: '5'
+        click_on "Copy Recommendations"
+        page.must_have_content('Successfully copied recommendations')
       end
 
     end
