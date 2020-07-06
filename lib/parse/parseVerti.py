@@ -4,7 +4,7 @@ import urllib2
 class parseVerti():
 
     def __init__(self):
-        ResourcesTypeURL = "https://gcmdservices.gsfc.nasa.gov/static/kms/verticalresolutionrange/verticalresolutionrange.csv?ed_wiki_keywords_page"
+        ResourcesTypeURL = "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/verticalresolutionrange?format=csv"
         response = urllib2.urlopen(ResourcesTypeURL)
         data = csv.reader(response)
 
