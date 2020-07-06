@@ -185,7 +185,6 @@ class RecordsController < ApplicationController
     concept_id = params[:concept_id]
     rev_id = params[:revision_id]
     prior_record = Collection.find_record(concept_id, rev_id)
-    #prior_record = @record.prior_revision_record
     if prior_record.nil?
       flash[:notice] = 'No prior revision could be found!'
     else
