@@ -190,7 +190,6 @@ class RecordsController < ApplicationController
     end
     flash[:notice] = msg
     redirect_to home_path
-    # redirect_back(fallback_location: home_path)
   end
 
   def batch_complete
