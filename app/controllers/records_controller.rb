@@ -173,7 +173,7 @@ class RecordsController < ApplicationController
     Rails.logger.info("#{current_user.uid} - Deleted the following record ids: #{params[:record_id]}")
 
     @unhide_form_record_ids = {}
-    session[:unhide_form_id] = params[:unhide_form_id]
+    session[:unhide_state] = params[:unhide_state]
     session[:unhide_record_ids] = params[:record_id]
 
     @records = Record.where(id: params[:record_id])

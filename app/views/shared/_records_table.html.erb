@@ -18,9 +18,11 @@
     <p><strong><%= title %>:</strong></p>
   </div>
 
-  <div align="right">
-    <a href="javascript:void(0);" onclick="checkAll('<%= title %>')">Select All</a>
-  </div>
+  <% if current_user.admin? || current_user.role == 'mdq_curator' %>
+    <div align="right">
+      <a href="javascript:void(0);" onclick="checkAll('<%= title %>')">Select All</a>
+    </div>
+  <% end %>
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
   <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
   <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
