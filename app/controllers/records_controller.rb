@@ -184,7 +184,11 @@ class RecordsController < ApplicationController
   def copy_prior_recommendations
     concept_id = params[:concept_id]
     rev_id = params[:revision_id]
-    prior_record = Collection.find_record(concept_id, rev_id)
+    if @record.recordable_type == 'Collection'
+      prior_record = Collection.find_record(concept_id, rev_id)
+    else
+      prior_record = Granule.find_record(concept_id, rev_id)
+    end
     if prior_record.nil?
       flash[:notice] = 'No prior revision could be found!'
     else
