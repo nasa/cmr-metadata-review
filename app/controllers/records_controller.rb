@@ -157,7 +157,7 @@ class RecordsController < ApplicationController
 
     msgItems = []
     @records.each do |record|
-      record.update(state: params[:unhide_form_id])
+      record.update(state: params[:unhide_state])
       msgItems << "#{record.concept_id}/#{record.revision_id}"
     end
     msgItems.sort!

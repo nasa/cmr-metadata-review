@@ -691,7 +691,6 @@ class Cmr
     if cmr_base_url.nil?
       cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     end
-    cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     cmr_base_url
   end
 
