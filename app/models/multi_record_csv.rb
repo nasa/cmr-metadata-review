@@ -107,7 +107,7 @@ class MultiRecordCsv
       data_string = nil
       if record_data = data_hash[title]
         data_string = "Color: #{record_data.color}\n"
-        data_string += "Script Comment: #{record_data.script_comment}\n" unless record_data.script_comment.blank?
+        data_string += "Value: " + (record_data.value.blank? ? "n/a \n" : "#{record_data.value}")
         data_string += "Recommendation: #{record_data.recommendation}" unless record_data.recommendation.blank?
       end
 
