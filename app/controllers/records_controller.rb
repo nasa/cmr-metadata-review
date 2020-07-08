@@ -111,6 +111,13 @@ class RecordsController < ApplicationController
   end
 
   def finished
+    unless session[:unhide_record_ids].nil?
+      @unhide_record_ids = {}
+      @unhide_record_ids[session[:unhide_state]] = session[:unhide_record_ids]
+      session[:unhide_record_ids] = nil
+      session[:unhide_state] = nil
+    end
+    
     @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
   end
 
@@ -167,7 +174,7 @@ class RecordsController < ApplicationController
       msg += message + ' '
     end
     flash[:notice] = msg
-    redirect_to home_path
+    redirect_back(fallback_location: home_path)
   end
 
 
@@ -191,7 +198,7 @@ class RecordsController < ApplicationController
       msg += message + ' '
     end
     flash[:notice] = msg
-    redirect_to home_path
+    redirect_back(fallback_location: home_path)
   end
 
   def batch_complete
