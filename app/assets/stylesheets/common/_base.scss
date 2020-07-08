@@ -220,6 +220,13 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $red;
 }
 
+.undeleteButton {
+  @include button_attributes;
+  @include normal_button_sizing;
+  @include button_disabled;
+  background-color: $blue-dark;
+}
+
 .completeButton {
   @include button_attributes;
   @include normal_button_sizing;

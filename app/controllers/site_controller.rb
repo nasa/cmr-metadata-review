@@ -6,6 +6,13 @@ class SiteController < ApplicationController
   before_action :filtered_records, only: :home
 
   def home
+    unless session[:unhide_record_ids].nil?
+      @unhide_record_ids = {}
+      @unhide_record_ids[session[:unhide_state]] = session[:unhide_record_ids]
+      session[:unhide_record_ids] = nil
+      session[:unhide_state] = nil
+    end
+
     records = Record.where(daac: nil)
     return if records.count.zero?
 
