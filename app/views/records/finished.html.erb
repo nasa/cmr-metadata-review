@@ -17,7 +17,8 @@
       <% if can?(:review_state, Record::STATE_CLOSED) %>
         <% content_for :form_buttons do %>
 
-          <%= render layout: "shared/record_buttons", locals: { report: true } do %>
+          <%= render layout: "shared/record_buttons", locals: { form_id: "closed", report: true } do %>
+
 
             <% if current_user.admin? %>
               <%= submit_tag("Exclude Record from Updates", class: "finishedButton", formaction: stop_updates_records_path, disabled: true, data: {confirm: "Exclude this Record from Future CMR Updates?"}) %>
@@ -35,7 +36,7 @@
 
         <% content_for :form_buttons, flush: true do %>
 
-          <%= render(layout: "shared/record_buttons") do %>
+          <%= render(layout: "shared/record_buttons", locals: { form_id: "finished"}) do %>
 
             <% if current_user.admin? %>
               <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_records_path, disabled: true) %>
