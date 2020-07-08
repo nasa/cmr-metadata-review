@@ -331,7 +331,6 @@ class RecordsControllerTest < ActionController::TestCase
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
       @request.env['HTTP_REFERER'] = 'http://foo.com'
       post :hide, params: { 'record_id': 1 }
-      puts "html page body=#{@response.body}"
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 ', flash[:notice]
     end
     it 'it properly undeletes a single record' do
