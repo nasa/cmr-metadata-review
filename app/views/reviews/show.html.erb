@@ -83,6 +83,7 @@
           <% end %>
         </tr>
         <tr>
+        <% unless current_user.daac_curator? %>
         <th class="headcol headcol__script-row">FLAGGED BY SCRIPT</th>
           <!-- for each of shown value list, create td for value -->
           <% @section_titles.each do |title| %>
@@ -95,6 +96,8 @@
             </td>
           <% end %>
         </tr>
+        <% end %>
+        <% unless current_user.daac_curator? %>
         <tr>
         <th class="headcol headcol__script-row">SCRIPT RESULT</th>
           <% @section_titles.each do |title| %>
@@ -103,7 +106,7 @@
             </td>
           <% end %>
         </tr>
-
+        <% end %>
         <% if !@previous_values.empty? %>
           <tr>
             <th class="headcol headcol__script-row">PREVIOUS VALUE</th>
