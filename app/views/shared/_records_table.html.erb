@@ -20,7 +20,7 @@
 
   <% if current_user.admin? || current_user.role == 'mdq_curator' %>
     <div align="right">
-      <a href="javascript:void(0);" onclick="checkAll('<%= title %>')">Select All</a>
+      <a href="javascript:void(0);" onclick="checkAll('<%= form_id+'_table' %>')">Select All</a>
     </div>
   <% end %>
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
@@ -34,7 +34,7 @@
 
     <div class="results-table-container">
       <div class="table-scroll">
-        <table id="<%= title %>" form_id="<%= form_id %>" class="results-table">
+        <table id="<%= form_id+'_table' %>" form_id="<%= form_id %>" class="results-table">
 
           <tr>
             <th>Concept_ID</th>
