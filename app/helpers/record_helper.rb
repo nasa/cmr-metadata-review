@@ -114,10 +114,6 @@ module RecordHelper
      Record::STATE_READY_FOR_DAAC_REVIEW.to_s].include?(record.state)
   end
 
-  def should_show_copy_recommendations_button?(record)
-    can?(:copy_recommendations, record) && !record.prior_revision_record.nil? && record_in_progress?(record)
-  end
-
   def copy_recommendations_active_class(record)
     record.copy_recommendations_note.nil? ? 'eui-btn--green confirm-modal-button' : 'eui-btn--disabled'
   end
