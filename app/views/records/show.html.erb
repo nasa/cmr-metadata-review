@@ -118,12 +118,42 @@
             <p><strong>Reviewer: <%= review.user.email %></strong></p>
             <p><%= review.formatted_date %></p>
 
-            <% if can?(:view_review_comments, review) %>
+            <% if can?(:create_review_comments, @user_review) %>
               <p><%= string_html_format(review.review_comment) %></p>
+              <% unless review.review_comment.blank?%>
+                <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReviewId(review)%>")'></i>
+                <a href="#" onclick="document.getElementById('delete_review_comment_<%=review.id.to_s %>').submit(); return false;" name="review_comment_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <%= form_with( name: "delete_review_comment",url: update_review_comment_review_path(id: review.id) , method: "put", id: "delete_review_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <input type="hidden" name="review_comment" id="review_id" value=""/>
+                <% end %>
+                <div id=<%=getFormReviewId(review)%> style="display: none;">
+                  <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <input type="text" name="review_comment" id="review_id" value="<%= review.review_comment%>"/>
+                    <input type="submit"/>
+                  <% end %>
+                </div>
+              <% end %>
             <% end %>
 
-            <% if can?(:view_report_comments, review) %>
+            <% if can?(:create_report_comments, @user_review) %>
               <p><%= string_html_format(review.report_comment) %></p>
+              <% unless review.report_comment.blank?%>
+                <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReportId(review)%>")'></i>
+                <a href="#" onclick="document.getElementById('delete_report_comment_<%=review.id.to_s %>').submit(); return false;" name="report_comment_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <%= form_with( name: "delete_report_comment",url: update_report_comment_review_path(id: review.id) , method: "put", id: "delete_report_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <input type="hidden" name="report_comment" id="report_id" value=""/>
+                <% end %>
+                <div id=<%=getFormReportId(review)%> style="display: none;">
+                  <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <input type="text" name="report_comment" id="report_id" value="<%= review.report_comment%>"/>
+                    <input type="submit"/>
+                  <% end %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         <% end %>
@@ -137,3 +167,14 @@
   <%= render(partial: 'reviews/legend') %>
 
 </section>
+
+<script type="text/javascript" charset="utf-8">
+  function toggle_message_form(messageId) {
+    var x = document.getElementById(messageId);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
