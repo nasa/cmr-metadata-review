@@ -119,10 +119,10 @@
             <p><%= review.formatted_date %></p>
 
             <% if can?(:view_review_comments, review) %>
-              <p><%= string_html_format(review.review_comment) %></p>
+              <p id=<%="text" + getFormReviewId(review)%> style="display: block;"><%= string_html_format(review.review_comment) %></p>
               <% if can?(:create_review_comments, @user_review) %>
                 <% unless review.review_comment.blank?%>
-                  <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReviewId(review)%>")'></i>
+                  <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReviewId(review)%>");toggle_message_form("<%="text" + getFormReviewId(review)%>")'></i>
                   <a href="#" onclick="document.getElementById('delete_review_comment_<%=review.id.to_s %>').submit(); return false;" name="review_comment_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
                   <%= form_with( name: "delete_review_comment",url: update_review_comment_review_path(id: review.id) , method: "put", id: "delete_review_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -140,10 +140,10 @@
             <% end %>
 
             <% if can?(:view_report_comments, review) %>
-              <p><%= string_html_format(review.report_comment) %></p>
+              <p id=<%="text" + getFormReportId(review)%> style="display: block;"><%= string_html_format(review.report_comment) %></p>
               <% if can?(:create_report_comments, @user_review) %>
                 <% unless review.report_comment.blank?%>
-                  <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReportId(review)%>")'></i>
+                  <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormReportId(review)%>");toggle_message_form("<%="text" + getFormReportId(review)%>")'></i>
                   <a href="#" onclick="document.getElementById('delete_report_comment_<%=review.id.to_s %>').submit(); return false;" name="report_comment_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
                   <%= form_with( name: "delete_report_comment",url: update_report_comment_review_path(id: review.id) , method: "put", id: "delete_report_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
