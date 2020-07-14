@@ -132,7 +132,7 @@
                     <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                       <input type="text" name="review_comment" id="review_id" value="<%= review.review_comment%>"/>
-                      <input type="submit"/>
+                      <input type="submit" class="eui-btn--green"/>
                     <% end %>
                   </div>
                 <% end %>
@@ -153,7 +153,7 @@
                     <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                       <input type="text" name="report_comment" id="report_id" value="<%= review.report_comment%>"/>
-                      <input type="submit"/>
+                      <input type="submit" class="eui-btn--green"/>
                     <% end %>
                   </div>
                 <% end %>
