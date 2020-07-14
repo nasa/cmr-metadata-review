@@ -63,4 +63,8 @@ module ReviewsHelper
   def getFormReportId(review)
     return 'report' + review.id.to_s
   end
+
+  def getFormDiscussionId(discussion)
+    return discussion.id.to_s
+  end
 end
