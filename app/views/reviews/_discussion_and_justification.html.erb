@@ -20,24 +20,30 @@
               <p><%= message.user.email %> says:</p>
             </div>
             <div class="discussion_text">
-              <div style="display: flex; flex-direction: row">
-                <p id=<%="text" + getFormDiscussionId(message)%> style="display: block;"><%= string_html_format(message.comment) %></p>
-                <div id=<%=getFormDiscussionId(message)%> style="display: none;">
+              <div style="display: flex; flex-direction: row; justify-content: center; align-self: stretch; flex-grow: 1">
+                <!--Column 1: the text-->
+                <div style="flex-grow: 1; display: flex;" id=<%="text" + getFormDiscussionId(message)%>><%= string_html_format(message.comment) %></div>
+                <!--Column 2: the form-->
+                <div id=<%=getFormDiscussionId(message)%> style="display: none; padding: 5px">
                   <%= form_with( url: discussion_path(id: message.id) , method: "put", id: message.id, local: true, authenticity_token: false) do %>
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                    <input type="text" name="discussion" id="discussion_id" value="<%= message.comment%>"/>
+                    <button type="submit" class="eui-btn--green" style="display: inline-flex; align-items: center; height: 20px">UPDATE</button>
+                    <textarea rows="4" name="discussion" id="discussion_id" style="background-color: #e7e7e7"><%= message.comment%></textarea>
                     <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
                     <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">
-                    <input type="submit" class="eui-btn--green"/>
                   <% end %>
                 </div>
+                <!--Column 3: the delete form-->
                 <%= form_with( name: "delete",url: discussion_path(id: message.id) , method: "delete", id: "delete"+message.id.to_s, local: true, authenticity_token: false) do %>
                   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                   <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
                   <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">
                 <% end %>
-                <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormDiscussionId(message)%>");toggle_message_form("<%="text" + getFormDiscussionId(message)%>")'></i>
-                <a href="#" onclick="document.getElementById('delete<%=message.id.to_s %>').submit(); return false;" name="discussion_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <!--Column 4: the icons-->
+                <div id=<%="icon-group" + getFormDiscussionId(message)%> style="width: 50px;text-align: center; margin-left: 8px; margin-top: auto; margin-bottom: auto">
+                  <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormDiscussionId(message)%>");toggle("<%="text" + getFormDiscussionId(message)%>"); toggle("<%="icon-group" + getFormDiscussionId(message)%>")'></i>
+                  <a href="#" onclick="document.getElementById('delete<%=message.id.to_s %>').submit(); return false;" name="discussion_trash_can"><i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
+                </div>
               </div>
             </div>
           </div>
@@ -49,7 +55,7 @@
 </tr>
 
 <script type="text/javascript" charset="utf-8">
-  function toggle_message_form(messageId) {
+  function toggle(messageId) {
     var x = document.getElementById(messageId);
     if (x.style.display === "none") {
       x.style.display = "block";

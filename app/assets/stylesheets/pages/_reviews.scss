@@ -513,8 +513,11 @@
     }
 
     .discussion_text {
-      padding: 0 0 5px 25px;
       border-bottom: 1px solid black;
+      display: flex;
+      align-content: stretch;
+      justify-content: center;
+      align-content: center;
     }
   }
 
