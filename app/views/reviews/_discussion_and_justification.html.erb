@@ -20,22 +20,24 @@
               <p><%= message.user.email %> says:</p>
             </div>
             <div class="discussion_text">
-              <p id=<%="text" + getFormDiscussionId(message)%> style="display: block;"><%= string_html_format(message.comment) %></p>
-              <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormDiscussionId(message)%>");toggle_message_form("<%="text" + getFormDiscussionId(message)%>")'></i>
-              <a href="#" onclick="document.getElementById('delete<%=message.id.to_s %>').submit(); return false;" name="discussion_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
-              <%= form_with( name: "delete",url: discussion_path(id: message.id) , method: "delete", id: "delete"+message.id.to_s, local: true, authenticity_token: false) do %>
-                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
-                <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">
-              <% end %>
-              <div id=<%=getFormDiscussionId(message)%> style="display: none;">
-                <%= form_with( url: discussion_path(id: message.id) , method: "put", id: message.id, local: true, authenticity_token: false) do %>
+              <div style="display: flex; flex-direction: row">
+                <p id=<%="text" + getFormDiscussionId(message)%> style="display: block;"><%= string_html_format(message.comment) %></p>
+                <div id=<%=getFormDiscussionId(message)%> style="display: none;">
+                  <%= form_with( url: discussion_path(id: message.id) , method: "put", id: message.id, local: true, authenticity_token: false) do %>
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                    <input type="text" name="discussion" id="discussion_id" value="<%= message.comment%>"/>
+                    <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
+                    <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">
+                    <input type="submit" class="eui-btn--green"/>
+                  <% end %>
+                </div>
+                <%= form_with( name: "delete",url: discussion_path(id: message.id) , method: "delete", id: "delete"+message.id.to_s, local: true, authenticity_token: false) do %>
                   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                  <input type="text" name="discussion" id="discussion_id" value="<%= message.comment%>"/>
                   <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
                   <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">
-                  <input type="submit" class="eui-btn--green"/>
                 <% end %>
+                <i class="fa fa-pencil-square-o" aria-hidden="true" onclick='toggle_message_form("<%=getFormDiscussionId(message)%>");toggle_message_form("<%="text" + getFormDiscussionId(message)%>")'></i>
+                <a href="#" onclick="document.getElementById('delete<%=message.id.to_s %>').submit(); return false;" name="discussion_trash_can"><i class="fa fa-trash" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>
