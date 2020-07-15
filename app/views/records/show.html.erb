@@ -119,25 +119,26 @@
             <p><%= review.formatted_date %></p>
 
             <% if can?(:view_review_comments, review) %>
-              <div style="display: flex; flex-direction: row; justify-content: center; align-self: stretch; flex-grow: 1">
+              <div class="comment_update">
                 <!--Column 1: the text-->
-                <div style="flex-grow: 1; display: flex;" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
+                <div class="comment_text_label" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
                 <% if can?(:create_review_comments, @user_review) %>
                   <% unless review.review_comment.blank?%>
-                    <!--Column 2: the form-->
-                    <div id=<%=getFormReviewId(review)%> style="display: none; padding: 5px">
+                    <!--Column 2: the form for update-->
+                    <div id=<%=getFormReviewId(review)%> class="comment_update_form">
                       <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <button type="submit" class="eui-btn--green" style="display: inline-flex; align-items: center; height: 20px">UPDATE</button>
                         <textarea rows="4" name="review_comment" id="review_id" style="background-color: #e7e7e7"><%= review.review_comment%></textarea>
                       <% end %>
                     </div>
-                    <!--Column 3: the delete form-->
+                    <!--Column 3: the form for delete-->
                     <%= form_with( name: "delete_review_comment",url: update_review_comment_review_path(id: review.id) , method: "put", id: "delete_review_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                       <input type="hidden" name="review_comment" id="review_id" value=""/>
                     <% end %>
-                    <div id=<%="icon-group" + getFormReviewId(review)%> style="width: 50px;text-align: center; margin-left: 8px; margin-top: auto; margin-bottom: auto">
+                    <!--Column 4: the update and delete icons-->
+                    <div id=<%="icon-group" + getFormReviewId(review)%> class="comment_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReviewId(review)%>");toggle("<%="text" + getFormReviewId(review)%>"); toggle("<%="icon-group" + getFormReviewId(review)%>")'></i>
                       <a href="#" onclick="document.getElementById('delete_review_comment_<%=review.id.to_s %>').submit(); return false;" name="review_comment_trash_can"><i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
                     </div>
@@ -149,11 +150,11 @@
             <% if can?(:view_report_comments, review) %>
               <div style="display: flex; flex-direction: row; justify-content: center; align-self: stretch; flex-grow: 1">
                 <!--Column 1: the text-->
-                <div style="flex-grow: 1; display: flex;" id=<%="text" + getFormReportId(review)%>><%= string_html_format(review.report_comment) %></div>
+                <div class="comment_text_label" id=<%="text" + getFormReportId(review)%>><%= string_html_format(review.report_comment) %></div>
                 <% if can?(:create_report_comments, @user_review) %>
                   <% unless review.report_comment.blank?%>
                     <!--Column 2: the form-->
-                    <div id=<%=getFormReportId(review)%> style="display: none; padding: 5px">
+                    <div id=<%=getFormReportId(review)%> class="comment_update_form">
                       <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <button type="submit" class="eui-btn--green" style="display: inline-flex; align-items: center; height: 20px">UPDATE</button>
@@ -165,7 +166,7 @@
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                       <input type="hidden" name="report_comment" id="report_id" value=""/>
                     <% end %>
-                    <div id=<%="icon-group" + getFormReportId(review)%> style="width: 50px;text-align: center; margin-left: 8px; margin-top: auto; margin-bottom: auto">
+                    <div id=<%="icon-group" + getFormReportId(review)%> class="comment_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReportId(review)%>");toggle("<%="text" + getFormReportId(review)%>"); toggle("<%="icon-group" + getFormReportId(review)%>")'></i>
                       <a href="#" onclick="document.getElementById('delete_report_comment_<%=review.id.to_s %>').submit(); return false;" name="report_comment_trash_can"><i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
                     </div>
