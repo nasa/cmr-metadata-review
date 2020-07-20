@@ -148,7 +148,7 @@
             <% end %>
 
             <% if can?(:view_report_comments, review) %>
-              <div style="display: flex; flex-direction: row; justify-content: center; align-self: stretch; flex-grow: 1">
+              <div class="comment_update">
                 <!--Column 1: the text-->
                 <div class="comment_text_label" id=<%="text" + getFormReportId(review)%>><%= string_html_format(review.report_comment) %></div>
                 <% if can?(:create_report_comments, @user_review) %>
