@@ -22,9 +22,9 @@
             <div class="discussion_text">
               <div class="discussion_update">
                 <!--Column 1: the text-->
-                <div class="discussion_text_label" id=<%="text" + getFormDiscussionId(message)%>><%= string_html_format(message.comment) %></div>
+                <div class="discussion_text_label" style="display: flex;" id=<%="text" + getFormDiscussionId(message)%>><%= string_html_format(message.comment) %></div>
                 <!--Column 2: the form for update-->
-                <div id=<%=getFormDiscussionId(message)%> class="discussion_update_form">
+                <div id=<%=getFormDiscussionId(message)%> class="discussion_update_form" style="display: none;">
                   <%= form_with( url: discussion_path(id: message.id) , method: "put", id: message.id, local: true, authenticity_token: false) do %>
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                     <button type="submit" class="eui-btn--green" style="display: inline-flex; align-items: center; height: 20px">UPDATE</button>
