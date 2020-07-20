@@ -70,6 +70,12 @@
     margin-bottom: auto
   }
 
+  .comment_submit_button {
+    display: inline-flex;
+    align-items: center;
+    height: 20px
+  }
+
   .section_header {
     border-bottom: thin solid #d9d9d9;
     width: 97%;
