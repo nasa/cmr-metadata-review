@@ -58,11 +58,11 @@
     display: flex;
     flex-grow: 1;
   }
-  .comment_update_form {
+  .comment_review_update_form, .comment_report_update_form {
     display: none;
     padding: 5px
   }
-  .comment_update_icons {
+  .comment_report_update_icons, .comment_review_update_icons {
     width: 50px;
     text-align: center;
     margin-left: 8px;
