@@ -140,7 +140,9 @@
                     <!--Column 4: the update and delete icons-->
                     <div id=<%="icon-group" + getFormReviewId(review)%> class="comment_review_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReviewId(review)%>");toggle("<%="text" + getFormReviewId(review)%>"); toggle("<%="icon-group" + getFormReviewId(review)%>")'></i>
-                      <a href="#" onclick="document.getElementById('delete_review_comment_<%=review.id.to_s %>').submit(); return false;" name="review_comment_trash_can"><i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
+                      <%= link_to("javascript:submitDeleteReviewForm(#{review.id.to_s})", data: { confirm: 'Delete ARC review comment. Are you sure?' }) do %>
+                        <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
+                      <% end %>
                     </div>
                   <% end %>
                 <% end %>
@@ -168,7 +170,9 @@
                     <% end %>
                     <div id=<%="icon-group" + getFormReportId(review)%> class="comment_report_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReportId(review)%>");toggle("<%="text" + getFormReportId(review)%>"); toggle("<%="icon-group" + getFormReportId(review)%>")'></i>
-                      <a href="#" onclick="document.getElementById('delete_report_comment_<%=review.id.to_s %>').submit(); return false;" name="report_comment_trash_can"><i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
+                      <%= link_to("javascript:submitDeleteReportForm(#{review.id.to_s})", data: { confirm: 'Delete report review comment. Are you sure?' }) do %>
+                        <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
+                      <% end %>
                     </div>
                   <% end %>
                 <% end %>
@@ -188,6 +192,12 @@
 </section>
 
 <script type="text/javascript" charset="utf-8">
+  function submitDeleteReviewForm(messageId) {
+    document.getElementById('delete_review_comment_' + messageId).submit(); return false;
+  }
+  function submitDeleteReportForm(messageId) {
+    document.getElementById('delete_report_comment_' + messageId).submit(); return false;
+  }
   function toggle(messageId) {
     var x = document.getElementById(messageId);
     if (x.style.display === "none") {
