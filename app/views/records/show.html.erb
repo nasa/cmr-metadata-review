@@ -122,7 +122,7 @@
               <div class="comment_update">
                 <!--Column 1: the text-->
                 <div class="comment_text_label" style="display: flex;" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
-                <% if can?(:create_review_comments, @user_review) %>
+                <% if can?(:create_review_comments, @user_review) && review.user.id == current_user.id %>
                   <% unless review.review_comment.blank?%>
                     <!--Column 2: the form for update-->
                     <div id=<%=getFormReviewId(review)%> class="comment_review_update_form" style="display: none;">
@@ -151,7 +151,7 @@
               <div class="comment_update">
                 <!--Column 1: the text-->
                 <div class="comment_text_label" style="display: flex;" id=<%="text" + getFormReportId(review)%>><%= string_html_format(review.report_comment) %></div>
-                <% if can?(:create_report_comments, @user_review) %>
+                <% if can?(:create_report_comments, @user_review) && review.user.id == current_user.id %>
                   <% unless review.report_comment.blank?%>
                     <!--Column 2: the form-->
                     <div id=<%=getFormReportId(review)%> class="comment_report_update_form" style="display: none;">
