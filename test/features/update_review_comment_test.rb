@@ -3,6 +3,7 @@ Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
 class UpdateReviewCommentTest < Capybara::Rails::TestCase
   include Helpers::UserHelpers
+  include Helpers::ReviewsHelper
 
   before do
     OmniAuth.config.test_mode = true
@@ -50,11 +51,13 @@ class UpdateReviewCommentTest < Capybara::Rails::TestCase
       within('.comment_review_update_icons') do
         all('i')[1].click
       end
+      accept_confirm_dialog
       assert has_no_content? 'an updated review comment'
       # removes the report comment
       within('.comment_report_update_icons') do
         all('i')[1].click
       end
+      accept_confirm_dialog
       assert has_no_content? 'an updated report comment'
     end
   end
