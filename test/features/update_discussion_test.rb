@@ -3,6 +3,7 @@ Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
 class UpdateDiscussionTest < Capybara::Rails::TestCase
   include Helpers::UserHelpers
+  include Helpers::ReviewsHelper
 
   before do
     OmniAuth.config.test_mode = true
@@ -50,6 +51,7 @@ class UpdateDiscussionTest < Capybara::Rails::TestCase
       within all('.discussion_update_icons')[0] do
         all('i')[1].click
       end
+      accept_confirm_dialog
       assert has_no_content? 'second discussion'
     end
   end
