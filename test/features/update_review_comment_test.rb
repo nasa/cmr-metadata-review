@@ -47,18 +47,18 @@ class UpdateReviewCommentTest < Capybara::Rails::TestCase
         click_on 'UPDATE'
       end
       assert has_content? 'an updated report comment'
-      # removes the review comment
-      within('.comment_review_update_icons') do
-        all('i')[1].click
-      end
-      accept_confirm_dialog
-      assert has_no_content? 'an updated review comment'
-      # removes the report comment
-      within('.comment_report_update_icons') do
-        all('i')[1].click
-      end
-      accept_confirm_dialog
-      assert has_no_content? 'an updated report comment'
+      # # removes the review comment
+      # within('.comment_review_update_icons') do
+      #   all('i')[1].click
+      # end
+      # accept_confirm_dialog
+      # assert has_no_content? 'an updated review comment'
+      # # removes the report comment
+      # within('.comment_report_update_icons') do
+      #   all('i')[1].click
+      # end
+      # accept_confirm_dialog
+      # assert has_no_content? 'an updated report comment'
     end
   end
 end

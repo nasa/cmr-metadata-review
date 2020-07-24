@@ -133,17 +133,9 @@
                         <textarea rows="4" name="review_comment" id="review_id" style="background-color: #e7e7e7"><%= review.review_comment%></textarea>
                       <% end %>
                     </div>
-                    <!--Column 3: the form for delete-->
-                    <%= form_with( name: "delete_review_comment",url: update_review_comment_review_path(id: review.id) , method: "put", id: "delete_review_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                      <input type="hidden" name="review_comment" id="review_id" value=""/>
-                    <% end %>
-                    <!--Column 4: the update and delete icons-->
+                    <!--Column 3: the update icon-->
                     <div id=<%="icon-group" + getFormReviewId(review)%> class="comment_review_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReviewId(review)%>");toggle("<%="text" + getFormReviewId(review)%>"); toggle("<%="icon-group" + getFormReviewId(review)%>")'></i>
-                      <%= link_to("javascript:submitDeleteReviewForm(#{review.id.to_s})", data: { confirm: 'Delete ARC review comment. Are you sure?' }) do %>
-                        <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
-                      <% end %>
                     </div>
                   <% end %>
                 <% end %>
@@ -165,16 +157,9 @@
                         <textarea rows="4" name="report_comment" id="report_id" style="background-color: #e7e7e7"><%= review.report_comment%></textarea>
                       <% end %>
                     </div>
-                    <!--Column 3: the delete form-->
-                    <%= form_with( name: "delete_report_comment",url: update_report_comment_review_path(id: review.id) , method: "put", id: "delete_report_comment_"+review.id.to_s, local: true, authenticity_token: false) do %>
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                      <input type="hidden" name="report_comment" id="report_id" value=""/>
-                    <% end %>
+                    <!--Column 3: the update icon-->
                     <div id=<%="icon-group" + getFormReportId(review)%> class="comment_report_update_icons">
                       <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReportId(review)%>");toggle("<%="text" + getFormReportId(review)%>"); toggle("<%="icon-group" + getFormReportId(review)%>")'></i>
-                      <%= link_to("javascript:submitDeleteReportForm(#{review.id.to_s})", data: { confirm: 'Delete report review comment. Are you sure?' }) do %>
-                        <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i></a>
-                      <% end %>
                     </div>
                   <% end %>
                 <% end %>
@@ -194,12 +179,6 @@
 </section>
 
 <script type="text/javascript" charset="utf-8">
-  function submitDeleteReviewForm(messageId) {
-    document.getElementById('delete_review_comment_' + messageId).submit(); return false;
-  }
-  function submitDeleteReportForm(messageId) {
-    document.getElementById('delete_report_comment_' + messageId).submit(); return false;
-  }
   function toggle(messageId) {
     var x = document.getElementById(messageId);
     if (x.style.display === "none") {
