@@ -129,7 +129,8 @@
                       <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
-                        <button type="submit" class="smallSelectButton confirm-no-button" >UPDATE</button>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+<!--                        <button type="submit" class="smallSelectButton confirm-no-button" >UPDATE</button>-->
                         <textarea rows="4" name="review_comment" id="review_id" style="background-color: #e7e7e7"><%= review.review_comment%></textarea>
                       <% end %>
                     </div>
@@ -161,7 +162,8 @@
                       <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
-                        <button type="submit" class="smallSelectButton confirm-no-button" >UPDATE</button>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+<!--                        <button type="submit" class="smallSelectButton confirm-no-button" >UPDATE</button>-->
                         <textarea rows="4" name="report_comment" id="report_id" style="background-color: #e7e7e7"><%= review.report_comment%></textarea>
                       <% end %>
                     </div>
