@@ -71,10 +71,8 @@
     white-space: nowrap
   }
 
-  .comment_submit_button {
-    display: inline-flex;
-    align-items: center;
-    height: 20px
+  .comment_cancel_button {
+    background-color: $blue-dark;
   }
 
   .section_header {
