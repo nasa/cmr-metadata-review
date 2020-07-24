@@ -84,6 +84,18 @@ class ReviewsController < ApplicationController
     redirect_to record_path(id: review.record_id)
   end
 
+  def update_review_comment
+    review = Review.find_by(id: params[:id])
+    review.update(review_comment: params[:review_comment])
+    redirect_to record_path(id: review.record_id)
+  end
+
+  def update_report_comment
+    review = Review.find_by(id: params[:id])
+    review.update(report_comment: params[:report_comment])
+    redirect_to record_path(id: review.record_id)
+  end
+
   private
 
   def review_params

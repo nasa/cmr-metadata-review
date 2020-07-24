@@ -119,11 +119,51 @@
             <p><%= review.formatted_date %></p>
 
             <% if can?(:view_review_comments, review) %>
-              <p><%= string_html_format(review.review_comment) %></p>
+              <div class="comment_update">
+                <!--Column 1: the text-->
+                <div class="comment_text_label" style="display: flex;" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
+                <% if can?(:create_review_comments, @user_review) && review.user.id == current_user.id %>
+                  <% unless review.review_comment.blank?%>
+                    <!--Column 2: the form for update-->
+                    <div id=<%=getFormReviewId(review)%> class="comment_review_update_form" style="display: none;">
+                      <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
+                        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button comment_cancel_button" value="Cancel"/></a>
+                        <textarea rows="4" name="review_comment" id="review_id" style="background-color: #e7e7e7"><%= review.review_comment%></textarea>
+                      <% end %>
+                    </div>
+                    <!--Column 3: the update icon-->
+                    <div id=<%="icon-group" + getFormReviewId(review)%> class="comment_review_update_icons">
+                      <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReviewId(review)%>");toggle("<%="text" + getFormReviewId(review)%>"); toggle("<%="icon-group" + getFormReviewId(review)%>")'></i>
+                    </div>
+                  <% end %>
+                <% end %>
+                </div>
             <% end %>
 
             <% if can?(:view_report_comments, review) %>
-              <p><%= string_html_format(review.report_comment) %></p>
+              <div class="comment_update">
+                <!--Column 1: the text-->
+                <div class="comment_text_label" style="display: flex;" id=<%="text" + getFormReportId(review)%>><%= string_html_format(review.report_comment) %></div>
+                <% if can?(:create_report_comments, @user_review) && review.user.id == current_user.id %>
+                  <% unless review.report_comment.blank?%>
+                    <!--Column 2: the form-->
+                    <div id=<%=getFormReportId(review)%> class="comment_report_update_form" style="display: none;">
+                      <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
+                        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+                        <a href="#"><input type="button" class="smallSelectButton confirm-no-button comment_cancel_button" value="Cancel"/></a>
+                        <textarea rows="4" name="report_comment" id="report_id" style="background-color: #e7e7e7"><%= review.report_comment%></textarea>
+                      <% end %>
+                    </div>
+                    <!--Column 3: the update icon-->
+                    <div id=<%="icon-group" + getFormReportId(review)%> class="comment_report_update_icons">
+                      <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormReportId(review)%>");toggle("<%="text" + getFormReportId(review)%>"); toggle("<%="icon-group" + getFormReportId(review)%>")'></i>
+                    </div>
+                  <% end %>
+                <% end %>
+                </div>
             <% end %>
           </div>
         <% end %>
@@ -137,3 +177,14 @@
   <%= render(partial: 'reviews/legend') %>
 
 </section>
+
+<script type="text/javascript" charset="utf-8">
+  function toggle(messageId) {
+    var x = document.getElementById(messageId);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>

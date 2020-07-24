@@ -56,4 +56,15 @@ module ReviewsHelper
     feedback_class
   end
 
+  def getFormReviewId(review)
+    return 'review' + review.id.to_s
+  end
+
+  def getFormReportId(review)
+    return 'report' + review.id.to_s
+  end
+
+  def getFormDiscussionId(discussion)
+    return discussion.id.to_s
+  end
 end

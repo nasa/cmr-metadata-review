@@ -38,7 +38,13 @@ Rails.application.routes.draw do
       end
     end
     resources :comments
-    resources :reviews
+    resources :discussions
+    resources :reviews do
+      member do
+        put "update_review_comment"
+        put "update_report_comment"
+      end
+    end
     resources :records do
       member do
         get "copy_prior_recommendations"
