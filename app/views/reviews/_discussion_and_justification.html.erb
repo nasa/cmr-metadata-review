@@ -27,9 +27,8 @@
                 <div id=<%=getFormDiscussionId(message)%> class="discussion_update_form" style="display: none;">
                   <%= form_with( url: discussion_path(id: message.id) , method: "put", id: message.id, local: true, authenticity_token: false) do %>
                     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                    <a href="#"><input type="button" class="smallSelectButton confirm-no-button" value="Cancel"/></a>
                     <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
-<!--                    <button type="submit" class="smallSelectButton confirm-no-button" >UPDATE</button>-->
+                    <a href="#"><input type="button" class="smallSelectButton confirm-no-button discussion_cancel_button" value="Cancel"/></a>
                     <textarea rows="4" name="discussion" id="discussion_id" style="background-color: #e7e7e7"><%= message.comment%></textarea>
                     <input type="hidden" id="record_id" name="record_id" value="<%=@record.id %>">
                     <input type="hidden" id="section_index" name="section_index" value="<%=params[:section_index] %>">

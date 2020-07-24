@@ -544,10 +544,8 @@
     margin-bottom: auto;
     white-space: nowrap
   }
-  .discussion_submit_button {
-    display: inline-flex;
-    align-items: center;
-    height: 20px
+  .discussion_cancel_button {
+    background-color: $blue-dark;
   }
 }
 
