@@ -1,6 +1,9 @@
 <%= render(partial: 'shared/navigation', locals: {title: "METADATA CURATION: HOME"}) %>
 
+
 <div class="curation_box">
+
+<%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 
   <div class="space_box"></div>
   <% if can?(:search, :cmr) %>

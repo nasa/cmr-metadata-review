@@ -7,6 +7,8 @@ gem 'rails', '~> 5.2.4.4'
 gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
 gem 'pg', '~> 0.18.0', group: [:test, :development, :production]
+gem 'webpacker'
+gem 'react-rails'
 
 
 # Use SCSS for stylesheets
