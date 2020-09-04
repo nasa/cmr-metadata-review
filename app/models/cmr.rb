@@ -500,6 +500,9 @@ class Cmr
         base_options['provider'] = provider_list
       else
         base_options['provider'] = provider
+        base_options['provider'] = ['LARC_ASDC', 'LARC'] if provider == 'ASDC'
+        base_options['provider'] = ['NSIDCV0', 'NSIDC_ECS'] if provider == 'NSIDC'
+        base_options['provider'] = ['GHRC', 'GHRC_CLOUD', 'LANCEAMSR2'] if provider == 'GHRC'
       end
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
