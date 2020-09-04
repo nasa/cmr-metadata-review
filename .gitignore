@@ -47,3 +47,5 @@ tags
 
 # Ignore byebug history
 .byebug_history
+
+.vscode

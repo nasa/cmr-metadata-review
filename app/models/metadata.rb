@@ -19,6 +19,10 @@ class Metadata < ApplicationRecord
   end
 
   def self.daac_from_concept_id(concept_id)
-    concept_id.partition('-').last
+    daac = concept_id.partition('-').last
+    daac = 'ASDC'  if daac == 'LARC_ASDC' || daac == 'LARC'
+    daac = 'NSIDC' if daac == 'NSIDCV0' || daac == 'NSIDC_ECS'
+    daac = 'GHRC'  if daac == 'GHRC_CLOUD' || daac == 'LANCEAMSR2'
+    daac
   end
 end
