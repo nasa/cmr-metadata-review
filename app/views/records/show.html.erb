@@ -128,7 +128,7 @@
                     <div id=<%=getFormReviewId(review)%> class="comment_review_update_form" style="display: none;">
                       <%= form_with( url: update_review_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE" onclick="updateReviewComment()"/>
                         <a href="#"><input type="button" class="smallSelectButton confirm-no-button comment_cancel_button" value="Cancel"/></a>
                         <textarea rows="4" name="review_comment" id="review_id" style="background-color: #e7e7e7"><%= review.review_comment%></textarea>
                       <% end %>
@@ -152,7 +152,7 @@
                     <div id=<%=getFormReportId(review)%> class="comment_report_update_form" style="display: none;">
                       <%= form_with( url: update_report_comment_review_path(id: review.id) , method: "put", id: review.id, local: true, authenticity_token: false) do %>
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+                        <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE" onclick="updateReportComment()"/>
                         <a href="#"><input type="button" class="smallSelectButton confirm-no-button comment_cancel_button" value="Cancel"/></a>
                         <textarea rows="4" name="report_comment" id="report_id" style="background-color: #e7e7e7"><%= review.report_comment%></textarea>
                       <% end %>
@@ -179,6 +179,23 @@
 </section>
 
 <script type="text/javascript" charset="utf-8">
+
+  function updateReviewComment() {
+      let value = document.getElementById("review_id").value
+      if (value != null && value.trim() == "") {
+        alert("The review comment cannot be empty.")
+        event.preventDefault()
+      }
+    }
+
+  function updateReportComment() {
+      let value = document.getElementById("report_id").value
+      if (value != null && value.trim() == "") {
+        alert("The report comment cannot be empty.")
+        event.preventDefault()
+      }
+  }
+
   function toggle(messageId) {
     var x = document.getElementById(messageId);
     if (x.style.display === "none") {
