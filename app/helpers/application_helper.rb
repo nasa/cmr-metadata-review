@@ -5,10 +5,9 @@ module ApplicationHelper
   SELECT_DAAC = 'Select DAAC'
 
   #providers are specified to identify only the records within EOSDIS which ARC team curates
-  ARC_PROVIDERS = ['NSIDCV0',
+  ARC_PROVIDERS = [
                    'ORNL_DAAC',
-                   'LARC_ASDC',
-                   'LARC',
+                   'ASDC',
                    'LAADS',
                    'GES_DISC',
                    'GHRC',
@@ -16,10 +15,9 @@ module ApplicationHelper
                    'ASF',
                    'LPDAAC_ECS',
                    'LANCEMODIS',
-                   'NSIDC_ECS',
+                   'NSIDC',
                    'OB_DAAC',
                    'CDDIS',
-                   'LANCEAMSR2',
                    'PODAAC',
                    'ARCTEST']
 
