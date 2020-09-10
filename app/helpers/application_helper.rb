@@ -120,4 +120,13 @@ module ApplicationHelper
   def self.truncate_string(string, max)
     string.length > max ? "#{string[0...max]}..." : string
   end
+
+  # convert the daac to virtual daac if necessary
+  def self.virtual_daac(daac)
+    daac = 'ASDC'  if %w[LARC_ASDC LARC].include?(daac)
+    daac = 'NSIDC' if %w[NSIDCV0 NSIDC_ECS].include?(daac)
+    daac = 'GHRC'  if %w[GHRC_CLOUD LANCEAMSR2].include?(daac)
+    daac
+  end
+
 end
