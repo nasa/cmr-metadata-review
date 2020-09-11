@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       end
 
       collection do
-        get "all_json"
+        get "find_records_json"
         get "finished"
         get "navigate"
         put "allow_updates"
