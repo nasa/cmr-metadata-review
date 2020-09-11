@@ -5,16 +5,48 @@ class RecordsController < ApplicationController
   before_action :ensure_curation
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
-  before_action :filtered_records, only: :finished
+  before_action :filtered_records, only: [:finished, :find_records_json]
 
 
-  def all_json
-    records = Record.visible
-    array = []
-    records.each do |record|
-      array.push({"id":record.id, "state":record.state})
+  def find_records_json
+    page_num = params['page_num']
+    page_size = params['page_size']
+    filter = params['filter']
+    sort_order = get_sort_direction(params['sort_order'])
+    sort_column = get_sort_column(params['sort_column'])
+    color_code = params['color_code']
+    state = params['state']
+
+    response_records = nil
+    if state == 'open'
+      response_records = @records.open
+    elsif state == 'in_arc'
+      response_records = @records.in_arc_review
+    elsif state == 'await_daac'
+      response_records = @records.ready_for_daac_review
+    elsif state == 'in_daac'
+      response_records = @records.in_daac_review
     end
-    render json: array
+
+    # if filter
+    #   response_records.where("short_name LIKE ?", "%" + filter + "%")
+    # end
+
+    if sort_column and sort_order
+      response_records = response_records.order(sort_column + " " + sort_order)
+    end
+
+    reponse_array = []
+    response_records.each do |record|
+      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record.concept_id,
+                          "revision_id": record.revision_id, "short_name": record.short_name,
+                          "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
+                          "no_second_reviews_requested": @second_opinion_counts[record.id].to_i})
+    end
+
+    response_records_paged = Kaminari.paginate_array(reponse_array, total_count: reponse_array.length).page(page_num).per(page_size)
+
+    render json: response_records_paged
   end
 
   def refresh
@@ -303,6 +335,16 @@ class RecordsController < ApplicationController
 
   def release_collection_record_to_daacs(collection_record)
     collection_record.release_to_daac!
+  end
+
+  private
+
+  def get_sort_column(sort_column)
+    Record.column_names.include?(sort_column) ? sort_column : nil
+  end
+
+  def get_sort_direction(sort_order)
+    %w[asc desc].include?(sort_order) ? sort_order : nil
   end
 
 end
