@@ -7,6 +7,16 @@ class RecordsController < ApplicationController
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
   before_action :filtered_records, only: :finished
 
+
+  def all_json
+    records = Record.visible
+    array = []
+    records.each do |record|
+      array.push({"id":record.id, "state":record.state})
+    end
+    render json: array
+  end
+
   def refresh
     added_records, deleted_records, failed_records = Cmr.update_collections(current_user)
     flash[:notice] = Cmr.format_added_records_list(added_records).html_safe
