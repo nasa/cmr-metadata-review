@@ -13,17 +13,9 @@
 
         <% messages = discussions.select { |discussion| discussion.column_name == title }.sort { |old_comment, new_comment| new_comment.date <=> old_comment.date } %>
         <% messages.each do |message| %>
-          <div class="discussion_comment">
-            <div class="discussion_title">
-              <p><%= message.formatted_date %></p>
-              <p><%= message.user.email %> says:</p>
-            </div>
-            <div class="discussion_text">
-              <p><%= string_html_format(message.comment) %></p>
-            </div>
-          </div>
+          <%= render partial: 'edit_delete_comment', locals: { message: message } %>
         <% end %>
-      </div>  
+      </div>
     </td>
   <% end %>
 

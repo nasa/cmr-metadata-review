@@ -1,0 +1,52 @@
+<div class="discussion_comment">
+  <div class="discussion_title">
+    <p><%= message.formatted_date %></p>
+    <p><%= message.user.email %> says:</p>
+  </div>
+  <div class="discussion_text">
+    <div class="discussion_update">
+      <!--Column 1: the text-->
+      <div class="discussion_text_label" style="display: flex;" id=<%= "text" + getFormDiscussionId(message) %>><%= string_html_format(message.comment) %></div>
+      <!--Column 2: the form for update-->
+      <div id=<%= getFormDiscussionId(message) %> class="discussion_update_form" style="display: none;">
+        <%= form_with(url: discussion_path(id: message.id), method: "put", id: message.id, local: true, authenticity_token: false) do %>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="submit" class="smallSelectButton confirm-no-button" value="UPDATE"/>
+          <a href="#"><input type="button" class="smallSelectButton confirm-no-button discussion_cancel_button" value="Cancel"/></a>
+          <textarea rows="4" name="discussion" id="discussion_id" style="background-color: #e7e7e7"><%= message.comment %></textarea>
+          <input type="hidden" id="record_id" name="record_id" value="<%= @record.id %>">
+          <input type="hidden" id="section_index" name="section_index" value="<%= params[:section_index] %>">
+        <% end %>
+      </div>
+      <!--Column 3: the form for delete-->
+      <%= form_with(name: "delete", url: discussion_path(id: message.id), method: "delete", id: "delete" + message.id.to_s, local: true, authenticity_token: false) do %>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input type="hidden" id="record_id" name="record_id" value="<%= @record.id %>">
+        <input type="hidden" id="section_index" name="section_index" value="<%= params[:section_index] %>">
+      <% end %>
+      <!--Column 4: the update and delete icons-->
+      <div id=<%= "icon-group" + getFormDiscussionId(message) %> class="discussion_update_icons">
+        <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormDiscussionId(message)%>");toggle("<%="text" + getFormDiscussionId(message)%>"); toggle("<%="icon-group" + getFormDiscussionId(message)%>")'></i>
+        <%= link_to("javascript:submitDeleteForm(#{message.id.to_s})", data: {confirm: 'Delete discussion. Are you sure?'}) do %>
+          <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function submitDeleteForm(messageId) {
+        document.getElementById('delete' + messageId).submit();
+        return false;
+    }
+
+    function toggle(messageId) {
+        var x = document.getElementById(messageId);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
