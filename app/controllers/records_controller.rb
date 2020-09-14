@@ -8,45 +8,62 @@ class RecordsController < ApplicationController
   before_action :filtered_records, only: [:finished, :find_records_json]
 
 
-  def find_records_json
-    page_num = params['page_num']
-    page_size = params['page_size']
-    filter = params['filter']
-    sort_order = get_sort_direction(params['sort_order'])
-    sort_column = get_sort_column(params['sort_column'])
-    color_code = params['color_code']
-    state = params['state']
+  def find_records_json(count_only = false)
+    page_num_param = params['page_num']
+    page_size_param = params['page_size']
+    filter_param = params['filter']
+    sort_order_param = params['sort_order']
+    sort_column_param = params['sort_column']
+    color_code_param = params['color_code']
+    state_param = params['state']
 
-    response_records = nil
-    if state == 'open'
-      response_records = @records.open
-    elsif state == 'in_arc'
-      response_records = @records.in_arc_review
-    elsif state == 'await_daac'
-      response_records = @records.ready_for_daac_review
-    elsif state == 'in_daac'
-      response_records = @records.in_daac_review
+    state = get_state(state_param)
+
+    page_num = get_page_num(page_num_param)
+    page_size = get_page_size(page_size_param)
+    limit = page_size
+    offset = (page_num - 1)*page_size
+
+    sort_order = get_sort_order(sort_order_param)
+    sort_column = get_sort_column(sort_column_param)
+
+    filter = get_filter(filter_param)
+
+    color_code = get_color_code(color_code_param)
+
+    query = "SELECT * from records, collections, record_data where records.recordable_id=collections.id" +
+            " and record_data.record_id=records.id" +
+            " and records.state='#{state}'"
+
+    if filter
+      query = query + " and (concept_id like '%#{filter}%' or short_name like '%#{filter}%')"
     end
 
-    # if filter
-    #   response_records.where("short_name LIKE ?", "%" + filter + "%")
-    # end
+    if color_code
+      query = query + " and color='#{color_code}'"
+    end
 
-    if sort_column and sort_order
-      response_records = response_records.order(sort_column + " " + sort_order)
+    if sort_column && sort_order
+      query = query + " order by #{sort_column} #{sort_order}"
+    end
+
+    query = query + " limit #{limit} offset #{offset}"
+
+    response_records = Record.find_by_sql(query)
+    if count_only
+      return response_records.count.to_s
     end
 
     reponse_array = []
     response_records.each do |record|
-      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record.concept_id,
-                          "revision_id": record.revision_id, "short_name": record.short_name,
+      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
+                          "revision_id": record.revision_id, "short_name": record[:short_name],
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
                           "no_second_reviews_requested": @second_opinion_counts[record.id].to_i})
     end
 
-    response_records_paged = Kaminari.paginate_array(reponse_array, total_count: reponse_array.length).page(page_num).per(page_size)
+    render json: reponse_array
 
-    render json: response_records_paged
   end
 
   def refresh
@@ -339,12 +356,42 @@ class RecordsController < ApplicationController
 
   private
 
-  def get_sort_column(sort_column)
-    Record.column_names.include?(sort_column) ? sort_column : nil
+  def get_page_num(page_num)
+    if page_num && page_num.match(/[0-9]+/)
+      page_num.to_i
+    else
+      1
+    end
   end
 
-  def get_sort_direction(sort_order)
+  def get_page_size(page_size)
+    if page_size && page_size.match(/[0-9]+/)
+      page_size.to_i
+    else
+      25
+    end
+  end
+
+  def get_state(state)
+    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished].include?(state) ? state : 'open'
+  end
+
+  def get_sort_order(sort_order)
     %w[asc desc].include?(sort_order) ? sort_order : nil
+  end
+
+  def get_sort_column(sort_column)
+    %w[concept_id short_name].include?(sort_column) ? sort_column : nil
+  end
+
+  def get_color_code(color_code)
+    %w[gray yellow green red blue].include?(color_code) ? color_code : nil
+  end
+
+  def get_filter(filter)
+    if filter
+      filter.match(/[_A-Za-z0-9-]+/) ? filter : nil
+    end
   end
 
 end
