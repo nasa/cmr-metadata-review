@@ -5,7 +5,7 @@ class RecordsController < ApplicationController
   before_action :ensure_curation
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
-  before_action :filtered_records, only: [:finished, :find_records_json]
+  before_action :filtered_records, only: [:finished]
 
 
   def find_records_json(count_only = false)
@@ -54,12 +54,14 @@ class RecordsController < ApplicationController
       return response_records.count.to_s
     end
 
+    record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
+
     reponse_array = []
     response_records.each do |record|
       reponse_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
                           "revision_id": record.revision_id, "short_name": record[:short_name],
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-                          "no_second_reviews_requested": @second_opinion_counts[record.id].to_i})
+                          "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
 
     render json: reponse_array
