@@ -5,10 +5,8 @@ class RecordsController < ApplicationController
   before_action :ensure_curation
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
-  before_action :filtered_records, only: [:finished]
 
-
-  def find_records_json(count_only = false)
+  def find_records_json
     page_num_param = params['page_num']
     page_size_param = params['page_size']
     filter_param = params['filter']
@@ -18,6 +16,11 @@ class RecordsController < ApplicationController
     state_param = params['state']
 
     state = get_state(state_param)
+    if state=='closed_finished'
+      state_query = " and (r.state='closed' or r.state='finished')"
+    else
+      state_query = " and r.state='#{state}'"
+    end
 
     page_num = get_page_num(page_num_param)
     page_size = get_page_size(page_size_param)
@@ -31,9 +34,8 @@ class RecordsController < ApplicationController
 
     color_code = get_color_code(color_code_param)
 
-    query = "SELECT * from records, collections, record_data where records.recordable_id=collections.id" +
-            " and record_data.record_id=records.id" +
-            " and records.state='#{state}'"
+    query = " from records r, collections c, record_data d where r.recordable_id=c.id" +
+        " and d.record_id=r.id" + state_query
 
     if filter
       query = query + " and (concept_id like '%#{filter}%' or short_name like '%#{filter}%')"
@@ -47,13 +49,12 @@ class RecordsController < ApplicationController
       query = query + " order by #{sort_column} #{sort_order}"
     end
 
+    count_query = "select" + " count(distinct r.id) as count" + query
+
     query = query + " limit #{limit} offset #{offset}"
+    records_query = "select" + " distinct r.id, r.state, r.format, c.concept_id, r.revision_id, c.short_name" + query
 
-    response_records = Record.find_by_sql(query)
-    if count_only
-      return response_records.count.to_s
-    end
-
+    response_records = Record.find_by_sql(records_query)
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
 
     reponse_array = []
@@ -63,9 +64,9 @@ class RecordsController < ApplicationController
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
                           "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
-
-    render json: reponse_array
-
+    count_result = ActiveRecord::Base.connection.exec_query(count_query)
+    result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
+    render json: result
   end
 
   def refresh
@@ -375,7 +376,7 @@ class RecordsController < ApplicationController
   end
 
   def get_state(state)
-    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished].include?(state) ? state : 'open'
+    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished closed_finished].include?(state) ? state : 'open'
   end
 
   def get_sort_order(sort_order)
