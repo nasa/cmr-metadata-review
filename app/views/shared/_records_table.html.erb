@@ -1,5 +1,6 @@
 <% closed ||= false %>
 <% reviews ||= false %>
+<% section ||= "open" %>
 
 <script type="text/javascript">
   function checkAll(table_name)
@@ -19,9 +20,9 @@
   </div>
 
   <% if current_user.admin? || current_user.role == 'mdq_curator' %>
-    <div align="right">
-      <a href="javascript:void(0);" onclick="checkAll('<%= form_id+'_table' %>')">Select All</a>
-    </div>
+<!--    <div align="right">-->
+<!--      <a href="javascript:void(0);" onclick="checkAll('<%= form_id+'_table' %>')">Select All</a>-->
+<!--    </div>-->
   <% end %>
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
   <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
@@ -34,45 +35,49 @@
 
     <div class="results-table-container">
       <div class="table-scroll">
-        <table id="<%= form_id+'_table' %>" form_id="<%= form_id %>" class="results-table">
 
-          <tr>
-            <th>Concept_ID</th>
-            <th class="center_text">Revision_ID</th>
-            <th>ShortName</th>
-            <th class="center_text">Version</th>
-            <% if reviews %>
-              <th class="center_text"># Completed Reviews</th>
-              <th class="center_text"># Second Reviews Requested</th>
-            <% end %>
-            <% if closed %>
-              <th>Date Review Closed</th>
-            <% end %>
-            <th>Selection</th>
-          </tr>
+        <%= react_component("view/PaginationTableView", { section: section, formId: form_id }) %>
 
-          <% records.each do |record| %>
-            <tr>
-              <td><%= record.concept_id %></td>
-              <td class="center_text"><%= record.revision_id %></td>
-              <td><%= record.recordable.short_name %></td>
-              <!-- Only Version ID should be loaded -->
-              <td class="center_text"><%= record.version%></td>
-              <% if closed %>
-                <td><%= record.formatted_closed_date %></td>
-              <% end %>
-              <% if reviews %>
-                <td class="center_text"><%= record.completed_review_count %></td>
-                <td class="center_text"><%= @second_opinion_counts[record.id].to_i %></td>
-              <% end %>
 
-              <td class="center_text"><%= check_box_tag("record_id[]", record.id) %></td>
 
-            </tr>
-          <% end %>
-        </table>
+<!--          <table id="<%#= form_id+'_table' %>" form_id="<%#= form_id %>" class="results-table">-->
+
+<!--          <tr>-->
+<!--            <th>Concept_ID</th>-->
+<!--            <th class="center_text">Revision_ID</th>-->
+<!--            <th>ShortName</th>-->
+<!--            <th class="center_text">Version</th>-->
+            <%# if reviews %>
+<!--              <th class="center_text"># Completed Reviews</th>-->
+<!--              <th class="center_text"># Second Reviews Requested</th>-->
+            <%# end %>
+            <%# if closed %>
+<!--              <th>Date Review Closed</th>-->
+            <%# end %>
+<!--            <th>Selection</th>-->
+<!--          </tr>-->
+
+          <%# records.each do |record| %>
+<!--            <tr>-->
+<!--              <td><%#= record.concept_id %></td>-->
+<!--              <td class="center_text"><%#= record.revision_id %></td>-->
+<!--              <td><%#= record.recordable.short_name %></td>-->
+<!--               Only Version ID should be loaded-->
+<!--              <td class="center_text"><%#= record.version%></td>-->
+              <%# if closed %>
+<!--                <td><%#= record.formatted_closed_date %></td>-->
+              <%# end %>
+              <%# if reviews %>
+<!--                <td class="center_text"><%#= record.completed_review_count %></td>-->
+<!--                <td class="center_text"><%#= @second_opinion_counts[record.id].to_i %></td>-->
+              <%# end %>
+
+<!--              <td class="center_text"><%#= check_box_tag("record_id[]", record.id) %></td>-->
+
+<!--            </tr>-->
+          <%# end %>
+<!--        </table>-->
       </div>
-      <br>
       <%= content_for :form_buttons %>
     </div>
   <% end %>
