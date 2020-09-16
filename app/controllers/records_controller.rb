@@ -39,8 +39,8 @@ class RecordsController < ApplicationController
 
     color_code = get_color_code(color_code_param)
 
-    query = " from records r, collections c, record_data d where r.recordable_id=c.id" +
-        " and r.recordable_type = 'Collection' and d.record_id=r.id" + state_query
+    query = " from records r LEFT JOIN record_data d ON d.record_id = r.id INNER JOIN collections c ON r.recordable_id=c.id" +
+        " WHERE r.recordable_type = 'Collection'" + state_query
 
     if filter
       query = query + " and (concept_id like '%#{filter}%' or short_name like '%#{filter}%')"
@@ -75,6 +75,7 @@ class RecordsController < ApplicationController
                           "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
+    puts "*TEST* state=#{state}, records_query=#{records_query}, count=#{count_result.count}"
     result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
     render json: result
   end
