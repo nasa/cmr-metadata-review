@@ -7,6 +7,22 @@ class RecordsController < ApplicationController
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
 
+  # def filter(records)
+  #   records = if current_user.daac_curator?
+  #                Record.daac(current_user.daac)
+  #              elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
+  #                Record.daac(params[:daac])
+  #              else
+  #                Record.all_records(application_mode)
+  #              end
+  #
+  #   # only include collection records
+  #   records = records.where(recordable_type: 'Collection').distinct
+  #
+  #   records = records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
+  #   records
+  # end
+
   def find_records_json
     page_num_param = params['page_num']
     page_size_param = params['page_size']
@@ -69,10 +85,16 @@ class RecordsController < ApplicationController
     query = query + " limit #{limit} offset #{offset}"
     records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id, records.revision_id, collections.short_name" + query
 
+    # https://apidock.com/rails/ActiveRecord/QueryMethods/offset
     puts "*** Records query=" + query
-
     response_records = Record.find_by_sql(records_query)
 
+    # ids = response_records.map { |r| r.id }
+    # records = Record.where(id: ids)
+    # records = filter(records)
+    # records.map do |r|
+    #   puts "record=#{r.short_name}"
+    # end
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
 
     reponse_array = []
