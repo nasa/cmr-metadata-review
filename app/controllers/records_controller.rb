@@ -1,5 +1,6 @@
 class RecordsController < ApplicationController
   include RecordHelper
+  include SiteHelper
 
   before_action :authenticate_user!
   before_action :ensure_curation
@@ -19,7 +20,11 @@ class RecordsController < ApplicationController
     if state=='closed_finished'
       state_query = " and (r.state='closed' or r.state='finished')"
     else
-      state_query = " and r.state='#{state}'"
+      if state == 'curator_feedback'
+        state_query = " and r.state != 'closed' and r.state != 'hidden' "
+      else
+        state_query = " and r.state='#{state}'"
+      end
     end
 
     page_num = get_page_num(page_num_param)
@@ -35,7 +40,7 @@ class RecordsController < ApplicationController
     color_code = get_color_code(color_code_param)
 
     query = " from records r, collections c, record_data d where r.recordable_id=c.id" +
-        " and d.record_id=r.id" + state_query
+        " and r.recordable_type = 'Collection' and d.record_id=r.id" + state_query
 
     if filter
       query = query + " and (concept_id like '%#{filter}%' or short_name like '%#{filter}%')"
@@ -55,6 +60,11 @@ class RecordsController < ApplicationController
     records_query = "select" + " distinct r.id, r.state, r.format, c.concept_id, r.revision_id, c.short_name" + query
 
     response_records = Record.find_by_sql(records_query)
+
+    if state == 'curator_feedback'
+      # response_records = curator_feedback_records(response_records)
+    end
+
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
 
     reponse_array = []
@@ -376,7 +386,7 @@ class RecordsController < ApplicationController
   end
 
   def get_state(state)
-    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished closed_finished].include?(state) ? state : 'open'
+    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished closed_finished curator_feedback].include?(state) ? state : 'open'
   end
 
   def get_sort_order(sort_order)
