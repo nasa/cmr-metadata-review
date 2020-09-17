@@ -1,4 +1,5 @@
 module SiteHelper
+  include ApplicationHelper
   def current_user_daac_records(records)
     daac_records = if current_user.daac_curator?
                      records.daac(current_user.daac)
@@ -23,11 +24,11 @@ module SiteHelper
 
   def filter_records(records)
     records = if current_user.daac_curator?
-                 Record.daac(current_user.daac)
+                records.daac(current_user.daac)
                elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
-                 Record.daac(params[:daac])
+                 records.daac(params[:daac])
                else
-                 Record.all_records(application_mode)
+                 records.all_records(application_mode)
                end
     # only include collection records
     records = records.where(recordable_type: 'Collection').distinct
@@ -39,6 +40,5 @@ module SiteHelper
   def second_opinion_count(records)
     RecordData.where(record: records, opinion: true).group(:record_id).count
   end
-
 
 end
