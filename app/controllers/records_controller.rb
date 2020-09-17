@@ -56,14 +56,14 @@ class RecordsController < ApplicationController
     color_code = get_color_code(color_code_param)
 
     record_data_join = " LEFT JOIN record_data ON record_data.record_id = records.id"
-    if state == 'curator_feedback'
-      record_data_join = record_data_join + " and record_data.feedback=true"
-    end
+    # if state == 'curator_feedback'
+    #   record_data_join = record_data_join + " and record_data.feedback=true"
+    # end
 
     review_join = " LEFT JOIN reviews ON reviews.record_id = records.id"
-    if state == 'curator_feedback'
-      review_join = review_join + " and reviews.user_id='#{current_user.id}'"
-    end
+    # if state == 'curator_feedback'
+    #   review_join = review_join + " and reviews.user_id='#{current_user.id}'"
+    # end
 
     query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" + record_data_join + review_join +
         " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query
