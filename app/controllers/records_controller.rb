@@ -7,22 +7,6 @@ class RecordsController < ApplicationController
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
 
-  # def filter(records)
-  #   records = if current_user.daac_curator?
-  #                Record.daac(current_user.daac)
-  #              elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
-  #                Record.daac(params[:daac])
-  #              else
-  #                Record.all_records(application_mode)
-  #              end
-  #
-  #   # only include collection records
-  #   records = records.where(recordable_type: 'Collection').distinct
-  #
-  #   records = records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
-  #   records
-  # end
-
   def find_records_json
     page_num_param = params['page_num']
     page_size_param = params['page_size']
@@ -56,17 +40,9 @@ class RecordsController < ApplicationController
     color_code = get_color_code(color_code_param)
 
     record_data_join = " LEFT JOIN record_data ON record_data.record_id = records.id"
-    # if state == 'curator_feedback'
-    #   record_data_join = record_data_join + " and record_data.feedback=true"
-    # end
 
-    review_join = " LEFT JOIN reviews ON reviews.record_id = records.id"
-    # if state == 'curator_feedback'
-    #   review_join = review_join + " and reviews.user_id='#{current_user.id}'"
-    # end
-
-    query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" + record_data_join + review_join +
-        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query
+    query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" + record_data_join +
+        " WHERE records.recordable_type = 'Collection'" + state_query
 
     if filter
       query = query + " and (collections.concept_id like '%#{filter}%' or collections.short_name like '%#{filter}%')"
@@ -80,39 +56,33 @@ class RecordsController < ApplicationController
       query = query + " order by #{sort_column} #{sort_order}"
     end
 
-    count_query = "select" + " count(distinct records.id) as count" + query
-
-    query = query + " limit #{limit} offset #{offset}"
-    records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id, records.revision_id, collections.short_name" + query
-
-    # https://apidock.com/rails/ActiveRecord/QueryMethods/offset
-    puts "*** Records query=" + query
+    records_query = "select" + " distinct records.id, records.format" + query
+    puts "*** Records query=" + records_query
     response_records = Record.find_by_sql(records_query)
 
-    # ids = response_records.map { |r| r.id }
-    # records = Record.where(id: ids)
-    # records = filter(records)
-    # records.map do |r|
-    #   puts "record=#{r.short_name}"
-    # end
+    ids = response_records.map { |r| r.id }
+    records = Record.where(id: ids)
 
-    records = filter_records(@records)
+    records = filter_records(records)
 
-    # if state curator_feedback
-    #    records = curator_feedback_records(records)
-    #
+    total_count = records.size
+
+    records = records.limit(limit).offset(offset)
+
+    if state == 'curator_feedback'
+       records = curator_feedback_records(records)
+    end
+
     record_second_opinion_counts = second_opinion_count(records)
 
     reponse_array = []
-    response_records.each do |record|
-      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
-                          "revision_id": record.revision_id, "short_name": record[:short_name],
+    records.each do |record|
+      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record.concept_id,
+                          "revision_id": record.revision_id, "short_name": record.short_name,
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
                           "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
-    puts "*** Count query=" + count_query
-    count_result = ActiveRecord::Base.connection.exec_query(count_query)
-    result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
+    result = {total_count: total_count, page_num: page_num, page_size: page_size, records: reponse_array}
     render json: result
   end
 
@@ -442,28 +412,6 @@ class RecordsController < ApplicationController
     if filter
       filter.match(/[_A-Za-z0-9-]+/) ? filter : nil
     end
-  end
-
-  def get_daac_query
-    query = ""
-    if current_user.daac_curator?
-      query = " and records.daac=#{current_user.daac}"
-    elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
-      query = " and records.daac=#{params[:daac]}"
-    elsif Rails.configuration.mdq_enabled_feature_toggle
-      query = application_mode == :mdq_mode ? get_provider_query(ApplicationHelper::MDQ_PROVIDERS) : get_provider_query(ApplicationHelper::ARC_PROVIDERS)
-    end
-    return query
-  end
-
-  def get_provider_query(provider_list)
-    result = " and records.daac in ("
-    provider_list.each { |provider|
-      result = result + "'#{provider}',"
-    }
-    result.chop!
-    result = result + ")"
-    return result
   end
 
 end
