@@ -3,7 +3,6 @@ class SiteController < ApplicationController
 
   before_action :authenticate_user!, :except => [:elb_status]
   before_action :ensure_curation, :except => [:general_home, :elb_status]
-  before_action :filtered_records, only: :home
 
   def home
     unless session[:unhide_record_ids].nil?

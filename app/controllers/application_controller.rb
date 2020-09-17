@@ -38,12 +38,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # confirm nothing else calls this and remove
-  def filtered_records
-    @records = filter_records(@records)
-    @second_opinion_counts =  second_opinion_counts(@records)
-  end
-
   def filtered_by?(param, any_keyword)
     params[param] && params[param] != any_keyword
   end
