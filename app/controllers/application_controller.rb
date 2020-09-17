@@ -38,22 +38,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # confirm nothing else calls this and remove
   def filtered_records
-    @records = if current_user.daac_curator?
-                 Record.daac(current_user.daac)
-               elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
-                 Record.daac(params[:daac])
-               else
-                 Record.all_records(application_mode)
-               end
-
-    # only include collection records
-    @records = @records.where(recordable_type: 'Collection').distinct
-
-    @records = @records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
-
-    # Count Second Opinions here for every record
-    @second_opinion_counts = RecordData.where(record: @records, opinion: true).group(:record_id).count
+    @records = filter_records(@records)
+    @second_opinion_counts =  second_opinion_counts(@records)
   end
 
   def filtered_by?(param, any_keyword)
