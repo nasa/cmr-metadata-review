@@ -20,4 +20,25 @@ module SiteHelper
       'In ARC Review Records'
     end
   end
+
+  def filter_records(records)
+    records = if current_user.daac_curator?
+                 Record.daac(current_user.daac)
+               elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
+                 Record.daac(params[:daac])
+               else
+                 Record.all_records(application_mode)
+               end
+    # only include collection records
+    records = records.where(recordable_type: 'Collection').distinct
+    records = records.where("'#{params[:campaign]}' = ANY (campaign)") if filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD)
+    records
+  end
+
+  # Count Second Opinions here for every record
+  def second_opinion_count(records)
+    RecordData.where(record: records, opinion: true).group(:record_id).count
+  end
+
+
 end

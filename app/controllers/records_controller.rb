@@ -95,7 +95,13 @@ class RecordsController < ApplicationController
     # records.map do |r|
     #   puts "record=#{r.short_name}"
     # end
-    record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
+
+    records = filter_records(@records)
+
+    # if state curator_feedback
+    #    records = curator_feedback_records(records)
+    #
+    record_second_opinion_counts = second_opinion_count(records)
 
     reponse_array = []
     response_records.each do |record|
