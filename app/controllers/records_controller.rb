@@ -97,6 +97,8 @@ class RecordsController < ApplicationController
     sort_column_param = params['sort_column']
     color_code_param = params['color_code']
     state_param = params['state']
+    daac_param = params['daac']
+    campaign_param = params['campaign']
 
     state = get_state(state_param)
     if state=='closed_finished'
@@ -129,7 +131,7 @@ class RecordsController < ApplicationController
 
     query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" +
         record_data_join + review_join + ingest_join +
-        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query + campaign_query + curator_feedback_query
+        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query(daac_param) + campaign_query(campaign_param) + curator_feedback_query
 
     if filter
       query = query + " and (lower(collections.concept_id) like lower('%#{filter}%') or lower(collections.short_name) like lower('%#{filter}%'))"
@@ -499,8 +501,12 @@ class RecordsController < ApplicationController
     end
   end
 
-  def campaign_query
-    filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD) ? " and '#{params[:campaign]}' = ANY (campaign)" : ''
+  def campaign_query(campaign)
+    if campaign && campaign != ANY_CAMPAIGN_KEYWORD
+      " and #{campaign} = ANY (campaign)"
+    else
+      ""
+    end
   end
 
   def curator_feedback_query
@@ -508,12 +514,12 @@ class RecordsController < ApplicationController
   end
 
 
-  def get_daac_query
+  def get_daac_query(daac)
     query = ""
     if current_user.daac_curator?
       query = " and records.daac=#{current_user.daac}"
-    elsif filtered_by?(:daac, ANY_DAAC_KEYWORD)
-      query = " and records.daac=#{params[:daac]}"
+    elsif daac && daac != ANY_DAAC_KEYWORD
+      query = " and records.daac='#{daac}'"
     elsif Rails.configuration.mdq_enabled_feature_toggle
       query = application_mode == :mdq_mode ? get_provider_query(ApplicationHelper::MDQ_PROVIDERS) : get_provider_query(ApplicationHelper::ARC_PROVIDERS)
     end

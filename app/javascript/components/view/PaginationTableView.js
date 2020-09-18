@@ -18,8 +18,22 @@ const PaginationTableView = observer(
       this.createRow = this.createRow.bind(this)
     }
 
+    getDaac() {
+      var element = document.getElementById("daac")
+      var value = element.options[element.selectedIndex].value
+      return value
+    }
+
+    getCampaign() {
+      var element = document.getElementById("campaign")
+      var value = element.options[element.selectedIndex].value
+      return value
+    }
+
     componentDidMount() {
-      this.viewModel.selectPage(this.viewModel.currentPage);
+      this.viewModel.daac = this.getDaac()
+      this.viewModel.campaign = this.getCampaign()
+      this.viewModel.selectPage(this.viewModel.currentPage)
     }
 
     render() {
