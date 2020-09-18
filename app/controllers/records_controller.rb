@@ -503,7 +503,7 @@ class RecordsController < ApplicationController
 
   def campaign_query(campaign)
     if campaign && campaign != ANY_CAMPAIGN_KEYWORD
-      " and #{campaign} = ANY (campaign)"
+      " and '#{campaign}' = ANY (campaign)"
     else
       ""
     end
