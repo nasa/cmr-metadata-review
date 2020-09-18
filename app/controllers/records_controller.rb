@@ -7,7 +7,7 @@ class RecordsController < ApplicationController
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
 
-  def find_records_json
+  def find_records_json_active_record
     page_num_param = params['page_num']
     page_size_param = params['page_size']
     filter_param = params['filter']
@@ -89,7 +89,7 @@ class RecordsController < ApplicationController
     render json: result
   end
 
-  def find_records_json_sql
+  def find_records_json
     page_num_param = params['page_num']
     page_size_param = params['page_size']
     filter_param = params['filter']
@@ -504,7 +504,7 @@ class RecordsController < ApplicationController
   end
 
   def curator_feedback_query
-    param[:state] == 'curator_feedback' ? " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'" : ''
+    params[:state] == 'curator_feedback' ? " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'" : ''
   end
 
 
