@@ -44,7 +44,7 @@ const PaginationTableView = observer(
 
       return (
         <>
-          <SearchView/>
+          <SearchView viewModel={this.viewModel}/>
           <div className="results-area">
             <table id={this.props.formId + "_table"} form_id={this.props.formId} className="results-table">
               <HeaderView viewModel={this.viewModel} headers={headers}/>

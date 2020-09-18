@@ -132,7 +132,7 @@ class RecordsController < ApplicationController
         " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query + campaign_query + curator_feedback_query
 
     if filter
-      query = query + " and (collections.concept_id like '%#{filter}%' or collections.short_name like '%#{filter}%')"
+      query = query + " and (lower(collections.concept_id) like lower('%#{filter}%') or lower(collections.short_name) like lower('%#{filter}%'))"
     end
 
     if color_code

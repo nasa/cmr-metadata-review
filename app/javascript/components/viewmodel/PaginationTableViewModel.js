@@ -85,6 +85,9 @@ export default class PagingTableViewModel {
     if (this.sortColumn != null && this.sortOrder != null) {
       url = url + '&sort_column='+this.sortColumn+'&sort_order='+this.sortOrder
     }
+    if (this.filter != null) {
+      url = url + '&filter='+this.filter
+    }
     console.log(url);
     const requestOptions = {
       method: 'GET',
@@ -115,6 +118,7 @@ export default class PagingTableViewModel {
 
   filterByText(value) {
     this.model.filter = value
+    this.fetchData()
   }
 
   filterByColor(value) {
