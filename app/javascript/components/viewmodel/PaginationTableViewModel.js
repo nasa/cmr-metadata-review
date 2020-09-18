@@ -2,9 +2,16 @@ import PaginationTableModel from "../model/PaginationTableModel";
 import tableResponse from "../data/query_response";
 
 export default class PagingTableViewModel {
-  loading = false
   model = new PaginationTableModel()
   // Access the Model
+
+  set loading(value) {
+    this.model.loading = value
+  }
+
+  get loading() {
+    return this.model.loading
+  }
 
   get totalItems() {
     let result = this.model.result
@@ -75,6 +82,10 @@ export default class PagingTableViewModel {
 
   fetchData() {
     let url = `/records/find_records_json?state=${this.section}&page_num=${this.currentPage}&page_size=10`
+    if (this.sortColumn != null && this.sortOrder != null) {
+      url = url + '&sort_column='+this.sortColumn+'&sort_order='+this.sortOrder
+    }
+    console.log(url);
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -87,8 +98,6 @@ export default class PagingTableViewModel {
     })
       .catch(error => {
         this.loading = false
-        alert("error loading for "+this.section+", error="+error)
-        console.log("error querying url=", url)
         console.error('There was an error!', error);
       });
   }
@@ -113,6 +122,8 @@ export default class PagingTableViewModel {
   }
 
   sortBy(column, order) {
-    this.model.sortBy(column, order)
+    this.model.setSortBy(column, order)
+    this.fetchData()
+
   }
 }
