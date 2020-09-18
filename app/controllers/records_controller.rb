@@ -29,8 +29,8 @@ class RecordsController < ApplicationController
 
     page_num = get_page_num(page_num_param)
     page_size = get_page_size(page_size_param)
-    limit = page_size
-    offset = (page_num - 1)*page_size
+    # limit = page_size
+    # offset = (page_num - 1)*page_size
 
     sort_order = get_sort_order(sort_order_param)
     sort_column = get_sort_column(sort_column_param)
@@ -53,7 +53,6 @@ class RecordsController < ApplicationController
     end
 
     records_query = "select" + " distinct records.id, records.format, collections.concept_id, collections.short_name" + query
-    puts "*** Records query=" + records_query
     response_records = Record.find_by_sql(records_query)
 
     ids = response_records.map { |r| r.id }
@@ -67,26 +66,26 @@ class RecordsController < ApplicationController
        records = curator_feedback_records(records)
     end
 
-    if sort_column && sort_order
-
-    else
-      records.joins(:ingest).order('date_ingested DESC')
-      records = records.joins(:ingest).order('date_ingested DESC')
-    end
-    # records = records_sorted_by_short_name(records)
-
     record_second_opinion_counts = second_opinion_count(records)
 
-    records = records.limit(limit).offset(offset)
-
-    reponse_array = []
+    response_array = []
     records.each do |record|
-      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record.concept_id,
+      puts record
+      response_array.push({"id":record.id, "state":record.state, "concept_id": record.concept_id,
                           "revision_id": record.revision_id, "short_name": record.short_name,
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-                          "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
+                          "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i, "date_ingested":record.date_ingested})
     end
-    result = {total_count: total_count, page_num: page_num, page_size: page_size, records: reponse_array}
+
+    if sort_column && sort_order
+        response_array.sort_by!  { |record| record[sort_column] }
+        response_array.reverse! if sort_order == 'desc'
+    else
+      response_array.sort_by!  { |record| record["date_ingested"] }.reverse!
+      response_records_paged = Kaminari.paginate_array(response_array, total_count: response_array.length).page(page_num).per(page_size)
+    end
+
+    result = {total_count: total_count, page_num: page_num, page_size: page_size, records: response_records_paged}
     render json: result
   end
 
