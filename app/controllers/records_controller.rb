@@ -122,20 +122,14 @@ class RecordsController < ApplicationController
     color_code = get_color_code(color_code_param)
 
     record_data_join = " LEFT JOIN record_data ON record_data.record_id = records.id"
-    if state == 'curator_feedback'
-      record_data_join = record_data_join + " and record_data.feedback=true"
-    end
 
     review_join = " LEFT JOIN reviews ON reviews.record_id = records.id"
-    if state == 'curator_feedback'
-      review_join = review_join + " and reviews.user_id='#{current_user.id}'"
-    end
 
     ingest_join = " LEFT JOIN ingests ON ingests.record_id = records.id"
 
     query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" +
         record_data_join + review_join + ingest_join +
-        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query
+        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query + campaign_query + curator_feedback_query
 
     if filter
       query = query + " and (collections.concept_id like '%#{filter}%' or collections.short_name like '%#{filter}%')"
@@ -504,6 +498,15 @@ class RecordsController < ApplicationController
       filter.match(/[_A-Za-z0-9-]+/) ? filter : nil
     end
   end
+
+  def campaign_query
+    filtered_by?(:campaign, ANY_CAMPAIGN_KEYWORD) ? " and '#{params[:campaign]}' = ANY (campaign)" : ''
+  end
+
+  def curator_feedback_query
+    param[:state] == 'curator_feedback' ? " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'" : ''
+  end
+
 
   def get_daac_query
     query = ""
