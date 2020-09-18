@@ -2,28 +2,11 @@
 <% reviews ||= false %>
 <% section ||= "open" %>
 
-<script type="text/javascript">
-  function checkAll(table_name)
-  {
-    var table = document.getElementById (table_name);
-    var form_id = table.getAttribute("form_id")
-    var checkboxes = table.querySelectorAll ('input[type=checkbox]');
-    for (var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = !checkboxes[i].checked
-    toggleAllButtons(form_id)
-  }
-</script>
-
-
 <div class="table-backdrop">
   <div class="results-title">
     <p><strong><%= title %>:</strong></p>
   </div>
 
-  <% if current_user.admin? || current_user.role == 'mdq_curator' %>
-<!--    <div align="right">-->
-<!--      <a href="javascript:void(0);" onclick="checkAll('<%= form_id+'_table' %>')">Select All</a>-->
-<!--    </div>-->
-  <% end %>
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
   <!-- See CMRARC-484 and https://github.com/rails/rails/issues/24257-->
   <!-- During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific-->
@@ -35,48 +18,7 @@
 
     <div class="results-table-container">
       <div class="table-scroll">
-
-        <%= react_component("view/PaginationTableView", { section: section, formId: form_id }) %>
-
-
-
-<!--          <table id="<%#= form_id+'_table' %>" form_id="<%#= form_id %>" class="results-table">-->
-
-<!--          <tr>-->
-<!--            <th>Concept_ID</th>-->
-<!--            <th class="center_text">Revision_ID</th>-->
-<!--            <th>ShortName</th>-->
-<!--            <th class="center_text">Version</th>-->
-            <%# if reviews %>
-<!--              <th class="center_text"># Completed Reviews</th>-->
-<!--              <th class="center_text"># Second Reviews Requested</th>-->
-            <%# end %>
-            <%# if closed %>
-<!--              <th>Date Review Closed</th>-->
-            <%# end %>
-<!--            <th>Selection</th>-->
-<!--          </tr>-->
-
-          <%# records.each do |record| %>
-<!--            <tr>-->
-<!--              <td><%#= record.concept_id %></td>-->
-<!--              <td class="center_text"><%#= record.revision_id %></td>-->
-<!--              <td><%#= record.recordable.short_name %></td>-->
-<!--               Only Version ID should be loaded-->
-<!--              <td class="center_text"><%#= record.version%></td>-->
-              <%# if closed %>
-<!--                <td><%#= record.formatted_closed_date %></td>-->
-              <%# end %>
-              <%# if reviews %>
-<!--                <td class="center_text"><%#= record.completed_review_count %></td>-->
-<!--                <td class="center_text"><%#= @second_opinion_counts[record.id].to_i %></td>-->
-              <%# end %>
-
-<!--              <td class="center_text"><%#= check_box_tag("record_id[]", record.id) %></td>-->
-
-<!--            </tr>-->
-          <%# end %>
-<!--        </table>-->
+        <%= react_component("view/PaginationTableView", { section: section, formId: form_id, current_user: current_user.id, admin: current_user.admin?, role: current_user.role }) %>
       </div>
       <%= content_for :form_buttons %>
     </div>

@@ -36,6 +36,15 @@ const PaginationTableView = observer(
       this.viewModel.selectPage(this.viewModel.currentPage)
     }
 
+    checkAll(table_name)
+    {
+      var table = document.getElementById (table_name);
+      var form_id = table.getAttribute("form_id")
+      var checkboxes = table.querySelectorAll ('input[type=checkbox]');
+      for (var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = !checkboxes[i].checked
+      toggleAllButtons(form_id)
+    }
+
     render() {
       let viewModel = this.viewModel
       let headers = viewModel.headers;
@@ -56,9 +65,22 @@ const PaginationTableView = observer(
           </td>
         </tr>
 
+      let selectAll = null
+      if (this.props.admin || this.props.role == 'mdq_curator') {
+        selectAll =
+          <div align="right">
+            <a href="javascript:void(0);" onClick={() => {
+              this.checkAll(this.props.formId+"_table")
+            }}>Select All</a>
+          </div>
+      }
+
       return (
         <>
-          <SearchView viewModel={this.viewModel}/>
+          <div style={{display:"flex", flexDirection: "row", justifyContent:"space-between", alignItems: "center"}}>
+            <SearchView viewModel={this.viewModel}/>
+            {selectAll}
+          </div>
           <div className="results-area">
             <table id={this.props.formId + "_table"} form_id={this.props.formId} className="results-table">
               <HeaderView viewModel={this.viewModel} headers={headers}/>
@@ -66,7 +88,7 @@ const PaginationTableView = observer(
               {!this.viewModel.loading ? rows : loadingTr}
               </tbody>
             </table>
-            <PaginationView viewModel={viewModel}/>
+            <PaginationView viewModel={viewModel} formId={this.props.formId}/>
           </div>
         </>
       )
@@ -83,7 +105,7 @@ const PaginationTableView = observer(
           let value = row[header.field]
           let pos = value.indexOf("T")
           if (pos > -1) {
-            value = value.substring(0,pos)
+            value = value.substring(0, pos)
           }
           column = <td key={header.field}>{value}</td>
         }
@@ -106,6 +128,9 @@ const PaginationTableView = observer(
 
 PaginationTableView.propTypes = {
   formId: PropTypes.string,
+  currentUser: PropTypes.string,
+  admin: PropTypes.bool,
+  role: PropTypes.string,
   section: PropTypes.string,
   filter: PropTypes.string,
   sortColumn: PropTypes.string,
