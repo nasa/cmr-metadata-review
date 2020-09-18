@@ -23,18 +23,18 @@ const PaginationView = observer(
 
                 pages = [];
                 for (let i = startPage; i <= endPage; i++) {
-                    pages.push(<PaginationItemView active={currentPage === i} viewModel={viewModel} key={i}>{i}</PaginationItemView>)
+                    pages.push(<PaginationItemView formId={this.props.formId} active={currentPage === i} viewModel={viewModel} key={i}>{i}</PaginationItemView>)
                 }
             }
             return (
-                <div>
-                    {/*Total Records: {totalItems}*/}
+                <div style={{display:"flex", flexDirection:"row", alignItems: "center"}}>
+                  <div style={{marginRight:"10px"}}>Total: {totalItems}</div>
                     <ul className="eui-pagination">
-                        <PaginationItemView name="First" viewModel={viewModel} />
-                        <PaginationItemView name="Prev" viewModel={viewModel} />
+                        <PaginationItemView formId={this.props.formId} name="First" viewModel={viewModel} />
+                        <PaginationItemView formId={this.props.formId} name="Prev" viewModel={viewModel} />
                         {pages}
-                        <PaginationItemView name="Next" viewModel={viewModel} />
-                        <PaginationItemView name="Last" viewModel={viewModel} />
+                        <PaginationItemView formId={this.props.formId} name="Next" viewModel={viewModel} />
+                        <PaginationItemView formId={this.props.formId} name="Last" viewModel={viewModel} />
                     </ul>
                 </div>
             );
