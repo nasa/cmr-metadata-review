@@ -112,7 +112,7 @@ export default class PagingTableViewModel {
     this.model.colorFilter = value
   }
 
-  sortBy(value) {
-    this.model.sortOrder = value
+  sortBy(column, order) {
+    this.model.sortBy(column, order)
   }
 }

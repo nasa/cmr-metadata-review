@@ -32,7 +32,7 @@ const PaginationTableView = observer(
           {/*<div className="results-area">*/}
             <table id={this.props.formId+"_table"} form_id={this.props.formId} className="results-table">
             {/*<table className="results-table" width="500px" height="100px">*/}
-              <HeaderView headers={headers} />
+              <HeaderView viewModel={this.viewModel} headers={headers} />
               {/*<tbody>*/}
                 {records.map(row => { return this.createRow(row) })}
               {/*</tbody>*/}
