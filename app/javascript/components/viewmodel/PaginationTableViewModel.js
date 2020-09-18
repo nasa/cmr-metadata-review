@@ -54,6 +54,21 @@ export default class PagingTableViewModel {
     return records
   }
 
+  get daac() {
+    return this.model.daac
+  }
+
+  set daac(value) {
+    this.model.daac = value
+  }
+
+  get campaign() {
+    return this.model.campaign
+  }
+
+  set campaign(value) {
+    this.model.campaign = value
+  }
   
   get headers() {
     return this.model.headers
@@ -80,7 +95,9 @@ export default class PagingTableViewModel {
     return this.model.sortOrder
   }
 
+
   fetchData() {
+
     let url = `/records/find_records_json?state=${this.section}&page_num=${this.currentPage}&page_size=10`
     if (this.sortColumn != null && this.sortOrder != null) {
       url = url + '&sort_column='+this.sortColumn+'&sort_order='+this.sortOrder
@@ -88,6 +105,15 @@ export default class PagingTableViewModel {
     if (this.filter != null) {
       url = url + '&filter='+this.filter
     }
+    let daac = this.model.daac
+    let campaign = this.model.campaign
+    if (daac != null && daac != "DAAC: ANY") {
+      url = url + '&daac='+encodeURI(daac)
+    }
+    if (campaign != null && campaign != "CAMPAIGN: ANY") {
+      url = url + '&campaign='+encodeURI(campaign)
+    }
+
     console.log(url);
     const requestOptions = {
       method: 'GET',

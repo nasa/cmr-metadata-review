@@ -4,6 +4,8 @@ import Result from "./Result"
 export default class PagingTableModel {
   section = null // String
   filter = null // String
+  daac = null // String
+  campaign = null // String
   colorCode = null // String
   sortColumn = null // String
   sortOrder = "asc" // String
@@ -60,6 +62,8 @@ export default class PagingTableModel {
 decorate(PagingTableModel, {
   section: observable,
   filter: observable,
+  daac: observable,
+  campaign: observable,
   colorCode: observable,
   sortColumn: observable,
   sortOrder: observable,
