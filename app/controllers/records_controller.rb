@@ -82,8 +82,8 @@ class RecordsController < ApplicationController
         response_array.reverse! if sort_order == 'desc'
     else
       response_array.sort_by!  { |record| record["date_ingested"] }.reverse!
-      response_records_paged = Kaminari.paginate_array(response_array, total_count: response_array.length).page(page_num).per(page_size)
     end
+    response_records_paged = Kaminari.paginate_array(response_array, total_count: response_array.length).page(page_num).per(page_size)
 
     result = {total_count: total_count, page_num: page_num, page_size: page_size, records: response_records_paged}
     render json: result
