@@ -54,7 +54,6 @@ Rails.application.routes.draw do
 
       collection do
         get "find_records_json"
-        get "find_records_json_sql"
         get "finished"
         get "navigate"
         put "allow_updates"
