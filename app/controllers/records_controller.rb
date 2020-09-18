@@ -486,7 +486,7 @@ class RecordsController < ApplicationController
   end
 
   def get_sort_column(sort_column)
-    %w[concept_id short_name].include?(sort_column) ? sort_column : nil
+    %w[concept_id short_name date_ingested].include?(sort_column) ? sort_column : nil
   end
 
   def get_color_code(color_code)
