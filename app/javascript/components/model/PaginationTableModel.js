@@ -1,4 +1,4 @@
-import { observable, decorate} from "mobx"
+import { computed, observable, decorate} from "mobx"
 import Result from "./Result"
 
 export default class PagingTableModel {
@@ -6,7 +6,7 @@ export default class PagingTableModel {
   filter = null // String
   colorCode = null // String
   sortColumn = null // String
-  sortOrder = null // String
+  sortOrder = "asc" // String
   currentPage = 1 // Int
   result = null // Result
 
@@ -17,26 +17,41 @@ export default class PagingTableModel {
   get headers() {
     if (this.section == 'open') {
       return [
-        { name: "No", field: "no"},
-        { name: "Concept_ID", field: "concept_id" },
-        { name: "Revision ID", field: "revision_id", width: "50px" },
-        { name: "Short_Name", field: "short_name" },
-        { name: "Version", field: "version" },
-        { name: "Selection", field: "selection", width: "50px"}
+        observable({ name: "No", field: "no", sortable: false}),
+        observable({ name: "Concept_ID", field: "concept_id" , sortable: true, order: null}),
+        observable({ name: "Revision ID", field: "revision_id", width: "50px", sortable: true, order: null }),
+        observable({ name: "Short_Name", field: "short_name" , sortable: true, order: null}),
+        observable({ name: "Version", field: "version", sortable: true, order: null}),
+        observable({ name: "Selection", field: "selection", width: "50px", sortable: false})
       ]
     } else {
       return [
-        { name: "No", field: "no"},
-        { name: "Concept_ID", field: "concept_id" },
-        { name: "Revision ID", field: "revision_id", width: "50px" },
-        { name: "Short_Name", field: "short_name" },
-        { name: "Version", field: "version" },
-        { name: "# Completed Reviews", field: "no_completed_reviews", width: "50px"},
-        { name: "# Second Reviews Requested", field: "no_second_reviews_requested", width: "50px" },
-        { name: "Selection", field: "selection", width: "50px"}
+        observable({name: "No", field: "no", sortable: false}),
+        observable({name: "Concept_ID", field: "concept_id", sortable: true, order: null}),
+        observable({name: "Revision ID", field: "revision_id", width: "50px", sortable: true, order: null}),
+        observable({name: "Short_Name", field: "short_name", sortable: true, order: null}),
+        observable({name: "Version", field: "version", sortable: true, order: null}),
+        observable({name: "# Completed Reviews", field: "no_completed_reviews", width: "50px", sortable: false}),
+        observable({name: "# Second Reviews Requested", field: "no_second_reviews_requested", width: "50px", sortable: false}),
+        observable({name: "Selection", field: "selection", width: "50px", sortable: false})
       ]
     }
   }
+
+  sortBy(column, order) {
+    this.sortColumn = column
+    this.sortOrder = order
+
+    for (let key in this.headers){
+      let header = this.headers[key]
+      if (header.field == column) {
+        header.order = order
+      } else {
+        header.order = null
+      }
+    }
+  }
+
 }
 
 decorate(PagingTableModel, {
@@ -46,5 +61,6 @@ decorate(PagingTableModel, {
   sortColumn: observable,
   sortOrder: observable,
   currentPage: observable,
-  result: observable
+  result: observable,
+  headers: computed
 })
