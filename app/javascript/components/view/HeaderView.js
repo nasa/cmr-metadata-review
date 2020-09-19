@@ -31,7 +31,7 @@ import React from "react"
           <thead>
           <tr>
             {this.props.headers.map(header => (
-              <th style={{width: header.width}} key={header.field}
+              <th className={header.sortable ? "sortableHeader" : "header"} style={{width: header.width}} key={header.field}
                   onClick={() => {
                     if (header.sortable) {
                       this.toggleTriangle(header)
