@@ -283,8 +283,6 @@ class RecordsController < ApplicationController
       session[:unhide_record_ids] = nil
       session[:unhide_state] = nil
     end
-    
-    @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
   end
 
   def revert
