@@ -38,6 +38,14 @@ function toggleAllButtons(form) {
   });
 }
 
+function disableAllButtons(form) {
+  var buttons = formButtons();
+  buttons.forEach(function(button){
+    var buttonId = 'form#' + form + ' .' + button.name + 'Button';
+    $(buttonId).prop("disabled", true)
+  });
+}
+
 function addButtonActions(form) {
   var formId = 'form#' + form;
 

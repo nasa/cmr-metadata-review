@@ -15,6 +15,7 @@ class Record < ApplicationRecord
   has_many :discussions
 
   delegate :concept_id, to: :recordable
+  delegate :date_ingested, to: :ingest
 
   scope :all_records, ->(application_mode) {
     if Rails.configuration.mdq_enabled_feature_toggle

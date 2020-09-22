@@ -87,7 +87,6 @@ class PerformsSanityChecksOnReviewsTest < Capybara::Rails::TestCase
 
           it 'verifies only collection errors are left' do
 
-            screenshot_and_open_image
             assert_equal Record.find_by(id: 1).state, 'in_arc_review'
             assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
 

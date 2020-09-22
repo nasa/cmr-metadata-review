@@ -3,8 +3,6 @@
 
 <div class="curation_box">
 
-<%= react_component("PagingTableView", { greeting: "Hello from react-rails." }) %>
-
   <div class="space_box"></div>
   <% if can?(:search, :cmr) %>
     <div class="searchbox_area">
@@ -24,6 +22,7 @@
         document.getElementById("search_button").onclick = function() {
           showLoading("Searching CMR System");
         }
+
       </script>
 
     </div>
@@ -38,7 +37,7 @@
         <%= render(partial: "shared/record_buttons", locals: {form_id: "open"}) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "open", records: records_sorted_by_short_name(@records.open), title: "Unreviewed Records" } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "open", title: "Unreviewed Records", section: "open" } %>
     <% end %>
 
     <% if can?(:review_state, Record::STATE_IN_ARC_REVIEW) %>
@@ -46,7 +45,7 @@
         <%= render(partial: "shared/record_buttons", locals: {form_id: "in_arc_review"}) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "in_arc_review", records: records_sorted_by_short_name(@records.in_arc_review), reviews: true, title: title_for_in_review_records() } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "in_arc_review", reviews: true, title: title_for_in_review_records(), section: "in_arc_review" } %>
     <% end %>
 
 
@@ -55,15 +54,15 @@
         <%= render(partial: "shared/record_buttons", locals: { form_id: "awaiting_daac_review", complete: can?(:release_to_daac, Record), complete_title: "Release to DAAC" }) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "awaiting_daac_review", records: records_sorted_by_short_name(@records.ready_for_daac_review), reviews: true, title: "Awaiting Release to DAAC" } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "awaiting_daac_review", reviews: true, title: "Awaiting Release to DAAC", section: "ready_for_daac_review" } %>
     <% end %>
 
     <% if can?(:review_state, Record::STATE_IN_DAAC_REVIEW) %>
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons", locals: { form_id: "in_daac_review", report: true, complete: can?(:close, Record), complete_title: "Close" } ) %>
+        <%= render(partial: "shared/record_buttons", locals: { form_id: "in_daac_review", report: true, complete: can?(:close, Record), complete_title: "Close" }, section: "closed_finished" ) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: { form_id: "in_daac_review", records: records_sorted_by_short_name(@records.in_daac_review), reviews: true, title: "In DAAC Review" } %>
+      <%= render partial: "shared/records_table", locals: { form_id: "in_daac_review", reviews: true, title: "In DAAC Review", section: "in_daac_review" } %>
     <% end %>
 
     <% if can?(:provide_feedback, Record) %>
@@ -71,7 +70,7 @@
         <%= render(partial: "shared/record_buttons", locals: {form_id: "provide_feedback"}) %>
       <% end %>
 
-      <%= render partial: "shared/records_table", locals: {form_id: "provide_feedback", records: curator_feedback_records(@records), reviews: true, title: "Requires Curator Feedback Records" } %>
+      <%= render partial: "shared/records_table", locals: {form_id: "provide_feedback", reviews: true, title: "Requires Curator Feedback Records", section: "curator_feedback" } %>
     <% end %>
   </div>
 </div>
