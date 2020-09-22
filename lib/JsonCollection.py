@@ -209,14 +209,17 @@ class CollectionOutputJSON():
             result[str] = self.checkerRules.checkContactRole(metadata['Contacts']['Contact']['Role'])
         except:
             xx = ""
-            for item in metadata['Contacts']['Contact']:
-                try:
-                    xx += self.checkerRules.checkContactRole(item['Role']) + ";"
-                except KeyError:
-                    xx += 'np;'
-                except:
-                    xx += 'np;'
-            result[str] = xx
+            try:
+              for item in metadata['Contacts']['Contact']:
+                  try:
+                      xx += self.checkerRules.checkContactRole(item['Role']) + ";"
+                  except KeyError:
+                      xx += 'np;'
+                  except:
+                      xx += 'np;'
+              result[str] = xx
+            except:
+              result[str] = 'np;'
         # ================
 
        # print metadata['Contacts']['Contact']

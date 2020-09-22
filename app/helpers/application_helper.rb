@@ -5,8 +5,7 @@ module ApplicationHelper
   SELECT_DAAC = 'Select DAAC'
 
   #providers are specified to identify only the records within EOSDIS which ARC team curates
-  ARC_PROVIDERS = [
-                   'ORNL_DAAC',
+  ARC_PROVIDERS = ['ORNL_DAAC',
                    'ASDC',
                    'LAADS',
                    'GES_DISC',
@@ -19,6 +18,7 @@ module ApplicationHelper
                    'OB_DAAC',
                    'CDDIS',
                    'PODAAC',
+                   'OMINRT',
                    'ARCTEST']
 
   #providers are specified to identify only the records within EOSDIS which MDQ team curates
