@@ -154,7 +154,7 @@ class RecordsController < ApplicationController
     records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
         " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
-    puts "*** Records query=" + records_query
+    puts "*** Records query=" + query
     response_records = Record.find_by_sql(records_query)
 
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
@@ -167,7 +167,7 @@ class RecordsController < ApplicationController
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
                           "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
-    puts "*** Count query=" + count_query
+    # puts "*** Count query=" + count_query
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
     result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
     render json: result
