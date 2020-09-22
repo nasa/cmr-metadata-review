@@ -38,7 +38,6 @@ class MdqCuratorTest < Capybara::Rails::TestCase
       it 'can see the arc records' do
         visit home_path
         within '#in_arc_review' do
-          screenshot_and_open_image
           assert has_content? 'arc_curator_collection'
           assert has_no_content? 'mdq_curator_collection'
         end
