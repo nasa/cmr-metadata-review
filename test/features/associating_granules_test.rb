@@ -3,6 +3,7 @@ Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 
 class AssociatingGranulesTest < Capybara::Rails::TestCase
   include Helpers::UserHelpers
+  include Helpers::HomeHelper
 
   before do
     OmniAuth.config.test_mode = true
@@ -103,10 +104,7 @@ class AssociatingGranulesTest < Capybara::Rails::TestCase
       mock_login(role: 'admin')
       visit '/home'
 
-      within '#in_daac_review' do
-        all('#record_id_')[0].click # select the record again in "in daac review"
-        find('div > div.navigate-buttons > input.selectButton').click # Clicks the See Review Details button
-      end
+      see_collection_review_details("#in_daac_review", 12)
 
       within '#form-9' do
         first('#associated_granule_value').find("option[value='Undefined']").click # other tests are not cleaning up db, so reset it back manually
