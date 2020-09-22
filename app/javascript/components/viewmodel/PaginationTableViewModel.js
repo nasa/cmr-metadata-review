@@ -1,5 +1,4 @@
 import PaginationTableModel from "../model/PaginationTableModel";
-import tableResponse from "../data/query_response";
 
 export default class PagingTableViewModel {
   model = new PaginationTableModel()
