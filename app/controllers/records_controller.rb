@@ -154,7 +154,7 @@ class RecordsController < ApplicationController
     records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
         " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
-    puts "*** Records query=" + query
+    puts "*** Records query=" + records_query
     response_records = Record.find_by_sql(records_query)
 
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
@@ -515,7 +515,7 @@ class RecordsController < ApplicationController
   def get_daac_query(daac)
     query = ""
     if current_user.daac_curator?
-      query = " and records.daac=#{current_user.daac}"
+      query = " and records.daac='#{current_user.daac}'"
     elsif daac && daac != ANY_DAAC_KEYWORD
       query = " and records.daac='#{daac}'"
     elsif Rails.configuration.mdq_enabled_feature_toggle

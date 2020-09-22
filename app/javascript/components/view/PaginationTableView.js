@@ -20,14 +20,21 @@ const PaginationTableView = observer(
 
     getDaac() {
       var element = document.getElementById("daac")
-      var value = element.options[element.selectedIndex].value
-      return value
+      if (element != null) {
+        var value = element.options[element.selectedIndex].value
+        return value
+      }
+      return null
     }
 
     getCampaign() {
       var element = document.getElementById("campaign")
-      var value = element.options[element.selectedIndex].value
-      return value
+      if (element != null) {
+        console.log("campaign element=",element)
+        var value = element.options[element.selectedIndex].value
+        return value
+      }
+      return null
     }
 
     componentDidMount() {
@@ -103,11 +110,13 @@ const PaginationTableView = observer(
         let column = <td key={header.field}>{row[header.field]}</td>
         if (header.field == 'date_ingested') {
           let value = row[header.field]
-          let pos = value.indexOf("T")
-          if (pos > -1) {
-            value = value.substring(0, pos)
+          if (value != null) {
+            let pos = value.indexOf("T")
+            if (pos > -1) {
+              value = value.substring(0, pos)
+            }
+            column = <td key={header.field}>{value}</td>
           }
-          column = <td key={header.field}>{value}</td>
         }
         if (header.field == 'selection') {
           column = <td key={header.field} className="center_text"><input onClick={() => {
