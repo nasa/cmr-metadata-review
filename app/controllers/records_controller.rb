@@ -154,7 +154,7 @@ class RecordsController < ApplicationController
     records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
         " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
-    puts "*** Records query=" + query
+    # puts "*** Records query=" + query
     response_records = Record.find_by_sql(records_query)
 
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
