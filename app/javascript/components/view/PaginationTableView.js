@@ -43,7 +43,7 @@ const PaginationTableView = observer(
       this.viewModel.selectPage(this.viewModel.currentPage)
     }
 
-    checkAll(table_name)
+    selectAll(table_name)
     {
       var table = document.getElementById (table_name);
       var form_id = table.getAttribute("form_id")
@@ -77,7 +77,7 @@ const PaginationTableView = observer(
         selectAll =
           <div align="right">
             <a href="javascript:void(0);" onClick={() => {
-              this.checkAll(this.props.formId+"_table")
+              this.selectAll(this.props.formId+"_table")
             }}>Select All</a>
           </div>
       }
@@ -101,10 +101,6 @@ const PaginationTableView = observer(
       )
     }
 
-    toggleButtons(formId) {
-      toggleAllButtons(formId)
-    }
-
     createRow(row) {
       let columns = this.viewModel.headers.map(header => {
         let column = <td key={header.field}>{row[header.field]}</td>
@@ -120,7 +116,7 @@ const PaginationTableView = observer(
         }
         if (header.field == 'selection') {
           column = <td key={header.field} className="center_text"><input onClick={() => {
-            this.toggleButtons(this.props.formId)
+            toggleAllButtons(this.props.formId)
           }} type="checkbox" name="record_id[]" id="record_id_" value={row.id}/></td>
         }
         return column

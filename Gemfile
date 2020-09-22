@@ -94,5 +94,4 @@ group :development do
   gem 'rdoc'
   gem 'rubyzip', '1.3.0'
   gem 'rails-erd'
-  gem 'kaminari'
 end
