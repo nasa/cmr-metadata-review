@@ -44,6 +44,10 @@ export default class PagingTableViewModel {
     return this.model.currentPage
   }
 
+  get pageSize() {
+    return this.model.pageSize
+  }
+
   get records() {
     let result = this.model.result
     let records = []
@@ -97,12 +101,15 @@ export default class PagingTableViewModel {
 
   fetchData() {
 
-    let url = `/records/find_records_json?state=${this.section}&page_num=${this.currentPage}&page_size=10`
+    let url = `/records/find_records_json?state=${this.section}&page_num=${this.currentPage}&page_size=${this.pageSize}`
     if (this.sortColumn != null && this.sortOrder != null) {
       url = url + '&sort_column='+this.sortColumn+'&sort_order='+this.sortOrder
     }
     if (this.filter != null) {
       url = url + '&filter='+this.filter
+    }
+    if (this.colorCode != null && this.colorCode != "any") {
+      url = url + '&color_code='+this.colorCode
     }
     let daac = this.model.daac
     let campaign = this.model.campaign
@@ -147,7 +154,16 @@ export default class PagingTableViewModel {
   }
 
   filterByColor(value) {
-    this.model.colorFilter = value
+    this.model.colorCode = value
+    this.fetchData()
+  }
+
+  selectPageSize(value) {
+    if (value == 'all') {
+      value = 100000
+    }
+    this.model.pageSize = value
+    this.fetchData()
   }
 
   sortBy(column, order) {

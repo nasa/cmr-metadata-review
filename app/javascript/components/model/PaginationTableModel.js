@@ -12,6 +12,7 @@ export default class PagingTableModel {
   currentPage = 1 // Int
   result = null // Result
   loading = false // Bool
+  pageSize = 10 // Int
 
   setData(json) {
     this.result = new Result(json)
