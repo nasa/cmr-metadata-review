@@ -427,7 +427,11 @@ class RecordsController < ApplicationController
 
   def curator_feedback_query
     if params[:state] == 'curator_feedback'
-      query = " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'"
+      if current_user.daac_curator?
+        query = " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'"
+      else
+        query = " and record_data.feedback=true"
+      end
     else
       query = " and records.id not in (select distinct record_data.record_id from record_data where record_data.feedback = true)"
     end
