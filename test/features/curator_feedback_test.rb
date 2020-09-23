@@ -17,7 +17,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
   # 1) Verifies there are no feedback records
   # 2) Verifies only daac curators can click the curator feedback button
   describe 'Curator Feedback with no feedback fields' do
-    it 'verifies no records in Requires Curator Feedback section.' do
+    it 'verifies no records in Requires Reviewer Feedback Records section.' do
       mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
@@ -83,7 +83,7 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
       end
     end
 
-    it 'verifies the record shows up in Requires Curator Feedback section for the daac curator.' do
+    it 'verifies the record shows up in Requires Reviewer Feedback Records section for the daac curator.' do
       mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
@@ -99,25 +99,6 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
       end
     end
 
-    it 'curator feedback disappears when record is closed' do
-      mock_login(role: "admin") # admin
-      visit '/home'
-      within '#provide_feedback' do
-        assert has_content?('C1000000020-LANCEAMSR2')
-      end
-      within '#in_daac_review' do
-        all('#record_id_')[0].click
-        within '.navigate-buttons' do
-          accept_alert do
-            click_on 'Close'
-          end
-        end
-      end
-      within '#provide_feedback' do
-        refute has_content?('C1000000020-LANCEAMSR2')
-      end
-
-    end
   end
 
 

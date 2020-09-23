@@ -15,6 +15,7 @@ class Record < ApplicationRecord
   has_many :discussions
 
   delegate :concept_id, to: :recordable
+  delegate :date_ingested, to: :ingest
 
   scope :all_records, ->(application_mode) {
     if Rails.configuration.mdq_enabled_feature_toggle
@@ -431,6 +432,7 @@ class Record < ApplicationRecord
          end
       end
     end
+    any_data_changed
   end
 
   # ====Params
@@ -703,7 +705,7 @@ class Record < ApplicationRecord
         end
       end
 
-      self.update_feedbacks(feedback_values)
+      any_data_changed = true if update_feedbacks(feedback_values)
 
       if new_discussions
         new_discussions.each do |key, value|

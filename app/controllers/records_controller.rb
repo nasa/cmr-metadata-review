@@ -1,11 +1,95 @@
 class RecordsController < ApplicationController
   include RecordHelper
+  include SiteHelper
 
   before_action :authenticate_user!
   before_action :ensure_curation
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
-  before_action :filtered_records, only: :finished
+
+  def find_records_json
+    page_num_param = params['page_num']
+    page_size_param = params['page_size']
+    filter_param = params['filter']
+    sort_order_param = params['sort_order']
+    sort_column_param = params['sort_column']
+    color_code_param = params['color_code']
+    state_param = params['state']
+    daac_param = params['daac']
+    campaign_param = params['campaign']
+
+    state = get_state(state_param)
+    if state=='closed_finished'
+      state_query = " and records.state in ('closed','finished')"
+    else
+      if state == 'curator_feedback'
+        state_query = " and records.state != 'closed'"
+      else
+        state_query = " and records.state='#{state}'"
+      end
+    end
+
+    page_num = get_page_num(page_num_param)
+    page_size = get_page_size(page_size_param)
+    limit = page_size
+    offset = (page_num - 1)*page_size
+
+    sort_order = get_sort_order(sort_order_param)
+    sort_column = get_sort_column(sort_column_param)
+
+    filter = get_filter(filter_param)
+
+    color_code = get_color_code(color_code_param)
+
+    record_data_join = " LEFT JOIN record_data ON record_data.record_id = records.id"
+
+    review_join = " LEFT JOIN reviews ON reviews.record_id = records.id"
+
+    ingest_join = " LEFT JOIN ingests ON ingests.record_id = records.id"
+
+    query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" +
+        record_data_join + review_join + ingest_join +
+        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query(daac_param) + campaign_query(campaign_param) + curator_feedback_query
+
+    if filter
+      query = query + " and (lower(collections.concept_id) like lower('%#{filter}%') or lower(collections.short_name) like lower('%#{filter}%'))"
+    end
+
+    if color_code
+      query = query + " and record_data.color='#{color_code}'"
+    end
+
+    count_query = "select" + " count(distinct records.id) as count" + query
+
+    if sort_column && sort_order
+      query = query + " order by #{sort_column} #{sort_order}"
+    else
+      query = query + " order by ingests.date_ingested DESC"
+    end
+
+    query = query + " limit #{limit} offset #{offset}"
+
+    records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
+        " records.revision_id, collections.short_name, ingests.date_ingested" + query
+
+    # puts "*** Records query=" + query
+    response_records = Record.find_by_sql(records_query)
+
+    record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
+
+    reponse_array = []
+    response_records.each do |record|
+      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
+                          "date_ingested": record[:date_ingested],
+                          "revision_id": record.revision_id, "short_name": record[:short_name],
+                          "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
+                          "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
+    end
+    # puts "*** Count query=" + count_query
+    count_result = ActiveRecord::Base.connection.exec_query(count_query)
+    result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
+    render json: result
+  end
 
   def refresh
     added_records, deleted_records, failed_records = Cmr.update_collections(current_user)
@@ -117,8 +201,6 @@ class RecordsController < ApplicationController
       session[:unhide_record_ids] = nil
       session[:unhide_state] = nil
     end
-    
-    @records = @records.where(state: [Record::STATE_CLOSED, Record::STATE_FINISHED])
   end
 
   def revert
@@ -293,6 +375,86 @@ class RecordsController < ApplicationController
 
   def release_collection_record_to_daacs(collection_record)
     collection_record.release_to_daac!
+  end
+
+  private
+
+  def get_page_num(page_num)
+    if page_num && page_num.match(/[0-9]+/)
+      page_num.to_i
+    else
+      1
+    end
+  end
+
+  def get_page_size(page_size)
+    if page_size && page_size.match(/[0-9]+/)
+      page_size.to_i
+    else
+      25
+    end
+  end
+
+  def get_state(state)
+    %w[open in_arc_review in_daac_review ready_for_daac_review closed hidden finished closed_finished curator_feedback].include?(state) ? state : 'open'
+  end
+
+  def get_sort_order(sort_order)
+    %w[asc desc].include?(sort_order) ? sort_order : nil
+  end
+
+  def get_sort_column(sort_column)
+    %w[concept_id short_name date_ingested].include?(sort_column) ? sort_column : nil
+  end
+
+  def get_color_code(color_code)
+    %w[gray yellow green red blue].include?(color_code) ? color_code : nil
+  end
+
+  def get_filter(filter)
+    if filter
+      filter.match(/[_A-Za-z0-9-]+/) ? filter : nil
+    end
+  end
+
+  def campaign_query(campaign)
+    if campaign && campaign != ANY_CAMPAIGN_KEYWORD
+      " and '#{campaign}' = ANY (campaign)"
+    else
+      ""
+    end
+  end
+
+  def curator_feedback_query
+    if params[:state] == 'curator_feedback'
+      query = " and record_data.feedback=true and reviews.user_id = '#{current_user.id}'"
+    else
+      query = " and records.id not in (select distinct record_data.record_id from record_data where record_data.feedback = true)"
+    end
+    query
+  end
+
+
+  def get_daac_query(daac)
+    query = ""
+    if current_user.daac_curator?
+      query = " and records.daac='#{current_user.daac}'"
+    elsif daac && daac != ANY_DAAC_KEYWORD
+      query = " and records.daac='#{daac}'"
+    elsif Rails.configuration.mdq_enabled_feature_toggle
+      query = application_mode == :mdq_mode ? get_provider_query(ApplicationHelper::MDQ_PROVIDERS) : get_provider_query(ApplicationHelper::ARC_PROVIDERS)
+    end
+    return query
+  end
+
+  def get_provider_query(provider_list)
+    result = " and records.daac in ("
+    provider_list.each { |provider|
+      result = result + "'#{provider}',"
+    }
+    result.chop!
+    result = result + ")"
+    return result
   end
 
 end
