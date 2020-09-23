@@ -98,7 +98,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         page.must_have_content("In ARC Review Records:")
         page.must_have_content("Awaiting Release to DAAC:")
         page.must_have_content("In DAAC Review:")
-        page.must_have_content("Requires Curator Feedback Records:")
+        page.must_have_content("Requires Reviewer Feedback Records:")
       end
 
       it "can sign in user with oauth account with arc curator privileges" do
@@ -123,7 +123,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         page.must_have_content("In ARC Review Records:")
         page.must_have_content("Awaiting Release to DAAC:")
         page.wont_have_content("In DAAC Review:")
-        page.must_have_content("Requires Curator Feedback Records:")
+        page.must_have_content("Requires Reviewer Feedback Records:")
 
       end
 
@@ -154,7 +154,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         click_link "Login"
         page.must_have_content("Logout")
         page.must_have_content("In DAAC Review:")
-        page.must_have_content("Requires Curator Feedback Records:")
+        page.must_have_content("Requires Reviewer Feedback Records:")
         page.wont_have_content("Unreviewed Records:")
       end
 
