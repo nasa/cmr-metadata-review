@@ -408,7 +408,7 @@ class RecordsController < ApplicationController
   end
 
   def get_color_code(color_code)
-    %w[gray yellow green red blue].include?(color_code) ? color_code : nil
+    %w[gray yellow green red blue].include?(color_code) || color_code=='' ? color_code : nil
   end
 
   def get_filter(filter)
