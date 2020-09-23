@@ -99,25 +99,6 @@ class CuratorFeedbackTest < Capybara::Rails::TestCase
       end
     end
 
-    it 'curator feedback disappears when record is closed' do
-      mock_login(role: "admin") # admin
-      visit '/home'
-      within '#provide_feedback' do
-        assert has_content?('C1000000020-LANCEAMSR2')
-      end
-      within '#in_daac_review' do
-        all('#record_id_')[0].click
-        within '.navigate-buttons' do
-          accept_alert do
-            click_on 'Close'
-          end
-        end
-      end
-      within '#provide_feedback' do
-        refute has_content?('C1000000020-LANCEAMSR2')
-      end
-
-    end
   end
 
 
