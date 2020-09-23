@@ -1,4 +1,5 @@
 module SiteHelper
+  include ApplicationHelper
   def current_user_daac_records(records)
     daac_records = if current_user.daac_curator?
                      records.daac(current_user.daac)
@@ -20,4 +21,10 @@ module SiteHelper
       'In ARC Review Records'
     end
   end
+
+  # Count Second Opinions here for every record
+  def second_opinion_count(records)
+    RecordData.where(record: records, opinion: true).group(:record_id).count
+  end
+
 end

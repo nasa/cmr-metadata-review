@@ -10,7 +10,7 @@
         <%= render "shared/record_buttons" %>
       <% end %>
       <%= render partial: "shared/record_filters", locals: { path_for_form: finished_records_path } %>
-      <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records), title: "DAAC Completed Records"} %>
+      <%= render partial: "shared/records_table", locals: {form_id: "finished", section: "closed_finished", title: "DAAC Completed Records"} %>
     <% else %>
       <%= render partial: "shared/record_filters", locals: { path_for_form: finished_records_path } %>
 
@@ -29,7 +29,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: "shared/records_table", locals: {form_id: "closed", records: records_sorted_by_short_name(@records.closed), closed: true, report: true, title: "Team's Closed Records" } %>
+        <%= render partial: "shared/records_table", locals: {form_id: "closed", section: "closed", closed: true, report: true, title: "Team's Closed Records" } %>
       <% end %>
 
       <% if can?(:review_state, Record::STATE_FINISHED) %>
@@ -45,7 +45,7 @@
 
         <% end %>
 
-        <%= render partial: "shared/records_table", locals: {form_id: "finished", records: records_sorted_by_short_name(@records.finished), title: "Finished Records" } %>
+        <%= render partial: "shared/records_table", locals: {form_id: "finished", section: "finished", title: "Finished Records" } %>
 
       <% end %>
     <% end %>

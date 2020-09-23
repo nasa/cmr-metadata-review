@@ -1,0 +1,7 @@
+.paginationItem :hover {
+  cursor: pointer;
+}
+
+.sortableHeader :hover {
+  cursor: pointer;
+}
