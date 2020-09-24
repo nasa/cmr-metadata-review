@@ -10,7 +10,6 @@
 
       <%= form_with( url: collections_search_path, method: "get", local: true) do %>
         <%= select_tag(:provider,options_for_select(provider_select_list, :selected => @provider)) %>
-        <%= text_field_tag(:free_text) %>
         <%= hidden_field_tag(:curr_page, "1") %>
         <%#= submit_tag("Search") %>
         <button class="search_button" id="search_button">
