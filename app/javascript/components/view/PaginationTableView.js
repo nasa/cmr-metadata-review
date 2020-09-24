@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {observer} from "mobx-react"
 import "../eui.css"
 import "../pagination.css"
+import ColorFilterView from "./ColorFilterView";
 
 const PaginationTableView = observer(
   class PaginationTableView extends React.Component {
@@ -16,6 +17,7 @@ const PaginationTableView = observer(
       super(props)
       this.viewModel.setSection(this.props.section)
       this.createRow = this.createRow.bind(this)
+      this.pageSizeSelectRef = React.createRef()
     }
 
     getDaac() {
@@ -97,7 +99,7 @@ const PaginationTableView = observer(
       return (
         <>
           <div style={{display:"flex", flexDirection: "row", justifyContent:"space-between", alignItems: "center"}}>
-            <SearchView viewModel={this.viewModel}/>
+            <SearchView viewModel={this.viewModel} section={this.props.section}/>
             {selectAll}
           </div>
           <div className="results-area">
@@ -107,7 +109,18 @@ const PaginationTableView = observer(
               {!this.viewModel.loading ? rows : loadingTr}
               </tbody>
             </table>
-            <PaginationView viewModel={viewModel} formId={this.props.formId}/>
+            <div style={{display: "flex", alignItems: "center", flexDirection: "row", justifyContent: "space-between"}}>
+              <PaginationView viewModel={viewModel} formId={this.props.formId}/>
+              <div>
+                  Page Size: <select ref={this.pageSizeSelectRef} style={{width: "75px"}} defaultValue="10" className="single-select" onChange={() => {this.viewModel.selectPageSize(this.pageSizeSelectRef.current.value)}}>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="all">All</option>
+                </select>
+              </div>
+            </div>
           </div>
         </>
       )

@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import React from "react"
+import ColorFilterView from "./ColorFilterView";
 
 /**
  * The view takes a TableViewModel implementation which responds wit the data necessary to render the view and
@@ -13,13 +14,16 @@ const SearchView = observer(
       }
 
         render() {
-            let styles = { margin: "5px" }
+            let styles = { margin: "5px", display: "flex", flexDirection: "row", alignItems: "center" }
             return (
                 <React.Fragment>
-                    <div style={styles}>
+                  <div style={styles}>
+                    <div>
                         <input onChange={() => {this.props.viewModel.filterByText(this.inputRef.current.value)}} ref={this.inputRef} type="text" className="eui-search-home" style={{ width: "240px", border: "solid 1px", borderColor: "lightgrey", marginRight: "4px", height: "30px" }} value={this.props.viewModel.filter} placeholder="Search" />
                         <button onClick={() => {this.props.viewModel.filterByText(this.inputRef.current.value)}} style={{ marginTop: "2px" }} type="button" className="eui-btn--sm eui-btn--green eui-search-home"><i className="eui-icon eui-fa-search"></i></button>
                     </div>
+                    <ColorFilterView viewModel={this.props.viewModel} section={this.props.section}/>
+                  </div>
                 </React.Fragment>
             );
         }
