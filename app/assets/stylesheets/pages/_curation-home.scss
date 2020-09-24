@@ -23,6 +23,7 @@
     &__filters {
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
 
     &__select {
@@ -83,6 +84,9 @@
   }
 
 
+  #freetext input[type=text]{
+    width: 50px;
+  }
   .results-area {
     margin-top: 5px;
 

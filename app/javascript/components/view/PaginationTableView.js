@@ -37,9 +37,21 @@ const PaginationTableView = observer(
       return null
     }
 
+    getFreetext() {
+      var element = document.getElementById("freetext")
+      if (element != null) {
+        if (element.value != null && !element.value.trim().isEmpty) {
+          return element.value
+        }
+      }
+      return null
+    }
+
+
     componentDidMount() {
       this.viewModel.daac = this.getDaac()
       this.viewModel.campaign = this.getCampaign()
+      this.viewModel.filter = this.getFreetext()
       this.viewModel.selectPage(this.viewModel.currentPage)
     }
 

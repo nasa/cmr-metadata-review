@@ -82,6 +82,10 @@ export default class PagingTableViewModel {
     return this.model.filter
   }
 
+  set filter(value) {
+    this.model.filter = value
+  }
+
   get colorCode() {
     return this.model.colorCode
   }
