@@ -16,7 +16,7 @@ const ColorFilterView = observer(
       let selectedColor = this.props.viewModel.selectedColor ?? "any"
       return (
         <div style={displayStyle}>
-          Filter: <select ref={this.colorSelectRef} defaultValue={selectedColor} className="single-select" onChange={() => {this.props.viewModel.filterByColor(this.colorSelectRef.current.value)}}>
+          Filter: <select ref={this.colorSelectRef} defaultValue={selectedColor} style={{width: "120px"}} className="single-select" onChange={() => {this.props.viewModel.filterByColor(this.colorSelectRef.current.value)}}>
             <option value="any">Any Color</option>
             <option value="red">Red</option>
             <option value="yellow">Yellow</option>
