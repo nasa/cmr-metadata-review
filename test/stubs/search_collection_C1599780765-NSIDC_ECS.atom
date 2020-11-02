@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed esipdiscovery:version="1.2" xmlns="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/terms/"
+    xmlns:echo="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html#atom"
+    xmlns:esipdiscovery="http://commons.esipfed.org/ns/discovery/1.2/"
+    xmlns:georss="http://www.georss.org/georss/10"
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/">
+    <updated>2020-11-02T14:00:38.805Z</updated>
+    <id>https://cmr.earthdata.nasa.gov:443/search/collections.atom?concept_id=C1599780765-NSIDC_ECS&amp;pretty=true</id>
+    <title type="text">ECHO dataset metadata</title>
+    <entry>
+        <id>C1599780765-NSIDC_ECS</id>
+        <title type="text">ABoVE LVIS L0 Raw Ranges V001</title>
+        <summary type="text">This data set contains raw Inertial Measurement Unit (IMU), Global Positioning System (GPS), and camera data over Alaska and Western Canada measured by the NASA Land, Vegetation, and Ice Sensor (LVIS), an airborne lidar scanning laser altimeter. The data were collected as part of NASA's Terrestrial Ecology Program campaign, the Arctic-Boreal Vulnerability Experiment (ABoVE).</summary>
+        <updated/>
+        <echo:datasetId>ABoVE LVIS L0 Raw Ranges V001</echo:datasetId>
+        <echo:shortName>ABLVIS0</echo:shortName>
+        <echo:versionId>1</echo:versionId>
+        <echo:originalFormat>ISO19115</echo:originalFormat>
+        <echo:dataCenter>NSIDC_ECS</echo:dataCenter>
+        <echo:archiveCenter>NASA NSIDC DAAC</echo:archiveCenter>
+        <echo:organization>NASA NSIDC DAAC</echo:organization>
+        <echo:organization>NASA/GSFC/SED/ESD/LRSL</echo:organization>
+        <echo:processingLevelId>Level 0</echo:processingLevelId>
+        <time:start>2017-06-29T00:00:00.000Z</time:start>
+        <time:end>2017-07-17T23:59:59.999Z</time:end>
+        <link
+            href="https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&amp;m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&amp;tl=1541951145!4!!&amp;q=ABLVIS0&amp;ok=ABLVIS0"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link href="https://nsidc.org/icebridge/portal/map"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&amp;m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&amp;tl=1541951145!4!!&amp;q=ABLVIS0&amp;ok=ABLVIS0"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link href="https://nsidc.org/icebridge/portal/map"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&amp;m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&amp;tl=1541951145!4!!&amp;q=ABLVIS0&amp;ok=ABLVIS0"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link href="https://nsidc.org/icebridge/portal/map"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link
+            href="https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&amp;m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&amp;tl=1541951145!4!!&amp;q=ABLVIS0&amp;ok=ABLVIS0"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link href="https://nsidc.org/icebridge/portal/map"
+            hreflang="en-US" length="0.0KB" rel="http://esipfed.org/ns/fedsearch/1.1/data#"/>
+        <link href="https://doi.org/10.5067/TLOIRQYWX00H"
+            hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/metadata#"/>
+        <link href="https://doi.org/10.5067/TLOIRQYWX00H"
+            hreflang="en-US" rel="http://esipfed.org/ns/fedsearch/1.1/documentation#"/>
+        <echo:coordinateSystem>CARTESIAN</echo:coordinateSystem>
+        <echo:orbitParameters/>
+        <georss:box>48 -158 72 -104</georss:box>
+        <echo:onlineAccessFlag>true</echo:onlineAccessFlag>
+        <echo:browseFlag>false</echo:browseFlag>
+        <echo:hasVariables>false</echo:hasVariables>
+        <echo:hasFormats>false</echo:hasFormats>
+        <echo:hasTransforms>false</echo:hasTransforms>
+        <echo:hasSpatialSubsetting>false</echo:hasSpatialSubsetting>
+        <echo:hasTemporalSubsetting>false</echo:hasTemporalSubsetting>
+    </entry>
+</feed>

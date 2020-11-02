@@ -1,0 +1,594 @@
+{
+  "hits" : 1,
+  "took" : 25,
+  "items" : [ {
+    "meta" : {
+      "has-variables" : false,
+      "native-id" : "ABoVE LVIS L0 Raw Ranges V001",
+      "provider-id" : "NSIDC_ECS",
+      "concept-type" : "collection",
+      "granule-count" : 0,
+      "has-temporal-subsetting" : false,
+      "concept-id" : "C1599780765-NSIDC_ECS",
+      "has-spatial-subsetting" : false,
+      "associations" : {
+        "services" : [ "S1568899363-NSIDC_ECS", "S1613689509-NSIDC_ECS" ]
+      },
+      "revision-date" : "2020-10-28T17:26:51.467Z",
+      "user-id" : "jrincion",
+      "deleted" : false,
+      "revision-id" : 26,
+      "has-transforms" : false,
+      "has-formats" : false,
+      "format" : "application/iso19115+xml"
+    },
+    "umm" : {
+      "DataLanguage" : "eng; usa",
+      "CollectionCitations" : [ {
+        "Title" : "ABoVE LVIS L0 Raw Ranges V001",
+        "Publisher" : "NASA National Snow and Ice Data Center Distributed Active Archive Center",
+        "Version" : "1"
+      } ],
+      "AdditionalAttributes" : [ {
+        "Name" : "AircraftID",
+        "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+        "DataType" : "STRING"
+      }, {
+        "Name" : "SIPSMetGenVersion",
+        "Description" : "The version of the SIPSMetGen software used to produce the metadata file for this granule",
+        "DataType" : "STRING"
+      }, {
+        "Name" : "ThemeID",
+        "Description" : "The identifier of the theme under which data are logically grouped",
+        "DataType" : "STRING"
+      }, {
+        "Name" : "identifier_product_doi",
+        "Description" : "Digital object identifier that uniquely identifies this data product",
+        "DataType" : "STRING"
+      }, {
+        "Name" : "identifier_product_doi_authority",
+        "Description" : "URL of the digital object identifier resolving authority",
+        "DataType" : "STRING"
+      } ],
+      "SpatialExtent" : {
+        "SpatialCoverageType" : "HORIZONTAL",
+        "HorizontalSpatialDomain" : {
+          "Geometry" : {
+            "CoordinateSystem" : "CARTESIAN",
+            "BoundingRectangles" : [ {
+              "WestBoundingCoordinate" : -158.0,
+              "NorthBoundingCoordinate" : 72.0,
+              "EastBoundingCoordinate" : -104.0,
+              "SouthBoundingCoordinate" : 48.0
+            } ]
+          }
+        },
+        "GranuleSpatialRepresentation" : "GEODETIC"
+      },
+      "CollectionProgress" : "PLANNED",
+      "ScienceKeywords" : [ {
+        "Category" : "EARTH SCIENCE",
+        "Topic" : "LAND SURFACE",
+        "Term" : "TOPOGRAPHY",
+        "VariableLevel1" : "TERRAIN ELEVATION"
+      } ],
+      "TemporalExtents" : [ {
+        "EndsAtPresentFlag" : false,
+        "RangeDateTimes" : [ {
+          "BeginningDateTime" : "2017-06-29T00:00:00.000Z",
+          "EndingDateTime" : "2017-07-17T23:59:59.999Z"
+        } ]
+      } ],
+      "ProcessingLevel" : {
+        "ProcessingLevelDescription" : "Unprocessed instrument data",
+        "Id" : "Level 0"
+      },
+      "DOI" : {
+        "DOI" : "10.5067/TLOIRQYWX00H"
+      },
+      "ShortName" : "ABLVIS0",
+      "EntryTitle" : "ABoVE LVIS L0 Raw Ranges V001",
+      "ISOTopicCategories" : [ "ELEVATION", "GEOSCIENTIFIC INFORMATION" ],
+      "RelatedUrls" : [ {
+        "Description" : "Direct download via HTTPS protocol.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "DIRECT DOWNLOAD",
+        "URL" : "https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "Earthdata Search",
+        "URL" : "https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&tl=1541951145!4!!&q=ABLVIS0&ok=ABLVIS0",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Tool to visualize, search, and download IceBridge data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "IceBridge Portal",
+        "URL" : "https://nsidc.org/icebridge/portal/map",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Direct download via HTTPS protocol.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "DIRECT DOWNLOAD",
+        "URL" : "https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "Earthdata Search",
+        "URL" : "https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&tl=1541951145!4!!&q=ABLVIS0&ok=ABLVIS0",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Tool to visualize, search, and download IceBridge data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "IceBridge Portal",
+        "URL" : "https://nsidc.org/icebridge/portal/map",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Direct download via HTTPS protocol.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "DIRECT DOWNLOAD",
+        "URL" : "https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "Earthdata Search",
+        "URL" : "https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&tl=1541951145!4!!&q=ABLVIS0&ok=ABLVIS0",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Tool to visualize, search, and download IceBridge data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "IceBridge Portal",
+        "URL" : "https://nsidc.org/icebridge/portal/map",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Direct download via HTTPS protocol.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "DIRECT DOWNLOAD",
+        "URL" : "https://n5eil01u.ecs.nsidc.org/ICEBRIDGE/ABLVIS0.001",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "Earthdata Search",
+        "URL" : "https://search.earthdata.nasa.gov/search/granules?p=C1599780765-NSIDC_ECS&m=13.552734375000002!-87.2808837890625!1!1!0!0%2C2&tl=1541951145!4!!&q=ABLVIS0&ok=ABLVIS0",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Tool to visualize, search, and download IceBridge data.",
+        "URLContentType" : "DistributionURL",
+        "Type" : "GET DATA",
+        "Subtype" : "IceBridge Portal",
+        "URL" : "https://nsidc.org/icebridge/portal/map",
+        "GetData" : {
+          "Format" : "Not provided",
+          "Size" : 0.0,
+          "Unit" : "KB"
+        }
+      }, {
+        "Description" : "Provides access to data, documentation, tools, citation information, support, and other resources.",
+        "URLContentType" : "CollectionURL",
+        "Type" : "DATA SET LANDING PAGE",
+        "URL" : "https://doi.org/10.5067/TLOIRQYWX00H"
+      }, {
+        "Description" : "Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.",
+        "URLContentType" : "PublicationURL",
+        "Type" : "VIEW RELATED INFORMATION",
+        "Subtype" : "GENERAL DOCUMENTATION",
+        "URL" : "https://doi.org/10.5067/TLOIRQYWX00H"
+      } ],
+      "ContactGroups" : [ {
+        "Roles" : [ "User Services" ],
+        "ContactInformation" : {
+          "Addresses" : [ {
+            "City" : "Boulder",
+            "StateProvince" : "Colorado",
+            "Country" : "USA"
+          } ]
+        },
+        "GroupName" : "NASA National Snow and Ice Data Center Distributed Active Archive Center"
+      } ],
+      "Abstract" : "This data set contains raw Inertial Measurement Unit (IMU), Global Positioning System (GPS), and camera data over Alaska and Western Canada measured by the NASA Land, Vegetation, and Ice Sensor (LVIS), an airborne lidar scanning laser altimeter. The data were collected as part of NASA's Terrestrial Ecology Program campaign, the Arctic-Boreal Vulnerability Experiment (ABoVE).",
+      "Purpose" : "Scientific Research",
+      "LocationKeywords" : [ {
+        "Category" : "CONTINENT",
+        "Type" : "NORTH AMERICA",
+        "Subregion1" : "CANADA"
+      }, {
+        "Category" : "CONTINENT",
+        "Type" : "NORTH AMERICA",
+        "Subregion1" : "UNITED STATES OF AMERICA",
+        "Subregion2" : "ALASKA"
+      } ],
+      "MetadataDates" : [ {
+        "Date" : "2019-05-13T00:00:00.000Z",
+        "Type" : "CREATE"
+      }, {
+        "Date" : "2020-05-26T00:00:00.000Z",
+        "Type" : "UPDATE"
+      } ],
+      "Version" : "1",
+      "Projects" : [ {
+        "ShortName" : "ABoVE",
+        "LongName" : "Arctic-Boreal Vulnerability Experiment (ABoVE) NASA field campaign",
+        "StartDate" : "2017-06-29T00:00:00.000Z",
+        "EndDate" : "2017-07-17T00:00:00.000Z"
+      } ],
+      "ContactPersons" : [ {
+        "Roles" : [ "Technical Contact" ],
+        "ContactInformation" : {
+          "ContactMechanisms" : [ {
+            "Type" : "Email",
+            "Value" : "James.B.Blair@nasa.gov"
+          } ],
+          "Addresses" : [ {
+            "City" : "Greenbelt",
+            "StateProvince" : "Maryland",
+            "Country" : "USA",
+            "PostalCode" : "20771"
+          } ]
+        },
+        "FirstName" : "J.",
+        "MiddleName" : "Bryan",
+        "LastName" : "Blair"
+      }, {
+        "Roles" : [ "Technical Contact" ],
+        "ContactInformation" : {
+          "ContactMechanisms" : [ {
+            "Type" : "Email",
+            "Value" : "mhofton@umd.edu"
+          } ],
+          "Addresses" : [ {
+            "StreetAddresses" : [ "2181 LeFrak Hall" ],
+            "City" : "College Park",
+            "StateProvince" : "Maryland",
+            "Country" : "USA",
+            "PostalCode" : "20742"
+          } ]
+        },
+        "FirstName" : "Michelle",
+        "LastName" : "Hofton"
+      }, {
+        "Roles" : [ "Technical Contact" ],
+        "ContactInformation" : {
+          "ContactMechanisms" : [ {
+            "Type" : "Telephone",
+            "Value" : "1 303 492 6199"
+          }, {
+            "Type" : "Fax",
+            "Value" : "1 303 492 2468"
+          }, {
+            "Type" : "Email",
+            "Value" : "nsidc@nsidc.org"
+          } ],
+          "Addresses" : [ {
+            "StreetAddresses" : [ "CIRES, 449 UCB", "University of Colorado" ],
+            "City" : "Boulder",
+            "StateProvince" : "CO",
+            "Country" : "USA",
+            "PostalCode" : "80309-0449"
+          } ]
+        },
+        "FirstName" : "NSIDC",
+        "MiddleName" : "User",
+        "LastName" : "Services"
+      }, {
+        "Roles" : [ "Technical Contact" ],
+        "ContactInformation" : {
+          "ContactMechanisms" : [ {
+            "Type" : "Email",
+            "Value" : "mhofton@umd.edu"
+          } ],
+          "Addresses" : [ {
+            "StreetAddresses" : [ "2181 LeFrak Hall" ],
+            "City" : "College Park",
+            "StateProvince" : "Maryland",
+            "Country" : "USA",
+            "PostalCode" : "20742"
+          } ]
+        },
+        "FirstName" : "Michelle",
+        "LastName" : "Hofton"
+      }, {
+        "Roles" : [ "Technical Contact" ],
+        "ContactInformation" : {
+          "ContactMechanisms" : [ {
+            "Type" : "Email",
+            "Value" : "James.B.Blair@nasa.gov"
+          } ],
+          "Addresses" : [ {
+            "City" : "Greenbelt",
+            "StateProvince" : "Maryland",
+            "Country" : "USA",
+            "PostalCode" : "20771"
+          } ]
+        },
+        "FirstName" : "J.",
+        "MiddleName" : "Bryan",
+        "LastName" : "Blair"
+      } ],
+      "DataCenters" : [ {
+        "Roles" : [ "ARCHIVER" ],
+        "ShortName" : "NASA NSIDC DAAC",
+        "ContactInformation" : {
+          "RelatedUrls" : [ {
+            "Description" : "Archiving Data Center",
+            "URLContentType" : "DataCenterURL",
+            "Type" : "HOME PAGE",
+            "URL" : "https://nsidc.org/daac"
+          } ],
+          "ContactMechanisms" : [ {
+            "Type" : "Telephone",
+            "Value" : "1 303 492 6199"
+          }, {
+            "Type" : "Email",
+            "Value" : "nsidc@nsidc.org"
+          } ],
+          "Addresses" : [ {
+            "StreetAddresses" : [ "National Snow and Ice Data Center", "CIRES, 449 UCB", "University of Colorado" ],
+            "City" : "Boulder",
+            "StateProvince" : "CO",
+            "Country" : "USA",
+            "PostalCode" : "80309-0449"
+          } ]
+        }
+      }, {
+        "Roles" : [ "DISTRIBUTOR" ],
+        "ShortName" : "NASA NSIDC DAAC",
+        "ContactInformation" : {
+          "RelatedUrls" : [ {
+            "Description" : "Archiving Data Center",
+            "URLContentType" : "DataCenterURL",
+            "Type" : "HOME PAGE",
+            "URL" : "https://nsidc.org/daac"
+          } ],
+          "ContactMechanisms" : [ {
+            "Type" : "Telephone",
+            "Value" : "1 303 492 6199"
+          }, {
+            "Type" : "Email",
+            "Value" : "nsidc@nsidc.org"
+          } ],
+          "Addresses" : [ {
+            "StreetAddresses" : [ "National Snow and Ice Data Center", "CIRES, 449 UCB", "University of Colorado" ],
+            "City" : "Boulder",
+            "StateProvince" : "CO",
+            "Country" : "USA",
+            "PostalCode" : "80309-0449"
+          } ]
+        }
+      }, {
+        "Roles" : [ "PROCESSOR" ],
+        "ShortName" : "NASA/GSFC/SED/ESD/LRSL"
+      }, {
+        "Roles" : [ "ORIGINATOR" ],
+        "ShortName" : "NASA/GSFC/SED/ESD/LRSL"
+      } ],
+      "Platforms" : [ {
+        "Type" : "Aircraft",
+        "ShortName" : "B-200",
+        "LongName" : "Beechcraft King Air B-200",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N529NA",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "C-130",
+        "LongName" : "Cessna 130",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N439NA",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "DC-8",
+        "LongName" : "Douglas DC-8",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N817NA",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "G-V",
+        "LongName" : "Gulfstream V",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N677F",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "HU-25C",
+        "LongName" : "Dassault HU-25C Guardian ",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N525NA",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        }, {
+          "ShortName" : "LVIS Camera",
+          "LongName" : "Digital Mapping Camera paired with LVIS",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS Camera",
+            "LongName" : "Digital Mapping Camera paired with LVIS"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "P-3B",
+        "LongName" : "Lockheed P-3B Orion",
+        "Characteristics" : [ {
+          "Name" : "AircraftID",
+          "Description" : "The identifier of the airplane used by the FAA to uniquely identify each aircraft",
+          "Value" : "N426NA",
+          "Unit" : "Not Applicable",
+          "DataType" : "STRING"
+        } ],
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      }, {
+        "Type" : "Aircraft",
+        "ShortName" : "RQ-4",
+        "LongName" : "Northrop Grumman RQ-4 Global Hawk",
+        "Instruments" : [ {
+          "ShortName" : "LVIS",
+          "LongName" : "Land, Vegetation, and Ice Sensor",
+          "Technique" : "instrument",
+          "NumberOfInstruments" : 1,
+          "ComposedOf" : [ {
+            "ShortName" : "LVIS",
+            "LongName" : "Land, Vegetation, and Ice Sensor"
+          } ]
+        } ]
+      } ],
+      "ArchiveAndDistributionInformation" : {
+        "FileDistributionInformation" : [ {
+          "FormatType" : "Native",
+          "Format" : "JPS",
+          "FormatDescription" : "HTTPS"
+        }, {
+          "FormatType" : "Native",
+          "Format" : "JPEG",
+          "FormatDescription" : "HTTPS"
+        }, {
+          "FormatType" : "Native",
+          "Format" : "Binary",
+          "FormatDescription" : "HTTPS"
+        }, {
+          "FormatType" : "Native",
+          "Format" : "ASCII Text",
+          "FormatDescription" : "HTTPS"
+        } ]
+      }
+    }
+  } ]
+}
