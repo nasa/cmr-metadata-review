@@ -143,5 +143,88 @@ describe "POST #create" do
       #ingest for granule logged
       assert_equal("abaker@element84.com", granule_record.ingest.user.email)
     end
-  end
+
+    it "downloads and saves a new iso record as umm-json" do
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      # the atom will return the native format is iso-19115
+      stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C1599780765-NSIDC_ECS")
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .to_return(:status => 200, :body => get_stub("search_collection_C1599780765-NSIDC_ECS.atom"),
+                   :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"],
+                                "content-type"=>["application/atom+xml; charset=utf-8"],
+                                "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"],
+                                "access-control-allow-origin"=>["*"],
+                                "cmr-hits"=>["1"],
+                                "cmr-took"=>["107"],
+                                "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"],
+                                "vary"=>["Accept-Encoding, User-Agent"],
+                                "connection"=>["close"],
+                                "server"=>["Jetty(9.2.z-SNAPSHOT)"],
+                                "strict-transport-security"=>["max-age=31536000"]})
+
+      # application logic should pull umm-json instead
+      stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS")
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .to_return(:status => 200, :body => get_stub("search_collection_C1599780765-NSIDC_ECS.json"),
+                   :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"],
+                                "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"],
+                                "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"],
+                                "access-control-allow-origin"=>["*"],
+                                "cmr-hits"=>["1"],
+                                "cmr-took"=>["2974"],
+                                "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"],
+                                "vary"=>["Accept-Encoding, User-Agent"],
+                                "connection"=>["close"],
+                                "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+
+      # stub for pulling a random granule
+      stub_request(:get, /.*granules.echo10\?concept_id=G.*/)
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .to_return(:status => 200, :body => get_stub("search_granules_C1599780765-NSIDC_ECS.xml"),
+                   :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"],
+                                "content-type"=>["application/echo10+xml; charset=utf-8"],
+                                "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"],
+                                "access-control-allow-origin"=>["*"],
+                                "cmr-hits"=>["1"], "cmr-took"=>["26"],
+                                "cmr-request-id"=>["46ad6de7-598a-463e-99e0-2a22ddf651da"],
+                                "vary"=>["Accept-Encoding, User-Agent"],
+                                "connection"=>["close"],
+                                "server"=>["Jetty(9.2.z-SNAPSHOT)"],
+                                "strict-transport-security"=>["max-age=31536000"]})
+
+
+      stub_request(:get, /.*granules.*C1599780765-NSIDC_ECS.*/)
+        .with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
+
+      post :create, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
+
+      assert_equal("302", response.code)
+      assert_equal(1, (Collection.where concept_id: "C1599780765-NSIDC_ECS").length)
+
+      record = (Collection.where concept_id: "C1599780765-NSIDC_ECS").first.records.first
+
+
+      assert_equal"iso19115", record.native_format
+      assert_equal"umm_json", record.format
+
+      #ingest for collection logged
+      assert_equal("abaker@element84.com", record.ingest.user.email)
+
+      #saves 1 associated granule
+      assert_equal(1, (Collection.where concept_id: "C1599780765-NSIDC_ECS").first.granules.length)
+      #needs to match regex since the granule that is taken from the list is random each time
+      assert_equal(0, (Collection.where concept_id: "C1599780765-NSIDC_ECS").first.granules.first.records.first.values["GranuleUR"] =~ /SC:ABLVIS0/)
+
+      granule_record = (Collection.where concept_id: "C1599780765-NSIDC_ECS").first.granules.first.records.first
+      #ingest for granule logged
+      assert_equal("abaker@element84.com", granule_record.ingest.user.email)
+
+    end
+
+end
+
+
 end
