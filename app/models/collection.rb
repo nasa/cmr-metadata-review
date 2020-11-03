@@ -29,15 +29,15 @@ class Collection < Metadata
     record && !record.hidden?
   end
 
-  def self.create_record(concept_id, revision_id, data_format, collection_data, options = {})
-    return unless SUPPORTED_FORMATS.include?(data_format)
+  def self.create_record(concept_id, revision_id, ingest_format, native_format, collection_data, options = {})
+    return unless SUPPORTED_FORMATS.include?(ingest_format)
 
-    short_name = collection_data[SHORT_NAMES[data_format]]
+    short_name = collection_data[SHORT_NAMES[ingest_format]]
 
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update_attributes!(short_name: short_name)
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: data_format, daac: daac_from_concept_id(concept_id))
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: ingest_format, native_format: native_format, daac: daac_from_concept_id(concept_id))
 
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
@@ -49,7 +49,6 @@ class Collection < Metadata
       end
       new_record.campaign = ApplicationController.helpers.clean_up_campaign(new_record.campaign_from_record_data)
       new_record.save
-
       user = options[:user] || User.find_by(role: "admin")
 
       Ingest.create(record: new_record, user: user, date_ingested: DateTime.now)
@@ -69,7 +68,8 @@ class Collection < Metadata
 
     # change this so it fetches the dif10 format instead, since dashboard doesn't support dif9
     native_format = native_format == 'dif' ? 'dif10' : native_format
-    collection_data = Cmr.get_collection(concept_id, native_format)
+    ingest_format = native_format == 'iso19115' ? 'umm_json' : native_format
+    collection_data = Cmr.get_collection(concept_id, ingest_format)
 
     options = {
       add_granule: add_granule,
@@ -77,7 +77,7 @@ class Collection < Metadata
       user: user
     }
 
-    create_record(concept_id, revision_id, native_format, collection_data, options)
+    create_record(concept_id, revision_id, ingest_format, native_format, collection_data, options)
   end
 
   def self.create_new_record_by_url(url, user = nil)

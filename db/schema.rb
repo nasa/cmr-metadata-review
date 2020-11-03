@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_121332) do
+ActiveRecord::Schema.define(version: 2020_11_02_105257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_121332) do
     t.datetime "released_to_daac_date"
     t.string "daac"
     t.string "campaign", default: [], null: false, array: true
+    t.string "native_format"
     t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id"
   end
 

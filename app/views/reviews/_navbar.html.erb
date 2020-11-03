@@ -50,7 +50,13 @@
 
     <% if record.collection? %>
       <p>SHORT NAME : <%= record.short_name %></p>
-      <p>FORMAT : <%= record.format %></p>
+      <% if record.format == record.native_format %>
+        <p>FORMAT : <%= record.format %></p>
+      <% else %>
+        <p>INGEST FORMAT : <%= record.format %></p>
+        <p>NATIVE FORMAT : <%= record.native_format %></p>
+      <% end %>
+
       <p class="format_links">SOURCE FILES :
         <a class="format_link" href="<%= record.umm_json_link %>" download>UMM-JSON</a> |
         <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a></p>

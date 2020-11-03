@@ -415,6 +415,19 @@
     }
   }
 
+  .title_value {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .iso_field_value {
+    overflow-x: scroll;
+    width: 220px;
+    font-weight: normal;
+    font-size: 10px;
+    background-color: #F0F0F0;
+  }
+
   textarea {
     border: none;
     background-color: transparent;

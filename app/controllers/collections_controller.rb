@@ -116,7 +116,6 @@ class CollectionsController < ApplicationController
     else
       begin
         Collection.create_new_record(params[:concept_id], params[:revision_id], current_user, true)
-
         flash[:notice] = "The selected collection has been successfully ingested into the system"
       rescue Cmr::CmrError => e
         Rails.logger.error("Error retrieving from CMR, #{e.message}")
