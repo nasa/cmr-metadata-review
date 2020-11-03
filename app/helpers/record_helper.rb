@@ -1,4 +1,11 @@
 module RecordHelper
+
+  def daac_from_concept_id(concept_id)
+    index = concept_id.rindex('-')
+    return concept_id[(index+1)..-1] unless index.nil?
+    raise 'Error parsing daac from concept_id'
+  end
+
   def is_number?(object)
     true if Float(object) rescue false
   end
