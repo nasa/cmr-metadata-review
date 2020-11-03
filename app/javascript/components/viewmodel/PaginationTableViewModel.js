@@ -2,6 +2,8 @@ import PaginationTableModel from "../model/PaginationTableModel";
 
 export default class PagingTableViewModel {
   model = new PaginationTableModel()
+  abortController = null; // used to cancel fetch requests
+
   // Access the Model
 
   set loading(value) {
@@ -130,7 +132,11 @@ export default class PagingTableViewModel {
       headers: { 'Content-Type': 'application/json' }
     };
     this.loading = true
-    fetch(url, requestOptions)
+    if (this.abortController != null) {
+      this.abortController.abort()
+    }
+    this.abortController = new window.AbortController();;
+    fetch(url, { signal: this.abortController.signal })
       .then(response => response.json()).then(data => {
       this.loading = false
       this.model.setData(data);
