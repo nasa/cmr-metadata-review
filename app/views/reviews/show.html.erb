@@ -49,7 +49,8 @@
                   <%= split_on_capitals(title) %>
                 </div>
                 <% if @record.native_format == "iso19115" %>
-                  <div title="ISO Field" class="iso_field_value">
+                  <div class="iso_field_value tooltip">
+                    <p class="iso_tooltiptext"><%=getISOFieldMapping(title)%></p>
                     <%= getISOFieldMapping(title)%>
                   </div>
                 <% end %>
