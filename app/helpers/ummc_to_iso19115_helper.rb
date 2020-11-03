@@ -1,5 +1,5 @@
 module UmmcToIso19115Helper
-  def getFieldMapping(ummJsonField)
+  def getISOFieldMapping(ummJsonField)
     FIELD_MAPPINGS[ummJsonField]
   end
   FIELD_MAPPINGS = {
