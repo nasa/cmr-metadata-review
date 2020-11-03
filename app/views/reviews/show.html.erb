@@ -50,8 +50,7 @@
                 </div>
                 <% if @record.native_format == "iso19115" %>
                   <div title="ISO Field" class="iso_field_value">
-                    This should call something like:
-                    UMMMapping.isoForUmm(title) -> returns the ISO field name
+                    <%= getISOFieldMapping(title)%>
                   </div>
                 <% end %>
               </div>
