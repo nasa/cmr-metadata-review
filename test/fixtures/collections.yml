@@ -68,3 +68,8 @@ collection_with_association:
   concept_id: "status_update_test_collection_1-SCIOPS"
   short_name: "Granule Status Update Test Collection 1"
 
+iso_collection1:
+  id: 15
+  concept_id: "iso_collection_test_1"
+  short_name: "Test Iso Collection 1"
+
