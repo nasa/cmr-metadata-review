@@ -1,11 +1,12 @@
 module UmmcToIso19115Helper
   def getISOFieldMapping(ummJsonField)
-    FIELD_MAPPINGS[ummJsonField]
+    value = FIELD_MAPPINGS[ummJsonField]
+    value&.split(/\n+/)&.join(' ')
   end
   FIELD_MAPPINGS = {
     "MetadataLanguage" => "/mdb:MD_Metadata/mdb:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#LanguageCode\"   codeListValue=
   with
-  /mdb:MD_Metadata/mdb:defaultLocale/lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode/ https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode\" codeListValue=\"utf8\"",
+/mdb:MD_Metadata/mdb:defaultLocale/lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode/ https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode\" codeListValue=\"utf8\"",
     "MetadataDates/Date" => "/mdb:MD_Metadata/mdb:dateInfo/cit:CI_Date/cit:date/gco:DateTime
 /mdb:MD_Metadata/mdb:dateInfo/cit:CI_Date/cit:dateType/cit:CI_DateTypeCode @codeList=\"codeListLocation#CI_DateTypeCode\" @codeListValue= creation, lastRevision, nextUpdated, expiry",
     "ShortName" => "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/[=>
@@ -279,5 +280,5 @@ and
 [=>gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.maturity
 and
 [=> gmd:description/gco:CharacterString = Maturity"
-  }
+  }.freeze
 end
