@@ -47,19 +47,18 @@
               <div class="title_value">
                 <div>
                   <%= split_on_capitals(title) %>
+                  <% if @controlled_notices[title] %>
+                    <i class="fa fa-asterisk controlled_icon tooltip">
+                      <p class="tooltiptext"><%= @controlled_notices[title] %></p>
+                    </i>
+                  <% end %>
                 </div>
                 <% if @record.native_format == "iso19115" %>
-                  <div class="iso_field_value tooltip">
-                    <p class="iso_tooltiptext"><%=getISOFieldMapping(title)%></p>
-                    <%= getISOFieldMapping(title)%>
-                  </div>
+                <div class="iso_label tooltip">ISO
+                   <p class="iso_tooltiptext"><%= getISOFieldMapping(title) %></p>
+                </div>
                 <% end %>
               </div>
-              <% if @controlled_notices[title] %>
-                <i class="fa fa-asterisk controlled_icon tooltip">
-                  <p class="tooltiptext"><%=@controlled_notices[title]%></p>
-                </i>
-              <% end %>
             </div>
             <div class="widthGrab">
               <i class="fa fa-arrows-h" aria-hidden="true"></i>
@@ -129,7 +128,7 @@
         <% end %>
 
         <tr>
-          <th class="headcol headcol__script-row">CURRENT VALUE</th>
+          <th class="headcol headcol__script-row currentvalue_col">CURRENT VALUE</th>
           <% @section_titles.each do |title| %>
             <td class="column_<%=title%>">
               <div>

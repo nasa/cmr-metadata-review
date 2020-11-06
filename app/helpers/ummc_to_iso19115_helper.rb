@@ -1,7 +1,10 @@
 module UmmcToIso19115Helper
   def getISOFieldMapping(ummJsonField)
     value = FIELD_MAPPINGS[ummJsonField]
-    value&.split(/\n+/)&.join(' ')
+    if value.blank?
+      value = "No ISO mapping available"
+    end
+    value
   end
   FIELD_MAPPINGS = {
     "MetadataLanguage" => "/mdb:MD_Metadata/mdb:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#LanguageCode\"   codeListValue=
@@ -35,7 +38,9 @@ cit:CI_Individual/cit:name or cit:CI_Organization/cit:name",
     "Abstract" => "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:abstract/gco:CharacterString",
     "Purpose" => "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:purpose/gco:CharacterString",
     "DataLanguage" => "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#LanguageCode\" codeListValue=
- with
+
+with
+
  /mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:defaultLocale/lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode\"  codeListValue= ",
     "DataDates/Date" => "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:date/cit:CI_Date/cit:date/gco:DateTime
 with

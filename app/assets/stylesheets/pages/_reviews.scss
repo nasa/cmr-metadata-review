@@ -148,8 +148,6 @@
   padding: 0px 0px 0px 0px !important;
 }
 
-
-
 .color_red {
   background-color: $review-red;
 }
@@ -225,7 +223,7 @@
     width: 14em;
     left: 5em;
     top: auto;
-    height: 200px;
+    min-height: 200px;
     font-size: 0.9em;
     text-align: center;
     border-left: 20px;
@@ -417,7 +415,9 @@
 
   .title_value {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
   }
 
   .iso_field_value {
@@ -598,10 +598,19 @@
     left: 75%;
 }
 
+.iso_label {
+  color: #fa8c16;
+  background: #fff7e6;
+  border: solid 1px #ffd591;
+  padding: 1px;
+}
+
 .tooltip .iso_tooltiptext {
   visibility: hidden;
-  width: 350px;
+  width: 600px;
   padding: 10px;
+
+  white-space: pre-wrap;
 
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -615,6 +624,7 @@
 
   background-color: white;
   color: black;
+  font-weight: normal;
   text-align: center;
   border-radius: 6px;
   border: 1px solid black;
