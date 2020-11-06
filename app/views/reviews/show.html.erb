@@ -53,10 +53,15 @@
                     </i>
                   <% end %>
                 </div>
-                <% if @record.native_format == "iso19115" %>
+                <% if @record.native_format == 'iso19115'%>
                 <div class="iso_label tooltip">ISO
                    <p class="iso_tooltiptext"><%= getISOFieldMapping(title) %></p>
                 </div>
+                <% end %>
+                <% if @record.native_format == 'iso-smap'%>
+                  <div class="iso_label tooltip">ISO
+                    <p class="iso_tooltiptext"><%= getISOFieldMapping(title) %></p>
+                  </div>
                 <% end %>
               </div>
             </div>
