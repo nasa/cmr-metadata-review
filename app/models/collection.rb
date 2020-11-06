@@ -78,6 +78,7 @@ class Collection < Metadata
     }
 
     create_record(concept_id, revision_id, ingest_format, native_format, collection_data, options)
+    return [ingest_format, native_format]
   end
 
   def self.create_new_record_by_url(url, user = nil)
