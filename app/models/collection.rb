@@ -68,7 +68,7 @@ class Collection < Metadata
 
     # change this so it fetches the dif10 format instead, since dashboard doesn't support dif9
     native_format = native_format == 'dif' ? 'dif10' : native_format
-    ingest_format = native_format == 'iso19115' ? 'umm_json' : native_format
+    ingest_format = native_format == ('iso19115' || 'iso-smap') ? 'umm_json' : native_format
     collection_data = Cmr.get_collection(concept_id, ingest_format)
 
     options = {
