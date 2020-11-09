@@ -53,7 +53,7 @@ and
       "DOI/Explanation" => "[=>  gmd:description/gco:CharacterString contains Explanation:",
       "Abstract" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract/gco:CharacterString",
       "Purpose" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:purpose/gco:CharacterString",
-      "DataLanguage" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/ gmd:language/gco:CharacterString
+      "DataLanguage" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language/gco:CharacterString
 with
 /gmi:MI_Metadata/ gmd:identificationInfo/gmd:MD_DataIdentification/ gmd:MD_CharacterSetCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode\"  codeListValue=UTF8",
       "DataDates/Date" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime

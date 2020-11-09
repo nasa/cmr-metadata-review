@@ -13,13 +13,21 @@ class UpdateReviewCommentTest < Capybara::Rails::TestCase
   end
 
   describe 'Show ingested iso record.' do
-    it 'Navigate to show iso field mapping' do
+    it 'Navigate to show iso mends field mapping' do
       visit '/home'
       see_collection_review_details('#in_arc_review', 42)
       see_collection_revision_details(1)
       click_on 'Collection Info'
-      assert has_content? "/gco:CharacterString= gov.nasa.esdis.umm.shortname"
-      assert has_content? "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode"
+      page.driver.browser.action.move_to(page.find('#ShortName').native).perform
+      assert has_content? "/gco:CharacterString = gov.nasa.esdis.umm.shortname"
+    end
+    it 'Navigate to show iso smap field mapping' do
+      visit '/home'
+      see_collection_review_details('#in_arc_review', 43)
+      see_collection_revision_details(1)
+      click_on 'Collection Info'
+      page.driver.browser.action.move_to(page.find('#ShortName').native).perform
+      assert has_content? "/gco:CharacterString = The ECS Short Name"
     end
   end
 end
