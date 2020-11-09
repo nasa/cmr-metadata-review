@@ -175,7 +175,7 @@ class RecordTest < ActiveSupport::TestCase
   describe "daac scope" do
     it "will return records for the given DAAC" do
       records = Record.daac("PODAAC")
-      assert_equal 14, records.length
+      assert_equal 15, records.length
     end
 
     it "will not return records that belong to anoter DAAC" do
