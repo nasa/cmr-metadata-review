@@ -45,7 +45,7 @@
           <td class="title_column column_<%=title%>">
             <div class="title_text">
               <div class="title_value">
-                <div>
+                <div class="title_value_star">
                   <%= split_on_capitals(title) %>
                   <% if @controlled_notices[title] %>
                     <i class="fa fa-asterisk controlled_icon tooltip">
@@ -55,12 +55,12 @@
                 </div>
                 <% if @record.native_format == 'iso19115'%>
                 <div class="iso_label tooltip">ISO
-                   <p class="iso_tooltiptext"><%= getISOFieldMapping(title) %></p>
+                   <p class="iso_tooltiptext"><%= getISOMendsFieldMapping(title) %></p>
                 </div>
                 <% end %>
                 <% if @record.native_format == 'iso-smap'%>
                   <div class="iso_label tooltip">ISO
-                    <p class="iso_tooltiptext"><%= getISOFieldMapping(title) %></p>
+                    <p class="iso_tooltiptext"><%= getISOSmapFieldMapping(title) %></p>
                   </div>
                 <% end %>
               </div>
