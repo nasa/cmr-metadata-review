@@ -540,18 +540,18 @@ with
 [=>/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.horizontalresolutionandcoordinatesystem_geodeticmodel
 and
 [=>/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:description/gco:CharacterString = HorizontalResolutionAndCoordinateSystem_GeodeticModel",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/XDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/YDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/Unit" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/XDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/YDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/Unit" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ViewingAngleType" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ScanDirection" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MinimumXDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MaximumXDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MinimumYDimension" => "",
-      "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MaximumYDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/XDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/YDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/Unit" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/XDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/YDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/Unit" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ViewingAngleType" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ScanDirection" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MinimumXDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MaximumXDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MinimumYDimension" => "",
+      # "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/MaximumYDimension" => "",
       "SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/LocalCoordinateSystem" => "[=> /gmd:geographicElement/gmd:EX_GeographicDescription id=\"horizontalresolutionandcoordinatesystem_localcoordinatesystem\"/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString = GeoReferenceInformation: value Description: value
 with
 [=>/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.horizontalresolutionandcoordinatesystem_localcoordinatesystem
