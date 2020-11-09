@@ -313,4 +313,15 @@ iso_collection_record:
   native_format: "iso19115"
   associated_granule_value: 39
   daac: PODAAC
+
+iso_smap_collection_record:
+  id: 43
+  recordable_id: 16
+  recordable_type: "Collection"
+  revision_id: "1"
+  state: "in_arc_review"
+  format: "umm_json"
+  native_format: "iso-smap"
+  associated_granule_value: 39
+  daac: PODAAC
     

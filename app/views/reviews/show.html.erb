@@ -54,12 +54,12 @@
                   <% end %>
                 </div>
                 <% if @record.native_format == 'iso19115'%>
-                <div class="iso_label tooltip">ISO
+                <div class="iso_label tooltip" id="<%=title%>">ISO
                    <p class="iso_tooltiptext"><%= getISOMendsFieldMapping(title) %></p>
                 </div>
                 <% end %>
                 <% if @record.native_format == 'iso-smap'%>
-                  <div class="iso_label tooltip">ISO
+                  <div class="iso_label tooltip" id="<%=title%>">ISO
                     <p class="iso_tooltiptext"><%= getISOSmapFieldMapping(title) %></p>
                   </div>
                 <% end %>
