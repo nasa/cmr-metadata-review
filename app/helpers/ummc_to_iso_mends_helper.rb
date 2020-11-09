@@ -1,6 +1,10 @@
 module UmmcToIsoMendsHelper
   def getISOMendsFieldMapping(ummJsonField)
-    ISO_MENDS_FIELD_MAPPINGS[ummJsonField]
+    let value = ISO_MENDS_FIELD_MAPPINGS[ummJsonField]
+    if value.blank?
+      value = "No field mapping found."
+    end
+    value
   end
   ISO_MENDS_FIELD_MAPPINGS = {
       "MetadataLanguage" => "/gmi:MI_Metadata/gmd:language/gco:CharacterString

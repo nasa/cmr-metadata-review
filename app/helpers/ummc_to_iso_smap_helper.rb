@@ -1,6 +1,10 @@
 module UmmcToIsoSmapHelper
   def getISOSmapFieldMapping(ummJsonField)
-    ISO_SMAP_FIELD_MAPPINGS[ummJsonField]
+    value = ISO_SMAP_FIELD_MAPPINGS[ummJsonField]
+    if value.blank?
+      value = "No field mapping found."
+    end
+    value
   end
   ISO_SMAP_FIELD_MAPPINGS = {
       "MetadataLanguage" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:language/gco:CharacterString
