@@ -286,7 +286,7 @@ iso_collection_1_short_name:
   flag: []
   recommendation: "ok"
 
-iso_collection_1_purpose:
+iso_collection_1_data_language:
   id: 37
   record_id: 42
   column_name: "DataLanguage"
@@ -297,3 +297,28 @@ iso_collection_1_purpose:
   opinion: false
   flag: []
   recommendation: "ok"
+
+iso_collection_2_short_name:
+  id: 38
+  record_id: 43
+  column_name: "ShortName"
+  value: "Test Iso Collection 1 Short Name"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+iso_collection_2_data_language:
+  id: 39
+  record_id: 43
+  column_name: "DataLanguage"
+  value: "eng"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+

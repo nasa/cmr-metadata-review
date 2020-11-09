@@ -73,3 +73,8 @@ iso_collection1:
   concept_id: "iso_collection_test_1"
   short_name: "Test Iso Collection 1"
 
+iso_collection2:
+  id: 16
+  concept_id: "iso_collection_test_2"
+  short_name: "Test Iso Collection 2"
+
