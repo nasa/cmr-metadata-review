@@ -302,4 +302,15 @@ collection_with_association_rev_2:
   state: "in_daac_review"
   format: "dif10"
   associated_granule_value: 39
+
+iso_collection_record:
+  id: 42
+  recordable_id: 15
+  recordable_type: "Collection"
+  revision_id: "1"
+  state: "in_arc_review"
+  format: "umm_json"
+  native_format: "iso19115"
+  associated_granule_value: 39
+  daac: PODAAC
     

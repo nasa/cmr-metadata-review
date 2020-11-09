@@ -273,3 +273,27 @@ associating_granule_to_collection:
   column_name: ShortName
   value: Test Short Name3
   opinion: true
+
+iso_collection_1_short_name:
+  id: 36
+  record_id: 42
+  column_name: "ShortName"
+  value: "Test Iso Collection 1 Short Name"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+iso_collection_1_purpose:
+  id: 37
+  record_id: 42
+  column_name: "DataLanguage"
+  value: "eng"
+  last_updated: null
+  color: "white"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"

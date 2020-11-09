@@ -45,21 +45,25 @@
           <td class="title_column column_<%=title%>">
             <div class="title_text">
               <div class="title_value">
-                <div>
+                <div class="title_value_star">
                   <%= split_on_capitals(title) %>
+                  <% if @controlled_notices[title] %>
+                    <i class="fa fa-asterisk controlled_icon tooltip">
+                      <p class="tooltiptext"><%= @controlled_notices[title] %></p>
+                    </i>
+                  <% end %>
                 </div>
-                <% if @record.native_format == "iso19115" %>
-                  <div title="ISO Field" class="iso_field_value">
-                    This should call something like:
-                    UMMMapping.isoForUmm(title) -> returns the ISO field name
+                <% if @record.native_format == 'iso19115'%>
+                <div class="iso_label tooltip">ISO
+                   <p class="iso_tooltiptext"><%= getISOMendsFieldMapping(title) %></p>
+                </div>
+                <% end %>
+                <% if @record.native_format == 'iso-smap'%>
+                  <div class="iso_label tooltip">ISO
+                    <p class="iso_tooltiptext"><%= getISOSmapFieldMapping(title) %></p>
                   </div>
                 <% end %>
               </div>
-              <% if @controlled_notices[title] %>
-                <i class="fa fa-asterisk controlled_icon tooltip">
-                  <p class="tooltiptext"><%=@controlled_notices[title]%></p>
-                </i>
-              <% end %>
             </div>
             <div class="widthGrab">
               <i class="fa fa-arrows-h" aria-hidden="true"></i>
