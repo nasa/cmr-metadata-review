@@ -115,8 +115,12 @@ class CollectionsController < ApplicationController
       flash[:alert] = 'This collection has already been ingested into the system'
     else
       begin
-        Collection.create_new_record(params[:concept_id], params[:revision_id], current_user, true)
-        flash[:notice] = "The selected collection has been successfully ingested into the system"
+        (ingest_format, native_format) = Collection.create_new_record(params[:concept_id], params[:revision_id], current_user, true)
+        if ingest_format != native_format
+          flash[:notice] = "The selected #{native_format} collection record has been successfully ingested into the system as a #{ingest_format} record."
+        else
+          flash[:notice] = "The selected collection has been successfully ingested into the system"
+        end
       rescue Cmr::CmrError => e
         Rails.logger.error("Error retrieving from CMR, #{e.message}")
         flash[:alert] = 'There was an error connecting to the CMR System, please try again'

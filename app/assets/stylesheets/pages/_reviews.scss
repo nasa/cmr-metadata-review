@@ -148,8 +148,6 @@
   padding: 0px 0px 0px 0px !important;
 }
 
-
-
 .color_red {
   background-color: $review-red;
 }
@@ -225,7 +223,7 @@
     width: 14em;
     left: 5em;
     top: auto;
-    height: 200px;
+    min-height: 200px;
     font-size: 0.9em;
     text-align: center;
     border-left: 20px;
@@ -417,15 +415,27 @@
 
   .title_value {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
   }
 
   .iso_field_value {
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+
     overflow-x: scroll;
     width: 220px;
     font-weight: normal;
     font-size: 10px;
     background-color: #F0F0F0;
+    min-height: 80px;
   }
 
   textarea {
@@ -588,8 +598,54 @@
     left: 75%;
 }
 
+.iso_label {
+  color: #fa8c16;
+  background: #fff7e6;
+  border: solid 1px #ffd591;
+  padding: 1px;
+}
+.title_value_star {
+  white-space: nowrap;
+  padding-right: 5px
+}
+.tooltip .iso_tooltiptext {
+  visibility: hidden;
+  width: 700px;
+  padding: 10px;
+
+  white-space: pre-wrap;
+
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  background-color: white;
+  color: black;
+  font-weight: normal;
+  text-align: left;
+  border-radius: 6px;
+  border: 1px solid black;
+  font-size: 1.1em;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 75%;
+}
+
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.tooltip:hover .iso_tooltiptext {
+  visibility: visible;
 }
 
 .bubbletooltip {
