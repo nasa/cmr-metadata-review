@@ -604,10 +604,13 @@
   border: solid 1px #ffd591;
   padding: 1px;
 }
-
+.title_value_star {
+  white-space: nowrap;
+  padding-right: 5px
+}
 .tooltip .iso_tooltiptext {
   visibility: hidden;
-  width: 600px;
+  width: 700px;
   padding: 10px;
 
   white-space: pre-wrap;
