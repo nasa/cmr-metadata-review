@@ -19,6 +19,7 @@ module ApplicationHelper
                    'OB_DAAC',
                    'CDDIS',
                    'PODAAC',
+                   'OMINRT',
                    'ARCTEST']
 
   #providers are specified to identify only the records within EOSDIS which MDQ team curates
