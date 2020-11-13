@@ -611,8 +611,10 @@
   padding-right: 5px;
 }
 .tooltip .iso_tooltiptext {
+  overflow: scroll;
   visibility: hidden;
   width: 700px;
+  max-height: 500px;
   padding: 10px;
 
   white-space: pre-wrap;
