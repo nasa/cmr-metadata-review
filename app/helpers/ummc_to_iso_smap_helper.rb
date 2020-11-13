@@ -2,7 +2,17 @@ module UmmcToIsoSmapHelper
   def getISOSmapFieldMapping(ummJsonField)
     value = ISO_SMAP_FIELD_MAPPINGS[ummJsonField]
     if value.blank?
-      value = "No field mapping found."
+      value = 'No field mapping found.'
+    end
+
+    if value.sub(' ', '').start_with? '[=>', '[==>'
+      pos = ummJsonField.index('/')
+      unless pos.nil?
+        parent_field = ummJsonField[0...pos]
+        parent_value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
+        value = parent_value + "
+        " + value
+      end
     end
     value
   end
