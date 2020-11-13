@@ -1,28 +1,15 @@
 module UmmcToIsoMendsHelper
-
   def getISOMendsFieldMapping(ummJsonField)
     value = ISO_MENDS_FIELD_MAPPINGS[ummJsonField]
     if value.blank?
-      value = 'No field mapping found.'
-    end
-
-    if value.sub(' ', '').start_with? '[=>', '[==>'
-      pos = ummJsonField.index('/')
-      unless pos.nil?
-        parent_field = ummJsonField[0...pos]
-        parent_value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
-        value = parent_value + "
-        " + value
-      end
+      value = "No field mapping found."
     end
     value
   end
-
   ISO_MENDS_FIELD_MAPPINGS = {
       "MetadataLanguage" => "/gmi:MI_Metadata/gmd:language/gco:CharacterString
 with
 /gmi:MI_Metadata/gmd:MD_CharacterSetCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode\" codeListValue=\"utf8\"",
-
       "MetadataDates/Date" => "/gmi:MI_Metadata/datestamp (write only) use update date if it exists otherwise use creation date if it exists, otherwise use current date.
 /gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/
 [=>gmd:name/gco:CharacterString=Metadata Create Date
@@ -32,50 +19,6 @@ with
 [=>gmd:parentEntity gco:nilReason=\"inapplicable\"
 [=>gmd:rule gco:nilReason=\"inapplicable\"
 [=>gmd:source gco:nilReason=\"inapplicable\"",
-
-      "MetadataDates/Type" => '/gmi:MI_Metadata/datestamp (write only) use update date if it exists otherwise use creation date if it exists, otherwise use current date.
-CREATE
-/gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
-\=>gmd:name/gco:CharacterString=Metadata Create Date
-\=>gmd:definition/gco:CharacterString=Create Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
-\=>gmd:domainValue/gco:CharacterString= {the actual date}
-\=>gmd:parentEntity gco:nilReason="inapplicable"
-\=>gmd:rule gco:nilReason="inapplicable"
-\=>gmd:source gco:nilReason="inapplicable"
-
-UPDATE
-/gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
-\=>gmd:name/gco:CharacterString=Metadata Update Date
-\=>gmd:definition/gco:CharacterString=Update Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
-\=>gmd:domainValue/gco:CharacterString= {the actual date}
-\=>gmd:parentEntity gco:nilReason="inapplicable"
-\=>gmd:rule gco:nilReason="inapplicable"
-\=>gmd:source gco:nilReason="inapplicable"
-
-REVIEW
-/gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
-\=>gmd:name/gco:CharacterString=Metadata Future Review Date
-\=>gmd:definition/gco:CharacterString=Future Review Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
-\=>gmd:domainValue/gco:CharacterString= {the actual date}
-\=>gmd:parentEntity gco:nilReason="inapplicable"
-\=>gmd:rule gco:nilReason="inapplicable"
-\=>gmd:source gco:nilReason="inapplicable"
-
-DELETE
-/gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
-\=>gmd:name/gco:CharacterString=Metadata Delete Date
-\=>gmd:definition/gco:CharacterString=Delete Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
-\=>gmd:domainValue/gco:CharacterString= {the actual date}
-\=>gmd:parentEntity gco:nilReason="inapplicable"
-\=>gmd:rule gco:nilReason="inapplicable"
-\=>gmd:source gco:nilReason="inapplicable"
-',
-
-
       "ShortName" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/ [=>
 [=> gmd:code/gco:CharacterString
 and
