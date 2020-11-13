@@ -249,6 +249,7 @@
   }
 
   .title_column {
+    vertical-align: top;
     min-width: 220px;
     position: relative;
     padding-right: 25px;
@@ -416,7 +417,6 @@
   .title_value {
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
     justify-content: space-between;
   }
 
@@ -599,14 +599,15 @@
 }
 
 .iso_label {
+  min-width: 25px;
+  height: 20px;
   color: #fa8c16;
   background: #fff7e6;
   border: solid 1px #ffd591;
   padding: 1px;
 }
 .title_value_star {
-  white-space: nowrap;
-  padding-right: 5px
+  padding-right: 5px;
 }
 .tooltip .iso_tooltiptext {
   visibility: hidden;
