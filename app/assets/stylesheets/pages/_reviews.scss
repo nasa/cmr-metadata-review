@@ -600,8 +600,7 @@
 }
 
 .iso_label {
-  min-width: 25px;
-  height: 20px;
+  align-self: flex-start;
   color: #fa8c16;
   background: #fff7e6;
   border: solid 1px #ffd591;
