@@ -44,26 +44,26 @@
         <% @section_titles.each do |title| %>
           <td class="title_column column_<%=title%>">
             <div class="title_text">
-              <div class="title_value">
-                <div class="title_value_star">
+              <span class="title_value">
+                <span class="title_value_star">
                   <%= split_on_capitals(title) %>
                   <% if @controlled_notices[title] %>
                     <i class="fa fa-asterisk controlled_icon tooltip">
                       <p class="tooltiptext"><%= @controlled_notices[title] %></p>
                     </i>
                   <% end %>
-                </div>
+                </span>
                 <% if @record.native_format == 'iso19115'%>
-                <div class="iso_label tooltip" id="<%=title%>">ISO
+                <span class="iso_label tooltip" id="<%=title%>">ISO
                    <p class="iso_tooltiptext"><%= getISOMendsFieldMapping(title) %></p>
-                </div>
+                </span>
                 <% end %>
                 <% if @record.native_format == 'iso-smap'%>
-                  <div class="iso_label tooltip" id="<%=title%>">ISO
+                  <span class="iso_label tooltip" id="<%=title%>">ISO
                     <p class="iso_tooltiptext"><%= getISOSmapFieldMapping(title) %></p>
-                  </div>
+                  </span>
                 <% end %>
-              </div>
+              </span>
             </div>
             <div class="widthGrab">
               <i class="fa fa-arrows-h" aria-hidden="true"></i>
