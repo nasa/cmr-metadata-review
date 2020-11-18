@@ -6,12 +6,19 @@ module UmmcToIsoSmapHelper
     end
 
     if value.sub(' ', '').start_with? '[=>', '[==>'
-      pos = ummJsonField.index('/')
-      unless pos.nil?
+      field = ummJsonField
+      while (true)
+        pos = field.rindex('/')
+        if pos.nil?
+          break
+        end
         parent_field = ummJsonField[0...pos]
-        parent_value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
-        value = parent_value + "
-        " + value
+        parent_value = ISO_SMAP_FIELD_MAPPINGS[parent_field]
+        unless parent_value.nil?
+          value = parent_value + "
+          " + value.strip
+        end
+        field = parent_field
       end
     end
     value
@@ -70,6 +77,28 @@ with
       "DataDates/Date" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
 with
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode  codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.",
+
+      "DataDates/Type" => '
+CREATE:
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
+with
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode codeList="https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.
+
+UPDATE:
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
+with
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode codeList="https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.
+
+REVIEW:
+0..*	/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
+with
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode codeList="https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.
+
+DELETE:
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
+with
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode codeList="https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.
+',
       "DataCenters" => "UMM Roles - ISO Roles
 ARCHIVER       - distributor   - yes this is different and not a mistake.
 DISTRIBUTOR - distributor
@@ -85,6 +114,10 @@ SDPS reads PROCESSOR and We will read PROCESSOR from:
 
 We will read ORIGINATOR from
 /gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/",
+
+
+
+
       "DataCenters/Roles" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode = processor",
       "DataCenters/ShortName" => "[=>gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString  ShortName delimited by &gt; LongName - only if LongName exists.",
       "DataCenters/LongName" => "[=>gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString  ShortName delimited by &gt; LongName - only if LongName exists.",
@@ -93,6 +126,7 @@ We will read ORIGINATOR from
       "DataCenters/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
+      "DataCenters/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "DataCenters/ContactInformation/Addresses" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/",
       "DataCenters/ContactInformation/Addresses/StreetAddresses" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint/gco:CharacterString",
       "DataCenters/ContactInformation/Addresses/City" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city/gco:CharacterString",

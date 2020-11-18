@@ -6,12 +6,19 @@ module UmmcToIsoMendsHelper
     end
 
     if value.sub(' ', '').start_with? '[=>', '[==>'
-      pos = ummJsonField.index('/')
-      unless pos.nil?
+      field = ummJsonField
+      while (true)
+        pos = field.rindex('/')
+        if pos.nil?
+          break
+        end
         parent_field = ummJsonField[0...pos]
         parent_value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
-        value = parent_value + "
-        " + value
+        unless parent_value.nil?
+          value = parent_value + "
+          " + value.strip
+        end
+        field = parent_field
       end
     end
     value
@@ -145,6 +152,7 @@ write only if PROCESSOR exists above otherwise read from here:
       "DataCenters/LongName" => "[=>gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString  ShortName delimited by &gt; LongName - only if LongName exists.",
       "DataCenters/ContactInformation/ServiceHours" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString",
       "DataCenters/ContactInformation/ContactInstruction" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions/gco:CharacterString",
+      "DataCenters/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "DataCenters/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
@@ -156,6 +164,10 @@ write only if PROCESSOR exists above otherwise read from here:
       "DataCenters/ContactInformation/Addresses/Country" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country/gco:CharacterString",
       "DataCenters/ContactInformation/RelatedUrls" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource",
       "DataCenters/ContactInformation/RelatedUrls/Description" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description",
+      "DataCenters/ContactPersons/ContactInformation/RelatedUrls/URLContentType" => "[=> should be \"DataContactURL\"]",
+      "DataCenters/ContactPersons/ContactInformation/RelatedUrls/Type" => "[=> should be \"Home Page\"]",
+      "DataCenters/ContactInformation/RelatedUrls/URLContentType" => "[=> should be \"DataContactURL\"]",
+      "DataCenters/ContactInformation/RelatedUrls/Type" => "[=> should be \"Home Page\"]",
       "DataCenters/ContactInformation/RelatedUrls/URL" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL",
       "DataCenters/ContactPersons" => "(For every ContactPerson except Metadata Author, create a new pointOfContact and add the Data Center Short Name and Long Name to the
 [=>gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString
@@ -167,6 +179,7 @@ write only if PROCESSOR exists above otherwise read from here:
       "DataCenters/ContactPersons/LastName" => "[=>gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString = LastName:",
       "DataCenters/ContactPersons/ContactInformation/ServiceHours" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString",
       "DataCenters/ContactPersons/ContactInformation/ContactInstruction" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions/gco:CharacterString",
+      "DataCenters/ContactPersons/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "DataCenters/ContactPersons/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
@@ -187,6 +200,7 @@ write only if PROCESSOR exists above otherwise read from here:
       "DataCenters/ContactGroups/GroupName" => "[=>gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString = GroupName:",
       "DataCenters/ContactGroups/ContactInformation/ServiceHours" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString",
       "DataCenters/ContactGroups/ContactInformation/ContactInstruction" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions/gco:CharacterString",
+      "DataCenters/ContactGroups/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "DataCenters/ContactGroups/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
@@ -210,6 +224,7 @@ For Metadata Author:
       "ContactPersons/LastName" => "[=>/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString = LastName:",
       "ContactPersons/ContactInformation/ServiceHours" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString",
       "ContactPersons/ContactInformation/ContactInstruction" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions/gco:CharacterString",
+      "ContactPersons/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "ContactPersons/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
@@ -222,12 +237,15 @@ For Metadata Author:
       "ContactPersons/ContactInformation/RelatedUrls" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource",
       "ContactPersons/ContactInformation/RelatedUrls/Description" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description",
       "ContactPersons/ContactInformation/RelatedUrls/URL" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL",
+      "ContactPersons/ContactInformation/RelatedUrls/URLContentType" => "[=> should be \"DataContactURL\"]",
+      "ContactPersons/ContactInformation/RelatedUrls/Type" => "[=> should be \"Home Page\"]",
       "ContactGroups" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[=>",
       "ContactGroups/Roles" => "[=>gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode (for more than 1 role another pointOfContact must be created)",
       "ContactGroups/NonDataCenterAffiliation" => "[=>gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString = NonDataCenterAffiliation:",
       "ContactGroups/GroupName" => "[=>/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString = GroupName:",
       "ContactGroups/ContactInformation/ServiceHours" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString",
       "ContactGroups/ContactInformation/ContactInstruction" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions/gco:CharacterString",
+      "ContactGroups/ContactInformation/ContactMechanisms/Type" => "[=> voice or fascimile only]",
       "ContactGroups/ContactInformation/ContactMechanisms/Value" => "[=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/[==>
 [==>gmd:voice/gco:CharacterString (UMM Types=>ISO: Direct Line, Mobile, Primary, TDD/TTY Phone, Telephone, U.S. toll free, Other) (ISO=>UMM: Telephone) or gmd:facsimile/gco:CharacterString (Fax)
 [=>gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString",
@@ -240,6 +258,8 @@ For Metadata Author:
       "ContactGroups/ContactInformation/RelatedUrls" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource",
       "ContactGroups/ContactInformation/RelatedUrls/Description" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description",
       "ContactGroups/ContactInformation/RelatedUrls/URL" => "[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL",
+      "ContactGroups/ContactInformation/RelatedUrls/Type" => "[=> should be HOME PAGE]",
+      "ContactGroups/ContactInformation/RelatedUrls/URLContentType" => "[=> should be DataContactURL]",
       "CollectionDataType" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/[=>
 [=> gmd:code/gco:CharacterString
 and
