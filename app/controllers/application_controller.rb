@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  before_action :assign_user
+  after_action :cleanup_user
 
   private
   def render_404(exception = nil)
@@ -44,5 +46,13 @@ class ApplicationController < ActionController::Base
 
   def new_session_path(scope)
     new_user_session_path
+  end
+
+  def assign_user
+    UserSingleton.instance.current_user = current_user
+  end
+
+  def cleanup_user
+    UserSingleton.clear
   end
 end

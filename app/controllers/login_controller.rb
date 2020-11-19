@@ -4,6 +4,9 @@ class LoginController < Devise::OmniauthCallbacksController
 
     begin
       @user = User.from_omniauth(request.env["omniauth.auth"])
+
+      instance = UserSingleton.instance
+      instance.current_user = @user
     rescue Cmr::CmrError => e
       flash.notice = e.message
       redirect_to root_path and return
