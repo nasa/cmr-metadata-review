@@ -21,9 +21,22 @@ class Cmr
   # Sends a request to the CMR system and returns the result
   # throws timeout error after time determined by TIMEOUT_MARGIN
 
+  def self.isTestUser(current_user)
+    return true if current_user.nil? || current_user.access_token.blank? || current_user.access_token == 'accesstoken'
+    false
+  end
+
   def self.cmr_request(url)
     begin
-      contents = HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+      user = UserSingleton.instance
+      current_user = user.current_user
+      contents = if isTestUser(current_user)
+                   HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+                 else
+                   HTTParty.get(url, timeout: TIMEOUT_MARGIN, headers: {
+                                  'Echo-Token' => user.echo_token
+                                })
+                 end
       truncated_contents = ApplicationHelper::truncate_string(contents, 200)
       Rails.logger.info("cmr_request - Calling external resource with #{url}, contents=#{truncated_contents}")
       return contents
@@ -115,7 +128,11 @@ class Cmr
     no_pages = 1
     cmr_revision_map = {}
 
+    user = UserSingleton.instance
+    current_user = user.current_user
+
     conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
+      faraday.headers['Echo-Token'] = user.echo_token unless isTestUser(current_user)
       faraday.response :logger
       faraday.adapter Faraday.default_adapter
     end
