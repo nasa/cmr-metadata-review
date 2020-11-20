@@ -58,9 +58,10 @@ and
 and
 [=>gmd:authority/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#CI_RoleCode\" codeListValue=\"\"  = authority",
       "DOI/DOI" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/ [=>
-[=> gmd:code/gco:CharacterString
+[=> gmd:code/gco:CharacterString = [The actual DOI identifier should go here]
 and
 [=> gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.doi
+
 and
 [=> gmd:description/gco:CharacterString contains DOI",
       "DOI/MissingReason" => "[=> gmd:code nilReason=\"inapplicable\"
