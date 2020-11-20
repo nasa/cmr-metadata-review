@@ -20,7 +20,7 @@ module UmmcToIsoSmapHelper
   def getISOSmapFieldText(field)
     value = ISO_SMAP_FIELD_MAPPINGS[field]
     return "\nNo field mapping found." if value.blank?
-    "\n\n#{ISO_SMAP_FIELD_MAPPINGS[field]}\n\n".gsub(/\[\=+\>/,"")
+    "\n\n#{ISO_SMAP_FIELD_MAPPINGS[field]}\n\n"
   end
 
   ISO_SMAP_FIELD_MAPPINGS = {
