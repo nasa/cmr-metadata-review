@@ -54,13 +54,15 @@
                   <% end %>
                 </span>
                 <% if @record.native_format == 'iso19115'%>
-                <span class="iso_label tooltip" id="<%=title%>">ISO
-                   <p class="iso_tooltiptext"><%= getISOMendsFieldMapping(title) %></p>
-                </span>
+                  <% sections = getISOMendsFieldMappingSections(title) %>
+                  <span class="iso_label tooltip" id="<%=title%>">ISO
+                  <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %><span style="font-weight: normal"><%=  getISOMendsFieldText(section)  %></span></span><% } %></p>
+                  </span>
                 <% end %>
                 <% if @record.native_format == 'iso-smap'%>
+                  <% sections = getISOSmapFieldMappingSections(title) %>
                   <span class="iso_label tooltip" id="<%=title%>">ISO
-                    <p class="iso_tooltiptext"><%= getISOSmapFieldMapping(title) %></p>
+                  <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %><span style="font-weight: normal"><%=  getISOSmapFieldText(section)  %></span></span><% } %></p>
                   </span>
                 <% end %>
               </span>
