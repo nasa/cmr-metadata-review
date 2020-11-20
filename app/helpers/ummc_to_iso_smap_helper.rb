@@ -18,6 +18,8 @@ module UmmcToIsoSmapHelper
   end
 
   def getISOSmapFieldText(field)
+    value = ISO_SMAP_FIELD_MAPPINGS[field]
+    return "\nNo field mapping found." if value.blank?
     "\n\n#{ISO_SMAP_FIELD_MAPPINGS[field]}\n\n".gsub(/\[\=+\>/,"")
   end
 
@@ -78,8 +80,7 @@ with
 with
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode  codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.",
 
-      "DataDates/Type" => '
-CREATE:
+      "DataDates/Type" => 'CREATE:
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime
 with
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode codeList="https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml codeListValue varies.
@@ -386,12 +387,12 @@ with
 where the following doesn't equal or exist:
 gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
 
-  DistributionURL: GET SERVICE
-  Read only: /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
-  where gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
-  if above not preset look for:  write to:
-      /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
-  where gmd:description/gco:CharacterString=\"URLContentType: DistributionURL\" and \"Type: GET SERVICE and Subtype: ...
+DistributionURL: GET SERVICE
+Read only: /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
+where gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
+if above not preset look for:  write to:
+/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
+where gmd:description/gco:CharacterString=\"URLContentType: DistributionURL\" and \"Type: GET SERVICE and Subtype: ...
 and
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
 with
@@ -410,8 +411,9 @@ ContactGroup/ContactInformation/RelatedURLs
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/ [=>
 
 CollectionURL, PublicationURL: /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:aggregationInfo [=>",
-      "RelatedUrls/URL" => "DistributionURL: GET DATA and GET SERVICE:
+"RelatedUrls/URL" => "[=>DistributionURL: GET DATA and GET SERVICE:
 [=>/gmd:CI_OnlineResource/gmd:linkage/gmd:URL
+
 GET SERVICE:
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL
 
@@ -424,7 +426,7 @@ CollectionURL, PublicationURL:
 VisualizationURL:  (Reading - look at first path first, if it doesn't exist then look at second path) (Writing - use first path only)
 [=>/gmd:MD_BrowseGraphic/gmd:fileName/gmx:FileName src=  {also use source as element value} or
 [=>/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString",
-      "RelatedUrls/Description" => "DistributionURL: GET DATA and GET SERVICE
+      "RelatedUrls/Description" => "[=>DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Description:\"
 GET SERVICE:
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:description/gco:CharacterString
@@ -438,7 +440,7 @@ CollectionURL, PublicationURL:
 
 VisualizationURL:
 [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Description:\"",
-      "RelatedUrls/URLContentType" => "DistributionURL: GET DATA and GET SERVICE
+      "RelatedUrls/URLContentType" => "[=>DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"URLContentType:\"    reading: if not present put into DistributionURL
 GET SERVICE
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
@@ -451,7 +453,7 @@ CollectionURL, PublicationURL:
 
 VisualizationURL:
 [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"URLContentType:\" reading: if not present put into VisualizationURL",
-      "RelatedUrls/Type" => "DistributionURL: GET DATA and GET SERVICE
+      "RelatedUrls/Type" => "[=>DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Type:\"  reading: if not present and srv:SV_ServiceIdentification doesn't exist and the following doesn't exit:
 where the following doesn't equal or exist:
 gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
@@ -470,7 +472,7 @@ gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metad
 
   VisualizationURL:
   [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Type:\"     reading: if not present use GET RELATED VISUALIZATION",
-      "RelatedUrls/Subtype" => "DistributionURL: GET DATA and GET SERVICE
+      "RelatedUrls/Subtype" => "[=>DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Subtype:\"  reading: if not present then Subtype isn't used.
 GET SERVICE
 /gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype: {use list of valid values}
