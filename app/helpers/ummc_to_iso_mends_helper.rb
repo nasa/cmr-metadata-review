@@ -1,28 +1,29 @@
 module UmmcToIsoMendsHelper
-  def getISOMendsFieldMapping(ummJsonField)
+  def getISOMendsFieldMappingSections(ummJsonField)
     value = ISO_MENDS_FIELD_MAPPINGS[ummJsonField]
-    if value.blank?
-      value = 'No field mapping found.'
-    end
-
+    value = 'No field mapping found.' if value.blank?
+    sections = [ummJsonField]
     if value.sub(' ', '').start_with? '[=>', '[==>'
       field = ummJsonField
-      while (true)
+      loop do
         pos = field.rindex('/')
-        if pos.nil?
-          break
-        end
-        parent_field = ummJsonField[0...pos]
-        parent_value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
-        unless parent_value.nil?
-          value = parent_value + "
-          " + value.strip
-        end
+        break if pos.nil?
+        parent_field = field[0...pos]
+        value = ISO_MENDS_FIELD_MAPPINGS[parent_field]
+        sections << parent_field unless value.nil?
         field = parent_field
       end
     end
-    value
+    sections.reverse!
   end
+
+  def getISOMendsFieldText(field)
+    value = ISO_MENDS_FIELD_MAPPINGS[field]
+    return "\nNo field mapping found." if value.blank?
+    "\n\n#{ISO_MENDS_FIELD_MAPPINGS[field]}\n\n".gsub(/\[\=+\>/,"")
+  end
+
+
   ISO_MENDS_FIELD_MAPPINGS = {
       "MetadataLanguage" => "/gmi:MI_Metadata/gmd:language/gco:CharacterString
 with
@@ -36,12 +37,13 @@ with
 [=>gmd:parentEntity gco:nilReason=\"inapplicable\"
 [=>gmd:rule gco:nilReason=\"inapplicable\"
 [=>gmd:source gco:nilReason=\"inapplicable\"",
+
       "MetadataDates/Type" => '/gmi:MI_Metadata/datestamp (write only) use update date if it exists otherwise use creation date if it exists, otherwise use current date.
 CREATE
 /gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
 \=>gmd:name/gco:CharacterString=Metadata Create Date
 \=>gmd:definition/gco:CharacterString=Create Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
+\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date and codeListValue="Create Date"
 \=>gmd:domainValue/gco:CharacterString= {the actual date}
 \=>gmd:parentEntity gco:nilReason="inapplicable"
 \=>gmd:rule gco:nilReason="inapplicable"
@@ -51,7 +53,7 @@ UPDATE
 /gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
 \=>gmd:name/gco:CharacterString=Metadata Update Date
 \=>gmd:definition/gco:CharacterString=Update Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
+\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date and codeListValue="Update Date"
 \=>gmd:domainValue/gco:CharacterString= {the actual date}
 \=>gmd:parentEntity gco:nilReason="inapplicable"
 \=>gmd:rule gco:nilReason="inapplicable"
@@ -61,7 +63,7 @@ REVIEW
 /gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
 \=>gmd:name/gco:CharacterString=Metadata Future Review Date
 \=>gmd:definition/gco:CharacterString=Future Review Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
+\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date and codeListValue="Review Date"
 \=>gmd:domainValue/gco:CharacterString= {the actual date}
 \=>gmd:parentEntity gco:nilReason="inapplicable"
 \=>gmd:rule gco:nilReason="inapplicable"
@@ -71,7 +73,7 @@ DELETE
 /gmi:MI_Metadata/gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation/gmd:extendedElementInformation/gmd:MD_ExtendedElementInformation/\=>
 \=>gmd:name/gco:CharacterString=Metadata Delete Date
 \=>gmd:definition/gco:CharacterString=Delete Date
-\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date
+\=>gmd:dataType/gmd:MD_DatatypeCode codeList="" codeListValue="" = Date and codeListValue="Delete Date"
 \=>gmd:domainValue/gco:CharacterString= {the actual date}
 \=>gmd:parentEntity gco:nilReason="inapplicable"
 \=>gmd:rule gco:nilReason="inapplicable"
@@ -102,7 +104,8 @@ and
 [=>gmd:authority/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString
 and
 [=>gmd:authority/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#CI_RoleCode\" codeListValue=\"\"  = authority",
-      "DOI/DOI" => "[=> gmd:code/gco:CharacterString
+      "DOI/DOI" => "/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/ [=>
+[=> gmd:code/gco:CharacterString
 and
 [=> gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.doi
 and
@@ -427,17 +430,18 @@ with
       "AdditionalAttributes/ParameterValueAccuracy" => "/gmi:MI_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmi:LE_ProcessStep/gmi:processingInformation/eos:EOS_Processing/eos:otherProperty/gco:Record/eos:AdditionalAttributes/eos:AdditionalAttribute/eos:reference/eos:EOS_AdditionalAttributeDescription/eos:parameterValueAccuracy/gco:CharacterString",
       "AdditionalAttributes/ValueAccuracyExplanation" => "/gmi:MI_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmi:LE_ProcessStep/gmi:processingInformation/eos:EOS_Processing/eos:otherProperty/gco:Record/eos:AdditionalAttributes/eos:AdditionalAttribute/eos:reference/eos:EOS_AdditionalAttributeDescription/eos:valueAccuracyExplanation/gco:CharacterString",
       "AdditionalAttributes/Value" => "/gmi:MI_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmi:LE_ProcessStep/gmi:processingInformation/eos:EOS_Processing/eos:otherProperty/gco:Record/eos:AdditionalAttributes/eos:AdditionalAttribute/eos:value/gco:CharacterString",
+
       "RelatedUrls" => "DistributionURL: GET DATA
 /gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine [=>
 where the following doesn't equal or exist:
 gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
 
-  DistributionURL: GET SERVICE
-  Read only: /gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
-  where gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
-  if above not preset look for:  write to:
-      /gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
-  where gmd:description/gco:CharacterString=\"URLContentType: DistributionURL\" and \"Type: GET SERVICE and Subtype: ...
+DistributionURL: GET SERVICE
+Read only: /gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
+where gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
+if above not preset look for:  write to:
+/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine
+where gmd:description/gco:CharacterString=\"URLContentType: DistributionURL\" and \"Type: GET SERVICE and Subtype: ...
 and
 /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
 with
@@ -447,7 +451,6 @@ with
 
 VisualizationURL:
 /gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview [=>
-
 DataCenterURL, DataContactURL: see
 DataCenters/ContactPerson/ContactInformation/RelatedURLs
 DataCenters/ContactGroup/ContactInformation/RelatedURLs
@@ -456,8 +459,10 @@ ContactGroup/ContactInformation/RelatedURLs
 /gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/ [=>
 
 CollectionURL, PublicationURL: /gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:aggregationInfo [=>",
-      "RelatedUrls/URL" => "DistributionURL: GET DATA and GET SERVICE:
+
+"RelatedUrls/URL" => "[=> DistributionURL: GET DATA and GET SERVICE:
 [=>/gmd:CI_OnlineResource/gmd:linkage/gmd:URL
+
 GET SERVICE:
 /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL
 
@@ -470,11 +475,12 @@ CollectionURL, PublicationURL:
 VisualizationURL:  (Reading - look at first path first, if it doesn't exist then look at second path) (Writing - use first path only)
 [=>/gmd:MD_BrowseGraphic/gmd:fileName/gmx:FileName src=  {also use source as element value} or
 [=>/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString",
-      "RelatedUrls/Description" => "DistributionURL: GET DATA and GET SERVICE
+
+"RelatedUrls/Description" => "[=> DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Description:\"
+
 GET SERVICE:
 /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:description/gco:CharacterString
-
 DataCenterURL, DataContactURL
 [=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Description:\"
 
@@ -484,8 +490,10 @@ CollectionURL, PublicationURL:
 
 VisualizationURL:
 [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Description:\"",
-      "RelatedUrls/URLContentType" => "DistributionURL: GET DATA and GET SERVICE
+
+"RelatedUrls/URLContentType" => "[=> DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"URLContentType:\"    reading: if not present put into DistributionURL
+
 GET SERVICE
 /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
 
@@ -497,27 +505,30 @@ CollectionURL, PublicationURL:
 
 VisualizationURL:
 [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"URLContentType:\" reading: if not present put into VisualizationURL",
-      "RelatedUrls/Type" => "DistributionURL: GET DATA and GET SERVICE
+
+"RelatedUrls/Type" => "[=> DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Type:\"  reading: if not present and srv:SV_ServiceIdentification doesn't exist and the following doesn't exit:
 where the following doesn't equal or exist:
 gmd:function/gmd:CI_OnLineFunctionCode codeList=\"http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode\" codeListValue=\"OPeNDAP\" and value = GET DATA : OPENDAP DATA (DODS)
-  use GET DATA if the above funtion element does exist or if srv:SV_ServiceIdentification exists use GET SERVICE
-  GET SERVICE
-  /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
+use GET DATA if the above funtion element does exist or if srv:SV_ServiceIdentification exists use GET SERVICE
+GET SERVICE
+/gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype:...
 
-  DataCenterURL, DataContactURL
-  [=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Type:\"  reading: if not present use HOME PAGE
+DataCenterURL, DataContactURL
+[=>gmd:CI_ResponsibleParty/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Type:\"  reading: if not present use HOME PAGE
 
-  CollectionURL, PublicationURL:
-      [=>/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description/gco:CharacterString
-  =\"Type:\"
-  CollectionURL - reading: if not present use PROJECT HOME PAGE
-  PublicationURL - reading: if not present use VIEW RELATED INFORMATION
+CollectionURL, PublicationURL:
+[=>/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:onlineResource/gmd:CI_OnlineResource/gmd:description/gco:CharacterString
+=\"Type:\"
+CollectionURL - reading: if not present use PROJECT HOME PAGE
+PublicationURL - reading: if not present use VIEW RELATED INFORMATION
 
-  VisualizationURL:
-  [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Type:\"     reading: if not present use GET RELATED VISUALIZATION",
-      "RelatedUrls/Subtype" => "DistributionURL: GET DATA and GET SERVICE
+VisualizationURL:
+[=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Type:\"     reading: if not present use GET RELATED VISUALIZATION",
+
+"RelatedUrls/Subtype" => "[=> DistributionURL: GET DATA and GET SERVICE
 [=>/gmd:CI_OnlineResource/gmd:description/gco:CharacterString=\"Subtype:\"  reading: if not present then Subtype isn't used.
+
 GET SERVICE
 /gmi:MI_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName=RelatedURL URLContentType: DistributionURL Type: GET SERVICE Subtype: {use list of valid values}
 
@@ -530,6 +541,7 @@ CollectionURL, PublicationURL:
 
 VisualizationURL:
 [=>/gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString =\"Subtype:\"     reading: if not present then Subtype isn't used.",
+
       "RelatedUrls/GetData/Format" => "/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString = Format: <format>",
       "RelatedUrls/GetData/MimeType" => "/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString = MimeType: <mime-type>",
       "RelatedUrls/GetData/Size" => "/gmi:MI_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:transferSize",
