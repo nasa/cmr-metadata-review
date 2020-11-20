@@ -20,7 +20,7 @@ module UmmcToIsoMendsHelper
   def getISOMendsFieldText(field)
     value = ISO_MENDS_FIELD_MAPPINGS[field]
     return "\nNo field mapping found." if value.blank?
-    "\n\n#{ISO_MENDS_FIELD_MAPPINGS[field]}\n\n".gsub(/\[\=+\>/,"")
+    "\n\n#{ISO_MENDS_FIELD_MAPPINGS[field]}\n\n"
   end
 
 
