@@ -1,28 +1,26 @@
 module UmmcToIsoSmapHelper
-  def getISOSmapFieldMapping(ummJsonField)
+  def getISOSmapFieldMappingSections(ummJsonField)
     value = ISO_SMAP_FIELD_MAPPINGS[ummJsonField]
-    if value.blank?
-      value = 'No field mapping found.'
-    end
-
+    value = 'No field mapping found.' if value.blank?
+    sections = [ummJsonField]
     if value.sub(' ', '').start_with? '[=>', '[==>'
       field = ummJsonField
-      while (true)
+      loop do
         pos = field.rindex('/')
-        if pos.nil?
-          break
-        end
-        parent_field = ummJsonField[0...pos]
-        parent_value = ISO_SMAP_FIELD_MAPPINGS[parent_field]
-        unless parent_value.nil?
-          value = parent_value + "
-          " + value.strip
-        end
+        break if pos.nil?
+        parent_field = field[0...pos]
+        value = ISO_SMAP_FIELD_MAPPINGS[parent_field]
+        sections << parent_field unless value.nil?
         field = parent_field
       end
     end
-    value
+    sections.reverse!
   end
+
+  def getISOSmapFieldText(field)
+    "\n\n#{ISO_SMAP_FIELD_MAPPINGS[field]}\n\n".gsub(/\[\=+\>/,"")
+  end
+
   ISO_SMAP_FIELD_MAPPINGS = {
       "MetadataLanguage" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:language/gco:CharacterString
 with
@@ -57,10 +55,12 @@ and
 [=> gmd:authority/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString
 and
 [=>gmd:authority/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode codeList=\"https://cdn.earthdata.nasa.gov/iso/resources/Codelist/gmxCodelists.xml#CI_RoleCode\" codeListValue=\"\"  = authority",
-      "DOI/DOI" => "[=> gmd:code/gco:CharacterString
+      "DOI/DOI" => "/gmd:DS_Series/gmd:seriesMetadata/gmi:MI_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/ [=>
+[=> gmd:code/gco:CharacterString
 and
 [=> gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.doi
-[=> gmd:description/gco:CharacterString  contains DOI",
+and
+[=> gmd:description/gco:CharacterString contains DOI",
       "DOI/MissingReason" => "[=> gmd:code nilReason=\"inapplicable\"
 and
 [=> gmd:codeSpace/gco:CharacterString = gov.nasa.esdis.umm.doi
