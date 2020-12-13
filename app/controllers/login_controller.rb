@@ -7,6 +7,7 @@ class LoginController < Devise::OmniauthCallbacksController
 
       instance = UserSingleton.instance
       instance.current_user = @user
+      Rails.logger.info("Google Analytics - Users #{@user.uid} from provider/role #{@user.role}")
     rescue Cmr::CmrError => e
       flash.notice = e.message
       redirect_to root_path and return
