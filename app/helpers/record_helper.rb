@@ -1,5 +1,26 @@
 module RecordHelper
 
+
+  # If the specified string contains a quote (") will remove it from the string
+  def remove_quotes_from_value!(v)
+    if v.instance_of? String
+      v.delete!('"')
+    end
+  end
+
+  # This is based on rails 6, deep_transform_values!
+  # This will remove quotes(") from values in the hash, as when converting to json, the value's can't have quotes in them.
+  def remove_quotes_from_all_values!(object)
+    case object
+    when Hash
+      object.transform_values! { |value| remove_quotes_from_all_values!(value) }
+    when Array
+      object.map! { |e| remove_quotes_from_all_values!(e) }
+    else
+      remove_quotes_from_value!(object)
+    end
+  end
+
   def daac_from_concept_id(concept_id)
     index = concept_id.rindex('-')
     return concept_id[(index+1)..-1] unless index.nil?
