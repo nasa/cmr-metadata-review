@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: [:urs]
+  devise :timeoutable, :omniauthable, omniauth_providers: [:urs]
 
   has_many :ingests
   has_many :comments
