@@ -2,11 +2,12 @@ module RecordHelper
 
 
   # If the specified string contains a quote (") will remove it from the string
-  def remove_quotes_from_value!(v)
+  def remove_quotes_from_value(v)
     if v.instance_of? String
-      v.delete!('"')
+      v.delete('"')
+    else
+      v
     end
-    v
   end
 
   # This is based on rails 6, deep_transform_values!
@@ -18,7 +19,7 @@ module RecordHelper
     when Array
       object.map! { |e| remove_quotes_from_all_values!(e) }
     else
-      remove_quotes_from_value!(object)
+      remove_quotes_from_value(object)
     end
   end
 
