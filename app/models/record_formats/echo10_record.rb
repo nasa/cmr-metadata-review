@@ -5,6 +5,7 @@
 module RecordFormats
   module Echo10Record
     include RecordFormats::Echo10Fields
+    include RecordHelper
 
     LONG_NAME_FIELD = "LongName"
 
@@ -77,25 +78,26 @@ module RecordFormats
       if raw_data.nil?
         raw_data = get_raw_data
       end
-      raw_data.each { |key, value|
-        if value.instance_of? String
-          value.gsub!('"', '')
-        end
-      }
 
-      #escaping json for passing to python
-      # https://stackoverflow.com/questions/28356308/escaping-single-quotes-for-shell
+      remove_quotes_from_all_values!(raw_data)
       record_json = raw_data.to_json
-      record_json.gsub!("'", "'\\\\''")
 
       #running collection script in python
       #W option to silence warnings
+      script_results = ""
       if collection?
-        script_results = `python -W ignore lib/CollectionChecker.py '#{record_json}'  `
+        Tempfile.create do |file|
+          file << record_json
+          file.flush
+          script_results = `python -W ignore lib/CollectionChecker.py #{file.path}`
+        end
       else
-        script_results = `python -W ignore lib/GranuleChecker.py '#{record_json}'`
+        Tempfile.create do |file|
+          file << record_json
+          file.flush
+          script_results = `python -W ignore lib/GranuleChecker.py #{file.path}`
+        end
       end
-
 
       unless script_results.to_s.empty?
         comment_hash = JSON.parse(script_results)
