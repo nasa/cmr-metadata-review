@@ -22,7 +22,6 @@ class UserSingleton
     singleton = Thread.current['user-singleton']
     unless singleton.nil?
       user = singleton.current_user
-      puts "clearing #{user.uid}" unless user.nil?
     end
     Thread.current['user-singleton'] = nil
   end
