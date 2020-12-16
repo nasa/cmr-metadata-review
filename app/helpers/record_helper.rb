@@ -6,6 +6,7 @@ module RecordHelper
     if v.instance_of? String
       v.delete!('"')
     end
+    v
   end
 
   # This is based on rails 6, deep_transform_values!
