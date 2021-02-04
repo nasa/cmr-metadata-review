@@ -10,6 +10,28 @@ class CollectionsControllerTest < ActionController::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
+  describe 'GET #search' do
+    it 'it returns modis results' do
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?page_size=10&page_num=1&provider=ORNL_DAAC&provider=ASDC&provider=LAADS&provider=GES_DISC&provider=GHRC&provider=SEDAC&provider=ASF&provider=LPDAAC_ECS&provider=LANCEMODIS&provider=NSIDC&provider=OB_DAAC&provider=CDDIS&provider=PODAAC&provider=OMINRT&provider=ARCTEST&provider=LARC_ASDC&provider=LARC&provider=NSIDCV0&provider=NSIDC_ECS&provider=GHRC&provider=GHRC_CLOUD&provider=LANCEAMSR2&keyword=*modis*').
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
+
+      get :search, params: { provider: 'DAAC: ANY', free_text: 'modis', curr_page:1 }
+      count = assigns(:collection_count)
+      search_iterator = assigns(:search_iterator)
+      assert(113, count)
+      assert('C1200019523-OB_DAAC', search_iterator[0]['concept_id'])
+    end
+  end
+
   describe "GET #show" do
     it "loads the correct collection on show" do
       sign_in(user)

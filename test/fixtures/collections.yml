@@ -77,4 +77,8 @@ iso_collection2:
   id: 16
   concept_id: "iso_collection_test_2"
   short_name: "Test Iso Collection 2"
+report_collection:
+  id: 17
+  concept_id: "C1200019523-OB_DAAC"
+  short_name: "MODISA_L3m_CHL"
 

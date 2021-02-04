@@ -322,3 +322,14 @@ iso_collection_2_data_language:
   flag: []
   recommendation: "ok"
 
+report_record_data:
+  id: 40
+  record_id: 14
+  column_name: "ShortName"
+  value: "MODISA_L3m_CHL"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
