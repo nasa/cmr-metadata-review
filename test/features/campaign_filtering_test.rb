@@ -21,7 +21,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         assert has_no_select?('campaign', with_options: ['TESTCAMP2'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP5'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP6'])
-        assert has_select?('campaign', with_options: ['CAMPAIGN: ANY', 'TESTCAMP3', 'TESTCAMP4'])
+        assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP3', 'TESTCAMP4'])
       end
 
       it 'can see unfiltered records' do
@@ -50,7 +50,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
         describe 'when the user removes the filter' do
           before do
-            select 'CAMPAIGN: ANY', from: 'campaign'
+            select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
@@ -75,7 +75,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         assert has_no_select?('campaign', with_options: ['TESTCAMP2'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP3'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP4'])
-        assert has_select?('campaign', with_options: ['CAMPAIGN: ANY', 'TESTCAMP5', 'TESTCAMP6'])
+        assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP5', 'TESTCAMP6'])
       end
 
       it 'can see unfiltered records' do
@@ -104,7 +104,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
         describe 'when the user removes the filter' do
           before do
-            select 'CAMPAIGN: ANY', from: 'campaign'
+            select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
@@ -128,7 +128,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
         assert has_no_select?('campaign', with_options: ['TESTCAMP4'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP5'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP6'])
-        assert has_select?('campaign', with_options: ['CAMPAIGN: ANY', 'TESTCAMP1', 'TESTCAMP2'])
+        assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP1', 'TESTCAMP2'])
       end
 
       it 'can see unfiltered records' do
@@ -151,7 +151,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
         describe 'when the user removes the filter' do
           before do
-            select 'CAMPAIGN: ANY', from: 'campaign'
+            select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
@@ -177,7 +177,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
       assert has_no_select?('campaign', with_options: ['TESTCAMP4'])
       assert has_no_select?('campaign', with_options: ['TESTCAMP5'])
       assert has_no_select?('campaign', with_options: ['TESTCAMP6'])
-      assert has_select?('campaign', with_options: ['CAMPAIGN: ANY', 'TESTCAMP1'])
+      assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP1'])
     end
 
     it 'can see unfiltered records' do
@@ -200,7 +200,7 @@ class CanShowCollectionsTest < Capybara::Rails::TestCase
 
       describe 'when the user removes the filter' do
         before do
-          select 'CAMPAIGN: ANY', from: 'campaign'
+          select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
           click_on 'Filter'
         end
 

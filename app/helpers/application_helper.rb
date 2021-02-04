@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   ANY_DAAC_KEYWORD = 'DAAC: ANY'
-  ANY_CAMPAIGN_KEYWORD = 'CAMPAIGN: ANY'
+  ANY_CAMPAIGN_KEYWORD = 'CAMPAIGN/PROJECT: ANY'
   SELECT_DAAC = 'Select DAAC'
 
   #providers are specified to identify only the records within EOSDIS which ARC team curates
