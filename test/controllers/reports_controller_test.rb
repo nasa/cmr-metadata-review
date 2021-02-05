@@ -22,7 +22,9 @@ class ReportsControllerTest < ActionController::TestCase
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent'=>'Ruby'
           }).
-        to_return(status: 200, body: get_stub('modis-report-search.json'), headers: {})
+        to_return(status: 200, body: get_stub('modis-report-search.json'), headers: {
+          'content-type' => 'application/json;charset=utf-8'
+        })
 
       get :search, params: { provider: 'OB_DAAC', free_text: 'modis', curr_page:1 }
       count = assigns(:collection_count)

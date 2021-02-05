@@ -582,13 +582,11 @@ class Cmr
 
       begin
         raw_json = Cmr.cmr_request(query_text).parsed_response
-        raw_json = JSON.parse(raw_json)
         search_results = raw_json["feed"]["entry"]
 
         #rerun query with first wildcard removed
         if search_results.length == 0
           raw_json = Cmr.cmr_request(query_text_first_char).parsed_response
-          raw_json = JSON.parse(raw_json)
           search_results = raw_json["feed"]["entry"]
         end
       rescue => e
