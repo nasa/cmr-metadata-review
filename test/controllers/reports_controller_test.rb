@@ -4,9 +4,36 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class ReportsControllerTest < ActionController::TestCase
   include OmniauthMacros
 
+  let(:user) { User.find_by_email("abaker@element84.com") }
+
   setup do
     @cmr_base_url = Cmr.get_cmr_base_url
   end
+
+  describe 'GET #search' do
+    it 'it returns modis results' do
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/collections.json?keyword=?*modis?*&page_num=1&page_size=2000&provider=OB_DAAC').
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('modis-report-search.json'), headers: {
+          'content-type' => 'application/json;charset=utf-8'
+        })
+
+      get :search, params: { provider: 'OB_DAAC', free_text: 'modis', curr_page:1 }
+      count = assigns(:collection_count)
+      search_iterator = assigns(:search_iterator)
+      assert(1, count)
+      assert('C1200019523-OB_DAAC', search_iterator[0]['concept_id'])
+    end
+  end
+
 
   describe "GET #home" do  
     it "gets home csv without error" do
