@@ -324,4 +324,14 @@ iso_smap_collection_record:
   native_format: "iso-smap"
   associated_granule_value: 39
   daac: PODAAC
+report_collection_record:
+  id: 44
+  recordable_id: 17
+  recordable_type: "Collection"
+  revision_id: "1"
+  state: "in_daac_review"
+  format: "echo10"
+  native_format: "echo10"
+  daac: OB_DAAC
+
     
