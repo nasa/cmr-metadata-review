@@ -12,8 +12,8 @@
       <% end %>
 
       <div class="record_filters__select">
-        <%= label_tag(:campaign) %>
-        <%= select_tag(:campaign, options_for_select(campaign_select_list(form: path_for_form), selected: params[:campaign])) %>
+        <span style="font-weight: bold">Campaign/Project</span>
+        <%= select_tag(:campaign, options_for_select(campaign_select_list(form: path_for_form), selected: params[:campaign]), style: "width:190px") %>
       </div>
       <div class="record_filters__select">
         <label for="freetext">Freetext</label>
