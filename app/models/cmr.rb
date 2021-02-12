@@ -690,7 +690,8 @@ class Cmr
                                                   'provider' => daac })
     end
 
-    total_results = Cmr.cmr_request(url)
+
+    total_results = Cmr.cmr_request(url).parsed_response
     begin
       results_hash = Hash.from_xml(total_results)['results']
     rescue
