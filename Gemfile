@@ -41,7 +41,7 @@ gem 'ruby-progressbar'
 
 group :test do
   gem 'minitest-spec-rails'
-  gem 'webmock', '~>3.5.0'
+  gem 'webmock'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
   gem 'minitest-rails-capybara'
