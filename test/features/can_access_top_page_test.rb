@@ -10,35 +10,13 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       mock_normal_edl_user
       Rails.application.env_config["devise.mapping"] = Devise.mappings[:user] # If using Devise
       Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:urs]
-
-      stub_urs_access('normaluser', 'accesstoken', 'refreshtoken')
-      stub_urs_access('existingdeviseuser', 'accesstoken', 'refreshtoken')
-      stub_urs_access('newdeviseuser', 'accesstoken', 'refreshtoken')
-
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
-        with(
-          headers: {
-            'Accept' => '*/*',
-            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Echo-Token' => 'accesstoken:clientid',
-            'User-Agent' => 'Faraday v0.15.3'
-          }).
-        to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"}, {"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
     end
 
     describe "access top page" do
       it "can maps an EDL user to Devise user" do
         mock_existing_devise_user
-
-        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=existingdeviseuser").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('existingdeviseuser').returns(['admin',nil])
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
@@ -54,15 +32,8 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can create a new user from an existing EDL user" do
         mock_new_devise_user
 
-        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=newdeviseuser").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('newdeviseuser').returns(['admin',nil])
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
@@ -78,15 +49,8 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can sign in user with oauth account with admin privileges" do
         mock_normal_edl_user
 
-        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301611-CMR","identity_type":"System","name":"System - DASHBOARD_ADMIN","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301611-CMR"}]}', headers: {})
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['admin',nil])
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
@@ -104,15 +68,8 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can sign in user with oauth account with arc curator privileges" do
         mock_normal_edl_user
 
-        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301610-CMR","identity_type":"System","name":"System - DASHBOARD_ARC_CURATOR","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301610-CMR"}]}', headers: {})
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['arc_curator',nil])
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
@@ -129,26 +86,9 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
 
       it "can sign in user with oauth account with daac curator privileges" do
         mock_normal_edl_user
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','LP_DAAC'])
 
-        stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls/ACL1200303063-CMR").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"group_permissions":[{"group_id":"AG1200303062-LARC","permissions":["create"]},{"group_id":"AG1200301542-CMR","permissions":["create"]},{"group_id":"AG1200303012-CMR","permissions":["create"]}],"provider_identity":{"target":"DASHBOARD_DAAC_CURATOR","provider_id":"LARC"}}', headers: {})
-
-        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
-          with(
-            headers: {
-              'Accept' => '*/*',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Echo-Token' => 'accesstoken:clientid',
-              'User-Agent' => 'Faraday v0.15.3'
-            }).
-          to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":3,"concept_id":"ACL1200303063-CMR","identity_type":"Provider","name":"Provider - LARC - DASHBOARD_DAAC_CURATOR","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200303063-CMR"}]}', headers: {})
         visit '/'
         page.must_have_content("Login with Earthdata Login")
         click_link "Login"
