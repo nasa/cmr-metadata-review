@@ -625,6 +625,73 @@ class Cmr
     return total_search_iterator, total_search_iterator.length
   end
 
+  def self.get_collections(provider, max_page_size = 2000)
+      page_no = 1
+      no_pages = 1
+      concept_ids = []
+
+      user = UserSingleton.instance
+      current_user = user.current_user
+
+      conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
+        faraday.headers['Echo-Token'] = user.echo_token unless isTestUser(current_user)
+        faraday.response :logger
+        faraday.adapter Faraday.default_adapter
+      end
+
+      while  page_no <= no_pages
+        query = "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}"
+        unless provider.nil?
+          query += "&provider=#{provider}"
+        end
+        response = conn.get query
+        headers = response.headers
+        if page_no == 1
+          no_hits = headers['cmr-hits'].to_i
+          no_pages = (no_hits / max_page_size) + 1
+        end
+        dict = JSON.parse(response.body)
+        items = dict['items']
+        items.each do |item|
+          meta = item['meta']
+          concept_ids << meta['concept-id']
+        end
+
+        page_no += 1
+      end
+    concept_ids
+  end
+
+def self.json_collection_search(free_text, provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 10)
+  search_iterator = []
+
+  if free_text
+    query_text = Cmr.api_url("collections", "json", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+
+    #cmr does not accept first character wildcards for some reason, so remove char and retry query
+    query_text_first_char = Cmr.api_url("collections", "json", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
+    unless provider == ANY_DAAC_KEYWORD
+      query_text = query_text + "&provider=#{provider}"
+      query_text_first_char = query_text_first_char + "&provider=#{provider}"
+    end
+
+    begin
+      raw_json = Cmr.cmr_request(query_text).parsed_response
+      search_results = raw_json["feed"]["entry"]
+
+      #rerun query with first wildcard removed
+      if search_results.length == 0
+        raw_json = Cmr.cmr_request(query_text_first_char).parsed_response
+        search_results = raw_json["feed"]["entry"]
+      end
+    rescue => e
+      raise CmrError, e.message
+    end
+  end
+
+  return search_results, search_results.length
+end
+
 
   def self.format_added_records_list(list)
     if list.empty?
