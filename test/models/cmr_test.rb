@@ -17,8 +17,7 @@ class CmrTest < ActiveSupport::TestCase
       assert_equal("CARTESIAN", collection["Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem"])
     end
 
-    it "returns all concept_ids for a given provider from CMR api" do
-
+    it "returns all concept_id, revision_id for a given provider from CMR api" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00-04:00").
         with(
           headers: {
@@ -38,12 +37,14 @@ class CmrTest < ActiveSupport::TestCase
         to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg2.json"), headers: {"content-type" => "application/json;charset=utf-8"})
 
       collections = Cmr.get_collections('LARC', page_size=30)
-      puts("collections=#{collections[0]}")
+      (concept_id, revision_id) = collections[0]
+      assert_equal(concept_id, 'C28109-LARC')
+      assert_equal(revision_id, 12)
       assert_equal(32, collections.length)
     end
 
-    it "returns umm-json collection from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C28109-LARC").
+    it "returns umm-json collection with revision id from CMR api" do
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC/12.umm_json").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -51,7 +52,20 @@ class CmrTest < ActiveSupport::TestCase
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
-      collection = Cmr.get_collection("C28109-LARC", data_format='umm_json')
+      collection = Cmr.get_raw_concept("C28109-LARC", 12, 'umm_json')
+      assert_equal(collection['ShortName'],'MISBR')
+    end
+
+    it "returns umm-json collection without revision id from CMR api" do
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC.umm_json").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
+      collection = Cmr.get_raw_concept("C28109-LARC", nil, 'umm_json')
       assert_equal(collection['ShortName'],'MISBR')
     end
 
