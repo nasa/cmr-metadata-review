@@ -661,37 +661,6 @@ class Cmr
     concept_ids
   end
 
-def self.json_collection_search(free_text, provider = ANY_DAAC_KEYWORD, curr_page = "1", page_size = 10)
-  search_iterator = []
-
-  if free_text
-    query_text = Cmr.api_url("collections", "json", {"keyword" => "?*#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-
-    #cmr does not accept first character wildcards for some reason, so remove char and retry query
-    query_text_first_char = Cmr.api_url("collections", "json", {"keyword" => "#{free_text}?*", "page_size" => page_size, "page_num" => curr_page})
-    unless provider == ANY_DAAC_KEYWORD
-      query_text = query_text + "&provider=#{provider}"
-      query_text_first_char = query_text_first_char + "&provider=#{provider}"
-    end
-
-    begin
-      raw_json = Cmr.cmr_request(query_text).parsed_response
-      search_results = raw_json["feed"]["entry"]
-
-      #rerun query with first wildcard removed
-      if search_results.length == 0
-        raw_json = Cmr.cmr_request(query_text_first_char).parsed_response
-        search_results = raw_json["feed"]["entry"]
-      end
-    rescue => e
-      raise CmrError, e.message
-    end
-  end
-
-  return search_results, search_results.length
-end
-
-
   def self.format_added_records_list(list)
     if list.empty?
       return "No New Records Were Found"
