@@ -46,11 +46,6 @@ class Cmr
     end
   end
 
-  def self.get_raw_concept(concept_id, revision_id = nil, format = nil)
-    url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}#{revision_id.nil? ? "" : "/#{revision_id}"}#{format.nil? ? "" : ".#{format}"}"
-    convert_to_hash(format, Cmr.cmr_request(url).body)
-  end
-
   # ====Params
   # User object
   # ====Returns
@@ -621,7 +616,15 @@ class Cmr
     return total_search_iterator, total_search_iterator.length
   end
 
-  def self.get_collections(provider, max_page_size = 2000)
+
+  # Given the specified concept id, revision id, format fetch the concept from CMR and returns the concept as a hash.
+  def self.get_concept(concept_id, revision_id = nil, format = nil)
+    url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}#{revision_id.nil? ? "" : "/#{revision_id}"}#{format.nil? ? "" : ".#{format}"}"
+    convert_to_hash(format, Cmr.cmr_request(url).body)
+  end
+
+  # Given the specified provider and max_page_size, fetch from CMR and return concept_ids as a list of tuples (concept_id, revision_id)
+  def self.get_concepts(provider, max_page_size = 2000)
       page_no = 1
       no_pages = 1
       concept_ids = []
