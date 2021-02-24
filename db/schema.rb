@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_105257) do
+ActiveRecord::Schema.define(version: 2021_02_24_213723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,20 @@ ActiveRecord::Schema.define(version: 2020_11_02_105257) do
     t.datetime "date_ingested", null: false
     t.index ["record_id"], name: "index_ingests_on_record_id"
     t.index ["user_id"], name: "index_ingests_on_user_id"
+  end
+
+  create_table "invalid_keywords", force: :cascade do |t|
+    t.datetime "last_updated"
+    t.string "provider_id"
+    t.string "concept_id"
+    t.integer "revision_id"
+    t.string "short_name"
+    t.string "version"
+    t.string "invalid_keyword_path"
+    t.string "valid_keyword_path"
+    t.string "ummc_field"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "record_data", id: :serial, force: :cascade do |t|
