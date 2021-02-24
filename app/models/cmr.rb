@@ -46,13 +46,9 @@ class Cmr
     end
   end
 
-  def self.get_raw_concept(concept_id, revision_id = nil)
-    url = if revision_id.nil?
-            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}"
-          else
-            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}/#{revision_id}"
-          end
-    Cmr.cmr_request(url).body
+  def self.get_raw_concept(concept_id, revision_id = nil, format = nil)
+    url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}#{revision_id.nil? ? "" : "/#{revision_id}"}#{format.nil? ? "" : ".#{format}"}"
+    convert_to_hash(format, Cmr.cmr_request(url).body)
   end
 
   # ====Params
@@ -654,7 +650,7 @@ class Cmr
         items = dict['items']
         items.each do |item|
           meta = item['meta']
-          concept_ids << meta['concept-id']
+          concept_ids << [meta['concept-id'],meta['revision-id']]
         end
 
         page_no += 1
