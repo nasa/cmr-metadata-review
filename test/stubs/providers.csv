@@ -1,0 +1,8 @@
+"Keyword Version: 9.1.5","Revision: 2021-02-12 09:01:12","Timestamp: 2021-02-25 10:03:26","Terms Of Use: https://cdn.earthdata.nasa.gov/conduit/upload/5182/KeywordsCommunityGuide_Baseline_v1_SIGNED_FINAL.pdf","The most up to date XML representations can be found here: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=xml""Case native"
+Bucket_Level0,Bucket_Level1,Bucket_Level2,Bucket_Level3,Short_Name,Long_Name,Data_Center_URL,UUID
+"ACADEMIC","GERMANY","","","DE/DLR","German Aerospace Center (DLR)","","2f9d7c12-c02d-41fb-a168-4d91794187f7"
+"ACADEMIC","GERMANY","","","","","","d780c4ea-4b39-4fda-a0d3-4f5bee42530d"
+"ACADEMIC","","","","AALTO-AM","Aalto University, School of Engineering, Department of Applied Mechanics","","28b4870a-e36c-4f9a-8810-5cf6d73c5f66"
+"ACADEMIC","","","","AALTO","Aalto University","","d50d54e6-6ea5-4579-bbc7-98afffd8b443"
+"ACADEMIC","","","","AARHUS-HYDRO","Hydrogeophysics Group, Aarhus University","","bd197c6d-8612-42c2-a818-1975c4911e45"
+"ACADEMIC","","","","ABDN/GEOG/CMCZM","Centre for Marine and Coastal Zone Management, Department of Geography, University of Aberdeen","http://www.abdn.ac.uk/cmczm/","629e2467-b1af-4b63-a642-2898d4b67c4c"
