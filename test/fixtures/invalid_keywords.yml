@@ -2,7 +2,7 @@
 
 one:
   provider_id: LARC
-  concept_id: MyString
+  concept_id: concept_id1
   revision_id: 1
   short_name: MyString
   version: MyString
@@ -12,7 +12,7 @@ one:
 
 two:
   provider_id: NSIDC
-  concept_id: MyString
+  concept_id: concept_id2
   revision_id: 1
   short_name: MyString
   version: MyString
