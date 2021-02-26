@@ -21,6 +21,14 @@ class InvalidKeywordTest < ActiveSupport::TestCase
     InvalidKeyword.remove_all_invalid_keywords("LARC")
     all_invalid_keywords = InvalidKeyword.all
     after_count = all_invalid_keywords.length
-    assert(before_count-1, after_count)
+    assert_equal(before_count-1, after_count)
+  end
+  it "remove invalid keywords by concept ids" do
+    all_invalid_keywords = InvalidKeyword.all
+    before_count = all_invalid_keywords.length
+    InvalidKeyword.remove_invalid_keywords(%w(concept_id1 concept_id2))
+    all_invalid_keywords = InvalidKeyword.all
+    after_count = all_invalid_keywords.length
+    assert_equal(before_count-2, after_count)
   end
 end
