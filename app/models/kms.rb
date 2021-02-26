@@ -61,9 +61,8 @@ class Kms
   def download_keywords(scheme)
     keywords = []
     url = get_kms_url(scheme)
-    file_path = "/tmp/#{scheme}.csv"
-    File.write(file_path, open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read)
-    CSV.foreach(file_path, liberal_parsing: true) do |row|
+    download = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
+    CSV.new(download, liberal_parsing: true).each do |row|
       keywords << row
     end
     return keywords[2..keywords.length]
