@@ -46,15 +46,6 @@ class Cmr
     end
   end
 
-  def self.get_raw_concept(concept_id, revision_id = nil)
-    url = if revision_id.nil?
-            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}"
-          else
-            "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}/#{revision_id}"
-          end
-    Cmr.cmr_request(url).body
-  end
-
   # ====Params
   # User object
   # ====Returns
@@ -624,7 +615,6 @@ class Cmr
 
     return total_search_iterator, total_search_iterator.length
   end
-
 
   def self.format_added_records_list(list)
     if list.empty?

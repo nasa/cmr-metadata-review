@@ -1,0 +1,79 @@
+DAACs and ARC can export a CSV report of invalid keywords filtered by CMR Provider Name.
+- Button will be in the top-right header of the In Daac Review Section.   For example, it will say "134 Invalid Keywords Found."\nDownload CSV
+- Clicking the button will download a CSV report.
+- If the provider is a DAAC, it will only produce a report of invalid keywords for that DAAC.
+- If the provider is admin, it will produce a report of invalid keywords for all ARC providers.
+- See application_helper virtual_daac as if the daac is a virtual daac, we may need to pull from multiple providers.
+
+We can create a controller that responds with the CSV.
+  - invalid_keywords_controller.rb model
+  - invalid_keyword.rb model
+        - last_updated
+        - provider_id
+        - concept_id
+        - revision_id
+        - short_name
+        - version
+        - keyword_path
+        - ummc_field
+
+We need to have a route:
+get '/invalid_keywords/csv_report', to: 'invalid_keywords#csv_report'
+
+invalid_keywords_controller.rb
+  csv_report(provider)
+     for each invalid_keyword in that provider (query active record it)
+       generate csv line
+      return all csv lines
+
+The cron, its logic would be:
+
+obj = KeywordChecker()
+   For each scheme in KMS
+      For each keyword that scheme in KMS
+         add keyword to our keyword_path list
+
+  For each provider
+    Transaction
+      Remove all invalid_keyword for provider
+      For each collection in that provider
+          invalid_keywords = obj.get_invalid_keywords(collection)
+          For each invalid_keyword in that collection
+             Add invalid_keyword to model
+    End Transaction and commit
+
+KeywordChecker
+  init
+   For each scheme
+      download csv of all keywords in that scheme
+      For each keyword that scheme
+         add keyword to our keyword_path list
+  get_invalid_keywords(collection):
+    invalid_keyword_paths = []
+    for ummc_field in collection //  Science Keywords, Platforms, Instruments, Projects, Data Centers, Data Format, Processing Level
+      keyword_paths = get_all_keyword_paths(umms_field)
+      for keyword_path in kewywords_path
+         if keyword_path is invalid
+            invalid_keyword_paths << keyword_path
+        end
+      end
+    end
+    return invalid_keyword_paths
+
+invalid_keyword model object:
+   create_invalid_keyword(
+        - last_updated
+        - provider_id
+        - concept_id
+        - revision_id
+        - short_name
+        - version
+        - keyword_path
+        - ummc_field)
+   remove_all_keywords(provider)
+
+cmr.rb
+   get_collection(concept_id, revision_id, format=umm_json) -> dictionary
+   get_collections(provider) -> array of [concept_id, revision_id]
+
+

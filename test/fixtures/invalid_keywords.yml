@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider_id: LARC
+  concept_id: MyString
+  revision_id: 1
+  short_name: MyString
+  version: MyString
+  invalid_keyword_path: MyString
+  valid_keyword_path: MyString
+  ummc_field: MyString
+
+two:
+  provider_id: NSIDC
+  concept_id: MyString
+  revision_id: 1
+  short_name: MyString
+  version: MyString
+  invalid_keyword_path: MyString
+  valid_keyword_path: MyString
+  ummc_field: MyString
