@@ -85,6 +85,9 @@ Rails.application.configure do
   # cmr base url
   config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
 
+  # kms base url
+  config.kms_base_url = 'https://gcmd.sit.earthdata.nasa.gov'
+
   # Google Tag Manager ID for EOSDIS usage stats
   config.tag_manager_id = 'GTM-WNP7MLF'
 

@@ -1,0 +1,235 @@
+{
+  "DataLanguage" : "eng",
+  "AncillaryKeywords" : [ "AIR-SEA", "AIRBORNE", "AIRCRAFT", "AMES", "ATMOSPHERE", "ATMOSPHERIC CIRCULATION", "ATMOSPHERIC EXPERIMENT", "AUSTRALIA", "CLOUD", "COARE", "CONVECTION", "CONVECTIVE", "CROSS TRACK", "DAAC", "DIGITIZER", "EOS", "EOSDIS", "ER-2", "ER2", "FTP", "HDF", "HIGH-ALTITUDE", "IFA", "IMAGE", "IMAGERY", "INFRARED", "INTENSIVE FLUX ARRAY", "INTENSIVE OBSERVING PERIOD", "IOP", "LEVEL-1B", "MAS", "MESOSCALE", "METEOROLOGY", "MODERATE", "MODIS", "NASA", "RADIATION", "RADIOMETER", "REMOTE SENSING", "RESOLUTION", "SCANNER", "SCANNING", "SIMULATOR", "SPECTRAL BANDS", "SPECTROMETER", "SURFACE", "TOGA", "TOGA COARE", "TOWNSVILLE", "VISIBLE", "WARM POOL", "WESTERN PACIFIC OCEAN" ],
+  "CollectionCitations" : [ {
+    "Version" : "1",
+    "Title" : "MODIS Airborne Simulator (MAS) Measurements Taken Onboard the NASA ER-2 During the TOGA COARE Intensive Observing Period",
+    "Creator" : "NASA, TOGA COARE",
+    "Publisher" : "Level 1 and Atmosphere Archive and Distribution System (LAADS)",
+    "OnlineResource" : {
+      "Linkage" : "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/mas/"
+    }
+  } ],
+  "SpatialExtent" : {
+    "GranuleSpatialRepresentation" : "CARTESIAN"
+  },
+  "CollectionProgress" : "COMPLETE",
+  "ScienceKeywords" : [ {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "SPECTRAL/ENGINEERING",
+    "Term" : "INFRARED WAVELENGTHS",
+    "VariableLevel1" : "INFRARED IMAGERY"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "SPECTRAL/ENGINEERING",
+    "Term" : "VISIBLE WAVELENGTHS",
+    "VariableLevel1" : "VISIBLE IMAGERY"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "SPECTRAL/ENGINEERING",
+    "Term" : "VISIBLE WAVELENGTHS",
+    "VariableLevel1" : "VISIBLE IMAGERY TEST"
+  }
+  ],
+  "TemporalExtents" : [ {
+    "EndsAtPresentFlag" : false,
+    "RangeDateTimes" : [ {
+      "BeginningDateTime" : "1993-01-03T00:00:00.000Z",
+      "EndingDateTime" : "1993-03-04T23:59:59.999Z"
+    } ]
+  } ],
+  "ProcessingLevel" : {
+    "Id" : "1B"
+  },
+  "DOI" : {
+    "MissingReason" : "Not Applicable"
+  },
+  "ShortName" : "COARE_cm_er2.mas",
+  "EntryTitle" : "MODIS Airborne Simulator (MAS) Measurements Taken Onboard the NASA ER-2 During the TOGA COARE Intensive Observing Period.",
+  "PublicationReferences" : [ {
+    "Title" : "Technical Memorandum 104594, Vol. 3, MODIS Technical Report  Series, Volume 3, MODIS Airborne Simulator, Level 1B Data User's Guide.",
+    "Author" : "Gumley, L. E., P. A. Hubanks and E.J. Masouka",
+    "PublicationDate" : "1994-01-01T00:00:00.000Z"
+  } ],
+  "ISOTopicCategories" : [ "IMAGERY/BASE MAPS/EARTH COVER" ],
+  "AccessConstraints" : {
+    "Description" : "None"
+  },
+  "MetadataLanguage" : "eng",
+  "RelatedUrls" : [ {
+    "Description" : "Access TOGA Coupled Ocean-Atmosphere Response Experiment images, data, and documentation.",
+    "URLContentType" : "DistributionURL",
+    "Type" : "GET DATA",
+    "URL" : "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/mas/"
+  }, {
+    "Description" : "Access TOGA Coupled Ocean-Atmosphere Response Experiment data from NASA LAADS.",
+    "URLContentType" : "DistributionURL",
+    "Type" : "GET DATA",
+    "Subtype" : "LAADS",
+    "URL" : "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/mas/"
+  }, {
+    "Description" : "MODIS Airborne Simulator development team at NASA Ames Research Center.",
+    "URLContentType" : "CollectionURL",
+    "Type" : "PROJECT HOME PAGE",
+    "URL" : "https://mas.arc.nasa.gov/data/deploy_html/toga_home.html"
+  } ],
+  "DataDates" : [ {
+    "Type" : "CREATE",
+    "Date" : "1993-01-11T00:00:00.000Z"
+  } ],
+  "Abstract" : "The MODIS Airborne Simulator (MAS) Measurements, taken onboard the NASA ER-2 during the TOGA COARE Intensive Observing Period, are available upon request from NASA LAADS. Browse products are available at https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/mas/. The ER-2 navigation data are available from the same site in sub directory nasa_er2/nav. Browse imagery of the data may be viewed from the MAS Homepage at: https://mas.arc.nasa.gov/data/deploy_html/toga_home.html. MAS Level 1B data are available on 8500 density 8mm tape from TOGA COARE User Services at the Goddard DAAC.  Each tape contains all the flight lines for one MAS flight (one day). The number of flight lines varies, but is generally between 10 and 20. The volume of data varies, but is generally 1 to 3 gigabytes per flight.  Detailed instructions for reading MAS tapes is contained in MAS_Usr_Guide.ps. To obtain the data on tape, contact the DAAC User Services Office.  For help with NASA TOGA COARE data residing at the GSFC DAAC, contact Pat Hrubiak at hrubiak@daac.gsfc.nasa.gov. \r\nBACK GROUND: TOGA COARE was a multidisciplinary, international research effort that investigated the scientific phenomena associated with the interaction between the atmosphere and the ocean in the warm pool region of the western Pacific. The field experiment phase of the program took place from 1 November 1992 through 28 February 1993 and involved the deployment of oceanographic ships and buoys, several ship and land based Doppler radars, multiple low and high level aircraft equipped with Doppler radar and other airborne sensors, as well as a variety of surface based instruments for in situ observations. The NASA component of TOGA COARE, while contributing directly to over all COARE objectives, emphasized scientific objectives associated with the Tropical Rainfall Measuring Mission (TRMM) and NASA's cloud and radiation program.\r\nAIRCRAFT INFORMATION: The NASA ER-2 is a high altitude, single pilot aircraft based at Ames Research Center, Moffett Field, CA, and deployed globally in support of a variety of atmospheric research projects. It has a maximum altitude of 70,000 feet (21 km), a range of 3000 nautical miles, a maximum flight duration of 8 hours (nominal 6.5 hours) and a top speed of 410 knots true air speed. The aircraft accommodates about 2700 pounds (1200 kg) of payload.  For the TOGA COARE campaign, the ER-2 payload consisted of a variety of radiometers, a lidar, a conductivity probe and a camera. \r\nFLIGHT INFORMATION: The following table relates MAS data files to ER-2 and DC-8 flight numbers and to the UTC dates for the 13 mission flights of the NASA/TOGA COARE campaign and 2 additional flights of the ER-2 on which MAS data was acquired. The objectives (Obj) column is included for the convenience of the user; the mission objective defaulted to radiation (Rad) unless convection (Con) was forecast in the target area. Date (UTC) ER-2 Flight DC-8 Flight MAS TapeID Obj-Jan 11-12  93-053  93-01-06 93-053 RadJan 17-18 93-054 93-01-07 93-054 Con Jan 18-19 93-055 93-01-08 93-055 Con Jan 25-26 93-056 93-01-09 93-056 RadJan 28-29 93-057 93-057 Jan 31-Feb 1 93-058 93-01-10 93-058 Rad Feb 2 93-059 93-059 Feb 4 93-060 93-01-11 93-060 Con Feb 6 93-01-12 Con Feb 7 93-061 93-061 Feb 8-9 93-062 93-01-13 93-062 Con Feb 10-11 93-063 93-01-14 93-063 Con Feb 17-18 93-01-15 93-064 Con Feb 19-20 93-064 93-064 Feb 20-21 93-065 93-01-16 93-065 Con Feb 22-23 93-066 93-01-17 Con Feb 23-24 93-067 93-01-18 Rad. \r\nINSTRUMENT INFORMATION: The MODIS Airborne Simulator is a visible/infrared imaging radiometer that was mounted, for this campaign, in the right aft wing pod of the ER-2 aircraft. Through cross track scanning to the aircraft direction of flight, the MAS instrument builds a continuous sequence image of the atmosphere surface features under the aircraft. Wavelength channels of the instrument are selected for specific cloud and surface remote sensing applications. Also the channels are those which will be incorporated in measurements by the space borne MODIS instrument. The MAS instrument acquires eleven simultaneous wavelengths with 100 meters or better resolution at the surface. \r\nPrinciples of Operation: The MAS Spectrometer acquires high spatial resolution imagery in the wavelength range 0.55 to 14.3 microns. A total of 50 spectral bands are available in this range, and currently the digitize is configured before each mission to record in any 12 of these bands during flight. For all pre-1994 MAS missions, the 12-channel digitize was configured with four 10-bit channels and seven 8-bit channels. The MAS spectrometer is mated to a scanner sub-assembly which collects image data with an IFOV of 2.5 mrad, giving a ground resolution of 50 meters from 20,000 meters altitude,and a cross track scan width of 85.92 degrees. A 50 channel digitizer which records all 50 spectral bands at 12 bit resolution became operational in January 1995. \r\nDATA ORGANIZATION Data Format: The archive tapes are created by writing each output data file (1 straight-line flight track) to tape in fixed-length blocks of 16384 bytes, in time ascending order. One end-of-file (EOF) mark is written at the end of the data blocks for each file, and an extra EOF is written at the end of the data on the tape.  The last block of each file has good data at the start of the block and unused bytes (filled with null characters) at the end. Information on the length of the file is encoded in the header when the file is created. No file name,protection, or ownership information is written onto the archive tape. All information necessary to identify the file is stored in the file itself.\r\nDocumentation:  In addition to this document, please obtain Volume 3, MODIS Airborne Simulator Level 1B Data Users Guide, resident in this directory in postscript file MAS_Usr_Guide.ps. \r\nBrowse Products: There are 2 GIF image files per flight line, named 93ddd??v.gif and 93ddd??i.gif, where 93 is the year, ddd the Julian day of the flight, ?? the flight line number, and v or i, indicating respectively visible (VIS) or Infrared (IR) imagery. Images from each flight, accompanied by a flight statistics summary file, reside in a sub directory named with the date of the flight (02feb93) under mas/images.",
+  "LocationKeywords" : [ {
+    "Category" : "VERTICAL LOCATION",
+    "Type" : "BOUNDARY LAYER"
+  }, {
+    "Category" : "GEOGRAPHIC REGION",
+    "Type" : "EQUATORIAL"
+  }, {
+    "Category" : "OCEAN",
+    "Type" : "PACIFIC OCEAN"
+  }, {
+    "Category" : "VERTICAL LOCATION",
+    "Type" : "TROPOSPHERE"
+  } ],
+  "MetadataDates" : [ {
+    "Type" : "CREATE",
+    "Date" : "2015-02-24T00:00:00.000Z"
+  }, {
+    "Type" : "UPDATE",
+    "Date" : "2019-11-27T19:06:00.000Z"
+  } ],
+  "Version" : "1",
+  "Projects" : [ {
+    "ShortName" : "TOGA COARE",
+    "LongName" : "TOGA Coupled Ocean Atmosphere Response Experiment"
+  }, {
+    "ShortName" : "WINCE",
+    "LongName" : "Winter Cloud Experiment"
+  } ],
+  "UseConstraints" : {
+    "Description" : {
+      "Description" : "None"
+    }
+  },
+  "ContactPersons" : [ {
+    "Roles" : [ "Technical Contact" ],
+    "LastName" : "LAADS USER SUPPORT TEAM",
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Email",
+        "Value" : "MODAPSUSO@lists.nasa.gov"
+      }, {
+        "Type" : "U.S. toll free",
+        "Value" : "800-596-8132"
+      }, {
+        "Type" : "Fax",
+        "Value" : "301-794-7035"
+      } ],
+      "Addresses" : [ {
+        "StreetAddresses" : [ "LAADS User Support Team", "NASA/GSFC", "Mail Code: 619" ],
+        "City" : "Greenbelt",
+        "StateProvince" : "MD",
+        "PostalCode" : "20771"
+      } ]
+    }
+  }, {
+    "Roles" : [ "Investigator" ],
+    "FirstName" : "DR. MICHAEL",
+    "MiddleName" : "D.",
+    "LastName" : "KING",
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Email",
+        "Value" : "michael.d.king@nasa.gov"
+      }, {
+        "Type" : "Telephone",
+        "Value" : "301-614-5636"
+      }, {
+        "Type" : "Fax",
+        "Value" : "301-614-5620"
+      } ],
+      "Addresses" : [ {
+        "StreetAddresses" : [ "NASA", "Goddard Space Flight Center", "Mailstop 610.0" ],
+        "City" : "Greenbelt",
+        "StateProvince" : "MD",
+        "PostalCode" : "20771"
+      } ]
+    }
+  } ],
+  "CollectionDataType" : "OTHER",
+  "DataCenters" : [ {
+    "Roles" : [ "DISTRIBUTOR" ],
+    "ShortName" : "NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",
+    "LongName" : "L1 and Atmosphere Archive and Distribution System,Biospheric Information Systems Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+    "ContactInformation" : {
+      "RelatedUrls" : [ {
+        "URLContentType" : "DataCenterURL",
+        "Type" : "HOME PAGE",
+        "URL" : "https://ladsweb.modaps.eosdis.nasa.gov/"
+      } ]
+    },
+    "ContactPersons" : [ {
+      "Roles" : [ "Data Center Contact" ],
+      "LastName" : "LAADS USER SUPPORT TEAM",
+      "ContactInformation" : {
+        "ContactMechanisms" : [ {
+          "Type" : "Email",
+          "Value" : "MODAPSUSO@lists.nasa.gov"
+        }, {
+          "Type" : "U.S. toll free",
+          "Value" : "800-596-8132"
+        }, {
+          "Type" : "Fax",
+          "Value" : "301-794-7035"
+        } ],
+        "Addresses" : [ {
+          "StreetAddresses" : [ "LAADS User Support Team", "NASA/GSFC", "Mail Code: 619" ],
+          "City" : "Greenbelt",
+          "StateProvince" : "MD",
+          "PostalCode" : "20771"
+        } ],
+        "RelatedUrls" : [ {
+          "URLContentType" : "DataContactURL",
+          "Type" : "HOME PAGE",
+          "URL" : "https://ladsweb.modaps.eosdis.nasa.gov/"
+        } ]
+      }
+    } ]
+  } ],
+  "Platforms" : [ {
+    "Type" : "Aircraft",
+    "ShortName" : "NASA ER-2",
+    "LongName" : "NASA Earth Resources-2",
+        "Instruments" : [ {
+          "ShortName" : "MAS",
+          "LongName" : "MODIS Airborne Simulator"
+        },
+          {
+            "ShortName" : "CALIOP",
+            "LongName" : "Cloud-Aerosol Lidar with Orthogonal Polarization"
+          },
+          {
+            "ShortName" : "GLAS",
+            "LongName" : "Geoscience Laser Altimeter System"
+          }]
+  } ],
+  "ArchiveAndDistributionInformation" : {
+    "FileArchiveInformation" : [ {
+      "Format" : "ZIP(HDF)",
+      "FormatType" : "Native",
+      "AverageFileSize" : 30.0,
+      "AverageFileSizeUnit" : "MB",
+      "TotalCollectionFileSize" : 6.8,
+      "TotalCollectionFileSizeUnit" : "GB"
+    } ],
+    "FileDistributionInformation" : [ {
+      "Format" : "ZIP(HDF)",
+      "FormatType" : "Native",
+      "AverageFileSize" : 30.0,
+      "AverageFileSizeUnit" : "MB",
+      "TotalCollectionFileSize" : 6.8,
+      "TotalCollectionFileSizeUnit" : "GB",
+      "Fees" : "None"
+    } ]
+  }
+}
