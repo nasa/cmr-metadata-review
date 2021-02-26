@@ -36,21 +36,27 @@ class KmsTest < ActiveSupport::TestCase
     @kms.download_kms_keywords(TEST_SCHEMES)
   end
 
-  describe "kms accessor" do
+  describe "kms accessor test" do
 
     it "download keywords in all schemes" do
       result = @kms.get_keyword_paths('sciencekeywords')
-      assert_equal('EARTH SCIENCE SERVICES|DATA ANALYSIS AND VISUALIZATION|CALIBRATION/VALIDATION', result[1])
+      key = 'EARTH SCIENCE SERVICES|DATA ANALYSIS AND VISUALIZATION|CALIBRATION/VALIDATION'
+      assert_equal(true, result[key])
+      key = 'ATLAS'
       result = @kms.get_keyword_paths('instruments')
-      assert_equal('ATLAS', result[1])
+      assert_equal(true, result[key])
+      key = 'AC-680E'
       result = @kms.get_keyword_paths('platforms')
-      assert_equal('AC-680E', result[2])
+      assert_equal(true, result[key])
+      key = 'AARDDVARK'
       result = @kms.get_keyword_paths('projects')
-      assert_equal('AARDDVARK', result[4])
+      assert_equal(true, result[key])
+      key = 'ABDN/GEOG/CMCZM'
       result = @kms.get_keyword_paths('providers')
-      assert_equal('ABDN/GEOG/CMCZM', result[4])
+      assert_equal(true, result[key])
+      key = '2P'
       result = @kms.get_keyword_paths('ProductLevelId')
-      assert_equal('2P', result[6])
+      assert_equal(true, result[key])
     end
 
     it "get kms base url" do
