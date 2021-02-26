@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_213723) do
+ActiveRecord::Schema.define(version: 2021_02_26_111023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 2021_02_24_213723) do
   end
 
   create_table "invalid_keywords", force: :cascade do |t|
-    t.datetime "last_updated"
     t.string "provider_id"
     t.string "concept_id"
     t.integer "revision_id"
