@@ -2,7 +2,7 @@ require 'test_helper'
 require 'stub_data'
 
 class KmsTest < ActiveSupport::TestCase
-  TEST_SCHEMES = %w[sciencekeywords platforms instruments projects providers ProductLevelId]
+  TEST_SCHEMES = %w[sciencekeywords platforms instruments projects providers ProductLevelId GranuleDataFormat]
   setup do
     kms_base_url = Kms.get_kms_base_url
     stub_header = {
@@ -34,6 +34,10 @@ class KmsTest < ActiveSupport::TestCase
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('ProductLevelId.csv'), headers: {})
 
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/GranuleDataFormat?format=csv").
+        with(headers: stub_header).
+        to_return(status: 200, body: get_stub('granuledataformat.csv'), headers: {})
+
     @kms = Kms.new
     @kms.download_kms_keywords(TEST_SCHEMES)
   end
@@ -58,6 +62,9 @@ class KmsTest < ActiveSupport::TestCase
       assert_equal(true, result[key])
       key = '2P'
       result = @kms.get_keyword_paths('ProductLevelId')
+      assert_equal(true, result[key])
+      key = 'GeoPackage'
+      result = @kms.get_keyword_paths('GranuleDataFormat')
       assert_equal(true, result[key])
     end
 

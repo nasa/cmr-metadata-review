@@ -33,6 +33,10 @@ class KeywordCheckerTest < ActiveSupport::TestCase
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('ProductLevelId.csv'), headers: {})
 
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/GranuleDataFormat?format=csv").
+        with(headers: stub_header).
+        to_return(status: 200, body: get_stub('granuledataformat.csv'), headers: {})
+
     json_record = get_stub('keyword_checker_C1625703857-LAADS.json')
     @record = JSON.parse(json_record)
     @keyword_checker = KeywordChecker.new()
@@ -52,6 +56,8 @@ class KeywordCheckerTest < ActiveSupport::TestCase
       assert_equal('WINCE', keywords[1])
       keywords = @keyword_checker.get_record_keywords(@record, 'ProductLevelId')
       assert_equal('1B', keywords[0])
+      keywords = @keyword_checker.get_record_keywords(@record, 'GranuleDataFormat')
+      assert_equal('ZIP(HDF)', keywords[0])
     end
 
     it 'get invalid keywords' do
@@ -59,6 +65,8 @@ class KeywordCheckerTest < ActiveSupport::TestCase
       assert_equal('EARTH SCIENCE|SPECTRAL/ENGINEERING|VISIBLE WAVELENGTHS|VISIBLE IMAGERY TEST', invalid_keywords[0])
       invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'instruments')
       assert_equal('MAS', invalid_keywords[0])
+      invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'GranuleDataFormat')
+      assert_equal('ZIP(HDF)', invalid_keywords[0])
     end
 
   end

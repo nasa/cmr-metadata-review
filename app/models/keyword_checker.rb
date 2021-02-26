@@ -1,7 +1,7 @@
 require "json"
 
 class KeywordChecker
-  SCHEMES = %w[sciencekeywords platforms instruments projects providers ProductLevelId]
+  SCHEMES = %w[sciencekeywords platforms instruments projects providers ProductLevelId GranuleDataFormat]
   def initialize()
     @kms = Kms.new()
     @kms.download_kms_keywords(SCHEMES)
@@ -30,6 +30,9 @@ class KeywordChecker
       ummc_field = 'DataCenters'
     when 'ProductLevelId'
       ummc_field = 'ProcessingLevel'
+    when 'GranuleDataFormat' #ArchiveAndDistributionInformation/FileArchiveInformation/Format
+      #ArchiveAndDistributionInformation/FileDistributionInformation/Format
+      ummc_field = 'ArchiveAndDistributionInformation'
     end
     return ummc_field
   end
@@ -68,6 +71,11 @@ class KeywordChecker
       record['DataCenters'].each {|dataCenter| keywords << dataCenter['ShortName']} unless record['DataCenters'].nil?
     when 'ProductLevelId'
       keywords << record['ProcessingLevel']['Id'] unless record['ProcessingLevel'].nil?
+    when 'GranuleDataFormat'
+      if !record['ArchiveAndDistributionInformation'].nil?
+        record['ArchiveAndDistributionInformation']['FileArchiveInformation'].each {|fai| keywords << fai['Format']} unless record['ArchiveAndDistributionInformation']['FileArchiveInformation'].nil?
+        record['ArchiveAndDistributionInformation']['FileDistributionInformation'].each {|fdi| keywords << fdi['Format']} unless record['ArchiveAndDistributionInformation']['FileDistributionInformation'].nil?
+      end
     end
     return keywords
   end
