@@ -1,8 +1,7 @@
 class InvalidKeyword < ApplicationRecord
-  def self.create_invalid_keyword(last_updated, provider_id, concept_id, revision_id, short_name, version,
-                             invalid_keyword_path, valid_keyword_path, ummc_field)
+  def self.create_invalid_keyword(provider_id, concept_id, revision_id, short_name, version,
+    invalid_keyword_path, valid_keyword_path, ummc_field)
     keyword = InvalidKeyword.new
-    keyword.last_updated = last_updated
     keyword.provider_id = provider_id
     keyword.concept_id = concept_id
     keyword.revision_id = revision_id
