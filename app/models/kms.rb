@@ -16,9 +16,19 @@ class Kms
     end
   end
 
-  #hash in hash here: path as keys
+  def is_valid_keyword(keyword, scheme)
+    if (!@keyword_paths_dict[scheme].nil?)
+      return @keyword_paths_dict[scheme][keyword]
+    end
+    return false
+  end
+  
   def save_keywords(scheme, keyword_paths)
-    @keyword_paths_dict[scheme] = keyword_paths
+    keyword_hash = {}
+    keyword_paths.each do |kp|
+      keyword_hash[kp] = true
+    end
+    @keyword_paths_dict[scheme] = keyword_hash
   end
 
   def create_keyword_paths(scheme, csv_array)

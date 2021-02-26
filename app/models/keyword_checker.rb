@@ -7,7 +7,7 @@ class KeywordChecker
     @kms.download_kms_keywords(SCHEMES)
   end
 
-  def get_invalid_keywords(json_record)
+  def get_invalid_keywords_for_record(json_record)
     record = JSON.parse(json_record)
     SCHEMES.each do |scheme|
       invalid_keywords = get_invalid_keywords_for_scheme(record, scheme)
@@ -34,10 +34,9 @@ class KeywordChecker
     return ummc_field
   end
 
-  def get_invalid_keywords_for_scheme(record, scheme)
-    valid_keywords = @kms.get_keyword_paths(scheme)
+  def get_invalid_keywords(record, scheme)
     record_keywords = get_record_keywords(record, scheme)
-    invalid_record_keywords = get_unmatched(record_keywords, valid_keywords)
+    invalid_record_keywords = get_unmatched(record_keywords, scheme)
     return invalid_record_keywords
   end
 
@@ -73,12 +72,10 @@ class KeywordChecker
     return keywords
   end
 
-  #move to kms is_valid_keyword
-  def get_unmatched(keywords, valid_keywords)
+  def get_unmatched(keywords, scheme)
     unmatched = []
     keywords.each do |kw|
-      found = valid_keywords.detect {|e| e == kw}
-      unmatched << kw unless found
+      unmatched << kw unless @kms.is_valid_keyword(kw, scheme)
     end
     return unmatched
   end

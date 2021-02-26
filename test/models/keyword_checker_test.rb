@@ -36,7 +36,7 @@ class KeywordCheckerTest < ActiveSupport::TestCase
     @record = JSON.parse(json_record)
     @keyword_checker = KeywordChecker.new()
   end
-  describe 'KeywordChecker' do
+  describe 'KeywordChecker test' do
     it 'get keywords from json' do
       keywords = @keyword_checker.get_record_keywords(@record, 'sciencekeywords')
       assert_equal('EARTH SCIENCE|SPECTRAL/ENGINEERING|VISIBLE WAVELENGTHS|VISIBLE IMAGERY', keywords[1])
@@ -54,17 +54,11 @@ class KeywordCheckerTest < ActiveSupport::TestCase
     end
 
     it 'get invalid keywords' do
-      invalid_keywords = @keyword_checker.get_invalid_keywords_for_scheme(@record, 'sciencekeywords')
+      invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'sciencekeywords')
       assert_equal('EARTH SCIENCE|SPECTRAL/ENGINEERING|VISIBLE WAVELENGTHS|VISIBLE IMAGERY TEST', invalid_keywords[0])
-      invalid_keywords = @keyword_checker.get_invalid_keywords_for_scheme(@record, 'instruments')
+      invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'instruments')
       assert_equal('MAS', invalid_keywords[0])
     end
 
-    it 'get unmatched keywords' do
-      keywords = ['a','b','c','d','e','7']
-      valids = ['k','a','7','c']
-      unmatched = @keyword_checker.get_unmatched(keywords, valids)
-      assert_equal(unmatched, ['b','d','e'])
-    end
   end
 end
