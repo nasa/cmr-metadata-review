@@ -616,13 +616,6 @@ class Cmr
     return total_search_iterator, total_search_iterator.length
   end
 
-
-  # Given the specified concept id, revision id, format fetch the concept from CMR and returns the concept as a hash.
-  def self.get_concept(concept_id, revision_id = nil, format = nil)
-    url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}#{revision_id.nil? ? "" : "/#{revision_id}"}#{format.nil? ? "" : ".#{format}"}"
-    convert_to_hash(format, Cmr.cmr_request(url).body)
-  end
-
   def self.format_added_records_list(list)
     if list.empty?
       return "No New Records Were Found"

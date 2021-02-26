@@ -20,7 +20,13 @@ class CmrSync < ApplicationRecord
     end
   end
 
-  # Given the specified provider and max_page_size, fetch from CMR and return concept_ids as a list of tuples (concept_id, revision_id)
+  # Given the specified concept id, revision id, format fetch the concept from CMR and returns the concept as a hash.
+  def self.get_concept(concept_id, revision_id = nil, format = nil)
+    url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}#{revision_id.nil? ? "" : "/#{revision_id}"}#{format.nil? ? "" : ".#{format}"}"
+    Cmr.convert_to_hash(format, Cmr.cmr_request(url).body)
+  end
+
+  # Given the specified provider and max_page_size, fetch from CMR and return concept_ids as a list of tuples (concept_id, revision_id, short_name, version)
   def self.get_concepts(provider, max_page_size = 2000, updated_since=nil)
     page_no = 1
     no_pages = 1
@@ -56,7 +62,8 @@ class CmrSync < ApplicationRecord
       items = dict['items']
       items.each do |item|
         meta = item['meta']
-        concept_ids << [meta['concept-id'],meta['revision-id']]
+        umm = item['umm']
+        concept_ids << [meta['concept-id'],meta['revision-id'],umm['short-name'],umm['version-id']]
       end
 
       page_no += 1
