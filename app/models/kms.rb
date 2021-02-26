@@ -3,23 +3,6 @@ require 'csv'
 
 class Kms
   include ApplicationHelper
-  # KeywordChecker
-  # init
-  # For each scheme
-  # download csv of all keywords in that scheme
-  # For each keyword that scheme
-  # add keyword to our keyword_path list
-  # get_invalid_keywords(collection):
-  #     invalid_keyword_paths = []
-  # for ummc_field in collection //  Science Keywords, Platforms, Instruments, Projects, Data Centers, Data Format, Processing Level
-  # keyword_paths = get_all_keyword_paths(umms_field)
-  # for keyword_path in kewywords_path
-  #   if keyword_path is invalid
-  #     invalid_keyword_paths << keyword_path
-  #   end
-  # end
-  # end
-  # return invalid_keyword_paths
 
   def initialize
     @keyword_paths_dict = {}
@@ -33,6 +16,7 @@ class Kms
     end
   end
 
+  #hash in hash here: path as keys
   def save_keywords(scheme, keyword_paths)
     @keyword_paths_dict[scheme] = keyword_paths
   end

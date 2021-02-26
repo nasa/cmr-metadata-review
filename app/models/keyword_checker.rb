@@ -15,11 +15,6 @@ class KeywordChecker
     end
   end
 
-  def create_invalid_keyword_report(record, scheme, invalid_keywords)
-    ummc_field = get_ummc_field(scheme)
-    
-  end
-
   def get_ummc_field(scheme)
     ummc_field = ''
     case scheme
@@ -78,6 +73,7 @@ class KeywordChecker
     return keywords
   end
 
+  #move to kms is_valid_keyword
   def get_unmatched(keywords, valid_keywords)
     unmatched = []
     keywords.each do |kw|
