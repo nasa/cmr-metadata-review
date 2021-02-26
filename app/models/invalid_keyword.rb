@@ -13,6 +13,10 @@ class InvalidKeyword < ApplicationRecord
     return keyword
   end
 
+  def self.remove_invalid_keywords(concept_ids)
+    InvalidKeyword.where(concept_id: concept_ids).delete_all
+  end
+
   def self.remove_all_invalid_keywords(provider)
     InvalidKeyword.where(provider_id: provider).delete_all
   end
