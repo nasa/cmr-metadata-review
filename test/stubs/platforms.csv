@@ -1,0 +1,13 @@
+"Keyword Version: 9.1.5","Revision: 2021-02-18 14:03:19","Timestamp: 2021-02-25 11:54:29","Terms Of Use: https://cdn.earthdata.nasa.gov/conduit/upload/5182/KeywordsCommunityGuide_Baseline_v1_SIGNED_FINAL.pdf","The most up to date XML representations can be found here: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=xml""Case native"
+Category,Series_Entity,Short_Name,Long_Name,UUID
+"Aircraft","","A340-600","Airbus A340-600","bab77f95-aa34-42aa-9a12-922d1c9fae63"
+"Aircraft","","AC-500S","Rockwell Aero Commander AC-500S","20d7a6a7-1c69-469b-ac53-92078dcb2a67"
+"Aircraft","","AC-680E","Rockwell Aero Commander AC-680E","3ecc7e27-1cf9-4c7d-817f-557752323560"
+"Aircraft","","AC-690A","Aerocommander aircraft","6fa682b9-c6b5-46ca-971f-b7ecd4bf304d"
+"Aircraft","","AEROSONDE","","6be3bc48-c307-4583-8357-34262cf8f35d"
+"Aircraft","","AIRCRAFT","","8bce0691-74e9-4363-8d1f-d453a318c62b"
+"Aircraft","","ALTUS","","46392889-f6e2-4b06-8f79-87f2ff9d4349"
+"Aircraft","","AS350-B2","Helicopter AS350-B2","50ce4651-516f-4b05-a5e0-864617ec26eb"
+"Aircraft","","AS350-B3","Helicopter AS350-B3","ad1d4887-ac0d-43a0-9e9b-b42172befebc"
+"Aircraft","","AS355-F2","Helicopter AS355-F2","770c3b12-d083-4df9-8b36-27a4786794bb"
+"Aircraft","","B-200","Beechcraft King Air B-200","d6aa2406-0323-43c1-b890-3509ee22784e"
