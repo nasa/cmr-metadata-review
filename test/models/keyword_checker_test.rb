@@ -3,32 +3,33 @@ require 'stub_data'
 
 class KeywordCheckerTest < ActiveSupport::TestCase
   setup do
+    kms_base_url = Kms.get_kms_base_url
     stub_header = {
         'Accept'=>'*/*',
         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         'User-Agent'=>'Ruby'
     }
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/sciencekeywords?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('sciencekeywords.csv'), headers: {})
 
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/platforms?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('platforms.csv'), headers: {})
 
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/instruments?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('instruments.csv'), headers: {})
 
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/projects?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('projects.csv'), headers: {})
 
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/providers?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('providers.csv'), headers: {})
 
-    stub_request(:get, "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/ProductLevelId?format=csv").
+    stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/ProductLevelId?format=csv").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('ProductLevelId.csv'), headers: {})
 
