@@ -22,7 +22,7 @@ class Kms
     end
     return false
   end
-  
+
   def save_keywords(scheme, keyword_paths)
     keyword_hash = {}
     keyword_paths.each do |kp|
@@ -39,8 +39,8 @@ class Kms
       if scheme == 'sciencekeywords'
         for j in 0..i
           if !n[j].blank?
-            path = path + n[j].gsub("\"", '').strip
-            path = path + '|'
+            path += n[j].gsub("\"", '').strip
+            path += '|'
           end
         end
         result << path.chop unless path.blank?
@@ -85,7 +85,7 @@ class Kms
     return -1
   end
 
-  def get_kms_base_url
+  def self.get_kms_base_url
     kms_base_url = Rails.application.config.kms_base_url
     if kms_base_url.nil?
       kms_base_url = 'https://gcmd.earthdata.nasa.gov'
@@ -94,7 +94,7 @@ class Kms
   end
 
   def get_kms_url(scheme)
-    return get_kms_base_url() + "/kms/concepts/concept_scheme/#{scheme}?format=csv"
+    return Kms.get_kms_base_url() + "/kms/concepts/concept_scheme/#{scheme}?format=csv"
   end
 
 end
