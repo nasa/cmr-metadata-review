@@ -624,10 +624,17 @@ class Cmr
   end
 
   # Given the specified provider and max_page_size, fetch from CMR and return concept_ids as a list of tuples (concept_id, revision_id)
-  def self.get_concepts(provider, max_page_size = 2000)
+  def self.get_concepts(provider, max_page_size = 2000, updated_since=nil)
       page_no = 1
       no_pages = 1
       concept_ids = []
+
+      if updated_since.nil?
+        updated_since = '1971-01-01T12:00:00-04:00'
+      else
+        updated_since = updated_since.to_s
+      end
+      puts("datetime=#{DateTime.current.to_s}")
 
       user = UserSingleton.instance
       current_user = user.current_user
