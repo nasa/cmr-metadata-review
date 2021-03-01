@@ -1,0 +1,160 @@
+{
+  "AncillaryKeywords" : [ "Antarctic seaweeds", "molecular systematic", "Phyllophoraceae", "rbcL", "Rhodophyta", "Fildes Peninsula" ],
+  "SpatialExtent" : {
+    "SpatialCoverageType" : "HORIZONTAL",
+    "HorizontalSpatialDomain" : {
+      "Geometry" : {
+        "CoordinateSystem" : "CARTESIAN",
+        "BoundingRectangles" : [ {
+          "WestBoundingCoordinate" : -58.15,
+          "NorthBoundingCoordinate" : -62.03,
+          "EastBoundingCoordinate" : -58.15,
+          "SouthBoundingCoordinate" : -62.03
+        } ]
+      }
+    },
+    "GranuleSpatialRepresentation" : "NO_SPATIAL"
+  },
+  "CollectionProgress" : "NOT PROVIDED",
+  "ScienceKeywords" : [ {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOLOGICAL CLASSIFICATION",
+    "Term" : "PLANTS",
+    "DetailedVariable" : "ALGAE; MORPHOLOGICAL STUDY"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOLOGICAL CLASSIFICATION",
+    "Term" : "PLANTS",
+    "VariableLevel1" : "MACROALGAE (SEAWEEDS)",
+    "VariableLevel2" : "RED ALGAE"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOLOGICAL CLASSIFICATION",
+    "Term" : "PROTISTS",
+    "VariableLevel1" : "MACROALGAE (SEAWEEDS)",
+    "VariableLevel2" : "RED ALGAE"
+  } ],
+  "TemporalExtents" : [ {
+    "RangeDateTimes" : [ {
+      "BeginningDateTime" : "1994-02-04T00:00:00.000Z",
+      "EndingDateTime" : "1995-12-31T23:59:59.999Z"
+    } ]
+  } ],
+  "ProcessingLevel" : {
+    "Id" : "Not provided"
+  },
+  "ShortName" : "001-93_01",
+  "EntryTitle" : "Systematic studies of the Antarctic species of the Phyllophoraceae (Gigartinales, Rhodophyta) based on rbcL sequence analysis",
+  "Quality" : "\n      Methods of samples preparation, DNA extraction, and sequencing protocols were\n      followed and the DNA sequences analyzed as previously described except that PCR\n      settings were set at denaturation  4 min at 94 degrees C, annealing 45 sec at\n      50 degrees C and extension 1 min 30 sec at 72 degrees C, followed by 39 cycles\n      denaturation for 1 min 30 sec at 94 degrees C, annealing 45 sec at 50 degrees\n      F, and extension 2 min at 72 degrees C. Analysis of the data set was restricted\n      to the last 1357 base pairs of the 1467 base-pairs rbcL coding region.\n   ",
+  "ISOTopicCategories" : [ "BIOTA", "OCEANS" ],
+  "AccessConstraints" : {
+    "Description" : "\n      Public Data Access\n   "
+  },
+  "Abstract" : "The taxonomic placement of four antarctic species of the marine red algal\nfamily Phyllophoraceae (Gigartinales) is assessed within a preliminary\nmolecular phylogeny of the family based on direct sequence analysis of the\nchloroplast gene rbcL. Parsimony analysis  of rbcL sequence indicates that\nGymnogongrus antarcticus and Gymnogongrus turquetii cluster in a clade\nconsisting predominantly of southern hemisphere species currently placed in\nGymnogongrus and Ahnfeltiopsis,  whereas Phyllophora ahnfeltioides and\nPhyllophora antarctica cluster in a separate clade that is widely divergent\nfrom the northern hemisphere Phyllophora clade. Result from molecular and\nmorphological data challenge the current taxonommic concept that type of life\nhistory is a phylogenetically valid criterion for recognition of genera in the\nPhyllophoraceae.",
+  "LocationKeywords" : [ {
+    "Category" : "OCEAN",
+    "Type" : "SOUTHERN OCEAN",
+    "Subregion1" : "SOUTH SHETLAND ISLANDS",
+    "DetailedLocation" : "KING GEORGE ISLAND"
+  }, {
+    "Category" : "CONTINENT",
+    "Type" : "ANTARCTICA"
+  }, {
+    "Category" : "GEOGRAPHIC REGION",
+    "Type" : "POLAR"
+  } ],
+  "MetadataDates" : [ {
+    "Date" : "2004-08-05T00:00:00.000Z",
+    "Type" : "CREATE"
+  }, {
+    "Date" : "2015-12-02T00:00:00.000Z",
+    "Type" : "UPDATE"
+  } ],
+  "DirectoryNames" : [ {
+    "ShortName" : "AMD/CL"
+  }, {
+    "ShortName" : "CEOS"
+  }, {
+    "ShortName" : "AMD"
+  } ],
+  "Version" : "Not provided",
+  "UseConstraints" : {
+    "Description" : {
+      "Description" : "\n      Public Data Use\n   "
+    }
+  },
+  "ContactPersons" : [ {
+    "Roles" : [ "Metadata Author" ],
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Email",
+        "Value" : "djorquer@inach.cl"
+      } ],
+      "Addresses" : [ {
+        "StreetAddresses" : [ "Luis Thayer Ojeda 814", "Providencia" ],
+        "City" : "Santiago",
+        "Country" : "Chile"
+      } ]
+    },
+    "FirstName" : "DORIS",
+    "MiddleName" : "NATHALIE",
+    "LastName" : "JORQUERA"
+  }, {
+    "Roles" : [ "Investigator", "Technical Contact" ],
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Fax",
+        "Value" : "6381975"
+      }, {
+        "Type" : "Telephone",
+        "Value" : "6814095 anexo 41"
+      } ],
+      "Addresses" : [ {
+        "StreetAddresses" : [ "Museo Nacional de Historia Natural", "Interior Quinta Normal S/N" ],
+        "City" : "Santiago",
+        "StateProvince" : "Quinta Normal",
+        "Country" : "Chile"
+      } ]
+    },
+    "FirstName" : "MARIA ELIANA",
+    "LastName" : "RAMIREZ"
+  } ],
+  "DataCenters" : [ {
+    "Roles" : [ "ARCHIVER", "DISTRIBUTOR" ],
+    "ShortName" : "CL/INACH/CENDA",
+    "LongName" : "Centro Nacional de Datos Antarticos, Instituto Antartico Chileno, Chile",
+    "Uuid" : "94f6b6bd-f4aa-4b56-9160-3e99bad2de11",
+    "ContactPersons" : [ {
+      "Roles" : [ "Data Center Contact" ],
+      "ContactInformation" : {
+        "ContactMechanisms" : [ {
+          "Type" : "Email",
+          "Value" : "rjana@inach.cl"
+        }, {
+          "Type" : "Fax",
+          "Value" : "++56 /61/ 298149"
+        }, {
+          "Type" : "Telephone",
+          "Value" : "++56 /61/ 298135"
+        } ],
+        "Addresses" : [ {
+          "StreetAddresses" : [ "Plaza Munoz Gamero 1055", "XII Region" ],
+          "City" : "Punta Arenas",
+          "Country" : "Chile"
+        } ]
+      },
+      "FirstName" : "RICARDO",
+      "LastName" : "JANA"
+    } ],
+    "ContactInformation" : {
+      "RelatedUrls" : [ {
+        "URLContentType" : "DataCenterURL",
+        "Type" : "HOME PAGE",
+        "URL" : "http://www.inach.cl/"
+      } ]
+    }
+  } ],
+  "Platforms" : [ {
+    "ShortName" : "GROUND STATIONS"
+  } ]
+}

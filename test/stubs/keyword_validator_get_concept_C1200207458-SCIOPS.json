@@ -1,0 +1,119 @@
+{
+  "DataLanguage" : "eng",
+  "AncillaryKeywords" : [ "IDN_NODE GSFC/NEDRES" ],
+  "SpatialExtent" : {
+    "SpatialCoverageType" : "HORIZONTAL",
+    "HorizontalSpatialDomain" : {
+      "Geometry" : {
+        "CoordinateSystem" : "CARTESIAN",
+        "BoundingRectangles" : [ {
+          "WestBoundingCoordinate" : -125.0,
+          "NorthBoundingCoordinate" : 50.0,
+          "EastBoundingCoordinate" : -65.0,
+          "SouthBoundingCoordinate" : 25.0
+        } ]
+      }
+    },
+    "GranuleSpatialRepresentation" : "NO_SPATIAL"
+  },
+  "CollectionProgress" : "NOT PROVIDED",
+  "ScienceKeywords" : [ {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "ATMOSPHERE",
+    "Term" : "ATMOSPHERIC WATER VAPOR",
+    "VariableLevel1" : "EVAPORATION"
+  } ],
+  "TemporalExtents" : [ {
+    "RangeDateTimes" : [ {
+      "BeginningDateTime" : "1956-01-01T00:00:00.000Z",
+      "EndingDateTime" : "1970-12-30T23:59:59.999Z"
+    } ]
+  } ],
+  "ProcessingLevel" : {
+    "Id" : "Not provided"
+  },
+  "ShortName" : "000501",
+  "EntryTitle" : "Evaporation Atlas for the Contiguous U.S. (1956-1970)",
+  "PublicationReferences" : [ {
+    "PublicationDate" : "1982-01-01T00:00:00.000Z",
+    "OtherReferenceDetails" : "price A07",
+    "Series" : "NOAA Technical Report NWS 33.",
+    "Title" : "Evaporation atlas   for the contiguous 48 United States",
+    "ReportNumber" : "(NTIS order number   PB83-122440",
+    "Publisher" : "NOAA",
+    "Author" : "Farnsworth, Richard K.; and Thompson, Edwin S",
+    "PublicationPlace" : "Washington, DC"
+  } ],
+  "Quality" : "\n      Quality control: Only data from standard installations were used.\n   ",
+  "ISOTopicCategories" : [ "CLIMATOLOGY/METEOROLOGY/ATMOSPHERE" ],
+  "RelatedUrls" : [ {
+    "Description" : "\n         Evaporation Atlas for the Contiguous U.S. (1956-1970)\n      ",
+    "URLContentType" : "DistributionURL",
+    "Type" : "GET DATA",
+    "URL" : "http://www.weather.gov/oh/hdsc/PMP_related_studies/TR33.pdf"
+  } ],
+  "Abstract" : "Maps are presented showing the areal distribution of evaporation in\nthe contiguous 48 states (1) observed from Class A pans from May\nthrough October, (2) estimated for a free water surface (FWS) with\nnegligible heat storage from May through October, and (3) estimated\nfor an FWS for the entire year.  A map is presented of coefficients to\nconvert from pan evaporation to FWS evaporation.  Sources of data,\nanalyses of the maps, and limitations on their use are described.  The\nmaps are printed on a scale of 1/4,800,000.  The data set used\nincluded, at most, 15 years.  The data sets were adjusted to fit a\ncommon base period 1956-1970.  These values are considered a good\nindex to potential evapotranspiration or potential consumptive use.\n\nProcessing: Estimation equations were used when weather conditions\nprevented reliable measurements.\n\nThese data are available in paper copy or microfiche at cost of\nreproduction.",
+  "LocationKeywords" : [ {
+    "Category" : "CONTINENT",
+    "Type" : "NORTH AMERICA",
+    "Subregion1" : "UNITED STATES OF AMERICA"
+  }, {
+    "Category" : "CONTINENT",
+    "Type" : "NORTH AMERICA"
+  }, {
+    "Category" : "GEOGRAPHIC REGION",
+    "Type" : "EQUATORIAL"
+  }, {
+    "Category" : "VERTICAL LOCATION",
+    "Type" : "BOUNDARY LAYER"
+  } ],
+  "MetadataDates" : [ {
+    "Date" : "2015-12-02T00:00:00.000Z",
+    "Type" : "UPDATE"
+  } ],
+  "DirectoryNames" : [ {
+    "ShortName" : "USA/NASA"
+  } ],
+  "Version" : "Not provided",
+  "DataCenters" : [ {
+    "Roles" : [ "ARCHIVER", "DISTRIBUTOR" ],
+    "ShortName" : "DOC/NTIS",
+    "LongName" : "National Technical Information Service, U.S. Department of Commerce",
+    "Uuid" : "e6a0622d-fa6c-48bd-842f-e321d9c6d6fd",
+    "ContactPersons" : [ {
+      "Roles" : [ "Data Center Contact" ],
+      "ContactInformation" : {
+        "ContactMechanisms" : [ {
+          "Type" : "Fax",
+          "Value" : "(703) 321-8547"
+        }, {
+          "Type" : "Fax",
+          "Value" : "(703) 321-9038"
+        }, {
+          "Type" : "Telephone",
+          "Value" : "(703) 487-4650"
+        } ],
+        "Addresses" : [ {
+          "StreetAddresses" : [ "National Technical Information Service (NTIS)", "U.S. Department of Commerce", "5285 Port Royal Road" ],
+          "City" : "Springfield",
+          "StateProvince" : "VA",
+          "Country" : "USA",
+          "PostalCode" : "22161"
+        } ]
+      },
+      "LastName" : "NATIONAL TECHNICAL INFORMATION SERVICE"
+    } ],
+    "ContactInformation" : {
+      "RelatedUrls" : [ {
+        "URLContentType" : "DataCenterURL",
+        "Type" : "HOME PAGE",
+        "URL" : "http://www.ntis.gov/"
+      } ]
+    }
+  } ],
+  "Platforms" : [ {
+    "ShortName" : "GROUND STATIONS"
+  }, {
+    "ShortName" : "METEOROLOGICAL STATIONS"
+  } ]
+}
