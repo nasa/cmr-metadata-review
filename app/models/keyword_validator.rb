@@ -4,7 +4,7 @@ class KeywordValidator
     super
   end
 
-  def validate_keywords(providers = get_providers)
+  def self.validate_keywords(providers = KeywordValidator.get_providers)
     checker = KeywordChecker.new
     updated_since = CmrSync.get_sync_date
     providers.each do |provider|
@@ -32,7 +32,7 @@ class KeywordValidator
     end
   end
 
-  def get_providers
+  def self.get_providers
     return ApplicationHelper::ARC_PROVIDERS
   end
 end
