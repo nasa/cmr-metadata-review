@@ -1,6 +1,6 @@
 class InvalidKeywordsController < ApplicationController
   respond_to :csv
   def csv_report
-    render csv: User.all
+    render csv: InvalidKeyword.all
   end
 end

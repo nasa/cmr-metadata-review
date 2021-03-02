@@ -7,9 +7,11 @@ class KeywordValidator
   def self.validate_keywords(providers = KeywordValidator.get_providers)
     checker = KeywordChecker.new
     updated_since = CmrSync.get_sync_date
+    records_processed = 0
     providers.each do |provider|
       concept_id_compound = CmrSync.get_concepts(provider, 2000, updated_since)
       concept_ids = concept_id_compound.map{|cidc| cidc[0]}
+      records_processed += concept_ids.length
       InvalidKeyword.transaction do
         InvalidKeyword.remove_invalid_keywords(concept_ids)
         concept_id_compound.each do |cidc|
@@ -17,6 +19,7 @@ class KeywordValidator
           revision_id = cidc[1]
           short_name = cidc[2]
           version_id = cidc[3]
+          Rails.logger.info("Processing invalid keywords for #{concept_id} -- #{provider} ")
           doc = CmrSync.get_concept(concept_id, revision_id, 'umm_json')
           KeywordChecker::SCHEMES.each do |scheme|
             invalid_keywords = checker.get_invalid_keywords(doc, scheme)
@@ -30,6 +33,7 @@ class KeywordValidator
         end
       end
     end
+    records_processed
   end
 
   def self.get_providers
