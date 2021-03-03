@@ -1,0 +1,12 @@
+"Keyword Version: 9.1.5","Revision: 2021-02-10 08:10:55","Timestamp: 2021-02-25 10:08:40","Terms Of Use: https://cdn.earthdata.nasa.gov/conduit/upload/5182/KeywordsCommunityGuide_Baseline_v1_SIGNED_FINAL.pdf","The most up to date XML representations can be found here: https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=xml""Case native"
+Category,Class,Type,Subtype,Short_Name,Long_Name,UUID
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","AIRBORNE LASER SCANNER","","ff309a1a-606d-456b-82b6-5b3c182f66ff"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","ATLAS","Advanced Topographic Laser Altimeter System","b3684b4b-4f0b-48aa-8997-e3758fd04155"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","ATM","Airborne Topographic Mapper","c2428a35-a87c-4ec7-aefd-13ff410b3271"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","CALIOP","Cloud-Aerosol Lidar with Orthogonal Polarization","8783344a-b6cb-4905-adab-1ae6281fc83d"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","GEDI","Global Ecosystem Dynamics Investigation","5218fe2e-bea7-4654-bc54-7b9ec5503b60"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","GLAS","Geoscience Laser Altimeter System","57463f12-2a21-49f9-9477-718030d34291"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","HALO","High Altitude Lidar Observatory","0e3c8f3e-c229-4760-b81c-fd0150254aaa"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","LIDAR ALTIMETERS","Light Detection and Ranging Altimeters","6323cb13-3eb8-4cbf-b0c7-eb253dbf5652"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","LVIS-Camera","Digital Mapping Camera paired with LVIS","4fcbd8a9-2cfe-461b-8e3b-f039692fdd10"
+"Earth Remote Sensing Instruments","Active Remote Sensing","Altimeters","Lidar/Laser Altimeters","LVIS-GH","Land, Vegetation, and Ice Sensor - Global Hawk","eec2fe85-bcce-4c42-858a-0c8b5fe96b10"

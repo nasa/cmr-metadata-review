@@ -1,0 +1,53 @@
+{
+  "hits" : 16683,
+  "took" : 16,
+  "items" : [ {
+    "meta" : {
+      "has-variables" : false,
+      "native-id" : "501",
+      "provider-id" : "SCIOPS",
+      "concept-type" : "collection",
+      "granule-count" : 0,
+      "has-temporal-subsetting" : false,
+      "concept-id" : "C1200207458-SCIOPS",
+      "has-spatial-subsetting" : false,
+      "revision-date" : "2016-07-07T16:41:55.856Z",
+      "user-id" : "mmorahan",
+      "deleted" : false,
+      "revision-id" : 1,
+      "has-transforms" : false,
+      "has-formats" : false,
+      "format" : "application/dif+xml"
+    },
+    "umm" : {
+      "entry-title" : "Evaporation Atlas for the Contiguous U.S. (1956-1970)",
+      "entry-id" : "000501",
+      "short-name" : "000501",
+      "version-id" : "Not provided"
+    }
+  }, {
+    "meta" : {
+      "has-variables" : false,
+      "native-id" : "001-93_01",
+      "provider-id" : "SCIOPS",
+      "concept-type" : "collection",
+      "granule-count" : 0,
+      "has-temporal-subsetting" : false,
+      "concept-id" : "C1200208767-SCIOPS",
+      "has-spatial-subsetting" : false,
+      "revision-date" : "2016-07-07T16:48:25.976Z",
+      "user-id" : "mmorahan",
+      "deleted" : false,
+      "revision-id" : 1,
+      "has-transforms" : false,
+      "has-formats" : false,
+      "format" : "application/dif+xml"
+    },
+    "umm" : {
+      "entry-title" : "Systematic studies of the Antarctic species of the Phyllophoraceae (Gigartinales, Rhodophyta) based on rbcL sequence analysis",
+      "entry-id" : "001-93_01",
+      "short-name" : "001-93_01",
+      "version-id" : "Not provided"
+    }
+  } ]
+}
