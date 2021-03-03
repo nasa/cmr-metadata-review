@@ -65,8 +65,7 @@ class KeywordValidatorTest < ActiveSupport::TestCase
   end
   describe 'keyword validator test' do
     it 'validate keyword' do
-      keyword_validator = KeywordValidator.new
-      keyword_validator.validate_keywords(TEST_PROVIDERS)
+      KeywordValidator.validate_keywords(TEST_PROVIDERS)
       assert_equal(InvalidKeyword.all.length, 9)
     end
   end
