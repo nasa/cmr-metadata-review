@@ -17,7 +17,7 @@ class KeywordValidator
     updated_now = Date.new
     records_processed = 0
     providers.each do |provider|
-      Rails.logger.info "Retrieving concepts for #{provider} using #{updated_since.utc.iso8601}"
+      Rails.logger.info "Retrieving concepts for #{provider} using #{updated_since.nil? ? "" : updated_since.utc.iso8601}"
       concept_id_compound = CmrSync.get_concepts(provider, 2000, updated_since)
       concept_ids = concept_id_compound.map{|cidc| cidc[0]}
       records_processed += concept_ids.length
