@@ -28,4 +28,17 @@ class InvalidKeyword < ApplicationRecord
   def self.remove_all_invalid_keywords(provider)
     InvalidKeyword.where(provider_id: provider).delete_all
   end
+
+  def self.to_csv
+    column_names = %w(provider_id concept_id revision_id short_name version ummc_field invalid_keyword_path valid_keyword_path)
+    ordered_names = %w(provider_id concept_id revision_id short_name version ummc_field invalid_keyword_path suggested_keyword)
+    csv_string = CSV.generate do |csv|
+      csv << ordered_names
+      all.find_each do |model|
+        csv << model.attributes.values_at(*column_names)
+      end
+    end
+    csv_string
+  end
+
 end

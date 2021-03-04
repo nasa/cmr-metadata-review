@@ -37,6 +37,7 @@
             <li><%= link_to "Overall Report", reports_home_path %></li>
             <li><%= link_to "Reports By DAAC", reports_provider_path %></li>
             <li><%= link_to "Reports By Selection", reports_search_path %></li>
+            <li><%= link_to "Download CSV of Invalid Keywords", invalid_keywords_csv_report_path(format: :csv, provider: current_user.daac), data: {turbolinks: false} %>
           </ul>
         </li>
 
