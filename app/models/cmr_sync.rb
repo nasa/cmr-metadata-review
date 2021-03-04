@@ -33,7 +33,7 @@ class CmrSync < ApplicationRecord
     concept_ids = []
 
     if updated_since.nil?
-      updated_since = '1971-01-01T12:00:00-04:00'
+      updated_since = '1971-01-01T12:00:00Z'
     else
       updated_since = updated_since.utc.iso8601
     end
