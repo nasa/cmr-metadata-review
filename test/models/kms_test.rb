@@ -70,12 +70,12 @@ class KmsTest < ActiveSupport::TestCase
 
     it "get kms base url" do
       kms_base_url = Kms.get_kms_base_url
-      assert_equal('https://gcmd.sit.earthdata.nasa.gov', kms_base_url)
+      assert_equal('https://gcmd.earthdata.nasa.gov', kms_base_url)
     end
 
     it "get kms url for science keywords" do
       kms_url = @kms.get_kms_url('sciencekeywords')
-      assert_equal('https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv', kms_url)
+      assert_equal('https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv', kms_url)
     end
 
   end

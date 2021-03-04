@@ -51,7 +51,7 @@ Rails.application.configure do
   config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
 
   # cmr base url
-  config.kms_base_url = 'https://gcmd.sit.earthdata.nasa.gov'
+  config.kms_base_url = 'https://gcmd.earthdata.nasa.gov'
 
   config.email_preference_feature_toggle = true
 
