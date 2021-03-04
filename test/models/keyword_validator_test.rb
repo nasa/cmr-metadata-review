@@ -51,7 +51,7 @@ class KeywordValidatorTest < ActiveSupport::TestCase
         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         'User-Agent'=>'Faraday v0.15.3'
     }
-    stub_request(:get, "#{cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T07%3A00%3A00-05%3A00").
+    stub_request(:get, "#{cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T12:00:00Z").
         with(headers: stub_header_faraday).
         to_return(status: 200, body: get_stub('keyword_validator_get_concepts.json'), headers: {})
 
