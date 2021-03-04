@@ -86,10 +86,12 @@ class Kms
   end
 
   def self.get_kms_base_url
-    kms_base_url = Rails.application.config.kms_base_url
-    if kms_base_url.nil?
-      kms_base_url = 'https://gcmd.earthdata.nasa.gov'
-    end
+    # commenting this out because mmt hardware can't access gcmd earthdata on sit.
+    # kms_base_url = Rails.application.config.kms_base_url
+    # if kms_base_url.nil?
+    #   kms_base_url = 'https://gcmd.earthdata.nasa.gov'
+    # end
+    kms_base_url = 'https://gcmd.earthdata.nasa.gov'
     kms_base_url
   end
 
