@@ -21,7 +21,11 @@ class KeywordValidator
       concept_ids = concept_id_compound.map{|cidc| cidc[0]}
       records_processed += concept_ids.length
       InvalidKeyword.transaction do
-        InvalidKeyword.remove_invalid_keywords(concept_ids)
+        if Date.today.on_weekend?
+          InvalidKeyword.remove_all_invalid_keywords(provider)
+        else
+          InvalidKeyword.remove_invalid_keywords(concept_ids)
+        end
         concept_id_compound.each do |cidc|
           concept_id = cidc[0]
           revision_id = cidc[1]
