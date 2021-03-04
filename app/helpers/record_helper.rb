@@ -156,4 +156,13 @@ module RecordHelper
 
     campaign.tr('•', '').split("\n").each(&:strip!)
   end
+
+  def get_concepts(invalid_keywords)
+    concept_ids = []
+    invalid_keywords.each do |keyword|
+      concept_id = keyword.concept_id
+      concept_ids << concept_id unless concept_ids.include? concept_id
+    end
+    concept_ids
+  end
 end

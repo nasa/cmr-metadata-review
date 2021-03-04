@@ -17,58 +17,6 @@ class CmrTest < ActiveSupport::TestCase
       assert_equal("CARTESIAN", collection["Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem"])
     end
 
-    it "returns all concept_id, revision_id for a given provider from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00-04:00").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Faraday v0.15.3'
-          }).
-        to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg1.json"), headers: {"cmr-hits" => 32, "content-type" => "application/json;charset=utf-8"})
-
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=2&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00-04:00").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Faraday v0.15.3'
-          }).
-        to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg2.json"), headers: {"content-type" => "application/json;charset=utf-8"})
-
-      concepts = Cmr.get_concepts('LARC', page_size=30)
-      (concept_id, revision_id) = concepts[0]
-      assert_equal(concept_id, 'C28109-LARC')
-      assert_equal(revision_id, 12)
-      assert_equal(32, concepts.length)
-    end
-
-    it "returns umm-json collection with revision id from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC/12.umm_json").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
-      concept = Cmr.get_concept("C28109-LARC", 12, 'umm_json')
-      assert_equal(concept['ShortName'],'MISBR')
-    end
-
-    it "returns umm-json collection without revision id from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC.umm_json").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
-      concept = Cmr.get_concept("C28109-LARC", nil, 'umm_json')
-      assert_equal(concept['ShortName'],'MISBR')
-    end
-
     it "raises error when concept_id invalid" do
       stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=junk-name").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => '{"errors"=>{"error"=>"Concept-id [junk-name] is not valid."}}', :headers => {"date"=>["Mon, 20 Feb 2017 19:38:25 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["10"], "cmr-request-id"=>["436b50ec-c84a-4180-93fa-9c721087d65b"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
 

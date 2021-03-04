@@ -98,6 +98,18 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         page.wont_have_content("Unreviewed Records:")
       end
 
+      it "it contains the invalid keywords report icon" do
+        mock_normal_edl_user
+        User.any_instance.stubs(:check_if_account_active).returns(true)
+        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','NSIDC'])
+
+        visit '/'
+        page.must_have_content("Login with Earthdata Login")
+        click_link "Login"
+        find('.invalid_keywords_alert_icon').hover
+        page.must_have_content('There are 1 invalid keywords found across 1 collection records')
+      end
+
       it "can handle authentication error" do
         OmniAuth.config.mock_auth[:urs] = :invalid_credentials
         visit '/'

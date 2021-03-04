@@ -4,7 +4,14 @@
 
 <div class="table-backdrop">
   <div class="results-title">
-    <p><strong><%= title %>:</strong></p>
+    <p><strong><%= title %>:</strong>
+      <% if title == "In DAAC Review" && @invalid_keywords.length > 0 %>
+        <span class="invalid_keywords_tooltip">
+          <img class="invalid_keywords_alert_icon" src="<%= asset_path('warning-icon.png') %>"  />
+          <span class="invalid_keywords_tooltiptext">There are <%= @invalid_keywords.length %> invalid keywords found across <%= get_concepts(@invalid_keywords).length %> collection records.   See the Reports Menu to download a CSV of issues found.</span>
+        </span>
+      <% end %>
+    </p>
   </div>
 
   <!-- Todo: Verify AuthenticityToken issue is fixed in RAILS 6.0 -->
