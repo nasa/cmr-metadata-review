@@ -35,7 +35,7 @@ class CmrSync < ApplicationRecord
     if updated_since.nil?
       updated_since = '1971-01-01T12:00:00-04:00'
     else
-      updated_since = updated_since.localtime.iso8601
+      updated_since = updated_since.utc.iso8601
     end
 
     user = UserSingleton.instance
