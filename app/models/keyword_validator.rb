@@ -6,14 +6,26 @@ class KeywordValidator
 
   def self.validate_keywords(providers = KeywordValidator.get_providers)
     checker = KeywordChecker.new
-    updated_since = CmrSync.get_sync_date
+
+    # force full sync on weekends
+    if Date.today.on_weekend?
+      updated_since = nil
+    else
+      updated_since = CmrSync.get_sync_date
+    end
+
+    updated_now = Date.new
     records_processed = 0
     providers.each do |provider|
       concept_id_compound = CmrSync.get_concepts(provider, 2000, updated_since)
       concept_ids = concept_id_compound.map{|cidc| cidc[0]}
       records_processed += concept_ids.length
       InvalidKeyword.transaction do
-        InvalidKeyword.remove_invalid_keywords(concept_ids)
+        if Date.today.on_weekend?
+          InvalidKeyword.remove_all_invalid_keywords(provider)
+        else
+          InvalidKeyword.remove_invalid_keywords(concept_ids)
+        end
         concept_id_compound.each do |cidc|
           concept_id = cidc[0]
           revision_id = cidc[1]
@@ -33,6 +45,7 @@ class KeywordValidator
         end
       end
     end
+    CmrSync.update_sync_date(updated_now)
     records_processed
   end
 

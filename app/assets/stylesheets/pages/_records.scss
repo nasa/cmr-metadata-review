@@ -388,3 +388,36 @@
   opacity: 0.65;
   cursor: not-allowed;
 }
+
+/* Tooltip container */
+.invalid_keywords_tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.invalid_keywords_alert_icon {
+  width: 30px;
+  height: 30px;
+  border-style: none;
+  vertical-align: bottom;
+}
+
+.invalid_keywords_tooltip .invalid_keywords_tooltiptext {
+  visibility: hidden;
+  width: 400px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.invalid_keywords_tooltip:hover .invalid_keywords_tooltiptext {
+  visibility: visible;
+}
