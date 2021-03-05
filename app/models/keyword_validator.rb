@@ -14,7 +14,7 @@ class KeywordValidator
       updated_since = CmrSync.get_sync_date
     end
 
-    updated_now = Date.new
+    updated_now = DateTime.now
     records_processed = 0
     providers.each do |provider|
       Rails.logger.info "Retrieving concepts for #{provider} using #{updated_since.utc.iso8601}"
@@ -43,6 +43,7 @@ class KeywordValidator
               invalid_keyword_model.save!
             end
           end
+          sleep 0.1 # 600 concepts per minute
         end
       end
     end
