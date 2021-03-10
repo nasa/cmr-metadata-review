@@ -42,7 +42,7 @@ module RecordFormats
     end
 
     def controlled_element_map
-      CONTROLLED_ELEMENT_MAP
+      ControlledElements.instance.mapping("umm_json")
     end
 
     def long_name_field
