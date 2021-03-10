@@ -13,11 +13,8 @@ class ControlledElements
     end
   end
 
-  def export_controlled_elements(format)
+  def export_controlled_elements_to_csv(format)
     map = {}
-    if format == 'umm_json'
-      map = ControlledElements.instance.map(format)
-    end
     if format == 'dif10'
       map = RecordFormats::Dif10Fields::CONTROLLED_ELEMENT_MAP
     end
