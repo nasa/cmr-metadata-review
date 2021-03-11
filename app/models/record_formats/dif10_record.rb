@@ -96,7 +96,7 @@ module RecordFormats
     end
 
     def controlled_element_map
-      ControlledElements.instance.mapping("umm_json")
+      ControlledElements.instance.mapping("dif10")
     end
   end
 end
