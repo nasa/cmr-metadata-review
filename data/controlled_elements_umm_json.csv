@@ -1,44 +1,44 @@
 Field,Description
 AdditionalAttributes/DataType,"UMM-Common JSON schema DataTypeEnum = [""STRING"", ""FLOAT"", ""INT"", ""BOOLEAN"", ""DATE"", ""TIME"", ""DATETIME"", ""DATE_STRING"", ""TIME_STRING"", ""DATETIME_STRING""]"
 ArchiveAndDistributionInformation/FileArchiveInformation/AverageFileSizeUnit,"UMM-C JSON schema ArchiveDistributionUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-ArchiveAndDistributionInformation/FileArchiveInformation/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.
-Only values in the ""Short_Name"" column."
+ArchiveAndDistributionInformation/FileArchiveInformation/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+Only values in the ""Short_Name"" column"
 ArchiveAndDistributionInformation/FileArchiveInformation/FormatType,"UMM-C JSON schema ArchiveDistributionFormatTypeEnum = [""Native"", ""Supported""]"
 ArchiveAndDistributionInformation/FileArchiveInformation/TotalCollectionFileSizeUnit,"UMM-C JSON schema ArchiveDistributionUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
 ArchiveAndDistributionInformation/FileDistributionInformation/AverageFileSizeUnit,"UMM-C JSON schema ArchiveDistributionUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-ArchiveAndDistributionInformation/FileDistributionInformation/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.  
-Only values in the Short_Name column."
+ArchiveAndDistributionInformation/FileDistributionInformation/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv  
+Only values in the ""Short_Name"" column"
 ArchiveAndDistributionInformation/FileDistributionInformation/FormatType,"UMM-C JSON schema ArchiveDistributionFormatTypeEnum = [""Native"", ""Supported""]"
 ArchiveAndDistributionInformation/FileDistributionInformation/TotalCollectionFileSizeUnit,"UMM-C JSON schema ArchiveDistributionUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
 CollectionDataType,"UMM-C JSON schema CollectionDataTypeEnum = [""SCIENCE_QUALITY"", ""NEAR_REAL_TIME"", ""OTHER""]"
 CollectionProgress,"UMM-C JSON schema CollectionProgress [""ACTIVE"", ""PLANNED"", ""COMPLETE"", ""DEPRECATED"", ""NOT APPLICABLE"", ""NOT PROVIDED""]"
 ContactGroups/ContactInformation/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
 ContactGroups/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 ContactGroups/ContactInformation/RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
 ContactGroups/ContactInformation/RelatedUrls/GetData/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 ContactGroups/ContactInformation/RelatedUrls/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 ContactGroups/ContactInformation/RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 ContactGroups/ContactInformation/RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
-ContactGroups/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv.  
-Only values in the ""Subtype"" column."
-ContactGroups/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv. 
-Only values in the ""Type"" column."
+ContactGroups/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv  
+Only values in the ""Subtype"" column"
+ContactGroups/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv 
+Only values in the ""Type"" column"
 ContactGroups/ContactInformation/RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 ContactGroups/Roles,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
 ContactPersons/ContactInformation/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
-ContactPersons/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.  
-Only values in the ""Short_Name"" column."
+ContactPersons/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv  
+Only values in the ""Short_Name"" column"
 ContactPersons/ContactInformation/RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
-ContactPersons/ContactInformation/RelatedURLs/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.  
-Only values in the ""Short_Name"" column."
+ContactPersons/ContactInformation/RelatedURLs/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv  
+Only values in the ""Short_Name"" column"
 ContactPersons/ContactInformation/RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 ContactPersons/ContactInformation/RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
-ContactPersons/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv.  
-Only values in the ""Subtype"" column."
-ContactPersons/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv.  
-Only values in the ""Type"" column."
+ContactPersons/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv  
+Only values in the ""Subtype"" column"
+ContactPersons/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv  
+Only values in the ""Type"" column"
 ContactPersons/ContactInformation/RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 ContactPersons/Roles,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
 DOI/Authority,"UMM-C JSON schema Authority [""https://doi.org/""]"
@@ -46,105 +46,113 @@ DOI/MissingReason,"UMM-Common JSON schema ""MissingReason"" enum = [""Not Applic
 DataCenters/Contact Information/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
 DataCenters/ContactGroups/Contact Information/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetData/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Subtype"" column."
+Only values in the ""Subtype"" column"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Type"" column."
+Only values in the ""Type"" column"
 DataCenters/ContactGroups/ContactInformation/RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 DataCenters/ContactGroups/Roles,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
 DataCenters/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactInformation/RelatedURLs/GetData/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataCenters/ContactInformation/RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
 DataCenters/ContactInformation/RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataCenters/ContactInformation/RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
 DataCenters/ContactInformation/RelatedUrls/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Subtype"" column."
+Only values in the ""Subtype"" column"
 DataCenters/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Type"" column."
+Only values in the ""Type"" column"
 DataCenters/ContactInformation/RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 DataCenters/ContactPersons/Contact Information/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Subtype"" column."
+Only values in the ""Subtype"" column"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Type"" column."
+Only values in the ""Type"" column"
 DataCenters/ContactPersons/ContactInformation/RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 DataCenters/ContactPersons/Roles,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
 DataCenters/Roles,"UMM-Common JSON schema DataCenterRoleEnum = [""ARCHIVER"", ""DISTRIBUTOR"", ""PROCESSOR"", ""ORIGINATOR""]"
 DataCenters/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 DataCenters/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 DataDates/Type,"UMM-Common JSON schema LineageDateEnum = [""CREATE"", ""UPDATE"", ""DELETE"", ""REVIEW""]"
 Distributions/Sizes/Unit,"UMM-Common JSON schema FileSizeType Unit enum =  [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
-LocationKeywords/Category,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv.  Only values from the ""Location_Category"" column."
-LocationKeywords/Subregion1,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv.  Only values from the ""Location_Subregion1"" column"
-LocationKeywords/Subregion2,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv.  Only values from the ""Location_Subregion2"" column"
-LocationKeywords/Subregion3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv.  Only values from the ""Location_Subregion3"" column"
-LocationKeywords/Topic,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv.  Only values from the ""Location_Topic"" column"
-LocationKeywords/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv.  Only values from the ""Location_Type"" column."
+LocationKeywords/Category,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
+Only values from the ""Location_Category"" column"
+LocationKeywords/Subregion1,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv
+Only values from the ""Location_Subregion1"" column"
+LocationKeywords/Subregion2,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv
+Only values from the ""Location_Subregion2"" column"
+LocationKeywords/Subregion3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv
+Only values from the ""Location_Subregion3"" column"
+LocationKeywords/Topic,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv
+Only values from the ""Location_Topic"" column"
+LocationKeywords/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv
+Only values from the ""Location_Type"" column."
 MetadataAssociations/Type,"UMM-Common JSON schema MetadataAssociateTypeEnum = [""SCIENCE ASSOCIATED"", ""DEPENDENT"", ""INPUT"", ""PARENT"", ""CHILD"", ""RELATED"", ""LARGER CITATION WORKS""]"
 MetadataDates/Type,"UMM-Common JSON schema LineageDateEnum = [""CREATE"", ""UPDATE"", ""DELETE"", ""REVIEW""]"
 Platforms/Instruments/ComposedOf/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platforms/Instruments/ComposedOf/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platforms/Instruments/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platforms/Instruments/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platforms/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platforms/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platforms/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Category"" column."
+Only values from the ""Category"" column"
 ProcessingLevel/ID,"Not explicitly controlled, but whenever possible, only NASA approved processing levels [""0"", ""1A"", ""1B"", ""2"", ""3"", ""4""] should be used.
 Source: https://earthdata.nasa.gov/collaborate/open-data-services-and-software/data-information-policy/data-levels"
 Projects/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Projects/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
-Only values from the ""Short_Name"" column."
-RelatedURLs/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.  Only values in the Short_Name"" column."
-RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv.  Only values in the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
+RelatedURLs/GetService/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+Only values in the Short_Name"" column"
+RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+Only values in the ""Short_Name"" column."
 RelatedUrls/GetData/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 RelatedUrls/GetData/Unit,"UMM-Common JSON schema GetDataType Unit enum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB""]"
 RelatedUrls/GetService/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 RelatedUrls/GetService/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
-RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv.  
-Only values in the ""Subtype"" column."
-RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv.  
-Only values in the ""Type"" column."
+RelatedUrls/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv  
+Only values in the ""Subtype"" column"
+RelatedUrls/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv  
+Only values in the ""Type"" column"
 RelatedUrls/URLContentType,"UMM-Common JSON schema RelatedURLContentTypeEnum = [""CollectionURL"", ""PublicationURL"", ""DataCenterURL"", ""DistributionURL"", ""DataContactURL"", ""VisualizationURL""]"
 ScienceKeywords/Category,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
 Only values from the ""Category"" column except ""EARTH SCIENCE SERVICES"" 
 I.e. EARTH SCIENCE SERVICES keywords should not be provided as science keywords."
 ScienceKeywords/Term,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Term"" column."
+Only values from the ""Term"" column"
 ScienceKeywords/Topic,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Topic"" column."
+Only values from the ""Topic"" column"
 ScienceKeywords/VariableLevel1,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_1"" column."
+Only values from the ""Variable_Level_1"" column"
 ScienceKeywords/VariableLevel2,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_2"" column."
+Only values from the ""Variable_Level_2"" column"
 ScienceKeywords/VariableLevel3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_3"" column."
+Only values from the ""Variable_Level_3"" column"
 SpatialExtent/GranuleSpatialRepresentation,"UMM-C JSON schema GranuleSpatialRepresentationEnum = [""CARTESIAN"", ""GEODETIC"", ""ORBIT"", ""NO_SPATIAL""]"
 SpatialExtent/HorizontalSpatialDomain/Geometry/CoordinateSystem,"UMM-C JSON schema CoordinateSystemEnum = [""CARTESIAN"", ""GEODETIC""]"
 SpatialExtent/SpatialCoverageType,"UMM-C JSON schema SpatialCoverageTypeEnum = [""HORIZONTAL"", ""VERTICAL"", ""ORBITAL"", ""HORIZONTAL_VERTICAL"", ""ORBITAL_VERTICAL"", ""HORIZONTAL_ORBITAL"", ""HORIZONTAL_VERTICAL_ORBITAL""]"
