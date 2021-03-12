@@ -7,14 +7,6 @@ class KeywordChecker
     @kms.download_kms_keywords(SCHEMES)
   end
 
-  def get_invalid_keywords_for_record(json_record)
-    record = JSON.parse(json_record)
-    SCHEMES.each do |scheme|
-      invalid_keywords = get_invalid_keywords_for_scheme(record, scheme)
-      create_invalid_keyword_report(record, scheme, invalid_keywords) unless invalid_keywords.empty?
-    end
-  end
-
   def get_ummc_field(scheme)
     ummc_field = ''
     case scheme
