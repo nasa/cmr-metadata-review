@@ -38,13 +38,18 @@ class KmsTest < ActiveSupport::TestCase
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('granuledataformat.csv'), headers: {})
 
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=platforms").
+        with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.15.3'}).
+        with(body: {"Keywords"=>["AQUATEST", "CLOUDTEST"]}).
+        to_return(status: 200, body: get_stub('kms_recommended_platforms.json'), headers: {})
+
     @kms = Kms.new
     @kms.download_kms_keywords(TEST_SCHEMES)
   end
 
-  describe "kms accessor test" do
+  describe 'kms accessor test' do
 
-    it "download keywords in all schemes" do
+    it 'download keywords in all schemes' do
       result = @kms.get_keyword_paths('sciencekeywords')
       key = 'EARTH SCIENCE SERVICES|DATA ANALYSIS AND VISUALIZATION|CALIBRATION/VALIDATION'
       assert_equal(true, result[key])
@@ -68,12 +73,20 @@ class KmsTest < ActiveSupport::TestCase
       assert_equal(true, result[key])
     end
 
-    it "get kms base url" do
+    it 'get recommended keywords' do
+      invalid_keywords = ['AQUATEST','CLOUDTEST']
+      scheme = 'platforms'
+      recommendations = @kms.get_recommended_keywords(invalid_keywords, scheme)
+      assert_equal('Terra', recommendations['AQUATEST'])
+      assert_equal('ADEOS-I', recommendations['CLOUDTEST'])
+    end
+
+    it 'get kms base url' do
       kms_base_url = Kms.get_kms_base_url
       assert_equal('https://gcmd.sit.earthdata.nasa.gov', kms_base_url)
     end
 
-    it "get kms url for science keywords" do
+    it 'get kms url for science keywords' do
       kms_url = @kms.get_kms_url('sciencekeywords')
       assert_equal('https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv', kms_url)
     end

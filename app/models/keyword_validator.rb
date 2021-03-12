@@ -36,10 +36,13 @@ class KeywordValidator
           doc = CmrSync.get_concept(concept_id, revision_id, 'umm_json')
           KeywordChecker::SCHEMES.each do |scheme|
             invalid_keywords = checker.get_invalid_keywords(doc, scheme)
+            recommendations = Kms.new.get_recommended_keywords(invalid_keywords, scheme)
             ummc_field = checker.get_ummc_field(scheme)
             invalid_keywords.each do |invalid_keyword|
+              map_value = recommendations[invalid_keyword]
+              recommended_keyword = (map_value.nil? || map_value.downcase == 'deleted') ? '' : map_value
               invalid_keyword_model = InvalidKeyword.create_invalid_keyword(provider, concept_id, revision_id, short_name, version_id,
-              invalid_keyword, '', ummc_field)
+              invalid_keyword, recommended_keyword, ummc_field)
               invalid_keyword_model.save!
             end
           end
