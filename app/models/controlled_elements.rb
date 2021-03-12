@@ -2,7 +2,7 @@ class ControlledElements
   include Singleton
 
   def initialize
-    @formats = ["umm_json", "dif10"]
+    @formats = ["umm_json", "dif10", "echo10"]
     @map = {}
     @formats.each do |format|
       csv_path = File.join(Rails.root, "/data/controlled_elements_#{format}.csv")
@@ -15,9 +15,6 @@ class ControlledElements
 
   def export_controlled_elements_to_csv(format)
     map = {}
-    if format == 'echo10'
-      map = RecordFormats::Echo10Fields::CONTROLLED_ELEMENT_MAP
-    end
     keys = map.keys.sort
     CSV.open("/tmp/#{format}.csv", "w") do |csv|
       csv << %w(field description)
