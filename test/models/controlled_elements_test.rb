@@ -26,5 +26,12 @@ class ControlledElementsTest < ActiveSupport::TestCase
       assert_includes(value,'ECHO metadata common schema MissingReason ["Unknown"]')
     end
 
+    it "can return proper description given specified field for umm-g json" do
+      controlled_elements = ControlledElements.instance
+      map = controlled_elements.mapping("umm-g")
+      value = map["DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/FormatType"]
+      assert_includes(value,'UMM-G JSON schema "FormatType" enum = ["Native", "Supported", "NA"]')
+    end
+
   end
 end
