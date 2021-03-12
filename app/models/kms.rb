@@ -1,9 +1,11 @@
 require 'open-uri'
 require 'csv'
 require 'json'
+require 'openssl'
 
 class Kms
   include ApplicationHelper
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
   def initialize
     @keyword_paths_dict = {}
