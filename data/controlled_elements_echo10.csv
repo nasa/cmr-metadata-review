@@ -1,0 +1,58 @@
+Field,Description
+AdditionalAttributes/AdditionalAttribute/DataType,"ECHO collection schema DataType enum = [""STRING"", ""FLOAT"", ""INT"", ""BOOLEAN"", ""DATE"", ""TIME"", ""DATETIME"", ""DATE_STRING"", ""TIME_STRING"", ""DATETIME_STRING""]"
+ArchiveCenter,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
+Only values from the ""Short_Name"" column."
+Campaigns/Campaign/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
+Only values from the ""Long_Name"" column."
+Campaigns/Campaign/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
+Only values from the ""Short_Name"" column."
+CollectionDataType,"ECHO collection schema CollectionDataType enum = [""SCIENCE_QUALITY"", ""NEAR_REAL_TIME"", ""OTHER""]"
+CollectionState,"UMM-C JSON schema CollectionProgress [""ACTIVE"", ""PLANNED"", ""COMPLETE"", ""DEPRECATED"", ""NOT APPLICABLE"", ""NOT PROVIDED""]"
+Contacts/Contact/ContactPersons/ContactPerson/JobPosition,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
+Contacts/Contact/OrganizationPhones/Phone/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
+Contacts/Contact/Role,"UMM-Common JSON schema DataCenterRoleEnum = [""ARCHIVER"", ""DISTRIBUTOR"", ""PROCESSOR"", ""ORIGINATOR""]"
+DataFormat,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+Only values in the ""Short_Name"" column."
+DOI/Authority,"ECHO metadata common schema Authority [""https://doi.org/""]"
+DOI/MissingReason,"ECHO metadata common schema MissingReason [""Unknown""]"
+DataGranule/DayNightFlag,"ECHO granule schema DayNightFlag enum = [""DAY"", ""NIGHT"", ""BOTH"", ""UNSPECIFIED""]"
+OnlineAccessURLs/OnlineAccessURL/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
+OnlineResources/OnlineResource/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
+OnlineResources/OnlineResource/Type,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
+Platforms/Platform/Instruments/Instrument/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Only values from the ""Long_Name"" column."
+Platforms/Platform/Instruments/Instrument/Sensors/Sensor/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Only values from the ""Long_Name"" column."
+Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Only values from the ""Short_Name"" column."
+Platforms/Platform/Instruments/Instrument/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Only values from the ""Short_Name"" column."
+Platforms/Platform/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
+Only values from the ""Long_Name"" column."
+Platforms/Platform/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
+Only values from the ""Short_Name"" column."
+Platforms/Platform/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
+Only values from the ""Category"" column."
+ProcessingCenter,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
+Only values from the ""Short_Name"" column."
+ProcessingLevelId,"Not explicitly controlled, but whenever possible, only NASA approved processing levels [""0"", ""1A"", ""1B"", ""2"", ""3"", ""4""] should be used.
+Source: https://earthdata.nasa.gov/collaborate/open-data-services-and-software/data-information-policy/data-levels"
+ScienceKeywords/ScienceKeyword/CategoryKeyword,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Category"" column except ""EARTH SCIENCE SERVICES"" 
+I.e. EARTH SCIENCE SERVICES keywords should not be provided as science keywords."
+ScienceKeywords/ScienceKeyword/TermKeyword,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Term"" column."
+ScienceKeywords/ScienceKeyword/TopicKeyword,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Topic"" column."
+ScienceKeywords/ScienceKeyword/VariableLevel1Keyword/Value,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Variable_Level_1"" column."
+ScienceKeywords/ScienceKeyword/VariableLevel2Keyword/Value,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Variable_Level_2"" column."
+ScienceKeywords/ScienceKeyword/VariableLevel3Keyword/Value,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
+Only values from the ""Variable_Level_3"" column."
+Spatial/GranuleSpatialRepresentation,"ECHO metadata common schema GranuleSpatialRepresentation enum = [""CARTESIAN"", ""GEODETIC"", ""ORBIT"", ""NO_SPATIAL""]"
+Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem,"ECHO metadata common schema CoordinateSystem enum = [""CARTESIAN"", ""GEODETIC""]"
+Spatial/SpatialCoverageType,"UMM-Common JSON schema SpatialCoverageTypeEnum = [""HORIZONTAL"", ""VERTICAL"", ""ORBITAL"", ""HORIZONTAL_VERTICAL"", ""ORBITAL_VERTICAL"", ""HORIZONTAL_ORBITAL"", ""HORIZONTAL_VERTICAL_ORBITAL""]"
+SpatialKeywords/Keyword,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
+Temporal/PeriodicDateTime/DurationUnit,"ECHO collection schema DurationUnit enum = [""DAY"", ""MONTH"", ""YEAR""]"
+Temporal/PeriodicDateTime/PeriodCycleDurationUnit,"ECHO collection schema DurationUnit enum = [""DAY"", ""MONTH"", ""YEAR""]"
