@@ -62,6 +62,84 @@ class KeywordValidatorTest < ActiveSupport::TestCase
     stub_request(:get, "#{cmr_base_url}/search/concepts/C1200208767-SCIOPS/1.umm_json").
         with(headers: stub_header).
         to_return(status: 200, body: get_stub('keyword_validator_get_concept_C1200208767-SCIOPS.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=sciencekeywords").
+        with(
+            body: "{\"Keywords\":[\"EARTH SCIENCE|ATMOSPHERE|ATMOSPHERIC WATER VAPOR|EVAPORATION\",\"EARTH SCIENCE|BIOLOGICAL CLASSIFICATION|PLANTS|ALGAE; MORPHOLOGICAL STUDY\"]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_sciencekeywords.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=platforms").
+        with(
+            body: "{\"Keywords\":[\"GROUND STATIONS\",\"METEOROLOGICAL STATIONS\",\"GROUND STATIONS\"]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_platforms.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=instruments").
+        with(
+            body: "{\"Keywords\":[]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=projects").
+        with(
+            body: "{\"Keywords\":[]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=providers").
+        with(
+            body: "{\"Keywords\":[\"DOC/NTIS\",\"CL/INACH/CENDA\"]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_providers.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=ProductLevelId").
+        with(
+            body: "{\"Keywords\":[]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
+
+    stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=GranuleDataFormat").
+        with(
+            body: "{\"Keywords\":[]}",
+            headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'Content-Type'=>'application/json',
+                'User-Agent'=>'Faraday v0.15.3'
+            }).
+        to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
+
   end
   describe 'keyword validator test' do
     it 'validate keyword' do
