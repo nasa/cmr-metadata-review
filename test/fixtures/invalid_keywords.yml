@@ -11,7 +11,7 @@ one:
   ummc_field: MyString
 
 two:
-  provider_id: NSIDC
+  provider_id: NSIDCV0
   concept_id: concept_id2
   revision_id: 1
   short_name: MyString

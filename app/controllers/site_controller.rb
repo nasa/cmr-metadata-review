@@ -12,8 +12,8 @@ class SiteController < ApplicationController
       session[:unhide_state] = nil
     end
 
-    provider = current_user.role == 'admin' || current_user.role == 'arc_curator' ? nil : current_user.daac
-    @invalid_keywords = InvalidKeyword.get_invalid_keywords(provider)
+    provider =  current_user.daac_curator? ? current_user.daac : nil
+    @invalid_keywords = InvalidKeyword.get_invalid_keywords(ApplicationHelper::providers(provider))
 
     records = Record.where(daac: nil)
     return if records.count.zero?
