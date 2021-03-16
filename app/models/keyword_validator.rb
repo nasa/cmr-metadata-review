@@ -52,6 +52,7 @@ class KeywordValidator
   end
 
   def self.get_providers
-    return ApplicationHelper::ARC_PROVIDERS
+    return ApplicationHelper::all_arc_providers
   end
+
 end
