@@ -101,7 +101,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "it contains the invalid keywords report icon" do
         mock_normal_edl_user
         User.any_instance.stubs(:check_if_account_active).returns(true)
-        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','NSIDC'])
+        AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','NSIDCV0'])
 
         visit '/'
         page.must_have_content("Login with Earthdata Login")
