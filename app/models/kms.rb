@@ -76,7 +76,7 @@ class Kms
     begin
       keywords = []
       url = get_kms_url(scheme)
-      download = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
+      download = URI(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
       CSV.new(download, liberal_parsing: true).each do |row|
         keywords << row
       end
