@@ -130,4 +130,18 @@ module ApplicationHelper
     daac
   end
 
+  # convert virtual daac into a provider list
+  def self.providers(virtual_daac)
+    providers = virtual_daac
+    providers = %w[LARC_ASDC LARC] if virtual_daac == 'ASDC'
+    providers = %w[NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
+    providers = %w[GHRC_CLOUD LANCEAMSR2] if virtual_daac == 'GHRC'
+    providers
+  end
+
+  def self.all_arc_providers
+    return ARC_PROVIDERS + %w(LARC_ASDC LARC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD LANCEAMSR2)
+  end
+
+
 end
