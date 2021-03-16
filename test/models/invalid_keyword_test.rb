@@ -5,7 +5,7 @@ class InvalidKeywordTest < ActiveSupport::TestCase
     it "create an invalid keyword" do
       all_invalid_keywords = InvalidKeyword.all
       count = all_invalid_keywords.length
-      keyword = InvalidKeyword.create_invalid_keyword("LARC", "39393_LARC", 1,  "ShortName", "Version",
+      keyword = InvalidKeyword.create_invalid_keyword("LARC", "sciencekeywords","39393_LARC", 1,  "ShortName", "Version",
                                             "ScienceKeywords|ATMOPHERE|AEROSLS", nil, "ScienceKeywords"
                                             )
       success = keyword.save

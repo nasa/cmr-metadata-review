@@ -1,8 +1,11 @@
 require 'open-uri'
 require 'csv'
+require 'json'
+require 'openssl'
 
 class Kms
   include ApplicationHelper
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
   def initialize
     @keyword_paths_dict = {}
@@ -13,6 +16,23 @@ class Kms
       csv_array = download_keywords(scheme)
       keyword_paths = create_keyword_paths(scheme, csv_array)
       save_keywords(scheme, keyword_paths)
+    end
+  end
+
+  def get_recommended_keywords(invalid_keywords, scheme)
+    begin
+      url = get_recommended_keywords_url(scheme)
+      payload = {}
+      payload['Keywords'] = invalid_keywords
+      resp = Faraday.post(url, payload.to_json, "Content-Type" => "application/json")
+      msg = "get_recommended_keywords - Calling external resource #{url}"
+      msg += " with payload #{payload.to_json}."
+      msg += " Response content=#{resp.body}"
+      Rails.logger.info(msg)
+      json = JSON.parse(resp.body)
+      return json['Recommendations']
+    rescue => e
+      Rails.logger.error("get_recommended_keywords - Error retrieving recommended keywords, message=#{e.message}");
     end
   end
 
@@ -53,13 +73,17 @@ class Kms
   end
 
   def download_keywords(scheme)
-    keywords = []
-    url = get_kms_url(scheme)
-    download = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
-    CSV.new(download, liberal_parsing: true).each do |row|
-      keywords << row
+    begin
+      keywords = []
+      url = get_kms_url(scheme)
+      download = URI(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
+      CSV.new(download, liberal_parsing: true).each do |row|
+        keywords << row
+      end
+      return keywords[2..keywords.length]
+    rescue => e
+      Rails.logger.error("download_keywords - Error retrieving kms keywords for scheme #{scheme}, message=#{e.message}");
     end
-    return keywords[2..keywords.length]
   end
 
   def get_keyword_paths(scheme)
@@ -96,6 +120,10 @@ class Kms
 
   def get_kms_url(scheme)
     return Kms.get_kms_base_url() + "/kms/concepts/concept_scheme/#{scheme}?format=csv"
+  end
+
+  def get_recommended_keywords_url(scheme)
+    return Kms.get_kms_base_url() + "/kms/recommended_keywords/?scheme=#{scheme}&includesFullPath=false"
   end
 
 end
