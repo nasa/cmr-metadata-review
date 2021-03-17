@@ -87,7 +87,7 @@ const PaginationTableView = observer(
         </tr>
 
       let selectAll = null
-      if (this.props.admin || this.props.role == 'mdq_curator') {
+      if (this.props.admin || this.props.role == 'mdq_curator' || this.props.role == 'daac_curator') {
         selectAll =
           <div align="right">
             <a href="javascript:void(0);" onClick={() => {
