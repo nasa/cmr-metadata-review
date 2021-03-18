@@ -13,6 +13,7 @@ class Kms
 
   def download_kms_keywords(schemes)
     schemes.each do |scheme|
+      Rails.logger.info("download_kms_keywords - Retrieving keywords for scheme #{}")
       csv_array = download_keywords(scheme)
       keyword_paths = create_keyword_paths(scheme, csv_array)
       save_keywords(scheme, keyword_paths)
