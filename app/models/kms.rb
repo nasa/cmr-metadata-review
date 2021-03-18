@@ -13,7 +13,6 @@ class Kms
 
   def download_kms_keywords(schemes)
     schemes.each do |scheme|
-      Rails.logger.info("download_kms_keywords - Retrieving keywords for scheme #{}")
       csv_array = download_keywords(scheme)
       keyword_paths = create_keyword_paths(scheme, csv_array)
       save_keywords(scheme, keyword_paths)
@@ -77,6 +76,7 @@ class Kms
     begin
       keywords = []
       url = get_kms_url(scheme)
+      Rails.logger.info("download_keywords - Retrieving keywords for scheme: #{scheme}, url: #{url}")
       download = URI(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
       CSV.new(download, liberal_parsing: true).each do |row|
         keywords << row
