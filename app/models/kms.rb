@@ -77,7 +77,7 @@ class Kms
       keywords = []
       url = get_kms_url(scheme)
       Rails.logger.info("download_keywords - Retrieving keywords for scheme: #{scheme}, url: #{url}")
-      download = URI(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8')
+      download = URI(url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, encoding: 'UTF-8', read_timeout: 300)
       CSV.new(download, liberal_parsing: true).each do |row|
         keywords << row
       end
