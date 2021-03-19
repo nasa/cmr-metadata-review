@@ -143,7 +143,7 @@ class KeywordValidatorTest < ActiveSupport::TestCase
   end
   describe 'keyword validator test' do
     it 'validate keyword' do
-      KeywordValidator.validate_keywords(TEST_PROVIDERS)
+      KeywordValidator.validate_keywords(providers: TEST_PROVIDERS, clear_sync_date: true)
       assert_equal(InvalidKeyword.all.length, 9)
     end
   end
