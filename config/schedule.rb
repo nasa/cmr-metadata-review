@@ -18,6 +18,6 @@ end
 # Default env is production. To change that, run 'whenever --update-crontab --set environment='development''
 # To verify crontab run 'crontab -l'
 set :output, 'log/keyword_validation.log'
-every 1.day, at: '1:00 am' do
+every 1.day, at: '4:00 am' do
   rake 'keyword_validation_cron:validate_keywords'
 end
