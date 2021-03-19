@@ -67,6 +67,7 @@ Rails.application.routes.draw do
 
     get '/record_refresh', to: 'records#refresh'
     get '/invalid_keywords/csv_report', to: 'invalid_keywords#csv_report'
+    get '/invalid_keywords/sync', to: 'invalid_keywords#sync'
     get '/reports/home', to: 'reports#home'
     get '/reports/provider', to: 'reports#provider'
     get '/reports/search', to: 'reports#search'
