@@ -4,11 +4,11 @@ class KeywordValidator
     super
   end
 
-  def self.validate_keywords(providers = KeywordValidator.get_providers)
+  def self.validate_keywords(providers: KeywordValidator.get_providers, clear_sync_date: false)
     checker = KeywordChecker.new
 
-    # force full sync on weekends
-    if Date.today.on_weekend?
+    # force full sync on weekends or when asked for
+    if Date.today.on_weekend? || clear_sync_date
       updated_since = nil
     else
       updated_since = CmrSync.get_sync_date
