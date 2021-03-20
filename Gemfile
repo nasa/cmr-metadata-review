@@ -62,7 +62,7 @@ gem 'simplecov', :require => false, :group => :test
 #using puma server instead of webBrick
 gem 'puma', '~> 3.12.2'
 #base authentication gem
-gem 'devise'
+gem 'devise', git: 'https://github.com/heartcombo/devise', branch: 'ca-omniauth-2'
 #setting user permissions for pages
 gem 'cancan', '~> 1.6.10'
 
@@ -80,7 +80,8 @@ gem 'oauth2'
 gem 'omniauth-oauth2'
 gem 'faraday_middleware'
 
-gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.1.0"
+gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.2.0"
+# gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", path: "/Users/cgokey/src/rails/ruby2.7.2/omniauth-urs"
 
 gem 'figaro'
 gem 'rails-controller-testing'

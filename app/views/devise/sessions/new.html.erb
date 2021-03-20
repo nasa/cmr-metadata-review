@@ -12,9 +12,11 @@
 
       <% if devise_mapping.omniauthable? %>
         <% resource_class.omniauth_providers.each do |provider| %>
-          <%= link_to "Login with #{get_omniauth_provider_display_name(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: "eui-btn--blue" %>
+          <%= form_with( url: omniauth_authorize_path(resource_name, provider), method: :post, local:true, authenticity_token: true) do %>
+            <%= submit_tag("Login with #{get_omniauth_provider_display_name(provider)}", class: 'eui-btn--blue') %>
+          <% end %>
         <% end %>
-      <% end %>
+    <% end %>
     </div>
   </div>
 </header>
