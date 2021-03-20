@@ -66,7 +66,7 @@ module OmniauthMacros
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization'=>'Bearer '+access_token,
-          'User-Agent'=>'Faraday v0.15.3'
+          'User-Agent'=>'Faraday v0.17.4'
         }).
       to_return(status: 200, body: "{}", headers: {})
 
@@ -78,7 +78,7 @@ module OmniauthMacros
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
           'Content-Type'=>'application/x-www-form-urlencoded',
-          'User-Agent'=>'Faraday v0.15.3'
+          'User-Agent'=>'Faraday v0.17.4'
         }).
       to_return(status: 200, body: %Q({"access_token":"#{access_token}","refresh_token":"#{refresh_token}"}), headers: {})
   end
