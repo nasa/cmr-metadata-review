@@ -282,7 +282,7 @@ class RecordsControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Faraday v0.15.3'
+            'User-Agent'=>'Faraday v0.17.4'
           }).
         to_return(status: 200, body: get_stub('search_collections.umm-json_C1000000020-LANCEAMSR2.json'), headers: { 'cmr-hits':1 } )
 

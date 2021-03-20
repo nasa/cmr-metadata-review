@@ -81,6 +81,7 @@ gem 'omniauth-oauth2'
 gem 'faraday_middleware'
 
 gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.2.0"
+gem 'omniauth-rails_csrf_protection'
 # gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", path: "/Users/cgokey/src/rails/ruby2.7.2/omniauth-urs"
 
 gem 'figaro'

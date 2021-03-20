@@ -19,11 +19,10 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('existingdeviseuser').returns(['admin',nil])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
+        find('#urs_login_button').click
         user = User.find_by_email("bjones@someplace.com")
-        assert(user.uid == nil)
-        assert(user.provider == nil)
-        click_link "Login"
+        assert_equal(user.uid, 'existingdeviseuser')
+        assert_equal(user.provider, 'urs')
         page.must_have_content("Logout")
         user = User.find_by_email("bjones@someplace.com")
         assert(user.uid == 'existingdeviseuser')
@@ -36,10 +35,9 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('newdeviseuser').returns(['admin',nil])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
+        find('#urs_login_button').click
         user = User.find_by_email("bsmith@someplace.com")
-        assert(user == nil)
-        click_link "Login"
+        assert(user != nil)
         page.must_have_content("Logout")
         user = User.find_by_email("bsmith@someplace.com")
         assert(user.uid == 'newdeviseuser')
@@ -53,8 +51,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['admin',nil])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
-        click_link "Login"
+        find('#urs_login_button').click
         page.must_have_content("john smith")
         page.must_have_content("Logout")
         page.must_have_content("Account Options")
@@ -72,8 +69,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['arc_curator',nil])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
-        click_link "Login"
+        find('#urs_login_button').click
         page.must_have_content("Logout")
         page.wont_have_content("Account Options")
         page.must_have_content("Unreviewed Records:")
@@ -90,8 +86,8 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','LP_DAAC'])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
-        click_link "Login"
+
+        find('#urs_login_button').click
         page.must_have_content("Logout")
         page.must_have_content("In DAAC Review:")
         page.must_have_content("Requires Reviewer Feedback Records:")
@@ -104,8 +100,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','NSIDCV0'])
 
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
-        click_link "Login"
+        find('#urs_login_button').click
         find('.invalid_keywords_alert_icon').hover
         page.must_have_content('There are 1 invalid keywords found across 1 collection records')
       end
@@ -113,8 +108,7 @@ class CanAccessTopPageTest < Capybara::Rails::TestCase
       it "can handle authentication error" do
         OmniAuth.config.mock_auth[:urs] = :invalid_credentials
         visit '/'
-        page.must_have_content("Login with Earthdata Login")
-        click_link "Login"
+        find('#urs_login_button').click
         page.must_have_content('Could not authenticate you from URS because "Invalid credentials".')
       end
     end
