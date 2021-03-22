@@ -7,24 +7,6 @@ require  './app/middleware/middleware_healthcheck'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Details on upgrading to omniauth 2.0 are here:
-# https://github.com/omniauth/omniauth/wiki/Upgrading-to-2.0
-# Derived from https://github.com/cookpad/omniauth-rails_csrf_protection/blob/master/lib/omniauth/rails_csrf_protection/token_verifier.rb
-# This specific implementation has been pared down and should not be taken as the most correct way to do this.
-class TokenVerifier
-  include ActiveSupport::Configurable
-  include ActionController::RequestForgeryProtection
-
-  def call(env)
-    @request = ActionDispatch::Request.new(env.dup)
-    raise OmniAuth::AuthenticityError unless verified_request?
-  end
-
-  private
-  attr_reader :request
-  delegate :params, :session, to: :request
-end
-
 module CmrMetadataReview
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -81,7 +63,5 @@ module CmrMetadataReview
     end
 
     config.version = load_version
-
-    OmniAuth.config.request_validation_phase = ::TokenVerifier.new
   end
 end

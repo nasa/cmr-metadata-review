@@ -39,7 +39,7 @@ class KmsTest < ActiveSupport::TestCase
         to_return(status: 200, body: get_stub('granuledataformat.csv'), headers: {})
 
     stub_request(:post, "#{kms_base_url}/kms/recommended_keywords/?includesFullPath=false&scheme=platforms").
-        with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.15.3'}).
+        with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.17.4'}).
         with(body: {"Keywords"=>["AQUATEST", "CLOUDTEST"]}).
         to_return(status: 200, body: get_stub('kms_recommended_platforms.json'), headers: {})
 
