@@ -63,7 +63,7 @@ class UserTest < ActiveSupport::TestCase
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization'=>'Bearer '+user.access_token,
-            'User-Agent'=>'Faraday v0.15.3'
+            'User-Agent'=>'Faraday v0.17.4'
           }).
         to_return(status: 401, body: '{"error":"invalid_token"}', headers: {})
 
