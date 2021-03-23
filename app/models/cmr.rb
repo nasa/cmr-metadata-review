@@ -239,7 +239,7 @@ class Cmr
     elsif data_format == "dif10"
       RecordFormats::Dif10Fields::DESIRED_FIELDS
     elsif data_format == "umm_json"
-      RecordFormats::UmmFields::DESIRED_FIELDS
+      UmmDesiredFields.instance.get_desired_fields
     else
       []
     end
