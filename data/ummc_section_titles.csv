@@ -13,7 +13,6 @@ SpatialInformation
 ContactGroups
 AdditionalAttributes
 ScienceKeywords
-Distributions
 ProcessingLevel
 Platforms
 Projects
@@ -23,3 +22,11 @@ DataCenters
 CollectionCitations
 MetadataAssociations
 DirectoryNames
+AssociatedDOIs
+UseConstraints
+ArchiveAndDistributionInformation
+DirectDistributionInformation
+ISOTopicCategories
+AncillaryKeywords
+TemporalKeywords
+SpatialKeywords
