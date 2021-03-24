@@ -1,5 +1,5 @@
 class LoginController < Devise::OmniauthCallbacksController
-
+  skip_before_action :verify_authenticity_token unless !Rails.env.development?
   def urs
 
     begin
@@ -28,5 +28,24 @@ class LoginController < Devise::OmniauthCallbacksController
         flash.notice = "Could not authenticate from Earthdata Login"
       end
     end
+  end
+
+  def developer
+    begin
+      auth = request.env["omniauth.auth"]
+      auth.info.name = "John Smith" if auth.info.name.blank?
+      auth.info.email_address = params["email"]
+      auth.info.email_address = "john.smith@somewhere.com" if auth.info.email_address.blank?
+      @user = User.from_omniauth(auth)
+
+      instance = UserSingleton.instance
+      instance.current_user = @user
+    rescue Cmr::CmrError => e
+      flash.notice = e.message
+      redirect_to root_path and return
+    end
+
+    sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
+    set_flash_message(:notice, :success, kind: "Developer Login") if is_navigational_format?
   end
 end

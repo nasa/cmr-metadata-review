@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :timeoutable, :omniauthable, omniauth_providers: [:urs]
+  devise :timeoutable, :omniauthable, omniauth_providers: [:urs, :developer]
 
   has_many :ingests
   has_many :comments
@@ -23,12 +23,17 @@ class User < ApplicationRecord
     user.refresh_token = auth.credentials['refresh_token']
     user.email = auth.info.email_address
 
-    role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials['access_token'])
+    if (auth.provider == 'developer')
+      role = 'admin'
+      daac = nil
+      user.name = auth.info.name
+    else
+      role, daac = Cmr.get_role_and_daac(auth.uid, auth.credentials['access_token'])
+      user.name = "#{auth.info['first_name']} #{auth.info['last_name']}"
+      user.name = user.name.strip
+    end
     user.role = role
-
     user.daac = ApplicationHelper.virtual_daac(daac) if daac
-    user.name = "#{auth.info['first_name']} #{auth.info['last_name']}"
-    user.name = user.name.strip
     user.save!
     user
   end
@@ -45,7 +50,11 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && check_if_account_active
+    if Rails.env.development?
+      true
+    else
+      super && check_if_account_active
+    end
   end
 
   def check_if_account_active
