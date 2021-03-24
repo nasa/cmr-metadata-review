@@ -4,17 +4,16 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Dif10Record
-    include RecordFormats::Dif10Fields
     include RecordHelper
 
     LONG_NAME_FIELD = "Entry_Title"
 
     def get_section_titles
-      SECTION_TITLES
+      SectionTitles.instance.get_section_titles('dif10')
     end
 
     def field_required?(field)
-      REQUIRED_COLLECTION_FIELDS.include?(field)
+      RequiredFields.instance.get_required_fields('dif10').include?(field)
     end
 
     # ====Params
