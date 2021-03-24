@@ -5,6 +5,8 @@ EntryTitle
 Abstract
 DOI/DOI
 DOI/MissingReason
+MetadataDates/Date
+MetadataDates/Type
 DataCenters/Roles
 DataCenters/ShortName
 DataCenters/ContactPersons/Roles
@@ -122,6 +124,7 @@ RelatedUrls/GetService/DataType
 PaleoTemporalCoverages/ChronostratigraphicUnits/Eon
 DataDates/Date
 DataDates/Type
+DirectoryNames/ShortName
 
 
 
