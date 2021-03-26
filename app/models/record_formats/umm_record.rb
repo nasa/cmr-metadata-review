@@ -4,16 +4,15 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module UmmRecord
-    include RecordFormats::UmmFields
 
     LONG_NAME_FIELD = "EntryTitle"
 
     def get_section_titles
-      SECTION_TITLES
+      SectionTitles.instance.get_section_titles('ummc')
     end
 
     def field_required?(field)
-      REQUIRED_COLLECTION_FIELDS.include?(field)
+      RequiredFields.instance.get_required_fields('ummc').include?(field)
     end
 
     def long_name
