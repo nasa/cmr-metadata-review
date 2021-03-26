@@ -235,11 +235,11 @@ class Cmr
 
   def self.format_collection(raw_collection, data_format = "echo10")
     desired_fields = if data_format == "echo10"
-      DesiredFields.instance.get_desired_fields('echo10')
+      DesiredFields.instance.get_format_fields('echo10')
     elsif data_format == "dif10"
-      DesiredFields.instance.get_desired_fields('dif10')
+      DesiredFields.instance.get_format_fields('dif10')
     elsif data_format == "umm_json"
-      DesiredFields.instance.get_desired_fields('ummc')
+      DesiredFields.instance.get_format_fields('ummc')
     else
       []
     end
@@ -263,7 +263,7 @@ class Cmr
 
   def self.format_granule_data(granule_raw_data)
     results_hash = flatten_collection(granule_raw_data)
-    add_required_fields(results_hash, DesiredFields.instance.get_desired_fields('echo10_granule'))
+    add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
   end
 
   # ====Params

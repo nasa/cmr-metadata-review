@@ -9,11 +9,11 @@ module RecordFormats
     LONG_NAME_FIELD = "Entry_Title"
 
     def get_section_titles
-      SectionTitles.instance.get_section_titles('dif10')
+      SectionTitles.instance.get_format_fields('dif10')
     end
 
     def field_required?(field)
-      RequiredFields.instance.get_required_fields('dif10').include?(field)
+      RequiredFields.instance.get_format_fields('dif10').include?(field)
     end
 
     # ====Params
