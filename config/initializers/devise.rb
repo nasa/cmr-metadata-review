@@ -243,6 +243,7 @@ Devise.setup do |config|
     token_url: ENV['urs_token_url'],
     calling_application: ENV['urs_client_id']
   }
+  config.omniauth :developer
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
