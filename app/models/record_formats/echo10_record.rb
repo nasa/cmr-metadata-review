@@ -4,13 +4,12 @@
 # unique accessors are needed for each format to access commonly requested data.
 module RecordFormats
   module Echo10Record
-    include RecordFormats::Echo10Fields
     include RecordHelper
 
     LONG_NAME_FIELD = "LongName"
 
     def get_section_titles
-      collection? ? SECTION_TITLES : GRANULE_SECTION_TITLES
+      collection? ? SectionTitles.instance.get_section_titles('echo10') : SectionTitles.instance.get_section_titles('echo10_granule')
     end
 
     def field_required?(field)
@@ -125,7 +124,7 @@ module RecordFormats
     private
 
     def required_fields
-      @required_fields ||= collection? ? REQUIRED_COLLECTION_FIELDS : REQUIRED_GRANULE_FIELDS
+      @required_fields ||= collection? ? RequiredFields.instance.get_required_fields('echo10') : RequiredFields.instance.get_required_fields('echo10_granule')
     end
   end
 end
