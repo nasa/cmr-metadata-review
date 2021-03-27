@@ -17,11 +17,11 @@ This can be found (with pictures) [here](https://wiki.earthdata.nasa.gov/display
 
 All development work is done on local copies of the code base.  Follow the steps below to prepare a local copy on your machine.
 
-1. Install Ruby on your machine.  The production version of the project uses Ruby v 2.5.1. Other versions may work, but only 2.5.1 is currently fully supported.
+1. Install Ruby on your machine.  The production version of the project uses Ruby v 2.7.2. Other versions may work, but only 2.7.2 is currently fully supported.
 
 - You can check which version of ruby you are running with the command `ruby -v`, and the location with `which ruby`
 
-- If the version of ruby that comes up is not 2.5.1 and you are using rvm use the command `rvm list` to list which ruby versions you have. To set the ruby version for the current directory use the command `rvm use 2.5.1`, or to set your default use `rvm --default use 2.5.1`
+- If the version of ruby that comes up is not 2.7.2 and you are using rvm use the command `rvm list` to list which ruby versions you have. To set the ruby version for the current directory use the command `rvm use 2.7.2`, or to set your default use `rvm --default use 2.7.2`
 
 2. Download the source code from this github repo.
 
@@ -68,13 +68,96 @@ All development work is done on local copies of the code base.  Follow the steps
 10. The last piece of software that needs to be installed is python. The production version uses 2.7. Using pip you'll need to install the "requests" package, e.g,:
 /usr/bin/pip install requests
 
+11. The application uses react:rails which has a dependency on having [yarn](https://tecadmin.net/install-yarn-macos/) installed on your system.  Yarn is a package manager used to install Javascript dependencies needed by the frontend.   To install these dependencies, issue the command: `yarn install` from the root directory of the application.
+    
 11. Now the project should be ready to go. Navigate to the home directory and execute `rails s` to start the server.
 
 12. The homepage will be served at the address `localhost:3000` in your browser. To use the tool locally you will need to:
 
 - Register for an [Earthdata Login account](https://sit.urs.earthdata.nasa.gov/) for the SIT environment.
 
-- Request ACL permissions to access the tool in the SIT environment by emailing [Earthdata Support](mailto:support@earthdata.nasa.gov). In order to Ingest collections into the tool, you may need Admin or Arc Curator permissions as well.
+- Request ACL permissions to access the tool in the SIT environment by emailing [Earthdata Support](mailto:support@earthdata.nasa.gov). In order to Ingest collections into the tool, you may need Admin or Arc Curator permissions as well..  Also see section below entitles "Authentication"
+
+## Quick Start Guide - Installation on Mac
+
+## Changing Python to default to 2.7
+    echo ‘export PATH=“/System/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH”’ >> ~/.zshrc
+    source ~/.zshrc
+    
+## Installing pip (if necessary)
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
+    python get-pip.py --user
+    pip install requests
+
+## Installing rvm
+    \curl -sSL https://get.rvm.io | bash
+    rvm install 2.7.2
+    rvm use 2.7.2 --default 
+
+### Installing Postgresql 9.6
+    brew install postgresql@9.6
+    echo 'export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"' >> ~/.zshrc
+    createuser -s postgres
+    createuser -s cmrdash
+    createuser -s cmrdash_test
+
+### Installing source code
+    git clone https://[userid]@github.com/nasa/cmr-metadata-review.git
+    cd cmr-metadata-review
+    rake db:create:all
+    rake db:migrate
+    cp ~/application.yml config (yml is supplied by another developer)
+
+### Install Gems
+    gem install bundle
+    bundle install
+
+### Install reactjs deps
+    brew install yarn
+    yarn install
+
+### Startup the server
+    rails s
+
+## Authentication
+The application uses [devise](https://github.com/heartcombo/devise) which is a flexible authentication solution for 
+Rails.  The authorization mechanism uses [omniauth](https://github.com/omniauth/omniauth) which is a library/module that standardizes 
+multi-provider authentication for web applications.  Any developer can create strategies for OmniAuth that can 
+authenticate users via disparate systems.  
+
+One strategy, called [Developer](https://github.com/omniauth/omniauth/blob/master/lib/omniauth/strategies/developer.rb), is included with OmniAuth and provides a completely 
+insecure, non-production-usable strategy that directly prompts an user for authentication information and then 
+passes it straight through.    If the server is run in "development" mode, you will see a button called "Login with Developer",
+you can click that, provide your name and email, and it will log you in using the information you provide.  It will bypass all
+typical authorizations you would get with production and assign you the role of `admin`.
+
+The second strategy, called [URS](https://git.earthdata.nasa.gov/projects/CMRARC/repos/omniauth-edl/browse), provides 
+a production-usable strategy that directly authenticates with Earth Data Login.   You can register for a account for 
+[SIT](https://sit.urs.earthdata.nasa.gov/home), [UAT](https://uat.urs.earthdata.nasa.gov/home), and [PROD](https://urs.earthdata.nasa.gov/home).  Please note, SIT and UAT both require PIV access.   If you want to configure authentication with the production, you'll need to modify these 2 lines 
+in `cmr-metadata-review/config/environments/development.rb`:
+
+    config.cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+    config.kms_base_url = 'https://gcmd.earthdata.nasa.gov'
+
+This will tell the authorization mechanism to access production CMR for access control rather than SIT. 
+
+## Importing Database 
+
+    psql -U postgres -c 'drop database cmrdash'
+    psql -U postgres -c 'create database cmrdash'
+    psql --user cmrdash cmrdash < sit-db-dump-2018-09-27.sql
+(Note you may see a bunch of ERROR like role "arcdashadmin" does not exist, this can be ignored)
+
+After the import is complete, you'll need to run `db:migrate` again.
+
+Additional note: If you login and view the dashboard home page (with all the sections) and the sections are empty, check the server logs, if you see lots of:
+
+    Record without DAAC: #<Record id: 4489, recordable_id: 1891, recordable_type: "Collection", revision_id: "30", closed_date: nil, format: "echo10", state: "in_daac_review", associated_granule_value: nil, copy_recommendations_note: nil, released_to_daac_date: "2021-03-27 17:00:12", daac: nil, campaign: [], native_format: nil>
+
+It means one of the migration scripts did not run properly (not entirely sure why), but if you
+redo the migration for that one script, it will work:
+
+    rake db:migrate:redo VERSION=20200227150658
 
 ## Other Known Issues
 
