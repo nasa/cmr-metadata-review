@@ -58,6 +58,11 @@ Organization/Organization_Name/Long_Name
 Organization/Organization_URL
 Organization/Personnel/Contact_Group/Name
 Distribution/Distribution_Format
+DirectDistributionInformation/Region
+DirectDistributionInformation/S3BucketAndObjectPrefixName
+DirectDistributionInformation/S3CredentialsAPIEndpoint
+DirectDistributionInformation/S3CredentialsAPIDocumentationURL
+Use_Constraints
 Multimedia_Sample/URL
 Multimedia_Sample/Description
 Reference/Citation
