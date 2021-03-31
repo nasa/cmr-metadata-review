@@ -1,5 +1,7 @@
 echo10_section_title
 DOI
+AssociatedDOIs
+UseConstraints
 Temporal
 Contacts
 Platforms
@@ -9,10 +11,13 @@ Spatial
 SpatialInfo
 OnlineResources
 OnlineAccessURLs
+AssociatedDIFs
 CSDTDescriptions
-CSDTDescription
+AssociatedBrowseImages
+AssociatedBrowseImageUrls
 AdditionalAttributes
 CollectionAssociations
 Campaigns
 AlgorithmPackages
 TwoDCoordinateSystems
+DirectDistributionInformation
