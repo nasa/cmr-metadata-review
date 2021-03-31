@@ -2,7 +2,6 @@ echo10_section_title
 DOI
 AssociatedDOIs
 UseConstraints
-TemporalKeywords
 Temporal
 Contacts
 Platforms
@@ -10,7 +9,6 @@ Campaigns
 ScienceKeywords
 Spatial
 SpatialInfo
-SpatialKeywords
 OnlineResources
 OnlineAccessURLs
 AssociatedDIFs
