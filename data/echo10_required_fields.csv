@@ -97,6 +97,7 @@ Spatial/OrbitParameters/Period
 Spatial/OrbitParameters/InclinationAngle
 Spatial/OrbitParameters/NumberOfOrbits
 Spatial/GranuleSpatialRepresentation
+AssociatedBrowseImageUrls/ProviderBrowseUrl/URL
 DirectDistributionInformation/Region
 DirectDistributionInformation/S3CredentialsAPIEndpoint
 DirectDistributionInformation/S3CredentialsAPIDocumentationURL
