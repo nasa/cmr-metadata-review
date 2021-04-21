@@ -76,7 +76,7 @@ class AclDao
 
   def send_request_to_cmr(action, endpoint, data = nil)
     conn = Faraday.new(:url => @base_url) do |faraday|
-      faraday.headers['Echo-Token'] = "#{@access_token}:#{ENV['urs_client_id']}"
+      faraday.headers['Authorization'] = "Bearer #{@access_token}"
       faraday.request :json
       faraday.response :logger # log requests to $stdout
       faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
