@@ -34,7 +34,7 @@ class Cmr
                    HTTParty.get(url, timeout: TIMEOUT_MARGIN)
                  else
                    HTTParty.get(url, timeout: TIMEOUT_MARGIN, headers: {
-                                  'Echo-Token' => user.echo_token
+                                  'Authorization' => "Bearer #{user.access_token}"
                                 })
                  end
       truncated_contents = ApplicationHelper::truncate_string(contents, 200)
@@ -123,7 +123,7 @@ class Cmr
     current_user = user.current_user
 
     conn = Faraday.new(:url => "#{Cmr.get_cmr_base_url}") do |faraday|
-      faraday.headers['Echo-Token'] = user.echo_token unless isTestUser(current_user)
+      faraday.headers['Authorization'] = "Bearer #{user.access_token}" unless isTestUser(current_user)
       faraday.response :logger
       faraday.adapter Faraday.default_adapter
     end
