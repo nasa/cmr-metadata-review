@@ -1,4 +1,3 @@
-echo10_desired_field
 ShortName
 VersionId
 InsertTime
@@ -15,6 +14,12 @@ CitationForExternalPublication
 CollectionState
 RestrictionFlag
 RestrictionComment
+UseConstraints/Description
+UseConstraints/LicenseURL/URL
+UseConstraints/LicenseURL/Description
+UseConstraints/LicenseURL/Type
+UseConstraints/LicenseURL/MimeType
+UseConstraints/LicenseText
 DataFormat
 SpatialKeywords/Keyword
 Temporal/EndsAtPresentFlag
@@ -60,3 +65,7 @@ SpatialInfo/HorizontalCoordinateSystem/GeodeticModel/DenominatorofFlatteningRati
 SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/GeographicCoordinateUnits
 SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/LatitudeResolution
 SpatialInfo/HorizontalCoordinateSystem/GeographicCoordinateSystem/LongitudeResolution
+DirectDistributionInformation/Region
+DirectDistributionInformation/S3BucketAndObjectPrefixName
+DirectDistributionInformation/S3CredentialsAPIEndpoint
+DirectDistributionInformation/S3CredentialsAPIDocumentationURL

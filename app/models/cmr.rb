@@ -235,7 +235,7 @@ class Cmr
 
   def self.format_collection(raw_collection, data_format = "echo10")
     desired_fields = if data_format == "echo10"
-      DesiredFields.instance.get_format_fields('echo10')
+       DesiredFields.instance.get_format_fields('echo10')
     elsif data_format == "dif10"
       DesiredFields.instance.get_format_fields('dif10')
     elsif data_format == "umm_json"

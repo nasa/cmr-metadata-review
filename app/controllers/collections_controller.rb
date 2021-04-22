@@ -104,6 +104,7 @@ class CollectionsController < ApplicationController
       return
     rescue Exception => ex
       flash[:alert] = 'There was an error ingesting the record into the system'
+      Rails.logger.error("Error ingesting record, message=#{ex.message}, stacktrace=#{ex.backtrace}")
       redirect_to home_path
       return
     end
