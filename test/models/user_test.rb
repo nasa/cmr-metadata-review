@@ -57,7 +57,7 @@ class UserTest < ActiveSupport::TestCase
       user.refresh_token = 'refreshtoken'
 
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
-      stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{user.uid}?calling_application=clientid").
+      stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{user.uid}?client_id=clientid").
         with(
           headers: {
             'Accept'=>'*/*',

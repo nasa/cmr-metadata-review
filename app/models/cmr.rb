@@ -751,7 +751,7 @@ class Cmr
         faraday.adapter Faraday.default_adapter # make requests with Net::HTTP
       end
       response = conn.get "/api/users/#{current_user.uid}",
-                          calling_application: ENV['urs_client_id']
+                          client_id: ENV['urs_client_id']
 
       msg = "get_user_info - Calling external resource with "
       msg += "#{ENV['urs_site']}/api/users/#{current_user.uid}, "

@@ -241,7 +241,7 @@ Devise.setup do |config|
     site: ENV['urs_site'],
     authorize_url: ENV['urs_authorize_url'],
     token_url: ENV['urs_token_url'],
-    calling_application: ENV['urs_client_id']
+    client_id: ENV['urs_client_id']
   }
   config.omniauth :developer
 

@@ -31,7 +31,7 @@ class LoginControllerTest < ActionController::TestCase
       it "should successfully create a user" do
         mock_normal_edl_user
 
-        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?calling_application=clientid").
+        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?client_id=clientid").
           with(
             headers: {
               'Accept' => '*/*',

@@ -60,7 +60,7 @@ module OmniauthMacros
     ENV['urs_client_id'] = 'clientid'
     ENV['urs_client_secret'] = 'clientsecret'
 
-    stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{uid}?calling_application=clientid").
+    stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/#{uid}?client_id=clientid").
       with(
         headers: {
           'Accept'=>'*/*',
