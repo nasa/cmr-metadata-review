@@ -14,8 +14,8 @@ class UserSingleton
     Thread.current['user-singleton'] ||= UserSingleton.new
   end
 
-  def echo_token
-    "#{@current_user.access_token}:#{ENV['urs_client_id']}"
+  def access_token
+    @current_user.access_token
   end
 
   def self.clear
