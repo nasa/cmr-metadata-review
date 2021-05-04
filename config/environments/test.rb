@@ -45,4 +45,17 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  # cmr base url
+  config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
+
+  # cmr base url
+  config.kms_base_url = 'https://gcmd.sit.earthdata.nasa.gov'
+
+  config.email_preference_feature_toggle = true
+
+  config.mdq_enabled_feature_toggle = true
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
+  config.default_email_domain = 'earthdata.nasa.gov'
 end

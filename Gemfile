@@ -39,11 +39,11 @@ gem 'rubyXL'
 gem 'ruby-progressbar'
 
 group :test do
-  gem 'minitest-spec-rails'
+  gem 'minitest-spec-rails', '6.0.0'
   gem 'webmock'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
-  gem 'minitest-rails-capybara'
+  gem 'minitest-rails', '6.0.0'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'launchy'
