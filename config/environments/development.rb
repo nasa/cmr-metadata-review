@@ -59,4 +59,13 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
+  config.kms_base_url = 'https://gcmd.sit.earthdata.nasa.gov'
+
+  config.email_preference_feature_toggle = true
+  config.mdq_enabled_feature_toggle = true
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
+  config.default_email_domain = 'earthdata.nasa.gov'
 end
