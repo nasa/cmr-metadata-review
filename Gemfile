@@ -13,8 +13,8 @@ gem 'react-rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 
-gem 'bourbon'
-gem 'neat'
+gem 'bourbon', '4.2.6'
+gem 'neat', '1.7.2'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
