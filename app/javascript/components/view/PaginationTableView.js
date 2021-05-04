@@ -7,14 +7,21 @@ import PropTypes from "prop-types";
 import {observer} from "mobx-react"
 import "../eui.css"
 import "../pagination.css"
-import ColorFilterView from "./ColorFilterView";
+// import ColorFilterView from "./ColorFilterView";
+
+// class PaginationTableView extends React.Component {
+//   viewModel = 'x'
+//   render() {
+//     return <h1>Hello, World!</h1>
+//   }
+// }
 
 const PaginationTableView = observer(
   class PaginationTableView extends React.Component {
-    viewModel = new PaginationTableViewModel()
 
     constructor(props) {
       super(props)
+      this.viewModel = new PaginationTableViewModel()
       this.viewModel.setSection(this.props.section)
       this.createRow = this.createRow.bind(this)
       this.pageSizeSelectRef = React.createRef()

@@ -1,7 +1,9 @@
 require 'test_helper'
+require 'capybara/rails'
+require 'capybara/minitest'
 Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 
-class CopyRecommendationsTest < Capybara::Rails::TestCase
+class CopyRecommendationsTest < ActionDispatch::SystemTestCase
     include Helpers::UserHelpers
 
     before do
@@ -10,7 +12,7 @@ class CopyRecommendationsTest < Capybara::Rails::TestCase
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC")
         .with(
-          headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby'}
+          headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*'}
         )
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
