@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
-class CanShowCollectionsTest < Capybara::Rails::TestCase
+class CanShowCollectionsTest < ActionDispatch::SystemTestCase
   include Helpers::UserHelpers
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
