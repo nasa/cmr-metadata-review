@@ -12,6 +12,7 @@ require 'webmock/minitest'
 require 'minitest/reporters'
 require 'minitest/rails/capybara'
 
+
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
 # Specs flagged with `js: true` will use Capybara's JS driver.
@@ -32,7 +33,16 @@ Capybara.register_driver :headless_chrome do |app|
     chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,2000], w3c: false}
 
   )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
+
+  options = ::Selenium::WebDriver::Chrome::Options.new
+
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+
+  # Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities, options: options)
 end
 
 Capybara::Screenshot.register_driver(:headless_chrome) do |driver, path|
@@ -48,7 +58,7 @@ WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: 'chromedriver.storage.googleapis.com'
 )
-# WebMock.allow_net_connect!
+WebMock.allow_net_connect!
 WebMock.after_request(real_requests_only: true) do |request_signature, response|
   unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.to_s.include?('chromedriver.storage.googleapis.com')
     puts "Request #{request_signature} was made. \nrequest headers=#{request_signature.headers}\nresponse body=#{response.body}"
