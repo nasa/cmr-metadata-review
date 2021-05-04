@@ -17,7 +17,7 @@ class LoginControllerTest < ActionController::TestCase
           headers: {
             'Accept' => '*/*',
             'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Echo-Token' => 'accesstoken:clientid',
+            'Authorization' => 'Bearer accesstoken',
             'User-Agent' => 'Faraday v0.17.4'
           }).
         to_return(status: 200, body: '{"hits":1,"took":661,"items":[{"revision_id":16,"concept_id":"ACL1200213993-CMR","identity_type":"Catalog Item","name":"Admin Full Access","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200213993-CMR"},{"revision_id":1,"concept_id":"ACL1200301610-CMR","identity_type":"System","name":"System - DASHBOARD_ARC_CURATOR","location":"' + Cmr.get_cmr_base_url + ':443/access-control/acls/ACL1200301610-CMR"}]}', headers: {})
@@ -31,7 +31,7 @@ class LoginControllerTest < ActionController::TestCase
       it "should successfully create a user" do
         mock_normal_edl_user
 
-        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?calling_application=clientid").
+        stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?client_id=clientid").
           with(
             headers: {
               'Accept' => '*/*',
