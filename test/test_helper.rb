@@ -30,14 +30,14 @@ Capybara.register_driver :headless_chrome do |app|
     # in the desired test location
     # w3c: false is needed for retrieving javascript console messages.
     loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,2000], w3c: false}
+    chromeOptions: { args: %w[no-sandbox headless disable-dev-shm-usage disable-gpu --window-size=1500,2000], w3c: false}
 
   )
 
   options = ::Selenium::WebDriver::Chrome::Options.new
 
-  options.add_argument('--headless')
   options.add_argument('--no-sandbox')
+  options.add_argument('--headless')
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1400,1400')
 
@@ -55,10 +55,10 @@ Capybara.javascript_driver = :headless_chrome
 
 # Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
 WebMock.disable_net_connect!(
-  allow_localhost: true,
-  allow: 'chromedriver.storage.googleapis.com'
+   allow_localhost: true,
+   allow: 'chromedriver.storage.googleapis.com'
 )
-WebMock.allow_net_connect!
+#WebMock.allow_net_connect!
 WebMock.after_request(real_requests_only: true) do |request_signature, response|
   unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.to_s.include?('chromedriver.storage.googleapis.com')
     puts "Request #{request_signature} was made. \nrequest headers=#{request_signature.headers}\nresponse body=#{response.body}"
