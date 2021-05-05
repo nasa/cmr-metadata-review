@@ -3,7 +3,7 @@ require 'capybara/rails'
 require 'capybara/minitest'
 Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 
-class CopyRecommendationsTest < ActiveSupport::TestCase
+class CopyRecommendationsTest < ActionDispatch::SystemTestCase
     include Helpers::UserHelpers
 
     before do

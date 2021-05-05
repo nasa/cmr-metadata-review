@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
-class CollectionsControllerTest < ActiveSupport::TestCase
+class CollectionsControllerTest < ActionController::TestCase
   include OmniauthMacros
 
   let(:user) { User.find_by_email("abaker@element84.com") }
