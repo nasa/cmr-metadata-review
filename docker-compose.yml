@@ -1,0 +1,15 @@
+version: "3"
+services:
+  pg96:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    networks:
+      - cmr
+networks:
+  cmr:
+    driver: bridge
+
