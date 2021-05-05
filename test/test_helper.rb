@@ -10,7 +10,7 @@ require 'mocha/minitest'
 require 'minitest/mock'
 require 'webmock/minitest'
 require 'minitest/reporters'
-#require 'minitest/rails/capybara'
+require 'minitest/rails/capybara'
 
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
