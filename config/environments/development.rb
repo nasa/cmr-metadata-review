@@ -60,8 +60,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.cmr_base_url = 'https://cmr.sit.earthdata.nasa.gov'
-  config.kms_base_url = 'https://gcmd.sit.earthdata.nasa.gov'
+  config.cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+  config.kms_base_url = 'https://gcmd.earthdata.nasa.gov'
 
   config.email_preference_feature_toggle = true
   config.mdq_enabled_feature_toggle = true
