@@ -28,6 +28,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "webpack-dev-server": "^3.11.2"
   }
 }
