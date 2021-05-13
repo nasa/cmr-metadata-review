@@ -89,6 +89,25 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.action_controller.default_url_options = {host: 'https://cmr-dashboard.earthdata.nasa.gov'}
+  config.action_controller.asset_host = 'https://cmr-dashboard.earthdata.nasa.gov'
+
+  # cmr base url
+  config.cmr_base_url = 'https://cmr.earthdata.nasa.gov'
+
+  # kms base url
+  config.kms_base_url = 'https://gcmd.earthdata.nasa.gov'
+
+  # Google Tag Manager ID for EOSDIS usage stats
+  config.tag_manager_id = 'GTM-WNP7MLF'
+
+  config.mdq_enabled_feature_toggle = false
+
+  config.email_preference_feature_toggle = true
+  # This domain has been configured to pass DMARC authentication.  Changing to a
+  # domain which has not been will cause gmail to reject our e-mails
+  config.default_email_domain = 'earthdata.nasa.gov'
+
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
