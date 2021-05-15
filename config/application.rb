@@ -49,6 +49,9 @@ module CmrMetadataReview
       '(unknown)'
     end
 
+    config.react.jsx_transform_options = {
+      optional: ["es7.classProperties"]
+    }
     config.version = load_version
   end
 end
