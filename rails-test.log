@@ -26,7 +26,7 @@ I, [2021-05-05T18:57:40.866472 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:40.866528 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_gets selection csv without error                     [31mERROR[0m (0.05s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -36,7 +36,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -50,7 +50,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -58,7 +58,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -74,7 +74,7 @@ I, [2021-05-05T18:57:40.985106 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:40.985149 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_will delete and replace the granule                  [31mERROR[0m (0.12s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -84,7 +84,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -98,7 +98,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -106,7 +106,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -120,7 +120,7 @@ I, [2021-05-05T18:57:41.022620 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:41.022665 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_prevents DAAC curators from replacing the Granule    [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/4?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/4?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -130,7 +130,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -144,7 +144,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/4?client_id=clientid").
           with(
@@ -152,7 +152,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -168,7 +168,7 @@ I, [2021-05-05T18:57:41.055721 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:41.055785 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_it returns modis results                             [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -178,7 +178,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -189,7 +189,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -199,7 +199,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -207,7 +207,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -251,7 +251,7 @@ I, [2021-05-05T18:57:52.076443 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.076476 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_gets home csv without error                          [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -261,7 +261,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -272,7 +272,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -282,7 +282,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -290,7 +290,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -310,7 +310,7 @@ I, [2021-05-05T18:57:52.179849 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.179918 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0005_roundtrip release to daac both a collection and assoc granule record and then revert it[31mERROR[0m (0.07s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -320,7 +320,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -334,7 +334,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -342,7 +342,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -356,7 +356,7 @@ I, [2021-05-05T18:57:52.206444 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.206479 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_will set an error when record cannot move to the next stage[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -366,7 +366,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -380,7 +380,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -388,7 +388,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -402,7 +402,7 @@ I, [2021-05-05T18:57:52.235143 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.235191 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0008_will not flag second opinions until it hits ready for daac review state.[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -412,7 +412,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -426,7 +426,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -434,7 +434,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -448,7 +448,7 @@ I, [2021-05-05T18:57:52.264378 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.264449 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0009_will moves the granule review state forward along with the collection view[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -458,7 +458,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -472,7 +472,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -480,7 +480,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -494,7 +494,7 @@ I, [2021-05-05T18:57:52.296030 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.296068 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0004_associates a granule to a collection                 [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -504,7 +504,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -518,7 +518,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -526,7 +526,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -540,7 +540,7 @@ I, [2021-05-05T18:57:52.325692 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.325731 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0007_marks complete while checking BOTH the collection review AND the associated granule review.[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -550,7 +550,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -564,7 +564,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -572,7 +572,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -586,7 +586,7 @@ I, [2021-05-05T18:57:52.357647 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.357691 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0006_roundtrip release to daac just a collection record with no assoc granule record and then revert it[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -596,7 +596,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -610,7 +610,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -618,7 +618,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -632,7 +632,7 @@ I, [2021-05-05T18:57:52.387309 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.387349 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_will set an error when the user does not have permission to advance the record[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -642,7 +642,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -656,7 +656,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -664,7 +664,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -678,7 +678,7 @@ I, [2021-05-05T18:57:52.419062 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.419103 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0003_will send the user to the collection's page when successful[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -688,7 +688,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -702,7 +702,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -710,7 +710,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -726,7 +726,7 @@ I, [2021-05-05T18:57:52.446095 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.446130 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_can ingest a specifc granule review found in CMR and test that you cannot import the granule again (duplicate)[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -736,7 +736,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -747,7 +747,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -757,7 +757,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -765,7 +765,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -779,7 +779,7 @@ I, [2021-05-05T18:57:52.476991 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.477037 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_can ingest a specifc granule review not found in CMR [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -789,7 +789,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -800,7 +800,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -810,7 +810,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -818,7 +818,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -832,7 +832,7 @@ I, [2021-05-05T18:57:52.507475 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.507514 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0003_prevents ingested a specific granule not belong to the collection.[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -842,7 +842,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -853,7 +853,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -863,7 +863,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -871,7 +871,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -887,7 +887,7 @@ I, [2021-05-05T18:57:52.543675 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.543764 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_downloads and saves a new iso record as umm-json     [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -897,7 +897,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -908,28 +908,28 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "/.*granules.echo10\?concept_id=G.*/").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=C1599780765-NSIDC_ECS").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -939,7 +939,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -947,7 +947,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -961,7 +961,7 @@ I, [2021-05-05T18:57:52.579673 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:57:52.579709 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_downloads and saves a new record                     [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -971,7 +971,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -982,28 +982,28 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "/.*granules.*C222702-GHRC.*/").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=C222702-GHRC").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "/https:\/\/cmr\.sit\.earthdata\.nasa\.gov\/search\/collections\.(echo10|native)\?concept_id\=C222702\-GHRC/").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1013,7 +1013,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1021,7 +1021,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1120,7 +1120,7 @@ I, [2021-05-05T18:58:30.156928 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:30.156966 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_pulls in the latest revision of a granule for a collection.[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1130,7 +1130,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1144,7 +1144,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1152,14 +1152,14 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         
         ============================================================
@@ -1213,7 +1213,7 @@ I, [2021-05-05T18:58:46.613468 #65025]  INFO -- request: GET https://cmr.sit.ear
 I, [2021-05-05T18:58:46.613511 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_should successfully create a user                    [31mERROR[0m (0.14s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1223,7 +1223,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1235,7 +1235,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
           with(
@@ -1243,7 +1243,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1261,7 +1261,7 @@ I, [2021-05-05T18:58:46.648282 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:46.648322 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_creates a new random granule for a collection        [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1271,7 +1271,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1285,7 +1285,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1293,21 +1293,21 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         
         ============================================================
@@ -1331,7 +1331,7 @@ I, [2021-05-05T18:58:51.429304 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:51.429353 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0004_detects if a granule is no longer in cmr             [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1341,7 +1341,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1352,14 +1352,14 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1369,7 +1369,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1377,7 +1377,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1391,7 +1391,7 @@ I, [2021-05-05T18:58:51.460375 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:51.460418 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_loads the correct collection on show                 [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1401,7 +1401,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1412,14 +1412,14 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1429,7 +1429,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1437,7 +1437,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1452,7 +1452,7 @@ I, [2021-05-05T18:58:51.498388 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:51.498431 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0005_detects if a new granule revision is available       [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1462,7 +1462,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1473,14 +1473,14 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1490,7 +1490,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1498,7 +1498,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1541,7 +1541,7 @@ I, [2021-05-05T18:58:55.508135 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:55.508178 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_the account is active                                [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1551,7 +1551,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1565,7 +1565,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid").
           with(
@@ -1573,7 +1573,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1586,7 +1586,7 @@ I, [2021-05-05T18:58:55.534468 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:58:55.534514 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_the account is inactive                              [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1596,7 +1596,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1608,7 +1608,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1618,7 +1618,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/2?client_id=clientid").
           with(
@@ -1626,7 +1626,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1668,7 +1668,7 @@ I, [2021-05-05T18:59:02.648362 #65025]  INFO -- request: GET https://cmr.sit.ear
 I, [2021-05-05T18:59:02.648405 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_tests retrieving role as arc_curator                 [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1678,7 +1678,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1690,7 +1690,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1703,7 +1703,7 @@ I, [2021-05-05T18:59:02.667285 #65025]  INFO -- request: GET https://cmr.sit.ear
 I, [2021-05-05T18:59:02.667323 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_tests retrieving role as admin                       [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=existingdeviseuser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=existingdeviseuser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1713,7 +1713,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1725,7 +1725,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1738,7 +1738,7 @@ I, [2021-05-05T18:59:02.685806 #65025]  INFO -- request: GET https://cmr.sit.ear
 I, [2021-05-05T18:59:02.685838 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0003_tests retrieving acls as daac curator                [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1748,7 +1748,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1760,7 +1760,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls/ACL1200303063-CMR").
           with(
@@ -1768,7 +1768,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1783,7 +1783,7 @@ I, [2021-05-05T18:59:02.714032 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:02.714074 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_it returns modis results                             [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1793,7 +1793,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1804,7 +1804,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -1814,7 +1814,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1822,7 +1822,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1879,7 +1879,7 @@ I, [2021-05-05T18:59:21.644719 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:21.644751 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_can reopen a closed record                           [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1889,7 +1889,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1903,7 +1903,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1911,7 +1911,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1925,7 +1925,7 @@ I, [2021-05-05T18:59:21.673410 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:21.673454 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_reverting a record not 'in daac review' or 'closed' results in no change[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1935,7 +1935,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1949,7 +1949,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -1957,7 +1957,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -1971,7 +1971,7 @@ I, [2021-05-05T18:59:21.705669 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:21.705710 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0004_can revert a record from in daac review back to ready for daac review[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -1981,7 +1981,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -1995,7 +1995,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2003,7 +2003,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2017,7 +2017,7 @@ I, [2021-05-05T18:59:21.746228 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:21.746269 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0003_revert both collection and assoc granule record      [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2027,7 +2027,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2041,7 +2041,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2049,7 +2049,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2079,7 +2079,7 @@ ControlledElementsTest::controlled elements tests
 
 KmsTest::kms accessor test
   test_0002_get recommended keywords                             [31mERROR[0m (0.43s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: POST https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=platforms with body '{"Keywords":["AQUATEST","CLOUDTEST"]}' with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: POST https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=platforms with body '{"Keywords":["AQUATEST","CLOUDTEST"]}' with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json'}
         
         You can stub this request with the following snippet:
         
@@ -2090,7 +2090,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2103,56 +2103,56 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/ProductLevelId?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/projects?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         
         ============================================================
@@ -2184,7 +2184,7 @@ I, [2021-05-05T18:59:26.574600 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:26.574635 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_gets provider csv without error                      [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2194,7 +2194,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2205,7 +2205,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -2215,7 +2215,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2223,7 +2223,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2275,7 +2275,7 @@ I, [2021-05-05T18:59:44.726667 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:44.726705 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_removes values when unselected                       [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2285,7 +2285,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2299,7 +2299,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2307,7 +2307,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2321,7 +2321,7 @@ I, [2021-05-05T18:59:44.750725 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:44.750763 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_updates record data from review params               [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2331,7 +2331,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2345,7 +2345,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2353,7 +2353,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2389,7 +2389,7 @@ CmrSyncTest::can read/write since data from cmr_sync table
 I, [2021-05-05T18:59:48.870445 #65025]  INFO -- request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12%3A00%3A00Z
 I, [2021-05-05T18:59:48.870491 #65025]  INFO -- request: User-Agent: "Faraday v1.4.1"
   test_0003_returns all concept_id, revision_id, short_name, version for a given provider from CMR api[31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}
         
         You can stub this request with the following snippet:
         
@@ -2398,7 +2398,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2409,14 +2409,14 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2433,7 +2433,7 @@ I, [2021-05-05T18:59:48.970059 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:48.970098 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_deletes a selected granule record from a collection  [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2443,7 +2443,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2457,7 +2457,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2465,7 +2465,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://sit.urs.earthdata.nasa.gov/oauth/token").
           with(
@@ -2475,7 +2475,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2483,7 +2483,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2519,7 +2519,7 @@ I, [2021-05-05T18:59:51.430179 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:51.430217 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0004_it properly undeletes multiple records               [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2529,7 +2529,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2543,7 +2543,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -2551,7 +2551,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2565,7 +2565,7 @@ I, [2021-05-05T18:59:51.454176 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:51.454211 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_it deletes a single record                           [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2575,7 +2575,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2589,7 +2589,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -2597,7 +2597,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2611,7 +2611,7 @@ I, [2021-05-05T18:59:51.485169 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:51.485207 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0002_it properly undeletes a single record                [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2621,7 +2621,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2635,7 +2635,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2643,7 +2643,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2656,7 +2656,7 @@ I, [2021-05-05T18:59:51.511553 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:51.511598 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0003_it deletes multiple records                          [31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2666,7 +2666,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2680,7 +2680,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/3?client_id=clientid").
           with(
@@ -2688,7 +2688,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2702,7 +2702,7 @@ I, [2021-05-05T18:59:51.542238 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T18:59:51.542279 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0005_ensure associate granule record not hidden, see CMRARC-586[31mERROR[0m (0.03s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2712,7 +2712,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2726,7 +2726,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2734,7 +2734,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2809,7 +2809,7 @@ I, [2021-05-05T19:00:14.306319 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T19:00:14.306365 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_refresh record with id # with new record from cmr    [31mERROR[0m (0.04s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -2819,7 +2819,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2833,7 +2833,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -2841,28 +2841,28 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1000000020-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=C1000000020-LANCEAMSR2").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=2000&updated_since=1971-01-01T12:00:00-04:00").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
@@ -2877,7 +2877,7 @@ KeywordValidatorTest::keyword validator test
 I, [2021-05-05T19:00:14.641290 #65025]  INFO -- request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T12%3A00%3A00Z
 I, [2021-05-05T19:00:14.641344 #65025]  INFO -- request: User-Agent: "Faraday v1.4.1"
   test_0001_validate keyword                                     [31mERROR[0m (0.33s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T12:00:00Z with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T12:00:00Z with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}
         
         You can stub this request with the following snippet:
         
@@ -2886,7 +2886,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -2899,7 +2899,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=ProductLevelId").
           with(
@@ -2908,7 +2908,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=providers").
           with(
@@ -2917,7 +2917,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=projects").
           with(
@@ -2926,7 +2926,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=instruments").
           with(
@@ -2935,7 +2935,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=platforms").
           with(
@@ -2944,7 +2944,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:post, "https://gcmd.sit.earthdata.nasa.gov/kms/recommended_keywords/?includesFullPath=false&scheme=sciencekeywords").
           with(
@@ -2953,77 +2953,77 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Content-Type'=>'application/json',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200208767-SCIOPS/1.umm_json").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200207458-SCIOPS/1.umm_json").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=2000&provider=SCIOPS&updated_since=1971-01-01T12:00:00Z").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/ProductLevelId?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/providers?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/projects?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         stub_request(:get, "https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv").
           with(
             headers: {
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        	  'User-Agent'=>'Ruby'
+
             })
         
         ============================================================
@@ -3054,7 +3054,7 @@ I, [2021-05-05T19:00:21.609378 #65025]  INFO -- request: GET https://sit.urs.ear
 I, [2021-05-05T19:00:21.609411 #65025]  INFO -- request: Authorization: "Bearer accesstoken"
 User-Agent: "Faraday v1.4.1"
   test_0001_can download csv review report                       [31mERROR[0m (0.02s)
-Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken', 'User-Agent'=>'Faraday v1.4.1'}
+Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP connections are disabled. Unregistered request: GET https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid with headers {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'Bearer accesstoken'}
         
         You can stub this request with the following snippet:
         
@@ -3064,7 +3064,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v1.4.1'
+        	  #
             }).
           to_return(status: 200, body: "", headers: {})
         
@@ -3078,7 +3078,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Basic Y2xpZW50aWQ6Y2xpZW50c2VjcmV0',
         	  'Content-Type'=>'application/x-www-form-urlencoded',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/1?client_id=clientid").
           with(
@@ -3086,7 +3086,7 @@ Minitest::UnexpectedError:         WebMock::NetConnectNotAllowedError: Real HTTP
         	  'Accept'=>'*/*',
         	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
         	  'Authorization'=>'Bearer accesstoken',
-        	  'User-Agent'=>'Faraday v0.17.4'
+
             })
         
         ============================================================
