@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require './app/middleware/middleware_healthcheck'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -17,7 +18,7 @@ module CmrMetadataReview
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # config.middleware.insert_after Rails::Rack::Logger, MiddlewareHealthcheck
+    config.middleware.insert_after Rails::Rack::Logger, MiddlewareHealthcheck
 
     # Content Security Policy controls which javascript can be run in the
     # application with the goal of preventing Cross Site Scripting. The
