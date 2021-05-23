@@ -7,14 +7,7 @@ import PropTypes from "prop-types";
 import {observer} from "mobx-react"
 import "../eui.css"
 import "../pagination.css"
-// import ColorFilterView from "./ColorFilterView";
-
-// class PaginationTableView extends React.Component {
-//   viewModel = 'x'
-//   render() {
-//     return <h1>Hello, World!</h1>
-//   }
-// }
+import ColorFilterView from "./ColorFilterView";
 
 const PaginationTableView = observer(
   class PaginationTableView extends React.Component {

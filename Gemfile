@@ -18,7 +18,7 @@ gem 'bourbon', '7.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails' # , '~> 4.2.2'
+gem 'coffee-rails', '~> 5.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -55,7 +55,7 @@ group :development, :test do
 end
 
 #coverage map for testing
-# gem 'simplecov', :require => false, :group => :test
+gem 'simplecov', :require => false, :group => :test
 
 #using puma server instead of webBrick
 gem 'puma', '~> 3.12.2'
@@ -89,7 +89,6 @@ gem 'rails-controller-testing'
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
-  gem 'listen'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'rdoc'
