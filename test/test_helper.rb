@@ -37,8 +37,7 @@ Capybara.register_driver :headless_chrome do |app|
     # in the desired test location
     # w3c: false is needed for retrieving javascript console messages.
     loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
-    chromeOptions: { args: %w[no-sandbox headless disable-dev-shm-usage disable-gpu --window-size=1500,2000],
-                     w3c: false }
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox --window-size=1500,2000], w3c: false}
   )
 
    Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
