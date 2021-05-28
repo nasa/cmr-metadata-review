@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 
-class MdqCuratorTest < ActionDispatch::SystemTestCase
+class MdqCuratorTest < SystemTestCase
   include Helpers::UserHelpers
 
   before do

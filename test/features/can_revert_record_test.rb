@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
-class CanRevertRecordTest < ActionDispatch::SystemTestCase
+class CanRevertRecordTest < SystemTestCase
   include Helpers::UserHelpers
 
   describe 'Reverting Collections' do
