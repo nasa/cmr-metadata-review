@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
-class PerformsSanityChecksOnReviewsTest < ActionDispatch::SystemTestCase
+class PerformsSanityChecksOnReviewsTest < SystemTestCase
   include Helpers::UserHelpers
   include Helpers::CollectionsHelper
   include Helpers::ReviewsHelper

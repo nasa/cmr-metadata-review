@@ -1,7 +1,7 @@
 require "test_helper"
 Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
-class CanAccessTopPageTest < ActionDispatch::SystemTestCase
+class CanAccessTopPageTest < SystemTestCase
   include OmniauthMacros
 
   describe "POST #urs" do
