@@ -9,13 +9,6 @@ import "../eui.css"
 import "../pagination.css"
 import ColorFilterView from "./ColorFilterView";
 
-// class PaginationTableView extends React.Component {
-//   viewModel = 'x'
-//   render() {
-//     return <h1>Hello, World!</h1>
-//   }
-// }
-
 const PaginationTableView = observer(
   class PaginationTableView extends React.Component {
 
