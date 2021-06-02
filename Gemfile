@@ -4,7 +4,7 @@ ruby "2.7.2"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4.4'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.12', group: [:test]
+# gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
 gem 'pg', group: [:test, :development, :production]
 gem 'webpacker'
@@ -37,6 +37,7 @@ gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
 gem 'ruby-progressbar'
+gem 'tzinfo-data'
 
 group :test do
   gem 'minitest-spec-rails'

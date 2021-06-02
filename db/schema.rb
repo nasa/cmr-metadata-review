@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_195108) do
+ActiveRecord::Schema.define(version: 2021_03_15_150210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2021_03_02_195108) do
     t.string "ummc_field"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "scheme"
   end
 
   create_table "record_data", id: :serial, force: :cascade do |t|
@@ -84,8 +85,8 @@ ActiveRecord::Schema.define(version: 2021_03_02_195108) do
   end
 
   create_table "records", id: :serial, force: :cascade do |t|
-    t.integer "recordable_id", null: false
     t.string "recordable_type", null: false
+    t.integer "recordable_id", null: false
     t.string "revision_id", null: false
     t.datetime "closed_date"
     t.string "format", default: ""
