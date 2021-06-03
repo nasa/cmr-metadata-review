@@ -11,12 +11,6 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
     OmniAuth.config.test_mode = true
     mock_login(role: 'admin')
 
-    stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC")
-        .with(
-            headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*', 'User-Agent' => 'Ruby'}
-        )
-        .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
-
     stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.xml?concept_id%5B%5D=metric1-PODAAC")
         .with(
             headers: {
