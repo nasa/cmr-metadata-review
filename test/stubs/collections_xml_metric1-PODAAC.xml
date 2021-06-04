@@ -1,0 +1,16 @@
+<results>
+    <hits>1</hits>
+    <took>8</took>
+    <references>
+        <reference>
+            <name>
+                Waveglider data for the SPURS-1 N. Atlantic field campaign
+            </name>
+            <id>metric1-PODAAC</id>
+            <location>
+                https://cmr.earthdata.nasa.gov:443/search/concepts/metric1-PODAAC/4
+            </location>
+            <revision-id>4</revision-id>
+        </reference>
+    </references>
+</results>

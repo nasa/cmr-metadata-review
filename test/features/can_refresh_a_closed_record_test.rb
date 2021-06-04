@@ -18,22 +18,7 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
                 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'User-Agent' => 'Ruby'}
         )
-        .to_return(status: 200, body: "<results>
-            <hits>1</hits>
-            <took>8</took>
-            <references>
-            <reference>
-            <name>
-            Waveglider data for the SPURS-1 N. Atlantic field campaign
-            </name>
-            <id>metric1-PODAAC</id>
-            <location>
-            https://cmr.earthdata.nasa.gov:443/search/concepts/metric1-PODAAC/4
-            </location>
-            <revision-id>4</revision-id>
-            </reference>
-            </references>
-            </results>", headers: {})
+        .to_return(status: 200, body: get_stub('collections_xml_metric1-PODAAC.xml'), headers: {})
 
     stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=metric1-PODAAC")
         .with(
