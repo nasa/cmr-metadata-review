@@ -10,37 +10,20 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
   before do
     OmniAuth.config.test_mode = true
     mock_login(role: 'admin')
-
-    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.xml?concept_id%5B%5D=metric1-PODAAC")
-        .with(
-            headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                'User-Agent' => 'Ruby'}
-        )
-        .to_return(status: 200, body: get_stub('collections_xml_metric1-PODAAC.xml'), headers: {})
-
-    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=metric1-PODAAC")
-        .with(
-            headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                'User-Agent' => 'Ruby'}
-        )
-        .to_return(status: 200, body: get_stub('collections_atom_metric1-PODAAC.xml'), headers: {})
-
-    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=metric1-PODAAC")
-        .with(
-            headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                'User-Agent' => 'Ruby'}
-        )
-        .to_return(status: 200, body: get_stub('collections.umm_json_metric1-PODAAC.json'), headers: {})
   end
 
   describe "GET #refresh" do
     it "refreshes a record and informs user collection has already been ingested." do
+      # https://cmr.earthdata.nasa.gov/search/concepts/C1652975935-PODAAC.native
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.xml?concept_id%5B%5D=metric1-PODAAC")
+      .with(
+          headers: {
+              'Accept' => '*/*',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent' => 'Ruby'}
+      )
+      .to_return(status: 200, body: get_stub('collections_xml_metric1-PODAAC.xml'), headers: {'content-type': 'application/xml; charset=utf-8'})
+
       visit '/home'
       find("#closed_records_button").click
       within '#closed' do
@@ -49,19 +32,61 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
       sleep 1
       screenshot_and_open_image
       click_on 'Refresh'
-      page.must_have_content(`Latest revision for Collection has already been ingested`)
+      page.must_have_content('Latest revision for Collection metric1-PODAAC has already been ingested')
     end
 
     it "refreshes a record and informs user a new revision has been ingested." do
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.xml?concept_id%5B%5D=metric1-PODAAC")
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent' => 'Ruby'}
+          )
+          .to_return(status: 200, body: "<results>
+              <hits>1</hits>
+              <took>8</took>
+              <references>
+              <reference>
+              <name>
+              Waveglider data for the SPURS-1 N. Atlantic field campaign
+              </name>
+              <id>metric1-PODAAC</id>
+              <location>
+              https://cmr.sit.earthdata.nasa.gov:443/search/concepts/metric1-PODAAC/5
+              </location>
+              <revision-id>5</revision-id>
+              </reference>
+              </references>
+              </results>", headers: {'content-type': 'application/xml; charset=utf-8'})
+
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.atom?concept_id=metric1-PODAAC")
+          .with(
+              headers: {
+                  'Accept' => '*/*',
+                  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                  'User-Agent' => 'Ruby'}
+          )
+          .to_return(status: 200, body: get_stub('collections_atom_metric1-PODAAC.xml'), headers: {'content-type': 'application/atom+xml; charset=utf-8'})
+
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=metric1-PODAAC")
+          .with(
+              headers: {
+                  'Accept' => '*/*',
+                  'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                  'User-Agent' => 'Ruby'}
+          )
+          .to_return(status: 200, body: get_stub('collections.umm_json_metric1-PODAAC.json'), headers: {'content-type': 'application/vnd.nasa.cmr.umm_results+json;version=1.16.3; charset=utf-8'})
+
       visit '/home'
       find("#closed_records_button").click
       within '#closed' do
         all('#record_id_')[0].click
       end
+      click_on 'Refresh'
       sleep 1
       screenshot_and_open_image
-      click_on 'Refresh'
-      page.must_have_content(`Latest revision for Collection has been ingested`)
+      page.must_have_content('Latest revision for Collection metric1-PODAAC has been ingested')
     end
   end
 end
