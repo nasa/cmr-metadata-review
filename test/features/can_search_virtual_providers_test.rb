@@ -18,12 +18,15 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
 
-  # describe "GET #search" do
-  #   it "searches for collections under ASDC provider" do
-  #     visit '/home'
-  #     find("#provider").click
-  #     screenshot_and_open_image
-  #     # click_on '#provider > option:nth-child(3)'
-  #   end
-  # end
+  describe "GET #search" do
+    it "searches for collections under ASDC provider" do
+      visit '/home'
+      # find("#provider").click
+      within '#provider' do
+        find("#provider > option:nth-child(3)").click
+      end
+      find("#search_button").click
+      screenshot_and_open_image
+    end
+  end
 end
