@@ -21,7 +21,6 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
   describe "GET #search" do
     it "searches for collections under ASDC provider" do
       visit '/home'
-      # find("#provider").click
       within '#provider' do
         find("#provider > option:nth-child(3)").click
       end
