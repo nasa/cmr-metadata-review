@@ -24,7 +24,28 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
       within '#provider' do
         find("#provider > option:nth-child(3)").click
       end
-      find("#search_button").click
+      # find("#search_button").click
+      assert has_content?
+      screenshot_and_open_image
+    end
+
+    it "searches for collections under NSIDC provider" do
+      visit '/home'
+      within '#provider' do
+        find("#provider > option:nth-child(11)").click
+      end
+      # find("#search_button").click
+      assert has_content?
+      screenshot_and_open_image
+    end
+
+    it "searches for collections under GHRC provider" do
+      visit '/home'
+      within '#provider' do
+        find("#provider > option:nth-child(6)").click
+      end
+      # find("#search_button").click
+      assert has_content?
       screenshot_and_open_image
     end
   end
