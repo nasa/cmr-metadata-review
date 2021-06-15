@@ -38,7 +38,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
 
@@ -49,7 +49,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.xml'), headers: {})
 
@@ -76,7 +76,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
@@ -170,7 +170,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 400, body: '<?xml version="1.0" encoding="UTF-8"?><errors><error>Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.</error></errors>', headers: {"content-type":"application/xml"})
 
@@ -188,7 +188,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub("search_granules_G226251-GHRC.xml"), headers: {})
 
@@ -209,7 +209,7 @@ class GranulesControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.xml"), headers: {})
 

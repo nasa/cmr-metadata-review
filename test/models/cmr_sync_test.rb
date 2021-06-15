@@ -19,7 +19,7 @@ class CmrSyncTest < ActiveSupport::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Faraday v0.17.4'
+            #
           }).
         to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg1.json"), headers: {"cmr-hits" => 32, "content-type" => "application/json;charset=utf-8"})
 
@@ -28,7 +28,7 @@ class CmrSyncTest < ActiveSupport::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Faraday v0.17.4'
+            #
           }).
         to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg2.json"), headers: {"content-type" => "application/json;charset=utf-8"})
 
@@ -47,7 +47,7 @@ class CmrSyncTest < ActiveSupport::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+            #
           }).
         to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
       concept = CmrSync.get_concept("C28109-LARC", 12, 'umm_json')
@@ -60,7 +60,7 @@ class CmrSyncTest < ActiveSupport::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+            #
           }).
         to_return(status: 200, body: get_stub("C28109-LARC.json"), headers: {"content-type" => "content-type: application/vnd.nasa.cmr.umm_results+json;version=1.16; charset=utf-8"})
       concept = CmrSync.get_concept("C28109-LARC", nil, 'umm_json')

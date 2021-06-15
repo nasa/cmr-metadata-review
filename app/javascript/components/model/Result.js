@@ -1,12 +1,14 @@
 import { observable, decorate} from "mobx"
 
 export default class Result {
-  totalItems = null // Int
-  currentPage = 1 // Int
-  itemsPerPage = null // Int
-  records = [] // [String:Any]
 
   constructor(json) {
+
+    this.totalItems = null // Int
+    this.currentPage = 1 // Int
+    this.itemsPerPage = null // Int
+    this.records = [] // [String:Any]
+
     this.totalItems = json["total_count"]
     this.currentPage = json["page_num"];
     this.itemsPerPage = json["page_size"]
@@ -17,6 +19,7 @@ export default class Result {
       records[i].no = (this.itemsPerPage*(this.currentPage-1))+(i+1)
     }
     this.records.push(...records)
+
   }
 
   get totalPages() {

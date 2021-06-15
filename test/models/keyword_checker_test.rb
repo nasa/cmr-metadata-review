@@ -7,7 +7,7 @@ class KeywordCheckerTest < ActiveSupport::TestCase
     stub_header = {
         'Accept'=>'*/*',
         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        'User-Agent'=>'Ruby'
+        #
     }
     stub_request(:get, "#{kms_base_url}/kms/concepts/concept_scheme/sciencekeywords?format=csv").
         with(headers: stub_header).
