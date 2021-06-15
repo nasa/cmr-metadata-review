@@ -20,7 +20,7 @@ class CollectionsControllerTest < ActionController::TestCase
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
 
@@ -38,14 +38,14 @@ class CollectionsControllerTest < ActionController::TestCase
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       #stubbing all requests for raw_data
-      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C1000000020-LANCEAMSR2.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C1000000020-LANCEAMSR2.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
 
       stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
+
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
@@ -71,14 +71,14 @@ class CollectionsControllerTest < ActionController::TestCase
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
     #stubbing all requests for raw_data
-    stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
+    stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
     stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
       with(
         headers: {
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent'=>'Ruby'
+
         }).
       to_return(status: 200,
                 body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
@@ -94,7 +94,7 @@ class CollectionsControllerTest < ActionController::TestCase
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
     stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
-      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).
       to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
     stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
@@ -102,7 +102,7 @@ class CollectionsControllerTest < ActionController::TestCase
         headers: {
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent'=>'Ruby'
+
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
 
@@ -118,16 +118,16 @@ describe "POST #create" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      stub_request(:get, Regexp.new("#{Regexp.escape(@cmr_base_url)}\\/search\\/collections\\.(echo10|native)\\?concept_id\\=C222702\\-GHRC")).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C222702-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, Regexp.new("#{Regexp.escape(@cmr_base_url)}\\/search\\/collections\\.(echo10|native)\\?concept_id\\=C222702\\-GHRC")).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C222702-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
       #stubbing the new format check
-      stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C222702-GHRC").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => "<?xml version=\"1.0\" encoding=\"UTF-8\"?><feed xmlns:os=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:georss=\"http://www.georss.org/georss/10\" xmlns=\"http://www.w3.org/2005/Atom\" xmlns:dc=\"http://purl.org/dc/terms/\" xmlns:echo=\"http://www.echo.nasa.gov/esip\" xmlns:esipdiscovery=\"http://commons.esipfed.org/ns/discovery/1.2/\" xmlns:gml=\"http://www.opengis.net/gml\" esipdiscovery:version=\"1.2\" xmlns:time=\"http://a9.com/-/opensearch/extensions/time/1.0/\"><entry><echo:originalFormat>ECHO10</echo:originalFormat></entry></feed>", :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C222702-GHRC").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => "<?xml version=\"1.0\" encoding=\"UTF-8\"?><feed xmlns:os=\"http://a9.com/-/spec/opensearch/1.1/\" xmlns:georss=\"http://www.georss.org/georss/10\" xmlns=\"http://www.w3.org/2005/Atom\" xmlns:dc=\"http://purl.org/dc/terms/\" xmlns:echo=\"http://www.echo.nasa.gov/esip\" xmlns:esipdiscovery=\"http://commons.esipfed.org/ns/discovery/1.2/\" xmlns:gml=\"http://www.opengis.net/gml\" esipdiscovery:version=\"1.2\" xmlns:time=\"http://a9.com/-/opensearch/extensions/time/1.0/\"><entry><echo:originalFormat>ECHO10</echo:originalFormat></entry></feed>", :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
 
       #Since a granule is chosen at random, a full mock can not be used.
       #in this instance, we return a set collection of results for any call using this concept id and granule keyword.
-      stub_request(:get, /.*granules.*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, /.*granules.*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
 
       #stubbing the granule raw look up
-      stub_request(:get, /.*granules.echo10\?concept_id=G.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_granules_G226250-GHRC.xml"), :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["26"], "cmr-request-id"=>["46ad6de7-598a-463e-99e0-2a22ddf651da"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
+      stub_request(:get, /.*granules.echo10\?concept_id=G.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G226250-GHRC.xml"), :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["26"], "cmr-request-id"=>["46ad6de7-598a-463e-99e0-2a22ddf651da"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
 
       #Making sure record does not exist before ingest
       assert_equal(0, (Collection.where concept_id: "C222702-GHRC").length)
@@ -146,9 +146,9 @@ describe "POST #create" do
       refute(record.binary_script_values["InsertTime"])
 
       # collection with umm-json can be saved to system. see ticket CMRARC-480
-      stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
-      stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
-      stub_request(:get, /.*granules.*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, /.*granules.*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
       post :create, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
       assert_equal("302", response.code)
       assert_equal(1, (Collection.where concept_id: "C190733714-LPDAAC_ECS").length)
@@ -172,7 +172,7 @@ describe "POST #create" do
 
       # the atom will return the native format is iso-19115
       stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C1599780765-NSIDC_ECS")
-        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(:status => 200, :body => get_stub("search_collection_C1599780765-NSIDC_ECS.atom"),
                    :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"],
                                 "content-type"=>["application/atom+xml; charset=utf-8"],
@@ -188,7 +188,7 @@ describe "POST #create" do
 
       # application logic should pull umm-json instead
       stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS")
-        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(:status => 200, :body => get_stub("search_collection_C1599780765-NSIDC_ECS.json"),
                    :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"],
                                 "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"],
@@ -203,7 +203,7 @@ describe "POST #create" do
 
       # stub for pulling a random granule
       stub_request(:get, /.*granules.echo10\?concept_id=G.*/)
-        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(:status => 200, :body => get_stub("search_granules_C1599780765-NSIDC_ECS.xml"),
                    :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"],
                                 "content-type"=>["application/echo10+xml; charset=utf-8"],
@@ -218,7 +218,7 @@ describe "POST #create" do
 
 
       stub_request(:get, /.*granules.*C1599780765-NSIDC_ECS.*/)
-        .with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
+        .with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
 
       post :create, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
