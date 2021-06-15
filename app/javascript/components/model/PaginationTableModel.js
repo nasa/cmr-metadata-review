@@ -2,17 +2,20 @@ import { computed, observable, decorate} from "mobx"
 import Result from "./Result"
 
 export default class PagingTableModel {
-  section = null // String
-  filter = null // String
-  daac = null // String
-  campaign = null // String
-  colorCode = null // String
-  sortColumn = null // String
-  sortOrder = "asc" // String
-  currentPage = 1 // Int
-  result = null // Result
-  loading = false // Bool
-  pageSize = 10 // Int
+
+  constructor() {
+    this.section = null // String
+    this.filter = null // String
+    this.daac = null // String
+    this.campaign = null // String
+    this.sortColumn = null // String
+    this.sortOrder = "asc" // String
+    this.currentPage = 1 // Int
+    this.result = null // Result
+    this.loading = false // Bool
+    this.pageSize = 10 // Int
+  }
+
 
   setData(json) {
     this.result = new Result(json)

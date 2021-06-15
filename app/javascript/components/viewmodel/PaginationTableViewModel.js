@@ -1,8 +1,12 @@
 import PaginationTableModel from "../model/PaginationTableModel";
 
 export default class PagingTableViewModel {
-  model = new PaginationTableModel()
-  abortController = null; // used to cancel fetch requests
+
+  constructor() {
+    this.model = new PaginationTableModel()
+    this.abortController = null; // used to cancel fetch requests
+  }
+
 
   // Access the Model
 

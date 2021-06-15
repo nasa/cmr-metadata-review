@@ -11,10 +11,10 @@ import ColorFilterView from "./ColorFilterView";
 
 const PaginationTableView = observer(
   class PaginationTableView extends React.Component {
-    viewModel = new PaginationTableViewModel()
 
     constructor(props) {
       super(props)
+      this.viewModel = new PaginationTableViewModel()
       this.viewModel.setSection(this.props.section)
       this.createRow = this.createRow.bind(this)
       this.pageSizeSelectRef = React.createRef()
