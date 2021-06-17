@@ -1,0 +1,3560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <results>
+    <hits>361</hits>
+    <took>90</took>
+    <result concept-id="C1575974124-LARC" revision-id="3" format="application/echo10+xml">
+      <Collection>
+        <ShortName>MOP03J</ShortName>
+        <VersionId>108</VersionId>
+        <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+        <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+        <LongName>Not provided</LongName>
+        <DataSetId>MOPITT Beta CO gridded daily means (Near and Thermal Infrared Radiances) V108</DataSetId>
+        <Description>MOP03J_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta CO gridded daily means (Near and Thermal Infrared Radiances) version 108 product. It is an unvalidated beta product subject to recalibration, contains daily mean gridded versions of the daily Level 2 CO profile and total column retrievals. The averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+          For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. [From the MOPITT version 3 Level 3 Data Quality Summary] MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+        <DOI>
+          <DOI>10.5067/TERRA/MOPITT/MOP03J_L3.108</DOI>
+        </DOI>
+        <RevisionDate>2020-01-27T00:00:00.000Z</RevisionDate>
+        <ProcessingLevelId>3</ProcessingLevelId>
+        <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+        <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+        <CollectionState>ACTIVE</CollectionState>
+        <RestrictionFlag>4.0</RestrictionFlag>
+        <RestrictionComment>No access constraints</RestrictionComment>
+        <UseConstraints>
+          <LicenseURL>
+            <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+            <Description>License URL for data use policy</Description>
+            <Type>Data Use Policy</Type>
+            <MimeType>text/html</MimeType>
+          </LicenseURL>
+        </UseConstraints>
+        <DataFormat>HDF-EOS5</DataFormat>
+        <SpatialKeywords>
+          <Keyword>GLOBAL</Keyword>
+        </SpatialKeywords>
+        <TemporalKeywords>
+          <Keyword>daily</Keyword>
+        </TemporalKeywords>
+        <Temporal>
+          <EndsAtPresentFlag>true</EndsAtPresentFlag>
+          <RangeDateTime>
+            <BeginningDateTime>2018-03-25T00:00:00.000Z</BeginningDateTime>
+          </RangeDateTime>
+        </Temporal>
+        <Contacts>
+          <Contact>
+            <Role>ARCHIVER</Role>
+            <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+          </Contact>
+          <Contact>
+            <Role>TECHNICAL CONTACT</Role>
+            <ContactPersons>
+              <ContactPerson>
+                <FirstName>JOHN</FirstName>
+                <MiddleName>C.</MiddleName>
+                <LastName>GILLE</LastName>
+                <JobPosition>INVESTIGATOR</JobPosition>
+              </ContactPerson>
+              <ContactPerson>
+                <FirstName>JAMES</FirstName>
+                <MiddleName>R.</MiddleName>
+                <LastName>DRUMMOND</LastName>
+                <JobPosition>INVESTIGATOR</JobPosition>
+              </ContactPerson>
+              <ContactPerson>
+                <FirstName>DALLAS</FirstName>
+                <LastName>MASTERS</LastName>
+                <JobPosition>TECHNICAL CONTACT</JobPosition>
+              </ContactPerson>
+            </ContactPersons>
+          </Contact>
+        </Contacts>
+        <ScienceKeywords>
+          <ScienceKeyword>
+            <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+            <TopicKeyword>ATMOSPHERE</TopicKeyword>
+            <TermKeyword>AIR QUALITY</TermKeyword>
+            <VariableLevel1Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel1Keyword>
+          </ScienceKeyword>
+          <ScienceKeyword>
+            <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+            <TopicKeyword>ATMOSPHERE</TopicKeyword>
+            <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+            <VariableLevel1Keyword>
+              <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+              <VariableLevel2Keyword>
+                <Value>CARBON MONOXIDE</Value>
+              </VariableLevel2Keyword>
+            </VariableLevel1Keyword>
+          </ScienceKeyword>
+          <ScienceKeyword>
+            <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+            <TopicKeyword>ATMOSPHERE</TopicKeyword>
+            <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          </ScienceKeyword>
+          <ScienceKeyword>
+            <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+            <TopicKeyword>ATMOSPHERE</TopicKeyword>
+            <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+            <VariableLevel1Keyword>
+              <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            </VariableLevel1Keyword>
+          </ScienceKeyword>
+          <ScienceKeyword>
+            <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+            <TopicKeyword>ATMOSPHERE</TopicKeyword>
+            <TermKeyword>AIR QUALITY</TermKeyword>
+          </ScienceKeyword>
+        </ScienceKeywords>
+        <Platforms>
+          <Platform>
+            <ShortName>Terra</ShortName>
+            <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+            <Type>Earth Observation Satellites</Type>
+            <Instruments>
+              <Instrument>
+                <ShortName>MOPITT</ShortName>
+                <LongName>Measurements of Pollution In The Troposphere</LongName>
+                <Sensors>
+                  <Sensor>
+                    <ShortName>2.3um Radiometer</ShortName>
+                  </Sensor>
+                  <Sensor>
+                    <ShortName>2.4um Radiometer</ShortName>
+                  </Sensor>
+                  <Sensor>
+                    <ShortName>4.7um Radiometer</ShortName>
+                  </Sensor>
+                </Sensors>
+              </Instrument>
+            </Instruments>
+          </Platform>
+        </Platforms>
+        <AdditionalAttributes>
+          <AdditionalAttribute>
+            <Name>identifier_product_doi</Name>
+            <DataType>STRING</DataType>
+            <Description>Digital object identifier that uniquely identifies this data product</Description>
+            <Value>10.5067/TERRA/MOPITT/MOP03J_L3.108</Value>
+          </AdditionalAttribute>
+          <AdditionalAttribute>
+            <Name>identifier_product_doi_authority</Name>
+            <DataType>STRING</DataType>
+            <Description>URL of the digital object identifier resolving authority</Description>
+            <Value>https://doi.org/</Value>
+          </AdditionalAttribute>
+        </AdditionalAttributes>
+        <Campaigns>
+          <Campaign>
+            <ShortName>MOPITT</ShortName>
+            <LongName>Measurements Of Pollution In The Troposphere</LongName>
+          </Campaign>
+        </Campaigns>
+        <SpatialInfo>
+          <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        </SpatialInfo>
+        <OnlineAccessURLs>
+          <OnlineAccessURL>
+            <URL>https://l0dup05.larc.nasa.gov/opendap/MOPITT/MOP03J.108/contents.html</URL>
+            <URLDescription>ASDC Data Pool for MOP03J_108</URLDescription>
+          </OnlineAccessURL>
+          <OnlineAccessURL>
+            <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974124-LARC</URL>
+            <URLDescription>Earthdata Search for MOP03J_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+          </OnlineAccessURL>
+          <OnlineAccessURL>
+            <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03J.108/</URL>
+            <URLDescription>ASDC Direct Data Download for MOP03J_108</URLDescription>
+          </OnlineAccessURL>
+        </OnlineAccessURLs>
+        <OnlineResources>
+          <OnlineResource>
+            <URL>https://www2.acom.ucar.edu/mopitt</URL>
+            <Description>U.S. MOPITT project home page</Description>
+            <Type>CollectionURL : PROJECT HOME PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt_table</URL>
+            <Description>ASDC Data and Information for MOPITT</Description>
+            <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements</URL>
+            <Description>ASDC List of MOPITT Quality Statements</Description>
+            <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+            <Description>Canadian MOPITT project home page</Description>
+            <Type>CollectionURL : PROJECT HOME PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v5_users_guide_beta.pdf</URL>
+            <Description>MOPITT Version 5 Product User's Guide -March 18, 2011</Description>
+            <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v6_users_guide_201309.pdf</URL>
+            <Description>MOPITT Version 6 Product User's Guide - September 6, 2013</Description>
+            <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03J_L3.108</URL>
+            <Description>DOI data set landing page for MOP03J_108</Description>
+            <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/citing-asdc-data</URL>
+            <Description>How to cite ASDC data</Description>
+            <Type>VIEW RELATED INFORMATION : DATA CITATION POLICY</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/project/mopitt/featured_articles</URL>
+            <Description>ASDC List of MOPITT Featured Articles</Description>
+            <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/newsletter/subscriptions</URL>
+            <Description>ASDC Registration for Project Specific News and Information</Description>
+            <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://hdfeos.org/zoo/</URL>
+            <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®</Description>
+            <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/mopitt-announcements</URL>
+            <Description>Measurements Of Pollution In The Troposphere (MOPITT) Project Announcements</Description>
+            <Type>VIEW RELATED INFORMATION : IMPORTANT NOTICE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/faq-page/mopitt-faq</URL>
+            <Description>MOPITT Frequently Asked Questions</Description>
+            <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+            <Description>NASA EOS ATB Documents: MOPITT</Description>
+            <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://eosweb.larc.nasa.gov/project/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+            <Description>Overview of MOPITT Data at the ASDC</Description>
+            <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://terra.nasa.gov/</URL>
+            <Description>Terra instrument home page</Description>
+            <Type>CollectionURL : PROJECT HOME PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://mopitt.physics.utoronto.ca/</URL>
+            <Description>University of Toronto MOPITT Overview</Description>
+            <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+          </OnlineResource>
+          <OnlineResource>
+            <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.108/contents.html</URL>
+            <Description>OPeNDAP data access for MOP03J_108</Description>
+            <Type>USE SERVICE API : OPENDAP DATA</Type>
+          </OnlineResource>
+        </OnlineResources>
+        <Spatial>
+          <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+          <HorizontalSpatialDomain>
+            <Geometry>
+              <CoordinateSystem>CARTESIAN</CoordinateSystem>
+              <BoundingRectangle>
+                <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+                <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+                <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+                <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+              </BoundingRectangle>
+            </Geometry>
+          </HorizontalSpatialDomain>
+          <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+        </Spatial>
+      </Collection>
+    </result>
+  <result concept-id="C1575974119-LARC" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03JM</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta CO gridded monthly means (Near and Thermal Infrared Radiances) V108</DataSetId>
+      <Description>MOP03JM_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta CO gridded monthly means (Near and Thermal Infrared Radiances) version 108 product. It contains monthly mean gridded versions of the daily L2 CO profile and total column retrievals. The averaging kernels associated with each retrieval are also gridded and included in the L3 files. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+        For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. [From the MOPITT version 3 Level 3 Data Quality Summary] MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03JM_L3.108</DOI>
+      </DOI>
+      <RevisionDate>2020-01-27T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>monthly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-01T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>JOHN</FirstName>
+              <MiddleName>C.</MiddleName>
+              <LastName>GILLE</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>JAMES</FirstName>
+              <MiddleName>R.</MiddleName>
+              <LastName>DRUMMOND</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>DALLAS</FirstName>
+              <LastName>MASTERS</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03JM_L3.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974119-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03JM_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://l0dup05.larc.nasa.gov/opendap/MOPITT/MOP03JM.108/contents.html</URL>
+          <URLDescription>ASDC Data Pool for MOP03JM_108</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03JM.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03JM_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt_table</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03JM.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03JM_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/about/terra-instruments/mopitt</URL>
+          <Description>MOPITT overview from Terra home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/featured_articles</URL>
+          <Description>ASDC List of MOPITT Featured Articles</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/newsletter/subscriptions</URL>
+          <Description>ASDC Registration for Project Specific News and Information</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/mopitt-announcements</URL>
+          <Description>Measurements Of Pollution In The Troposphere (MOPITT) Project Announcements</Description>
+          <Type>VIEW RELATED INFORMATION : IMPORTANT NOTICE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/faq-page/mopitt-faq</URL>
+          <Description>MOPITT Frequently Asked Questions</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03JM_L3.108</URL>
+          <Description>DOI data set landing page for MOP03JM_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+    </Collection>
+  </result>
+  <result concept-id="C1575974141-LARC" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03N</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta CO gridded daily means (Near Infrared Radiances) V108</DataSetId>
+      <Description>MOP03N_108 is the Measurements of Pollution in the Troposphere (MOPITT) Beta CO gridded daily means (Near Infrared Radiances) version 108 product. It is a non-validated beta product subject to recalibration, contains daily mean gridded versions of the daily Level 2 CO profile and total column retrievals. The averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+        For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. [From the MOPITT version 3 Level 3 Data Quality Summary] MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03N_L3.108</DOI>
+      </DOI>
+      <RevisionDate>2020-01-27T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-25T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>JOHN</FirstName>
+              <MiddleName>C</MiddleName>
+              <LastName>GILLE</LastName>
+              <JobPosition>METADATA AUTHOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>JAMES</FirstName>
+              <MiddleName>R.</MiddleName>
+              <LastName>DRUMMOND</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>DALLAS</FirstName>
+              <LastName>MASTERS</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03N_L3.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03N</ShortName>
+          <VersionId>108</VersionId>
+          <CollectionType>RELATED</CollectionType>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://l0dup05.larc.nasa.gov/opendap/MOPITT/MOP03N.108/contents.html</URL>
+          <URLDescription>ASDC Data Pool for MOP03N_108</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974141-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03N_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03N.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03N_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt_table</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v5_users_guide_beta.pdf</URL>
+          <Description>MOPITT Version 5 Product User's Guide -March 18, 2011</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v6_users_guide_201309.pdf</URL>
+          <Description>MOPITT Version 6 Product User's Guide - September 6, 2013</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03N_L3.108</URL>
+          <Description>DOI data set landing page for MOP03N_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/featured_articles</URL>
+          <Description>ASDC List of MOPITT Featured Articles</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/newsletter/subscriptions</URL>
+          <Description>ASDC Registration for Project Specific News and Information</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/mopitt-announcements</URL>
+          <Description>Measurements Of Pollution In The Troposphere (MOPITT) Project Announcements</Description>
+          <Type>VIEW RELATED INFORMATION : IMPORTANT NOTICE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/faq-page/mopitt-faq</URL>
+          <Description>MOPITT Frequently Asked Questions</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03N.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03N_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+    </Collection>
+  </result>
+  <result concept-id="C1575974143-LARC" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03NM</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta CO gridded monthly means (Near Infrared Radiances) V108</DataSetId>
+      <Description>MOP03NM_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta CO gridded monthly means (Near Infrared Radiances) version 108 product. This product contains monthly mean gridded versions of the daily Level 2 CO profile and total column retrievals. The averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+        For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. [From the MOPITT version 3 Level 3 Data Quality Summary] MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03NM_L3.108</DOI>
+      </DOI>
+      <RevisionDate>2020-04-22T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>monthly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-01T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>JOHN</FirstName>
+              <MiddleName>C.</MiddleName>
+              <LastName>GILLE</LastName>
+              <JobPosition>METADATA AUTHOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>DALLAS</FirstName>
+              <LastName>MASTERS</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>JAMES</FirstName>
+              <MiddleName>R.</MiddleName>
+              <LastName>DRUMMOND</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03NM_L3.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03NM</ShortName>
+          <VersionId>107</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974143-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03NM_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03NM.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03NM_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/citing-data</URL>
+          <Description>How to cite ASDC data</Description>
+          <Type>VIEW RELATED INFORMATION : DATA CITATION POLICY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v5_users_guide_beta.pdf</URL>
+          <Description>MOPITT Version 5 Product User's Guide -March 18, 2011</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v6_users_guide_201309.pdf</URL>
+          <Description>MOPITT Version 6 Product User's Guide - September 6, 2013</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03NM.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03NM_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03NM_L3.108</URL>
+          <Description>DOI data set landing page for MOP03NM_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's Contribution (researchers investigate how much wildfires contribute to pollution and how far this pollution can travel), and how far this pollution can travel.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+    </Collection>
+  </result>
+  <result concept-id="C1575974121-LARC" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03TM</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta CO gridded monthly means (Thermal Infrared Radiances) V108</DataSetId>
+      <Description>MOP03TM_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta CO gridded monthly means (Thermal Infrared Radiances) version 108 product. It is an unvalidated beta product subject to recalibration, contains monthly mean gridded versions of the daily Level 2 CO profile and total column retrievals. The averaging kernels associated with each retrieval are also grFor a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. [From the MOPITT version 3 Level 3 Data Quality Summary] MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03TM_L3.108</DOI>
+      </DOI>
+      <RevisionDate>2020-12-23T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <Description>For more information, please see the ESDIS Data Use Policy: https://earthdata.nasa.gov/earth-observation-data/data-use-policy</Description>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>NORTH AMERICA</Keyword>
+        <Keyword>CANADA</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>monthly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-01T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>Helen</FirstName>
+              <LastName>Worden</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Helen</FirstName>
+              <LastName>Worden</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03TM_L3.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03TM</ShortName>
+          <VersionId>107</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+        <CollectionAssociation>
+          <ShortName>MOP03TM</ShortName>
+          <VersionId>109</VersionId>
+          <CollectionType>CHILD</CollectionType>
+          <CollectionUse>Succeeding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974121-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03TM_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03TM.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03TM_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03TM.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03TM_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v8_users_guide_201812.pdf</URL>
+          <Description>MOPITT Version 8 Product User's Guide - December 2018</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03TM_L3.108</URL>
+          <Description>DOI data set landing page for MOP03TM_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's contribution: Researchers investigate how much wildfires contribute to pollution, and how far this pollution can travel - By Jane Beitler</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/</URL>
+          <Description>NASA Worldview</Description>
+        </ProviderBrowseUrl>
+        <ProviderBrowseUrl>
+          <URL>https://www2.acom.ucar.edu/mopitt/visualization</URL>
+          <Description>MOPITT Visualizations</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1575974133-LARC" revision-id="5" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP02J</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta Derived CO (Near and Thermal Infrared Radiances) V108</DataSetId>
+      <Description>MOP02J_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta Derived CO (Near and Thermal Infrared Radiances) version 108 product. It consists of the geo-located, retrieved carbon monoxide profiles and total column amounts for carbon monoxide. Ancillary data concerning surface properties and cloud conditions at the locations of the retrieved parameters are also included. Each retrieval is accompanied by an estimated error. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+        MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP02J_L2.108</DOI>
+      </DOI>
+      <RevisionDate>2020-06-17T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>2</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+        <Keyword>TROPOSPHERE</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-25T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>HELEN</FirstName>
+              <LastName>WORDEN</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>MOPFGRad5DiffThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>First Guess minus Thermal 800mb A channel difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThr2</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess Polar threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThrN</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess night threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad6FGDiffThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Absolute value of Solar 800mb A channel minus First Guess difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad6FGRatioThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Solar 800mb A channel to First Guess threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPCldTopPrDiff</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Surface Pressure minus Cloud Top Pressure difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPNStarD</Name>
+          <DataType>FLOAT</DataType>
+          <Description>N* cloud clearing technique Day limit</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPNStarN</Name>
+          <DataType>FLOAT</DataType>
+          <Description>N* cloud clearing technique Night limit</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPOvrcstUniformity</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Overcast Cloud Top threshold determined by statistical uniformity of adjacent pixels</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPOvrcstOpacity</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Overcast Cloud Top threshold determined by the opacity of the clouds</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPPercentCloudCleared</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels which were cleared of clouds</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPConvIterAvg</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The average number of iterations required to converge on a retrieval</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPConvIterMax</Name>
+          <DataType>INT</DataType>
+          <Description>Maximum number of iterations permitted to occur before declaring the pixel as non-convergent</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPUncertCOSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The average retrieved uncertainty of the surface CO mixing ratio</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCO</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The maximum observed total column CO value</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCO</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The minimum observed total column CO value</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRatSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum surface mixing ratio of CO</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRatSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum surface mixing ratio of CO</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat850</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 850 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat850</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 850 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat700</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 700 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat700</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 700 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat500</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 500 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat500</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 500 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat350</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 350 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat350</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 350 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat250</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 250 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat250</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 250 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat150</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 150 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat150</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 150 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre1</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 1</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost1</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 1</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre2</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 2</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost2</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 2</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre3</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 3</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost3</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 3</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre4</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 4</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost4</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 4</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPEventDesc</Name>
+          <DataType>STRING</DataType>
+          <Description>Significant geophysical, instrument-related or processing-related events associated with this granule</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP02J_L2.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP02J</ShortName>
+          <VersionId>107</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974133-LARC</URL>
+          <URLDescription>Earthdata Search for MOP02J_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP02J.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP02J_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP02J.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP02J_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v8_users_guide_201812.pdf</URL>
+          <Description>MOPITT Version 8 Product User's Guide - December 2018</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP02J_L2.108</URL>
+          <Description>DOI data set landing page for MOP02J_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/citing-data</URL>
+          <Description>How to cite ASDC data</Description>
+          <Type>VIEW RELATED INFORMATION : DATA CITATION POLICY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's Contribution (researchers investigate how much wildfires contribute to pollution and how far this pollution can travel), and how far this pollution can travel.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/tools/README_MOPITT_L2Viewer.txt</URL>
+          <Description>MOPITT Level 2 Viewer Software Readme File</Description>
+          <Type>VIEW RELATED INFORMATION : READ-ME</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.harrisgeospatial.com/Support/Forums/aft/2540</URL>
+          <Description>L3 Harris Geospatial Forum: Reading multiple HDF/NCDF files in IDL running under Fedora 13</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/tools/MOPITT_L2Viewer.tar</URL>
+          <Description>MOPITT Level 2 Viewer Tool Software Package - Direct File Download (.tar)</Description>
+          <Type>DistributionURL : DOWNLOAD SOFTWARE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/</URL>
+          <Description>NASA Worldview</Description>
+        </ProviderBrowseUrl>
+        <ProviderBrowseUrl>
+          <URL>https://www2.acom.ucar.edu/mopitt/visualization</URL>
+          <Description>MOPITT Visualizations</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1575974139-LARC" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP02T</ShortName>
+      <VersionId>108</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT Beta Derived CO (Thermal Infrared Radiances) V108</DataSetId>
+      <Description>MOP02T_108 is the Measurements Of Pollution In The Troposphere (MOPITT) Beta Derived CO (Thermal Infrared Radiances) version 108 product. It is an unvalidated beta product subject to recalibration, consists of the geo-located, retrieved carbon monoxide profiles and total column amounts for carbon monoxide. Ancillary data concerning surface properties and cloud conditions at the locations of the retrieved parameters are also included. Each retrieval is accompanied by an estimated error. Version 108 products are beta versions for version 8 products, they are unvalidated beta products subject to recalibration.
+        MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP02T_L2.108</DOI>
+      </DOI>
+      <RevisionDate>2020-01-13T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>2</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 108, an unvalidated beta product subject to recalibration, uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>true</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-03-25T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>HELEN</FirstName>
+              <LastName>WORDEN</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>MOPFGRad5DiffThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>First Guess minus Thermal 800mb A channel difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThr2</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess Polar threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad5FGRatioThrN</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Thermal 800mb A channel to First Guess night threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad6FGDiffThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Absolute value of Solar 800mb A channel minus First Guess difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPRad6FGRatioThr</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Ratio Solar 800mb A channel to First Guess threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPCldTopPrDiff</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Surface Pressure minus Cloud Top Pressure difference threshold</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPNStarD</Name>
+          <DataType>FLOAT</DataType>
+          <Description>N* cloud clearing technique Day limit</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPNStarN</Name>
+          <DataType>FLOAT</DataType>
+          <Description>N* cloud clearing technique Night limit</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPOvrcstUniformity</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Overcast Cloud Top threshold determined by statistical uniformity of adjacent pixels</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPOvrcstOpacity</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Overcast Cloud Top threshold determined by the opacity of the clouds</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPPercentCloudCleared</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels which were cleared of clouds</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPConvIterAvg</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The average number of iterations required to converge on a retrieval</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPConvIterMax</Name>
+          <DataType>INT</DataType>
+          <Description>Maximum number of iterations permitted to occur before declaring the pixel as non-convergent</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPUncertCOSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The average retrieved uncertainty of the surface CO mixing ratio</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCO</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The maximum observed total column CO value</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCO</Name>
+          <DataType>FLOAT</DataType>
+          <Description>The minimum observed total column CO value</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRatSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum surface mixing ratio of CO</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRatSfc</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum surface mixing ratio of CO</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat850</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 850 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat850</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 850 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat700</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 700 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat700</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 700 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat500</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 500 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat500</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 500 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat350</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 350 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat350</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 350 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat250</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 250 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat250</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 250 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMinCOMixRat150</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Minimum mixing ratio of CO at 150 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPMaxCOMixRat150</Name>
+          <DataType>FLOAT</DataType>
+          <Description>Maximum mixing ratio of CO at 150 mb</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre1</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 1</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost1</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 1</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre2</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 2</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost2</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 2</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre3</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 3</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost3</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 3</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPre4</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of previous hot calibration in optical train 4</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPHotCalPost4</Name>
+          <DataType>DATE</DataType>
+          <Description>Date of post hot calibration in optical train 4</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>MOPEventDesc</Name>
+          <DataType>STRING</DataType>
+          <Description>Significant geophysical, instrument-related or processing-related events associated with this granule</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP02T_L2.108</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP02TN</ShortName>
+          <VersionId>108</VersionId>
+          <CollectionType>RELATED</CollectionType>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>ftp://l5ftl01.larc.nasa.gov/MOPITT/BETA/MOP02T.108</URL>
+          <URLDescription>ASDC Data Pool for MOP02T.108</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974139-LARC</URL>
+          <URLDescription>Earthdata Search for MOP02T_108 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://l0dup05.larc.nasa.gov/opendap/MOPITT/MOP02T.108/contents.html</URL>
+          <URLDescription>ASDC Data Pool for MOP02T_108</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP02T.108/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP02T_108</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt-quality-statements</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v8_users_guide_201812.pdf</URL>
+          <Description>MOPITT Version 8 Product User's Guide - December 2018</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP02T.108/contents.html</URL>
+          <Description>OPeNDAP data access for MOP02T_108</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP02T_L2.108</URL>
+          <Description>DOI data set landing page for MOP02T_108</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/mopitt_table</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/featured_articles</URL>
+          <Description>ASDC List of MOPITT Featured Articles</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/newsletter/subscriptions</URL>
+          <Description>ASDC Registration for Project Specific News and Information</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/mopitt-announcements</URL>
+          <Description>Measurements Of Pollution In The Troposphere (MOPITT) Project Announcements</Description>
+          <Type>VIEW RELATED INFORMATION : IMPORTANT NOTICE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/faq-page/mopitt-faq</URL>
+          <Description>MOPITT Frequently Asked Questions</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eosweb.larc.nasa.gov/project/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/</URL>
+          <Description>NASA Worldview</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1575974131-LARC" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03J</ShortName>
+      <VersionId>8</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT CO gridded daily means (Near and Thermal Infrared Radiances) V008</DataSetId>
+      <Description>MOP03J_8 is the Measurements Of Pollution In The Troposphere (MOPITT) Carbon Monoxide (CO) gridded daily means (Near and Thermal Infrared Radiances) version 8 data product. It contains daily mean gridded versions of the daily Level 2 CO profile and total column retrievals. For this data product, the averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft, on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency. Data collection for this product was completed in March of 2020.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03J_L3.008</DOI>
+      </DOI>
+      <RevisionDate>2020-11-10T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 8 uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <Description>For more information, please see the ESDIS Data Use Policy: https://earthdata.nasa.gov/earth-observation-data/data-use-policy</Description>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+        <Keyword>GEOGRAPHIC REGION</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-03-03T00:00:00.000Z</BeginningDateTime>
+          <EndingDateTime>2020-03-22T23:59:59.000Z</EndingDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>DALLAS</FirstName>
+              <LastName>MASTERS</LastName>
+              <JobPosition>METADATA AUTHOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>JOHN</FirstName>
+              <MiddleName>C.</MiddleName>
+              <LastName>GILLE</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>JAMES</FirstName>
+              <MiddleName>R.</MiddleName>
+              <LastName>DRUMMOND</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE TEMPERATURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE PRESSURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+            <VariableLevel2Keyword>
+              <Value>WATER VAPOR</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03J_L3.008</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03J</ShortName>
+          <VersionId>7</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974131-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03J_8 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03J.008/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03J_8</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/citing-data</URL>
+          <Description>How to cite ASDC data</Description>
+          <Type>VIEW RELATED INFORMATION : DATA CITATION POLICY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.008/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03J_8</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v8_users_guide_201812.pdf</URL>
+          <Description>MOPITT Version 8 Product User's Guide - December 2018</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03J_L3.008</URL>
+          <Description>DOI data set landing page for MOP03J_8</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://subset.larc.nasa.gov/mopitt/</URL>
+          <Description>MOPITT Search and Subsetting Web Application</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's contribution: Researchers investigate how much wildfires contribute to pollution, and how far this pollution can travel - By Jane Beitler</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/quality_summaries/MOPV8_L3_DQ_statement.pdf</URL>
+          <Description>Quality Summary: MOPITT Level 3, Version 8 (V8; L3V5.6.x), first released December, 2018</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+    </Collection>
+  </result>
+  <result concept-id="C1575974122-LARC" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03N</ShortName>
+      <VersionId>8</VersionId>
+      <InsertTime>2018-11-15T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT CO gridded daily means (Near Infrared Radiances) V008</DataSetId>
+      <Description>MOP03N_8 is the Measurements Of Pollution In The Troposphere (MOPITT) Carbon Monoxide (CO) gridded daily means (Near Infrared Radiances) version 8 data product. It contains daily mean gridded versions of the daily Level 2 CO profile and total column retrievals. For this data product, the averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft, on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency. Data collection for this product was completed in March of 2020.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03N_L3.008</DOI>
+      </DOI>
+      <RevisionDate>2020-11-10T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 8 uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <Description>For more information, please see the ESDIS Data Use Policy: https://earthdata.nasa.gov/earth-observation-data/data-use-policy</Description>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GEOGRAPHIC REGION</Keyword>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-03-03T00:00:00.000Z</BeginningDateTime>
+          <EndingDateTime>2020-03-22T23:59:59.000Z</EndingDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>Helen</FirstName>
+              <LastName>Worden</LastName>
+              <JobPosition>INVESTIGATOR</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Helen</FirstName>
+              <LastName>Worden</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE TEMPERATURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE PRESSURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+            <VariableLevel2Keyword>
+              <Value>WATER VAPOR</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03N_L3.008</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03N</ShortName>
+          <VersionId>7</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974122-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03N_8 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03N.008/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03N_8</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03N.008/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03N_8</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03N_L3.008</URL>
+          <Description>DOI data set landing page for MOP03N_8</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://subset.larc.nasa.gov/mopitt/</URL>
+          <Description>MOPITT Search and Subsetting Web Application</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's contribution: Researchers investigate how much wildfires contribute to pollution, and how far this pollution can travel - By Jane Beitler</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/quality_summaries/MOPV8_L3_DQ_statement.pdf</URL>
+          <Description>Quality Summary: MOPITT Level 3, Version 8 (V8; L3V5.6.x), first released December, 2018</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/</URL>
+          <Description>NASA Worldview</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1575974117-LARC" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOP03T</ShortName>
+      <VersionId>8</VersionId>
+      <InsertTime>2018-10-26T00:00:00.000Z</InsertTime>
+      <LastUpdate>2019-06-19T00:00:00.000Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MOPITT CO gridded daily means (Thermal Infrared Radiances) V008</DataSetId>
+      <Description>MOP03T_8 is the Measurements Of Pollution In The Troposphere (MOPITT) Carbon Monoxide (CO) gridded daily means (Thermal Infrared Radiances) version 8 data product. It contains daily mean gridded versions of the daily Level 2 CO profile and total column retrievals. For this data product, the averaging kernels associated with each retrieval are also gridded and included in the Level 3 files. For a description of the file contents, refer to the File Spec Document. The MOPITT Level 2 Data Quality Statement contains additional information about the quality and the limitations of the retrievals. MOPITT was successfully launched into sun-synchronous polar orbit aboard Terra, NASA's first Earth Observing System spacecraft, on December 18, 1999. The MOPITT instrument was constructed by a consortium of Canadian companies and funded by the Space Science Division of the Canadian Space Agency. Data collection for this product was completed in March of 2020.</Description>
+      <DOI>
+        <DOI>10.5067/TERRA/MOPITT/MOP03T_L3.008</DOI>
+      </DOI>
+      <RevisionDate>2020-11-10T00:00:00.000Z</RevisionDate>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <ArchiveCenter>NASA/LARC/SD/ASDC</ArchiveCenter>
+      <VersionDescription>Version 8 uses a dynamic version of radiance correction that accounts for both instrument drift over time and the effects of water vapor on CO retrieval.</VersionDescription>
+      <CollectionState>ACTIVE</CollectionState>
+      <RestrictionFlag>4.0</RestrictionFlag>
+      <RestrictionComment>No access constraints</RestrictionComment>
+      <UseConstraints>
+        <Description>For more information, please see the ESDIS Data Use Policy: https://earthdata.nasa.gov/earth-observation-data/data-use-policy</Description>
+      </UseConstraints>
+      <DataFormat>HDF-EOS5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+        <Keyword>GEOGRAPHIC REGION</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-03-03T00:00:00.000Z</BeginningDateTime>
+          <EndingDateTime>2020-03-22T23:59:59.000Z</EndingDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA/LARC/SD/ASDC</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>Helen</FirstName>
+              <LastName>Worden</LastName>
+              <JobPosition>METADATA AUTHOR
+              </JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON MONOXIDE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+            <VariableLevel2Keyword>
+              <Value>CARBON MONOXIDE</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>AIR QUALITY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>CARBON AND HYDROCARBON COMPOUNDS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC TEMPERATURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE TEMPERATURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC PRESSURE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SURFACE PRESSURE</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>ATMOSPHERE</TopicKeyword>
+          <TermKeyword>ATMOSPHERIC WATER VAPOR</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>WATER VAPOR INDICATORS</Value>
+            <VariableLevel2Keyword>
+              <Value>WATER VAPOR</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MOPITT</ShortName>
+              <LongName>Measurements of Pollution In The Troposphere</LongName>
+              <Sensors>
+                <Sensor>
+                  <ShortName>2.3um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>2.4um Radiometer</ShortName>
+                </Sensor>
+                <Sensor>
+                  <ShortName>4.7um Radiometer</ShortName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+          <Value>10.5067/TERRA/MOPITT/MOP03T_L3.008</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+          <Value>https://doi.org/</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <CollectionAssociations>
+        <CollectionAssociation>
+          <ShortName>MOP03T</ShortName>
+          <VersionId>7</VersionId>
+          <CollectionType>PARENT</CollectionType>
+          <CollectionUse>Preceding version</CollectionUse>
+        </CollectionAssociation>
+      </CollectionAssociations>
+      <Campaigns>
+        <Campaign>
+          <ShortName>MOPITT</ShortName>
+          <LongName>Measurements Of Pollution In The Troposphere</LongName>
+        </Campaign>
+      </Campaigns>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1575974117-LARC</URL>
+          <URLDescription>Earthdata Search for MOP03T_8 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://asdc.larc.nasa.gov/data/MOPITT/MOP03T.008/</URL>
+          <URLDescription>ASDC Direct Data Download for MOP03T_8</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03T.008/contents.html</URL>
+          <Description>OPeNDAP data access for MOP03T_8</Description>
+          <Type>USE SERVICE API : OPENDAP DATA</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/mopitt</URL>
+          <Description>U.S. MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.atmosp.physics.utoronto.ca/MOPITT/home.html</URL>
+          <Description>Canadian MOPITT project home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www2.acom.ucar.edu/sites/default/files/mopitt/v8_users_guide_201812.pdf</URL>
+          <Description>MOPITT Version 8 Product User's Guide - December 2018</Description>
+          <Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://eospso.gsfc.nasa.gov/atbd-category/48</URL>
+          <Description>NASA EOS ATB Documents: MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/TERRA/MOPITT/MOP03T_L3.008</URL>
+          <Description>DOI data set landing page for MOP03T_8</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/project/MOPITT</URL>
+          <Description>ASDC Data and Information for MOPITT</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://hdfeos.org/zoo/</URL>
+          <Description>Examples on how to access and visualize various NASA HDF/HDF-EOS files using Python (pyhdf/h5py), NCL, MATLAB®, and IDL®, NCL, MATLAB®, and IDL®</Description>
+          <Type>VIEW RELATED INFORMATION : HOW-TO</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://forum.earthdata.nasa.gov/app.php/tag/MOPITT</URL>
+          <Description>NASA Earthdata Forum - MOPITT Project Specific Forum</Description>
+          <Type>VIEW RELATED INFORMATION : USER FEEDBACK PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://subset.larc.nasa.gov/mopitt/</URL>
+          <Description>MOPITT Search and Subsetting Web Application</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/guide/ASDC_MOPITT_Overview_2015.pdf</URL>
+          <Description>Overview of MOPITT Data at the ASDC</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/</URL>
+          <Description>Terra Instrument home page</Description>
+          <Type>CollectionURL : PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://mopitt.physics.utoronto.ca/</URL>
+          <Description>University of Toronto MOPITT Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/10775/bushfires-raging-in-southeast-australia</URL>
+          <Description>NASA Earth Observatory Article: Bushfires Raging in Southeast Australia : Natural Hazards - Data taken by the Measurements Of Pollution In The Troposphere (MOPITT) instrument aboard NASA's Terra satellite have been combined for 6 days from January 15-20, 2003</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/13721/carbon-monoxide-from-tropical-fires</URL>
+          <Description>NASA Earth Observatory Article: Carbon Monoxide from Tropical Fires : Natural Hazards - The Terra MOPITT sensor observed large plumes of carbon monoxide produced by biomass burning in South America and Africa in early August 2004.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/19011/fires-and-thick-smoke-over-south-america</URL>
+          <Description>NASA Earth Observatory Article: Fires and Thick Smoke over South America : Natural Hazards - Places where MOPITT could not collect enough data to make an estimate of carbon monoxide (probably due to clouds) are gray.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.nasa.gov/feature/langley/longstanding-carbon-monoxide-measuring-instrument-mopitt-celebrated/</URL>
+          <Description>NASA Langley Article: Fourteen Years of Carbon Monoxide from MOPITT, which has truly unlocked a pathway for groundbreaking studies of air pollution transport and atmospheric chemical processes.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/533/mopitt-first-light-image</URL>
+          <Description>NASA Earth Observatory Article: MOPITT First Light Image : Image of the Day - MOPITT measures radiances in several channels to determine the amount of carbon monoxide (CO) and methane in the atmosphere.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/852/mopitt-views-carbon-monoxide-concentration</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views Carbon Monoxide Concentration, there were widespread wildfires across Montana and Idaho.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthobservatory.nasa.gov/images/559/mopitt-views-north-america</URL>
+          <Description>NASA Earth Observatory Article: MOPITT Views North America : Image of the Day - Measurement of Pollution in the Troposphere, MOPITT, measures two important pollutants in the Earth's atmosphere—carbon monoxide (CO) and methane.</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/nature-s-contribution</URL>
+          <Description>NASA Earthdata Article: Nature's contribution: Researchers investigate how much wildfires contribute to pollution, and how far this pollution can travel - By Jane Beitler</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://www.pnas.org/content/115/20/5099</URL>
+          <Description>Proceedings of the National Academy of Sciences (PNAS) Article: Unexpected slowdown of US pollutant emission reduction in the past decade (Ground and satellite observations show that air pollution regulations in the United States (US) have resulted in substantial reductions in emissions and corresponding improvements in air quality over the last several decades)</Description>
+          <Type>VIEW RELATED INFORMATION : PUBLICATIONS</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/quality_summaries/MOPV8_L3_DQ_statement.pdf</URL>
+          <Description>Quality Summary: MOPITT Level 3, Version 8 (V8; L3V5.6.x), first released December, 2018</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://asdc.larc.nasa.gov/documents/mopitt/mopitt_quality_statements.html</URL>
+          <Description>ASDC List of MOPITT Quality Statements</Description>
+          <Type>VIEW RELATED INFORMATION : DATA QUALITY</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://terra.nasa.gov/?section=60</URL>
+          <Description>TERRA Overview</Description>
+          <Type>CollectionURL : PROFESSIONAL HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/learn/sensing-our-planet/on-the-trail-of-global-pollution-drift</URL>
+          <Description>Earth Observing System Data and InformationSystem (EOSDIS) Article: On The Trail of Global Pollution Drift</Description>
+          <Type>VIEW RELATED INFORMATION : MICRO ARTICLE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://giovanni.gsfc.nasa.gov/giovanni/</URL>
+          <Description>Goddard Earth Sciences Data and Information Services Center (GES DISC): Giovanni - Interactive Visualization and Analysis software</Description>
+          <Type>GOTO WEB TOOL : SUBSETTER</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL_VERTICAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/</URL>
+          <Description>NASA Worldview</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+</results>
