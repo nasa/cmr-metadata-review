@@ -37,7 +37,6 @@ gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
 gem 'ruby-progressbar'
-gem 'tzinfo-data'
 
 group :test do
   gem 'minitest-spec-rails'
