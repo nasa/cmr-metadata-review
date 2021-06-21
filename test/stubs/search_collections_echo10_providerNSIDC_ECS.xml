@@ -1519,4 +1519,1325 @@
     </Collection>
   </result>
   <result concept-id="C1706334301-NSIDC_ECS" revision-id="7" format="application/echo10+xml">
-    <Collection><ShortName>ATL08</ShortName><VersionId>003</VersionId><InsertTime>2021-06-19T08:51:05.658Z</InsertTime><LastUpdate>2021-06-19T08:51:05.658Z</LastUpdate><LongName>Not provided</LongName><DataSetId>ATLAS/ICESat-2 L3A Land and Vegetation Height V003</DataSetId><Description>This data set (ATL08) contains along-track heights above the WGS84 ellipsoid (ITRF2014 reference frame) for the ground and canopy surfaces. The canopy and ground surfaces are processed in fixed 100 m data segments, which typically contain more than 100 signal photons. The data were acquired by the Advanced Topographic Laser Altimeter System (ATLAS) instrument on board the Ice, Cloud and land Elevation Satellite-2 (ICESat-2) observatory.</Description><DOI><DOI>10.5067/ATLAS/ATL08.003</DOI></DOI><RevisionDate>2021-04-13T00:00:00.000Z</RevisionDate><SuggestedUsage>Scientific Research</SuggestedUsage><ProcessingCenter>NASA/GSFC/EOS/ESDIS</ProcessingCenter><ProcessingLevelId>Level 3</ProcessingLevelId><ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription><ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter><CollectionState>PLANNED</CollectionState><DataFormat>HDF5</DataFormat><SpatialKeywords><Keyword>GLOBAL</Keyword></SpatialKeywords><Temporal><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>2018-10-14T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>ARCHIVER</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>DISTRIBUTOR</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>PROCESSOR</Role><OrganizationName>NASA/GSFC/EOS/ESDIS</OrganizationName></Contact><Contact><Role>ORIGINATOR</Role><OrganizationName>NASA/GSFC/EOS/ESDIS</OrganizationName></Contact><Contact><Role>TECHNICAL CONTACT</Role><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><MiddleName>User</MiddleName><LastName>Services</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Amy</FirstName><MiddleName>L</MiddleName><LastName>Neuenschwander</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Katherine</FirstName><MiddleName>L</MiddleName><LastName>Pitts</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Benjamin</FirstName><MiddleName>P</MiddleName><LastName>Jelley</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>John</FirstName><LastName>Robbins</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Brad</FirstName><LastName>Klotz</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Sorin</FirstName><MiddleName>C</MiddleName><LastName>Popescu</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Ross</FirstName><MiddleName>F</MiddleName><LastName>Nelson</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>David</FirstName><LastName>Harding</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dylan</FirstName><LastName>Pederson</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Ryan</FirstName><LastName>Sheridan</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Amy</FirstName><MiddleName>L</MiddleName><LastName>Neuenschwander</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Katherine</FirstName><MiddleName>L</MiddleName><LastName>Pitts</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Benjamin</FirstName><MiddleName>P</MiddleName><LastName>Jelley</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>John</FirstName><LastName>Robbins</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Brad</FirstName><LastName>Klotz</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Sorin</FirstName><MiddleName>C</MiddleName><LastName>Popescu</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Ross</FirstName><MiddleName>F</MiddleName><LastName>Nelson</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>David</FirstName><LastName>Harding</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dylan</FirstName><LastName>Pederson</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Ryan</FirstName><LastName>Sheridan</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LANDSCAPE</TermKeyword><VariableLevel1Keyword><Value>Canopy Height</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LANDSCAPE</TermKeyword><VariableLevel1Keyword><Value>TERRAIN ELEVATION</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>ICESat-2</ShortName><LongName>Ice, Cloud, and land Elevation Satellite-2</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>ATLAS</ShortName><LongName>Advanced Topographic Laser Altimeter System</LongName><Technique>instrument</Technique><NumberOfSensors>1</NumberOfSensors><Sensors><Sensor><ShortName>ATLAS</ShortName><LongName>Advanced Topographic Laser Altimeter System</LongName></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>identifier_product_doi</Name><DataType>STRING</DataType><Description>Digital object identifier that uniquely identifies this data product</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi_authority</Name><DataType>STRING</DataType><Description>URL of the digital object identifier resolving authority</Description></AdditionalAttribute></AdditionalAttributes><SpatialInfo><SpatialCoverageType>HORIZONTAL</SpatialCoverageType></SpatialInfo><OnlineAccessURLs><OnlineAccessURL><URL>https://n5eil01u.ecs.nsidc.org/ATLAS/ATL08.003/</URL><URLDescription>Direct download via HTTPS protocol.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://search.earthdata.nasa.gov/search/granules?p=C1706334301-NSIDC_ECS&amp;q=atl08%20v003&amp;m=-29.109278436791882!-59.86889648437499!1!1!0!0%2C2&amp;tl=1572814258!4!!</URL><URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://openaltimetry.org/</URL><URLDescription>Platform for ICESat, ICESat-2 to visualize and access vector data along one or more individual tracks</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>https://doi.org/10.5067/ATLAS/ATL08.003</URL><Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description><Type>CollectionURL : DATA SET LANDING PAGE</Type></OnlineResource><OnlineResource><URL>https://doi.org/10.5067/ATLAS/ATL08.003</URL><Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description><Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><OrbitParameters><SwathWidth>36.0</SwathWidth><Period>96.8</Period><InclinationAngle>92.0</InclinationAngle><NumberOfOrbits>0.071428571</NumberOfOrbits><StartCircularLatitude>0.0</StartCircularLatitude></OrbitParameters><GranuleSpatialRepresentation>ORBIT</GranuleSpatialRepresentation></Spatial></Collection></result><result concept-id="C1646610417-NSIDC_ECS" revision-id="3" format="application/echo10+xml"><Collection><ShortName>MOD10A1</ShortName><VersionId>61</VersionId><InsertTime>2021-06-19T08:53:58.244Z</InsertTime><LastUpdate>2021-06-19T08:53:58.244Z</LastUpdate><LongName>Not provided</LongName><DataSetId>MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V061</DataSetId><Description>This global Level-3 (L3) data set provides a daily composite of snow cover and albedo derived from the 'MODIS/Terra Snow Cover 5-Min L2 Swath 500m' data set (DOI:10.5067/MODIS/MOD10_L2.061). Each data granule is a 10°x10° tile projected to a 500 m sinusoidal grid.</Description><DOI><DOI>10.5067/MODIS/MOD10A1.061</DOI></DOI><RevisionDate>2021-05-24T00:00:00.000Z</RevisionDate><SuggestedUsage>Scientific Research</SuggestedUsage><ProcessingCenter>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</ProcessingCenter><ProcessingLevelId>Level 3</ProcessingLevelId><ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription><ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter><CollectionState>COMPLETE</CollectionState><DataFormat>HDF-EOS</DataFormat><SpatialKeywords><Keyword>GLOBAL</Keyword></SpatialKeywords><Temporal><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>ARCHIVER</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>DISTRIBUTOR</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>PROCESSOR</Role><OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName></Contact><Contact><Role>ORIGINATOR</Role><OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName></Contact><Contact><Role>TECHNICAL CONTACT</Role><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><MiddleName>User</MiddleName><LastName>Services</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dorothy</FirstName><MiddleName>K.</MiddleName><LastName>Hall</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>George</FirstName><MiddleName>A.</MiddleName><LastName>Riggs</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW COVER</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>Earth Observing System, Terra (AM-1)</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName><Technique>instrument</Technique><NumberOfSensors>1</NumberOfSensors><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>HORIZONTALTILENUMBER</Name><DataType>INT</DataType><Description>Horizontal tile number of a grid which increases from left to right</Description></AdditionalAttribute><AdditionalAttribute><Name>PROCESSVERSION</Name><DataType>STRING</DataType><Description>Version of the process software that generated the product.</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTGOODQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDCLOUD</Name><DataType>INT</DataType><Description>Percent of pixels under cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDOTHER</Name><DataType>INT</DataType><Description>Percent of pixels not produced due to some reason other than cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTOTHERQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with not so good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>SNOWCOVERPERCENT</Name><DataType>INT</DataType><Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description></AdditionalAttribute><AdditionalAttribute><Name>TileID</Name><DataType>INT</DataType><Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description></AdditionalAttribute><AdditionalAttribute><Name>VERTICALTILENUMBER</Name><DataType>INT</DataType><Description>Vertical tile number of a grid, which increases from top to bottom.</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi</Name><DataType>STRING</DataType><Description>Digital object identifier that uniquely identifies this data product</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi_authority</Name><DataType>STRING</DataType><Description>URL of the digital object identifier resolving authority</Description></AdditionalAttribute></AdditionalAttributes><TwoDCoordinateSystems><TwoDCoordinateSystem><TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0.0</MinimumValue><MaximumValue>35.0</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0.0</MinimumValue><MaximumValue>17.0</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><SpatialInfo><SpatialCoverageType>HORIZONTAL</SpatialCoverageType></SpatialInfo><OnlineAccessURLs><OnlineAccessURL><URL>https://nsidc.org/daac/subscriptions.html</URL><URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A1.061/</URL><URLDescription>Direct download via HTTPS protocol.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://search.earthdata.nasa.gov/search/granules?p=C1646610417-NSIDC_ECS&amp;pg[0][gsk]=-start_date&amp;tl=1601212778!4!!&amp;m=5.203125!-90.28125!2!1!0!0%2C2</URL><URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A1.061</URL><Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description><Type>CollectionURL : DATA SET LANDING PAGE</Type></OnlineResource><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A1.061</URL><Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description><Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial><AssociatedBrowseImageUrls><ProviderBrowseUrl><URL>https://worldview.earthdata.nasa.gov/?p=geographic&amp;l=BlueMarble_NextGeneration,MODIS_Terra_L3_NDSI_Snow_Cover_Daily,Coastlines&amp;t=2000-02-25</URL><Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description></ProviderBrowseUrl></AssociatedBrowseImageUrls></Collection></result><result concept-id="C1000001167-NSIDC_ECS" revision-id="90" format="application/echo10+xml"><Collection><ShortName>MOD10A1</ShortName><VersionId>6</VersionId><InsertTime>2021-06-19T08:53:58.268Z</InsertTime><LastUpdate>2021-06-19T08:53:58.268Z</LastUpdate><LongName>Not provided</LongName><DataSetId>MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V006</DataSetId><Description>This data set contains daily, gridded snow cover and albedo derived from radiance data acquired by the Moderate Resolution Imaging Spectroradiometer (MODIS) on board the Terra satellite. Snow cover is identified using the Normalized Difference Snow Index (NDSI) and a series of screens designed to alleviate errors and flag uncertain snow cover detections.</Description><DOI><DOI>10.5067/MODIS/MOD10A1.006</DOI></DOI><RevisionDate>2021-02-12T00:00:00.000Z</RevisionDate><SuggestedUsage>Scientific Research</SuggestedUsage><ProcessingLevelId>Level 3</ProcessingLevelId><ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription><ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter><CollectionState>PLANNED</CollectionState><DataFormat>HDF-EOS</DataFormat><SpatialKeywords><Keyword>Global</Keyword></SpatialKeywords><Temporal><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>ARCHIVER</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>DISTRIBUTOR</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>TECHNICAL CONTACT</Role><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><MiddleName>User</MiddleName><LastName>Services</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dorothy</FirstName><MiddleName>K.</MiddleName><LastName>Hall</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>George</FirstName><MiddleName>A.</MiddleName><LastName>Riggs</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW COVER</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>TERRA</ShortName><LongName>Earth Observing System, TERRA (AM-1)</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName><Technique>instrument</Technique><NumberOfSensors>1</NumberOfSensors><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>HORIZONTALTILENUMBER</Name><DataType>INT</DataType><Description>Horizontal tile number of a grid which increases from left to right</Description></AdditionalAttribute><AdditionalAttribute><Name>PROCESSVERSION</Name><DataType>STRING</DataType><Description>Version of the process software that generated the product.</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTGOODQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDCLOUD</Name><DataType>INT</DataType><Description>Percent of pixels under cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDOTHER</Name><DataType>INT</DataType><Description>Percent of pixels not produced due to some reason other than cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTOTHERQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with not so good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>SNOWCOVERPERCENT</Name><DataType>INT</DataType><Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description></AdditionalAttribute><AdditionalAttribute><Name>TileID</Name><DataType>INT</DataType><Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description></AdditionalAttribute><AdditionalAttribute><Name>VERTICALTILENUMBER</Name><DataType>INT</DataType><Description>Vertical tile number of a grid, which increases from top to bottom.</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi</Name><DataType>STRING</DataType><Description>Digital object identifier that uniquely identifies this data product</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi_authority</Name><DataType>STRING</DataType><Description>URL of the digital object identifier resolving authority</Description></AdditionalAttribute></AdditionalAttributes><TwoDCoordinateSystems><TwoDCoordinateSystem><TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0.0</MinimumValue><MaximumValue>35.0</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0.0</MinimumValue><MaximumValue>17.0</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><SpatialInfo><SpatialCoverageType>HORIZONTAL</SpatialCoverageType></SpatialInfo><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/daac/subscriptions.html</URL><URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A1.006/</URL><URLDescription>Direct download via HTTPS protocol.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://search.earthdata.nasa.gov/search/granules?p=C1000001167-NSIDC_ECS&amp;m=-32.203125!0!1!1!0!0%2C2&amp;tl=1511801318!4!!&amp;q=MOD10A1</URL><URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A1.006</URL><Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description><Type>CollectionURL : DATA SET LANDING PAGE</Type></OnlineResource><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A1.006</URL><Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description><Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial><AssociatedBrowseImageUrls><ProviderBrowseUrl><URL>https://worldview.earthdata.nasa.gov/?v=-186.50002183453788,-51.64201183431953,94.50002183453788,78.64201183431953&amp;t=2000-02-24-T00%3A00%3A00Z&amp;l=MODIS_Terra_L3_NDSI_Snow_Cover_Daily,Reference_Features,BlueMarble_NextGeneration</URL><Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description></ProviderBrowseUrl></AssociatedBrowseImageUrls></Collection></result><result concept-id="C1646610415-NSIDC_ECS" revision-id="4" format="application/echo10+xml"><Collection><ShortName>MOD10A2</ShortName><VersionId>61</VersionId><InsertTime>2021-06-19T08:53:57.980Z</InsertTime><LastUpdate>2021-06-19T08:53:57.980Z</LastUpdate><LongName>Not provided</LongName><DataSetId>MODIS/Terra Snow Cover 8-Day L3 Global 500m SIN Grid V061</DataSetId><Description>This global Level-3 (L3) data set provides the maximum snow cover extent observed over an eight-day period within 10° x 10° MODIS sinusoidal grid tiles. Tiles are generated by compositing 500 m observations from the 'MODIS/Terra Snow Cover Daily L3 Global 500m Grid' data set (DOI:10.5067/MODIS/MOD10A1.061). A bit flag index is used to track the eight-day snow/no-snow chronology for each 500 m cell.</Description><DOI><DOI>10.5067/MODIS/MOD10A2.061</DOI></DOI><RevisionDate>2021-04-01T00:00:00.000Z</RevisionDate><SuggestedUsage>Scientific Research</SuggestedUsage><ProcessingCenter>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</ProcessingCenter><ProcessingLevelId>Level 3</ProcessingLevelId><ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription><ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter><CollectionState>PLANNED</CollectionState><DataFormat>HDF-EOS</DataFormat><SpatialKeywords><Keyword>GLOBAL LAND</Keyword></SpatialKeywords><Temporal><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>2000-02-18T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>ARCHIVER</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>DISTRIBUTOR</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>PROCESSOR</Role><OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName></Contact><Contact><Role>ORIGINATOR</Role><OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName></Contact><Contact><Role>TECHNICAL CONTACT</Role><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><MiddleName>User</MiddleName><LastName>Services</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dorothy</FirstName><MiddleName>K.</MiddleName><LastName>Hall</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>George</FirstName><MiddleName>A.</MiddleName><LastName>Riggs</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW COVER</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>Earth Observing System, Terra (AM-1)</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName><Technique>instrument</Technique><NumberOfSensors>1</NumberOfSensors><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>HORIZONTALTILENUMBER</Name><DataType>INT</DataType><Description>Horizontal tile number of a grid which increases from left to right</Description></AdditionalAttribute><AdditionalAttribute><Name>PROCESSVERSION</Name><DataType>STRING</DataType><Description>Version of the process software that generated the product.</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTGOODQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTOTHERQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with not so good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>SNOWCOVERPERCENT</Name><DataType>INT</DataType><Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description></AdditionalAttribute><AdditionalAttribute><Name>TileID</Name><DataType>INT</DataType><Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description></AdditionalAttribute><AdditionalAttribute><Name>VERTICALTILENUMBER</Name><DataType>INT</DataType><Description>Vertical tile number of a grid, which increases from top to bottom.</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi</Name><DataType>STRING</DataType><Description>Digital object identifier that uniquely identifies this data product</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi_authority</Name><DataType>STRING</DataType><Description>URL of the digital object identifier resolving authority</Description></AdditionalAttribute></AdditionalAttributes><TwoDCoordinateSystems><TwoDCoordinateSystem><TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0.0</MinimumValue><MaximumValue>35.0</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0.0</MinimumValue><MaximumValue>17.0</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><SpatialInfo><SpatialCoverageType>HORIZONTAL</SpatialCoverageType></SpatialInfo><OnlineAccessURLs><OnlineAccessURL><URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A2.061</URL><URLDescription>Direct download via HTTPS protocol.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://nsidc.org/daac/subscriptions.html</URL><URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://search.earthdata.nasa.gov/search/granules?p=C1646610415-NSIDC_ECS&amp;pg[0][gsk]=-start_date&amp;tl=1601212778!4!!&amp;m=5.203125!-90.140625!2!1!0!0%2C2</URL><URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A2.061</URL><Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description><Type>CollectionURL : DATA SET LANDING PAGE</Type></OnlineResource><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A2.061</URL><Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description><Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial><AssociatedBrowseImageUrls><ProviderBrowseUrl><URL>https://worldview.earthdata.nasa.gov/?p=geographic&amp;l=BlueMarble_NextGeneration,MODIS_Terra_L3_Snow_Extent_8Day,Coastlines&amp;t=2000-02-26</URL><Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description></ProviderBrowseUrl></AssociatedBrowseImageUrls></Collection></result><result concept-id="C1000001161-NSIDC_ECS" revision-id="88" format="application/echo10+xml"><Collection><ShortName>MOD10A2</ShortName><VersionId>6</VersionId><InsertTime>2021-06-19T08:53:57.970Z</InsertTime><LastUpdate>2021-06-19T08:53:57.970Z</LastUpdate><LongName>Not provided</LongName><DataSetId>MODIS/Terra Snow Cover 8-Day L3 Global 500m SIN Grid V006</DataSetId><Description>This data set reports the maximum snow cover extent during an eight-day period in 1200 km x 1200 km tiles. Tiles are generated by compositing 500 m observations from the MODIS/Terra Snow Cover Daily L3 Global 500m Grid (MOD10A1) data set. Bit flags are also provided that report the eight-day snow/no-snow chronology for each 500 m cell.</Description><DOI><DOI>10.5067/MODIS/MOD10A2.006</DOI></DOI><RevisionDate>2021-05-24T00:00:00.000Z</RevisionDate><SuggestedUsage>Scientific Research</SuggestedUsage><ProcessingLevelId>Level 3</ProcessingLevelId><ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription><ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter><CollectionState>PLANNED</CollectionState><DataFormat>HDF-EOS</DataFormat><SpatialKeywords><Keyword>Global Land</Keyword></SpatialKeywords><Temporal><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>ARCHIVER</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>DISTRIBUTOR</Role><OrganizationName>NASA NSIDC DAAC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>1 303 492 6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>TECHNICAL CONTACT</Role><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><MiddleName>User</MiddleName><LastName>Services</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>Dorothy</FirstName><MiddleName>K.</MiddleName><LastName>Hall</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson><ContactPerson><FirstName>George</FirstName><MiddleName>A.</MiddleName><LastName>Riggs</LastName><JobPosition>TECHNICAL CONTACT</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW COVER</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>TERRA</ShortName><LongName>Earth Observing System, TERRA (AM-1)</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName><Technique>instrument</Technique><NumberOfSensors>1</NumberOfSensors><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Moderate-Resolution Imaging Spectroradiometer</LongName></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>HORIZONTALTILENUMBER</Name><DataType>INT</DataType><Description>Horizontal tile number of a grid which increases from left to right</Description></AdditionalAttribute><AdditionalAttribute><Name>PROCESSVERSION</Name><DataType>STRING</DataType><Description>Version of the process software that generated the product.</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTGOODQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTOTHERQUALITY</Name><DataType>INT</DataType><Description>Percent of pixels with not so good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>SNOWCOVERPERCENT</Name><DataType>INT</DataType><Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description></AdditionalAttribute><AdditionalAttribute><Name>TileID</Name><DataType>INT</DataType><Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description></AdditionalAttribute><AdditionalAttribute><Name>VERTICALTILENUMBER</Name><DataType>INT</DataType><Description>Vertical tile number of a grid, which increases from top to bottom.</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi</Name><DataType>STRING</DataType><Description>Digital object identifier that uniquely identifies this data product</Description></AdditionalAttribute><AdditionalAttribute><Name>identifier_product_doi_authority</Name><DataType>STRING</DataType><Description>URL of the digital object identifier resolving authority</Description></AdditionalAttribute></AdditionalAttributes><TwoDCoordinateSystems><TwoDCoordinateSystem><TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0.0</MinimumValue><MaximumValue>35.0</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0.0</MinimumValue><MaximumValue>17.0</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><SpatialInfo><SpatialCoverageType>HORIZONTAL</SpatialCoverageType></SpatialInfo><OnlineAccessURLs><OnlineAccessURL><URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A2.006/</URL><URLDescription>Direct download via HTTPS protocol.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>http://nsidc.org/daac/subscriptions.html</URL><URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://search.earthdata.nasa.gov/search/granules?p=C1000001161-NSIDC_ECS&amp;m=-31.640625!1.125!1!1!0!0%2C2&amp;tl=1511801301!4!!&amp;q=MOD10A2</URL><URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A2.006</URL><Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description><Type>CollectionURL : DATA SET LANDING PAGE</Type></OnlineResource><OnlineResource><URL>https://doi.org/10.5067/MODIS/MOD10A2.006</URL><Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description><Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial><AssociatedBrowseImageUrls><ProviderBrowseUrl><URL>https://worldview.earthdata.nasa.gov/?v=-187.87748473979323,-149.04034924967337,189.14323796088897,137.75524836309827&amp;t=2000-02-26-T00%3A00%3A00Z&amp;l=MODIS_Terra_L3_Snow_Extent_8Day,Reference_Features,BlueMarble_NextGeneration</URL><Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description></ProviderBrowseUrl></AssociatedBrowseImageUrls></Collection></result></results>
+    <Collection>
+      <ShortName>ATL08</ShortName>
+      <VersionId>003</VersionId>
+      <InsertTime>2021-06-19T08:51:05.658Z</InsertTime>
+      <LastUpdate>2021-06-19T08:51:05.658Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>ATLAS/ICESat-2 L3A Land and Vegetation Height V003</DataSetId>
+      <Description>This data set (ATL08) contains along-track heights above the WGS84 ellipsoid (ITRF2014 reference frame) for the ground and canopy surfaces. The canopy and ground surfaces are processed in fixed 100 m data segments, which typically contain more than 100 signal photons. The data were acquired by the Advanced Topographic Laser Altimeter System (ATLAS) instrument on board the Ice, Cloud and land Elevation Satellite-2 (ICESat-2) observatory.</Description>
+      <DOI>
+        <DOI>10.5067/ATLAS/ATL08.003</DOI>
+      </DOI>
+      <RevisionDate>2021-04-13T00:00:00.000Z</RevisionDate>
+      <SuggestedUsage>Scientific Research</SuggestedUsage>
+      <ProcessingCenter>NASA/GSFC/EOS/ESDIS</ProcessingCenter>
+      <ProcessingLevelId>Level 3</ProcessingLevelId>
+      <ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription>
+      <ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter>
+      <CollectionState>PLANNED</CollectionState>
+      <DataFormat>HDF5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2018-10-14T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>PROCESSOR</Role>
+          <OrganizationName>NASA/GSFC/EOS/ESDIS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>ORIGINATOR</Role>
+          <OrganizationName>NASA/GSFC/EOS/ESDIS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>NSIDC</FirstName>
+              <MiddleName>User</MiddleName>
+              <LastName>Services</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Amy</FirstName>
+              <MiddleName>L</MiddleName>
+              <LastName>Neuenschwander</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Katherine</FirstName>
+              <MiddleName>L</MiddleName>
+              <LastName>Pitts</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Benjamin</FirstName>
+              <MiddleName>P</MiddleName>
+              <LastName>Jelley</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>John</FirstName>
+              <LastName>Robbins</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Brad</FirstName>
+              <LastName>Klotz</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Sorin</FirstName>
+              <MiddleName>C</MiddleName>
+              <LastName>Popescu</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Ross</FirstName>
+              <MiddleName>F</MiddleName>
+              <LastName>Nelson</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>David</FirstName>
+              <LastName>Harding</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dylan</FirstName>
+              <LastName>Pederson</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Ryan</FirstName>
+              <LastName>Sheridan</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Amy</FirstName>
+              <MiddleName>L</MiddleName>
+              <LastName>Neuenschwander</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Katherine</FirstName>
+              <MiddleName>L</MiddleName>
+              <LastName>Pitts</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Benjamin</FirstName>
+              <MiddleName>P</MiddleName>
+              <LastName>Jelley</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>John</FirstName>
+              <LastName>Robbins</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Brad</FirstName>
+              <LastName>Klotz</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Sorin</FirstName>
+              <MiddleName>C</MiddleName>
+              <LastName>Popescu</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Ross</FirstName>
+              <MiddleName>F</MiddleName>
+              <LastName>Nelson</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>David</FirstName>
+              <LastName>Harding</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dylan</FirstName>
+              <LastName>Pederson</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Ryan</FirstName>
+              <LastName>Sheridan</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>LAND SURFACE</TopicKeyword>
+          <TermKeyword>LANDSCAPE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Canopy Height</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>LAND SURFACE</TopicKeyword>
+          <TermKeyword>LANDSCAPE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>TERRAIN ELEVATION</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>ICESat-2</ShortName>
+          <LongName>Ice, Cloud, and land Elevation Satellite-2</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>ATLAS</ShortName>
+              <LongName>Advanced Topographic Laser Altimeter System</LongName>
+              <Technique>instrument</Technique>
+              <NumberOfSensors>1</NumberOfSensors>
+              <Sensors>
+                <Sensor>
+                  <ShortName>ATLAS</ShortName>
+                  <LongName>Advanced Topographic Laser Altimeter System</LongName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://n5eil01u.ecs.nsidc.org/ATLAS/ATL08.003/</URL>
+          <URLDescription>Direct download via HTTPS protocol.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1706334301-NSIDC_ECS&amp;q=atl08%20v003&amp;m=-29.109278436791882!-59.86889648437499!1!1!0!0%2C2&amp;tl=1572814258!4!!</URL>
+          <URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://openaltimetry.org/</URL>
+          <URLDescription>Platform for ICESat, ICESat-2 to visualize and access vector data along one or more individual tracks</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/ATLAS/ATL08.003</URL>
+          <Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/ATLAS/ATL08.003</URL>
+          <Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <OrbitParameters>
+          <SwathWidth>36.0</SwathWidth>
+          <Period>96.8</Period>
+          <InclinationAngle>92.0</InclinationAngle>
+          <NumberOfOrbits>0.071428571</NumberOfOrbits>
+          <StartCircularLatitude>0.0</StartCircularLatitude>
+        </OrbitParameters>
+        <GranuleSpatialRepresentation>ORBIT</GranuleSpatialRepresentation>
+      </Spatial>
+    </Collection>
+  </result>
+  <result concept-id="C1646610417-NSIDC_ECS" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOD10A1</ShortName>
+      <VersionId>61</VersionId>
+      <InsertTime>2021-06-19T08:53:58.244Z</InsertTime>
+      <LastUpdate>2021-06-19T08:53:58.244Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V061</DataSetId>
+      <Description>This global Level-3 (L3) data set provides a daily composite of snow cover and albedo derived from the 'MODIS/Terra Snow Cover 5-Min L2 Swath 500m' data set (DOI:10.5067/MODIS/MOD10_L2.061). Each data granule is a 10°x10° tile projected to a 500 m sinusoidal grid.</Description>
+      <DOI>
+        <DOI>10.5067/MODIS/MOD10A1.061</DOI>
+      </DOI>
+      <RevisionDate>2021-05-24T00:00:00.000Z</RevisionDate>
+      <SuggestedUsage>Scientific Research</SuggestedUsage>
+      <ProcessingCenter>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</ProcessingCenter>
+      <ProcessingLevelId>Level 3</ProcessingLevelId>
+      <ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription>
+      <ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter>
+      <CollectionState>COMPLETE</CollectionState>
+      <DataFormat>HDF-EOS</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>PROCESSOR</Role>
+          <OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>ORIGINATOR</Role>
+          <OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>NSIDC</FirstName>
+              <MiddleName>User</MiddleName>
+              <LastName>Services</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dorothy</FirstName>
+              <MiddleName>K.</MiddleName>
+              <LastName>Hall</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>George</FirstName>
+              <MiddleName>A.</MiddleName>
+              <LastName>Riggs</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>ALBEDO</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SNOW COVER</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, Terra (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MODIS</ShortName>
+              <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+              <Technique>instrument</Technique>
+              <NumberOfSensors>1</NumberOfSensors>
+              <Sensors>
+                <Sensor>
+                  <ShortName>MODIS</ShortName>
+                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>HORIZONTALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Horizontal tile number of a grid which increases from left to right</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>PROCESSVERSION</Name>
+          <DataType>STRING</DataType>
+          <Description>Version of the process software that generated the product.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTGOODQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTNOTPRODUCEDCLOUD</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels under cloud</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTNOTPRODUCEDOTHER</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels not produced due to some reason other than cloud</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTOTHERQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with not so good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>SNOWCOVERPERCENT</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>TileID</Name>
+          <DataType>INT</DataType>
+          <Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>VERTICALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Vertical tile number of a grid, which increases from top to bottom.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <TwoDCoordinateSystems>
+        <TwoDCoordinateSystem>
+          <TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName>
+          <Coordinate1>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>35.0</MaximumValue>
+          </Coordinate1>
+          <Coordinate2>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>17.0</MaximumValue>
+          </Coordinate2>
+        </TwoDCoordinateSystem>
+      </TwoDCoordinateSystems>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://nsidc.org/daac/subscriptions.html</URL>
+          <URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A1.061/</URL>
+          <URLDescription>Direct download via HTTPS protocol.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1646610417-NSIDC_ECS&amp;pg[0][gsk]=-start_date&amp;tl=1601212778!4!!&amp;m=5.203125!-90.28125!2!1!0!0%2C2</URL>
+          <URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A1.061</URL>
+          <Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A1.061</URL>
+          <Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/?p=geographic&amp;l=BlueMarble_NextGeneration,MODIS_Terra_L3_NDSI_Snow_Cover_Daily,Coastlines&amp;t=2000-02-25</URL>
+          <Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1000001167-NSIDC_ECS" revision-id="90" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOD10A1</ShortName>
+      <VersionId>6</VersionId>
+      <InsertTime>2021-06-19T08:53:58.268Z</InsertTime>
+      <LastUpdate>2021-06-19T08:53:58.268Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V006</DataSetId>
+      <Description>This data set contains daily, gridded snow cover and albedo derived from radiance data acquired by the Moderate Resolution Imaging Spectroradiometer (MODIS) on board the Terra satellite. Snow cover is identified using the Normalized Difference Snow Index (NDSI) and a series of screens designed to alleviate errors and flag uncertain snow cover detections.</Description>
+      <DOI>
+        <DOI>10.5067/MODIS/MOD10A1.006</DOI>
+      </DOI>
+      <RevisionDate>2021-02-12T00:00:00.000Z</RevisionDate>
+      <SuggestedUsage>Scientific Research</SuggestedUsage>
+      <ProcessingLevelId>Level 3</ProcessingLevelId>
+      <ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription>
+      <ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter>
+      <CollectionState>PLANNED</CollectionState>
+      <DataFormat>HDF-EOS</DataFormat>
+      <SpatialKeywords>
+        <Keyword>Global</Keyword>
+      </SpatialKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>NSIDC</FirstName>
+              <MiddleName>User</MiddleName>
+              <LastName>Services</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dorothy</FirstName>
+              <MiddleName>K.</MiddleName>
+              <LastName>Hall</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>George</FirstName>
+              <MiddleName>A.</MiddleName>
+              <LastName>Riggs</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>ALBEDO</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SNOW COVER</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>TERRA</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MODIS</ShortName>
+              <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+              <Technique>instrument</Technique>
+              <NumberOfSensors>1</NumberOfSensors>
+              <Sensors>
+                <Sensor>
+                  <ShortName>MODIS</ShortName>
+                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>HORIZONTALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Horizontal tile number of a grid which increases from left to right</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>PROCESSVERSION</Name>
+          <DataType>STRING</DataType>
+          <Description>Version of the process software that generated the product.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTGOODQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTNOTPRODUCEDCLOUD</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels under cloud</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTNOTPRODUCEDOTHER</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels not produced due to some reason other than cloud</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTOTHERQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with not so good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>SNOWCOVERPERCENT</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>TileID</Name>
+          <DataType>INT</DataType>
+          <Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>VERTICALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Vertical tile number of a grid, which increases from top to bottom.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <TwoDCoordinateSystems>
+        <TwoDCoordinateSystem>
+          <TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName>
+          <Coordinate1>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>35.0</MaximumValue>
+          </Coordinate1>
+          <Coordinate2>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>17.0</MaximumValue>
+          </Coordinate2>
+        </TwoDCoordinateSystem>
+      </TwoDCoordinateSystems>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>http://nsidc.org/daac/subscriptions.html</URL>
+          <URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A1.006/</URL>
+          <URLDescription>Direct download via HTTPS protocol.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1000001167-NSIDC_ECS&amp;m=-32.203125!0!1!1!0!0%2C2&amp;tl=1511801318!4!!&amp;q=MOD10A1</URL>
+          <URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A1.006</URL>
+          <Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A1.006</URL>
+          <Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/?v=-186.50002183453788,-51.64201183431953,94.50002183453788,78.64201183431953&amp;t=2000-02-24-T00%3A00%3A00Z&amp;l=MODIS_Terra_L3_NDSI_Snow_Cover_Daily,Reference_Features,BlueMarble_NextGeneration</URL>
+          <Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1646610415-NSIDC_ECS" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOD10A2</ShortName>
+      <VersionId>61</VersionId>
+      <InsertTime>2021-06-19T08:53:57.980Z</InsertTime>
+      <LastUpdate>2021-06-19T08:53:57.980Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MODIS/Terra Snow Cover 8-Day L3 Global 500m SIN Grid V061</DataSetId>
+      <Description>This global Level-3 (L3) data set provides the maximum snow cover extent observed over an eight-day period within 10° x 10° MODIS sinusoidal grid tiles. Tiles are generated by compositing 500 m observations from the 'MODIS/Terra Snow Cover Daily L3 Global 500m Grid' data set (DOI:10.5067/MODIS/MOD10A1.061). A bit flag index is used to track the eight-day snow/no-snow chronology for each 500 m cell.</Description>
+      <DOI>
+        <DOI>10.5067/MODIS/MOD10A2.061</DOI>
+      </DOI>
+      <RevisionDate>2021-04-01T00:00:00.000Z</RevisionDate>
+      <SuggestedUsage>Scientific Research</SuggestedUsage>
+      <ProcessingCenter>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</ProcessingCenter>
+      <ProcessingLevelId>Level 3</ProcessingLevelId>
+      <ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription>
+      <ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter>
+      <CollectionState>PLANNED</CollectionState>
+      <DataFormat>HDF-EOS</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL LAND</Keyword>
+      </SpatialKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-02-18T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>PROCESSOR</Role>
+          <OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>ORIGINATOR</Role>
+          <OrganizationName>NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS</OrganizationName>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>NSIDC</FirstName>
+              <MiddleName>User</MiddleName>
+              <LastName>Services</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dorothy</FirstName>
+              <MiddleName>K.</MiddleName>
+              <LastName>Hall</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>George</FirstName>
+              <MiddleName>A.</MiddleName>
+              <LastName>Riggs</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SNOW COVER</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>Terra</ShortName>
+          <LongName>Earth Observing System, Terra (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MODIS</ShortName>
+              <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+              <Technique>instrument</Technique>
+              <NumberOfSensors>1</NumberOfSensors>
+              <Sensors>
+                <Sensor>
+                  <ShortName>MODIS</ShortName>
+                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>HORIZONTALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Horizontal tile number of a grid which increases from left to right</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>PROCESSVERSION</Name>
+          <DataType>STRING</DataType>
+          <Description>Version of the process software that generated the product.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTGOODQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTOTHERQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with not so good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>SNOWCOVERPERCENT</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>TileID</Name>
+          <DataType>INT</DataType>
+          <Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>VERTICALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Vertical tile number of a grid, which increases from top to bottom.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <TwoDCoordinateSystems>
+        <TwoDCoordinateSystem>
+          <TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName>
+          <Coordinate1>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>35.0</MaximumValue>
+          </Coordinate1>
+          <Coordinate2>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>17.0</MaximumValue>
+          </Coordinate2>
+        </TwoDCoordinateSystem>
+      </TwoDCoordinateSystems>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A2.061</URL>
+          <URLDescription>Direct download via HTTPS protocol.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://nsidc.org/daac/subscriptions.html</URL>
+          <URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1646610415-NSIDC_ECS&amp;pg[0][gsk]=-start_date&amp;tl=1601212778!4!!&amp;m=5.203125!-90.140625!2!1!0!0%2C2</URL>
+          <URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A2.061</URL>
+          <Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A2.061</URL>
+          <Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/?p=geographic&amp;l=BlueMarble_NextGeneration,MODIS_Terra_L3_Snow_Extent_8Day,Coastlines&amp;t=2000-02-26</URL>
+          <Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+  <result concept-id="C1000001161-NSIDC_ECS" revision-id="88" format="application/echo10+xml">
+    <Collection>
+      <ShortName>MOD10A2</ShortName>
+      <VersionId>6</VersionId>
+      <InsertTime>2021-06-19T08:53:57.970Z</InsertTime>
+      <LastUpdate>2021-06-19T08:53:57.970Z</LastUpdate>
+      <LongName>Not provided</LongName>
+      <DataSetId>MODIS/Terra Snow Cover 8-Day L3 Global 500m SIN Grid V006</DataSetId>
+      <Description>This data set reports the maximum snow cover extent during an eight-day period in 1200 km x 1200 km tiles. Tiles are generated by compositing 500 m observations from the MODIS/Terra Snow Cover Daily L3 Global 500m Grid (MOD10A1) data set. Bit flags are also provided that report the eight-day snow/no-snow chronology for each 500 m cell.</Description>
+      <DOI>
+        <DOI>10.5067/MODIS/MOD10A2.006</DOI>
+      </DOI>
+      <RevisionDate>2021-05-24T00:00:00.000Z</RevisionDate>
+      <SuggestedUsage>Scientific Research</SuggestedUsage>
+      <ProcessingLevelId>Level 3</ProcessingLevelId>
+      <ProcessingLevelDescription>Geophysical variables mapped on a grid</ProcessingLevelDescription>
+      <ArchiveCenter>NASA NSIDC DAAC</ArchiveCenter>
+      <CollectionState>PLANNED</CollectionState>
+      <DataFormat>HDF-EOS</DataFormat>
+      <SpatialKeywords>
+        <Keyword>Global Land</Keyword>
+      </SpatialKeywords>
+      <Temporal>
+        <EndsAtPresentFlag>false</EndsAtPresentFlag>
+        <RangeDateTime>
+          <BeginningDateTime>2000-02-24T00:00:00.000Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>ARCHIVER</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA NSIDC DAAC</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>National Snow and Ice Data Center CIRES, 449 UCB University of Colorado</StreetAddress>
+              <City>Boulder</City>
+              <StateProvince>CO</StateProvince>
+              <PostalCode>80309-0449</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>1 303 492 6199</Number>
+              <Type>Telephone</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>nsidc@nsidc.org</Email>
+          </OrganizationEmails>
+        </Contact>
+        <Contact>
+          <Role>TECHNICAL CONTACT</Role>
+          <ContactPersons>
+            <ContactPerson>
+              <FirstName>NSIDC</FirstName>
+              <MiddleName>User</MiddleName>
+              <LastName>Services</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>Dorothy</FirstName>
+              <MiddleName>K.</MiddleName>
+              <LastName>Hall</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+            <ContactPerson>
+              <FirstName>George</FirstName>
+              <MiddleName>A.</MiddleName>
+              <LastName>Riggs</LastName>
+              <JobPosition>TECHNICAL CONTACT</JobPosition>
+            </ContactPerson>
+          </ContactPersons>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+          <TopicKeyword>CRYOSPHERE</TopicKeyword>
+          <TermKeyword>SNOW/ICE</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>SNOW COVER</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>TERRA</ShortName>
+          <LongName>Earth Observing System, TERRA (AM-1)</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>MODIS</ShortName>
+              <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+              <Technique>instrument</Technique>
+              <NumberOfSensors>1</NumberOfSensors>
+              <Sensors>
+                <Sensor>
+                  <ShortName>MODIS</ShortName>
+                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+                </Sensor>
+              </Sensors>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>HORIZONTALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Horizontal tile number of a grid which increases from left to right</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>PROCESSVERSION</Name>
+          <DataType>STRING</DataType>
+          <Description>Version of the process software that generated the product.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTGOODQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>QAPERCENTOTHERQUALITY</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of pixels with not so good quality</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>SNOWCOVERPERCENT</Name>
+          <DataType>INT</DataType>
+          <Description>Percent of granule that was identified as snow covered;  % based on area of granule (swath or tile).</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>TileID</Name>
+          <DataType>INT</DataType>
+          <Description>MODIS Land tile identification number which represents a geographical area on the surface of the Earth bounded by latitude and longitude coordinates.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>VERTICALTILENUMBER</Name>
+          <DataType>INT</DataType>
+          <Description>Vertical tile number of a grid, which increases from top to bottom.</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Digital object identifier that uniquely identifies this data product</Description>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>URL of the digital object identifier resolving authority</Description>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <TwoDCoordinateSystems>
+        <TwoDCoordinateSystem>
+          <TwoDCoordinateSystemName>MODIS Tile SIN</TwoDCoordinateSystemName>
+          <Coordinate1>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>35.0</MaximumValue>
+          </Coordinate1>
+          <Coordinate2>
+            <MinimumValue>0.0</MinimumValue>
+            <MaximumValue>17.0</MaximumValue>
+          </Coordinate2>
+        </TwoDCoordinateSystem>
+      </TwoDCoordinateSystems>
+      <SpatialInfo>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      </SpatialInfo>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://n5eil01u.ecs.nsidc.org/MOST/MOD10A2.006/</URL>
+          <URLDescription>Direct download via HTTPS protocol.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>http://nsidc.org/daac/subscriptions.html</URL>
+          <URLDescription>Subscribe to have new data automatically sent when the data become available.</URLDescription>
+        </OnlineAccessURL>
+        <OnlineAccessURL>
+          <URL>https://search.earthdata.nasa.gov/search/granules?p=C1000001161-NSIDC_ECS&amp;m=-31.640625!1.125!1!1!0!0%2C2&amp;tl=1511801301!4!!&amp;q=MOD10A2</URL>
+          <URLDescription>NASA's newest search and order tool for subsetting, reprojecting, and reformatting data.</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A2.006</URL>
+          <Description>Provides access to data, documentation, tools, citation information, support, and other resources.</Description>
+          <Type>CollectionURL : DATA SET LANDING PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://doi.org/10.5067/MODIS/MOD10A2.006</URL>
+          <Description>Includes a user's guide, supplemental documents like ATBDs and academic papers, How Tos, FAQs, etc.</Description>
+          <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <Spatial>
+        <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180.0</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
+      </Spatial>
+      <AssociatedBrowseImageUrls>
+        <ProviderBrowseUrl>
+          <URL>https://worldview.earthdata.nasa.gov/?v=-187.87748473979323,-149.04034924967337,189.14323796088897,137.75524836309827&amp;t=2000-02-26-T00%3A00%3A00Z&amp;l=MODIS_Terra_L3_Snow_Extent_8Day,Reference_Features,BlueMarble_NextGeneration</URL>
+          <Description>This application allows you to interactively browse global satellite imagery within hours of it being acquired. You can also save it, share it, and download the underlying data.</Description>
+        </ProviderBrowseUrl>
+      </AssociatedBrowseImageUrls>
+    </Collection>
+  </result>
+</results>
