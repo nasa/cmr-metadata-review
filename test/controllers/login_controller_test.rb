@@ -42,7 +42,7 @@ class LoginControllerTest < ActionController::TestCase
         before_count = User.count
         post :urs, params: { provider: :urs }
         after_count = User.count
-        assert(_(after_count).must_equal(before_count + 1))
+        assert(after_count.must_equal(before_count + 1))
       end
     end
 
