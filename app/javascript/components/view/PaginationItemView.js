@@ -43,7 +43,6 @@ const PaginationItemView = observer(
       }
       if (name === 'Prev' || name === 'Next') {
         let pageToSelect = Math.max(1, viewModel.currentPage - 1);
-        ;
         let icon = "eui-icon eui-fa-chevron-circle-left";
         if (name === 'Next') {
           icon = "eui-icon eui-fa-chevron-circle-right";
