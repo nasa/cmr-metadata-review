@@ -24,7 +24,7 @@ class AclDaoTest < ActiveSupport::TestCase
       acl = AclDao.new('accesstoken', ENV['urs_client_id'], @cmr_base_url)
       role, daac = acl.get_role_and_daac('existingdeviseuser')
       assert_equal('admin', role)
-      assert_equal(daac, nil)
+      assert_nil(daac)
     end
 
     it "tests retrieving role as arc_curator" do
@@ -40,7 +40,7 @@ class AclDaoTest < ActiveSupport::TestCase
       acl = AclDao.new('accesstoken', ENV['urs_client_id'], @cmr_base_url)
       role, daac = acl.get_role_and_daac('normaluser')
       assert_equal('arc_curator', role)
-      assert_equal(daac, nil)
+      assert_nil(daac)
     end
 
     it 'tests retrieving acls as daac curator' do
