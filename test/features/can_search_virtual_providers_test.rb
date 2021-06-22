@@ -25,7 +25,6 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
         find("#provider > option:nth-child(3)").click
       end
       find("#search_button").click
-      # sleep 1
       page.must_have_content('Search the CMR:')
       screenshot_and_open_image
     end
