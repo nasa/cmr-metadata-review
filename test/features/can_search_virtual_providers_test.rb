@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
-class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
+class CanSearchVirtualProvidersTest < SystemTestCase
   include Helpers::UserHelpers
   include Helpers::ReviewsHelper
   include Helpers::HomeHelper
@@ -26,7 +26,8 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
       end
       find("#search_button").click
       page.must_have_content('Search the CMR:')
-      screenshot_and_open_image
+      # We should see LARC and LARC_ASDC since these are part of ASDC virtual provider
+      page.must_have_content('C1575974124-LARC')
     end
 
     it "searches for collections under NSIDC provider" do
@@ -42,7 +43,8 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
       end
       find("#search_button").click
       page.must_have_content('Search the CMR:')
-      screenshot_and_open_image
+      # We should see NSIDCV0 and NSIDC_ECS since these are part of the NSIDC virtual provider
+      page.must_have_content('C1430937702-NSIDC_ECS')
     end
 
     it "searches for collections under GHRC provider" do
@@ -58,7 +60,8 @@ class CanSearchVirtualProvidersTest < Capybara::Rails::TestCase
       end
       find("#search_button").click
       page.must_have_content('Search the CMR:')
-      screenshot_and_open_image
+      # We should see GHRC_CLOUD and LANCEAMSR2 since these are part of the GHRC virtual provider
+      page.must_have_content('C1886605827-LANCEAMSR2')
     end
   end
 end

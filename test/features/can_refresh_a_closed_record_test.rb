@@ -1,7 +1,7 @@
 require 'test_helper'
 Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 
-class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
+class CanRefreshAClosedRecordTest < SystemTestCase
   include Helpers::UserHelpers
   include Helpers::ReviewsHelper
   include Helpers::HomeHelper
@@ -29,8 +29,6 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
       within '#closed' do
         all('#record_id_')[0].click
       end
-      sleep 1
-      screenshot_and_open_image
       click_on 'Refresh'
       page.must_have_content('Latest revision for Collection metric1-PODAAC has already been ingested')
     end
@@ -69,8 +67,6 @@ class CanRefreshAClosedRecordTest < Capybara::Rails::TestCase
         all('#record_id_')[0].click
       end
       click_on 'Refresh'
-      sleep 1
-      screenshot_and_open_image
       page.must_have_content('Latest revision for Collection metric1-PODAAC has been ingested')
     end
   end
