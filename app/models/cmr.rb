@@ -506,12 +506,9 @@ class Cmr
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
         base_options['provider'] = provider_list + ['LARC_ASDC', 'LARC'] +
-          ['NSIDCV0', 'NSIDC_ECS'] + ['GHRC', 'GHRC_CLOUD', 'LANCEAMSR2']
+          ['NSIDCV0', 'NSIDC_ECS'] + ['GHRC', 'GHRC_CLOUD', 'GHRC_DAAC', 'LANCEAMSR2']
       else
-        base_options['provider'] = provider
-        base_options['provider'] = ['LARC_ASDC', 'LARC'] if provider == 'ASDC'
-        base_options['provider'] = ['NSIDCV0', 'NSIDC_ECS'] if provider == 'NSIDC'
-        base_options['provider'] = ['GHRC', 'GHRC_CLOUD', 'LANCEAMSR2'] if provider == 'GHRC'
+        base_options['provider'] = ApplicationHelper.providers(provider)
       end
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
@@ -524,7 +521,6 @@ class Cmr
 
       #cmr does not accept first character wildcards for some reason, so remove char and retry query
       query_text_first_char = Cmr.api_url('collections', 'echo10', options_first_char)
-
       begin
         raw_xml = Cmr.cmr_request(query_text).parsed_response
         search_results = Hash.from_xml(raw_xml)['results']
