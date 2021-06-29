@@ -126,21 +126,21 @@ module ApplicationHelper
   def self.virtual_daac(daac)
     daac = 'ASDC'  if %w[LARC_ASDC LARC].include?(daac)
     daac = 'NSIDC' if %w[NSIDCV0 NSIDC_ECS].include?(daac)
-    daac = 'GHRC'  if %w[GHRC_CLOUD LANCEAMSR2].include?(daac)
+    daac = 'GHRC'  if %w[GHRC_CLOUD GHRC_DAAC LANCEAMSR2].include?(daac)
     daac
   end
 
   # convert virtual daac into a provider list
   def self.providers(virtual_daac)
     providers = virtual_daac
-    providers = %w[LARC_ASDC LARC] if virtual_daac == 'ASDC'
-    providers = %w[NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
-    providers = %w[GHRC_CLOUD LANCEAMSR2] if virtual_daac == 'GHRC'
+    providers = %w[ASDC LARC_ASDC LARC] if virtual_daac == 'ASDC'
+    providers = %w[NSIDC NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
+    providers = %w[GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2] if virtual_daac == 'GHRC'
     providers
   end
 
   def self.all_arc_providers
-    return ARC_PROVIDERS + %w(LARC_ASDC LARC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD LANCEAMSR2)
+    return ARC_PROVIDERS + %w(ASDC LARC_ASDC LARC NSIDC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2)
   end
 
 
