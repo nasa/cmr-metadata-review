@@ -505,8 +505,8 @@ class Cmr
       base_options = {'page_size' => page_size, 'page_num' => curr_page}
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
-        base_options['provider'] = provider_list + ['LARC_ASDC', 'LARC'] +
-          ['NSIDCV0', 'NSIDC_ECS'] + ['GHRC', 'GHRC_CLOUD', 'GHRC_DAAC', 'LANCEAMSR2']
+        base_options['provider'] = provider_list + ['ASDC', LARC_ASDC', 'LARC'] +
+          ['NSIDC', NSIDCV0', 'NSIDC_ECS'] + ['GHRC', 'GHRC_CLOUD', 'GHRC_DAAC', 'LANCEAMSR2']
       else
         base_options['provider'] = ApplicationHelper.providers(provider)
       end

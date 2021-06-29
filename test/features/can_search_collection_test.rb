@@ -44,7 +44,7 @@ class CanSearchCollectionTest < SystemTestCase
       to_return(status: 200, body: get_stub("search_collection_C1996546695-GHRC_DAAC.atom"), headers: {})
   end
   describe 'search cmr collection' do
-    it 'search collection by provider' do
+    it 'search collection by GHRC provider' do
       visit '/home'
       within '#provider' do
         find("#provider > option:nth-child(6)").click
