@@ -1,0 +1,329 @@
+<Collection>
+  <ShortName>SPURS1_WAVEGLIDER</ShortName>
+  <VersionId>1.0</VersionId>
+  <InsertTime>2015-04-07T00:02:24.407Z</InsertTime>
+  <LastUpdate>2017-04-28T05:01:46.000Z</LastUpdate>
+  <LongName>Not provided</LongName>
+  <DataSetId>Waveglider data for the SPURS-1 N. Atlantic field campaign</DataSetId>
+  <Description>The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is an oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans exhibiting salinity extremes.  SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed salinity fields from the Aquarius/SAC-D and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of spatio-temporal scales.  The SPURS-1 campaign involved a series of 5 cruises during 2012 - 2013 seeking to characterize the salinity structure and balance in a high salinity, high evaporation, and low rainfall region of the subtropical North Atlantic. It aims to resolve processes responsible for maintaining the subtropical surface salinity maximum in this region and within a 900 x 800-mile square study area centered at 25N, 38W. A Waveglider is an autonomous platform propelled by the conversion of ocean wave energy into forward thrust and employing solar panels to power instrumentation. During SPURS-1, three wavegliders (ASL2, ASL3 and ASL4) were deployed from the Knorr in September 2012, redeployed in April 2013 (ASL22, ASL32 and ASL42) with final recovery in September. Waveglider trajectories followed a square loop or butterfly pattern around the central SPURS mooring.  Sensors included a CTD at the near-surface and another at 6 m depth, a surface current meter, air temperature, atmospheric pressure and wind speed sensors providing continuous  along-track observations.  NetCDF waveglider data files here contain hour averaged, georeferenced  trajectory data for those parameters and depths.</Description>
+  <DOI>
+    <DOI>10.5067/SPUR1-GLID3</DOI>
+    <Authority>https://dx.doi.org/</Authority>
+  </DOI>
+  <RevisionDate>2021-06-20T01:07:48.323Z</RevisionDate>
+  <ProcessingCenter>SPURS Project</ProcessingCenter>
+  <ProcessingLevelId>2</ProcessingLevelId>
+  <ArchiveCenter>NASA/JPL/PODAAC</ArchiveCenter>
+  <CitationForExternalPublication>SPURS PROJECT, Fred Bingham, SPURS Data Management PI, Fred Bingham, 2015-05-11, Waveglider data for the SPURS-1 N. Atlantic field campaign, http://podaac.jpl.nasa.gov/SPURS</CitationForExternalPublication>
+  <CollectionState>COMPLETE</CollectionState>
+  <DataFormat>NETCDF</DataFormat>
+  <SpatialKeywords>
+    <Keyword>SPURS-1  N.Atlantic Salinity maximum region</Keyword>
+  </SpatialKeywords>
+  <TemporalKeywords>
+    <Keyword>1 Day</Keyword>
+  </TemporalKeywords>
+  <Temporal>
+    <EndsAtPresentFlag>false</EndsAtPresentFlag>
+    <RangeDateTime>
+      <BeginningDateTime>2012-09-01T00:00:00.000Z</BeginningDateTime>
+      <EndingDateTime>2013-03-25T00:00:00.000Z</EndingDateTime>
+    </RangeDateTime>
+  </Temporal>
+  <Contacts>
+    <Contact>
+      <Role>PROCESSOR</Role>
+      <OrganizationName>SPURS Project</OrganizationName>
+    </Contact>
+    <Contact>
+      <Role>ARCHIVER</Role>
+      <OrganizationName>NASA/JPL/PODAAC</OrganizationName>
+      <ContactPersons>
+        <ContactPerson>
+          <FirstName>Frederick</FirstName>
+          <MiddleName>M</MiddleName>
+          <LastName>Bingham</LastName>
+          <JobPosition>INVESTIGATOR</JobPosition>
+        </ContactPerson>
+        <ContactPerson>
+          <FirstName>Frederick</FirstName>
+          <MiddleName>M</MiddleName>
+          <LastName>Bingham</LastName>
+          <JobPosition>TECHNICAL CONTACT</JobPosition>
+        </ContactPerson>
+      </ContactPersons>
+    </Contact>
+    <Contact>
+      <Role>ARCHIVER</Role>
+      <OrganizationName>NASA/JPL/PODAAC</OrganizationName>
+      <ContactPersons>
+        <ContactPerson>
+          <FirstName>User</FirstName>
+          <LastName>Services</LastName>
+          <JobPosition>INVESTIGATOR</JobPosition>
+        </ContactPerson>
+        <ContactPerson>
+          <FirstName>User</FirstName>
+          <LastName>Services</LastName>
+          <JobPosition>TECHNICAL CONTACT</JobPosition>
+        </ContactPerson>
+      </ContactPersons>
+    </Contact>
+  </Contacts>
+  <ScienceKeywords>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>OCEAN TEMPERATURE</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>TEMPERATURE PROFILES</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>OCEAN WINDS</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>SURFACE WINDS</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>OCEAN PRESSURE</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>SURFACE PRESSURE</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>OCEAN CIRCULATION</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>CURRENT VELOCITY</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>SALINITY/DENSITY</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>CONDUCTIVITY</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>SALINITY/DENSITY</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>SALINITY</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+    <ScienceKeyword>
+      <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+      <TopicKeyword>OCEANS</TopicKeyword>
+      <TermKeyword>OCEAN TEMPERATURE</TermKeyword>
+      <VariableLevel1Keyword>
+        <Value>SURFACE AIR TEMPERATURE</Value>
+      </VariableLevel1Keyword>
+    </ScienceKeyword>
+  </ScienceKeywords>
+  <Platforms>
+    <Platform>
+      <ShortName>Waveglider</ShortName>
+      <LongName>SPURS-I WHOI Waveglider</LongName>
+      <Type>In Situ Ocean-based Platforms</Type>
+      <Characteristics>
+        <Characteristic>
+          <Name>OrbitPeriod</Name>
+          <Description>Nominal period of a spacecraft’s single revolution on an orbital plane.</Description>
+          <DataType>FLOAT</DataType>
+          <Unit>Minutes</Unit>
+          <Value>0.0</Value>
+        </Characteristic>
+        <Characteristic>
+          <Name>InclinationAngle</Name>
+          <Description>Spacecraft angular distance from orbital plane relative to the Equator.</Description>
+          <DataType>FLOAT</DataType>
+          <Unit>Degrees</Unit>
+          <Value>0.0</Value>
+        </Characteristic>
+      </Characteristics>
+      <Instruments>
+        <Instrument>
+          <ShortName>CTD</ShortName>
+          <LongName>Conductivity, Temperature, Depth</LongName>
+          <Characteristics>
+            <Characteristic>
+              <Name>SwathWidth</Name>
+              <Description>Spacecraft angular distance from orbital plane relative to the Equator.</Description>
+              <DataType>FLOAT</DataType>
+              <Unit>Kilometers</Unit>
+              <Value>0.001</Value>
+            </Characteristic>
+          </Characteristics>
+        </Instrument>
+        <Instrument>
+          <ShortName>MMS</ShortName>
+          <LongName>Meteorological Measurement System</LongName>
+          <Characteristics>
+            <Characteristic>
+              <Name>SwathWidth</Name>
+              <Description>Spacecraft angular distance from orbital plane relative to the Equator.</Description>
+              <DataType>FLOAT</DataType>
+              <Unit>Kilometers</Unit>
+              <Value>0.001</Value>
+            </Characteristic>
+          </Characteristics>
+        </Instrument>
+        <Instrument>
+          <ShortName>CURRENT METERS</ShortName>
+          <LongName>Current Meter</LongName>
+          <Characteristics>
+            <Characteristic>
+              <Name>SwathWidth</Name>
+              <Description>Spacecraft angular distance from orbital plane relative to the Equator.</Description>
+              <DataType>FLOAT</DataType>
+              <Unit>Kilometers</Unit>
+              <Value>0.001</Value>
+            </Characteristic>
+          </Characteristics>
+        </Instrument>
+      </Instruments>
+    </Platform>
+  </Platforms>
+  <AdditionalAttributes>
+    <AdditionalAttribute>
+      <Name>earliest_granule_start_time</Name>
+      <DataType>DATETIME</DataType>
+      <Description>Earliest Granule Start Time for dataset.</Description>
+      <Value>2012-09-01T00:00:00.000Z</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
+      <Name>latest_granule_end_time</Name>
+      <DataType>DATETIME</DataType>
+      <Description>Latest Granule Stop/End Time for dataset.</Description>
+      <Value>2013-03-25T00:00:00.000Z</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
+      <Name>data_latency</Name>
+      <DataType>INT</DataType>
+      <Description>Dataset Latency</Description>
+      <Value>9000</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
+      <Name>Series Name</Name>
+      <DataType>STRING</DataType>
+      <Description>Dataset citation series name</Description>
+      <Value>Waveglider data for the SPURS-1 N. Atlantic field campaign</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
+      <Name>Persistent ID</Name>
+      <DataType>STRING</DataType>
+      <Description>Dataset Persistent ID</Description>
+      <Value>PODAAC-SPUR1-GLID3</Value>
+    </AdditionalAttribute>
+  </AdditionalAttributes>
+  <Campaigns>
+    <Campaign>
+      <ShortName>SPURS</ShortName>
+      <LongName>NASA Salinity Processes in the Upper Ocean Regional Study</LongName>
+    </Campaign>
+  </Campaigns>
+  <SpatialInfo>
+    <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+    <HorizontalCoordinateSystem>
+      <GeodeticModel>
+        <HorizontalDatumName>World Geodetic System 1984</HorizontalDatumName>
+        <EllipsoidName>WGS 84</EllipsoidName>
+        <SemiMajorAxis>6378137</SemiMajorAxis>
+        <DenominatorOfFlatteningRatio>298.2572236</DenominatorOfFlatteningRatio>
+      </GeodeticModel>
+      <GeographicCoordinateSystem>
+        <GeographicCoordinateUnits>Meters</GeographicCoordinateUnits>
+        <LatitudeResolution>1</LatitudeResolution>
+        <LongitudeResolution>1</LongitudeResolution>
+      </GeographicCoordinateSystem></HorizontalCoordinateSystem>
+    </SpatialInfo>
+    <OnlineAccessURLs>
+      <OnlineAccessURL>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/waveglider</URL>
+        <URLDescription>PO.DAAC Drive</URLDescription>
+        <MimeType>text/html</MimeType>
+      </OnlineAccessURL>
+    </OnlineAccessURLs>
+    <OnlineResources>
+      <OnlineResource>
+        <URL>http://spurs.jpl.nasa.gov/</URL>
+        <Description>Project Website for SPURS</Description>
+        <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/sw/R</URL>
+        <Description>R read software</Description>
+        <Type>DistributionURL : DOWNLOAD SOFTWARE</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>http://podaac.jpl.nasa.gov/spurs</URL>
+        <Description>Field Campaign and Instrument Overview</Description>
+        <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/DataDocumentation/</URL>
+        <Description>Data Submission Report, Instrument Calibration Report, etc</Description>
+        <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/sw/Matlab</URL>
+        <Description>MATLAB read software</Description>
+        <Type>DistributionURL : DOWNLOAD SOFTWARE</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/SpursWebsiteContent/</URL>
+        <Description>Meeting Materials, Cruise Blogs, and other archive artifacts</Description>
+        <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/CruiseReports/</URL>
+        <Description>Cruise Reports</Description>
+        <Type>VIEW RELATED INFORMATION : GENERAL DOCUMENTATION</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs1/waveglider/</URL>
+        <Description>The OPeNDAP base directory location for the collection.</Description>
+        <Type>USE SERVICE API : OPENDAP DATA</Type>
+      </OnlineResource>
+      <OnlineResource>
+        <URL>https://podaac.jpl.nasa.gov/CitingPODAAC</URL>
+        <Description>Data Use and Citation Policy </Description>
+        <Type>VIEW RELATED INFORMATION : DATA CITATION POLICY</Type>
+      </OnlineResource>
+    </OnlineResources>
+    <Spatial>
+      <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+      <HorizontalSpatialDomain>
+        <Geometry>
+          <CoordinateSystem>CARTESIAN</CoordinateSystem>
+          <BoundingRectangle>
+            <WestBoundingCoordinate>-71.0</WestBoundingCoordinate>
+            <NorthBoundingCoordinate>42</NorthBoundingCoordinate>
+            <EastBoundingCoordinate>-37.0</EastBoundingCoordinate>
+            <SouthBoundingCoordinate>23</SouthBoundingCoordinate>
+          </BoundingRectangle>
+        </Geometry>
+      </HorizontalSpatialDomain>
+      <OrbitParameters>
+        <SwathWidth>0.001</SwathWidth>
+        <Period>0.0</Period>
+        <InclinationAngle>0.0</InclinationAngle>
+        <NumberOfOrbits>1</NumberOfOrbits>
+      </OrbitParameters>
+      <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+    </Spatial>
+    <AssociatedBrowseImageUrls>
+      <ProviderBrowseUrl>
+        <URL>https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS1_WAVEGLIDER.jpg</URL>
+        <Description>Thumbnail</Description>
+      </ProviderBrowseUrl>
+    </AssociatedBrowseImageUrls>
+  </Collection>
