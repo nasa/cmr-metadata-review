@@ -37,7 +37,7 @@ class CanRevertRecordTest < SystemTestCase
         page.driver.browser.switch_to.alert.accept
       end
 
-      assert page.has_content? 'The record C1000000020-LANCEAMSR2 was successfully updated.'
+      assert has_content? 'The record C1000000020-LANCEAMSR2 was successfully updated.'
     end
   end
 end
