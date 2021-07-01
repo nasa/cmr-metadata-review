@@ -18,7 +18,7 @@ class RecordTest < ActiveSupport::TestCase
 
   describe "GET #record" do
     it "creates a new record by url" do
-      stub_request(:get, "https://cmr.earthdata.nasa.gov/search/concepts/C1652975935-PODAAC.echo10")
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov:443/search/concepts/C1652975935-PODAAC.echo10")
           .with(
             headers: {
               'Accept' => '*/*',
@@ -28,7 +28,10 @@ class RecordTest < ActiveSupport::TestCase
           )
           .to_return(status: 200, body: get_stub('search_concepts_C1652975935PODAAC_echo10.xml'), headers: {'content-type': 'application/echo10+xml; charset=utf-8'})
 
-          
+      concept_id, data_format = Collection.parse_collection_url("https://cmr.sit.earthdata.nasa.gov:443/search/concepts/C1652975935-PODAAC.echo10")
+      assert_equal(concept_id, "C1652975935-PODAAC")
+      assert_equal(data_format, "echo10")
+
     end
   end
 end
