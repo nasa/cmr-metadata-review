@@ -36,7 +36,7 @@ Capybara.register_driver :headless_chrome do |app|
     # in the desired test location
     # w3c: false is needed for retrieving javascript console messages.
     loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage --window-size=1500,2000], w3c: false}
+    chromeOptions: { args: %w[headless disable-gpu no-sandbo --window-size=1500,2000], w3c: false}
 
   )
   Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
@@ -73,11 +73,6 @@ end
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   OmniAuth.config.test_mode = true
-end
-
-# new way for rails 6+ to control browser options
-class SystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000]
 end
 
 # Checks for pending migrations before tests are run.
