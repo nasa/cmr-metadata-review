@@ -75,6 +75,11 @@ class ActionController::TestCase
   OmniAuth.config.test_mode = true
 end
 
+# new way for rails 6+ to control browser options
+class SystemTestCase < ActionDispatch::SystemTestCase
+  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000]
+end
+
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
