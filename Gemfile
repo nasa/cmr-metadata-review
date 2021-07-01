@@ -44,7 +44,7 @@ group :test do
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
   gem 'minitest-rails', '6.0.0'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '3.142.7'
   gem 'webdrivers'
   gem 'launchy'
   gem 'capybara-screenshot'
