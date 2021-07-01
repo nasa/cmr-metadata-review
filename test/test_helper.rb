@@ -10,13 +10,6 @@ require 'mocha/minitest'
 require 'minitest/mock'
 require 'webmock/minitest'
 require 'minitest/reporters'
-
-# Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
-WebMock.disable_net_connect!(
-   allow_localhost: true,
-   allow: 'chromedriver.storage.googleapis.com'
-)
-
 require 'minitest/rails/capybara'
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
@@ -50,6 +43,11 @@ end
 Capybara.default_driver = :headless_chrome
 Capybara.javascript_driver = :headless_chrome
 
+# Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: 'chromedriver.storage.googleapis.com'
+)
 # WebMock.allow_net_connect!
 WebMock.after_request(real_requests_only: true) do |request_signature, response|
   unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.to_s.include?('chromedriver.storage.googleapis.com')
