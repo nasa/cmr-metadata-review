@@ -427,7 +427,7 @@ DEPENDENCIES
   rubyzip (= 1.3.0)
   sass-rails (~> 6.0)
   sdoc
-  selenium-webdriver (= 3.142.7)
+  selenium-webdriver
   simplecov
   spring
   sqlite3 (~> 1.3.12)
