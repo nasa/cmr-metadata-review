@@ -21,31 +21,6 @@ require 'minitest/rails/capybara'
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
-# Specs flagged with `js: true` will use Capybara's JS driver.
-Capybara.register_driver :headless_chrome do |app|
-  # set timeout to 60s http://www.testrisk.com/2016/05/change-default-timeout-and-wait-time-of.html
-  # need to use read_timeout and open_timeout https://github.com/SeleniumHQ/selenium/blob/master/rb/lib/selenium/webdriver/remote/http/default.rb
-  client = Selenium::WebDriver::Remote::Http::Default.new
-  client.read_timeout = 60
-  client.open_timeout = 60
-
-  # http://technopragmatica.blogspot.com/2017/10/switching-to-headless-chrome-for-rails_31.html
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    # This makes javascript console logs available, but doesn't cause them to appear in real time
-    # to display javascript logs in the rspec output, add `puts page.driver.browser.manage.logs.get(:browser)`
-    # in the desired test location
-    # w3c: false is needed for retrieving javascript console messages.
-    loggingPrefs: { browser: 'ALL', client: 'ALL', driver: 'ALL', server: 'ALL' },
-    chromeOptions: { args: %w[headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1500,2000], w3c: false}
-
-  )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, http_client: client, desired_capabilities: capabilities)
-end
-
-Capybara::Screenshot.register_driver(:headless_chrome) do |driver, path|
-  driver.browser.save_screenshot(path)
-end
-
 # setting headless_chrome as default driver, can be changed to run not headless
 Capybara.default_driver = :headless_chrome
 Capybara.javascript_driver = :headless_chrome
@@ -77,9 +52,12 @@ end
 
 # new way for rails 6+ to control browser options
 class SystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000], options: {
-    args: %w[headless --no-sandbox --disable-dev-shm-usage --disable-gpu --window-size=1500,2000]
-  }
+  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000] do |options|
+    options.add_argument("headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+  end
 end
 
 # Checks for pending migrations before tests are run.
