@@ -21,10 +21,6 @@ require 'minitest/rails/capybara'
 
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
-Capybara::Screenshot.register_driver(:headless_chrome) do |driver, path|
-  driver.browser.save_screenshot(path)
-end
-
 # setting headless_chrome as default driver, can be changed to run not headless
 Capybara.default_driver = :headless_chrome
 Capybara.javascript_driver = :headless_chrome
@@ -56,7 +52,12 @@ end
 
 # new way for rails 6+ to control browser options
 class SystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000]
+  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000] do |options|
+    options.add_argument("headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+  end
 end
 
 # Checks for pending migrations before tests are run.
