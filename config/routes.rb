@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'gkr_keyword_comparison/show'
+  get 'gkr/show'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   scope format: false do
     get '/elb_status', to: 'site#elb_status'
@@ -24,6 +26,9 @@ Rails.application.routes.draw do
         put 'refresh'
       end
     end
+
+    get '/gkr_keyword_comparison' => 'gkr_keyword_comparison#show', as: 'gkr_keyword_comparison'
+    post '/gkr_keyword_comparison' => 'gkr_keyword_comparison#create'
 
     get '/collections_search', to: 'collections#search'
 

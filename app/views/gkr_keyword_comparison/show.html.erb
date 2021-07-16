@@ -1,0 +1,11 @@
+<%= form_with url: gkr_keyword_comparison_path, method: :post do |form| %>
+  <%= form.label :concept_id, "Concept ID:" %>
+  <%= form.text_field :concept_id %>
+  <br>
+  <br>
+  <%= form.label :threshold, "Theshold:" %>
+  <%= form.text_field :threshold %>
+  <br>
+  <br>
+  <%= form.submit "Submit" %>
+<% end %>
