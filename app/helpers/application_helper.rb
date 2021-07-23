@@ -124,9 +124,10 @@ module ApplicationHelper
 
   # convert the daac to virtual daac if necessary
   def self.virtual_daac(daac)
-    daac = 'ASDC'  if %w[LARC_ASDC LARC].include?(daac)
-    daac = 'NSIDC' if %w[NSIDCV0 NSIDC_ECS].include?(daac)
-    daac = 'GHRC'  if %w[GHRC_CLOUD GHRC_DAAC LANCEAMSR2].include?(daac)
+    daac = 'ASDC'   if %w[LARC_ASDC LARC].include?(daac)
+    daac = 'NSIDC'  if %w[NSIDCV0 NSIDC_ECS].include?(daac)
+    daac = 'GHRC'   if %w[GHRC_CLOUD GHRC_DAAC LANCEAMSR2].include?(daac)
+    daac = 'PODAAC' if %w[POCLOUD PO.DAAC].include?(daac)
     daac
   end
 
@@ -136,6 +137,7 @@ module ApplicationHelper
     providers = %w[ASDC LARC_ASDC LARC] if virtual_daac == 'ASDC'
     providers = %w[NSIDC NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
     providers = %w[GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2] if virtual_daac == 'GHRC'
+    providers = %w[PODAAC POCLOUD PO.DAAC] if virtual_daac == 'PODAAC'
     providers
   end
 
