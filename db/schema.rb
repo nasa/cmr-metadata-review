@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_150210) do
+ActiveRecord::Schema.define(version: 2021_07_23_031819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 2021_03_15_150210) do
   end
 
   create_table "records", id: :serial, force: :cascade do |t|
-    t.string "recordable_type", null: false
     t.integer "recordable_id", null: false
+    t.string "recordable_type", null: false
     t.string "revision_id", null: false
     t.datetime "closed_date"
     t.string "format", default: ""
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 2021_03_15_150210) do
     t.string "associated_granule_value"
     t.string "copy_recommendations_note"
     t.datetime "released_to_daac_date"
-    t.string "daac"
     t.string "campaign", default: [], null: false, array: true
     t.string "native_format"
+    t.string "daac"
     t.index ["recordable_type", "recordable_id"], name: "index_records_on_recordable_type_and_recordable_id"
   end
 
