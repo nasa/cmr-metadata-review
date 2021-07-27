@@ -1,4 +1,4 @@
-<%= form_with url: gkr_keyword_comparison_path, method: :post do |form| %>
+<%= form_with(url: submitting_concept_path, method: :post, local:true) do |form| %>
   <%= form.label :concept_id, "Concept ID:" %>
   <%= form.text_field :concept_id %>
   <br>
@@ -8,4 +8,10 @@
   <br>
   <br>
   <%= form.submit "Submit" %>
+  <br>
+  <br>
 <% end %>
+<br>
+<br>
+<h1 style='color: white'> Abstract: </h1>
+<p style='color: white'> <%= @abstract %> </p>
