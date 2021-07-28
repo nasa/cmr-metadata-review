@@ -1,0 +1,209 @@
+{
+    "hits": 1,
+    "took": 9,
+    "items": [
+      {
+        "meta": {
+          "revision-id": 4,
+          "deleted": false,
+          "format": "application/vnd.nasa.cmr.umm+json",
+          "provider-id": "GHRC",
+          "user-id": "ECHO_SYS",
+          "has-formats": false,
+          "has-spatial-subsetting": false,
+          "native-id": "mmt_collection_2342",
+          "has-transforms": false,
+          "has-variables": false,
+          "concept-id": "C1200400842-GHRC",
+          "revision-date": "2021-07-23T12:58:22.047Z",
+          "granule-count": 0,
+          "has-temporal-subsetting": false,
+          "concept-type": "collection"
+        },
+        "umm": {
+          "DataLanguage": "eng",
+          "SpatialExtent": {
+            "SpatialCoverageType": "HORIZONTAL",
+            "HorizontalSpatialDomain": {
+              "Geometry": {
+                "CoordinateSystem": "CARTESIAN",
+                "BoundingRectangles": [
+                  {
+                    "WestBoundingCoordinate": -180,
+                    "NorthBoundingCoordinate": 65.45,
+                    "EastBoundingCoordinate": 180,
+                    "SouthBoundingCoordinate": -60.88
+                  }
+                ]
+              }
+            },
+            "GranuleSpatialRepresentation": "CARTESIAN"
+          },
+          "CollectionProgress": "NOT PROVIDED",
+          "ScienceKeywords": [
+            {
+              "Category": "EARTH SCIENCE",
+              "Topic": "SPECTRAL/ENGINEERING",
+              "Term": "INFRARED WAVELENGTHS",
+              "VariableLevel1": "INFRARED IMAGERY"
+            }
+          ],
+          "TemporalExtents": [
+            {
+              "EndsAtPresentFlag": false,
+              "RangeDateTimes": [
+                {
+                  "BeginningDateTime": "1995-06-04T00:00:00.000Z"
+                }
+              ]
+            }
+          ],
+          "ProcessingLevel": {
+            "Id": "3"
+          },
+          "DOI": {
+            "DOI": "10.5067/GHRC/AMSU-A/DATA303",
+            "Authority": "https://doi.org/"
+          },
+          "ShortName": "GraphDB-Demo-10",
+          "EntryTitle": "Infrared Global Geostationary Composite Demo 10",
+          "RelatedUrls": [
+            {
+              "URLContentType": "PublicationURL",
+              "Type": "VIEW RELATED INFORMATION",
+              "Subtype": "USER'S GUIDE",
+              "URL": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/globalir/globalir_dataset.html"
+            },
+            {
+              "Description": "Another Related URL for Demo",
+              "URLContentType": "PublicationURL",
+              "Type": "VIEW RELATED INFORMATION",
+              "Subtype": "DATA RECIPE",
+              "URL": "https://doi.org/10.5067/9LNYIYOBNBR5"
+            }
+          ],
+          "DataDates": [
+            {
+              "Date": "1998-01-01T00:00:00.000Z",
+              "Type": "CREATE"
+            },
+            {
+              "Date": "2009-11-05T13:33:23.000Z",
+              "Type": "UPDATE"
+            }
+          ],
+          "Abstract": "The National Center for Environmental Prediction/Aviation Weather Center Infrared Global Geostationary Composite data set contains global composite images from the infrared channels of multiple weather satellites in geosynchronous orbit. These satellites include the GMS (Japan), GOES (USA), and Meteosat (Europe).  These imagers span nearly the entire globe with a small gap over India. The data resolution is 14 km spatial with the data remapped into a Mercator projection. The data have not necessarily been cross calibrated between sensors.",
+          "LocationKeywords": [
+            {
+              "Category": "OTHER",
+              "Type": "NEAR GLOBAL"
+            }
+          ],
+          "MetadataDates": [
+            {
+              "Type": "CREATE",
+              "Date": "2021-07-07T18:05:00.000Z"
+            },
+            {
+              "Type": "UPDATE",
+              "Date": "2021-07-07T18:05:00.000Z"
+            }
+          ],
+          "VersionDescription": "Third Draft",
+          "Version": "5",
+          "Projects": [
+            {
+              "ShortName": "Project1",
+              "Campaigns": [
+                "Campaign1"
+              ]
+            },
+            {
+              "ShortName": "Project2",
+              "Campaigns": [
+                "Campaign2",
+                "Campaign3"
+              ]
+            }
+          ],
+          "DataCenters": [
+            {
+              "Roles": [
+                "ARCHIVER"
+              ],
+              "ShortName": "NASA/MSFC/GHRC",
+              "LongName": "Global Hydrology Resource Center, Marshall Space Flight Center, NASA",
+              "ContactInformation": {
+                "ContactMechanisms": [
+                  {
+                    "Type": "Email",
+                    "Value": "ghrc-dmg@itsc.uah.edu"
+                  }
+                ],
+                "RelatedUrls": [
+                  {
+                    "URLContentType": "DataCenterURL",
+                    "Type": "HOME PAGE",
+                    "URL": "https://ghrc.nsstc.nasa.gov/home/"
+                  }
+                ]
+              }
+            }
+          ],
+          "TemporalKeywords": [
+            "Daily - < Weekly"
+          ],
+          "Platforms": [
+            {
+              "Type": "SATELLITE",
+              "ShortName": "METEOSAT-7",
+              "LongName": "GMS-4",
+              "Instruments": [
+                {
+                  "ShortName": "VISSR",
+                  "LongName": "Visible and Infrared Spin Scan Radiometer",
+                  "ComposedOf": [
+                    {
+                      "ShortName": "VISSR",
+                      "LongName": "Visible and Infrared Spin Scan Radiometer"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Type": "SATELLITE",
+              "ShortName": "MTSAT-1R",
+              "LongName": "Multi-functional Transport Satellite 1 Replacement",
+              "Instruments": [
+                {
+                  "ShortName": "VISSR",
+                  "LongName": "Visible and Infrared Spin Scan Radiometer",
+                  "ComposedOf": [
+                    {
+                      "ShortName": "VISSR",
+                      "LongName": "Visible and Infrared Spin Scan Radiometer"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Type": "SATELLITE",
+              "ShortName": "GOES-8",
+              "LongName": "GMS-4"
+            }
+          ],
+          "ArchiveAndDistributionInformation": {
+            "FileDistributionInformation": [
+              {
+                "FormatType": "Native",
+                "Fees": "0",
+                "Format": "Not provided"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }

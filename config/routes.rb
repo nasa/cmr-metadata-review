@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
     end
 
+    get '/gkr_keyword_comparison' => 'gkr_keyword_comparison#show', as: 'gkr_keyword_comparison'
+    post '/gkr_keyword_comparison_submit' => 'gkr_keyword_comparison#create', as: 'submitting_concept'
+
     get '/collections_search', to: 'collections#search'
 
     get 'user/email_preferences' => 'user#email_preferences', as: 'email_preferences'
