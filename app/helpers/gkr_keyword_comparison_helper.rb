@@ -1,2 +1,0 @@
-module GkrKeywordComparisonHelper
-end
