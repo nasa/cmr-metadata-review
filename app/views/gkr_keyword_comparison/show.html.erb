@@ -13,5 +13,18 @@
 <% end %>
 <br>
 <br>
-<h1 style='color: white'> Abstract: </h1>
-<p style='color: white'> <%= @abstract %> </p>
+
+<% if @abstract %>
+  <h1 style='color: white'> Abstract: </h1>
+  <p style='color: white'> <%= @abstract %> </p>
+<% end %>
+
+<% if @cmr_keywords %>
+  <h1 style='color: white'> Keywords: </h1>
+  <% @cmr_keywords.each do |keyword| %>
+    <p style='color: white'> <%= keyword %> </p>
+  <% end %>
+<% end %>
+
+
+

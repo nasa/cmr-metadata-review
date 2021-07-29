@@ -29,6 +29,7 @@ class GkrKeywordComparisonTest < SystemTestCase
       click_on 'Submit'
 
       assert has_content?('The National Center for Environmental Prediction/Aviation Weather Center Infrared Global Geostationary Composite data set contains global composite images from the infrared channels of multiple weather satellites in geosynchronous orbit. These satellites include the GMS (Japan), GOES (USA), and Meteosat (Europe). These imagers span nearly the entire globe with a small gap over India. The data resolution is 14 km spatial with the data remapped into a Mercator projection. The data have not necessarily been cross calibrated between sensors.')
+      assert has_content?('{"Category"=>"EARTH SCIENCE", "Topic"=>"SPECTRAL/ENGINEERING", "Term"=>"INFRARED WAVELENGTHS", "VariableLevel1"=>"INFRARED IMAGERY"}')
     end
   end
 end
