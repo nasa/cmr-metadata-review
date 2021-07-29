@@ -13,8 +13,11 @@
 <% end %>
 <br>
 <br>
-<h1 style='color: white'> Abstract: </h1>
-<p style='color: white'> <%= @abstract %> </p>
+
+<% if @abstract != nil then %>
+  <h1 style='color: white'> Abstract: </h1>
+  <p style='color: white'> <%= @abstract %> </p>
+<% end %>
 
 <% if @cmr_keywords != nil then %>
   <h1 style='color: white'> Keywords: </h1>
