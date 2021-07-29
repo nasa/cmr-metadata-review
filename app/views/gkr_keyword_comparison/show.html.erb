@@ -14,12 +14,12 @@
 <br>
 <br>
 
-<% if @abstract != nil then %>
+<% if @abstract %>
   <h1 style='color: white'> Abstract: </h1>
   <p style='color: white'> <%= @abstract %> </p>
 <% end %>
 
-<% if @cmr_keywords != nil then %>
+<% if @cmr_keywords %>
   <h1 style='color: white'> Keywords: </h1>
   <% @cmr_keywords.each do |keyword| %>
     <p style='color: white'> <%= keyword %> </p>
