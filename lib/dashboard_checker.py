@@ -17,7 +17,7 @@ def remove_doctype(field_path):
         path = field_path[pos+1:]
     return path
 
-# Given the specified path and the check being applied, incude the check result of the value/message to the "result" dictionary.
+# Given the specified path and the check being applied, include the check result of the value/message to the "result" dictionary.
 # If the check is valid (no errors), just include "OK; "
 #
 # e.g. check_data = { "valid": false, "value": [ 43 ],
