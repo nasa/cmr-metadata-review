@@ -128,6 +128,7 @@ module ApplicationHelper
     daac = 'NSIDC'  if %w[NSIDCV0 NSIDC_ECS].include?(daac)
     daac = 'GHRC'   if %w[GHRC_CLOUD GHRC_DAAC LANCEAMSR2].include?(daac)
     daac = 'PODAAC' if %w[POCLOUD PO.DAAC].include?(daac)
+    daac = 'ORNL_DAAC' if %w[ORNL_CLOUD].include?(daac)
     daac
   end
 
@@ -138,12 +139,12 @@ module ApplicationHelper
     providers = %w[NSIDC NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
     providers = %w[GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2] if virtual_daac == 'GHRC'
     providers = %w[PODAAC POCLOUD PO.DAAC] if virtual_daac == 'PODAAC'
+    providers = %w[ORNL_CLOUD ORNL_DAAC] if virtual_daac == 'ORNL_DAAC'
     providers
   end
 
   def self.all_arc_providers
-    return ARC_PROVIDERS + %w(ASDC LARC_ASDC LARC NSIDC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2)
+    return ARC_PROVIDERS + %w(ASDC LARC_ASDC LARC NSIDC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2 PODAAC POCLOUD PO.DAAC ORNL_CLOUD ORNL_DAAC)
   end
-
 
 end
