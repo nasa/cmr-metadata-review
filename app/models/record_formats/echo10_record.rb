@@ -101,14 +101,14 @@ module RecordFormats
           else
             file << record_json
             file.flush
-            script_results = `python -W ignore lib/CollectionChecker.py #{file.path}`
+            script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
           end
         end
       else
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python -W ignore lib/GranuleChecker.py #{file.path}`
+          script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
         end
       end
 
