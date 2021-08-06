@@ -96,7 +96,7 @@ module RecordFormats
             raw_data = get_raw_concept(concept_id, "echo10")
             file << raw_data
             file.flush
-            script_results = `python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
+            script_results = `/opt/rh/rh-python38/root/bin/python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
           else
             file << record_json
             file.flush
