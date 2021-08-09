@@ -97,18 +97,18 @@ module RecordFormats
             file << raw_data
             file.flush
             # script_results = `/opt/rh/rh-python38/root/bin/python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
-            script_results = `python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
+            script_results = `lib/dashboard_checker.sh #{file.path} echo10`
           else
             file << record_json
             file.flush
-            script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
+            script_results = `python -W ignore lib/CollectionChecker.py #{file.path}`
           end
         end
       else
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
+          script_results = `python -W ignore lib/GranuleChecker.py #{file.path}`
         end
       end
 
