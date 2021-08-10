@@ -96,14 +96,11 @@ module RecordFormats
             raw_data = get_raw_concept(concept_id, "echo10")
             file << raw_data
             file.flush
-            # script_results = `/opt/rh/rh-python38/root/bin/python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
             script_results = `lib/dashboard_checker.sh #{file.path} echo10`
-            Rails.logger.info "scripts results - lib/dashboard_checker.sh #{file.path} echo10 - for new python3 checks=#{script_results}"
           else
             file << record_json
             file.flush
             script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
-            Rails.logger.info "scripts results for python2 checks=#{script_results}"
           end
         end
       else
@@ -111,7 +108,6 @@ module RecordFormats
           file << record_json
           file.flush
           script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
-          Rails.logger.info "scripts results for python2 granule checks=#{script_results}"
         end
       end
 
