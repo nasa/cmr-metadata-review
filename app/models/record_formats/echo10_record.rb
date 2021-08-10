@@ -98,7 +98,7 @@ module RecordFormats
             file.flush
             # script_results = `/opt/rh/rh-python38/root/bin/python3 -W ignore lib/dashboard_checker.py #{file.path} echo10`
             script_results = `lib/dashboard_checker.sh #{file.path} echo10`
-            Rails.logger.info "scripts results for new python3 checks=#{script_results}"
+            Rails.logger.info "scripts results - lib/dashboard_checker.sh #{file.path} echo10 - for new python3 checks=#{script_results}"
           else
             file << record_json
             file.flush
