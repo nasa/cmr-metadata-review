@@ -102,7 +102,7 @@ module RecordFormats
           else
             file << record_json
             file.flush
-            script_results = `python -W ignore lib/CollectionChecker.py #{file.path}`
+            script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
             Rails.logger.info "scripts results for python2 checks=#{script_results}"
           end
         end
@@ -110,7 +110,7 @@ module RecordFormats
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python -W ignore lib/GranuleChecker.py #{file.path}`
+          script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
           Rails.logger.info "scripts results for python2 granule checks=#{script_results}"
         end
       end
