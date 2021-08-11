@@ -38,11 +38,16 @@ def assign_results(path, check, check_data, result):
 
             # Use the message if we have one.
             if check_data["message"]:
+                result[path] = "<b>Errors:</b><ul>"
                 for message in check_data["message"]:
-                    result[path] += message + "; "
+                    result[path] += "<li>" + message + "</li> "
+                result[path] += "</ul>"
+            if check_data["remediation"]:
+              result[path] += "<b>Remediation:</b><br>"+check_data["remediation"]
+
             # Otherwise just mention the check failed.
             else:     
-                result[path] += check+" failed;"
+                result[path] += check+" failed<br>"
 
 # This just cleans up the result path, it will remove a trailing ; and if the result path's value == "" then will remove it altogher from the
 # dictionary, hence all checks passed.
