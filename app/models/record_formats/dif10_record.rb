@@ -76,7 +76,7 @@ module RecordFormats
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python -W ignore lib/CollectionCheckerDIF.py #{file.path}`
+          script_results = `python2 -W ignore lib/CollectionCheckerDIF.py #{file.path}`
         end
       end
 
