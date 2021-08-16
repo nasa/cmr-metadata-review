@@ -93,7 +93,8 @@ Rails.application.configure do
 
   config.mdq_enabled_feature_toggle = true
   config.email_preference_feature_toggle = true
-  
+  config.python3_checks_feature_toggle = true
+
   # This domain has been configured to pass DMARC authentication.  Changing to a
   # domain which has not been will cause gmail to reject our e-mails
   config.default_email_domain = 'earthdata.nasa.gov'

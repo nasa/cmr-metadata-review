@@ -73,6 +73,12 @@ module RecordFormats
     # Parameter is optional hash of raw metadata from cmr for one record, if not provided, the raw data is manually retreived
     # Returns a formatted hash with results from script as values for each record field as keys.
 
+    def get_raw_concept(concept_id, format)
+      url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}.#{format}"
+      raw_data = Cmr.cmr_request(url).parsed_response
+      raw_data
+    end
+
     def evaluate_script(raw_data = nil)
       if raw_data.nil?
         raw_data = get_raw_data
@@ -86,15 +92,22 @@ module RecordFormats
       script_results = ""
       if collection?
         Tempfile.create do |file|
-          file << record_json
-          file.flush
-          script_results = `python -W ignore lib/CollectionChecker.py #{file.path}`
+          if Rails.configuration.python3_checks_feature_toggle
+            raw_data = get_raw_concept(concept_id, "echo10")
+            file << raw_data
+            file.flush
+            script_results = `lib/dashboard_checker.sh #{file.path} echo10`
+          else
+            file << record_json
+            file.flush
+            script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
+          end
         end
       else
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python -W ignore lib/GranuleChecker.py #{file.path}`
+          script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
         end
       end
 
