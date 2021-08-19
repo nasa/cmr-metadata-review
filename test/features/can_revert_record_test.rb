@@ -34,7 +34,7 @@ class CanRevertRecordTest < SystemTestCase
         within '.navigate-buttons' do
           click_on 'Revert'
         end
-        page.driver.browser.switch_to.alert.accept
+        accept_confirm
       end
 
       assert has_content? 'The record C1000000020-LANCEAMSR2 was successfully updated.'

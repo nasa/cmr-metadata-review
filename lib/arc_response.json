@@ -1,0 +1,249 @@
+[
+  {
+    "file": "C13909-ASF.xml",
+    "errors": {
+      "Collection/ProcessingLevelDescription": {},
+      "Collection/CollectionDataType": {},
+      "Collection/Contacts/Contact/Role": {
+        "controlled_contact_role_check": {
+          "valid": false,
+          "value": [
+            "User Services"
+          ],
+          "message": [
+            "Error: `User Services` is not a valid Contact Role."
+          ],
+          "remediation": "Select a Contact Role from the following list: ['ARCHIVER', 'DISTRIBUTOR', 'PROCESSOR', 'ORIGINATOR']."
+        }
+      },
+      "Collection/SpatialInfo/VerticalCoordinateSystem/AltitudeSystemDefinition/DistanceUnits": {},
+      "Collection/ProductFlag": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/ShortName": {
+        "instrument_short_name_gcmd_check": {
+          "valid": true,
+          "value": []
+        },
+        "instrument_short_long_name_consistency_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName": {
+        "instrument_short_name_gcmd_check": {
+          "valid": false,
+          "value": [
+            "FN1",
+            "FN2",
+            "FN3",
+            "FN4",
+            "FN5"
+          ],
+          "message": [
+            "Error: The provided instrument short name `FN1` does not comply with the GCMD.",
+            "Error: The provided instrument short name `FN2` does not comply with the GCMD.",
+            "Error: The provided instrument short name `FN3` does not comply with the GCMD.",
+            "Error: The provided instrument short name `FN4` does not comply with the GCMD.",
+            "Error: The provided instrument short name `FN5` does not comply with the GCMD."
+          ],
+          "remediation": "Please submit a request to support@earthdata.nasa.gov to have this instrument added to the GCMD Instrument KMS."
+        }
+      },
+      "Collection/Platforms/Platform/Instruments/Instrument/LongName": {
+        "instrument_long_name_gcmd_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Platforms/Platform/Instruments/Instrument/Sensors/Sensor/LongName": {},
+      "Collection/Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle": {
+        "bounding_coordinate_logic_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/InsertTime": {
+        "datetime_format_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/LastUpdate": {
+        "datetime_format_check": {
+          "valid": true,
+          "value": []
+        },
+        "data_update_time_logic_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/DeleteTime": {},
+      "Collection/RevisionDate": {},
+      "Collection/Temporal/SingleDateTime": {},
+      "Collection/Temporal/RangeDateTime/BeginningDateTime": {
+        "datetime_format_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Temporal/RangeDateTime/EndingDateTime": {},
+      "Collection/Temporal/PeriodicDateTime/StartDate": {},
+      "Collection/Temporal/PeriodicDateTime/EndDate": {},
+      "Collection/Campaigns/Campaign/StartDate": {},
+      "Collection/Campaigns/Campaign/EndDate": {},
+      "Collection/DOI/Authority": {},
+      "Collection/Description": {
+        "abstract_length_check": {
+          "valid": false,
+          "value": [
+            43
+          ],
+          "message": [
+            "Warning: The abstract provided may be inadequate based on length."
+          ],
+          "remediation": "Provide a more comprehensive description, mimicking a journal abstract that is useful to the science community but also approachable for a first time user of the data."
+        },
+        "url_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Temporal/EndsAtPresentFlag": {
+        "ends_at_present_flag_presence_check": {
+          "valid": false,
+          "value": [
+            null
+          ],
+          "message": [
+            "Warning: Potential issue with:\n - No EndingDateTime provided; no EndsAtPresentFlag provided for a potentially active collection. \n - CollectionState = ACTIVE; no EndsAtPresentFlag provided for a potentially active collection."
+          ],
+          "remediation": "If data collection is ongoing, provide an EndsAtPresentFlag of \"true\""
+        }
+      },
+      "Collection/DataSetId": {
+        "shortname_uniqueness": {
+          "valid": false,
+          "value": [
+            [
+              "R1_FINE_FRAME",
+              "R1_FINE_FRAME"
+            ]
+          ],
+          "message": [
+            "Error: The DataSetId `R1_FINE_FRAME` is identical to the ShortName `R1_FINE_FRAME`."
+          ],
+          "remediation": "Since DataSetId maps to Entry Title in the CMR, provide a more descriptive, formal title for the dataset. "
+        }
+      },
+      "Collection/AdditionalAttributes/AdditionalAttribute/DataType": {
+        "data_type_control_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Platforms/Platform/Characteristics/Characteristic/DataType": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/DataType": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/DataType": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Value": {},
+      "Collection/ArchiveCenter": {
+        "data_center_name_presence_check": {
+          "valid": true,
+          "value": []
+        },
+        "data_center_short_name_gcmd_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Platforms/Platform/LongName": {
+        "platform_long_name_gcmd_check": {
+          "valid": false,
+          "value": [
+            "RADARSAT-1"
+          ],
+          "message": [
+            "Error: The provided platform long name `RADARSAT-1` does not comply with the GCMD."
+          ],
+          "remediation": "Please submit a request to support@earthdata.nasa.gov to have this data format added to the GCMD Data Format KMS."
+        }
+      },
+      "Collection/SpatialInfo/VerticalCoordinateSystem/DepthSystemDefinition/DistanceUnits": {},
+      "Collection/ScienceKeywords/ScienceKeyword/CategoryKeyword": {},
+      "Collection/Spatial/GranuleSpatialRepresentation": {
+        "granule_spatial_representation_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/SuggestedUsage": {},
+      "Collection/CitationforExternalPublication": {},
+      "Collection/OnlineAccessURLs/OnlineAccessURL/URL": {
+        "url_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/OnlineResources/OnlineResource/URL": {},
+      "Collection/Platforms/Platform/ShortName": {
+        "platform_short_name_gcmd_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Spatial/HorizontalSpatialDomain/Geometry/Coordinate System": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Name": {},
+      "Collection/Platforms/Platform/Type": {
+        "platform_type_gcmd_check": {
+          "valid": false,
+          "value": [
+            "Spacecraft"
+          ],
+          "message": [
+            "Error: The provided platform type `Spacecraft` does not comply with the GCMD."
+          ],
+          "remediation": "Please submit a request to support@earthdata.nasa.gov to have this platform type added to the GCMD Locations KMS."
+        }
+      },
+      "Collection/Campaigns/Campaign/ShortName": {
+        "campaign_short_name_gcmd_check": {
+          "valid": false,
+          "value": [
+            "IPY DATAPOOL"
+          ],
+          "message": [
+            "Error: The provided campaign short name `IPY DATAPOOL` does not comply with the GCMD."
+          ],
+          "remediation": "Please submit a request to support@earthdata.nasa.gov to have this campaign short name added to the GCMD Projects KMS."
+        }
+      },
+      "Collection/Contacts/Contact/OrganizationPhones/Phone/Type": {
+        "contact_mechanism_enum_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Campaigns/Campaign/LongName": {},
+      "Collection/DOI/DOI": {},
+      "Collection/DOI/MissingReason": {},
+      "Collection/VersionDescription": {},
+      "Collection/ProcessingCenter": {},
+      "Collection/AdditionalAttributes/AdditionalAttribute/Value": {},
+      "Collection/Spatial/SpatialCoverageType": {},
+      "Collection/SpatialInfo/SpatialCoverageType": {},
+      "Collection/OnlineResources/OnlineResource/MimeType": {
+        "mime_type_check": {
+          "valid": true,
+          "value": []
+        }
+      },
+      "Collection/Contacts/Contact/ContactPersons/ContactPerson/JobPosition": {},
+      "Collection/Spatial/VerticalSpatialDomain/Type": {},
+      "Collection/ProcessingLevelId": {},
+      "Collection/DataFormat": {},
+      "Collection/CollectionState": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Unit": {},
+      "Collection/Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Description": {},
+      "Collection/SpatialKeywords/Keyword": {}
+    }
+  }
+]
