@@ -37,12 +37,12 @@ def assign_results(path, check, check_data, result):
                 result[path] = ""
 
             # Use the message if we have one.
-            if check_data["message"]:
+            if "message" in check_data:
                 result[path] = "<b>Errors:</b><ul>"
                 for message in check_data["message"]:
                     result[path] += "<li>" + message + "</li> "
                 result[path] += "</ul>"
-            if check_data["remediation"]:
+            if "remediation" in check_data:
               result[path] += "<b>Remediation:</b><br>"+check_data["remediation"]
 
             # Otherwise just mention the check failed.

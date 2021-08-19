@@ -42,6 +42,14 @@ class CanSearchCollectionTest < SystemTestCase
           'User-Agent'=>'Ruby'
         }).
       to_return(status: 200, body: get_stub("search_collection_C1996546695-GHRC_DAAC.atom"), headers: {})
+    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1996546695-GHRC_DAAC.echo10").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: get_stub("C1996546695-GHRC_DAAC_echo10.xml"), headers: {})
   end
   describe 'search cmr collection' do
     it 'search collection by GHRC provider' do
