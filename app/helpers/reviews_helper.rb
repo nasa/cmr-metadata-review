@@ -1,4 +1,11 @@
 module ReviewsHelper
+  def script_result_value(value)
+    if value.blank?
+      "N/A"
+    else
+      raw value
+    end
+  end
 
   def color_selected_list(color)
     select_list = ['','','','','', '']
