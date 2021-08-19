@@ -98,25 +98,11 @@
         </tr>
         <tr>
         <% unless current_user.daac_curator? %>
-        <th class="headcol headcol__script-row">FLAGGED BY SCRIPT</th>
-          <!-- for each of shown value list, create td for value -->
-          <% @section_titles.each do |title| %>
-            <td class="column_<%=title%>">
-              <div class="script_check_cell">
-                <% if @flagged_by_script[title] %>
-                  <i class="eui-icon eui-check-o review_check"></i>
-                <% end %>
-              </div>
-            </td>
-          <% end %>
-        </tr>
-        <% end %>
-        <% unless current_user.daac_curator? %>
         <tr>
         <th class="headcol headcol__script-row">SCRIPT RESULT</th>
           <% @section_titles.each do |title| %>
             <td class="column_<%=title%>">
-              <div><%= raw @script_values[title] %></div>
+              <div><%= script_result_value @script_values[title] %></div>
             </td>
           <% end %>
         </tr>
