@@ -27,7 +27,7 @@ class UpdateDiscussionTest < SystemTestCase
         click_on "See Collection Review Details"
       end
       click_on "Collection Info"
-      within("#scroll_table > table > tbody > tr:nth-child(12) > td.discussion_td.column_ShortName > div > div") do
+      within("#scroll_table > table > tbody > tr:nth-child(11) > td.discussion_td.column_ShortName > div > div") do
         fill_in 'discussion[ShortName]', with: 'short name review discussion'
       end
       click_on 'Save Review'
@@ -42,7 +42,7 @@ class UpdateDiscussionTest < SystemTestCase
       end
       assert has_content? 'short name review updated'
       # add another discussion
-      within("#scroll_table > table > tbody > tr:nth-child(12) > td.discussion_td.column_ShortName > div > div.new_discussion") do
+      within("#scroll_table > table > tbody > tr:nth-child(11) > td.discussion_td.column_ShortName > div > div.new_discussion") do
         fill_in 'discussion[ShortName]', with: 'second discussion'
       end
       click_on 'Save Review'
