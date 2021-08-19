@@ -129,6 +129,16 @@ describe "POST #create" do
       #stubbing the granule raw look up
       stub_request(:get, /.*granules.echo10\?concept_id=G.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G226250-GHRC.xml"), :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["26"], "cmr-request-id"=>["46ad6de7-598a-463e-99e0-2a22ddf651da"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
 
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C222702-GHRC.echo10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("C222702-GHRC_echo10.xml"), headers: {})
+
+
       #Making sure record does not exist before ingest
       assert_equal(0, (Collection.where concept_id: "C222702-GHRC").length)
 
