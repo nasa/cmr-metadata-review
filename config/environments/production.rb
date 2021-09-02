@@ -105,7 +105,7 @@ Rails.application.configure do
   config.tag_manager_id = 'GTM-WNP7MLF'
 
   config.mdq_enabled_feature_toggle = false
-  config.python3_checks_feature_toggle = false
+  config.python3_checks_feature_toggle = true
 
   config.email_preference_feature_toggle = true
   # This domain has been configured to pass DMARC authentication.  Changing to a
