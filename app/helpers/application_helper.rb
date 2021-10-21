@@ -32,6 +32,13 @@ module ApplicationHelper
                    'EUMETSA',
                    'MDQTEST']
 
+  # arc virtual providers and members of each virtual provider
+  ARC_VIRTUAL_PROVIDERS = ['ASDC', 'LARC_ASDC', 'LARC',
+                   'NSIDC', 'NSIDCV0', 'NSIDC_ECS',
+                   'GHRC', 'GHRC_CLOUD', 'GHRC_DAAC', 'LANCEAMSR2',
+                   'PODAAC', 'POCLOUD', 'PO.DAAC',
+                   'ORNL_DAAC', 'ORNL_CLOUD']
+
   # The application mode is determined by the logged in user's role or the associated daac.   If they are a
   # "mdq_curator" or a "daac_curator" who is associated with a daac in the MDQ_PROVIDERS list, then the mode will
   # be :mdq_mode. If they are an "arc_curator", "admin", or a "daac_curator" associated with a daac in the ARC_PROVIDERS
@@ -144,7 +151,11 @@ module ApplicationHelper
   end
 
   def self.all_arc_providers
-    return ARC_PROVIDERS + %w(ASDC LARC_ASDC LARC NSIDC NSIDCV0 NSIDC_ECS GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2 PODAAC POCLOUD PO.DAAC ORNL_CLOUD ORNL_DAAC)
+    return ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
+  end
+
+  def self.all_providers
+    :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
   end
 
 end
