@@ -494,7 +494,7 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.
 
 
-  def self.collection_search(free_text, provider, provider_list, curr_page="1", page_size=10)
+  def self.collection_search(free_text, provider, curr_page="1", page_size=10)
     provider = ANY_DAAC_KEYWORD if provider.nil?
 
     search_iterator = []
@@ -505,7 +505,7 @@ class Cmr
       base_options = {'page_size' => page_size, 'page_num' => curr_page}
       #setting the provider params
       if provider == ANY_DAAC_KEYWORD
-        base_options['provider'] = ApplicationHelper.all_providers if provider_list.nil?
+        base_options['provider'] = ApplicationHelper.all_providers
       else
         base_options['provider'] = ApplicationHelper.providers(provider)
       end
