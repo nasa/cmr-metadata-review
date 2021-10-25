@@ -1,21 +1,16 @@
 task :fill_test_data => :environment do
 
-  PROVIDERS = ['PODAAC', 'SEDAC', 'OB_DAAC', 'ORNL_DAAC', 'NSIDC_ECS', 'LAADS',
-              'LPDAAC_ECS', 'GES_DISC','CDDIS', 'LARC_ASDC','ASF','GHRC'
-              ]
-
   ANY_DAAC_KEYWORD = 'DAAC: ANY'
 
   collection_count = 300
   record_count = 500
   record_data_count = 10000
 
-  search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, PROVIDERS, "1", collection_count)
+  search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, "1", collection_count)
 
   added_collections = []
 
   (0...collection_count).each do |num|
-    daac_name = PROVIDERS.sample
     col = Collection.new(concept_id: (search_iterator[num]["concept_id"]), short_name: ("test_short_name#{num}"))
     col.save
     added_collections.push(col)
