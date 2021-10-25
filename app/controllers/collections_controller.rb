@@ -51,7 +51,7 @@ class CollectionsController < ApplicationController
   def search
     if can?(:search, :cmr)
       begin
-        @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], provider_list, params["curr_page"], 10)
+        @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"], 10)
       rescue Cmr::CmrError => e
         Rails.logger.error("Error retrieving from CMR, #{e.message}")
         flash[:alert] = 'There was an error connecting to the CMR System, please try again'
