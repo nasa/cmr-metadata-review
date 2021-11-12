@@ -152,8 +152,8 @@
             </tr>
             <% elements.each do |element| %>
               <tr>
-                <td><%= element.column_name %></td>
-                <td><%= element.value %></td>
+                <td class="element_comment"><%= element.column_name %></td>
+                <td class="report_comment"><%= element.value %></td>
                 <td class="recommendation_comment"><%= element.recommendation %></td>
               </tr>
             <% end %>
