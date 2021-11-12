@@ -15,7 +15,7 @@ class CollectionsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=MDQTEST").
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=ORNL_CLOUD").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -53,7 +53,7 @@ class CollectionsControllerTest < ActionController::TestCase
       collection_records = assigns(:collection_records)
       assert_equal(6, collection_records.length)
     end
-    
+
     it "redirects when no concept id is provided" do
       #redirects no record_id
       get :show, params: { id: 1 }

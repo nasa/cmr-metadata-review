@@ -154,8 +154,8 @@ module ApplicationHelper
     return ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
   end
 
-  def self.all_providers
-    :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
+  def all_providers
+    application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
   end
 
 end
