@@ -51,7 +51,13 @@ class CollectionsController < ApplicationController
   def search
     if can?(:search, :cmr)
       begin
-        @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], params["provider"], params["curr_page"], 10)
+        provider = params["provider"]
+        if provider == ANY_DAAC_KEYWORD
+          provider_list = all_providers
+        else
+          provider_list = ApplicationHelper::providers(provider)
+        end
+        @search_iterator, @collection_count = Cmr.collection_search(params["free_text"], provider_list, params["curr_page"], 10)
       rescue Cmr::CmrError => e
         Rails.logger.error("Error retrieving from CMR, #{e.message}")
         flash[:alert] = 'There was an error connecting to the CMR System, please try again'

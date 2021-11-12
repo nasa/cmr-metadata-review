@@ -494,9 +494,7 @@ class Cmr
   # parses the results and then returns a group of 10 to show in paginated results.
 
 
-  def self.collection_search(free_text, provider, curr_page="1", page_size=10)
-    provider = ANY_DAAC_KEYWORD if provider.nil?
-
+  def self.collection_search(free_text, provider_list, curr_page="1", page_size=10)
     search_iterator = []
     collection_count = 0
 
@@ -504,11 +502,7 @@ class Cmr
       free_text = free_text.strip
       base_options = {'page_size' => page_size, 'page_num' => curr_page}
       #setting the provider params
-      if provider == ANY_DAAC_KEYWORD
-        base_options['provider'] = ApplicationHelper.all_providers
-      else
-        base_options['provider'] = ApplicationHelper.providers(provider)
-      end
+      base_options['provider'] = provider_list
 
       #setting the two versions of free text search we want to run (with/without first char wildcard)
       options = base_options.clone
