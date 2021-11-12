@@ -5,9 +5,7 @@ task :fill_test_data => :environment do
   collection_count = 300
   record_count = 500
   record_data_count = 10000
-
-  search_iterator, count = Cmr.collection_search("", ANY_DAAC_KEYWORD, "1", collection_count)
-
+  search_iterator, count = Cmr.collection_search("", all_providers, "1", collection_count)
   added_collections = []
 
   (0...collection_count).each do |num|
@@ -50,12 +48,12 @@ task :fill_test_data => :environment do
     end
 
     added_records.push(rec)
-  end 
+  end
 
 
   # (0..record_count).each do |num|
   #   rec = Record.new(recordable: added_collections.sample, revision_id: num.to_s)
-  #   if Random.rand(11) > 5 
+  #   if Random.rand(11) > 5
   #     rec.closed = true
   #     rec.closed_date = DateTime.now
   #     rec.save
@@ -131,7 +129,7 @@ task :fill_test_data => :environment do
   added_records.each do |record|
     if record.closed
       review_close_date = DateTime.now - (Random.rand(180)).to_i.days
-      
+
       if Random.rand(11) > 3
         rec = record.dup
         rec.revision_id = "2"
