@@ -431,6 +431,7 @@
 
 .report_comment, .recommendation_comment {
   white-space: pre-wrap;
+  word-break: break-word;
 }
 .element_comment {
   white-space: pre-wrap;
