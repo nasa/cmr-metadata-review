@@ -190,6 +190,8 @@ class Cmr
   end
 
   def self.convert_to_hash(data_format, collection_data)
+    return collection_data if collection_data.is_a?(Hash)
+
     if data_format == "umm_json"
       JSON.parse(collection_data)
     else
@@ -356,13 +358,13 @@ class Cmr
   def self.get_raw_granule_results(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
-
+    granule_xml = convert_to_hash("echo10", granule_xml)
     unless granule_xml['errors'].nil?
       raise CmrError.new, granule_xml['errors']['error']
     end
 
     begin
-      granule_results = convert_to_hash("echo10", granule_xml)["results"]
+      granule_results = granule_xml["results"]
     rescue => e
       raise CmrError, e.message
     end
