@@ -144,7 +144,7 @@ class Collection < Metadata
 
     #In production there is an egress issue with certain link types given in metadata
     #AWS hangs requests that break ingress/egress rules.  Added this timeout to catch those
-    Timeout::timeout(20) {
+    Timeout::timeout(90) {
       #getting list of records for script
       granule_records = granules_components.flatten.select {|savable_object| savable_object.is_a?(Record)}
       granule_records.each do |record|
