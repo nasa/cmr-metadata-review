@@ -5,6 +5,7 @@ import xmltodict
 import sys
 import json
 
+sys.path.append('lib/pyQuARC.egg')
 from pyQuARC import ARC
 
 # The field path has the doctype (e.g. Collection/) as a prefix, this should be removed.
@@ -25,8 +26,8 @@ def remove_doctype(field_path):
 # "remediation": "Provide a more comprehensive description, mimicking a journal abstract that is useful to the science
 # community but also approachable for a first time user of the data." }
 def assign_results(path, check, check_data, result):
-    if "valid" in check_data:                    
-        valid = check_data["valid"]        
+    if "valid" in check_data:
+        valid = check_data["valid"]
         # if check is valid, use "OK"
         if valid:
             if result[path] == "":
@@ -46,7 +47,7 @@ def assign_results(path, check, check_data, result):
               result[path] += "<b>Remediation:</b><br>"+check_data["remediation"]
 
             # Otherwise just mention the check failed.
-            else:     
+            else:
                 result[path] += check+" failed<br>"
 
 # This just cleans up the result path, it will remove a trailing ; and if the result path's value == "" then will remove it altogher from the
@@ -66,7 +67,7 @@ def parse_checks(field_path, errors, result):
     path = remove_doctype(field_path)
     result[path] = ""
     checks = errors[field_path].keys()
-    
+
     for check in checks:
         check_data = errors[field_path][check]
         assign_results(path, check, check_data, result)
