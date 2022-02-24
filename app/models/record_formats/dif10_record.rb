@@ -59,23 +59,22 @@ module RecordFormats
       add_script_comment(comment_hash)
     end
 
+    def get_raw_concept(concept_id, format)
+      url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}.#{format}"
+      raw_data = Cmr.cmr_request(url).parsed_response
+      raw_data
+    end
 
     # There are currently only scripts for DIF10 collections.
     def evaluate_script(raw_data = nil)
       if raw_data.nil?
-        raw_data = get_raw_data
+        raw_data = get_raw_concept(concept_id, "dif10")
       end
 
-      remove_quotes_from_all_values!(raw_data)
-      record_json = raw_data.to_json
-
-      #running collection script in python
-      #W option to silence warnings
       script_results = ''
       if collection?
         Tempfile.create do |file|
           if Rails.configuration.python3_checks_feature_toggle
-            raw_data = get_raw_concept(concept_id, "dif10")
             file << raw_data
             file.flush
             script_results = `lib/dashboard_checker.sh #{file.path} dif10`
