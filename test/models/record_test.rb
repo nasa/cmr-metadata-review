@@ -202,6 +202,25 @@ class RecordTest < ActiveSupport::TestCase
     #   assert_equal(expect_str, comment_hash.to_s)
     # end
 
+    # Commented out to wait for bug fix in pyQuARC
+    # it "returns results of the automated collection_script for dif10" do
+    #   stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.dif10").
+    #     with(
+    #       headers: {
+    #         'Accept'=>'*/*',
+    #         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+    #         'User-Agent'=>'Ruby'
+    #       }).
+    #     to_return(status: 200, body: DIF10_RECORD, headers: {})
+    #
+    #   record = records(:metric1)
+    #   comment_hash = record.evaluate_script(nil)
+    #   comment_hash = sort_by_key(comment_hash)
+    #
+    #   expect_str=%q{{"DIF"=>"OK", "Dataset_Citation/Dataset_Title"=>"<b>Errors:</b><ul><li>Warning: No CitationforExternalPublication is provided.</li> </ul><b>Remediation:</b><br>Please provide a citation for the dataset in the CitationforExternalPublication field.", "Dataset_Citation/Persistent_Identifier/Explanation"=>"OK", "Dataset_Progress"=>"<b>Errors:</b><ul><li>Warning: CollectionState `IN WORK` is not consistent with EndingDateTime/EndsAtPresentFlag.</li> </ul><b>Remediation:</b><br>Please update the CollectionState based on the EndingDateTime/EndsAtPresentFlag values.", "Entry_Title"=>"OK", "Location/Location_Category"=>"<b>Errors:</b><ul><li>Info: No location keyword is provided.</li> </ul><b>Remediation:</b><br>Please add a location keyword.", "Metadata_Dates/Data_Creation"=>"OK", "Metadata_Dates/Data_Last_Revision"=>"OK", "Metadata_Dates/Metadata_Creation"=>"<b>Errors:</b><ul><li>Error: `1970-01-01` does not adhere to the ISO 1601 standard</li> </ul><b>Remediation:</b><br>Make sure the datetime complies with ISO 1601 standard.", "Metadata_Dates/Metadata_Last_Revision"=>"<b>Errors:</b><ul><li>Error: `1970-01-01` does not adhere to the ISO 1601 standard</li> </ul><b>Remediation:</b><br>Make sure the datetime complies with ISO 1601 standard.", "Multimedia_Sample/Description"=>"OK", "Platform/Characteristics/Description"=>"OK", "Platform/Characteristics/Name"=>"OK", "Platform/Characteristics/Unit"=>"OK", "Platform/Characteristics/Value"=>"OK", "Platform/Instrument/Long_Name"=>"OK", "Platform/Instrument/Sensor/Short_Name"=>"<b>Errors:</b><ul><li>Error: The provided instrument short name `DSN` does not comply with the GCMD.</li> <li>Error: The provided instrument short name `FBD` does not comply with the GCMD.</li> <li>Error: The provided instrument short name `WB2` does not comply with the GCMD.</li> <li>Error: The provided instrument short name `PLR` does not comply with the GCMD.</li> <li>Error: The provided instrument short name `WB1` does not comply with the GCMD.</li> <li>Error: The provided instrument short name `FBS` does not comply with the GCMD.</li> </ul><b>Remediation:</b><br>Please submit a request to support@earthdata.nasa.gov to have this instrument added to the GCMD Instrument KMS.", "Platform/Instrument/Short_Name"=>"<b>Errors:</b><ul><li>Error: The provided instrument short name `PALSAR` and long name `Phased Array type L-band Synthetic Aperture Radar` aren't consistent.</li> </ul><b>Remediation:</b><br>Please supply the corresponding long name for the short name.", "Platform/Long_Name"=>"OK", "Platform/Type"=>"<b>Errors:</b><ul><li>Error: The provided platform type `Not provided` does not comply with the GCMD.</li> </ul><b>Remediation:</b><br>Please submit a request to support@earthdata.nasa.gov to have this platform type added to the GCMD Locations KMS.", "Project/Short_Name"=>"OK", "Related_URL/Description"=>"OK", "Related_URL/Mime_Type"=>"OK", "Spatial_Coverage/Spatial_Info/Horizontal_Coordinate_System/Geodetic_Model/Horizontal_DatumName"=>"<b>Errors:</b><ul><li>Info: Horizontal Datum Name is missing.</li> </ul><b>Remediation:</b><br>Please provide a Horizontal Datum Name.", "Summary/Abstract"=>"<b>Errors:</b><ul><li>Warning: The abstract provided may be inadequate based on length.</li> </ul><b>Remediation:</b><br>Provide a more comprehensive description, mimicking a journal abstract that is useful to the science community but also approachable for a first time user of the data.", "Temporal_Coverage/Ends_At_Present_Flag"=>"OK", "Temporal_Coverage/Range_DateTime/Beginning_Date_Time"=>"OK", "Temporal_Coverage/Range_DateTime/Ending_Date_Time"=>"OK", "Temporal_Coverage/Single_Date_Time"=>"OK", "Use_Constraints/License_URL/Description"=>"OK", "Use_Constraints/License_URL/URL"=>"<b>Errors:</b><ul><li>Warning: No license information is provided.</li> </ul><b>Remediation:</b><br>Please provide information about the license applicable to the dataset, preferably as a URL. For EOSDIS records, please providing the following link (unless under different usage terms): https://earthdata.nasa.gov/earth-observation-data/data-use-policy"}}
+    #   assert_equal(expect_str, comment_hash.to_s)
+    # end
+
     it "returns results of the automated granule_script" do
       #manually setting the record as a granule so the evaluate script runs the write python script
       record = Record.find_by id: 5
