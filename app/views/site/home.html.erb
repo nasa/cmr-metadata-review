@@ -34,7 +34,7 @@
 
     <% if can?(:review_state, Record::STATE_OPEN) %>
       <% content_for :form_buttons do %>
-        <%= render(partial: "shared/record_buttons", locals: {form_id: "open"}) %>
+        <%= render(partial: "shared/record_buttons", locals: {form_id: "open", report: true}) %>
       <% end %>
 
       <%= render partial: "shared/records_table", locals: { form_id: "open", title: "Unreviewed Records", section: "open" } %>
@@ -42,7 +42,7 @@
 
     <% if can?(:review_state, Record::STATE_IN_ARC_REVIEW) %>
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons", locals: {form_id: "in_arc_review"}) %>
+        <%= render(partial: "shared/record_buttons", locals: {form_id: "in_arc_review", report: true}) %>
       <% end %>
 
       <%= render partial: "shared/records_table", locals: { form_id: "in_arc_review", reviews: true, title: title_for_in_review_records(), section: "in_arc_review" } %>
@@ -51,7 +51,7 @@
 
     <% if can?(:review_state, Record::STATE_READY_FOR_DAAC_REVIEW) %>
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons", locals: { form_id: "awaiting_daac_review", complete: can?(:release_to_daac, Record), complete_title: "Release to DAAC" }) %>
+        <%= render(partial: "shared/record_buttons", locals: { form_id: "awaiting_daac_review", report: true, complete: can?(:release_to_daac, Record), complete_title: "Release to DAAC" }) %>
       <% end %>
 
       <%= render partial: "shared/records_table", locals: { form_id: "awaiting_daac_review", reviews: true, title: "Awaiting Release to DAAC", section: "ready_for_daac_review" } %>
@@ -67,7 +67,7 @@
 
     <% if can?(:provide_feedback, Record) %>
       <% content_for :form_buttons, flush: true do %>
-        <%= render(partial: "shared/record_buttons", locals: {form_id: "provide_feedback"}) %>
+        <%= render(partial: "shared/record_buttons", locals: {form_id: "provide_feedback", report: true}) %>
       <% end %>
 
       <%= render partial: "shared/records_table", locals: {form_id: "provide_feedback", reviews: true, title: "Requires Reviewer Feedback Records", section: "curator_feedback" } %>
