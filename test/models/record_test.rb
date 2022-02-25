@@ -202,7 +202,6 @@ class RecordTest < ActiveSupport::TestCase
     #   assert_equal(expect_str, comment_hash.to_s)
     # end
 
-    # Commented out to wait for bug fix in pyQuARC
     it "returns results of the automated collection_script for dif10" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.dif10").
         with(
