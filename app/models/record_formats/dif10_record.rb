@@ -67,30 +67,21 @@ module RecordFormats
 
     # There are currently only scripts for DIF10 collections.
     def evaluate_script(raw_data = nil)
-      if raw_data.nil?
-        raw_data = get_raw_concept(concept_id, "dif10")
-      end
-
+      raw_data = get_raw_concept(concept_id, "dif10")
       script_results = ''
       if collection?
         Tempfile.create do |file|
-          if Rails.configuration.python3_checks_feature_toggle
-            file << raw_data
-            file.flush
-            script_results = `lib/dashboard_checker.sh #{file.path} dif10`
-            new_results = ""
-            script_results.each_line do |line|
-              unless line.start_with? "Downloading "
-                new_results << line
-                new_results << "\n"
-              end
+          file << raw_data
+          file.flush
+          script_results = `lib/dashboard_checker.sh #{file.path} dif10`
+          new_results = ""
+          script_results.each_line do |line|
+            unless line.start_with? "Downloading "
+              new_results << line
+              new_results << "\n"
             end
-            script_results = new_results
-          else
-            file << record_json
-            file.flush
-            script_results = `python2 -W ignore lib/CollectionCheckerDIF.py #{file.path}`
           end
+          script_results = new_results
         end
       end
 
