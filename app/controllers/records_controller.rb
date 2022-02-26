@@ -68,18 +68,19 @@ class RecordsController < ApplicationController
       " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
     if (color_code)
-      response_records = Record.find_by_sql(records_query)
+      # response_records = Record.find_by_sql(records_query)
+      response_record_ids = ActiveRecord::Base.connection.exec_query(records_query).rows.map {|r|r[0]}
       # select distinct records.id from records, records_data where records.id == record_data.record_id and record_data.color = color
       # and records.id in (#{response_records.map(&:id).join(",")})
-      response_records = filter_by_color_code(response_records, color_code, color_code_filter_collection, color_code_filter_granule)
-      if response_records.count == 0
+      response_record_ids = filter_by_color_code(response_record_ids, color_code, color_code_filter_collection, color_code_filter_granule)
+      if response_record_ids.count == 0
         result = {total_count: 0, page_num: page_num, page_size: page_size, records: []}
         render json: result
         return
       end
       query = " from records INNER JOIN collections ON records.recordable_id=collections.id" +
         record_data_join + review_join + ingest_join +
-        " WHERE #{recordable_type_filter}" + " and records.id in (#{response_records.map(&:id).join(",")})"
+        " WHERE #{recordable_type_filter}" + " and records.id in (#{response_record_ids.join(",")})"
     end
 
     count_query = "select" + " count(distinct records.id) as count" + query
@@ -114,27 +115,27 @@ class RecordsController < ApplicationController
     render json: result
   end
 
-  def filter_by_color_code(response_records, color_code, color_code_filter_collection, color_code_filter_granule)
+  def filter_by_color_code(response_record_ids, color_code, color_code_filter_collection, color_code_filter_granule)
     if color_code
       collection_response_records = []
       granule_response_records = []
 
       # retrieve all collection records with 'color_code'
       if color_code_filter_collection
-        collection_response_records = Record.find_by_sql("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Collection' and records.id in (#{response_records.map(&:id).join(",")})")
+        collection_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
       end
       # retrieve all collection records where it has granules with 'color_code'
       if color_code_filter_granule
-        granule_response_records = Record.find_by_sql("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Granule' and records.id in (#{response_records.map(&:id).join(",")})")
+        granule_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
       end
 
       # only include records that are in either collection_records OR granule_records
-      response_records.select! { |record|
-        collection_response_records.select { |r| r.id == record.id }.count > 0 ||
-          granule_response_records.select { |r| r.id == record.id }.count > 0
+      response_record_ids.select! { |record_id|
+        collection_response_records.select { |c_record_id| c_record_id == record_id }.count > 0 ||
+          granule_response_records.select { |g_record_id| g_record_id == record_id }.count > 0
       }
     end
-    response_records
+    response_record_ids
   end
 
   def refresh
