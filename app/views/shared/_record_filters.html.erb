@@ -17,11 +17,11 @@
       </div>
       <div class="record_filters__select">
         <span style="font-weight: bold">Color</span>
-        <%= select_tag(:color_code_param, options_for_select([['','None'],['Error', 'red'],['Warning','yellow'],['Information','blue'],['Flagged','grey']], selected: params[:color_code_param])) %>
-        <span><%= check_box_tag(:color_code_filter_collection_param) %>
-              <%= label_tag(:color_code_filter_collection_param, "Collection") %>
-              <%= check_box_tag(:color_code_filter_granule_param) %>
-              <%= label_tag(:color_code_filter_granule_param, "Granule") %></span>
+        <%= select_tag(:color_code, options_for_select([['','None'],['Error', 'red'],['Warning','yellow'],['Information','blue'],['Flagged','grey']], selected: params[:color_code])) %>
+        <span><%= check_box_tag(:color_code_filter_collection,nil,params[:color_code_filter_collection]) %>
+              <%= label_tag(:color_code_filter_collection, "Collection") %>
+              <%= check_box_tag(:color_code_filter_granule,nil,params[:color_code_filter_granule]) %>
+              <%= label_tag(:color_code_filter_granule, "Granule") %></span>
       </div>
       <div class="record_filters__select">
         <label for="freetext">Freetext</label>
