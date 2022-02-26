@@ -1,16 +1,10 @@
 <% path_for_form ||= home_path %>
 <script type="text/javascript">
-  function handleCheckboxChange(e, name) {
-    console.log('value of checkbox : ', e.checked, name);
-    document.getElementById(name).value=e.checked ? 'on' : 'off';
-  }
-  function onChangeColorFilter(e) {
-    console.log('color change:', e);
+  function onChangeColorFilter() {
     selectedValue = document.getElementById('color_code').value;
     if (selectedValue != 'None') {
-      document.getElementById('color_code_filter_collection').checked=true;
+      document.getElementById('color_code_filter_collection').checked = true;
     }
-    console.log(selectedValue);
   }
 </script>
 <div class="record_filters searchbox_area">
@@ -32,13 +26,6 @@
         <span style="font-weight: bold">Color</span>
         <%= select_tag(:color_code, options_for_select([['','None'],['Error', 'red'],['Warning','yellow'],['Information','blue'],['Flagged','grey']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
         <span>
-              <%# if params[:color_code_filter_collection].blank? ? true : params[:color_code_filter_collection] == 'on' %>
-<!--                <input type="checkbox" id="color_code_filter_collection_id" name="color_code_filter_collection_id" onchange="handleCheckboxChange(this,'color_code_filter_collection')" checked>-->
-<!--                <input type="hidden" id="color_code_filter_collection" name="color_code_filter_collection" value="on">-->
-              <%# else %>
-<!--                <input type="checkbox" id="color_code_filter_collection_id" name="color_code_filter_collection_id" onchange="handleCheckboxChange(this,'color_code_filter_collection')">-->
-<!--                <input type="hidden" id="color_code_filter_collection" name="color_code_filter_collection" value="off">-->
-              <%# end %>
               <%= check_box_tag(:color_code_filter_collection,nil,params[:color_code_filter_collection]) %>
               <%= label_tag(:color_code_filter_collection, "Collection") %>
 
