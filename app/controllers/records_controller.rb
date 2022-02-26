@@ -7,6 +7,7 @@ class RecordsController < ApplicationController
   before_action :admin_only, only: [:stop_updates, :allow_updates, :revert]
   before_action :find_record, only: [:show, :complete, :update, :stop_updates, :allow_updates, :revert, :copy_prior_recommendations]
 
+  # http://localhost:3000/records/find_records_json?color_code=red
   def find_records_json
     page_num_param = params['page_num']
     page_size_param = params['page_size']
@@ -14,6 +15,8 @@ class RecordsController < ApplicationController
     sort_order_param = params['sort_order']
     sort_column_param = params['sort_column']
     color_code_param = params['color_code']
+    color_code_filter_collection_param = params['color_code_filter_collection']
+    color_code_filter_granule_param = params['color_code_filter_granule']
     state_param = params['state']
     daac_param = params['daac']
     campaign_param = params['campaign']
@@ -40,6 +43,8 @@ class RecordsController < ApplicationController
     filter = get_filter(filter_param)
 
     color_code = get_color_code(color_code_param)
+    color_code_filter_collection = get_bool(color_code_filter_collection_param, true)
+    color_code_filter_granule = get_bool(color_code_filter_granule_param, false)
 
     record_data_join = " LEFT JOIN record_data ON record_data.record_id = records.id"
 
@@ -55,10 +60,21 @@ class RecordsController < ApplicationController
       query = query + " and (lower(collections.concept_id) like lower('%#{filter}%') or lower(collections.short_name) like lower('%#{filter}%'))"
     end
 
-    if color_code
-      query = query + " and record_data.color='#{color_code}'"
-    end
+    records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
+      " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
+    if (color_code)
+      response_records = Record.find_by_sql(records_query)
+      response_records = filter_by_color_code(response_records, color_code, color_code_filter_collection, color_code_filter_granule)
+      if response_records.count == 0
+        result = {total_count: 0, page_num: page_num, page_size: page_size, records: []}
+        render json: result
+        return
+      end
+      query = " from records INNER JOIN collections ON records.recordable_id=collections.id" +
+        record_data_join + review_join + ingest_join +
+        " WHERE records.recordable_type = 'Collection'" + " and records.id in (#{response_records.map(&:id).join(",")})"
+    end
     count_query = "select" + " count(distinct records.id) as count" + query
 
     if sort_column && sort_order
@@ -72,14 +88,14 @@ class RecordsController < ApplicationController
     records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
         " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
-    # puts "*** Records query=" + query
+    # puts "*** Records query=" + records_query
     response_records = Record.find_by_sql(records_query)
 
     record_second_opinion_counts = RecordData.where(record: response_records, opinion: true).group(:record_id).count
 
-    reponse_array = []
+    response_array = []
     response_records.each do |record|
-      reponse_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
+      response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
                           "date_ingested": record[:date_ingested],
                           "revision_id": record.revision_id, "short_name": record[:short_name],
                           "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
@@ -87,8 +103,41 @@ class RecordsController < ApplicationController
     end
     # puts "*** Count query=" + count_query
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
-    result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: reponse_array}
+    result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: response_array}
     render json: result
+  end
+
+  def filter_by_color_code(response_records, color_code, color_code_filter_collection, color_code_filter_granule)
+    if color_code
+      collection_response_records = []
+      granule_response_records = []
+
+      # retrieve all collection records with 'color_code'
+      if color_code_filter_collection
+        collection_response_records = response_records.select { |record| record.color?(color_code) }
+      end
+      # retrieve all collection records where it has granules with 'color_code'
+      if color_code_filter_granule
+        granule_response_records = response_records.select do |record|
+          # can't access recordable without doing the line below.
+          db_record = Record.find_by(id: record.id)
+          granules = db_record.recordable.granules.select do |granule|
+            granule_records = granule.records.select do |granule_record|
+              granule_record.color?(color_code)
+            end
+            granule_records.count > 0
+          end
+          granules.count > 0
+        end
+      end
+
+      # only include records that are in either collection_records OR granule_records
+      response_records.select! { |record|
+        collection_response_records.select { |r| r.id == record.id }.count > 0 ||
+          granule_response_records.select { |r| r.id == record.id }.count > 0
+      }
+    end
+    response_records
   end
 
   def refresh
@@ -409,6 +458,10 @@ class RecordsController < ApplicationController
 
   def get_color_code(color_code)
     %w[gray yellow green red blue].include?(color_code) || color_code=='' ? color_code : nil
+  end
+
+  def get_bool(value, default)
+    value ? value == 'true' : default
   end
 
   def get_filter(filter)

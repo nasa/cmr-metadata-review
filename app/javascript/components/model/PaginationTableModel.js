@@ -8,6 +8,9 @@ export default class PagingTableModel {
     this.filter = null // String
     this.daac = null // String
     this.campaign = null // String
+    this.colorCode = null // String
+    this.colorCodeCollection = null // Bool
+    this.colorCodeGranule = null // Bool
     this.sortColumn = null // String
     this.sortOrder = "asc" // String
     this.currentPage = 1 // Int
