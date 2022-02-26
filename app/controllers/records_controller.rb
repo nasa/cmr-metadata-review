@@ -52,9 +52,13 @@ class RecordsController < ApplicationController
 
     ingest_join = " LEFT JOIN ingests ON ingests.record_id = records.id"
 
+    recordable_type_filter = "records.recordable_type = 'Collection'"
+    if (color_code)
+      recordable_type_filter = "(records.recordable_type = 'Collection' or records.recordable_type = 'Granule')"
+    end
     query = " from records" + " INNER JOIN collections ON records.recordable_id=collections.id" +
         record_data_join + review_join + ingest_join +
-        " WHERE records.recordable_type = 'Collection'" + state_query + get_daac_query(daac_param) + campaign_query(campaign_param) + curator_feedback_query
+        " WHERE #{recordable_type_filter} " + state_query + get_daac_query(daac_param) + campaign_query(campaign_param) + curator_feedback_query
 
     if filter
       query = query + " and (lower(collections.concept_id) like lower('%#{filter}%') or lower(collections.short_name) like lower('%#{filter}%'))"
@@ -65,6 +69,8 @@ class RecordsController < ApplicationController
 
     if (color_code)
       response_records = Record.find_by_sql(records_query)
+      # select distinct records.id from records, records_data where records.id == record_data.record_id and record_data.color = color
+      # and records.id in (#{response_records.map(&:id).join(",")})
       response_records = filter_by_color_code(response_records, color_code, color_code_filter_collection, color_code_filter_granule)
       if response_records.count == 0
         result = {total_count: 0, page_num: page_num, page_size: page_size, records: []}
@@ -73,8 +79,9 @@ class RecordsController < ApplicationController
       end
       query = " from records INNER JOIN collections ON records.recordable_id=collections.id" +
         record_data_join + review_join + ingest_join +
-        " WHERE records.recordable_type = 'Collection'" + " and records.id in (#{response_records.map(&:id).join(",")})"
+        " WHERE #{recordable_type_filter}" + " and records.id in (#{response_records.map(&:id).join(",")})"
     end
+
     count_query = "select" + " count(distinct records.id) as count" + query
 
     if sort_column && sort_order
@@ -114,21 +121,11 @@ class RecordsController < ApplicationController
 
       # retrieve all collection records with 'color_code'
       if color_code_filter_collection
-        collection_response_records = response_records.select { |record| record.color?(color_code) }
+        collection_response_records = Record.find_by_sql("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Collection' and records.id in (#{response_records.map(&:id).join(",")})")
       end
       # retrieve all collection records where it has granules with 'color_code'
       if color_code_filter_granule
-        granule_response_records = response_records.select do |record|
-          # can't access recordable without doing the line below.
-          db_record = Record.find_by(id: record.id)
-          granules = db_record.recordable.granules.select do |granule|
-            granule_records = granule.records.select do |granule_record|
-              granule_record.color?(color_code)
-            end
-            granule_records.count > 0
-          end
-          granules.count > 0
-        end
+        granule_response_records = Record.find_by_sql("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Granule' and records.id in (#{response_records.map(&:id).join(",")})")
       end
 
       # only include records that are in either collection_records OR granule_records
