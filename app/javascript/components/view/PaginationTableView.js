@@ -40,7 +40,7 @@ const PaginationTableView = observer(
     }
 
     getColorCode() {
-      var element = document.getElementById("color_code")
+      var element = document.getElementById("color_code_param")
       if (element != null) {
         console.log("color element=",element)
         var value = element.options[element.selectedIndex].value
@@ -50,21 +50,19 @@ const PaginationTableView = observer(
     }
 
     getColorCodeCollection() {
-      var element = document.getElementById("color_code_collection")
+      var element = document.getElementById("color_code_filter_collection_param")
       if (element != null) {
-        console.log("color collection element=",element)
-        var value = element.options[element.selectedIndex].value
-        return value == 'true'
+        console.log("color collection element=",element.value)
+        return element.value == '1'
       }
       return null
     }
 
     getColorCodeGranule() {
-      var element = document.getElementById("color_code_granule")
+      var element = document.getElementById("color_code_filter_granule_param")
       if (element != null) {
-        console.log("color granule element=",element)
-        var value = element.options[element.selectedIndex].value
-        return value == 'true'
+        console.log("color granule element=",element.value)
+        return element.value == '1'
       }
       return null
     }

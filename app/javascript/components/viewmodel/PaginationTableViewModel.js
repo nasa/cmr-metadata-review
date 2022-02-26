@@ -137,9 +137,6 @@ export default class PagingTableViewModel {
     if (this.filter != null) {
       url = url + '&filter='+this.filter
     }
-    if (this.colorCode != null && this.colorCode != "any") {
-      url = url + '&color_code='+this.colorCode
-    }
     let daac = this.model.daac
     let campaign = this.model.campaign
     if (daac != null && daac != "DAAC: ANY") {
@@ -151,8 +148,8 @@ export default class PagingTableViewModel {
     let colorCode = this.model.colorCode
     let colorCodeCollection = this.model.colorCodeCollection
     let colorCodeGranule = this.model.colorCodeGranule
-    if (colorCode != null && colorCode != '') {
-      url = url + '&color_dode='+colorCode+'&color_code_collection_filter='+colorCodeCollection+'&color_code_granule_filter='+colorCodeGranule
+    if (colorCode != null && colorCode != 'None') {
+      url = url + '&color_code_param='+colorCode+'&color_code_filter_collection_param='+colorCodeCollection+'&color_code_filter_granule_param='+colorCodeGranule
     }
 
     console.log(url);
