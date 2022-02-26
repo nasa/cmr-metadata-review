@@ -9,7 +9,6 @@ export default class PagingTableViewModel {
 
 
   // Access the Model
-
   set loading(value) {
     this.model.loading = value
   }
@@ -24,7 +23,7 @@ export default class PagingTableViewModel {
     if (result != null) {
       totalItems = result.totalItems
     }
-   
+
     return totalItems
   }
 
@@ -78,7 +77,19 @@ export default class PagingTableViewModel {
   set campaign(value) {
     this.model.campaign = value
   }
-  
+
+  set colorCode(value) {
+    this.model.colorCode = value
+  }
+
+  set colorCodeCollection(value) {
+    this.model.colorCodeCollection = value
+  }
+
+  set colorCodeGranule(value) {
+    this.model.colorCodeGranule = value
+  }
+
   get headers() {
     return this.model.headers
   }
@@ -98,6 +109,14 @@ export default class PagingTableViewModel {
 
   get colorCode() {
     return this.model.colorCode
+  }
+
+  get colorCodeCollection() {
+    return this.model.colorCodeCollection
+  }
+
+  get colorCodeGranule() {
+    return this.model.colorCodeGranule
   }
 
   get sortColumn() {
@@ -128,6 +147,12 @@ export default class PagingTableViewModel {
     }
     if (campaign != null && campaign != "CAMPAIGN: ANY") {
       url = url + '&campaign='+encodeURI(campaign)
+    }
+    let colorCode = this.model.colorCode
+    let colorCodeCollection = this.model.colorCodeCollection
+    let colorCodeGranule = this.model.colorCodeGranule
+    if (colorCode != null && colorCode != '') {
+      url = url + '&color_dode='+colorCode+'&color_code_collection_filter='+colorCodeCollection+'&color_code_granule_filter='+colorCodeGranule
     }
 
     console.log(url);
@@ -164,11 +189,6 @@ export default class PagingTableViewModel {
 
   filterByText(value) {
     this.model.filter = value
-    this.fetchData()
-  }
-
-  filterByColor(value) {
-    this.model.colorCode = value
     this.fetchData()
   }
 
