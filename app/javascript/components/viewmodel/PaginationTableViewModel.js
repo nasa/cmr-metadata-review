@@ -149,7 +149,7 @@ export default class PagingTableViewModel {
     let colorCodeCollection = this.model.colorCodeCollection
     let colorCodeGranule = this.model.colorCodeGranule
     if (colorCode != null && colorCode != 'None') {
-      url = url + '&color_code_param='+colorCode+'&color_code_filter_collection_param='+colorCodeCollection+'&color_code_filter_granule_param='+colorCodeGranule
+      url = url + '&color_code='+colorCode+'&color_code_filter_collection='+colorCodeCollection+'&color_code_filter_granule='+colorCodeGranule
     }
 
     console.log(url);
