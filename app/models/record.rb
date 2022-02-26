@@ -554,6 +554,10 @@ class Record < ApplicationRecord
     return true
   end
 
+  def color?(code)
+    return self.record_datas.where(color: code).count > 0
+  end
+
   def completed_review_count
     return (self.reviews.select {|review| review.completed?}).count
   end
