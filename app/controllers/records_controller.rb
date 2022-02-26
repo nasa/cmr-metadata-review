@@ -122,11 +122,11 @@ class RecordsController < ApplicationController
 
       # retrieve all collection records with 'color_code'
       if color_code_filter_collection
-        collection_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+        collection_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' or records.state != 'finished') and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
       end
       # retrieve all collection records where it has granules with 'color_code'
       if color_code_filter_granule
-        granule_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+        granule_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' or records.state != 'finished') and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
       end
 
       # only include records that are in either collection_records OR granule_records
