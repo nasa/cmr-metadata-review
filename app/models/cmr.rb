@@ -33,9 +33,10 @@ class Cmr
       contents = if isTestUser(current_user)
                    HTTParty.get(url, timeout: TIMEOUT_MARGIN)
                  else
-                   HTTParty.get(url, timeout: TIMEOUT_MARGIN, headers: {
-                                  'Authorization' => "Bearer #{user.access_token}"
-                                })
+                   HTTParty.get(url, timeout: TIMEOUT_MARGIN)
+                   # HTTParty.get(url, timeout: TIMEOUT_MARGIN, headers: {
+                   #                'Authorization' => "Bearer #{user.access_token}"
+                   #              })
                  end
       truncated_contents = ApplicationHelper::truncate_string(contents, 200)
       Rails.logger.info("cmr_request - Calling external resource with #{url}, contents=#{truncated_contents}")
@@ -356,6 +357,38 @@ class Cmr
   end
 
   def self.get_raw_granule_results(concept_id)
+    url = Cmr.api_url("granules", "umm_json", {"concept_id" => concept_id})
+    granule_json_str = Cmr.cmr_request(url).parsed_response
+    granule_dict = JSON.parse(granule_json_str)
+    if granule_dict['hits'].to_i == 0
+      raise CmrError, "CMR returned 0 hits for #{concept_id}"
+    end
+    raw_format = granule_dict['items'][0]['meta']['format']
+    format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
+    granule_dict = granule_dict['items'][0]
+    granule_dict['format_type'] = format_type
+    granule_dict['collection-concept-id'] = concept_id
+
+    if format_type == 'echo10'
+      granule_result_echo10 = get_raw_granule_results_echo10(concept_id)
+      granule_dict['concept-id'] = granule_result_echo10['concept-id']
+      granule_dict['format'] = granule_result_echo10['format']
+      granule_dict['revision-id'] = granule_result_echo10['revision-id']
+      granule_dict['Granule'] = granule_result_echo10['Granule']
+    else
+      granule_dict['concept-id'] = granule_dict['meta']['concept-id']
+      granule_dict['concept-type'] = granule_dict['meta']['concept-type']
+      granule_dict['revision-id'] = granule_dict['meta']['revision-id']
+      granule_dict['native-id'] = granule_dict['meta']['native-id']
+      granule_dict['provider-id'] = granule_dict['meta']['provider-id']
+      granule_dict['format'] = granule_dict['meta']['format']
+      granule_dict['revision-date'] = granule_dict['meta']['revision-date']
+      granule_dict['Granule'] = granule_dict['umm']
+    end
+    granule_dict
+  end
+
+  def self.get_raw_granule_results_echo10(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     granule_xml = convert_to_hash("echo10", granule_xml)
@@ -694,6 +727,7 @@ class Cmr
     if cmr_base_url.nil?
       cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     end
+    cmr_base_url = 'https://cmr.earthdata.nasa.gov'
     cmr_base_url
   end
 
