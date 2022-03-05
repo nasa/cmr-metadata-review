@@ -24,9 +24,5 @@ module RecordFormats
     def controlled_element_map
       ControlledElements.instance.mapping("umm-g")
     end
-
-    def long_name_field
-      LONG_NAME_FIELD
-    end
   end
 end
