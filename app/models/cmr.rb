@@ -355,6 +355,7 @@ class Cmr
     granule_results["Granule"]
   end
 
+  # Given a granule concept id, it will pull all revisions and return the latest granule revision.
   def self.get_raw_granule_results(concept_id)
     url = Cmr.api_url("granules", "umm_json", {"concept_id" => concept_id})
     granule_json_str = Cmr.cmr_request(url).parsed_response
@@ -458,7 +459,8 @@ class Cmr
   # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
-    url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
+    url = Cmr.api_url("granules", "umm_json", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
+    # Hoan: Parse and fix this so it return a list of granules.
     granule_xml = Cmr.cmr_request(url).parsed_response
     begin
       Hash.from_xml(granule_xml)["results"]

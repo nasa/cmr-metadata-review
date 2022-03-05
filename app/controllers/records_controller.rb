@@ -90,7 +90,7 @@ class RecordsController < ApplicationController
 
     query = query + " limit #{limit} offset #{offset}"
 
-    records_query = "select" + " distinct records.id, records.state, records.format, collections.concept_id," +
+    records_query = "select" + " distinct records.id, records.state, records.format, records.recordable_type, collections.concept_id," +
         " records.revision_id, collections.short_name, ingests.date_ingested" + query
 
     # puts "*** Records query=" + records_query
