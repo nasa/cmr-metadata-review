@@ -139,7 +139,7 @@ class Record < ApplicationRecord
   def load_format_module
     if self.format == "dif10"
       self.extend(RecordFormats::Dif10Record)
-    elsif self.format == "umm_json" and self.recorable_type == "Collection"
+    elsif self.format == "umm_json" and self.recordable_type == "Collection"
       self.extend(RecordFormats::UmmRecord)
     elsif self.format == "umm_json" and self.recordable_type == "Granule"
       self.extend(RecordFormats::UmmGRecord)
