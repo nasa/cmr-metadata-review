@@ -30,13 +30,13 @@
             <span class="bubbletooltiptext">Filters records containing one or more metadata elements flagged by the selected color.</span>
           </span>
         </span>
-        <%= select_tag(:color_code, options_for_select([['','None'],['Red (Error)', 'red'],['Yellow (Warning)','yellow'],['Blue (Information)','blue'],['Flagged (flagged with any color)','grey']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
+        <%= select_tag(:color_code, options_for_select([['','None'],['Red (Error)', 'red'],['Yellow (Warning)','yellow'],['Blue (Information)','blue'],['Grey (Flagged by pyQuARC)','grey']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
         <span>
           <span><%= check_box_tag(:color_code_filter_collection,nil,params[:color_code_filter_collection]) %></span>
-          <span style="vertical-align: top"><%= label_tag(:color_code_filter_collection, "Collection") %></span>
+          <span style="vertical-align: top; margin-left: -7px"><%= label_tag(:color_code_filter_collection, "Collection") %></span>
 
           <span style="margin-left: 10px"><%= check_box_tag(:color_code_filter_granule,nil,params[:color_code_filter_granule]) %></span>
-          <span style="vertical-align: top"><%= label_tag(:color_code_filter_granule, "Granule") %></span>
+          <span style="vertical-align: top; margin-left: -7px"><%= label_tag(:color_code_filter_granule, "Granule") %></span>
         </span>
       </div>
       <div class="record_filters__select">
