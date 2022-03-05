@@ -85,7 +85,7 @@ class CmrTest < ActiveSupport::TestCase
 
   describe "collection_search" do
     it "gets free text results from CMR" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*doris*&page_num=1&page_size=10&provider=ARCTEST").
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?keyword=*doris*&page_num=1&page_size=10&provider=ARCTEST").
         with(
           headers: {
             'Accept'=>'*/*',

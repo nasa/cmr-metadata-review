@@ -41,7 +41,7 @@ class RecordTest < ActiveSupport::TestCase
     it "adds script results and can return them on command" do
       record = Record.find_by id: 1
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
+      stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -63,7 +63,7 @@ class RecordTest < ActiveSupport::TestCase
     it "returns correct bubble map" do
       record = Record.find_by id: 1
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
+      stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
             'Accept'=>'*/*',
