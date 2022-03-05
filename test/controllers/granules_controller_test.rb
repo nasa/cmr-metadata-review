@@ -33,6 +33,15 @@ class GranulesControllerTest < ActionController::TestCase
   describe "POST #create" do
     it "creates a new random granule for a collection" do
 
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1581545525-LANCEAMSR2").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.json'), headers: {})
+
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
         with(
           headers: {
@@ -41,8 +50,6 @@ class GranulesControllerTest < ActionController::TestCase
 
           }).
         to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
-
-
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
         with(
@@ -71,6 +78,14 @@ class GranulesControllerTest < ActionController::TestCase
 
   describe 'POST #pull_latest' do
     it 'pulls in the latest revision of a granule for a collection.' do
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
@@ -165,6 +180,15 @@ class GranulesControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=somegranule").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_umm_json.json'), headers: {})
+
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=somegranule").
         with(
           headers: {
@@ -182,6 +206,15 @@ class GranulesControllerTest < ActionController::TestCase
       user = User.find_by(role: "admin")
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G226251-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G226251-GHRC.json'), headers: {})
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G226251-GHRC").
         with(
@@ -203,6 +236,15 @@ class GranulesControllerTest < ActionController::TestCase
       user = User.find_by(role: "admin")
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G226250-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.json"), headers: {})
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G226250-GHRC").
         with(

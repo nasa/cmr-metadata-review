@@ -14,7 +14,7 @@ class CmrSyncTest < ActiveSupport::TestCase
     end
 
     it "returns all concept_id, revision_id, short_name, version for a given provider from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -23,7 +23,7 @@ class CmrSyncTest < ActiveSupport::TestCase
           }).
         to_return(status: 200, body: get_stub("get_umm_json_collections_larc_pg1.json"), headers: {"cmr-hits" => 32, "content-type" => "application/json;charset=utf-8"})
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm-json?page_num=2&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=2&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -42,7 +42,7 @@ class CmrSyncTest < ActiveSupport::TestCase
     end
 
     it "returns umm-json collection with revision id from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC/12.umm_json").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/C28109-LARC/12.umm_json").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -55,7 +55,7 @@ class CmrSyncTest < ActiveSupport::TestCase
     end
 
     it "returns umm-json collection without revision id from CMR api" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C28109-LARC.umm_json").
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/C28109-LARC.umm_json").
         with(
           headers: {
             'Accept'=>'*/*',

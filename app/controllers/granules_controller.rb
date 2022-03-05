@@ -60,7 +60,7 @@ class GranulesController < ApplicationController
     granule = Granule.find(params[:id])
     collection = granule.collection
     begin
-      Granule.add_new_revision_to_granule(granule, current_user)
+      Granule.add_new_revision_to_granule(collection.concept_id, granule, current_user)
       flash[:notice] = "A new granule revision has been added for this collection."
       redirect_to collection_path(id: 1, record_id: collection.records.first.id)
     rescue ActiveRecord::ActiveRecordError => e
@@ -127,7 +127,7 @@ class GranulesController < ApplicationController
         rescue Cmr::CmrError => e
           flash[:notice] = e.message
         rescue StandardError => e
-          flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested."
+          flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested.#{e.message}"
           Rails.logger.error("Sorry, granule #{granule_concept_id} could not be ingested.  error=#{e.message}")
         end
         redirect_to collection_path(id: 1, record_id: collection.records.first.id)
