@@ -15,7 +15,7 @@ class ReportsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/collections.json?keyword=?*modis?*&page_num=1&page_size=2000&provider=OB_DAAC').
+      stub_request(:get, "#{@cmr_base_url}/search/collections.json?keyword=?*modis?*&page_num=1&page_size=2000&provider=OB_DAAC").
         with(
           headers: {
             'Accept'=>'*/*',

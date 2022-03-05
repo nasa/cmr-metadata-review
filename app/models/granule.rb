@@ -48,9 +48,9 @@ class Granule < Metadata
   # It will return false if the concept id is a collection or if there is an error
   # Otherwise, will return the granule_record.   I think it should return nil and test for it.
   # This is only being used in the legacy ingest
-  def self.add_granule_by_concept_id(granule_concept_id, current_user = User.find_by(role: "admin"))
+  def self.add_granule_by_concept_id(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
-    collection   = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+    collection   = Collection.find_by(concept_id: collection_concept_id)
 
     return false unless collection
 
@@ -79,9 +79,9 @@ class Granule < Metadata
   end
 
   # Fetches the latest revision for the granule, creates a review of it, then returns the granule record.
-  def self.add_new_revision_to_granule(granule, current_user = User.find_by(role: "admin"))
+  def self.add_new_revision_to_granule(collection_concept_id, granule, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule.concept_id)
-    collection = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+    collection = Collection.find_by(concept_id: collection_concept_id)
     return nil unless collection
 
     granule_data = granule_info["Granule"]
@@ -111,11 +111,8 @@ class Granule < Metadata
 
   def self.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
     granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
-    collection = Collection.find_by(concept_id: granule_info["collection_concept_id"])
+    collection = Collection.find_by(concept_id: collection_concept_id)
 
-    if granule_info["collection_concept_id"] != collection_concept_id
-      raise Cmr::CmrError.new, 'Granule record does not belong to this collection.'
-    end
     if collection.nil?
       raise Cmr::CmrError.new, 'Collection record associated with granule could not be found in system.'
     end
