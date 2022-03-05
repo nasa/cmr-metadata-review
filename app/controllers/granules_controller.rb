@@ -127,7 +127,7 @@ class GranulesController < ApplicationController
         rescue Cmr::CmrError => e
           flash[:notice] = e.message
         rescue StandardError => e
-          flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested.#{e.message}"
+          flash[:notice] = "Sorry, granule #{granule_concept_id} could not be ingested."
           Rails.logger.error("Sorry, granule #{granule_concept_id} could not be ingested.  error=#{e.message}")
         end
         redirect_to collection_path(id: 1, record_id: collection.records.first.id)

@@ -2,7 +2,7 @@ class ControlledElements
   include Singleton
 
   def initialize
-    @formats = ["ummg", "umm_json", "dif10", "echo10", "umm-g"]
+    @formats = ["umm_json", "dif10", "echo10", "umm-g"]
     @map = {}
     @formats.each do |format|
       csv_path = File.join(Rails.root, "/data/controlled_elements_#{format}.csv")
