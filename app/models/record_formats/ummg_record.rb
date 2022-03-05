@@ -22,7 +22,7 @@ module RecordFormats
     end
 
     def controlled_element_map
-      ControlledElements.instance.mapping("ummg_json")
+      ControlledElements.instance.mapping("umm-g")
     end
 
     def long_name_field
