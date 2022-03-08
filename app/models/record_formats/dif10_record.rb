@@ -59,24 +59,29 @@ module RecordFormats
       add_script_comment(comment_hash)
     end
 
+    def get_raw_concept(concept_id, format)
+      url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}.#{format}"
+      raw_data = Cmr.cmr_request(url).parsed_response
+      raw_data
+    end
 
     # There are currently only scripts for DIF10 collections.
     def evaluate_script(raw_data = nil)
-      if raw_data.nil?
-        raw_data = get_raw_data
-      end
-
-      remove_quotes_from_all_values!(raw_data)
-      record_json = raw_data.to_json
-
-      #running collection script in python
-      #W option to silence warnings
+      raw_data = get_raw_concept(concept_id, "dif10")
       script_results = ''
       if collection?
         Tempfile.create do |file|
-          file << record_json
+          file << raw_data
           file.flush
-          script_results = `python2 -W ignore lib/CollectionCheckerDIF.py #{file.path}`
+          script_results = `lib/dashboard_checker.sh #{file.path} dif10`
+          new_results = ""
+          script_results.each_line do |line|
+            unless line.start_with? "Downloading "
+              new_results << line
+              new_results << "\n"
+            end
+          end
+          script_results = new_results
         end
       end
 
