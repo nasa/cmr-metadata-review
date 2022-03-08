@@ -52,6 +52,7 @@ class CanSearchCollectionTest < SystemTestCase
       to_return(status: 200, body: get_stub("C1996546695-GHRC_DAAC_echo10.xml"), headers: {})
   end
   describe 'search cmr collection' do
+    # This test fails due to a bug in pyQuARC:
     it 'search collection by GHRC provider' do
       visit '/home'
       within '#provider' do
