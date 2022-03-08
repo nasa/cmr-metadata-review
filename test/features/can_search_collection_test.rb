@@ -53,22 +53,20 @@ class CanSearchCollectionTest < SystemTestCase
   end
   describe 'search cmr collection' do
     # This test fails due to a bug in pyQuARC:
-    # validity = (not bool(ending_date_time)) and (ends_at_present_flag.lower() == "true")
-    #
-    # it 'search collection by GHRC provider' do
-    #   visit '/home'
-    #   within '#provider' do
-    #     find("#provider > option:nth-child(6)").click
-    #   end
-    #   find("#search_button").click
-    #   assert has_content?('C1996543397-GHRC_DAAC')
-    #   assert has_content?('C1996546695-GHRC_DAAC')
-    #   assert has_content?('C1979115640-GHRC_DAAC')
-    #   assert has_content?('C1979116062-GHRC_DAAC')
-    #   find('#search3').click
-    #   click_on 'Select Collection'
-    #   click_on 'Ingest Collection Without Granule'
-    #   assert has_content?('C1996546695-GHRC_DAAC')
-    # end
+    it 'search collection by GHRC provider' do
+      visit '/home'
+      within '#provider' do
+        find("#provider > option:nth-child(6)").click
+      end
+      find("#search_button").click
+      assert has_content?('C1996543397-GHRC_DAAC')
+      assert has_content?('C1996546695-GHRC_DAAC')
+      assert has_content?('C1979115640-GHRC_DAAC')
+      assert has_content?('C1979116062-GHRC_DAAC')
+      find('#search3').click
+      click_on 'Select Collection'
+      click_on 'Ingest Collection Without Granule'
+      assert has_content?('C1996546695-GHRC_DAAC')
+    end
   end
 end
