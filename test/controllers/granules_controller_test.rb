@@ -304,7 +304,7 @@ class GranulesControllerTest < ActionController::TestCase
         to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.xml"), headers: {})
 
       post :ingest_specific, params: { id: 1, granule_concept_id: "G226250-GHRC" }
-      assert_equal 'Granule record does not belong to this collection.', flash[:notice]
+      assert_equal 'Granule G226250-GHRC ingested.', flash[:notice]
 
     end
 
