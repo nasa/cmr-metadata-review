@@ -114,28 +114,28 @@ class RecordsController < ApplicationController
 
   def filter_by_color_code(response_record_ids, color_code, color_code_filter_collection, color_code_filter_granule)
     if color_code
-      collection_response_records = []
-      granule_response_records = []
+      collection_response_record_ids = []
+      granule_response_record_ids = []
 
       # retrieve all collection records with 'color_code'
       if color_code_filter_collection
         if response_record_ids.empty?
-          collection_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection'").rows.map {|array|array[0]}
+          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection'").rows.map {|array|array[0]}
         else
-          collection_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
         end
       end
       # retrieve all collection records where it has granules with 'color_code'
       if color_code_filter_granule
         if response_record_ids.empty?
-          granule_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
+          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
         else
-          granule_response_records = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
         end
       end
 
       # only include records that are in either collection_records OR granule_records
-      response_record_ids = collection_response_records.union(granule_response_records)
+      response_record_ids = collection_response_record_ids.union(granule_response_record_ids)
     end
     response_record_ids
   end
