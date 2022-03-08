@@ -4,7 +4,7 @@ first:
   column_name: "ShortName"
   value: "A2_DySno_NRT"
   last_updated: null
-  color: "green"
+  color: "red"
   script_comment: "ok"
   opinion: false
   flag: []
@@ -254,13 +254,13 @@ digest_email_collection_short_name:
   record_id: 22
   column_name: ShortName
   value: Test Short Name
-  
+
 digest_email_collection2_short_name:
   id: 33
   record_id: 24
   column_name: ShortName
   value: Test Short Name2
-  
+
 digest_email_collection3_short_name:
   id: 34
   record_id: 25
@@ -329,6 +329,18 @@ report_record_data:
   value: "MODISA_L3m_CHL"
   last_updated: null
   color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: []
+  recommendation: "ok"
+
+granule_red_longname:
+  id: 41
+  record_id: 39
+  column_name: "LongName"
+  value: "Test_Long_Name"
+  last_updated: null
+  color: "red"
   script_comment: "ok"
   opinion: false
   flag: []

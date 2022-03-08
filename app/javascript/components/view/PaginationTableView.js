@@ -39,6 +39,34 @@ const PaginationTableView = observer(
       return null
     }
 
+    getColorCode() {
+      var element = document.getElementById("color_code")
+      if (element != null) {
+        console.log("color element=",element)
+        var value = element.options[element.selectedIndex].value
+        return value
+      }
+      return null
+    }
+
+    getColorCodeCollection() {
+      var element = document.getElementById("color_code_filter_collection")
+      if (element != null) {
+        console.log("color collection element=",element.checked)
+        return element.checked
+      }
+      return null
+    }
+
+    getColorCodeGranule() {
+      var element = document.getElementById("color_code_filter_granule")
+      if (element != null) {
+        console.log("color granule element=",element.checked)
+        return element.checked
+      }
+      return null
+    }
+
     getFreetext() {
       var element = document.getElementById("freetext")
       if (element != null) {
@@ -54,6 +82,9 @@ const PaginationTableView = observer(
       this.viewModel.daac = this.getDaac()
       this.viewModel.campaign = this.getCampaign()
       this.viewModel.filter = this.getFreetext()
+      this.viewModel.colorCode = this.getColorCode()
+      this.viewModel.colorCodeCollection = this.getColorCodeCollection()
+      this.viewModel.colorCodeGranule = this.getColorCodeGranule()
       this.viewModel.selectPage(this.viewModel.currentPage)
     }
 
@@ -165,7 +196,6 @@ PaginationTableView.propTypes = {
   filter: PropTypes.string,
   sortColumn: PropTypes.string,
   sortOrder: PropTypes.string,
-  colorCode: PropTypes.string
 };
 
 export default PaginationTableView
