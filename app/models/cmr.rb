@@ -384,6 +384,7 @@ class Cmr
       granule_dict['revision-date'] = granule_dict['meta']['revision-date']
       granule_dict['Granule'] = granule_dict['umm']
     end
+    granule_dict['items'] = []
     granule_dict
   end
 
@@ -394,13 +395,7 @@ class Cmr
     unless granule_xml['errors'].nil?
       raise CmrError.new, granule_xml['errors']['error']
     end
-
-    begin
-      granule_results = granule_xml["results"]
-    rescue => e
-      raise CmrError, e.message
-    end
-
+    granule_results = granule_xml["results"]
     if granule_results["hits"].to_i == 0
       raise CmrError, "CMR returned 0 hits for #{concept_id}"
     end
@@ -460,13 +455,45 @@ class Cmr
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
     url = Cmr.api_url("granules", "umm_json", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
-    # Hoan: Parse and fix this so it return a list of granules.
-    granule_xml = Cmr.cmr_request(url).parsed_response
-    begin
-      Hash.from_xml(granule_xml)["results"]
-    rescue => e
-      raise CmrError, e.message
+    granule_json_str = Cmr.cmr_request(url).parsed_response
+    granule_dict = JSON.parse(granule_json_str)
+    hits = granule_dict['hits'].to_i
+    if hits == 0
+      raise CmrError, "CMR returned 0 hits for #{concept_id}"
     end
+    granule_dict['hits'] = hits
+    raw_format = granule_dict['items'][0]['meta']['format']
+    format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
+    granule_dict['format_type'] = format_type
+
+    if format_type == 'echo10'
+      granule_results_echo10 = granule_list_from_collection_echo10(concept_id, page_num)
+      granule_dict['result'] = granule_results_echo10
+    else
+      granule_result_list = []
+      granule_dict['items'].each do |item|
+        item_dict = Hash.new
+        item_dict['result']['Granule'] =  item['umm']
+        granule_result_list << item_dict
+      end
+      granule_dict['result'] = granule_result_list
+    end
+    granule_dict['items'] = []
+    granule_dict
+  end
+
+  def self.granule_list_from_collection_echo10(concept_id, page_num = 1)
+    url = Cmr.api_url("granules", "echo10", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
+    granule_xml = Cmr.cmr_request(url).parsed_response
+    granule_xml = convert_to_hash("echo10", granule_xml)
+    unless granule_xml['errors'].nil?
+      raise CmrError.new, granule_xml['errors']['error']
+    end
+    if granule_xml['results']['hits'].to_i == 0
+      raise CmrError, "CMR returned 0 hits for #{concept_id}"
+    end
+    granule_results = granule_xml["results"]
+    granule_results
   end
 
   # ====Params

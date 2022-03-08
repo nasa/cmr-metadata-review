@@ -32,7 +32,22 @@ class GranulesControllerTest < ActionController::TestCase
 
   describe "POST #create" do
     it "creates a new random granule for a collection" do
-
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1581545525-LANCEAMSR2").
         with(
           headers: {
@@ -59,6 +74,39 @@ class GranulesControllerTest < ActionController::TestCase
 
           }).
         to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.xml'), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
+
 
       user = User.find_by role: "admin"
       sign_in(user)
