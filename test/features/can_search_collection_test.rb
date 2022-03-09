@@ -50,6 +50,14 @@ class CanSearchCollectionTest < SystemTestCase
           'User-Agent'=>'Ruby'
         }).
       to_return(status: 200, body: get_stub("C1996546695-GHRC_DAAC_echo10.xml"), headers: {})
+    stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1996546695-GHRC_DAAC&page_size=10&page_num=1").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: '{"hits" : 0, "took" : 105, "items" : []}', headers: {})
   end
   describe 'search cmr collection' do
     # This test fails due to a bug in pyQuARC:

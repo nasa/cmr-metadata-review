@@ -452,9 +452,6 @@ class Cmr
     url = Cmr.api_url("granules", "umm_json", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
     granule_json_str = Cmr.cmr_request(url).parsed_response
     granule_dict = JSON.parse(granule_json_str)
-    if granule_dict['hits'].to_i == 0
-      raise CmrError, "CMR returned 0 hits for #{concept_id}"
-    end
     granule_dict
   end
 
