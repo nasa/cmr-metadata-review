@@ -1,6 +1,6 @@
 {
-  "hits" : 2017,
-  "took" : 125,
+  "hits" : 1,
+  "took" : 146,
   "items" : [ {
     "meta" : {
       "concept-type" : "granule",
@@ -72,7 +72,7 @@
         "ProductionDateTime" : "2017-06-30T12:18:00.000Z"
       },
       "CollectionReference" : {
-        "Version" : "1",
+        "Version" : "0",
         "ShortName" : "daylightn"
       },
       "RelatedUrls" : [ {
@@ -98,4 +98,5 @@
         "Description" : "OPeNDAP request URL"
       } ]
     }
-  }]}
+  } ]
+}

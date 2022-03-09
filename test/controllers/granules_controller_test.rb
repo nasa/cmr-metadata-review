@@ -32,30 +32,6 @@ class GranulesControllerTest < ActionController::TestCase
 
   describe "POST #create" do
     it "creates a new random granule for a collection" do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1581545525-LANCEAMSR2").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.json'), headers: {})
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
         with(
@@ -66,6 +42,41 @@ class GranulesControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
 
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=1&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2a.json'), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2a.json'), headers: {})
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2a.json'), headers: {})
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1581545525-LANCEAMSR2").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.json'), headers: {})
+
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G1581545525-LANCEAMSR2").
         with(
           headers: {
@@ -74,39 +85,6 @@ class GranulesControllerTest < ActionController::TestCase
 
           }).
         to_return(status: 200, body: get_stub('search_granules_G1581545525-LANCEAMSR2.xml'), headers: {})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=2&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C1000000020-LANCEAMSR2&page_num=3&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.json'), headers: {})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=3&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?collection_concept_id=C1000000020-LANCEAMSR2&page_num=2&page_size=10").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'), headers: {})
-
 
       user = User.find_by role: "admin"
       sign_in(user)
@@ -126,14 +104,6 @@ class GranulesControllerTest < ActionController::TestCase
 
   describe 'POST #pull_latest' do
     it 'pulls in the latest revision of a granule for a collection.' do
-      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
@@ -142,7 +112,14 @@ class GranulesControllerTest < ActionController::TestCase
 
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
-
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
 
       user = User.find_by role: 'admin'
       sign_in(user)
@@ -235,7 +212,7 @@ class GranulesControllerTest < ActionController::TestCase
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent'=>'Ruby'
           }).
-        to_return(status: 200, body: get_stub('search_granules_umm_json.json'), headers: {})
+        to_return(status: 200, body: '{"hits" : 0, "took" : 105, "items" : []}', headers: {})
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=somegranule").
         with(
@@ -247,7 +224,7 @@ class GranulesControllerTest < ActionController::TestCase
         to_return(status: 400, body: '<?xml version="1.0" encoding="UTF-8"?><errors><error>Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.</error></errors>', headers: {"content-type":"application/xml"})
 
       post :ingest_specific, params: { id: 1, granule_concept_id: "somegranule" }
-      assert_equal 'Invalid concept_id [somegranule]. For granule queries concept_id must be either a granule or collection concept ID.', flash[:notice]
+      assert_equal 'CMR returned 0 hits for somegranule', flash[:notice]
     end
 
     it "can ingest a specifc granule review found in CMR and test that you cannot import the granule again (duplicate)" do
@@ -255,6 +232,14 @@ class GranulesControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G226250-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.json"), headers: {})
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G226251-GHRC").
         with(
           headers: {
@@ -262,7 +247,7 @@ class GranulesControllerTest < ActionController::TestCase
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent'=>'Ruby'
           }).
-        to_return(status: 200, body: get_stub('search_granules_G226251-GHRC.json'), headers: {})
+        to_return(status: 200, body: get_stub("search_granules_G226251-GHRC.json"), headers: {})
 
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G226251-GHRC").
         with(
