@@ -1,6 +1,6 @@
 {
-  "hits" : 2017,
-  "took" : 125,
+  "hits" : 1,
+  "took" : 146,
   "items" : [ {
     "meta" : {
       "concept-type" : "granule",
@@ -98,4 +98,5 @@
         "Description" : "OPeNDAP request URL"
       } ]
     }
-  }]}
+  } ]
+}
