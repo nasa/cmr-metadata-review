@@ -363,25 +363,20 @@ class Cmr
     if granule_dict['hits'].to_i == 0
       raise CmrError, "CMR returned 0 hits for #{concept_id}"
     end
+    # Access to first element because it should have only one record (concept_id)
     raw_format = granule_dict['items'][0]['meta']['format']
     format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
-    granule_dict = granule_dict['items'][0]
-    granule_dict['format_type'] = format_type
 
     if format_type == 'echo10'
       granule_result_echo10 = get_raw_granule_results_echo10(concept_id)
-      granule_dict['concept-id'] = granule_result_echo10['concept_id']
-      granule_dict['format'] = granule_result_echo10['format']
-      granule_dict['revision_id'] = granule_result_echo10['revision_id']
-      granule_dict['Granule'] = granule_result_echo10['Granule']
+      granule_result_echo10['format_type'] = 'echo10'
+      return granule_result_echo10
     else
+      granule_dict = granule_dict['items'][0]
+      granule_dict['format_type'] = format_type
       granule_dict['concept-id'] = granule_dict['meta']['concept-id']
-      granule_dict['concept-type'] = granule_dict['meta']['concept-type']
+      granule_dict['concept_id'] = granule_dict['meta']['concept-id']
       granule_dict['revision_id'] = granule_dict['meta']['revision-id']
-      granule_dict['native-id'] = granule_dict['meta']['native-id']
-      granule_dict['provider-id'] = granule_dict['meta']['provider-id']
-      granule_dict['format'] = granule_dict['meta']['format']
-      granule_dict['revision-date'] = granule_dict['meta']['revision-date']
       granule_dict['Granule'] = granule_dict['umm']
     end
     granule_dict['items'] = []
@@ -457,43 +452,10 @@ class Cmr
     url = Cmr.api_url("granules", "umm_json", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
     granule_json_str = Cmr.cmr_request(url).parsed_response
     granule_dict = JSON.parse(granule_json_str)
-    hits = granule_dict['hits'].to_i
-    if hits == 0
+    if granule_dict['hits'].to_i == 0
       raise CmrError, "CMR returned 0 hits for #{concept_id}"
     end
-    granule_dict['hits'] = hits
-    raw_format = granule_dict['items'][0]['meta']['format']
-    format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
-    granule_dict['format_type'] = format_type
-
-    if format_type == 'echo10'
-      granule_results_echo10 = granule_list_from_collection_echo10(concept_id, page_num)
-      granule_dict['result'] = granule_results_echo10
-    else
-      granule_result_list = []
-      granule_dict['items'].each do |item|
-        item_dict = Hash.new
-        item_dict['result']['Granule'] =  item['umm']
-        granule_result_list << item_dict
-      end
-      granule_dict['result'] = granule_result_list
-    end
-    granule_dict['items'] = []
     granule_dict
-  end
-
-  def self.granule_list_from_collection_echo10(concept_id, page_num = 1)
-    url = Cmr.api_url("granules", "echo10", {"collection_concept_id" => concept_id, "page_size" => 10, "page_num" => page_num})
-    granule_xml = Cmr.cmr_request(url).parsed_response
-    granule_xml = convert_to_hash("echo10", granule_xml)
-    unless granule_xml['errors'].nil?
-      raise CmrError.new, granule_xml['errors']['error']
-    end
-    if granule_xml['results']['hits'].to_i == 0
-      raise CmrError, "CMR returned 0 hits for #{concept_id}"
-    end
-    granule_results = granule_xml["results"]
-    granule_results
   end
 
   # ====Params
@@ -531,15 +493,30 @@ class Cmr
 
         #cmr does not return a list if only one result
         if total_granules > 1
-          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["result"][page_item]
+          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][page_item]
         else
-          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["result"]
+          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"]
         end
         granule_data_list.push(granule_data)
       end
     end
-
-    return granule_data_list
+    result_granule_list = []
+    # todo: process the list granule_data_list
+    granule_data_list.each do |granule_data|
+      current_granule = Hash.new
+      raw_format = granule_data['meta']['format']
+      format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
+      if format_type == 'echo10'
+        current_granule = get_raw_granule_results_echo10(granule_data['meta']['concept-id'])
+      else
+        current_granule['concept-id'] = granule_data['meta']['concept-id']
+        current_granule['concept_id'] = granule_data['meta']['concept-id']
+        current_granule['revision_id'] = granule_data['meta']['revision-id']
+        gracurrent_granulenule_dict['Granule'] = granule_data['umm']
+      end
+      result_granule_list << current_granule
+    end
+    return result_granule_list
   end
 
 

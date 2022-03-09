@@ -1,6 +1,6 @@
 {
-  "hits" : 2017,
-  "took" : 125,
+  "hits" : 1,
+  "took" : 146,
   "items" : [ {
     "meta" : {
       "concept-type" : "granule",
@@ -23,7 +23,7 @@
         "Name" : "UMM-G",
         "Version" : "1.6.4"
       },
-      "GranuleUR" : "ersst.v5.185401",
+      "GranuleUR" : "AMSR_2_L3_DailySnow_P00_20190102.he5",
       "ProviderDates" : [ {
         "Type" : "Insert",
         "Date" : "2021-09-14T15:58:40.058Z"
@@ -72,8 +72,8 @@
         "ProductionDateTime" : "2017-06-30T12:18:00.000Z"
       },
       "CollectionReference" : {
-        "Version" : "5",
-        "ShortName" : "REYNOLDS_NCDC_L4_MONTHLY_V5"
+        "Version" : "0",
+        "ShortName" : "A2_DySno_NRT"
       },
       "RelatedUrls" : [ {
         "URL" : "s3://podaac-ops-cumulus-protected/REYNOLDS_NCDC_L4_MONTHLY_V5/ersst.v5.185401.nc",
@@ -98,4 +98,5 @@
         "Description" : "OPeNDAP request URL"
       } ]
     }
-  }]}
+  } ]
+}
