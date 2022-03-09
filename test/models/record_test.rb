@@ -80,7 +80,7 @@ class RecordTest < ActiveSupport::TestCase
       expected = {
         "ShortName" => {
           field_name: "ShortName",
-          color:      "green",
+          color:      "red",
           script:     false,
           opinion:    false,
           feedback:   false
