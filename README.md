@@ -160,6 +160,16 @@ redo the migration for that one script, it will work:
 
     rake db:migrate:redo VERSION=20200227150658
 
+## Installing pyQuARC
+
+   git clone https://github.com/NASA-IMPACT/pyQuARC.git
+   cd pyQuARC
+   python3 setup.py install
+(this will install pyQuARC globally)
+If you want to have dashboard use a local version of pyQuARC, do this instead:
+   python3 setup.py install --prefix ./local
+   cp ./local/lib/python3.9/site-packages/pyQuARC-1.1.4-py3.9.egg <path to dashboard>/lib/pyQuARC.egg
+   
 ## Other Known Issues
 
 During the RAILS 5.2 upgrade, there was an issue with the CSRF authenticity tokens.   Namely, this specific
@@ -171,3 +181,4 @@ Note: The above work-around is not necessary on GET requests, only POST, PUT, an
 
 See [https://bugs.earthdata.nasa.gov/browse/CMRARC-484] and [https://github.com/rails/rails/issues/24257]
 for more details.
+
