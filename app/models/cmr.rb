@@ -492,7 +492,7 @@ class Cmr
         if total_granules > 1
           granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][page_item]
         else
-          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"]
+          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][0]
         end
         granule_data_list.push(granule_data)
       end
