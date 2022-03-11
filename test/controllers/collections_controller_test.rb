@@ -184,6 +184,15 @@ describe "POST #create" do
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("C222702-GHRC_echo10.xml"), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G226250-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.json"), headers: {})
+
 
 
       #Making sure record does not exist before ingest
@@ -205,7 +214,31 @@ describe "POST #create" do
       # collection with umm-json can be saved to system. see ticket CMRARC-480
       stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
-      stub_request(:get, /.*granules.*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
+      stub_request(:get, /.*granules.echo10*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_size=10&page_num=1").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
       post :create, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
       assert_equal("302", response.code)
       assert_equal(1, (Collection.where concept_id: "C190733714-LPDAAC_ECS").length)
@@ -281,7 +314,7 @@ describe "POST #create" do
                                 "server"=>["Jetty(9.2.z-SNAPSHOT)"],
                                 "strict-transport-security"=>["max-age=31536000"]})
 
-      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?collection_concept_id=C1599780765-NSIDC_ECS&page_num=1&page_size=10").
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?collection_concept_id=C1599780765-NSIDC_ECS&page_size=10&page_num=1").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -297,9 +330,17 @@ describe "POST #create" do
 
           }).
         to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
-      stub_request(:get, /.*granules.*C1599780765-NSIDC_ECS.*/)
+      stub_request(:get, /.*granules.echo10*C1599780765-NSIDC_ECS.*/)
         .with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1599790933-NSIDC_ECS").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G1599790933-NSIDC_ECS.json"), headers: {})
 
       post :create, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
 
