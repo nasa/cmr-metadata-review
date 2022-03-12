@@ -30,7 +30,7 @@
             <span class="bubbletooltiptext">Filters records containing one or more metadata elements flagged by the selected color.</span>
           </span>
         </span>
-        <%= select_tag(:color_code, options_for_select([['','None'],['Red (Error)', 'red'],['Yellow (Warning)','yellow'],['Blue (Information)','blue'],['Grey (Flagged by pyQuARC)','grey']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
+        <%= select_tag(:color_code, options_for_select([['','None'],['Red (Error)', 'red'],['Yellow (Warning)','yellow'],['Blue (Information)','blue'],['Any (Red/Yellow/Blue)','any']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
         <div style="display: flex; gap: 5px; align-items: center">
           <div style="display: flex; align-items: flex-end">
             <div><%= check_box_tag(:color_code_filter_collection,nil,params[:color_code_filter_collection]) %></div>
