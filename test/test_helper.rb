@@ -19,7 +19,7 @@ WebMock.disable_net_connect!(
 
 require 'minitest/rails/capybara'
 
-# Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
+Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
 # setting headless_chrome as default driver, can be changed to run not headless
 Capybara.default_driver = :headless_chrome
