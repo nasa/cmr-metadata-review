@@ -22,7 +22,7 @@ class CollectionsController < ApplicationController
       # if the granule has a new revision or the granule has been deleted.
       @granule_objects.each do |granule|
         if Cmr.raw_granule?(granule.concept_id)
-          raw_granule_results = Cmr.get_raw_granule_results(granule.concept_id)
+          raw_granule_results = Cmr.get_raw_granule(granule.concept_id)
           granule.latest_revision_in_cmr = raw_granule_results['revision_id']
           granule.deleted_in_cmr = false
           granule.save!

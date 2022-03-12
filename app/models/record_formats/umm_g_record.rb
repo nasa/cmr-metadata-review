@@ -24,5 +24,27 @@ module RecordFormats
     def controlled_element_map
       ControlledElements.instance.mapping("umm-g")
     end
+    #
+    def long_name
+      get_column(LONG_NAME_FIELD)
+    end
+    #
+    # def short_name
+    #   get_column("ShortName")
+    # end
+    #
+    # def version_id
+    #   get_column("Version")
+    # end
+    #
+    def campaign_from_record_data
+      get_column('Projects/ShortName')
+    end
+    #
+    # def long_name_field
+    #   LONG_NAME_FIELD
+    # end
+    #
+    LONG_NAME_FIELD = "EntryTitle"
   end
 end
