@@ -22,26 +22,28 @@
         <span style="font-weight: bold">Campaign/Project</span>
         <%= select_tag(:campaign, options_for_select(campaign_select_list(form: path_for_form), selected: params[:campaign]), style: "width:190px") %>
       </div>
-      <div class="record_filters__select">
-        <span>
-          <span style="font-weight: bold">Color</span>
-          <span class="bubbletooltip">
-            <i class="eui-icon eui-fa-info-circle"></i>
-            <span class="bubbletooltiptext">Filters records containing one or more metadata elements flagged by the selected color.</span>
+      <% if Rails.configuration.filter_by_color_feature_toggle %>
+        <div class="record_filters__select">
+          <span>
+            <span style="font-weight: bold">Color</span>
+            <span class="bubbletooltip">
+              <i class="eui-icon eui-fa-info-circle"></i>
+              <span class="bubbletooltiptext">Filters records containing one or more metadata elements flagged by the selected color.</span>
+            </span>
           </span>
-        </span>
-        <%= select_tag(:color_code, options_for_select([['','None'],['Red (Error)', 'red'],['Yellow (Warning)','yellow'],['Blue (Information)','blue'],['Any (Red/Yellow/Blue)','any']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
-        <div style="display: flex; gap: 5px; align-items: center">
-          <div style="display: flex; align-items: flex-end">
-            <div><%= check_box_tag(:color_code_filter_collection,nil,params[:color_code_filter_collection]) %></div>
-            <div style="margin-left: -2px"><%= label_tag(:color_code_filter_collection, "Collection") %></div>
-          </div>
-          <div style="display: flex; align-items: flex-end">
-            <div><%= check_box_tag(:color_code_filter_granule,nil,params[:color_code_filter_granule]) %></div>
-            <div style="margin-left: -2px"><%= label_tag(:color_code_filter_granule, "Granule") %></div>
+          <%= select_tag(:color_code, options_for_select([['', 'None'], ['Red (Error)', 'red'], ['Yellow (Warning)', 'yellow'], ['Blue (Information)', 'blue'], ['Any (Red/Yellow/Blue)', 'any']], selected: params[:color_code]), onchange: 'onChangeColorFilter()') %>
+          <div style="display: flex; gap: 5px; align-items: center">
+            <div style="display: flex; align-items: flex-end">
+              <div><%= check_box_tag(:color_code_filter_collection, nil, params[:color_code_filter_collection]) %></div>
+              <div style="margin-left: -2px"><%= label_tag(:color_code_filter_collection, "Collection") %></div>
+            </div>
+            <div style="display: flex; align-items: flex-end">
+              <div><%= check_box_tag(:color_code_filter_granule, nil, params[:color_code_filter_granule]) %></div>
+              <div style="margin-left: -2px"><%= label_tag(:color_code_filter_granule, "Granule") %></div>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
       <div class="record_filters__select">
         <label for="freetext">Freetext</label>
         <input type="search" name="freetext" id="freetext" class="freetext" style="width: 200px;" value="<%=params[:freetext]%>"/>
