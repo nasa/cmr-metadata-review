@@ -240,7 +240,7 @@ class Cmr
        DesiredFields.instance.get_format_fields('echo10')
     elsif data_format == "dif10"
       DesiredFields.instance.get_format_fields('dif10')
-    elsif data_format == "umm_json"
+    elsif data_format == "umm_json" # todo: This needs attention, how to distinguish between ummc and ummg
       DesiredFields.instance.get_format_fields('ummc')
     else
       []
@@ -252,18 +252,13 @@ class Cmr
     add_required_fields(results_hash, desired_fields)
   end
 
-  def self.get_granule(concept_id)
-    granule_raw_data = Cmr.get_raw_granule(concept_id)
-    format_granule_data(granule_raw_data)
-  end
-
-  def self.get_granule_with_collection_data(concept_id)
-    granule_data            = get_raw_granule_results(concept_id)
-    granule_data["Granule"] = format_granule_data(granule_data["Granule"])
+  def self.get_granule_with_collection_id(concept_id)
+    granule_data            = get_raw_granule(concept_id)
+    granule_data["Granule"] = flatten_format_granule_data(granule_data["Granule"])
     granule_data
   end
 
-  def self.format_granule_data(granule_raw_data)
+  def self.flatten_format_granule_data(granule_raw_data)
     results_hash = flatten_collection(granule_raw_data)
     add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
   end
@@ -350,13 +345,8 @@ class Cmr
   # Only Echo10 records pull in granules pre business rules.
   # See Collection::INCLUDE_GRANULE_FORMATS
 
-  def self.get_raw_granule(concept_id)
-    granule_results = get_raw_granule_results(concept_id)
-    granule_results["Granule"]
-  end
-
   # Given a granule concept id, it will pull all revisions and return the latest granule revision.
-  def self.get_raw_granule_results(concept_id)
+  def self.get_raw_granule(concept_id)
     url = Cmr.api_url("granules", "umm_json", {"concept_id" => concept_id})
     granule_json_str = Cmr.cmr_request(url).parsed_response
     granule_dict = JSON.parse(granule_json_str)
@@ -368,9 +358,9 @@ class Cmr
     format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
 
     if format_type == 'echo10'
-      granule_result_echo10 = get_raw_granule_results_echo10(concept_id)
-      granule_result_echo10['format_type'] = 'echo10'
-      return granule_result_echo10
+      echo10_granule = get_raw_echo10_granule(concept_id)
+      echo10_granule['format_type'] = 'echo10'
+      return echo10_granule
     else
       granule_dict = granule_dict['items'][0]
       granule_dict['format_type'] = format_type
@@ -383,7 +373,7 @@ class Cmr
     granule_dict
   end
 
-  def self.get_raw_granule_results_echo10(concept_id)
+  def self.get_raw_echo10_granule(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     granule_xml = convert_to_hash("echo10", granule_xml)
@@ -445,7 +435,7 @@ class Cmr
   # ====Returns
   # Array of granule data hashes
   # ==== Method
-  # Contacts the CMR system and pulls granule data related to conecept_id param
+  # Contacts the CMR system and pulls granule data related to collection concept_id param
   # Uses param page number and gets set of 10 results starting from that page.
 
   def self.granule_list_from_collection(concept_id, page_num = 1)
@@ -488,28 +478,24 @@ class Cmr
         page_num = (granule_address / 10) + 1
         page_item = granule_address % 10
 
-        #cmr does not return a list if only one result
-        if total_granules > 1
-          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][page_item]
-        else
-          granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][0]
-        end
+        granule_data = Cmr.granule_list_from_collection(collection_concept_id, page_num)["items"][page_item]
         granule_data_list.push(granule_data)
       end
     end
     result_granule_list = []
-    # todo: process the list granule_data_list
+
+    # post process the granule_data_list
     granule_data_list.each do |granule_data|
       current_granule = Hash.new
       raw_format = granule_data['meta']['format']
       format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
+      current_granule['format'] = format_type
       if format_type == 'echo10'
-        current_granule = get_raw_granule_results_echo10(granule_data['meta']['concept-id'])
+        current_granule = get_raw_echo10_granule(granule_data['meta']['concept-id'])
       else
-        current_granule['concept-id'] = granule_data['meta']['concept-id']
         current_granule['concept_id'] = granule_data['meta']['concept-id']
         current_granule['revision_id'] = granule_data['meta']['revision-id']
-        gracurrent_granulenule_dict['Granule'] = granule_data['umm']
+        current_granule['Granule'] = granule_data['umm']
       end
       result_granule_list << current_granule
     end
@@ -527,7 +513,6 @@ class Cmr
   # ==== Method
   # Contacts the CMR system and uses the free text search API
   # parses the results and then returns a group of 10 to show in paginated results.
-
 
   def self.collection_search(free_text, provider_list, curr_page="1", page_size=10)
     search_iterator = []

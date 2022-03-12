@@ -18,11 +18,11 @@ class Granule < Metadata
     granules_to_save.each do |granule_data|
       #creating the granule and related record
       granule_object = Granule.new(concept_id: granule_data["concept_id"], collection: collection_object)
-      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]))
+      new_granule_record = Record.new(recordable: granule_object, revision_id: granule_data["revision_id"], daac: daac_from_concept_id(granule_data["concept_id"]), format: granule_data['format'])
 
       granule_record_data_list = []
 
-      flattened_granule_data = Cmr.get_granule(granule_data['concept_id'])
+      flattened_granule_data = Cmr.flatten_format_granule_data(granule_data["Granule"])
 
       #creating all the recordData values for the granule
       flattened_granule_data.each_with_index do |(key, value), i|
@@ -49,7 +49,7 @@ class Granule < Metadata
   # Otherwise, will return the granule_record.   I think it should return nil and test for it.
   # This is only being used in the legacy ingest
   def self.add_granule_by_concept_id(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
-    granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
+    granule_info = Cmr.get_granule_with_collection_id(granule_concept_id)
     collection   = Collection.find_by(concept_id: collection_concept_id)
 
     return false unless collection
@@ -80,7 +80,7 @@ class Granule < Metadata
 
   # Fetches the latest revision for the granule, creates a review of it, then returns the granule record.
   def self.add_new_revision_to_granule(collection_concept_id, granule, current_user = User.find_by(role: "admin"))
-    granule_info = Cmr.get_granule_with_collection_data(granule.concept_id)
+    granule_info = Cmr.get_granule_with_collection_id(granule.concept_id)
     collection = Collection.find_by(concept_id: collection_concept_id)
     return nil unless collection
 
@@ -110,7 +110,7 @@ class Granule < Metadata
   end
 
   def self.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
-    granule_info = Cmr.get_granule_with_collection_data(granule_concept_id)
+    granule_info = Cmr.get_granule_with_collection_id(granule_concept_id)
     collection = Collection.find_by(concept_id: collection_concept_id)
 
     if collection.nil?

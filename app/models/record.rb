@@ -143,6 +143,8 @@ class Record < ApplicationRecord
       self.extend(RecordFormats::UmmRecord)
     elsif self.format == "umm_json" and self.recordable_type == "Granule"
       self.extend(RecordFormats::UmmGRecord)
+    elsif self.recordable_type == "Granule"
+      self.extend(RecordFormats::Echo10Record)
     else
       self.extend(RecordFormats::Echo10Record)
     end
@@ -277,7 +279,7 @@ class Record < ApplicationRecord
   end
 
   def get_raw_data
-    collection? ? Cmr.get_raw_collection(concept_id) : Cmr.get_raw_granule(concept_id)
+    collection? ? Cmr.get_raw_collection(concept_id) : Cmr.get_raw_granule(concept_id)['Granule']
   end
 
   # ====Params
