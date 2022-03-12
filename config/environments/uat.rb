@@ -63,7 +63,7 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}  
+  config.action_mailer.default_url_options = {host: 'https://cmr-dashboard.uat.earthdata.nasa.gov'}
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -93,8 +93,8 @@ Rails.application.configure do
 
   config.mdq_enabled_feature_toggle = true
   config.python3_checks_feature_toggle = true
-
   config.email_preference_feature_toggle = true
+  config.filter_by_color_feature_toggle = ENV['filter_by_color_feature_toggle'] == '1'
   # This domain has been configured to pass DMARC authentication.  Changing to a
   # domain which has not been will cause gmail to reject our e-mails
   config.default_email_domain = 'earthdata.nasa.gov'

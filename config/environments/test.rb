@@ -5,7 +5,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
+
   config.cache_classes = true
 
   # Do not eager load code on boot. This avoids loading your whole application
@@ -59,6 +59,7 @@ Rails.application.configure do
 
   config.mdq_enabled_feature_toggle = true
   config.python3_checks_feature_toggle = true
+  config.filter_by_color_feature_toggle = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: '3000' }
   config.default_email_domain = 'earthdata.nasa.gov'

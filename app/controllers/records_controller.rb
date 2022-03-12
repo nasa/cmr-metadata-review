@@ -132,16 +132,21 @@ class RecordsController < ApplicationController
         end
       end
       # retrieve all collection records where it has granules with 'color_code'
+
+      granule_response_record_ids = Set.new
       if color_code_filter_granule
-        if response_record_ids.empty?
-          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
-        else
-          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+        granule_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
+        granule_record_ids.each do |granule_record_id|
+          granule = (Record.find_by id: granule_record_id).recordable
+          collection = Collection.find_by id: granule.collection_id
+          records = collection.records
+          records.each do |record|
+            granule_response_record_ids << record.id
+          end
         end
       end
-
       # only include records that are in either collection_records OR granule_records
-      response_record_ids = response_record_ids.intersection(collection_response_record_ids.union(granule_response_record_ids))
+      response_record_ids = response_record_ids.intersection(collection_response_record_ids.union(granule_response_record_ids.to_a))
     end
     response_record_ids
   end
