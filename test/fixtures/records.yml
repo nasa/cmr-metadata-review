@@ -7,7 +7,7 @@ first:
   state: "in_arc_review"
   format: "echo10"
   daac: PODAAC
-  
+
 granule:
   id: 5
   recordable_id: 1
@@ -16,7 +16,7 @@ granule:
   state: "in_arc_review"
   format: "echo10"
   daac: PODAAC
-  
+
 metric1:
   id: 10
   recordable_id: 2
@@ -24,7 +24,7 @@ metric1:
   revision_id: "8"
   format: "dif10"
   daac: PODAAC
-  
+
 metric2:
   id: 11
   recordable_id: 3
@@ -32,7 +32,8 @@ metric2:
   revision_id: "8"
   format: "dif10"
   daac: PODAAC
-  
+  state: "in_arc_review"
+
 in_daac_review:
   id: 12
   recordable_id: 1
@@ -106,7 +107,7 @@ copy_recommendations1:
   state: "open"
   format: "echo10"
   daac: PODAAC
-  
+
 copy_recommendations2:
   id: 21
   recordable_id: 1
@@ -115,7 +116,7 @@ copy_recommendations2:
   state: "open"
   format: "echo10"
   daac: PODAAC
-  
+
 digest_email_collection:
   id: 22
   recordable_id: 4
@@ -124,7 +125,7 @@ digest_email_collection:
   revision_id: 1
   released_to_daac_date: 2002-10-31 00:00:00 -0500
   daac: OB_DAAC
-  
+
 digest_email_granule:
   id: 23
   recordable_id: 2
@@ -133,7 +134,7 @@ digest_email_granule:
   revision_id: 1
   released_to_daac_date: 2002-10-31 00:00:00 -0500
   daac: OB_DAAC
-  
+
 digest_email_collection2:
   id: 24
   recordable_id: 4
@@ -183,7 +184,7 @@ mdq_enabled_collection4:
   state: in_daac_review
   revision_id: 1
   daac: PODAAC
-  
+
 campaign_collection1:
   id: 30
   recordable_id: 8
@@ -194,7 +195,7 @@ campaign_collection1:
   campaign:
     - TESTCAMP1
     - TESTCAMP2
-  
+
 campaign_collection2:
     id: 31
     recordable_id: 9
@@ -204,7 +205,7 @@ campaign_collection2:
     daac: PODAAC
     campaign:
       - TESTCAMP2
-  
+
 campaign_collection3:
     id: 32
     recordable_id: 10
@@ -214,7 +215,7 @@ campaign_collection3:
     daac: OB_DAAC
     campaign:
       - TESTCAMP1
-      
+
 campaign_collection4:
   id: 33
   recordable_id: 8
@@ -225,7 +226,7 @@ campaign_collection4:
   campaign:
     - TESTCAMP3
     - TESTCAMP4
-  
+
 campaign_collection5:
     id: 34
     recordable_id: 9
@@ -235,7 +236,7 @@ campaign_collection5:
     daac: PODAAC
     campaign:
       - TESTCAMP4
-  
+
 campaign_collection6:
     id: 35
     recordable_id: 10
@@ -245,7 +246,7 @@ campaign_collection6:
     daac: OB_DAAC
     campaign:
       - TESTCAMP3
-      
+
 campaign_collection7:
   id: 36
   recordable_id: 11
@@ -256,7 +257,7 @@ campaign_collection7:
   campaign:
     - TESTCAMP5
     - TESTCAMP6
-  
+
 campaign_collection8:
     id: 37
     recordable_id: 12
@@ -266,7 +267,7 @@ campaign_collection8:
     daac: SCIOPS
     campaign:
       - TESTCAMP6
-  
+
 campaign_collection9:
     id: 38
     recordable_id: 13
@@ -279,7 +280,7 @@ campaign_collection9:
 
 associated_granule_record:
   id: 39
-  recordable_id: 3
+  recordable_id: 4
   recordable_type: "Granule"
   revision_id: "1"
   state: "in_daac_review"
@@ -334,4 +335,3 @@ report_collection_record:
   native_format: "echo10"
   daac: OB_DAAC
 
-    

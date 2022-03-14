@@ -16,6 +16,7 @@ class CanShowCollectionsTest < SystemTestCase
       end
 
       it 'can see un-filtered records' do
+        assert has_content?('metric3-PODAAC')
         assert has_content?('C1000000020-LANCEAMSR2')
         assert has_content?('campaign_test_collection_1-PODAAC')
       end
