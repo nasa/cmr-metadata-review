@@ -184,7 +184,7 @@ class Cmr
   # then processes and returns the data
   # Automatically returns only the most recent revision of a collection
   # can add "&all_revisions=true" params to find specific revision
-  def self.get_collection(concept_id, data_format = "echo10")
+  def self.get_collection(concept_id, data_format)
     raw_collection = get_raw_collection(concept_id, data_format)
     format_collection(raw_collection, data_format)
   end
@@ -235,14 +235,14 @@ class Cmr
     format_collection(raw_collection, data_format)
   end
 
-  def self.format_collection(raw_collection, data_format = "echo10")
+  def self.format_collection(raw_collection, data_format)
     desired_fields = if data_format == "echo10"
        DesiredFields.instance.get_format_fields('echo10')
     elsif data_format == "dif10"
       DesiredFields.instance.get_format_fields('dif10')
-    elsif data_format == "umm_json" # todo: This needs attention, how to distinguish between ummc and ummg
+    elsif data_format == "umm_json"
       DesiredFields.instance.get_format_fields('ummc')
-    else
+   else
       []
     end
 
@@ -253,14 +253,18 @@ class Cmr
   end
 
   def self.get_granule_with_collection_id(concept_id)
-    granule_data            = get_raw_granule(concept_id)
-    granule_data["Granule"] = flatten_format_granule_data(granule_data["Granule"])
+    granule_data            = get_raw_granule_info(concept_id)
+    granule_data["Granule"] = flatten_format_granule_data(granule_data["Granule"], granule_data['format_type'])
     granule_data
   end
 
-  def self.flatten_format_granule_data(granule_raw_data)
+  def self.flatten_format_granule_data(granule_raw_data, format)
     results_hash = flatten_collection(granule_raw_data)
-    add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
+    if format == 'echo10'
+      add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
+    else
+      add_required_fields(results_hash, DesiredFields.instance.get_format_fields('ummg'))
+    end
   end
 
   # ====Params
@@ -298,7 +302,7 @@ class Cmr
   # returns the response hash without processing
   # need the raw return format to run automated scripts against
 
-  def self.get_raw_collection(concept_id, type = "echo10")
+  def self.get_raw_collection(concept_id, type)
     url  = Cmr.api_url("collections", type, {"concept_id" => concept_id})
     data = Cmr.cmr_request(url).parsed_response
 
@@ -346,7 +350,7 @@ class Cmr
   # See Collection::INCLUDE_GRANULE_FORMATS
 
   # Given a granule concept id, it will pull all revisions and return the latest granule revision.
-  def self.get_raw_granule(concept_id)
+  def self.get_raw_granule_info(concept_id)
     url = Cmr.api_url("granules", "umm_json", {"concept_id" => concept_id})
     granule_json_str = Cmr.cmr_request(url).parsed_response
     granule_dict = JSON.parse(granule_json_str)
@@ -358,13 +362,12 @@ class Cmr
     format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
 
     if format_type == 'echo10'
-      echo10_granule = get_raw_echo10_granule(concept_id)
+      echo10_granule = get_raw_echo10_granule_info(concept_id)
       echo10_granule['format_type'] = 'echo10'
       return echo10_granule
     else
       granule_dict = granule_dict['items'][0]
       granule_dict['format_type'] = format_type
-      granule_dict['concept-id'] = granule_dict['meta']['concept-id']
       granule_dict['concept_id'] = granule_dict['meta']['concept-id']
       granule_dict['revision_id'] = granule_dict['meta']['revision-id']
       granule_dict['Granule'] = granule_dict['umm']
@@ -373,7 +376,7 @@ class Cmr
     granule_dict
   end
 
-  def self.get_raw_echo10_granule(concept_id)
+  def self.get_raw_echo10_granule_info(concept_id)
     url = Cmr.api_url("granules", "echo10", {"concept_id" => concept_id})
     granule_xml = Cmr.cmr_request(url).parsed_response
     granule_xml = convert_to_hash("echo10", granule_xml)
@@ -489,9 +492,9 @@ class Cmr
       current_granule = Hash.new
       raw_format = granule_data['meta']['format']
       format_type = raw_format == 'application/vnd.nasa.cmr.umm+json' ? 'umm_json' : 'echo10'
-      current_granule['format'] = format_type
+      current_granule['format_type'] = format_type
       if format_type == 'echo10'
-        current_granule = get_raw_echo10_granule(granule_data['meta']['concept-id'])
+        current_granule = get_raw_echo10_granule_info(granule_data['meta']['concept-id'])
       else
         current_granule['concept_id'] = granule_data['meta']['concept-id']
         current_granule['revision_id'] = granule_data['meta']['revision-id']

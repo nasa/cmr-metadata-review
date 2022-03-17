@@ -139,12 +139,14 @@ class Record < ApplicationRecord
   def load_format_module
     if self.format == "dif10"
       self.extend(RecordFormats::Dif10Record)
-    elsif self.format == "umm_json" and self.recordable_type == "Collection"
-      self.extend(RecordFormats::UmmRecord)
-    elsif self.format == "umm_json" and self.recordable_type == "Granule"
-      self.extend(RecordFormats::UmmGRecord)
-    elsif self.recordable_type == "Granule"
+    elsif self.format == "echo10" and self.recordable_type == 'Collection'
       self.extend(RecordFormats::Echo10Record)
+    elsif self.format == 'echo10' and self.recordable_type == "Granule"
+      self.extend(RecordFormats::Echo10Record)
+    elsif self.format == "umm_json" and self.recordable_type == 'Collection'
+      self.extend(RecordFormats::UmmRecord)
+    elsif self.format == "umm_json" and self.recordable_type == 'Granule'
+      self.extend(RecordFormats::UmmGRecord)
     else
       self.extend(RecordFormats::Echo10Record)
     end
@@ -278,8 +280,8 @@ class Record < ApplicationRecord
     end
   end
 
-  def get_raw_data
-    collection? ? Cmr.get_raw_collection(concept_id) : Cmr.get_raw_granule(concept_id)['Granule']
+  def get_raw_data(format)
+    collection? ? Cmr.get_raw_collection(concept_id, format) : Cmr.get_raw_granule_info(concept_id)['Granule']
   end
 
   # ====Params
