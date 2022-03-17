@@ -2,7 +2,12 @@ first:
   id: 1
   concept_id: "G309210-GHRC"
   collection_id: 1
-  
+
+forth:
+  id: 4
+  concept_id: "G309211-GHRC"
+  collection_id: 3
+
 daac_curator_mailer_granule:
   id: 2
   concept_id: "G309210-OB_DAAC"

@@ -118,24 +118,35 @@ class RecordsController < ApplicationController
       granule_response_record_ids = []
 
       # retrieve all collection records with 'color_code'
+
+      color_query = "record_data.color = '#{color_code}'"
+      if color_code == 'any'
+        color_query = "(record_data.color = 'red' or record_data.color = 'yellow' or record_data.color = 'blue')"
+      end
+
       if color_code_filter_collection
         if response_record_ids.empty?
-          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection'").rows.map {|array|array[0]}
+          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection'").rows.map {|array|array[0]}
         else
-          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+          collection_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format  from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Collection' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
         end
       end
       # retrieve all collection records where it has granules with 'color_code'
+
+      granule_response_record_ids = Set.new
       if color_code_filter_granule
-        if response_record_ids.empty?
-          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
-        else
-          granule_response_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and record_data.color = '#{color_code}' and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule' and records.id in (#{response_record_ids.join(",")})").rows.map {|array|array[0]}
+        granule_record_ids = ActiveRecord::Base.connection.exec_query("select distinct records.id, records.format from records, record_data where records.id = record_data.record_id and #{color_query} and (records.state != 'closed' and records.state != 'finished') and records.recordable_type = 'Granule'").rows.map {|array|array[0]}
+        granule_record_ids.each do |granule_record_id|
+          granule = (Record.find_by id: granule_record_id).recordable
+          collection = Collection.find_by id: granule.collection_id
+          records = collection.records
+          records.each do |record|
+            granule_response_record_ids << record.id
+          end
         end
       end
-
       # only include records that are in either collection_records OR granule_records
-      response_record_ids = collection_response_record_ids.union(granule_response_record_ids)
+      response_record_ids = response_record_ids.intersection(collection_response_record_ids.union(granule_response_record_ids.to_a))
     end
     response_record_ids
   end
@@ -457,7 +468,7 @@ class RecordsController < ApplicationController
   end
 
   def get_color_code(color_code)
-    %w[gray yellow green red blue].include?(color_code) || color_code=='' ? color_code : nil
+    %w[gray yellow green red blue any].include?(color_code) || color_code=='' ? color_code : nil
   end
 
   def get_bool(value, default)
