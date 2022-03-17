@@ -61,7 +61,7 @@
         <a class="format_link" href="<%= record.umm_json_link %>" download>UMM-JSON</a> |
         <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a></p>
     <% else %>
-      <p>FORMAT : GRANULE</p>
+      <p>FORMAT : GRANULE <%= record.format == 'umm_json' ? 'umm-g' : 'echo10' %></p>
       <p class="format_links">SOURCE FILES : <a class="format_link" href="<%= record.native_link %>" download>NATIVE</a>
       </p>
     <% end %>
