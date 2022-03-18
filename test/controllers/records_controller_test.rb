@@ -295,7 +295,7 @@ class RecordsControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('search_collections.atom_C1000000020-LANCEAMSR2.xml'), headers: {})
 
-      stub_request(:get, 'https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1000000020-LANCEAMSR2').
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm_json?concept_id=C1000000020-LANCEAMSR2").
         with(
           headers: {
             'Accept'=>'*/*',

@@ -41,7 +41,7 @@ class RecordTest < ActiveSupport::TestCase
     it "adds script results and can return them on command" do
       record = Record.find_by id: 1
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
+      stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -63,7 +63,7 @@ class RecordTest < ActiveSupport::TestCase
     it "returns correct bubble map" do
       record = Record.find_by id: 1
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
+      stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -229,7 +229,7 @@ class RecordTest < ActiveSupport::TestCase
       # #URL is removed to prevent this test fails when it is broken link
       comment_hash.delete("OnlineAccessURLs/OnlineAccessURL/URL")
       comment_hash.delete("OnlineResources/OnlineResource/URL")
-      expect_str = %q{{"Campaigns/"=>"OK", "Collection/DataSetId"=>"np - Ensure that the ShortName and VersionId fields are provided.", "Collection/ShortName"=>"np - Ensure the DataSetId field is provided.", "Collection/VersionId"=>"np - Ensure the DataSetId field is provided.", "DataFormat"=>"Recommend providing the data format for the associated granule", "DataGranule/DayNightFlag"=>"np", "DataGranule/ProductionDateTime"=>"np", "DataGranule/SizeMBDataGranule"=>"Granule file size not provided. Recommend providing a value for this field in the metadata", "DeleteTime"=>"np", "InsertTime"=>"InsertTime error.", "LastUpdate"=>"np", "OnlineAccessURLs/OnlineAccessURL/URLDescription"=>"OK - quality check", "OnlineResource/OnlineResource/Description"=>"np", "OnlineResources/OnlineResource/Type"=>"np", "OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime"=>"np", "Orderable"=>"Note: The Orderable field is being deprecated in UMM.", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName"=>"np", "Platforms/Platform/Instruments/Instrument/ShortName"=>"OK- quality check", "Platforms/Platform/ShortName"=>"OK - quality check", "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle"=>"OK - quality check, OK - quality check, OK - quality check, OK - quality check, ", "Temporal/RangeDateTime/BeginningDateTime"=>"BeginningDateTime error", "Temporal/RangeDateTime/EndingDateTime"=>"EndingDateTime error", "Temporal/RangeDateTime/SingleDateTime"=>"np", "Visible"=>"Note: The Visible field is being deprecated in UMM."}}
+      expect_str = %q{{"Campaigns/"=>"OK", "Collection/DataSetId"=>"np - Ensure that the ShortName and VersionId fields are provided.", "Collection/ShortName"=>"np - Ensure the DataSetId field is provided.", "Collection/VersionId"=>"np - Ensure the DataSetId field is provided.", "DataFormat"=>"Recommend providing the data format for the associated granule", "DataGranule/DayNightFlag"=>"np", "DataGranule/ProductionDateTime"=>"np", "DataGranule/SizeMBDataGranule"=>"Granule file size not provided. Recommend providing a value for this field in the metadata", "DeleteTime"=>"np", "InsertTime"=>"InsertTime error.", "LastUpdate"=>"np", "OnlineAccessURLs/OnlineAccessURL/URLDescription"=>"OK - quality check", "OnlineResource/OnlineResource/Description"=>"np", "OnlineResources/OnlineResource/Type"=>"np", "OrbitCalculatedSpatialDomains/OrbitCalculatedSpatialDomain/EquatorCrossingDateTime"=>"np", "Orderable"=>"Note: The Orderable field is being deprecated in UMM.", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName"=>"np", "Platforms/Platform/Instruments/Instrument/ShortName"=>"OK- quality check", "Platforms/Platform/ShortName"=>"NOT APPLICABLE: incorrect keyword order", "Spatial/HorizontalSpatialDomain/Geometry/BoundingRectangle"=>"OK - quality check, OK - quality check, OK - quality check, OK - quality check, ", "Temporal/RangeDateTime/BeginningDateTime"=>"BeginningDateTime error", "Temporal/RangeDateTime/EndingDateTime"=>"EndingDateTime error", "Temporal/RangeDateTime/SingleDateTime"=>"np", "Visible"=>"Note: The Visible field is being deprecated in UMM."}}
       assert_equal(expect_str, comment_hash.to_s)
     end
 

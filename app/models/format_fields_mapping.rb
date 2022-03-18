@@ -2,7 +2,7 @@ class FormatFieldsMapping
   include Singleton
   def initialize
     @format_fields_dict = {}
-    @formats = %w(ummc dif10 echo10 echo10_granule)
+    @formats = %w(ummc ummg dif10 echo10 echo10_granule)
     @formats.each do |format|
       csv_path = File.join(Rails.root, get_csv_file(format))
       csv_list = CSV.read(csv_path)
