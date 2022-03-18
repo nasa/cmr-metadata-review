@@ -15,7 +15,7 @@ class CollectionsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=ORNL_CLOUD").
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=ORNL_CLOUD").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -48,6 +48,14 @@ class CollectionsControllerTest < ActionController::TestCase
 
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
 
       get :show, params: { id: 1, record_id: 1 }
       collection_records = assigns(:collection_records)
@@ -71,6 +79,14 @@ class CollectionsControllerTest < ActionController::TestCase
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
     #stubbing all requests for raw_data
+    stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: '{"hits" : 0,"took" : 105,"items" : []}', headers: {})
     stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
     stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
@@ -105,7 +121,14 @@ class CollectionsControllerTest < ActionController::TestCase
 
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
-
+    stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
     get :show, params: { id: 1, record_id: 1 }
     assert_select '.import_new_revision', count: 4
   end
@@ -124,12 +147,36 @@ describe "POST #create" do
 
       #Since a granule is chosen at random, a full mock can not be used.
       #in this instance, we return a set collection of results for any call using this concept id and granule keyword.
-      stub_request(:get, /.*granules.*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
-
+      stub_request(:get, /.*granules.echo10*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, /.*granules.umm_json*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.json"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=1&page_size=10").
+          with(
+            headers: {
+                  'Accept'=>'*/*',
+                  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                  'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G309203-GHRC.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G309203-GHRC.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G309203-GHRC.json"), headers: {})
       #stubbing the granule raw look up
       stub_request(:get, /.*granules.echo10\?concept_id=G.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G226250-GHRC.xml"), :headers => {"date"=>["Tue, 14 Mar 2017 19:36:02 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["26"], "cmr-request-id"=>["46ad6de7-598a-463e-99e0-2a22ddf651da"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
 
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C222702-GHRC.echo10").
+      stub_request(:get, "#{@cmr_base_url}/search/concepts/C222702-GHRC.echo10").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -137,6 +184,15 @@ describe "POST #create" do
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("C222702-GHRC_echo10.xml"), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G226250-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.json"), headers: {})
+
 
 
       #Making sure record does not exist before ingest
@@ -158,7 +214,31 @@ describe "POST #create" do
       # collection with umm-json can be saved to system. see ticket CMRARC-480
       stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
-      stub_request(:get, /.*granules.*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
+      stub_request(:get, /.*granules.echo10*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_size=10&page_num=1").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_num=3&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C190733714-LPDAAC_ECS&page_num=2&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
       post :create, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
       assert_equal("302", response.code)
       assert_equal(1, (Collection.where concept_id: "C190733714-LPDAAC_ECS").length)
@@ -210,6 +290,14 @@ describe "POST #create" do
                                 "vary"=>["Accept-Encoding, User-Agent"],
                                 "connection"=>["close"],
                                 "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_collection_C1599780765-NSIDC_ECS.json"), headers: {})
 
       # stub for pulling a random granule
       stub_request(:get, /.*granules.echo10\?concept_id=G.*/)
@@ -226,10 +314,33 @@ describe "POST #create" do
                                 "server"=>["Jetty(9.2.z-SNAPSHOT)"],
                                 "strict-transport-security"=>["max-age=31536000"]})
 
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?collection_concept_id=C1599780765-NSIDC_ECS&page_size=10&page_num=1").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_C1599780765-NSIDC_ECS.json'), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?collection_concept_id=C1599780765-NSIDC_ECS&page_num=1&page_size=10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
 
-      stub_request(:get, /.*granules.*C1599780765-NSIDC_ECS.*/)
+          }).
+        to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
+      stub_request(:get, /.*granules.echo10*C1599780765-NSIDC_ECS.*/)
         .with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', })
         .to_return(status: 200, body: get_stub("search_granules_by_collection_C1599780765-NSIDC_ECS.xml"), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.umm_json?concept_id=G1599790933-NSIDC_ECS").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_granules_G1599790933-NSIDC_ECS.json"), headers: {})
 
       post :create, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
 

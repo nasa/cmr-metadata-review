@@ -44,7 +44,7 @@ class AclDaoTest < ActiveSupport::TestCase
     end
 
     it 'tests retrieving acls as daac curator' do
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/access-control/acls/ACL1200303063-CMR").
+      stub_request(:get, "#{@cmr_base_url}/access-control/acls/ACL1200303063-CMR").
         with(
           headers: {
             'Accept' => '*/*',

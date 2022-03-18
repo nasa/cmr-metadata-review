@@ -56,7 +56,7 @@ module RecordFormats
 
     def create_script(raw_data = nil)
       if raw_data.nil?
-        raw_data = get_raw_data
+        raw_data = get_raw_data('echo10')
       end
       comment_hash = self.evaluate_script(raw_data)
       score = score_script_hash(comment_hash)
@@ -81,7 +81,7 @@ module RecordFormats
 
     def evaluate_script(raw_data = nil)
       if raw_data.nil?
-        raw_data = get_raw_data
+        raw_data = get_raw_data('echo10')
       end
 
       remove_quotes_from_all_values!(raw_data)

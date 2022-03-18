@@ -1,0 +1,102 @@
+{
+  "hits" : 1,
+  "took" : 146,
+  "items" : [ {
+    "meta" : {
+      "concept-type" : "granule",
+      "concept-id" : "G1581545525-LANCEAMSR2",
+      "revision-id" : 15,
+      "native-id" : "ersst.v5.185401",
+      "provider-id" : "POCLOUD",
+      "format" : "application/vnd.nasa.cmr.umm+json",
+      "revision-date" : "2021-11-17T17:46:08.510Z"
+    },
+    "umm" : {
+      "TemporalExtent" : {
+        "RangeDateTime" : {
+          "EndingDateTime" : "1854-02-01T00:00:00.000Z",
+          "BeginningDateTime" : "1854-01-01T00:00:00.000Z"
+        }
+      },
+      "MetadataSpecification" : {
+        "URL" : "https://cdn.earthdata.nasa.gov/umm/granule/v1.6.4",
+        "Name" : "UMM-G",
+        "Version" : "1.6.4"
+      },
+      "GranuleUR" : "AMSR_2_L3_DailySnow_P00_20190102.he5",
+      "ProviderDates" : [ {
+        "Type" : "Insert",
+        "Date" : "2021-09-14T15:58:40.058Z"
+      }, {
+        "Type" : "Update",
+        "Date" : "2021-09-14T15:58:40.059Z"
+      } ],
+      "SpatialExtent" : {
+        "HorizontalSpatialDomain" : {
+          "Geometry" : {
+            "BoundingRectangles" : [ {
+              "WestBoundingCoordinate" : -1,
+              "SouthBoundingCoordinate" : -89,
+              "EastBoundingCoordinate" : 180,
+              "NorthBoundingCoordinate" : 89
+            }, {
+              "WestBoundingCoordinate" : -180,
+              "SouthBoundingCoordinate" : -89,
+              "EastBoundingCoordinate" : -1,
+              "NorthBoundingCoordinate" : 89
+            } ]
+          }
+        }
+      },
+      "DataGranule" : {
+        "ArchiveAndDistributionInformation" : [ {
+          "SizeUnit" : "MB",
+          "Size" : 0.1017465591430664,
+          "Checksum" : {
+            "Value" : "6cd118b292d37035f54ba7fd9e3a35d6",
+            "Algorithm" : "MD5"
+          },
+          "SizeInBytes" : 106689,
+          "Name" : "ersst.v5.185401.nc"
+        }, {
+          "SizeUnit" : "MB",
+          "Size" : 4.9591064453125E-5,
+          "Checksum" : {
+            "Value" : "7e91a4ac007833fde6550f45f4f72fe6",
+            "Algorithm" : "MD5"
+          },
+          "SizeInBytes" : 52,
+          "Name" : "ersst.v5.185401.nc.md5"
+        } ],
+        "DayNightFlag" : "Unspecified",
+        "ProductionDateTime" : "2017-06-30T12:18:00.000Z"
+      },
+      "CollectionReference" : {
+        "Version" : "0",
+        "ShortName" : "A2_DySno_NRT"
+      },
+      "RelatedUrls" : [ {
+        "URL" : "s3://podaac-ops-cumulus-protected/REYNOLDS_NCDC_L4_MONTHLY_V5/ersst.v5.185401.nc",
+        "Type" : "GET DATA VIA DIRECT ACCESS",
+        "Description" : "This link provides direct download access via S3 to the granule."
+      }, {
+        "URL" : "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/REYNOLDS_NCDC_L4_MONTHLY_V5/ersst.v5.185401.nc.md5",
+        "Description" : "Download ersst.v5.185401.nc.md5",
+        "Type" : "EXTENDED METADATA"
+      }, {
+        "URL" : "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/REYNOLDS_NCDC_L4_MONTHLY_V5/ersst.v5.185401.nc",
+        "Description" : "Download ersst.v5.185401.nc",
+        "Type" : "GET DATA"
+      }, {
+        "URL" : "https://archive.podaac.earthdata.nasa.gov/s3credentials",
+        "Description" : "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+        "Type" : "VIEW RELATED INFORMATION"
+      }, {
+        "URL" : "https://opendap.earthdata.nasa.gov/collections/C2036878116-POCLOUD/granules/ersst.v5.185401",
+        "Type" : "USE SERVICE API",
+        "Subtype" : "OPENDAP DATA",
+        "Description" : "OPeNDAP request URL"
+      } ]
+    }
+  } ]
+}

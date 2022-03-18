@@ -1,4 +1,4 @@
-module RecordHelper
+module  RecordHelper
 
 
   # If the specified string contains a quote (") will remove it from the string
