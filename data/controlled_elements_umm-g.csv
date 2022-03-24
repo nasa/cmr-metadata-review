@@ -5,12 +5,12 @@ DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Format,"GCMD Keywo
 Only values in the ""Short_Name"" column."
 DataGranuleType/ArchiveAndDistributionInformation/FilePackage/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
+DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
 Only values in the ""Short_Name"" column."
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/FormatType,"UMM-G JSON schema ""FormatType"" enum = [""Native"", ""Supported"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/File/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
+DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/FormatType,"UMM-G JSON schema ""FormatType"" enum = [""Native"", ""Supported"", ""NA""]"
+DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
+DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
 DataGranuleType/ArchiveAndDistributionInformation/File/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
 DataGranuleType/ArchiveAndDistributionInformation/File/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
 Only values in the ""Short_Name"" column."
@@ -46,11 +46,11 @@ NativeProjectionNames,"UMM-G JSON schema ""ProjectionNameType"" enum = [""Geogra
 MetadataSpecification/URL,"UMM-G JSON schema ""URL"" enum = [""https://cdn.earthdata.nasa.gov/umm/granule/v1.6.1""]"
 MetadataSpecification/Name,"UMM-G JSON schema ""Name"" enum = [""UMM-G""]"
 MetadataSpecification/Version,"UMM-G JSON schema ""Version"" enum = [""1.6.1""]"
-Platforms/Platform/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
+Platforms/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
 Only values from the ""Short_Name"" column."
-Platforms/Platform/Instruments/Instrument/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Platforms/Instruments/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
 Only values from the ""Short_Name"" column."
-Platforms/Platform/Instruments/Instrument/ComposedOf/Instruments/Instrument/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Platforms/Instruments/ComposedOf/Instruments/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
 Only values from the ""Short_Name"" column."
-Projects/Project/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
+Projects/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
 Only values from the ""Short_Name"" column."
