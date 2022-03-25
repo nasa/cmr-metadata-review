@@ -1,31 +1,22 @@
 Field,Description
 ProviderDates/Type,"UMM-G JSON schema ProviderDateTypeEnum = [""Create"", ""Insert"", ""Update"", ""Delete""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+DataGranule/ArchiveAndDistributionInformation/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
+DataGranule/ArchiveAndDistributionInformation/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
 Only values in the ""Short_Name"" column."
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
+DataGranule/ArchiveAndDistributionInformation/FormatType,"UMM-G JSON schema ""FormatType"" enum = [""Native"", ""Supported"", ""NA""]"
+DataGranule/ArchiveAndDistributionInformation/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
+DataGranule/ArchiveAndDistributionInformation/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
+DataGranule/ArchiveAndDistributionInformation/Files/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
+DataGranule/ArchiveAndDistributionInformation/Files/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
 Only values in the ""Short_Name"" column."
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/FormatType,"UMM-G JSON schema ""FormatType"" enum = [""Native"", ""Supported"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
-DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
-DataGranuleType/ArchiveAndDistributionInformation/File/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/File/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
-DataGranuleType/ArchiveAndDistributionInformation/File/FormatType,"UMM-G JSON schema ""FormatType"" enum = [""Native"", ""Supported"", ""NA""]"
-DataGranuleType/ArchiveAndDistributionInformation/File/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
-DataGranuleType/ArchiveAndDistributionInformation/File/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
-DataGranuleType/DayNightFlag,"UMM-G JSON schema ""DayNightFlag"" enum = [""Day"", ""Night"", ""Both"", ""Unspecified""]"
-DataGranuleType/Identifiers/IdentifierType,"UMM-G JSON schema ""IdentifierType"" enum = [""ProducerGranuleId"", ""LocalVersionId"", ""FeatureId"", ""CRID""]"
-DataGranuleType/Identifiers/IdentifierType,"UMM-G JSON schema ""IdentifierType"" enum = [""Other""]"
+DataGranule/ArchiveAndDistributionInformation/Files/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
+DataGranule/ArchiveAndDistributionInformation/Files/Checksum/Algorithm,"UMM-G JSON schema ""Algorithm"" enum = [""Adler-32"", ""BSD checksum"", ""Fletcher-32"", ""Fletcher-64"", ""MD5"", ""POSIX"", ""SHA-1"", ""SHA-2"", ""SHA-256"", ""SHA-384"", ""SHA-512"", ""SM3"", ""SYSV""]"
+DataGranule/DayNightFlag,"UMM-G JSON schema ""DayNightFlag"" enum = [""Day"", ""Night"", ""Both"", ""Unspecified""]"
+DataGranule/Identifiers/IdentifierType,"UMM-G JSON schema ""IdentifierType"" enum = [""ProducerGranuleId"", ""LocalVersionId"", ""FeatureId"", ""CRID"", ""Other""]"
 SpatialExtent/HorizontalSpatialDomain/Orbit/StartDirection,"UMM-G JSON schema OrbitDirectionTypeEnum = [""A"", ""D""]
-
 A = Ascending
 D = Descending"
 SpatialExtent/HorizontalSpatialDomain/Orbit/EndDirection,"UMM-G JSON schema OrbitDirectionTypeEnum = [""A"", ""D""]
-
 A = Ascending
 D = Descending"
 SpatialExtent/VerticalSpatialDomains/Type,"UMM-G JSON schema VerticalSpatialDomainTypeEnum = [""Atmosphere Layer"",""Pressure"", ""Altitude"", ""Depth""]"
@@ -43,14 +34,18 @@ Only values in the ""Short_Name"" column."
 RelatedUrls/MimeType,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 RelatedUrls/SizeUnit,"UMM-G JSON schema FileSizeUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
 NativeProjectionNames,"UMM-G JSON schema ""ProjectionNameType"" enum = [""Geographic"", ""Mercator"", ""Spherical Mercator"", ""Space Oblique Mercator"", ""Universal Transverse Mercator"", ""Military Grid Reference"", ""MODIS Sinusoidal System"", ""Sinusoidal"", ""Lambert Equal Area"", ""NSIDC EASE Grid North and South (Lambert EA)"", ""NSIDC EASE Grid Global"", ""EASE Grid 2.0 N. Polar"", ""Plate Carree"", ""Polar Stereographic"", ""WELD Albers Equal Area"", ""Canadian Albers Equal Area Conic"", ""Lambert Conformal Conic"", ""State Plane Coordinates"", ""Albers Equal Area Conic"", ""Transverse Mercator"", ""Lambert Azimuthal Equal Area"", ""UTM Northern Hemisphere"", ""NAD83 / UTM zone 17N"", ""UTM Southern Hemisphere"", ""Cylindrical""]"
-MetadataSpecification/URL,"UMM-G JSON schema ""URL"" enum = [""https://cdn.earthdata.nasa.gov/umm/granule/v1.6.1""]"
+MetadataSpecification/URL,"UMM-G JSON schema ""URL"" enum. 
+Varies depending on the version used. 
+Here's an example for v1.6.1 = [""https://cdn.earthdata.nasa.gov/umm/granule/v1.6.1""]"
 MetadataSpecification/Name,"UMM-G JSON schema ""Name"" enum = [""UMM-G""]"
-MetadataSpecification/Version,"UMM-G JSON schema ""Version"" enum = [""1.6.1""]"
+MetadataSpecification/Version,"UMM-G JSON schema ""Version"" enum.
+Varies depending on the version used.
+Here's an example for v1.6.1 = [""1.6.1""]"
 Platforms/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
 Only values from the ""Short_Name"" column."
 Platforms/Instruments/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
 Only values from the ""Short_Name"" column."
-Platforms/Instruments/ComposedOf/Instruments/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
+Platforms/Instruments/ComposedOf/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
 Only values from the ""Short_Name"" column."
 Projects/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
 Only values from the ""Short_Name"" column."
