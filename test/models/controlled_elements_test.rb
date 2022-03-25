@@ -27,8 +27,8 @@ class ControlledElementsTest < ActiveSupport::TestCase
     it "can return proper description given specified field for umm-g json" do
       controlled_elements = ControlledElements.instance
       map = controlled_elements.mapping("umm-g")
-      value = map["DataGranuleType/ArchiveAndDistributionInformation/FilePackage/Files/FormatType"]
-      assert_includes(value,'UMM-G JSON schema "FormatType" enum = ["Native", "Supported", "NA"]')
+      value = map["DataGranule/Identifiers/IdentifierType"]
+      assert_includes(value,'UMM-G JSON schema ')
     end
 
   end
