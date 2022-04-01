@@ -97,6 +97,9 @@ module RecordFormats
             file << raw_data
             file.flush
             script_results = `lib/dashboard_checker.sh #{file.path} echo10`
+            pos = script_results.index('{')
+            script_results = script_results.slice(pos..)
+
             new_results = ""
             script_results.each_line do |line|
               unless line.start_with? "Downloading "
