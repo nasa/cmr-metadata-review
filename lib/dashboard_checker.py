@@ -5,6 +5,7 @@ import xmltodict
 import sys
 import json
 
+# Uses pyQuARC 1.1.5
 sys.path.append('lib/pyQuARC.egg')
 from pyQuARC import ARC
 
