@@ -91,5 +91,7 @@ if __name__ == "__main__":
         errors = error["errors"]
         for field_path in errors.keys():
             parse_checks(field_path, errors, result)
-    print(json.dumps(result))
+    out = open(file+'.out', 'w')
+    out.write(json.dumps(result))
+    out.close()
 
