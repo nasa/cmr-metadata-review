@@ -96,18 +96,10 @@ module RecordFormats
             raw_data = get_raw_concept(concept_id, "echo10")
             file << raw_data
             file.flush
-            script_results = `lib/dashboard_checker.sh #{file.path} echo10`
-            pos = script_results.index('{')
-            script_results = script_results.slice(pos..)
-
-            new_results = ""
-            script_results.each_line do |line|
-              unless line.start_with? "Downloading "
-                new_results << line
-                new_results << "\n"
-              end
-            end
-            script_results = new_results
+            output = `lib/dashboard_checker.sh #{file.path} echo10`
+            Rails.logger.info("Results of running dashboard checker for #{short_name}: #{output}")
+            script_results = File.read(file.path+'.out')
+            File.delete(file.path+'.out')
           else
             file << record_json
             file.flush
@@ -118,7 +110,7 @@ module RecordFormats
         Tempfile.create do |file|
           file << record_json
           file.flush
-          script_results = `python2 -W ignore lib/GranuleChecker.py #{file.path}`
+          script_results = `lib/granule_checker.sh #{file.path}`
         end
       end
 
