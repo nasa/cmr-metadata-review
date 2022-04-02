@@ -80,7 +80,7 @@ class Granule < Metadata
   private
 
   def self.create_granule(granule, current_user, granule_info)
-    granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), format: granule_info['format_type'])
+    granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), format: granule_info['format_type'], native_format: granule_info['format_type'])
     granule_record_data_list = []
     flattened_granule_data = Cmr.flatten_format_granule_data(granule_info["Granule"], granule_info['format_type'])
 

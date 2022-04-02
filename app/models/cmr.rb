@@ -495,6 +495,7 @@ class Cmr
       current_granule['format_type'] = format_type
       if format_type == 'echo10'
         current_granule = get_raw_echo10_granule_info(granule_data['meta']['concept-id'])
+        current_granule['format_type'] = 'echo10'
       else
         current_granule['concept_id'] = granule_data['meta']['concept-id']
         current_granule['revision_id'] = granule_data['meta']['revision-id']
