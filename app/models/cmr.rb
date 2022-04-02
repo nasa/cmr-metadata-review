@@ -237,19 +237,31 @@ class Cmr
 
   def self.format_collection(raw_collection, data_format)
     desired_fields = if data_format == "echo10"
-       DesiredFields.instance.get_format_fields('echo10')
-    elsif data_format == "dif10"
-      DesiredFields.instance.get_format_fields('dif10')
-    elsif data_format == "umm_json"
-      DesiredFields.instance.get_format_fields('ummc')
-   else
-      []
-    end
+                       DesiredFields.instance.get_format_fields('echo10')
+                     elsif data_format == "dif10"
+                       DesiredFields.instance.get_format_fields('dif10')
+                     elsif data_format == "umm_json"
+                       DesiredFields.instance.get_format_fields('ummc')
+                     else
+                       []
+                     end
+
+    required_fields = if data_format == "echo10"
+                       RequiredFields.instance.get_format_fields('echo10')
+                     elsif data_format == "dif10"
+                       RequiredFields.instance.get_format_fields('dif10')
+                     elsif data_format == "umm_json"
+                       RequiredFields.instance.get_format_fields('ummc')
+                     else
+                       []
+                     end
 
     results_hash   = flatten_collection(raw_collection)
     # Dif10 records come in with some uneeded header values
     results_hash = Cmr.remove_header_values(results_hash)
     add_required_fields(results_hash, desired_fields)
+    add_required_fields(results_hash, required_fields)
+
   end
 
   def self.get_granule_with_collection_id(concept_id)
@@ -262,8 +274,10 @@ class Cmr
     results_hash = flatten_collection(granule_raw_data)
     if format == 'echo10'
       add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
+      add_required_fields(results_hash, RequiredFields.instance.get_format_fields('echo10_granule'))
     else
       add_required_fields(results_hash, DesiredFields.instance.get_format_fields('ummg'))
+      add_required_fields(results_hash, RequiredFields.instance.get_format_fields('ummg'))
     end
   end
 
