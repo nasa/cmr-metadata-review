@@ -86,6 +86,7 @@ class CollectionsController < ApplicationController
     @granule_count = 0
     @concept_id = params["concept_id"]
     @revision_id = params["revision_id"]
+    @version = params["version_id"]
     @already_ingested = Collection.record_exists?(@concept_id, @revision_id)
     if @already_ingested
       @cmr_update = (Collection.find_by concept_id: @concept_id).update?
