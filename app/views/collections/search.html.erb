@@ -48,6 +48,7 @@
                     <th>Concept_ID</th>
                     <th>Revision_ID</th>
                     <th>ShortName</th>
+                    <th>Version</th>
                     <th>Selection</th>
                 </tr>
 
@@ -59,7 +60,8 @@
                     <td id="concept<%= index.to_s %>"><%= result["concept_id"] %></td>
                     <td id="revision<%= index.to_s %>"><%= result["revision_id"] %></td>
                     <td><%= result["Collection"]["ShortName"] %></td>
-                    <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
+                    <td id="version<%= index.to_s %>"><%= result["Collection"]["VersionId"] %></td>
+                  <td><input type="radio" id="search<%= index.to_s %>" name="searchSelection" value="<%= index.to_s %>"/></td>
                 </tr>
               <% end %>
             </table>
@@ -69,6 +71,7 @@
                 <%= form_with( url: new_collection_path , method: "get", id: 'ingest_form', local: true) do %>
                   <%= hidden_field_tag(:concept_id, "") %>
                   <%= hidden_field_tag(:revision_id, "") %>
+                  <%= hidden_field_tag(:version_id, "") %>
                   <%= submit_tag("Select Collection", id: 'ingest_submit', class: 'selectButton') %>
                 <% end %> 
 
@@ -162,6 +165,11 @@
     var rowNameRevision = "revision" + count;
     var newRevisionId = document.getElementById(rowNameRevision).innerHTML;
     document.getElementById("revision_id").value = newRevisionId;
+
+    var rowNameVersion = "version" + count;
+    var newVersionId = document.getElementById(rowNameVersion).innerHTML;
+    document.getElementById("version_id").value = newVersionId;
+
   }
 
 
