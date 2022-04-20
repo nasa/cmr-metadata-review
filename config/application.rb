@@ -50,6 +50,7 @@ module CmrMetadataReview
       '(unknown)'
     end
 
+    # Returns the version found in pyQuARC/version.txt
     def load_pyquarc_version
       version_file = "#{config.root}/lib/pyQuARC.egg/pyQuARC/version.txt"
       if File.exist?(version_file)
