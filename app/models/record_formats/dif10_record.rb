@@ -73,15 +73,10 @@ module RecordFormats
         Tempfile.create do |file|
           file << raw_data
           file.flush
-          script_results = `lib/dashboard_checker.sh #{file.path} dif10`
-          new_results = ""
-          script_results.each_line do |line|
-            unless line.start_with? "Downloading "
-              new_results << line
-              new_results << "\n"
-            end
-          end
-          script_results = new_results
+          output = `lib/dashboard_checker.sh #{file.path} dif10`
+          Rails.logger.info("Results of running dashboard checker for #{short_name}: #{output}")
+          script_results = File.read(file.path+'.out')
+          File.delete(file.path+'.out')
         end
       end
 
