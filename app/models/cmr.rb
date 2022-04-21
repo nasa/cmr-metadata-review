@@ -275,10 +275,12 @@ class Cmr
     if format == 'echo10'
       add_required_fields(results_hash, DesiredFields.instance.get_format_fields('echo10_granule'))
       add_required_fields(results_hash, RequiredFields.instance.get_format_fields('echo10_granule'))
-    else
+    end
+    if format == 'umm_json'
       add_required_fields(results_hash, DesiredFields.instance.get_format_fields('ummg'))
       add_required_fields(results_hash, RequiredFields.instance.get_format_fields('ummg'))
     end
+    results_hash
   end
 
   # ====Params
@@ -514,6 +516,7 @@ class Cmr
         current_granule['concept_id'] = granule_data['meta']['concept-id']
         current_granule['revision_id'] = granule_data['meta']['revision-id']
         current_granule['Granule'] = granule_data['umm']
+        current_granule['format_type'] = 'umm_json'
       end
       result_granule_list << current_granule
     end
