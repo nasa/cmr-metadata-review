@@ -1,4 +1,3 @@
-echo10_section_title
 DOI
 AssociatedDOIs
 UseConstraints
@@ -9,15 +8,14 @@ Campaigns
 ScienceKeywords
 Spatial
 SpatialInfo
-OnlineResources
+TwoDCoordinateSystems
 OnlineAccessURLs
+DirectDistributionInformation
+OnlineResources
 AssociatedDIFs
 CSDTDescriptions
 AssociatedBrowseImages
 AssociatedBrowseImageUrls
 AdditionalAttributes
 CollectionAssociations
-Campaigns
 AlgorithmPackages
-TwoDCoordinateSystems
-DirectDistributionInformation

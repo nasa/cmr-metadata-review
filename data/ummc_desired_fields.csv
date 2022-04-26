@@ -2,10 +2,6 @@ CollectionDataType
 ContactGroups/GroupName
 ContactGroups/Roles
 DataCenters/LongName
-DirectDistributionInformation/Region
-DirectDistributionInformation/S3BucketAndObjectPrefixNames
-DirectDistributionInformation/S3CredentialsAPIDocumentationURL
-DirectDistributionInformation/S3CredentialsAPIEndpoint
 DOI/Authority
 DOI/MissingReason
 LocationKeywords/Category
@@ -42,7 +38,6 @@ TemporalExtents/RangeDateTimes/EndingDateTime
 TemporalExtents/SingleDateTimes
 UseConstraints/Description
 UseConstraints/FreeAndOpenData
-UseConstraints/LicenseText
 UseConstraints/LicenseURL/Description
 CollectionCitation/Creators
 CollectionCitation/Title
