@@ -6,7 +6,7 @@ Campaigns/Campaign/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/c
 Only values from the ""Long_Name"" column."
 Campaigns/Campaign/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
 Only values from the ""Short_Name"" column."
-CollectionDataType,"ECHO collection schema CollectionDataType enum = [""SCIENCE_QUALITY"", ""NEAR_REAL_TIME"", ""OTHER""]"
+CollectionDataType,"ECHO collection schema CollectionDataType enum = [""NEAR_REAL_TIME"", ""LOW_LATENCY"", ""EXPEDITED"", ""SCIENCE_QUALITY"", ""OTHER""]"
 CollectionState,"UMM-C JSON schema CollectionProgress [""ACTIVE"", ""PLANNED"", ""COMPLETE"", ""DEPRECATED"", ""NOT APPLICABLE"", ""NOT PROVIDED""]"
 Contacts/Contact/ContactPersons/ContactPerson/JobPosition,"UMM-Common JSON schema DataContactRoleEnum = [""Data Center Contact"", ""Technical Contact"", ""Science Contact"", ""Investigator"", ""Metadata Author"", ""User Services"", ""Science Software Development""]"
 Contacts/Contact/OrganizationPhones/Phone/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"

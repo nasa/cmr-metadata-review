@@ -1,5 +1,5 @@
 Field,Description
-Collection_Data_Type,"DIF/UMM CollectionDataTypeEnum = [""SCIENCE_QUALITY"", ""NEAR_REAL_TIME"", ""ON_DEMAND"", ""OTHER""]"
+Collection_Data_Type,"DIF/UMM CollectionDataTypeEnum = [""NEAR_REAL_TIME"", ""LOW_LATENCY"", ""EXPEDITED"", ""SCIENCE_QUALITY"", ""OTHER"", ""ON_DEMAND""]"
 Data_Resolution/Horizontal_Resolution_Range,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/horizontalresolutionrange/?format=csv
 Data_Resolution/Temporal_Resolution_Range,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/temporalresolutionrange/?format=csv
 Data_Resolution/Vertical_Resolution_Range,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/verticalresolutionrange/?format=csv
@@ -7,31 +7,31 @@ Dataset_Citation/Persistent_Identifier/Type,"DIF/UMM PersistentIdentifierEnum = 
 Dataset_Language,"DIF/UMM DatasetLanguageEnum = [""English"", ""Afrikaans"", ""Arabic"", ""Bosnian"", ""Bulgarian"", ""Chinese"", ""Croatian"", ""Czech"", ""Danish"", ""Dutch"", ""Estonian"", ""Finnish"", ""French"", ""German"", ""Hebrew"", ""Hungarian"", ""Indonesian"", ""Italian"", ""Japanese"", ""Korean"", ""Latvian"", ""Lithuanian"", ""Norwegian"", ""Polish"", ""Portuguese"", ""Romanian"", ""Russian"", ""Slovak"", ""Spanish"", ""Ukrainian"", ""Vietnamese""]"
 Dataset_Progress,"DIF/UMM DatasetProgressEnum = [""PLANNED"", ""IN WORK"", ""COMPLETE""]"
 Distribution/Distribution_Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
-Only values in the ""Short_Name"" column."
+Only values in the ""Short_Name"" column"
 Location/Location_Category,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
-Only values from the ""Location_Category"" column."
+Only values from the ""Location_Category"" column"
 Location/Location_Subregion1,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
-Only values from the ""Location_Subregion1"" column."
+Only values from the ""Location_Subregion1"" column"
 Location/Location_Subregion2,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
-Only values from the ""Location_Subregion2"" column."
+Only values from the ""Location_Subregion2"" column"
 Location/Location_Subregion3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
-Only values from the ""Location_Subregion3"" column."
+Only values from the ""Location_Subregion3"" column"
 Location/Location_Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations/?format=csv
-Only values from the ""Location_Type"" column."
+Only values from the ""Location_Type"" column"
 Metadata_Association/Type,"DIF/UMM MetadataAssociationTypeEnum = [""Parent"", ""Child"", ""Related"", ""Dependent"", ""Input"", ""Science Associated""]"
-Metadata_Dates/Data_Creation,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Data_Delete,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Data_Future_Review,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Data_Last_Revision,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Metadata_Creation,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Metadata_Delete,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Metadata_Future_Review,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Metadata_Dates/Metadata_Last_Revision,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
+Metadata_Dates/Data_Creation,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Data_Delete,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Data_Future_Review,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Data_Last_Revision,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Metadata_Creation,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Metadata_Delete,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Metadata_Future_Review,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Metadata_Dates/Metadata_Last_Revision,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
 Metadata_Version,"DIF/UMM MetadataVersionEnum = [""VERSION 9.8.1"", ""VERSION 9.8.2"", ""VERSION 9.8.2.2"", ""VERSION 9.8.3"", ""VERSION 9.8.4"", ""VERSION 9.9.3"", ""VERSION 10.2""]"
 Organization/Organization_Name/Long_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Organization/Organization_Name/Short_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/providers/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Organization/Organization_Type,"DIF/UMM OrganizationTypeEnum = [""DISTRIBUTOR"", ""ARCHIVER"", ""ORIGINATOR"", ""PROCESSOR""]"
 Organization/Personnel/Contact_Group/Phone/Type,"DIF/UMM PhoneTypeEnum = [""Direct Line"", ""Primary"", ""Telephone"", ""Fax"", ""Mobile"", ""Modem"", ""TDD/TTY Phone"", ""U.S. toll free"", ""Other""]"
 Organization/Personnel/Contact_Person/Phone/Type,"DIF/UMM PhoneTypeEnum = [""Direct Line"", ""Primary"", ""Telephone"", ""Fax"", ""Mobile"", ""Modem"", ""TDD/TTY Phone"", ""U.S. toll free"", ""Other""]"
@@ -40,53 +40,55 @@ Personnel/Contact_Group/Phone/Type,"DIF/UMM PhoneTypeEnum = [""Direct Line"", ""
 Personnel/Contact_Person/Phone/Type,"DIF/UMM PhoneTypeEnum = [""Direct Line"", ""Primary"", ""Telephone"", ""Fax"", ""Mobile"", ""Modem"", ""TDD/TTY Phone"", ""U.S. toll free"", ""Other""]"
 Personnel/Role,"DIF/UMM PersonnelRoleEnum = [""INVESTIGATOR"", ""INVESTIGATOR, TECHNICAL CONTACT"", ""METADATA AUTHOR"", ""METADATA AUTHOR, TECHNICAL CONTACT"", ""TECHNICAL CONTACT""]"
 Platform/Instrument/Long_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platform/Instrument/Sensor/Long_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platform/Instrument/Sensor/Short_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platform/Instrument/Short_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platform/Long_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Platform/Short_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Platform/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/platforms/?format=csv
-Only values from the ""Category"" column."
+Only values from the ""Category"" column"
 Private,"DIF/UMM PrivateEnum = [""True"", ""False""]"
 Product_Flag,"DIF/UMM ProductFlagEnum = [""Not provided"", ""DATA_PRODUCT_FILE"", ""INSTRUMENT_ANCILLARY_FILE"", ""SYSTEM/SPACECRAFT_FILE"", ""EXTERNAL_DATA""]"
-Product_Level_Id,"DIF/UMM ProductLevelIdEnum = [""Not provided"", ""0"", ""1"", ""1A"", ""1B"", ""1T"", ""2"", ""2G"", ""2P"", ""3"", ""4"", ""NA""], but whenever possible, only NASA approved processing levels [""0"", ""1A"", ""1B"", ""2"", ""3"", ""4""] should be used."
+Product_Level_Id,"DIF/UMM ProductLevelIdEnum = [""Not provided"", ""0"", ""1"", ""1A"", ""1B"", ""1T"", ""2"", ""2G"", ""2P"", ""3"", ""4"", ""NA""], but whenever possible, only NASA approved processing levels [""0"", ""1A"", ""1B"", ""2"", ""3"", ""4""] should be used"
 Project/Long_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
-Only values from the ""Long_Name"" column."
+Only values from the ""Long_Name"" column"
 Project/Short_Name,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/projects/?format=csv
-Only values from the ""Short_Name"" column."
+Only values from the ""Short_Name"" column"
 Reference/Persistent_Identifier/Type,"DIF/UMM PersistentIdentifierEnum = [""DOI"", ""ARK""]"
 Related_URL/Mime_Type,GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/MimeType/?format=csv
 Related_URL/Protocol,"UMM-Common JSON schema GetServiceType Protocol enum = [""HTTP"", ""HTTPS"", ""FTP"", ""FTPS"", ""Not provided""]"
 Related_URL/URL_Content_Type/Subtype,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Subtype"" column."
+Only values in the ""Subtype"" column"
 Related_URL/URL_Content_Type/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/rucontenttype/?format=csv
-Only values in the ""Type"" column."
+Only values in the ""Type"" column"
 Science_Keywords/Category,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
 Only values from the ""Category"" column except ""EARTH SCIENCE SERVICES"" 
-I.e. EARTH SCIENCE SERVICES keywords should not be provided as science keywords."
+I.e. EARTH SCIENCE SERVICES keywords should not be provided as science keywords"
 Science_Keywords/Term,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Term"" column."
+Only values from the ""Term"" column"
 Science_Keywords/Topic,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Topic"" column."
+Only values from the ""Topic"" column"
 Science_Keywords/Variable_Level_1,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_1"" column."
+Only values from the ""Variable_Level_1"" column"
 Science_Keywords/Variable_Level_2,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_2"" column."
+Only values from the ""Variable_Level_2"" column"
 Science_Keywords/Variable_Level_3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/?format=csv
-Only values from the ""Variable_Level_3"" column."
+Only values from the ""Variable_Level_3"" column"
 Spatial_Coverage/Geometry/Coordinate_System,"DIF/UMM CoordinateSystemEnum = [""CARTESIAN"", ""GEODETIC""]"
 Spatial_Coverage/Granule_Spatial_Representation,"DIF/UMM GranuleSpatialRepresentationEnum = [""CARTESIAN"", ""GEODETIC"", ""ORBIT"", ""NO_SPATIAL""]"
 Spatial_Coverage/Spatial_Coverage_Type,"DIF/UMM SpatialCoverageTypeEnum = [""Horizontal"", ""HorizontalVertical"", ""Orbit"", ""Vertical"", ""Horizon&amp;Vert""]"
 Temporal_Coverage/Periodic_DateTime/Duration_Unit,"DIF/UMM DurationUnitEnum = [""DAY"", ""MONTH"", ""YEAR""]"
-Temporal_Coverage/Periodic_DateTime/End_Date,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
+Temporal_Coverage/Periodic_DateTime/End_Date,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
 Temporal_Coverage/Periodic_DateTime/Period_Cycle_Duration_Unit,"DIF/UMM DurationUnitEnum = [""DAY"", ""MONTH"", ""YEAR""]"
-Temporal_Coverage/Periodic_DateTime/Start_Date,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Temporal_Coverage/Range_DateTime/Beginning_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Temporal_Coverage/Range_DateTime/Ending_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
-Temporal_Coverage/Single_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]."
+Temporal_Coverage/Periodic_DateTime/Start_Date,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Temporal_Coverage/Range_DateTime/Beginning_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Temporal_Coverage/Range_DateTime/Ending_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Temporal_Coverage/Single_Date_Time,"Controlled by the DIF/UMM Date or DateTime or EnumType. Must provide an ISO date, an ISO date-time, or a value from the DIF/UMM DateEnum = [""Not provided"", ""unknown"", ""present"", ""unbounded"", ""future""]"
+Expanded_Metadata/Metadata/Name,"Recommend adding Name of ""StandardProduct"" for NASA datasets, if applicable. "
+Expanded_Metadata/Metadata/Value,"Recommend adding Value of ""true"" for StandardProduct, if applicable. "

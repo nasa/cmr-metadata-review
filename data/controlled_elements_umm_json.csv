@@ -10,7 +10,7 @@ ArchiveAndDistributionInformation/FileDistributionInformation/Format,"GCMD Keywo
 Only values in the ""Short_Name"" column"
 ArchiveAndDistributionInformation/FileDistributionInformation/FormatType,"UMM-C JSON schema ArchiveDistributionFormatTypeEnum = [""Native"", ""Supported""]"
 ArchiveAndDistributionInformation/FileDistributionInformation/TotalCollectionFileSizeUnit,"UMM-C JSON schema ArchiveDistributionUnitEnum = [""KB"", ""MB"", ""GB"", ""TB"", ""PB"", ""NA""]"
-CollectionDataType,"UMM-C JSON schema CollectionDataTypeEnum = [""SCIENCE_QUALITY"", ""NEAR_REAL_TIME"", ""OTHER""]"
+CollectionDataType,"UMM-C JSON schema CollectionDataTypeEnum = [""NEAR_REAL_TIME"", ""LOW_LATENCY"", ""EXPEDITED"", ""SCIENCE_QUALITY"", ""OTHER""]"
 CollectionProgress,"UMM-C JSON schema CollectionProgress [""ACTIVE"", ""PLANNED"", ""COMPLETE"", ""DEPRECATED"", ""NOT APPLICABLE"", ""NOT PROVIDED""]"
 ContactGroups/ContactInformation/ContactMechanisms/Type,"UMM-Common JSON schema ContactMechanismTypeEnum = [""Direct Line"", ""Email"", ""Facebook"", ""Fax"", ""Mobile"", ""Modem"", ""Primary"", ""TDD/TTY Phone"", ""Telephone"", ""Twitter"", ""U.S. toll free"", ""Other""]"
 ContactGroups/ContactInformation/RelatedUrls/GetData/Format,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/GranuleDataFormat/?format=csv
@@ -107,6 +107,13 @@ LocationKeywords/Type,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concept
 Only values from the ""Location_Type"" column."
 MetadataAssociations/Type,"UMM-Common JSON schema MetadataAssociateTypeEnum = [""SCIENCE ASSOCIATED"", ""DEPENDENT"", ""INPUT"", ""PARENT"", ""CHILD"", ""RELATED"", ""LARGER CITATION WORKS""]"
 MetadataDates/Type,"UMM-Common JSON schema LineageDateEnum = [""CREATE"", ""UPDATE"", ""DELETE"", ""REVIEW""]"
+MetadataSpecification/URL,"UMM-C JSON schema MetadataSpecificationType ""URL"" enum. 
+Varies depending on the version used. Note: this field was first added in v1.17.0. 
+Here's an example for v1.17.0 = [""https://cdn.earthdata.nasa.gov/umm/collection/v1.17.0""]"
+MetadataSpecification/Name,"UMM-C JSON schema MetadataSpecificationType ""Name"" enum =  [""UMM-C""]"
+MetadataSpecification/Version,"UMM-C JSON schema MetadataSpecificationType ""Version"" enum. 
+Varies depending on the version used. Note: this field was first added in v1.17.0. 
+Here's an example for v1.17.0 = [""1.17.0""]"
 Platforms/Instruments/ComposedOf/LongName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
 Only values from the ""Long_Name"" column"
 Platforms/Instruments/ComposedOf/ShortName,"GCMD Keywords https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/instruments/?format=csv
@@ -155,6 +162,26 @@ ScienceKeywords/VariableLevel3,"GCMD Keywords https://gcmd.earthdata.nasa.gov/km
 Only values from the ""Variable_Level_3"" column"
 SpatialExtent/GranuleSpatialRepresentation,"UMM-C JSON schema GranuleSpatialRepresentationEnum = [""CARTESIAN"", ""GEODETIC"", ""ORBIT"", ""NO_SPATIAL""]"
 SpatialExtent/HorizontalSpatialDomain/Geometry/CoordinateSystem,"UMM-C JSON schema CoordinateSystemEnum = [""CARTESIAN"", ""GEODETIC""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GenericResolutions/Unit,"UMM-C JSON schema HorizontalDataResolutionUnitEnum = [""Decimal Degrees"", ""Kilometers"", ""Meters"", ""Statute Miles"", ""Nautical Miles"", ""Not provided""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedRangeResolutions/Unit,"UMM-C JSON schema HorizontalDataResolutionUnitEnum = [""Decimal Degrees"", ""Kilometers"", ""Meters"", ""Statute Miles"", ""Nautical Miles"", ""Not provided""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/GriddedResolutions/Unit,"UMM-C JSON schema HorizontalDataResolutionUnitEnum = [""Decimal Degrees"", ""Kilometers"", ""Meters"", ""Statute Miles"", ""Nautical Miles"", ""Not provided""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedRangeResolutions/ScanDirection,"UMM-C JSON schema HorizontalResolutionScanDirectionType = ""enum"": [""Along Track"", ""Cross Track""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedRangeResolutions/Unit,"UMM-C JSON schema HorizontalDataResolutionUnitEnum = [""Decimal Degrees"", ""Kilometers"", ""Meters"", ""Statute Miles"", ""Nautical Miles"", ""Not provided""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedRangeResolutions/ViewingAngleType,"UMM-C JSON schema HorizontalResolutionViewingAngleType = ""enum"": [""At Nadir"", ""Scan Extremes""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ScanDirection,"UMM-C JSON schema HorizontalResolutionScanDirectionType = ""enum"": [""Along Track"", ""Cross Track""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/Unit,"UMM-C JSON schema HorizontalDataResolutionUnitEnum = [""Decimal Degrees"", ""Kilometers"", ""Meters"", ""Statute Miles"", ""Nautical Miles"", ""Not provided""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/NonGriddedResolutions/ViewingAngleType,"UMM-C JSON schema HorizontalResolutionViewingAngleType = ""enum"": [""At Nadir"", ""Scan Extremes""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/PointResolution,"UMM-C JSON schema HorizontalDataResolutionPointType = ""enum"": [""Point""]"
+SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem/HorizontalDataResolution/VariesResolution,"UMM-C JSON schema HorizontalDataResolutionVariesType = ""enum"": [""Varies""]"
+SpatialExtent/OrbitParameters/SwathWidthUnit,"UMM-C JSON schema SwathWidthUnit = ""enum"": [""Kilometer"", ""Meter""]"
+SpatialExtent/OrbitParameters/Footprints/FootprintUnit,"UMM-C JSON schema FootprintUnit = ""enum"": [""Kilometer"", ""Meter""]"
+SpatialExtent/OrbitParameters/OrbitPeriodUnit,"UMM-C JSON schema OrbitPeriodUnit = ""enum"": [""Decimal Minute""]"
+SpatialExtent/OrbitParameters/InclinationAngleUnit,"UMM-C JSON schema InclinationAngleUnit = ""enum"": [""Degree""]"
+SpatialExtent/OrbitParameters/StartCircularLatitudeUnit,"UMM-C JSON schema StartCircularLatitudeUnit = ""enum"": [""Degree""]"
 SpatialExtent/SpatialCoverageType,"UMM-C JSON schema SpatialCoverageTypeEnum = [""HORIZONTAL"", ""VERTICAL"", ""ORBITAL"", ""HORIZONTAL_VERTICAL"", ""ORBITAL_VERTICAL"", ""HORIZONTAL_ORBITAL"", ""HORIZONTAL_VERTICAL_ORBITAL""]"
+SpatialExtent/VerticalSpatialDomain/Type,"UMM-C JSON schema VerticalSpatialDomainTypeEnum = [""Atmosphere Layer"", ""Maximum Altitude"", ""Maximum Depth"", ""Minimum Altitude"", ""Minimum Depth""]"
+SpatialInformation/VerticalCoordinateSystem/AltitudeSystemDefinition/DistanceUnits,"UMM-C JSON schema AltitudeDistanceUnitsEnum = [""HectoPascals"", ""Kilometers"", ""Millibars""]"
+SpatialInformation/VerticalCoordinateSystem/DepthSystemDefinition/DistanceUnits,"UMM-C JSON schema DepthDistanceUnitsEnum = [""Fathoms"", ""Feet"", ""HectoPascals"", ""Meters"", ""Millibars""]"
 TemporalExtents/PeriodicDateTimes/DurationUnit,"UMM-Common JSON schema DurationUnitEnum = [""DAY"", ""MONTH"", ""YEAR""]"
 TemporalExtents/PeriodicDateTimes/PeriodCycleDurationUnit,"UMM-Common JSON schema DurationUnitEnum = [""DAY"", ""MONTH"", ""YEAR""]"
+TilingIdentificationSystems/TilingIdentificationSystemName,"UMM-C JSON schema TilingIdentificationSystemNameEnum = [""CALIPSO"", ""MISR"", ""MODIS Tile EASE"", ""MODIS Tile SIN"", ""WELD Alaska Tile"", ""WELD CONUS Tile"", ""WRS-1"", ""WRS-2"", ""Military Grid Reference System""]"
