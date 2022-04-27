@@ -158,4 +158,12 @@ module ApplicationHelper
     application_mode == :mdq_mode ? MDQ_PROVIDERS : ARC_PROVIDERS + ARC_VIRTUAL_PROVIDERS
   end
 
+  def pyquarc_version
+    version_file = "#{Rails.configuration.root}/lib/pyQuARC.egg/pyQuARC/version.txt"
+    if File.exist?(version_file)
+      return IO.read(version_file)
+    end
+    '(unknown)'
+  end
+
 end
