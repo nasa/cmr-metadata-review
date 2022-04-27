@@ -50,19 +50,9 @@ module CmrMetadataReview
       '(unknown)'
     end
 
-    # Returns the version found in pyQuARC/version.txt
-    def load_pyquarc_version
-      version_file = "#{config.root}/lib/pyQuARC.egg/pyQuARC/version.txt"
-      if File.exist?(version_file)
-        return IO.read(version_file)
-      end
-      '(unknown)'
-    end
-
     config.react.jsx_transform_options = {
       optional: ["es7.classProperties"]
     }
     config.version = load_version
-    config.pyquarc_version = load_pyquarc_version
   end
 end
