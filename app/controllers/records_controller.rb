@@ -347,12 +347,18 @@ class RecordsController < ApplicationController
     @records = Record.find(Array(params[:record_id]))
 
     success = false
+    last_record_worked_on = nil
     @records.each do |r|
+      last_record_worked_on = r.concept_id
       success = completion_success(r)
       break unless success
     end
 
-    flash[:notice] = "Records were successfully updated" if success
+    if success
+      flash[:notice] = "Records were successfully updated"
+    else
+      flash[:notice] = "Error closing record #{last_record_worked_on}"
+    end
 
     redirect_to (request.referrer || home_path)
   end
@@ -403,11 +409,16 @@ class RecordsController < ApplicationController
       elsif record.ready_for_daac_review?
         success = release_record_for_daac_review(record)
       else # in daac review
-        can?(:force_close, record) ? record.force_close! : record.close!
+        if can?(:force_close, record)
+          record.force_close!
+        else
+          record.close!
+        end
         success = true
       end
       success
     rescue StandardError => e
+      puts e.backtrace
       if e.respond_to?(:failures)
         error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
         flash[:alert] = error_messages.join(" ")
