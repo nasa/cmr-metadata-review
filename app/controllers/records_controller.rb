@@ -409,16 +409,11 @@ class RecordsController < ApplicationController
       elsif record.ready_for_daac_review?
         success = release_record_for_daac_review(record)
       else # in daac review
-        if can?(:force_close, record)
-          record.force_close!
-        else
-          record.close!
-        end
+        can?(:force_close, record) ? record.force_close! : record.close!
         success = true
       end
       success
     rescue StandardError => e
-      puts e.backtrace
       if e.respond_to?(:failures)
         error_messages = e.failures.uniq.map { |failure| Record::REVIEW_ERRORS[failure] }
         flash[:alert] = error_messages.join(" ")
