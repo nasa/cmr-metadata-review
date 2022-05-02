@@ -347,12 +347,18 @@ class RecordsController < ApplicationController
     @records = Record.find(Array(params[:record_id]))
 
     success = false
+    last_record_worked_on = nil
     @records.each do |r|
+      last_record_worked_on = r.concept_id
       success = completion_success(r)
       break unless success
     end
 
-    flash[:notice] = "Records were successfully updated" if success
+    if success
+      flash[:notice] = "Records were successfully updated"
+    else
+      flash[:notice] = "Error closing record #{last_record_worked_on}"
+    end
 
     redirect_to (request.referrer || home_path)
   end
