@@ -43,7 +43,8 @@ class Record < ApplicationRecord
   REVIEW_ERRORS = {
     color_coding_complete?: "Not all columns have been flagged with a color, cannot close review.",
     has_enough_reviews?: "A review needs two completed reviews to be closed, cannot close review.",
-    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags."
+    no_second_opinions?: "Some columns still need a second opinion review, cannot close review.  Please clear all second opinion flags.",
+    updated_revision_if_needed?: "Some columns are still flagged red, cannot close review."
   }
 
   aasm column: 'state', whiny_persistence: false do
@@ -581,7 +582,14 @@ class Record < ApplicationRecord
   end
 
   def updated_revision_if_needed?
-    flagged_reviews? ? Cmr.current_revision_for(concept_id) > self.revision_id.to_i : true
+    if flagged_reviews?
+      cmr_revision_id = Cmr.current_revision_for(concept_id)
+      review_revision_id = self.revision_id.to_i
+      return false if (cmr_revision_id == -1)
+      return cmr_revision_id > review_revision_id
+    else
+      return true
+    end
   end
 
   def no_feedback_requested?
