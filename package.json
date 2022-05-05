@@ -4,7 +4,7 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/runtime": "^7.11.2",
-    "@rails/webpacker": "^5.2.1",
+    "@rails/webpacker": "^5.4.3",
     "antd": "^4.5.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-es2015": "^6.24.1",
@@ -26,6 +26,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^4.9.0"
   }
 }
