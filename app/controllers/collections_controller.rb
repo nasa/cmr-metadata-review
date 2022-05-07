@@ -8,6 +8,10 @@ class CollectionsController < ApplicationController
   before_action :collection_only, only: :refresh
 
   def show
+    if params[:concept_id]
+      @collection = (Collection.find_by concept_id: params[:concept_id])
+      @record = @collection.get_records.first
+    end
     if @record
       @collection = get_collection_from_record(@record)
 
@@ -178,7 +182,11 @@ class CollectionsController < ApplicationController
     # :record_id can be either a single value or a list of IDs. We can only support a single value.
     # Wrapping the paramter in Array ensures that we are working with an Array before getting
     # the first value (Array([]) == []).
-    @record = Record.find(Array(params[:record_id]).first)
+    begin
+      @record = Record.find(Array(params[:record_id]).first) unless params[:record_id].nil?
+    rescue Exception => e
+      Rails.logger.error("Error finding record with id=#{params[:record_id]}")
+    end
   end
 
   def collection_only
