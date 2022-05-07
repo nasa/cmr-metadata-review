@@ -47,7 +47,8 @@
                     </form>
                   <% else %>
                     <h4>Revision ID: <%= record.associated_granule_value %></h4>
-                  <% end %>
+                <% end %>
+                  <h4>State: <%= record.state %></h4>
                 </div>
               </th>
             </tr>
@@ -146,6 +147,7 @@
                     <% end %>
 
                   </h4>
+                  <h4>State: <%= granule_record.state %></h4>
                 </th>
               </tr>
 
