@@ -7,7 +7,7 @@
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <% if current_user.daac_curator? %>
       <% content_for :form_buttons do %>
-        <%= render "shared/record_buttons" %>
+        <%= render "shared/record_buttons", locals: {form_id: "finished", report: true} %>
       <% end %>
       <%= render partial: "shared/record_filters", locals: { path_for_form: finished_records_path } %>
       <%= render partial: "shared/records_table", locals: {form_id: "finished", section: "closed_finished", title: "DAAC Completed Records"} %>
@@ -36,7 +36,7 @@
 
         <% content_for :form_buttons, flush: true do %>
 
-          <%= render(layout: "shared/record_buttons", locals: { form_id: "finished"}) do %>
+          <%= render(layout: "shared/record_buttons", locals: { form_id: "finished", report: true}) do %>
 
             <% if current_user.admin? %>
               <%= submit_tag("Allow CMR Updates", class: "cmrUpdateButton", formaction: allow_updates_records_path, disabled: true) %>
