@@ -1,7 +1,8 @@
 require 'test_helper'
 Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 
-class CollectionsControllerTest < ActionController::TestCase
+class CollectionsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   include OmniauthMacros
 
   let(:user) { User.find_by_email("abaker@element84.com") }
@@ -24,7 +25,7 @@ class CollectionsControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
 
-      get :search, params: { provider: 'DAAC: ANY', free_text: 'modis', curr_page:1 }
+      get '/collections_search', params: { provider: 'DAAC: ANY', free_text: 'modis', curr_page:1 }
       count = assigns(:collection_count)
       search_iterator = assigns(:search_iterator)
       assert(113, count)
@@ -57,20 +58,26 @@ class CollectionsControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
 
-      get :show, params: { id: 1, record_id: 1 }
+      get '/collections/1', params: { record_id: 1 }
       collection_records = assigns(:collection_records)
       assert_equal(6, collection_records.length)
     end
 
     it "redirects when no concept id is provided" do
       #redirects no record_id
-      get :show, params: { id: 1 }
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      get '/collections/1', params: { }
       assert_equal(response.code, "302")
     end
 
     it "redirects when no collection is found" do
       #redirects no collection found
-      get :show, params: { id: 1, record_id: "xyz" }
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      get '/collections/1', params: { record_id: "xyz" }
       assert_equal(response.code, "302")
     end
 
@@ -100,7 +107,7 @@ class CollectionsControllerTest < ActionController::TestCase
                 body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
                 headers: {})
 
-    get :show, params: { id: 1, record_id: 1 }
+    get '/collections/1', params: { record_id: 1 }
     assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 4,
                   :text => '[Granule Not Found in CMR]'
   end
@@ -129,7 +136,7 @@ class CollectionsControllerTest < ActionController::TestCase
           'User-Agent'=>'Ruby'
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
-    get :show, params: { id: 1, record_id: 1 }
+    get '/collections/1', params: { record_id: 1 }
     assert_select '.import_new_revision', count: 4
   end
 end
@@ -197,10 +204,7 @@ describe "POST #create" do
 
       #Making sure record does not exist before ingest
       assert_equal(0, (Collection.where concept_id: "C222702-GHRC").length)
-
-      post :create, params: { concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1 }
-
-      #redirects after creation
+      post collections_url, params: { concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1 }
       assert_equal("302", response.code)
 
       #collection with rawJSON saved in system
@@ -239,8 +243,14 @@ describe "POST #create" do
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.json"), headers: {})
-      post :create, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
-      assert_equal("302", response.code)
+
+      post collections_url, params: { concept_id: "C190733714-LPDAAC_ECS", revision_id: "77", granuleCounts: 1 }
+      get '/collections/1', params: { concept_id: "C190733714-LPDAAC_ECS" }
+
+      assert_select "#record_format", count: 1,
+                    :text => 'umm-c; version=1.13'
+
+      assert_equal("200", response.code)
       assert_equal(1, (Collection.where concept_id: "C190733714-LPDAAC_ECS").length)
 
       #ingest for collection logged
@@ -342,7 +352,7 @@ describe "POST #create" do
           }).
         to_return(status: 200, body: get_stub("search_granules_G1599790933-NSIDC_ECS.json"), headers: {})
 
-      post :create, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
+      post collections_url, params: { concept_id: "C1599780765-NSIDC_ECS", revision_id: "77", granuleCounts: 1 }
 
       assert_equal("302", response.code)
       assert_equal(1, (Collection.where concept_id: "C1599780765-NSIDC_ECS").length)

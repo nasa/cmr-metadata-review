@@ -320,12 +320,16 @@ class Cmr
 
   def self.get_raw_collection(concept_id, type)
     url  = Cmr.api_url("collections", type, {"concept_id" => concept_id})
-    data = Cmr.cmr_request(url).parsed_response
-
+    data = Cmr.cmr_request(url)
     begin
-      collection_results = convert_to_hash(type, data)
-      # dif10 and echo10 return results subelement but umm does not
-      if type != 'umm_json'
+      if (type == 'umm_json')
+        format_version = parse_version(data.headers['content-type'])
+        data = data.parsed_response
+        collection_results = convert_to_hash(type, data)
+        collection_results['items'].first['umm']['__format_version'] = format_version
+      else
+        data = data.parsed_response
+        collection_results = convert_to_hash(type, data)
         collection_results = collection_results['results']
       end
     rescue => e
@@ -344,6 +348,14 @@ class Cmr
     elsif type == "umm_json"
       collection_results["items"].first["umm"]
     end
+  end
+
+  def self.parse_version(content_type)
+    # it looks like:application/vnd.nasa.cmr.umm_results+json;version=1.16.7; charset=utf-8
+    return nil if content_type.nil?
+    regexp = /(.*);version\=(.*);(.*)/
+    (umm_type, version, charset) = content_type.match(regexp).captures
+    return version
   end
 
   def self.get_raw_collection_meta(concept_id)

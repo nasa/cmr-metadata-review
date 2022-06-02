@@ -8,7 +8,7 @@
       <h3>Concept ID: <%= @concept_id %></h3>
       <h3>Short Name: <%= @collection_records.first.recordable.short_name %></h3>
       <% if @collection_records.first.format == @collection_records.first.native_format %>
-        <h3>Format: <%= @collection_records.first.format %></h3>
+        <h3>Format: <span id="record_format"><%= get_format_and_version(@collection_records.first.format, @collection_records.first.format_version)%></span></h3>
       <% else %>
         <h3>Ingest Format: <%= @collection_records.first.format %></h3>
         <h3>Native Format: <%= @collection_records.first.native_format %></h3>
