@@ -37,7 +37,10 @@ class Collection < Metadata
     Collection.transaction do
       collection = Collection.find_or_create_by(concept_id: concept_id)
       collection.update!(short_name: short_name)
-      new_record = Record.create(recordable: collection, revision_id: revision_id, format: ingest_format, native_format: native_format, daac: daac_from_concept_id(concept_id))
+      format_version = collection_data['__format_version']
+      collection_data.delete("__format_version")
+
+      new_record = Record.create(recordable: collection, revision_id: revision_id, format: ingest_format, format_version: format_version, native_format: native_format, daac: daac_from_concept_id(concept_id))
 
       collection_data.each_with_index do |(key, value), i|
         new_record.record_datas.create({
@@ -76,7 +79,6 @@ class Collection < Metadata
       run_script: true,
       user: user
     }
-
     create_record(concept_id, revision_id, ingest_format, native_format, collection_data, options)
     return [ingest_format, native_format]
   end

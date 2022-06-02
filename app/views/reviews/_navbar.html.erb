@@ -51,9 +51,9 @@
     <% if record.collection? %>
       <p>SHORT NAME : <%= record.short_name %></p>
       <% if record.format == record.native_format %>
-        <p>FORMAT : <%= record.format %></p>
+        <p>FORMAT : <%= get_format_and_version(record.format, record.format_version) %></p>
       <% else %>
-        <p>INGEST FORMAT : <%= record.format %></p>
+        <p>INGEST FORMAT : <%= get_format_and_version(record.format, record.format_version) %>; version=<%= record.format_version %></p>
         <p>NATIVE FORMAT : <%= record.native_format %></p>
       <% end %>
 

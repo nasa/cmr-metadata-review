@@ -125,6 +125,11 @@ module ApplicationHelper
     end
   end
 
+  def get_format_and_version(format, version)
+    version = 'n/a' if version.nil?
+    format == 'umm_json' ? "umm-c; version=#{version}" : format
+  end
+
   def self.truncate_string(string, max)
     string.length > max ? "#{string[0...max]}..." : string
   end
