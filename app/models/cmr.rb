@@ -444,7 +444,7 @@ class Cmr
 
   def self.add_required_fields(collection_hash, required_fields)
     required_fields.each do |field|
-      collection_hash[field] = "" unless field.blank? || collection_hash[field]
+      collection_hash[field] = "N/A" unless field.blank? || collection_hash[field]
     end
 
     collection_hash
