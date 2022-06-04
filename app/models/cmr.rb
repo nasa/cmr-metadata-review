@@ -1,6 +1,7 @@
 class Cmr
   include ApplicationHelper
   include CmrHelper
+  include DocumentAmendmentsHelper
 
   # Constant used to determine the timeout limit in seconds when connecting to CMR
   TIMEOUT_MARGIN = 10
@@ -256,6 +257,7 @@ class Cmr
                        []
                      end
 
+    raw_collection = Cmr.assign_not_available_values(data_format, raw_collection)
     results_hash   = flatten_collection(raw_collection)
     # Dif10 records come in with some uneeded header values
     results_hash = Cmr.remove_header_values(results_hash)

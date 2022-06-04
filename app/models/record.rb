@@ -229,6 +229,7 @@ class Record < ApplicationRecord
   def values
     values_hash = {}
     self.record_datas.each do |data|
+      data.value = "N/A" if data.value.blank?
       values_hash[data.column_name] = data.value
     end
 

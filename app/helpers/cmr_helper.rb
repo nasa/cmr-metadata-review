@@ -30,7 +30,6 @@ module CmrHelper
       new_collection_arr = []
 
       collection_hash.each do |key, sub_value|
-
         if sub_value.is_a?(Hash)
           #flattening the child tree
           flattened_sub_array = flatten_to_array(sub_value, parent_string + "/" + key)
@@ -42,13 +41,13 @@ module CmrHelper
             #creating an inline object here [key_name, value]
             new_collection_arr_entry = [(parent_string + "/" + key), ""]
             value_index = 1
-            sub_value.each_with_index do | array_entry |
+            sub_value.each_with_index do |array_entry|
               new_collection_arr_entry[value_index] += (array_entry + " ")
             end
             new_collection_arr_entry[value_index].strip
             new_collection_arr.push(new_collection_arr_entry)
           else
-            sub_value.each_with_index do | array_entry, index |
+            sub_value.each_with_index do |array_entry, index|
               #flattening the child tree
               flattened_sub_array = flatten_to_array(array_entry, parent_string + "/" + key)
               #adding to flattened parent list
@@ -71,10 +70,8 @@ module CmrHelper
         final_collection_arr = new_collection_arr
       end
 
-
       return final_collection_arr
     end
-
   end
 
   def self.included(receiver)
