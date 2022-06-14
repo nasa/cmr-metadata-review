@@ -58,7 +58,7 @@
               <td><%= record.daac %></td>
               <td><%= granule.collection_concept_id.partition('-').first %></td>
               <td><%= link_to "Native", record.native_link %></td>
-              <td><%= record.format == 'umm_json' ? 'umm-g' : 'echo10'%></td>
+              <td><%= record.format == 'umm_json' ? 'umm-g; version='+(record.format_version || "n/a") : 'echo10'%></td>
               <td><%= record.formatted_closed_date %></td>
             </tr>
           </table>
