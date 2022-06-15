@@ -80,7 +80,14 @@ class Granule < Metadata
   private
 
   def self.create_granule(granule, current_user, granule_info)
-    granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), format: granule_info['format_type'], native_format: granule_info['format_type'])
+    version_id = nil
+    if granule_info['format_type'] == 'umm_json'
+      version_id = granule_info.dig('Granule', 'MetadataSpecification', 'Version')
+      if granule_info['Granule'].key?('MetadataSpecification')
+        version_id = granule_info['Granule']['MetadataSpecification']['Version']
+      end
+    end
+    granule_record = Record.create(recordable: granule, revision_id: granule_info["revision_id"], daac: daac_from_concept_id(granule.concept_id), format: granule_info['format_type'], native_format: granule_info['format_type'], format_version: version_id)
     granule_record_data_list = []
     flattened_granule_data = Cmr.flatten_format_granule_data(granule_info["Granule"], granule_info['format_type'])
 
