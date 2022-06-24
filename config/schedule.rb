@@ -22,6 +22,7 @@ every 1.day, at: '4:00 am' do
   rake 'keyword_validation_cron:validate_keywords'
 end
 set :output, 'log/refresh_records.log'
-every 1.day, at: '3:00 am' do
+#every 1.day, at: '3:00 am' do
+every 15.minutes do
   rake 'refresh_records_cron:refresh_records'
 end
