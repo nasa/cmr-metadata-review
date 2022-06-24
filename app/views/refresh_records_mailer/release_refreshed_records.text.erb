@@ -1,0 +1,13 @@
+Refresh Records Report:
+
+The following Curation Dashboard records have been refreshed:
+<%= sprintf("%-32.30s%-26.26s\r\n", 'Status', 'State', 'Concept_ID', 'Revision_ID') %>
+<% @added_records.each do |record| %>
+  <%= sprintf("%-20.30s%-26.26s-26.26s-26.26s\r\n", 'Record Added', record[2].upcase,record[0],record[1]) %>
+<% end %>
+<% @failed_records.each do |record| %>
+  <%= sprintf("%-20.30s%-26.26s-26.26s-26.26s\r\n", 'Failed Ingest', record[2].upcase,record[0],record[1]) %>
+<% end %>
+<% @deleted_records.each do |record| %>
+  <%= sprintf("%-20.30s%-26.26s-26.26s-26.26s\r\n", 'No Longer in CMR', record[2].upcase,record[0],record[1]) %>
+<% end %>
