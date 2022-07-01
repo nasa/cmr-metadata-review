@@ -43,12 +43,14 @@ class Collection < Metadata
       new_record = Record.create(recordable: collection, revision_id: revision_id, format: ingest_format, format_version: format_version, native_format: native_format, daac: daac_from_concept_id(concept_id))
 
       collection_data.each_with_index do |(key, value), i|
-        new_record.record_datas.create({
-                                         last_updated: DateTime.now,
-                                         column_name: key,
-                                         value: value,
-                                         order_count: i,
-                                       })
+        unless value.blank?
+          new_record.record_datas.create({
+                                           last_updated: DateTime.now,
+                                           column_name: key,
+                                           value: value,
+                                           order_count: i,
+                                         })
+        end
       end
       new_record.campaign = ApplicationController.helpers.clean_up_campaign(new_record.campaign_from_record_data)
       new_record.save
