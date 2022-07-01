@@ -1,0 +1,48 @@
+<h1 class='styled-heading'>Refresh Records Report</h1>
+<div class= 'email-message'>
+  <p>The following Curation Dashboard records have been refreshed:</p>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Status</th>
+      <th>State</th>
+      <th>Concept ID</th>
+      <th>Revision ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @added_records.each do |record| %>
+      <tr>
+        <td>Record Added</td>
+        <td><%= record[2].upcase %></td>
+        <td><%= record[0] %></td>
+        <td><%= record[1] %></td>
+      </tr>
+    <% end %>
+
+    <% @failed_records.each do |record| %>
+      <tr>
+        <td>Failed Ingest</td>
+        <td><%= record[2].upcase %></td>
+        <td><%= record[0] %></td>
+        <td><%= record[1] %></td>
+      </tr>
+    <% end %>
+
+    <% @deleted_records.each do |record| %>
+      <tr>
+        <td>No Longer in CMR</td>
+        <td><%= record[2].upcase %></td>
+        <td><%= record[0] %></td>
+        <td><%= record[1] %></td>
+      </tr>
+    <% end %>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="email-footer">
+  <img src="https://cdn.earthdata.nasa.gov/eui/latest/docs/assets/ed-logos/meatball.png" alt="Meatball" class="image-center" />
+</div>
