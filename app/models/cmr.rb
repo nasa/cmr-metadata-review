@@ -81,27 +81,24 @@ class Cmr
       ids = records.map { |a| a.revision_id.to_i }
       ids.sort!
       latest_revision_id = ids.empty? ? -1 : ids.last
-      cmr_revision_id = cmr_revision_map[record.concept_id]
+      cmr_revision_id = cmr_revision_map[record.concept_id].to_i
 
-      if cmr_revision_id.nil?
-        deleted_records << [record.concept_id, latest_revision_id, record.state]
-      else
-        cmr_revision_id = cmr_revision_id.to_i
-        if cmr_revision_id > latest_revision_id
-          begin
-            new_record = Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
-            added_records << [record.concept_id, cmr_revision_id, record.state]
-            Rails.logger.info "refresh-record NEW #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
-          rescue Timeout::Error
-            Rails.logger.error("refresh-record py-cmr timeout error #{record.concept_id} #{record.revision_id}")
-            failed_records << [record.concept_id, cmr_revision_id, record.state]
-          rescue StandardError => e
-            Rails.logger.error("refresh-record error #{record.concept_id} #{record.revision_id} #{e.message}")
-            failed_records << [record.concept_id, cmr_revision_id, record.state]
-          end
+      if cmr_revision_id > latest_revision_id
+        begin
+          new_record = Collection.create_new_record(record.concept_id, cmr_revision_id, current_user, false)
+          added_records << [record.concept_id, cmr_revision_id, record.state]
+          Rails.logger.info "refresh-record NEW #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
+        rescue Timeout::Error
+          Rails.logger.error("refresh-record py-cmr timeout error #{record.concept_id} #{record.revision_id}")
+          failed_records << [record.concept_id, cmr_revision_id, record.state]
+        rescue StandardError => e
+          Rails.logger.error("refresh-record error #{record.concept_id} #{record.revision_id} #{e.message}")
+          failed_records << [record.concept_id, cmr_revision_id, record.state]
         end
+      else
+        Rails.logger.info "refresh-record EXISTS #{record.concept_id} #{record.revision_id} #{cmr_revision_id}"
+        deleted_records << [record.concept_id, latest_revision_id, record.state]
       end
-
     end
 
     update_lock = RecordsUpdateLock.find_by id: 1
