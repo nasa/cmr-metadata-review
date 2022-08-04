@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <results>
+  <hits>7</hits>
+  <took>134</took>
+  <result concept-id="C1886605827-LANCEAMSR2" revision-id="2" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_SI12_NRT_R04</ShortName>
+      <VersionId>4</VersionId>
+      <InsertTime>2020-06-30T08:00:00Z</InsertTime>
+      <LastUpdate>2020-06-30T09:00:00Z</LastUpdate>
+      <LongName>NRT AMSR2 Unified L3 Daily 12.5 km Brightness Temperature &amp; Sea Ice Concentration</LongName>
+      <DataSetId>NRT AMSR2 Unified L3 Daily 12.5 km Brightness Temperature &amp; Sea Ice Concentration V4</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles. Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The NRT AMSR2 Unified L3 Daily 12.5 km Brightness Temperature &amp; Sea Ice Concentration, Version 4 uses as input the resampled brightness temperature (Level-1R) data provided by the Japanese Aerospace Exploration Agency (JAXA).  The Version 4 dataset uses the AMSR-U2 product generation algorithm with slight modifications for NRT product generation, same algorithm used to generation the standard, science quality, data that is available at the NSIDC DAAC.  This Level-3 gridded product includes brightness temperatures at 89.0 GHz. Data are mapped to a polar stereographic grid at 12.5 km spatial resolution. Sea ice concentration and brightness temperatures include daily ascending averages, daily descending averages, and daily averages. Data are stored in HDF-EOS5 format and are available via HTTP from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice12.  If data latency is not a primary concern, please consider using science quality products. Science products are created using the best available ancillary, calibration and ephemeris information. Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science. These standard product, science quality, are available at the NSIDC DAAC: https://nsidc.org/</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_SI12_NRT_R04</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <CitationForExternalPublication>Meier, Walt, Josefino C Comiso, and Thorsten Markus.2019. NRT AMSR2 Unified L3 Daily 12.5 km Brightness Temperature &amp; Sea Ice Concentration [indicate subset used]. Dataset available online from the NASA Global Hydrology Resource Center DAAC, Huntsville, Alabama, U.S.A. DOI: http://dx.doi.org/10.5067/AMSRU/AU_SI12_NRT_R04</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>POLAR</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Daily - &lt; Weekly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2020-06-29T08:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Oceans</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Cryosphere</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Spectral/Engineering</TopicKeyword>
+          <TermKeyword>Microwave</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Brightness Temperature</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_SI12_NRT_R04</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice12/R04/hdfeos5/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level3/seaice12/R04/hdfeos5/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_CorrectedReflectance_TrueColor,AMSRU2_Sea_Ice_Concentration_12km,Coastlines</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_SI12.jpg</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://nsidc.org/data/au_si12/versions/1</URL>
+          <Description>The guide document contains detailed information about the dataset</Description>
+          <Type>USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_SI12_NRT_R04</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C1886605830-LANCEAMSR2" revision-id="2" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_SI25_NRT_R04</ShortName>
+      <VersionId>4</VersionId>
+      <InsertTime>2020-06-30T08:00:00Z</InsertTime>
+      <LastUpdate>2020-06-30T09:00:00Z</LastUpdate>
+      <LongName>NRT AMSR2 Unified L3 Daily 25 km Brightness Temperature &amp; Sea Ice Concentration Polar Grids</LongName>
+      <DataSetId>NRT AMSR2 Unified L3 Daily 25 km Brightness Temperature &amp; Sea Ice Concentration Polar Grids V4</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles. Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The NRT AMSR2 Unified L3 Daily 25 km Brightness Temperature &amp; Sea Ice Concentration Polar Grids, Version 4 uses as input the resampled brightness temperature (Level-1R) data provided by the Japanese Aerospace Exploration Agency (JAXA).  The Version 4 dataset uses the AMSR-U2 product generation algorithm with slight modifications for NRT product generation, same algorithm used to generation the standard, science quality, data that is available at the NSIDC DAAC.  This Level-3 gridded product includes brightness temperatures at 6.9 through 89.0 GHz and sea ice concentrations.  Data are mapped to a polar stereographic grid at 25 km spatial resolution.   Sea ice concentration and brightness temperatures include daily ascending averages, daily descending averages, and daily averages. Data are stored in HDF-EOS5 format and are available via HTTP from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice25.  If data latency is not a primary concern, please consider using science quality products. Science products are created using the best available ancillary, calibration and ephemeris information. Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science. These standard product, science quality, are available at the NSIDC DAAC: https://nsidc.org/</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_SI25_NRT_R04</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <CitationForExternalPublication>Meier, Walt, Josefino C Comiso, and Thorsten Markus.2019. NRT AMSR2 Unified L3 Daily 25 km Brightness Temperature &amp; Sea Ice Concentration Polar Grids [indicate subset used]. Dataset available online from the NASA Global Hydrology Resource Center DAAC, Huntsville, Alabama, U.S.A. DOI: http://dx.doi.org/10.5067/AMSRU/AU_SI25_NRT_R04</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>POLAR</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Daily - &lt; Weekly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2020-06-29T08:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Spectral/Engineering</TopicKeyword>
+          <TermKeyword>Microwave</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Brightness Temperature</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Cryosphere</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Oceans</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_SI25_NRT_R04</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>AscendingDescendingFlg</Name>
+          <DataType>STRING</DataType>
+          <Description>Flag to indicate ascending or descending</Description>
+          <Value>Ascending and Descending</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice25/R04/hdfeos5/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level3/seaice25/R04/hdfeos5/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_CorrectedReflectance_TrueColor,AMSRU2_Sea_Ice_Concentration_25km,Coastlines</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_SI25.jpg</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://nsidc.org/data/AU_SI25/versions/1</URL>
+          <Description>The guide document contains detailed information about the dataset</Description>
+          <Type>USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_SI25_NRT_R04</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C1886605828-LANCEAMSR2" revision-id="3" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_SI6_NRT_R04</ShortName>
+      <VersionId>4</VersionId>
+      <InsertTime>2020-06-30T08:00:00Z</InsertTime>
+      <LastUpdate>2020-06-30T09:00:00Z</LastUpdate>
+      <LongName>NRT AMSR2 Unified L3 Daily 6.25 km Polar Gridded 89 GHz Brightness Temperatures</LongName>
+      <DataSetId>NRT AMSR2 Unified L3 Daily 6.25 km Polar Gridded 89 GHz Brightness Temperatures V4</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles. Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The NRT AMSR2 Unified L3 Daily 6.25 km Polar Gridded 89 GHz Brightness Temperatures, Version 4 uses as input the resampled brightness temperature (Level-1R) data provided by the Japanese Aerospace Exploration Agency (JAXA).  The Version 4 dataset uses the AMSR-U2 product generation algorithm with slight modifications for NRT product generation, same algorithm used to generation the standard, science quality, data that is available at the NSIDC DAAC.  This Level-3 gridded product includes brightness temperatures at 89.0 GHz. Data are mapped to a polar stereographic grid at 6.25 km spatial resolution. This product is an intermediate product during processing of LANCE AMSR2 Level-3 sea ice products at 12.5 km and 25 km resolution. Data are stored in HDF-EOS5/netCDF-CF  format and are available via HTTP from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice6.  If data latency is not a primary concern, please consider using science quality products. Science products are created using the best available ancillary, calibration and ephemeris information. Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science. These standard product, science quality, are available at the NSIDC DAAC: https://nsidc.org/</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_SI6_NRT_R04</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <CitationForExternalPublication>Meier, Walt, Josefino C Comiso, and Thorsten Markus.2019. NRT AMSR2 Unified L3 Daily 6.25 km Polar Gridded 89 GHz Brightness Temperatures [indicate subset used]. Dataset available online from the NASA Global Hydrology Resource Center DAAC, Huntsville, Alabama, U.S.A. DOI: http://dx.doi.org/10.5067/AMSRU/AU_SI6_NRT_R04</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>POLAR</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Daily - &lt; Weekly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2020-06-29T08:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Oceans</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Cryosphere</TopicKeyword>
+          <TermKeyword>Sea Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Ice Concentration</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Spectral/Engineering</TopicKeyword>
+          <TermKeyword>Microwave</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Brightness Temperature</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_SI6_NRT_R04</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>AscendingDescendingFlg</Name>
+          <DataType>STRING</DataType>
+          <Description>Flag to indicate ascending or descending</Description>
+          <Value>Ascending and Descending</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level3/seaice6/R04/hdfeos5/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level3/seaice6/R04/hdfeos5/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=AMSRU2_Sea_Ice_Brightness_Temp_6km_89V,AMSRU2_Sea_Ice_Brightness_Temp_6km_89H,Coastlines,MODIS_Terra_CorrectedReflectance_TrueColor</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_SI6.jpg</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://nsidc.org/data/AU_SI6/versions/1</URL>
+          <Description>The guide document contains detailed information about the dataset</Description>
+          <Type>USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_SI6_NRT_R04</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C1514684539-LANCEAMSR2" revision-id="10" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_Land_NRT_R02</ShortName>
+      <VersionId>2</VersionId>
+      <InsertTime>2018-04-23T08:00:00</InsertTime>
+      <LastUpdate>2020-03-03T00:00:00</LastUpdate>
+      <LongName>NRT AMSR2 Unified L2B Half-Orbit 25 km EASE-Grid Surface Soil Moisture Beta V2</LongName>
+      <DataSetId>NRT AMSR2 Unified L2B Half-Orbit 25 km EASE-Grid Surface Soil Moisture Beta V2</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles.  Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The GCOM-W1 NRT AMSR2 Unified L2B Half-Orbit 25 km EASE-Grid Surface Soil Moisture product is a daily measurement of surface soil moisture produced by two retrieval algorithms using resampled Tb (Level-1R) data provided by JAXA: the Normalized Polarization Difference (NPD) algorithm developed by JPL and the Single Channel Algorithm (SCA) developed by USDA.  Ancillary data include time, geolocation, and quality assessment.  Data are stored in HDF-EOS5 and netCDF4 formats and are available via HTTPS from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level2/land/.  If data latency is not a primary concern, please consider using science quality products.  Science products are created using the best available ancillary, calibration and ephemeris information.  Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science.  The AMSR SIPS produces AMSR2 standard science quality data products and they are available at the NSIDC DAAC.  Note:  This is the same algorithm that generates the corresponding standard science products in the AMSR SIPS.  With this beta release, we are generating NRT products in both HDF-EOS5 and netCDF with CF metadata. Version 2 corrects these issues from the previous release: a boundary condition error that resulted in the failure of a small number of version 1 product files and an error in the number of low resolution scans processed which caused only the first half of each scan to be processed.</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_Land_NRT_R02</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>2</ProcessingLevelId>
+      <CitationForExternalPublication>Jackson, T., S. Chan, R. Bindlish, and E. G. Njoku. 2017. AMSR2 Unified L2B Half-Orbit 25 km EASE-Grid Surface Soil Moisture. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/AMSRU/AU_Land_NRT_R02. [Date Accessed].</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0.0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>netCDF-4/CF - HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Hourly - &lt; Daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2018-04-11T10:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Land Surface</TopicKeyword>
+          <TermKeyword>Soils</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Soil Moisture/Water Content</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_Land_NRT_R02</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>AscendingDescendingFlg</Name>
+          <DataType>STRING</DataType>
+          <Description>Flag to indicate ascending or descending</Description>
+          <Value>Ascending and Descending</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level2/land/R02/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level2/land/R02/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=MODIS_Terra_CorrectedReflectance_TrueColor,AMSRU2_Soil_Moisture_SCA_Night,AMSRU2_Soil_Moisture_SCA_Day,AMSRU2_Soil_Moisture_NPD_Night,AMSRU2_Soil_Moisture_NPD_Day,Coastlines</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_Land.png</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://nsidc.org/data/AU_Land/versions/1</URL>
+          <Description>The guide document contains detailed information about the dataset</Description>
+          <Type>USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_Land_NRT_R02</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89.24</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89.24</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C1841273046-LANCEAMSR2" revision-id="5" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_Ocean_NRT_R01</ShortName>
+      <VersionId>1</VersionId>
+      <InsertTime>2020-06-09T00:00:00</InsertTime>
+      <LastUpdate>2020-06-09T08:00:00</LastUpdate>
+      <LongName>NRT AMSR2 Unified L2B Global Swath Ocean Products</LongName>
+      <DataSetId>NRT AMSR2 Unified L2B Global Swath Ocean Products V1</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles.  Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The GCOM-W1 NRT AMSR2 Unified L2B Global Swath Ocean Products is a swath product containing global sea surface temperature over ocean, wind speed over ocean, water vapor over ocean and cloud liquid water over ocean, using resampled NRT Level-1R data provided by JAXA.  This is the same algorithm that generates the corresponding standard science products in the AMSR SIPS. The NRT products are generated in HDF-EOS-5 augmented with netCDF-4/CF metadata and are available via HTTPS from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level2/ocean/.  If data latency is not a primary concern, please consider using science quality products.  Science products are created using the best available ancillary, calibration and ephemeris information.  Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science.  The AMSR SIPS produces AMSR2 standard science quality data products, and they are available at the NSIDC DAAC.</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_OCEAN_NRT_R01</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>2</ProcessingLevelId>
+      <CitationForExternalPublication>Kummerow, C., R. Ferraro, and D. Duncan. 2020. NRT AMSR2 Unified L2B Global Swath Ocean Products. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/AMSRU/AU_OCEAN_NRT_R01. [Date Accessed].</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0.0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>netCDF-4/CF - HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Hourly - &lt; Daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2020-06-01T08:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Atmospheric Water Vapor</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Water Vapor Indicators</Value>
+            <VariableLevel2Keyword>
+              <Value>Water Vapor</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Atmospheric Water Vapor</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Water Vapor Profiles</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Atmospheric Winds</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Surface Winds</Value>
+            <VariableLevel2Keyword>
+              <Value>Wind Speed</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Atmospheric Winds</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Surface Winds</Value>
+            <VariableLevel2Keyword>
+              <Value>Wind Direction</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Oceans</TopicKeyword>
+          <TermKeyword>Ocean Temperature</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Sea Surface Temperature</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Clouds</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Cloud Microphysics</Value>
+            <VariableLevel2Keyword>
+              <Value>Cloud Liquid Water/Ice</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_OCEAN_NRT_R02</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>AscendingDescendingFlg</Name>
+          <DataType>STRING</DataType>
+          <Description>Flag to indicate ascending or descending</Description>
+          <Value>Ascending and Descending</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level2/ocean/R01/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level2/ocean/R01/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=AMSRU2_Wind_Speed_Night,AMSRU2_Wind_Speed_Day,AMSRU2_Cloud_Liquid_Water_Night,AMSRU2_Cloud_Liquid_Water_Day,AMSRU2_Total_Precipitable_Water_Night,AMSRU2_Total_Precipitable_Water_Day,Coastlines,MODIS_Terra_CorrectedReflectance_TrueColor</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_Ocean.png</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_Ocean_NRT_R01</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C1841272975-LANCEAMSR2" revision-id="6" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_Rain_NRT_R01</ShortName>
+      <VersionId>1</VersionId>
+      <InsertTime>2020-06-09T00:00:00</InsertTime>
+      <LastUpdate>2020-06-09T08:00:00</LastUpdate>
+      <LongName>NRT AMSR2 Unified Global Swath Surface Precipitation GSFC Profiling Algorithm</LongName>
+      <DataSetId>NRT AMSR2 Unified Global Swath Surface Precipitation GSFC Profiling Algorithm V1</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles.  Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The GCOM-W1 NRT AMSR2 Unified Global Swath Surface Precipitation GSFC Profiling Algorithm is a swath product containing global rain rate and type, calculated by the GPROF 2017 V2R rainfall retrieval algorithm using resampled NRT Level-1R data provided by JAXA. This is the same algorithm that generates the corresponding standard science products in the AMSR SIPS. The NRT products are generated in HDF-EOS-5 augmented with netCDF-4/CF metadata and are available via HTTPS from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rain/.  If data latency is not a primary concern, please consider using science quality products.  Science products are created using the best available ancillary, calibration and ephemeris information.  Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science.  The AMSR SIPS produces AMSR2 standard science quality data products, and they are available at the NSIDC DAAC.</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_RAIN_NRT_R01</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>2</ProcessingLevelId>
+      <CitationForExternalPublication>Kummerow, C., R. Ferraro, and D. Randel. 2020. NRT AMSR2 Unified Global Swath Surface Precipitation GSFC Profiling Algorithm. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/AMSRU/AU_RAIN_NRT_R01. [Date Accessed].</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0.0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>netCDF-4/CF - HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Hourly - &lt; Daily</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2020-06-01T08:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Precipitation</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Liquid Precipitation</Value>
+            <VariableLevel2Keyword>
+              <Value>Rain</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Clouds</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Cloud Microphysics</Value>
+            <VariableLevel2Keyword>
+              <Value>Cloud Precipitable Water</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Precipitation</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Precipitation Rate</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Atmosphere</TopicKeyword>
+          <TermKeyword>Atmospheric Water Vapor</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Water Vapor Indicators</Value>
+            <VariableLevel2Keyword>
+              <Value>Total Precipitable Water</Value>
+            </VariableLevel2Keyword>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_RAIN_NRT_R02</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>AscendingDescendingFlg</Name>
+          <DataType>STRING</DataType>
+          <Description>Flag to indicate ascending or descending</Description>
+          <Value>Ascending and Descending</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level2/rain/R01/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level2/rain/R01/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=AMSRU2_Columnar_Water_Vapor_Night,AMSRU2_Columnar_Water_Vapor_Day,AMSRU2_Surface_Precipitation_Night,AMSRU2_Surface_Precipitation_Day,Coastlines,MODIS_Terra_CorrectedReflectance_TrueColor</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_Rain.png</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://nsidc.org/data/AU_Rain/versions/1</URL>
+          <Description>The guide document contains detailed information about the dataset</Description>
+          <Type>USER'S GUIDE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_Rain_NRT_R01</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>89</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-89</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+  <result concept-id="C2052622563-LANCEAMSR2" revision-id="4" format="application/echo10+xml">
+    <Collection>
+      <ShortName>AU_DySno_NRT_R02</ShortName>
+      <VersionId>2</VersionId>
+      <InsertTime>2021-05-01T01:00:00Z</InsertTime>
+      <LastUpdate>2021-05-01T02:00:00Z</LastUpdate>
+      <LongName>NRT AMSR2 Unified L3 Global Daily 25 km EASE-Grid Snow Water Equivalent</LongName>
+      <DataSetId>NRT AMSR2 Unified L3 Global Daily 25 km EASE-Grid Snow Water Equivalent V2</DataSetId>
+      <Description>The Advanced Microwave Scanning Radiometer 2 (AMSR2) instrument on the Global Change Observation Mission - Water 1 (GCOM-W1) provides global passive microwave measurements of terrestrial, oceanic, and atmospheric parameters for the investigation of global water and energy cycles.  Near real-time (NRT) products are generated within 3 hours of the last observations in the file, by the Land Atmosphere Near real-time Capability for EOS (LANCE) at the AMSR Science Investigator-led Processing System (AMSR SIPS), which is collocated with the Global Hydrology Resource Center (GHRC) DAAC.  The NRT AMSR2 Unified L3 Global Daily Snow Water Equivalent data set contains snow water equivalent (SWE) data and quality assurance flags mapped to Northern and Southern Hemisphere 25 km Equal-Area Scalable Earth Grids (EASE-Grids).  Data are stored in HDF-EOS5 format and are available via HTTP from the EOSDIS LANCE system at https://lance.nsstc.nasa.gov/amsr2-science/data/level3/daysnow/.  If data latency is not a primary concern, please consider using science quality products.  Science products are created using the best available ancillary, calibration and ephemeris information.  Science quality products are an internally consistent, well-calibrated record of the Earth's geophysical properties to support science.</Description>
+      <DOI>
+        <DOI>10.5067/AMSRU/AU_DySno_NRT_R02</DOI>
+      </DOI>
+      <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+      <Orderable>true</Orderable>
+      <Visible>true</Visible>
+      <ProcessingLevelId>3</ProcessingLevelId>
+      <CitationForExternalPublication>Tedesco, Marco, Jeyavinoth Jeyaratnam and Richard Kelly.2019. NRT AMSR2 DAILY L3 GLOBAL SNOW WATER EQUIVALENT EASE-GRIDS [indicate subset used]. Dataset available online from the NASA Global Hydrology Resource Center DAAC, Huntsville, Alabama, U.S.A. DOI: http://dx.doi.org/10.5067/AMSRU/AU_DySno_NRT_R02</CitationForExternalPublication>
+      <CollectionState>IN WORK</CollectionState>
+      <RestrictionFlag>0.0</RestrictionFlag>
+      <RestrictionComment>This product has full public access.</RestrictionComment>
+      <UseConstraints>
+        <LicenseURL>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/data-use-policy</URL>
+          <Description>License URL for data use policy</Description>
+          <Type>Data Use Policy</Type>
+          <MimeType>text/html</MimeType>
+        </LicenseURL>
+      </UseConstraints>
+      <Price>0.0</Price>
+      <DataFormat>HDF-EOS-5</DataFormat>
+      <SpatialKeywords>
+        <Keyword>GLOBAL</Keyword>
+      </SpatialKeywords>
+      <TemporalKeywords>
+        <Keyword>Daily - &lt; Weekly</Keyword>
+      </TemporalKeywords>
+      <Temporal>
+        <RangeDateTime>
+          <BeginningDateTime>2021-04-15T00:00:00Z</BeginningDateTime>
+        </RangeDateTime>
+      </Temporal>
+      <Contacts>
+        <Contact>
+          <Role>DISTRIBUTOR</Role>
+          <OrganizationName>NASA/MSFC/AMSR SIPS/LANCE</OrganizationName>
+          <OrganizationAddresses>
+            <Address>
+              <StreetAddress>320 Sparkman Drive</StreetAddress>
+              <City>Huntsville</City>
+              <StateProvince>Alabama</StateProvince>
+              <PostalCode>35805</PostalCode>
+              <Country>USA</Country>
+            </Address>
+          </OrganizationAddresses>
+          <OrganizationPhones>
+            <Phone>
+              <Number>+1 256-961-7932</Number>
+              <Type>Telephone</Type>
+            </Phone>
+            <Phone>
+              <Number>+1 256-824-5149</Number>
+              <Type>Fax</Type>
+            </Phone>
+          </OrganizationPhones>
+          <OrganizationEmails>
+            <Email>support-ghrc@earthdata.nasa.gov</Email>
+          </OrganizationEmails>
+        </Contact>
+      </Contacts>
+      <ScienceKeywords>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Cryosphere</TopicKeyword>
+          <TermKeyword>Snow/Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Snow Water Equivalent</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+        <ScienceKeyword>
+          <CategoryKeyword>Earth Science</CategoryKeyword>
+          <TopicKeyword>Terrestrial Hydrosphere</TopicKeyword>
+          <TermKeyword>Snow/Ice</TermKeyword>
+          <VariableLevel1Keyword>
+            <Value>Snow Water Equivalent</Value>
+          </VariableLevel1Keyword>
+        </ScienceKeyword>
+      </ScienceKeywords>
+      <Platforms>
+        <Platform>
+          <ShortName>GCOM-W1</ShortName>
+          <LongName>Global Change Observation Mission 1st-Water</LongName>
+          <Type>Earth Observation Satellites</Type>
+          <Instruments>
+            <Instrument>
+              <ShortName>AMSR2</ShortName>
+              <LongName>Advanced Microwave Scanning Radiometer 2</LongName>
+            </Instrument>
+          </Instruments>
+        </Platform>
+      </Platforms>
+      <AdditionalAttributes>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi</Name>
+          <DataType>STRING</DataType>
+          <Description>Product DOI</Description>
+          <Value>10.5067/AMSRU/AU_DySno_NRT_R02</Value>
+        </AdditionalAttribute>
+        <AdditionalAttribute>
+          <Name>identifier_product_doi_authority</Name>
+          <DataType>STRING</DataType>
+          <Description>DOI authority</Description>
+          <Value>http://dx.doi.org</Value>
+        </AdditionalAttribute>
+      </AdditionalAttributes>
+      <Campaigns>
+        <Campaign>
+          <ShortName>LANCE</ShortName>
+          <LongName>Land, Atmosphere Near real-time Capability for EOS</LongName>
+        </Campaign>
+      </Campaigns>
+      <OnlineAccessURLs>
+        <OnlineAccessURL>
+          <URL>https://lance.nsstc.nasa.gov/amsr2-science/data/level3/daysnow/R02/hdfeos5/</URL>
+          <URLDescription>Files may be downloaded directly to your workstation from this link</URLDescription>
+        </OnlineAccessURL>
+      </OnlineAccessURLs>
+      <OnlineResources>
+        <OnlineResource>
+          <URL>https://lance.itsc.uah.edu/amsr2-science/data/level3/daysnow/R02/hdfeos5/</URL>
+          <Description>Files may be downloaded directly to your workstation from this link</Description>
+          <Type>LANCE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://worldview.earthdata.nasa.gov/?l=AMSRU2_Snow_Water_Equivalent_Daily,MODIS_Terra_CorrectedReflectance_TrueColor,Coastlines</URL>
+          <Description>Interactively browse imagery in EOSDIS Worldview</Description>
+          <Type>WORLDVIEW</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/pub/browse_sample/lance/AMSR_U2_DySno.jpg</URL>
+          <Description>Sample browse image</Description>
+          <Type>BROWSE</Type>
+          <MimeType>image/png</MimeType>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time</URL>
+          <Description>The home page for the project or program which sponsored the dataset</Description>
+          <Type>PROJECT HOME PAGE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/data-recipes/how-georeference-and-convert-nrt-amsr2-snow-water-equivalent-polar-ease-grid-data</URL>
+          <Description>How to Georeference and Convert NRT AMSR2 Snow Water Equivalent Polar EASE-Grid Data to GeoTIFF Format using Python and ArcGIS</Description>
+          <Type>DATA RECIPE</Type>
+        </OnlineResource>
+        <OnlineResource>
+          <URL>https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data</URL>
+          <Description>Instructions for citing GHRC data</Description>
+          <Type>DATA CITATION POLICY</Type>
+        </OnlineResource>
+      </OnlineResources>
+      <AssociatedDIFs>
+        <DIF>
+          <EntryId>AU_DySno_NRT_R02</EntryId>
+        </DIF>
+      </AssociatedDIFs>
+      <Spatial>
+        <SpatialCoverageType>Horizontal</SpatialCoverageType>
+        <HorizontalSpatialDomain>
+          <Geometry>
+            <CoordinateSystem>CARTESIAN</CoordinateSystem>
+            <BoundingRectangle>
+              <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+              <NorthBoundingCoordinate>90</NorthBoundingCoordinate>
+              <EastBoundingCoordinate>180</EastBoundingCoordinate>
+              <SouthBoundingCoordinate>-90</SouthBoundingCoordinate>
+            </BoundingRectangle>
+          </Geometry>
+        </HorizontalSpatialDomain>
+        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+      </Spatial>
+      <MetadataStandardName>ECHO</MetadataStandardName>
+      <MetadataStandardVersion>10</MetadataStandardVersion>
+    </Collection>
+  </result>
+</results>

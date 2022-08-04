@@ -66,6 +66,7 @@ closed:
   revision_id: 4
   state: "closed"
   format: "dif10"
+  daac: PODAAC
 
 open_granule:
   id: 16

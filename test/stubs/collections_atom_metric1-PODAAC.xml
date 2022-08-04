@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <feed xmlns:os="http://a9.com/-/spec/opensearch/1.1/" 
+        xmlns:georss="http://www.georss.org/georss/10" xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" 
+        xmlns:echo="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html#atom" 
+        xmlns:esipdiscovery="http://commons.esipfed.org/ns/discovery/1.2/" xmlns:gml="http://www.opengis.net/gml" esipdiscovery:version="1.2" 
+        xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/">
+    <updated>2021-05-28T22:15:47.949Z</updated>
+    <id>https://cmr.earthdata.nasa.gov:443/search/collections.atom?concept_id=C1652975935-PODAAC</id>
+    <title 
+        type="text">ECHO dataset metadata
+    </title>
+    <entry>
+        <id>C1652975935-PODAAC</id>
+        <title type="text">Waveglider data for the SPURS-1 N. 
+            Atlantic field campaign
+        </title>
+        <summary type="text">The SPURS (Salinity Processes in the Upper Ocean Regional Study) project is an 
+            oceanographic process study and associated field program that aim to elucidate key mechanisms responsible for near-surface salinity 
+            variations in the oceans. The project involves two field campaigns and a series of cruises in regions of the Atlantic and Pacific Oceans 
+            exhibiting salinity extremes.  SPURS employs a suite of state-of-the-art in-situ sampling technologies that, combined with remotely sensed 
+            salinity fields from the Aquarius/SAC-D and SMOS satellites, provide a detailed characterization of salinity structure over a continuum of 
+            spatio-temporal scales.  The SPURS-1 campaign involved a series of 5 cruises during 2012 - 2013 seeking to characterize the salinity 
+            structure and balance in a high salinity, high evaporation, and low rainfall region of the subtropical North Atlantic. It aims to resolve 
+            processes responsible for maintaining the subtropical surface salinity maximum in this region and within a 900 x 800-mile square study 
+            area centered at 25N, 38W. A Waveglider is an autonomous platform propelled by the conversion of ocean wave energy into forward thrust 
+            and employing solar panels to power instrumentation. During SPURS-1, three wavegliders (ASL2, ASL3 and ASL4) were deployed from the Knorr 
+            in September 2012, redeployed in April 2013 (ASL22, ASL32 and ASL42) with final recovery in September. Waveglider trajectories followed a 
+            square loop or butterfly pattern around the central SPURS mooring.  Sensors included a CTD at the near-surface and another at 6 m depth, 
+            a surface current meter, air temperature, atmospheric pressure and wind speed sensors providing continuous  along-track observations.  
+            NetCDF waveglider data files here contain hour averaged, georeferenced  trajectory data for those parameters and depths.
+        </summary>
+        <updated>2017-04-28T05:01:46.000Z</updated>
+        <echo:datasetId>Waveglider data for the SPURS-1 N. 
+            Atlantic field campaign
+        </echo:datasetId>
+        <echo:shortName>SPURS1_WAVEGLIDER</echo:shortName>
+        <echo:versionId>1.0</echo:versionId>
+        <echo:originalFormat>UMM_JSON</echo:originalFormat>
+        <echo:dataCenter>PODAAC</echo:dataCenter>
+        <echo:archiveCenter>NASA/JPL/PODAAC</echo:archiveCenter>
+        <echo:organization>NASA/JPL/PODAAC</echo:organization>
+        <echo:organization>
+            SPURS Project
+        </echo:organization>
+        <echo:processingLevelId>2</echo:processingLevelId>
+        <time:start>2012-09-01T00:00:00.000Z</time:start>
+        <time:end>2013-03-25T00:00:00.000Z</time:end
+        ><link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" 
+            hreflang="en-US" href="http://spurs.jpl.nasa.gov/">
+        </link>
+        <link rel="http://esipfed.org/ns/fedsearch/1.1/metadata#" hreflang="en-US" 
+            href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/sw/R">
+        </link>
+        <link 
+            rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US" href="http://podaac.jpl.nasa.gov/spurs">
+        </link>
+        <link 
+            rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US" 
+            href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/DataDocumentation/">
+        </link>
+        <link 
+            rel="http://esipfed.org/ns/fedsearch/1.1/metadata#" hreflang="en-US" 
+            href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/sw/Matlab">
+        </link>
+        <link rel="http://esipfed.org/ns/fedsearch/1.1/browse#" 
+            hreflang="en-US" href="https://podaac.jpl.nasa.gov/Podaac/thumbnails/SPURS1_WAVEGLIDER.jpg">
+        </link>
+        <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" 
+            hreflang="en-US" href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/SpursWebsiteContent/">
+        </link>
+        <link 
+            rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" hreflang="en-US" 
+            href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/docs/CruiseReports/">
+        </link>
+        <link 
+            rel="http://esipfed.org/ns/fedsearch/1.1/service#" hreflang="en-US" 
+            href="https://podaac-opendap.jpl.nasa.gov/opendap/allData/insitu/L2/spurs1/waveglider/">
+        </link>
+        <link length="0.0KB" 
+            rel="http://esipfed.org/ns/fedsearch/1.1/data#" hreflang="en-US" 
+            href="https://podaac-tools.jpl.nasa.gov/drive/files/allData/insitu/L2/spurs1/waveglider">
+        </link>
+        <link rel="http://esipfed.org/ns/fedsearch/1.1/documentation#" 
+            hreflang="en-US" href="https://podaac.jpl.nasa.gov/CitingPODAAC">
+        </link>
+        <echo:coordinateSystem>CARTESIAN</echo:coordinateSystem>
+        <echo:orbitParameters swathWidth="0.001" period="0.0" inclinationAngle="0.0" 
+            numberOfOrbits="1">
+        </echo:orbitParameters>
+        <georss:box>23 -71 42 -37</georss:box>
+        <echo:onlineAccessFlag>true</echo:onlineAccessFlag>
+        <echo:browseFlag>true</echo:browseFlag>
+        <echo:hasVariables>false</echo:hasVariables>
+        <echo:hasFormats>false</echo:hasFormats>
+        <echo:hasTransforms>false</echo:hasTransforms>
+        <echo:hasSpatialSubsetting>false</echo:hasSpatialSubsetting>
+        <echo:hasTemporalSubsetting>false</echo:hasTemporalSubsetting>
+    </entry>
+    </feed>
