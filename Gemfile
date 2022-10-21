@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.7.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.0.4.8'
+gem 'rails', '6.0.6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.12', group: [:test]
 # use pg for local and prod development
@@ -74,7 +74,7 @@ gem 'aws-sdk', '~> 2.2.37'
 # Should use 5.0.13 but compatibility issues with SIT version of RH, has older GCC.    Eventualaly when they upgrade RH, we can move back to the latest
 gem 'font-awesome-sass', '5.15.1'
 gem 'font-awesome-rails', '4.7.0.7'
-gem 'activerecord', '6.0.4.8'
+gem 'activerecord', '6.0.6'
 gem 'activerecord-session_store', '2.0.0'
 gem 'whenever', require: false
 gem 'oauth2'
