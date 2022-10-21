@@ -208,11 +208,6 @@
       <MimeType>application/pdf</MimeType>
     </OnlineResource>
     <OnlineResource>
-      <URL>https://ghrc.nsstc.nasa.gov/opendap/ssmis/f17/daily/</URL>
-      <Description>OPeNDAP server dataset access</Description>
-      <Type>OPENDAP DATA</Type>
-    </OnlineResource>
-    <OnlineResource>
       <URL>https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf</URL>
       <Description>AMSR Ocean Algorithm documentation supplement</Description>
       <Type>ALGORITHM DOCUMENTATION</Type>
