@@ -96,7 +96,7 @@ module RecordFormats
             raw_data = get_raw_concept(concept_id, "echo10")
             file << raw_data
             file.flush
-            output = `lib/dashboard_checker.sh #{file.path} echo10`
+            output = `lib/dashboard_checker.sh #{file.path} echo-c`
             Rails.logger.info("Results of running dashboard checker for #{short_name}: #{output}")
             script_results = File.read(file.path+'.out')
             File.delete(file.path+'.out')
