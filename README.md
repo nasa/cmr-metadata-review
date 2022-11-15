@@ -169,6 +169,16 @@ redo the migration for that one script, it will work:
 If you want to have dashboard use a local version of pyQuARC, do this instead:
    python3 setup.py install --prefix ./local
    cp ./local/lib/python3.9/site-packages/pyQuARC-1.1.4-py3.9.egg <path to dashboard>/lib/pyQuARC.egg
+
+# Bamboo Testing
+
+Bamboo environment runs cmr dashboard in a docker environment.   It uses two images to setup the environment.
+The first image is the base image which includes centos with python38 installed:
+https://ci.earthdata.nasa.gov/build/admin/edit/editBuildTasks.action?buildKey=MMT-MMTBUIL-PTA
+The second image builds pyQuARC (note should change the version, i.e., --build-arg version=1.2.0)
+https://ci.earthdata.nasa.gov/build/admin/edit/editBuildTasks.action?buildKey=MMT-CMRDAS-PTA
+It uses this image to build and run the dashboard tests:
+https://ci.earthdata.nasa.gov/build/admin/edit/editBuildTasks.action?buildKey=MMT-ARC-BTS
    
 ## Other Known Issues
 
