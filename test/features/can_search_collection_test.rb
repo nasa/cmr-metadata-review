@@ -60,6 +60,7 @@ class CanSearchCollectionTest < SystemTestCase
       to_return(status: 200, body: '{"hits" : 0, "took" : 105, "items" : []}', headers: {})
   end
   describe 'search cmr collection' do
+
     # This test fails due to a bug in pyQuARC:
     it 'search collection by GHRC provider' do
       visit '/home'
