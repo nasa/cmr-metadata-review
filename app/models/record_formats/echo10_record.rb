@@ -91,21 +91,8 @@ module RecordFormats
       #W option to silence warnings
       script_results = ""
       if collection?
-        Tempfile.create do |file|
-          if Rails.configuration.python3_checks_feature_toggle
-            raw_data = get_raw_concept(concept_id, "echo10")
-            file << raw_data
-            file.flush
-            output = `lib/dashboard_checker.sh #{file.path} echo-c`
-            Rails.logger.info("Results of running dashboard checker for #{short_name}: #{output}")
-            script_results = File.read(file.path+'.out')
-            File.delete(file.path+'.out')
-          else
-            file << record_json
-            file.flush
-            script_results = `python2 -W ignore lib/CollectionChecker.py #{file.path}`
-          end
-        end
+        script_results = Quarc.instance.validate('echo-c', raw_data)
+        script_results = script_results.to_json
       else
         Tempfile.create do |file|
           file << record_json

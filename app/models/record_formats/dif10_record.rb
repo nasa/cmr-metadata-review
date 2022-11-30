@@ -70,14 +70,8 @@ module RecordFormats
       raw_data = get_raw_concept(concept_id, "dif10")
       script_results = ''
       if collection?
-        Tempfile.create do |file|
-          file << raw_data
-          file.flush
-          output = `lib/dashboard_checker.sh #{file.path} dif10`
-          Rails.logger.info("Results of running dashboard checker for #{short_name}: #{output}")
-          script_results = File.read(file.path+'.out')
-          File.delete(file.path+'.out')
-        end
+        script_results = Quarc.instance.validate('dif10', raw_data)
+        script_results = script_results.to_json
       end
 
       unless script_results.to_s.empty?

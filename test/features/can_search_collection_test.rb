@@ -58,6 +58,7 @@ class CanSearchCollectionTest < SystemTestCase
           'User-Agent'=>'Ruby'
         }).
       to_return(status: 200, body: '{"hits" : 0, "took" : 105, "items" : []}', headers: {})
+
   end
   describe 'search cmr collection' do
 
@@ -74,7 +75,9 @@ class CanSearchCollectionTest < SystemTestCase
       assert has_content?('C1979116062-GHRC_DAAC')
       find('#search3').click
       click_on 'Select Collection'
-      click_on 'Ingest Collection Without Granule'
+      Quarc.stub_any_instance(:validate, {}) do
+        click_on 'Ingest Collection Without Granule'
+      end
       assert has_content?('C1996546695-GHRC_DAAC')
     end
   end
