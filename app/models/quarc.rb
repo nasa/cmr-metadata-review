@@ -3,24 +3,29 @@ class Quarc
   include Singleton
 
   def validate(format, metadata)
-    payload = {
-      data: { 'format': format },
-      files: { 'file': metadata }
-    }
-    response = Faraday.post(
-      QUARC_API,
-      payload.to_json,
-      "Content-Type" => "application/json"
-    )
-    if (response.status != 200)
-      raise Errors::PyQuARCError, "PyQuARC Error: (#{response.body})"
+    conn = Faraday.new(QUARC_API) do |f|
+      f.request :multipart
+      f.request :url_encoded
+      f.adapter :net_http # This is what ended up making it work
     end
 
-    process(response.body)
+    Tempfile.create do |file|
+      file << metadata
+      file.flush
+      payload = { format: format,
+                  :file => Faraday::UploadIO.new(file.path, 'text/plain')
+      }
+      response = conn.post('/', payload)
+      if (response.status != 200)
+        raise Errors::PyQuARCError, "PyQuARC Error: (#{response.body})"
+      end
+      response = JSON.parse(response.body)
+      process(response)
+    end
   end
 
-  def process(json)
-    validation_results = JSON.parse(json)
+  def process(validation_results)
+    validation_results = validation_results["details"]
     result = {}
     validation_results.each do |error|
       errors = error["errors"]
@@ -34,7 +39,7 @@ class Quarc
   def remove_doctype(field_path)
     pos = field_path.index("/")
     path = field_path
-    if (pos != -1)
+    unless pos.nil?
       path = field_path[pos + 1..]
     end
     return path

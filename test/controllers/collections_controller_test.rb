@@ -156,6 +156,7 @@ describe "POST #create" do
       #in this instance, we return a set collection of results for any call using this concept id and granule keyword.
       stub_request(:get, /.*granules.echo10*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.xml"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
       stub_request(:get, /.*granules.umm_json*C222702-GHRC.*/).with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_granules_G309203-GHRC.json"), :headers => {"date"=>["Tue, 21 Feb 2017 16:02:46 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["10554"], "cmr-took"=>["40"], "cmr-request-id"=>["5b0c8426-3a23-4025-a4d3-6d1c9024153a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
+
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=1&page_size=10").
           with(
             headers: {
@@ -200,21 +201,11 @@ describe "POST #create" do
           }).
         to_return(status: 200, body: get_stub("search_granules_G226250-GHRC.json"), headers: {})
 
-      stub_request(:post, "https://quarc.nasa-impact.net/validate").
-        with(
-          body: "{\"data\":{\"format\":\"echo-c\"},\"files\":{\"file\":{\"ShortName\":\"daylightn\",\"VersionId\":\"1\",\"InsertTime\":\"1988-01-01T00:00:00.000Z\",\"LastUpdate\":\"2012-01-07T14:34:28.000Z\",\"LongName\":\"US COMPOSITE LIGHTNING DAILY TOTAL FROM NATL LIGHTNING NETWORK\",\"DataSetId\":\"US COMPOSITE LIGHTNING DAILY TOTAL FROM NATL LIGHTNING NETWORK V1\",\"Description\":\"The Global Hydrology Resource Center generates a cloud-to-ground lightning product from the data\\n      collected from the U.S. National Lightning Detection Network, a commercial lightning detection network operated by\\n      Global Atmospherics, Inc. (GAI), formerly Geomet Data Services. The daily products are produced by binning the\\n      number of flashes occurring in each pixel (pixel is approximately 8 km by 8 km) during a 24 hr period (00 UTC to\\n      00 UTC). The data set begins on July 8, 1994 and continues through the present.\\n    \",\"Orderable\":\"false\",\"Visible\":\"true\",\"ProcessingLevelId\":\"3\",\"ArchiveCenter\":\"GHRC\",\"Price\":\"0\",\"SpatialKeywords\":{\"Keyword\":\"CONUS\"},\"TemporalKeywords\":{\"Keyword\":\"DAILY TOTAL\"},\"Temporal\":{\"RangeDateTime\":{\"BeginningDateTime\":\"1988-01-01T00:00:00.000Z\"}},\"Contacts\":{\"Contact\":{\"Role\":\"GHRC USER SERVICES\",\"OrganizationEmails\":{\"Email\":\"ghrc-dmg@itsc.uah.edu\"}}},\"ScienceKeywords\":{\"ScienceKeyword\":[{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"ATMOSPHERE\",\"TermKeyword\":\"ATMOSPHERIC ELECTRICITY\",\"VariableLevel1Keyword\":{\"Value\":\"LIGHTNING\"}},{\"CategoryKeyword\":\"EARTH SCIENCE\",\"TopicKeyword\":\"ATMOSPHERE\",\"TermKeyword\":\"ATMOSPHERIC PHENOMENA\",\"VariableLevel1Keyword\":{\"Value\":\"LIGHTNING\"}}]},\"Platforms\":{\"Platform\":{\"ShortName\":\"NATIONAL LIGHTNING DETECTION NETWORK\",\"LongName\":\"NATIONAL LIGHTNING DETECTION NETWORK\",\"Type\":\"GROUND BASED NETWORK\",\"Instruments\":{\"Instrument\":{\"ShortName\":\"RF ANTENNA\",\"Sensors\":{\"Sensor\":{\"ShortName\":\"RF ANTENNA\"}}}}}},\"Campaigns\":{\"Campaign\":{\"ShortName\":\"LIS\"}},\"OnlineResources\":{\"OnlineResource\":[{\"URL\":\"http://lightning.nsstc.nasa.gov/cgi-bin/nldn/nldn_cal.pl?1998+January\",\"Type\":\"Browse\"},{\"URL\":\"http://ghrc.nsstc.nasa.gov/uso/ds_docs/nldn/lightning_dataset.html\",\"Type\":\"Guide\"},{\"URL\":\"http://lightning.nsstc.nasa.gov/data/\",\"Type\":\"Homepage\"}]},\"AssociatedDIFs\":{\"DIF\":{\"EntryId\":\"daylightn\"}},\"Spatial\":{\"SpatialCoverageType\":\"Horizontal\",\"HorizontalSpatialDomain\":{\"Geometry\":{\"CoordinateSystem\":\"CARTESIAN\",\"BoundingRectangle\":{\"WestBoundingCoordinate\":\"-130\",\"NorthBoundingCoordinate\":\"53\",\"EastBoundingCoordinate\":\"-60\",\"SouthBoundingCoordinate\":\"20\"}}},\"GranuleSpatialRepresentation\":\"CARTESIAN\"}}}}",
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Content-Type'=>'application/json',
-            'User-Agent'=>'Faraday v1.4.1'
-          }).
-        to_return(status: 200, body: "{}", headers: {})
-
-
       #Making sure record does not exist before ingest
       assert_equal(0, (Collection.where concept_id: "C222702-GHRC").length)
-      post collections_url, params: { concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1 }
+      Quarc.stub_any_instance(:validate, {}) do
+        post collections_url, params: { concept_id: "C222702-GHRC", revision_id: "32", granulesCount: 1 }
+      end
       assert_equal("302", response.code)
 
       #collection with rawJSON saved in system
