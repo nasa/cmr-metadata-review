@@ -145,6 +145,9 @@ class CollectionsController < ApplicationController
       rescue Errors::PythonError => ex
         Rails.logger.error("PyCMR Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.message}\n#{ex.backtrace}")
         flash[:alert] = 'There was an python error checking metadata'
+      rescue Errors::PyQuARCError => ex
+        Rails.logger.error("PyQuarc Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.message}\n#{ex.backtrace}")
+        flash[:alert] = "#{ex.message}"
       rescue => ex
         Rails.logger.error("Error: Unknown error ingesting Revision #{params[:revision_id]} with Concept ID #{params[:concept_id]} with error\n#{ex.backtrace}")
         flash[:alert] = "There was an error ingesting the record into the system #{ex.message}"
