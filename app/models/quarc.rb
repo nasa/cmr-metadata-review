@@ -12,6 +12,10 @@ class Quarc
       payload.to_json,
       "Content-Type" => "application/json"
     )
+    if (response.status != 200)
+      raise Errors::PyQuARCError, "PyQuARC Error: (#{response.body})"
+    end
+
     process(response.body)
   end
 
