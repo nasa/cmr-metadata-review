@@ -5,7 +5,7 @@ import xmltodict
 import sys
 import json
 
-# Uses pyQuARC 1.1.5
+# Uses pyQuARC 2.0
 sys.path.append('lib/pyQuARC.egg')
 from pyQuARC import ARC
 
@@ -75,7 +75,7 @@ def parse_checks(field_path, errors, result):
 
     trim_result_path(result, path)
 
-# Main that calls the ARC library, with the specified metadata file (arg1) and theh specified format (arg2), parses the results and transforms the results
+# Main that calls the ARC library, with the specified metadata file (arg1) and then specified format (arg2), parses the results and transforms the results
 # into something cmr dashboard can use.
 if __name__ == "__main__":
     if (len(sys.argv) != 3):
