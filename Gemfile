@@ -49,6 +49,7 @@ group :test do
   gem 'webdrivers'
   gem 'launchy'
   gem 'capybara-screenshot'
+  gem 'minitest-stub_any_instance'
 end
 
 group :development, :test do
