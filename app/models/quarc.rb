@@ -3,6 +3,7 @@ class Quarc
   include Singleton
 
   def validate(format, metadata)
+
     conn = Faraday.new(QUARC_API) do |f|
       f.request :multipart
       f.request :url_encoded
@@ -22,6 +23,7 @@ class Quarc
       response = JSON.parse(response.body)
       process(response)
     end
+
   end
 
   def process(validation_results)

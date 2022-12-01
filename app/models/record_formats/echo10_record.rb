@@ -91,6 +91,7 @@ module RecordFormats
       #W option to silence warnings
       script_results = ""
       if collection?
+        raw_data = get_raw_concept(concept_id, "echo10")
         script_results = Quarc.instance.validate('echo-c', raw_data)
         script_results = script_results.to_json
       else
