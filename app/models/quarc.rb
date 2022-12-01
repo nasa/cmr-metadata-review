@@ -23,6 +23,7 @@ class Quarc
       response = JSON.parse(response.body)
       process(response)
     end
+
   end
 
   def process(validation_results)
