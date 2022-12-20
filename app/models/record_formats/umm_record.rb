@@ -31,13 +31,34 @@ module RecordFormats
       get_column('Projects/ShortName')
     end
 
-    # There is no script yet for UMM collections
     def create_script(raw_data = nil)
-      nil
+      if raw_data.nil?
+        raw_data = get_raw_concept(concept_id, "umm_json")
+      end
+      comment_hash = self.evaluate_script(raw_data)
+      add_script_comment(comment_hash)
+    end
+
+    def get_raw_concept(concept_id, format)
+      url = "#{Cmr.get_cmr_base_url}/search/concepts/#{concept_id}.#{format}"
+      raw_data = Cmr.cmr_request(url).parsed_response
+      raw_data
     end
 
     def evaluate_script(raw_data = nil)
-      {}
+      script_results = ''
+      if collection?
+        script_results = Quarc.instance.validate('umm-c', raw_data)
+        script_results = script_results.to_json
+      end
+      unless script_results.to_s.empty?
+        comment_hash = JSON.parse(script_results)
+        value_keys = self.record_datas.map { |data| data.column_name }
+        comment_hash = Record.format_script_comments(comment_hash, value_keys)
+        comment_hash
+      else
+        raise Errors::PyQuARCError, "PyQuARC error occurred UMM-C (#{short_name})"
+      end
     end
 
     def controlled_element_map
