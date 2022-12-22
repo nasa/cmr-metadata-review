@@ -312,14 +312,17 @@ class RecordsControllerTest < ActionController::TestCase
       records = collection.records
       array = records.map(&:revision_id)
       assert_not_includes array, '21'
-      post :refresh
+      Quarc.stub_any_instance(:validate, {}) do
+        post :refresh
+      end
       assert_equal "The following records and revision id's have been added C1000000020-LANCEAMSR2 - 21 ", flash[:notice]
       collection = Collection.find_by concept_id: 'C1000000020-LANCEAMSR2'
       records = collection.records
       array = records.map(&:revision_id)
       assert_includes array, '21'
-
-      post :refresh
+      Quarc.stub_any_instance(:validate, {}) do
+        post :refresh
+      end
       assert_equal 'No New Records Were Found', flash[:notice]
     end
   end
