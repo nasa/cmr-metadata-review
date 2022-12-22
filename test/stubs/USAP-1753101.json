@@ -1,0 +1,185 @@
+{"DataLanguage" : "eng",
+  "AncillaryKeywords" : [ "USAP-DC", "AMD", "AMD/US", "NSF/USA", "Anvers Island" ],
+  "CollectionCitations" : [ {
+    "Title" : " CAREER: \"The Omnivore's Dilemma\": The Effect of Autumn Diet on Winter Physiology and Condition of Juvenile Antarctic Krill",
+    "Creator" : "Bernard, Kim",
+    "ReleaseDate" : "2020-08-31T00:00:00.000Z",
+    "Publisher" : "USAP-DC",
+    "OnlineResource" : {
+      "Name" : "USAP-DC Project Landing Page",
+      "Linkage" : "https://www.usap-dc.org/view/project/p0010124",
+      "Description" : "USAP-DC Project Landing Page"
+    }
+  } ],
+  "SpatialExtent" : {
+    "SpatialCoverageType" : "HORIZONTAL",
+    "HorizontalSpatialDomain" : {
+      "Geometry" : {
+        "CoordinateSystem" : "GEODETIC",
+        "BoundingRectangles" : [ {
+          "NorthBoundingCoordinate" : -64,
+          "WestBoundingCoordinate" : -65,
+          "EastBoundingCoordinate" : -62,
+          "SouthBoundingCoordinate" : -65
+        } ]
+      }
+    },
+    "GranuleSpatialRepresentation" : "GEODETIC"
+  },
+  "CollectionProgress" : "PLANNED",
+  "ScienceKeywords" : [ {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOSPHERE",
+    "Term" : "MARINE ECOSYSTEMS"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOLOGICAL CLASSIFICATION",
+    "Term" : "ANIMALS/INVERTEBRATES"
+  }, {
+    "Category" : "EARTH SCIENCE",
+    "Topic" : "BIOSPHERE",
+    "Term" : "ECOSYSTEMS",
+    "VariableLevel1" : "MARINE ECOSYSTEMS",
+    "VariableLevel2" : "PELAGIC"
+  } ],
+  "TemporalExtents" : [ {
+    "EndsAtPresentFlag" : false,
+    "RangeDateTimes" : [ {
+      "BeginningDateTime" : "2018-07-11T00:00:00.000Z",
+      "EndingDateTime" : "2023-08-31T00:00:00.000Z"
+    } ]
+  } ],
+  "ProcessingLevel" : {
+    "Id" : "Not Provided"
+  },
+  "DOI" : {
+    "MissingReason" : "Not Applicable"
+  },
+  "ShortName" : "USAP-1753101",
+  "EntryTitle" : "\"The Omnivores Dilemma\": The Effect of Autumn Diet on Winter Physiology and Condition of Juvenile Antarctic Krill",
+  "MetadataLanguage" : "eng",
+  "RelatedUrls" : [ {
+    "Description" : " USAP-DC Project page",
+    "URLContentType" : "CollectionURL",
+    "Type" : "DATA SET LANDING PAGE",
+    "URL" : "https://www.usap-dc.org/view/project/p0010124"
+  }, {
+    "Description" : "NSF Award Information",
+    "URLContentType" : "PublicationURL",
+    "Type" : "VIEW RELATED INFORMATION",
+    "URL" : "http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1753101"
+  }, {
+    "Description" : "BCO-DMO data",
+    "URLContentType" : "DistributionURL",
+    "Type" : "GET DATA",
+    "URL" : "https://www.bco-dmo.org/project/824760"
+  } ],
+  "DataDates" : [ {
+    "Type" : "CREATE",
+    "Date" : "2020-08-31T00:00:00.000Z"
+  } ],
+  "Abstract" : "Antarctic krill are essential in the Southern Ocean as they support vast numbers of marine mammals, seabirds and fishes, some of which feed almost exclusively on krill. Antarctic krill also constitute a target species for industrial fisheries in the Southern Ocean. The success of Antarctic krill populations is largely determined by the ability of their young to survive the long, dark winter, where food is extremely scarce. To survive the long-dark winter, young Antarctic krill must have a high-quality diet in autumn. However, warming in certain parts of Antarctica is changing the dynamics and quality of the polar food web, resulting in a shift in the type of food available to young krill in autumn. It is not yet clear how these dynamic changes are affecting the ability of krill to survive the winter. This project aims to fill an important gap in current knowledge on an understudied stage of the Antarctic krill life cycle, the 1-year old juveniles. The results derived from this work will contribute to the development of improved bioenergetic, population and ecosystem models, and will advance current scientific understanding of this critical Antarctic species. This CAREER project's core education and outreach objectives seek to enhance education and increase diversity within STEM fields. An undergraduate course will be developed that will integrate undergraduate research and writing in way that promotes authentic scientific inquiry and analysis of original research data by the students, and that enhances their communication skills. A graduate course will be developed that will promote students' skills in communicating their own research to a non-scientific audience.  Graduate students will be supported through the proposed study and will gain valuable research experience. Traditionally underserved undergraduate students will be recruited to conduct independent research under the umbrella of the larger project. Throughout each field season, the research team will maintain a weekly blog that will include short videos, photographs and text highlighting the research, as well as their experiences living and working in Antarctica. The aim of the blog will be to engage the public and increase awareness and understanding of Antarctic ecosystems and the impact of warming, and of the scientific process of research and discovery.\r\n\r\n\r\n\r\nIn this 5-year CAREER project, the investigator will use a combination of empirical and theoretical techniques to assess the effects of diet on 1-year old krill in autumn-winter. The research is centered on four hypotheses: (H1) autumn diet affects 1-year old krill physiology and condition at the onset of winter; (H2) autumn diet has an effect on winter physiology and condition of 1-year old krill under variable winter food conditions; (H3) the rate of change in physiology and condition of 1-year old krill from autumn to winter is dependent on autumn diet; and (H4) the winter energy budget of 1-year old krill will vary between years and will be dependent on autumn diet. Long-term feeding experiments and in situ sampling will be used to measure changes in the physiology and condition of krill in relation to their diet and feeding environment. Empirically-derived data will be used to develop theoretical models of growth rates and energy budgets to determine how diet will influence the overwinter survival of 1-year old krill. The research will be integrated with an education and outreach plan to (1) develop engaging undergraduate and graduate courses, (2) train and develop young scientists for careers in polar research, and (3) engage the public and increase their awareness and understanding.\r\n\r\n\r\n\r\nThis award reflects NSF's statutory mission and has been deemed worthy of support through evaluation using the Foundation's intellectual merit and broader impacts review criteria.",
+  "LocationKeywords" : [ {
+    "Category" : "CONTINENT",
+    "Type" : "ANTARCTICA",
+    "Subregion1" : "ANTARCTIC PENINSULA"
+  }, {
+    "Category" : "OCEAN",
+    "Type" : "SOUTHERN OCEAN"
+  } ],
+  "MetadataDates" : [ {
+    "Type" : "CREATE",
+    "Date" : "2021-09-27T20:19:00.000Z"
+  }, {
+    "Type" : "UPDATE",
+    "Date" : "2021-09-27T20:19:00.000Z"
+  } ],
+  "Version" : "1",
+  "Projects" : [ {
+    "ShortName" : "NSF/OPP",
+    "LongName" : "Office of Polar Programs, National Science Foundation"
+  } ],
+  "ContactPersons" : [ {
+    "Roles" : [ "Investigator" ],
+    "FirstName" : "Kim",
+    "LastName" : "Bernard",
+    "NonDataCenterAffiliation" : "Oregon State University",
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Email",
+        "Value" : "kbernard@coas.oregonstate.edu"
+      } ],
+      "Addresses" : [ {
+        "Country" : "United States"
+      } ]
+    }
+  } ],
+  "CollectionDataType" : "SCIENCE_QUALITY",
+  "DataCenters" : [ {
+    "Roles" : [ "DISTRIBUTOR" ],
+    "ShortName" : "USAP-DC",
+    "LongName" : "United States Antarctic Program Data Center",
+    "ContactInformation" : {
+      "ContactMechanisms" : [ {
+        "Type" : "Email",
+        "Value" : "info@usap-dc.org"
+      } ],
+      "Addresses" : [ {
+        "Country" : "United States"
+      } ],
+      "RelatedUrls" : [ {
+        "URLContentType" : "DataCenterURL",
+        "Type" : "HOME PAGE",
+        "URL" : "http://www.usap-dc.org/"
+      } ]
+    },
+    "ContactPersons" : [ {
+      "Roles" : [ "Data Center Contact" ],
+      "FirstName" : "Data",
+      "LastName" : "Manager",
+      "ContactInformation" : {
+        "ContactMechanisms" : [ {
+          "Type" : "Email",
+          "Value" : "info@usap-dc.org"
+        } ],
+        "Addresses" : [ {
+          "Country" : "United States"
+        } ],
+        "RelatedUrls" : [ {
+          "URLContentType" : "DataContactURL",
+          "Type" : "HOME PAGE",
+          "URL" : "http://www.usap-dc.org/"
+        } ]
+      }
+    } ]
+  }, {
+    "Roles" : [ "ARCHIVER", "DISTRIBUTOR" ],
+    "ShortName" : "BCO-DMO",
+    "LongName" : "Biological and Chemical Oceanography Data Management Office",
+    "ContactInformation" : {
+      "RelatedUrls" : [ {
+        "URLContentType" : "DataCenterURL",
+        "Type" : "HOME PAGE",
+        "URL" : "https://www.bco-dmo.org/"
+      } ]
+    }
+  } ],
+  "Platforms" : [ {
+    "Type" : "In Situ Land-based Platforms",
+    "ShortName" : "FIELD INVESTIGATION",
+    "LongName" : "FIELD INVESTIGATION"
+  } ],
+  "MetadataSpecification" : {
+    "URL" : "https://cdn.earthdata.nasa.gov/umm/collection/v1.17.2",
+    "Name" : "UMM-C",
+    "Version" : "1.17.2"
+  },
+  "ArchiveAndDistributionInformation" : {
+    "FileArchiveInformation" : [ {
+      "Format" : "ascii"
+    } ],
+    "FileDistributionInformation" : [ {
+      "Format" : "ascii"
+    } ]
+  }
+}

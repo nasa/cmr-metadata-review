@@ -33,7 +33,7 @@ module RecordFormats
 
     def create_script(raw_data = nil)
       if raw_data.nil?
-        raw_data = get_raw_concept(concept_id, "umm_json")
+        raw_data = get_raw_data('umm_json')
       end
       comment_hash = self.evaluate_script(raw_data)
       add_script_comment(comment_hash)
@@ -46,9 +46,12 @@ module RecordFormats
     end
 
     def evaluate_script(raw_data = nil)
+      if raw_data.nil?
+        raw_data = get_raw_concept(concept_id, "umm_json")
+      end
       script_results = ''
       if collection?
-        script_results = Quarc.instance.validate('umm-c', raw_data)
+        script_results = Quarc.instance.validate('umm-c', raw_data.to_json)
         script_results = script_results.to_json
       end
       unless script_results.to_s.empty?
