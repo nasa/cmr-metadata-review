@@ -54,12 +54,8 @@ module RecordFormats
       get_column('Campaigns/Campaign/ShortName')
     end
 
-    def create_script(raw_data = nil)
-      if raw_data.nil?
-        raw_data = get_raw_data('echo10')
-      end
-      comment_hash = self.evaluate_script(raw_data)
-      score = score_script_hash(comment_hash)
+    def create_script
+      comment_hash = self.evaluate_script()
       add_script_comment(comment_hash)
     end
 
@@ -81,26 +77,11 @@ module RecordFormats
 
     def evaluate_script(raw_data = nil)
       if raw_data.nil?
-        raw_data = get_raw_data('echo10')
-      end
-
-      remove_quotes_from_all_values!(raw_data)
-      record_json = raw_data.to_json
-
-      #running collection script in python
-      #W option to silence warnings
-      script_results = ""
-      if collection?
         raw_data = get_raw_concept(concept_id, "echo10")
-        script_results = Quarc.instance.validate('echo-c', raw_data)
-        script_results = script_results.to_json
-      else
-        Tempfile.create do |file|
-          file << record_json
-          file.flush
-          script_results = `lib/granule_checker.sh #{file.path}`
-        end
       end
+      validation_type = collection? ? 'echo-c' : 'echo-g'
+      script_results = Quarc.instance.validate(validation_type, raw_data)
+      script_results = script_results.to_json
 
       unless script_results.to_s.empty?
         comment_hash = JSON.parse(script_results)
@@ -113,7 +94,7 @@ module RecordFormats
         else
           identifier = "Granule #{self.get_column("GranuleUR")}"
         end
-        raise Errors::PythonError, "Python error occurred (#{identifier})"
+        raise Errors::PyQuARCError, "PyQuARC error occurred (#{identifier})"
       end
     end
 
