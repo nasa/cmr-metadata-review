@@ -215,6 +215,14 @@ describe "POST #create" do
       refute(record.binary_script_values["InsertTime"])
 
       # collection with umm-json can be saved to system. see ticket CMRARC-480
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C190733714-LPDAAC_ECS.umm_json").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub("search_collection_C190733714-LPDAAC_ECS.json"), headers: {})
       stub_request(:get, "#{@cmr_base_url}/search/collections.atom?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.atom"), :headers => {"date"=>["Fri, 17 Mar 2017 20:00:54 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["107"], "cmr-request-id"=>["308d3b81-b229-4593-a05e-c61a741d45be"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
       stub_request(:get, "#{@cmr_base_url}/search/collections.umm_json?concept_id=C190733714-LPDAAC_ECS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub("search_collection_C190733714-LPDAAC_ECS.json"), :headers => {"date"=>["Tue, 21 Feb 2017 15:50:04 GMT"], "content-type"=>["application/vnd.nasa.cmr.umm_results+json;version=1.13; charset=UTF-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["1"], "cmr-took"=>["2974"], "cmr-request-id"=>["bb005bac-18ce-4b6a-b69f-3f29f820ced5"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
       stub_request(:get, /.*granules.echo10*C190733714-LPDAAC_ECS.*/).with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(status: 200, body: get_stub("search_granules_by_collection_C190733714-LPDAAC_ECS.xml"), headers: {})
@@ -300,7 +308,7 @@ describe "POST #create" do
                                 "vary"=>["Accept-Encoding, User-Agent"],
                                 "connection"=>["close"],
                                 "server"=>["Jetty(9.2.z-SNAPSHOT)"]})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS").
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1599780765-NSIDC_ECS.umm_json").
         with(
           headers: {
             'Accept'=>'*/*',
@@ -308,6 +316,14 @@ describe "POST #create" do
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("search_collection_C1599780765-NSIDC_ECS.json"), headers: {})
+      # stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.umm_json?concept_id=C1599780765-NSIDC_ECS").
+      #   with(
+      #     headers: {
+      #       'Accept'=>'*/*',
+      #       'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      #       'User-Agent'=>'Ruby'
+      #     }).
+      #   to_return(status: 200, body: get_stub("search_collection_C1599780765-NSIDC_ECS.json"), headers: {})
 
       # stub for pulling a random granule
       stub_request(:get, /.*granules.echo10\?concept_id=G.*/)
