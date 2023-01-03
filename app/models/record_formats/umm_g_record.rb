@@ -13,14 +13,10 @@ module RecordFormats
     end
 
     # There is no script yet for UMM collections
-    def create_script(raw_data = nil)
-      if raw_data.nil?
-        raw_data = get_raw_concept(concept_id, "umm_json")
-      end
-      comment_hash = self.evaluate_script(raw_data)
+    def create_script
+      comment_hash = self.evaluate_script(raw_data = nil)
       score = score_script_hash(comment_hash)
       add_script_comment(comment_hash)
-      nil
     end
 
     def get_raw_concept(concept_id, format)
@@ -34,7 +30,7 @@ module RecordFormats
         raw_data = get_raw_concept(concept_id, "umm_json")
       end
 
-      script_results = Quarc.instance.validate('umm-g', raw_data.to_json)
+      script_results = Quarc.instance.validate('umm-g', raw_data)
       script_results = script_results.to_json
 
       unless script_results.to_s.empty?
