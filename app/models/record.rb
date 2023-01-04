@@ -124,7 +124,7 @@ class Record < ApplicationRecord
     comment_keys = comment_hash.keys
 
     comment_keys.each do |comment_field|
-      if !comment_field.blank?
+      unless comment_field.blank?
         value_keys.each do |value_field|
           # the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
           # if so, it adds the comment value to the fields.
