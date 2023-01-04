@@ -124,12 +124,14 @@ class Record < ApplicationRecord
     comment_keys = comment_hash.keys
 
     comment_keys.each do |comment_field|
-      value_keys.each do |value_field|
-        # the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
-        # if so, it adds the comment value to the fields.
-        # so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
-        if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
-          comment_hash[value_field] = comment_hash[comment_field]
+      unless comment_field.blank?
+        value_keys.each do |value_field|
+          # the regex here takes the comment key and checks if the value key is the same, but with 0-9 digits included.
+          # if so, it adds the comment value to the fields.
+          # so "Platforms/Platform/ShortName" value gets added to "Platforms/Platform0/ShortName"
+          if value_field =~ /#{(comment_field.split('/').reduce("") {|sum, n| sum + '/' + n + '[0-9+]?'  })[1..-1]}/
+            comment_hash[value_field] = comment_hash[comment_field]
+          end
         end
       end
     end
