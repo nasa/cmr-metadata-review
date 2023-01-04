@@ -3,7 +3,6 @@ class Quarc
   include Singleton
 
   def validate(format, metadata)
-
     conn = Faraday.new(QUARC_API) do |f|
       f.request :multipart
       f.request :url_encoded
@@ -62,7 +61,7 @@ class Quarc
         result[path] += "OK; " if result[path] === ""
       else
         # prior check said this was OK, but this check says not.
-        result[path] == "" if result[path] == "OK; "
+        result[path] = "" if result[path] == "OK; "
 
         # Use the message if we have one.
         if check_data.has_key?("message")
