@@ -335,3 +335,11 @@ report_collection_record:
   native_format: "echo10"
   daac: OB_DAAC
 
+ummc1:
+  id: 45
+  recordable_id: 2
+  recordable_type: "Collection"
+  revision_id: "8"
+  format: "umm_json"
+  daac: PODAAC
+

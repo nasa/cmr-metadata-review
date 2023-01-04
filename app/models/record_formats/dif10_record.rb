@@ -49,12 +49,8 @@ module RecordFormats
       get_column('Project/Short_Name')
     end
 
-    # There are currently only scripts for DIF10 collections.
-    def create_script(raw_data = nil)
-      if raw_data.nil?
-        raw_data = get_raw_data('dif10')
-      end
-      comment_hash = self.evaluate_script(raw_data)
+    def create_script
+      comment_hash = self.evaluate_script()
       score = score_script_hash(comment_hash)
       add_script_comment(comment_hash)
     end

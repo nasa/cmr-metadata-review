@@ -103,6 +103,16 @@ class GranulesControllerTest < ActionController::TestCase
           }).
         to_return(status: 200, body: get_stub('search_granules_by_collection_ummg.json'), headers: {})
 
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1581545525-LANCEAMSR2.umm_json").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: "", headers: {})
+
+
       user = User.find_by role: "admin"
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -112,7 +122,9 @@ class GranulesControllerTest < ActionController::TestCase
       # should increase by 1.
       collection = Collection.find(1)
       no_granules_before = collection.granules.count
-      post :create, params: { id: collection.id }
+      Quarc.stub_any_instance(:validate, {}) do
+        post :create, params: { id: collection.id }
+      end
       no_granules_after = collection.granules.count
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new random granule has been added for this collection", flash[:notice]
