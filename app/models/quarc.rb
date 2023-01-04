@@ -72,7 +72,7 @@ class Quarc
           end
           result[path] += "</ul>"
         end
-        if check_data.has_key?("remediation")
+        if check_data["remediation"]
           result[path] += "<b>Remediation:</b><br>" + check_data["remediation"]
         else
           # Otherwise just mention the check failed.
