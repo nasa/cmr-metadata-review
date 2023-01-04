@@ -12,7 +12,6 @@ module RecordFormats
       RequiredFields.instance.get_format_fields('ummg').include?(field)
     end
 
-    # There is no script yet for UMM collections
     def create_script
       comment_hash = self.evaluate_script(raw_data = nil)
       score = score_script_hash(comment_hash)
