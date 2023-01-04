@@ -32,6 +32,15 @@ class GranulesControllerTest < ActionController::TestCase
   describe "POST #create" do
     it "creates a new random echo10 granule for a collection" do
 
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1581545525-LANCEAMSR2.echo10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: "", headers: {})
+
       stub_request(:get, /.*granules\.umm_json\?collection_concept_id=.*/).
         with(
           headers: {
@@ -68,7 +77,9 @@ class GranulesControllerTest < ActionController::TestCase
       # should increase by 1.
       collection = Collection.find(1)
       no_granules_before = collection.granules.count
-      post :create, params: { id: collection.id }
+      Quarc.stub_any_instance(:validate, {}) do
+        post :create, params: { id: collection.id }
+      end
       no_granules_after = collection.granules.count
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new random granule has been added for this collection", flash[:notice]
@@ -76,6 +87,14 @@ class GranulesControllerTest < ActionController::TestCase
 
     it "creates a new random umm-g granule for a collection" do
       stub_request(:get, /.*granules\.umm_json\?collection_concept_id=.*/).
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_by_collection_ummg.json'), headers: {})
+      stub_request(:get, /.*granules\.echo10\?concept_id=.*/).
         with(
           headers: {
             'Accept'=>'*/*',
