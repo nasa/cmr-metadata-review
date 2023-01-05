@@ -66,9 +66,6 @@ All development work is done on local copies of the code base.  Follow the steps
 
 9. An application.yml file will be needed before starting the server.  This file can only be obtained from a teammate on the project, it does not reside on the repo.  Once received, copy the file into your config folder. The application.yml is set to be ignored by git.  However, if somehow you accidentally commit the file or send the file to the cloud repo, let someone on the team know immediately.  All env variables will need to be reset across platforms to ensure safety of the system.
 
-10. The last piece of software that needs to be installed is python. The production version uses 2.7. Using pip you'll need to install the "requests" package, e.g,:
-/usr/bin/pip install requests
-
 11. The application uses react:rails which has a dependency on having [yarn](https://tecadmin.net/install-yarn-macos/) installed on your system.  Yarn is a package manager used to install Javascript dependencies needed by the frontend.   To install these dependencies, issue the command: `yarn install` from the root directory of the application.
     
 11. Now the project should be ready to go. Navigate to the home directory and execute `rails s` to start the server.
@@ -80,15 +77,6 @@ All development work is done on local copies of the code base.  Follow the steps
 - Request ACL permissions to access the tool in the SIT environment by emailing [Earthdata Support](mailto:support@earthdata.nasa.gov). In order to Ingest collections into the tool, you may need Admin or Arc Curator permissions as well..  Also see section below entitles "Authentication"
 
 ## Quick Start Guide - Installation on Mac
-
-## Changing Python to default to 2.7
-    echo ‘export PATH=“/System/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH”’ >> ~/.zshrc
-    source ~/.zshrc
-    
-## Installing pip (if necessary)
-    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
-    python get-pip.py --user
-    pip install requests
 
 ## Installing rvm
     \curl -sSL https://get.rvm.io | bash

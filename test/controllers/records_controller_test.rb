@@ -277,6 +277,14 @@ class RecordsControllerTest < ActionController::TestCase
     # I've mocked a cmr response that returns a revision id 21 which is a newer revision that currently in fixtures.   The test
     # should post to Records#refresh and it should find this record, detect it is newer and ingest the new record.
     it 'refresh record with id # with new record from cmr' do
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.umm_json").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_collections.umm_json_raw_C1000000020-LANCEAMSR2.json'), headers: {})
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=2000&updated_since=1971-01-01T12:00:00-04:00").
         with(
           headers: {
@@ -312,14 +320,17 @@ class RecordsControllerTest < ActionController::TestCase
       records = collection.records
       array = records.map(&:revision_id)
       assert_not_includes array, '21'
-      post :refresh
+      Quarc.stub_any_instance(:validate, {}) do
+        post :refresh
+      end
       assert_equal "The following records and revision id's have been added C1000000020-LANCEAMSR2 - 21 ", flash[:notice]
       collection = Collection.find_by concept_id: 'C1000000020-LANCEAMSR2'
       records = collection.records
       array = records.map(&:revision_id)
       assert_includes array, '21'
-
-      post :refresh
+      Quarc.stub_any_instance(:validate, {}) do
+        post :refresh
+      end
       assert_equal 'No New Records Were Found', flash[:notice]
     end
   end
