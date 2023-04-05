@@ -81,7 +81,6 @@ class CanShowCollectionsTest < SystemTestCase
 
     it 'cannot see link for editing mmt' do
       visit '/home'
-
       within '#in_arc_review' do
         # checks the check box next to the first collection record in the tables
         find(:css, "#record_id_[value='1']").set(true)
@@ -93,6 +92,21 @@ class CanShowCollectionsTest < SystemTestCase
 
       # Tests to see if the edit collection in mmt link is there.
       page.wont_have_link('EDIT COLLECTION IN MMT')
+    end
+
+    it 'can see 3 revisions when select record from in_daac_review section' do
+      visit '/home'
+      within '#in_daac_review' do
+        # checks the check box next to the first collection record in the table
+        all('#record_id_')[4].click
+
+        within '.navigate-buttons' do
+          click_on 'See Review Detail'
+        end
+      end
+
+      # There should be 3 revisions shown
+      page.must_have_button('See Collection Review Details', minimum: 3)
     end
   end
 
@@ -110,7 +124,6 @@ class CanShowCollectionsTest < SystemTestCase
 
     it 'can see link for editing mmt' do
       visit '/home'
-
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
         all('#record_id_')[0].click
@@ -122,6 +135,23 @@ class CanShowCollectionsTest < SystemTestCase
 
       # Tests to see if the edit collection in mmt link is there.
       page.must_have_link('EDIT COLLECTION IN MMT')
+    end
+
+    it 'can see only one revision which is in_daac_review' do
+      visit '/home'
+      within '#in_daac_review' do
+        # checks the check box next to the first collection record in the table
+        all('#record_id_')[1].click
+
+        within '.navigate-buttons' do
+          click_on 'See Review Detail'
+        end
+      end
+
+      # Tests to see if the edit collection in mmt link is there.
+      page.must_have_link('EDIT COLLECTION IN MMT')
+      # There should be only one revision with state 'in_daac_review' shown
+      page.must_have_button('See Collection Review Details', maximum: 1)
     end
 
   end

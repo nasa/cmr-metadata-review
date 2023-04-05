@@ -185,6 +185,14 @@ mdq_enabled_collection4:
   revision_id: 1
   daac: PODAAC
 
+mdq_enabled_collection4_a:
+  id: 46
+  recordable_id: 7
+  recordable_type: Collection
+  state: in_arc_review
+  revision_id: 2
+  daac: PODAAC
+
 campaign_collection1:
   id: 30
   recordable_id: 8
