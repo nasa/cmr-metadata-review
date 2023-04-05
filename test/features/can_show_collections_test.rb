@@ -24,7 +24,6 @@ class CanShowCollectionsTest < SystemTestCase
       it 'can show collection' do
         visit '/home'
         see_collection_review_details('#open', 20)
-
         see_collection_revision_details(4)
         assert has_content? 'METADATA ELEMENTS'
       end
@@ -126,6 +125,7 @@ class CanShowCollectionsTest < SystemTestCase
 
     it 'can see link for editing mmt' do
       visit '/home'
+
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
         all('#record_id_')[0].click

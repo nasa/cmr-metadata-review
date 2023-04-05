@@ -14,6 +14,7 @@ class CollectionsController < ApplicationController
     end
     if @record
       @collection = get_collection_from_record(@record)
+      
       @concept_id = @collection.concept_id
       @collection_records = @collection.get_records
       @granule_objects = Granule.where(collection: @collection)
