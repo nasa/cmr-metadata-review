@@ -24,6 +24,7 @@ class CanShowCollectionsTest < SystemTestCase
       it 'can show collection' do
         visit '/home'
         see_collection_review_details('#open', 20)
+
         see_collection_revision_details(4)
         assert has_content? 'METADATA ELEMENTS'
       end
@@ -96,6 +97,7 @@ class CanShowCollectionsTest < SystemTestCase
 
     it 'can see 3 revisions when select record from in_daac_review section' do
       visit '/home'
+
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
         all('#record_id_')[4].click
@@ -135,6 +137,8 @@ class CanShowCollectionsTest < SystemTestCase
 
       # Tests to see if the edit collection in mmt link is there.
       page.must_have_link('EDIT COLLECTION IN MMT')
+      # There should be only one granule revision with state 'in_daac_review' shown
+      page.must_have_button('See Granule Review Details', maximum: 1)
     end
 
     it 'can see only one revision which is in_daac_review' do
