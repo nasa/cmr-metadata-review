@@ -30,6 +30,11 @@
     <div class="group_box left_box">
 
       <h3 class="collection_revision_header">Collection Revisions</h3>
+      <%
+        if current_user.daac_curator?
+          @collection_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
+        end
+      %>
       <% @collection_records.each_with_index do |record, index| %>
 
         <div id="collection_revision_<%= record.revision_id %>" class="collection_revision">
@@ -126,7 +131,13 @@
           <% end %>
         </div>
         <% @granule_objects.each_with_index do |granule, index| %>
-          <% granule.get_records.each do |granule_record| %>
+          <%
+            granule_records = granule.get_records
+            if current_user.daac_curator?
+              granule_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
+            end
+          %>
+          <% granule_records.each do |granule_record| %>
             <table id="granule_revision_<%= granule_record.revision_id %>" class="revision_table">
               <tr>
                 <th class="collection_granule_revision_row">

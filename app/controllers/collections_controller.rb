@@ -16,9 +16,6 @@ class CollectionsController < ApplicationController
       @collection = get_collection_from_record(@record)
       @concept_id = @collection.concept_id
       @collection_records = @collection.get_records
-      if current_user.daac_curator?
-        @collection_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
-      end
       @granule_objects = Granule.where(collection: @collection)
 
       # iterates through the granule objects, setting:
@@ -43,7 +40,7 @@ class CollectionsController < ApplicationController
       @granule_objects.each do |granule|
         granule.records.each do |record|
           option_val = "#{granule.concept_id}/#{record.revision_id}"
-          @associated_granules_options << [option_val, record.id]
+          @associated_granules_options << [option_val, record.id] unless (current_user.daac_curator? && record.state != Record::STATE_IN_DAAC_REVIEW.to_s)
         end
       end
       @associated_granules_options << ['No Granule Review', 'No Granule Review']

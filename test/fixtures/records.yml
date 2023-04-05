@@ -83,6 +83,14 @@ in_daac_review_granule:
   state: "in_daac_review"
   format: "echo10"
 
+not_in_daac_review_granule:
+  id: 47
+  recordable_id: 1
+  recordable_type: "Granule"
+  revision_id: "20"
+  state: "ready_for_daac_review"
+  format: "echo10"
+
 in_ready_for_daac_review_collection:
   id: 18
   recordable_id: 1
