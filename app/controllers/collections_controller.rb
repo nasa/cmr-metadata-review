@@ -14,9 +14,11 @@ class CollectionsController < ApplicationController
     end
     if @record
       @collection = get_collection_from_record(@record)
-
       @concept_id = @collection.concept_id
       @collection_records = @collection.get_records
+      if current_user.daac_curator?
+        @collection_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
+      end
       @granule_objects = Granule.where(collection: @collection)
 
       # iterates through the granule objects, setting:
