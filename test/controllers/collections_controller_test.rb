@@ -108,7 +108,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
                 headers: {})
 
     get '/collections/1', params: { record_id: 1 }
-    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 4,
+    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 5,
                   :text => '[Granule Not Found in CMR]'
   end
 
@@ -137,7 +137,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
         }).
       to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
     get '/collections/1', params: { record_id: 1 }
-    assert_select '.import_new_revision', count: 4
+    assert_select '.import_new_revision', count: 5
   end
 end
 
