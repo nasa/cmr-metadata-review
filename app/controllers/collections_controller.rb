@@ -41,7 +41,7 @@ class CollectionsController < ApplicationController
       @granule_objects.each do |granule|
         granule.records.each do |record|
           option_val = "#{granule.concept_id}/#{record.revision_id}"
-          @associated_granules_options << [option_val, record.id]
+          @associated_granules_options << [option_val, record.id] unless (current_user.daac_curator? && record.state != Record::STATE_IN_DAAC_REVIEW.to_s)
         end
       end
       @associated_granules_options << ['No Granule Review', 'No Granule Review']
