@@ -18,11 +18,11 @@ This can be found (with pictures) [here](https://wiki.earthdata.nasa.gov/display
 
 All development work is done on local copies of the code base.  Follow the steps below to prepare a local copy on your machine.
 
-1. Install Ruby on your machine.  The production version of the project uses Ruby v 2.7.2. Other versions may work, but only 2.7.2 is currently fully supported.
+1. Install Ruby on your machine.  The production version of the project uses Ruby v 3.0.6. Other versions may work, but only 3.0.6 is currently fully supported.
 
 - You can check which version of ruby you are running with the command `ruby -v`, and the location with `which ruby`
 
-- If the version of ruby that comes up is not 2.7.2 and you are using rvm use the command `rvm list` to list which ruby versions you have. To set the ruby version for the current directory use the command `rvm use 2.7.2`, or to set your default use `rvm --default use 2.7.2`
+- If the version of ruby that comes up is not 3.0.6 and you are using rvm use the command `rvm list` to list which ruby versions you have. To set the ruby version for the current directory use the command `rvm use 3.0.6`, or to set your default use `rvm --default use 3.0.6`
 
 2. Download the source code from this github repo.
 
@@ -80,8 +80,8 @@ All development work is done on local copies of the code base.  Follow the steps
 
 ## Installing rvm
     \curl -sSL https://get.rvm.io | bash
-    rvm install 2.7.2
-    rvm use 2.7.2 --default 
+    rvm install 3.0.6
+    rvm use 3.0.6 --default 
 
 ### Installing Postgresql 9.6
     brew install postgresql@9.6
