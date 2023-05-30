@@ -131,7 +131,7 @@ class Cmr
     end
 
     while  page_no <= no_pages
-      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode('1971-01-01T12:00:00-04:00')}"
+      response = conn.get "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{CGI.escape('1971-01-01T12:00:00-04:00')}"
       headers = response.headers
       if page_no == 1
         no_hits = headers['cmr-hits'].to_i
