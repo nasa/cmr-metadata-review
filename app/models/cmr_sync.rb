@@ -48,7 +48,7 @@ class CmrSync < ApplicationRecord
     end
 
     while  page_no <= no_pages
-      query = "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{URI.encode(updated_since)}"
+      query = "/search/collections.umm-json?page_size=#{max_page_size}&page_num=#{page_no}&updated_since=#{CGI.escape(updated_since)}"
       unless provider.nil?
         query += "&provider=#{provider}"
       end
