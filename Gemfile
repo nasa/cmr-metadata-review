@@ -38,7 +38,6 @@ gem 'aasm', '~> 4.12.0'
 gem 'rubyXL'
 gem 'ruby-progressbar'
 gem 'dotenv-rails'
-gem 'rexml'
 
 group :test do
   gem 'minitest-spec-rails', '6.0.0'

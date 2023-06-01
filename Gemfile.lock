@@ -1836,7 +1836,6 @@ DEPENDENCIES
   rails-erd
   rdoc
   react-rails
-  rexml
   ruby-progressbar
   rubyXL
   rubyzip (= 1.3.0)
