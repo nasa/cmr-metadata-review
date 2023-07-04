@@ -8,7 +8,7 @@
     "antd": "^4.5.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react-app": "^9.1.2",
+    "babel-preset-react-app": "^10.0.1",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
     "prop-types": "^15.7.2",
