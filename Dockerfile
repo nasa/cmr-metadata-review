@@ -56,8 +56,10 @@ RUN curl -OL https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.6.tar.gz \
 RUN dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 RUN dnf -y module -y disable postgresql
 RUN dnf clean all
-ENV PATH /usr/pgsql-11/bin:$PATH
-RUN gem install bundler
+ENV PATH=/home/bamboo/.gem/ruby/3.0.6/bin:/usr/pgsql-11/bin:/opt/google/chrome/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN gem install bundler --version 2.2.33 --user-install
+RUN gem install rspec --version=3.12 --user-install
+RUN gem install debase --version=0.2.5.beta2 --user-install
 RUN groupadd -g 500 bamboo
 RUN useradd --gid bamboo --create-home --uid 500 bamboo
 RUN dnf --enablerepo=powertools install perl-IPC-Run -y
@@ -67,5 +69,4 @@ RUN dnf install -y postgresql11-devel
 USER bamboo
 WORKDIR /build
 ENV HOME /home/bamboo
-ENV PATH /home/bamboo/.gem/ruby/3.0.6/bin:/opt/google/chrome/:$PATH
-RUN gem install rspec --version=3.9 --user-install
+ENV NODE_OPTIONS --openssl-legacy-provider
