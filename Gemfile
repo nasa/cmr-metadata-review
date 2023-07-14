@@ -32,7 +32,7 @@ gem 'jbuilder' #, '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 2.3.1.0', group: :doc
 
-gem 'httparty', '~> 0.14.0'
+gem 'httparty', '~> 0.21.0'
 gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
