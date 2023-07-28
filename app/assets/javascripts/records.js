@@ -59,7 +59,8 @@ function addButtonActions(form) {
   });
 
   $(formId + ' .reportButton').click(function(){
-    $(formId).prop("method", "get");
+    $(formId).prop("method", "post");
+    $(formId + ' input[name="_method"]').val("post");
   });
 
   $(formId + ' .refreshButton').click(function(){

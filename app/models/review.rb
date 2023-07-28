@@ -74,7 +74,10 @@ class Review < ApplicationRecord
   end
 
   def reviewer_email
-    self.user.email
+    if self.user
+      return self.user.email
+    end
+    '[unknown user]'
   end
 
   private

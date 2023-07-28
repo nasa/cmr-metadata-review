@@ -5,8 +5,8 @@
     <div class="report_drop_down">
     </div>
     <div class="report_buttons">
-      <%= link_to reports_review_path(format: :csv, record_id: @records.map(&:id)), data: { turbolinks: false }, class: "report_button" do %>
-        <p>EXPORT METRICS</p>
+      <%= button_to reports_review_path(format: :csv, record_id: @records.map(&:id)), data: { turbolinks: false }, class: "report_button" do %>
+        <p>EXPORT METRICS review</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
       <a href="#" id="pdf_button" class="report_button">

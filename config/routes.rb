@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     get '/reports/search', to: 'reports#search'
     get '/reports/selection', to: 'reports#selection'
     get '/reports/review', to: 'reports#review'
+    post '/reports/review', to: 'reports#review'
 
     # https://stackoverflow.com/questions/21654826/how-to-rescue-page-not-found-404-in-rails
     # The “a” is actually a parameter in the Rails 3 Route Globbing technique. For example,
