@@ -146,6 +146,9 @@
     text-align: right;
     width: 50%;
     padding-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 5px;
   }
 
   .report_button {
@@ -154,7 +157,7 @@
     background-color: #5abdf3;
     border: none;
     padding: 5px;
-
+    cursor: pointer;
 
     i {
       display: inline-block;
