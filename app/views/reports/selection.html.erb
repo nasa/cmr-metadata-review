@@ -5,14 +5,14 @@
     <div class="report_drop_down">
     </div>
     <div class="report_buttons">
-      <%= link_to reports_selection_path(format: :csv, records: params[:records].to_s), data: {turbolinks: false}, class: "report_button" do %>
+      <%= button_to reports_selection_path(format: :csv, records: params[:records].to_s), data: {turbolinks: false}, class: "report_button" do %>
         <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
-      <a href="#" id="pdf_button" class="report_button">
+      <div id="pdf_button" class="report_button">
         <p>PRINT PDF COPY</p>
         <i class="fa fa-file-pdf-o"></i>
-      </a>
+      </div>
     </div>
   </div>
 
