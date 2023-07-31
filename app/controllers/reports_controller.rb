@@ -4,7 +4,6 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    puts('########### report home!')
     @metric_data         = MetricData.new(Collection.all_metadata(application_mode))
     @granule_metric_data = MetricData.new(Granule.all_metadata(application_mode))
 
@@ -39,7 +38,6 @@ class ReportsController < ApplicationController
   end
 
   def selection
-    puts('########## Selection!')
     concept_ids = params[:records].split(",")
 
     @collections = Collection.all_metadata(application_mode).where(concept_id: concept_ids)
@@ -55,14 +53,7 @@ class ReportsController < ApplicationController
   end
 
   def review
-    puts('########## Review!')
-    puts("###### record_id=#{params[:record_id]}")
-    if !params[:record_id].blank?
-      @records = Record.where(id: params[:record_id])
-      @@records = @records
-    else
-      @records = @@records
-    end
+    @records = Record.where(id: params[:record_id])
     @granule_associations = {}
     @records.each do |record|
       value = record.associated_granule_value
