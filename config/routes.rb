@@ -69,10 +69,14 @@ Rails.application.routes.draw do
     get '/invalid_keywords/csv_report', to: 'invalid_keywords#csv_report'
     get '/invalid_keywords/sync', to: 'invalid_keywords#sync'
     get '/reports/home', to: 'reports#home'
+    post '/reports/home', to: 'reports#home'
     get '/reports/provider', to: 'reports#provider'
+    post '/reports/provider', to: 'reports#provider'
     get '/reports/search', to: 'reports#search'
     get '/reports/selection', to: 'reports#selection'
+    post '/reports/selection', to: 'reports#selection'
     get '/reports/review', to: 'reports#review'
+    post '/reports/review', to: 'reports#review'
 
     # https://stackoverflow.com/questions/21654826/how-to-rescue-page-not-found-404-in-rails
     # The “a” is actually a parameter in the Rails 3 Route Globbing technique. For example,
