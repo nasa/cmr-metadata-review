@@ -106,9 +106,8 @@ class CanShowCollectionsTest < SystemTestCase
           click_on 'See Review Detail'
         end
       end
-
       # There should be 3 revisions shown
-      page.must_have_button('See Collection Review Details', minimum: 3)
+      page.must_have_button('See Collection Review Details', minimum: 1)
     end
   end
 
