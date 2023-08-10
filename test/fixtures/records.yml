@@ -58,12 +58,14 @@ podaac_in_daac_review:
   revision_id: "7"
   state: "in_daac_review"
   format: "dif10"
+  daac: PODAAC
 
 closed:
   id: 15
   recordable_id: 2
   recordable_type: "Collection"
   revision_id: 4
+  daac: PODAAC
   state: "closed"
   format: "dif10"
 
