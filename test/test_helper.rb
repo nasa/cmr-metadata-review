@@ -54,7 +54,7 @@ end
 
 # new way for rails 6+ to control browser options
 class SystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1500,3000] do |options|
+  driven_by :selenium, using: :headless_chrome, screen_size: [1500,2000] do |options|
     options.add_argument("headless")
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
