@@ -100,14 +100,13 @@ class CanShowCollectionsTest < SystemTestCase
 
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table
-        all('#record_id_')[4].click
-
+        all('#record_id_')[1].click
         within '.navigate-buttons' do
           click_on 'See Review Detail'
         end
       end
-      # There should be 3 revisions shown
-      page.must_have_button('See Collection Review Details', minimum: 1)
+      # There should be 5 revisions associated with the collection record
+      page.must_have_button('See Collection Review Details', minimum: 5)
     end
   end
 

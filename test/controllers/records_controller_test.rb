@@ -376,13 +376,13 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find_by(id: 12).state, 'in_daac_review'
       assert_equal Record.find_by(id: 14).state, 'in_daac_review'
       post :hide, params: { 'record_id': [12,14]}
-      assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/9 metric1-PODAAC/7 ', flash[:notice]
+      assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/9 arc_curator_collection/7 ', flash[:notice]
       assert_equal Record.find_by(id: 12).state, 'hidden'
       assert_equal Record.find_by(id: 14).state, 'hidden'
       post :unhide, params: { 'unhide_form_record_ids': '12 14', 'unhide_state': 'in_daac_review' }
       assert_equal Record.find_by(id: 12).state, 'in_daac_review'
       assert_equal Record.find_by(id: 14).state, 'in_daac_review'
-      assert_equal 'Undeleted the following collections: C1000000020-LANCEAMSR2/9 metric1-PODAAC/7 ', flash[:notice]
+      assert_equal 'Undeleted the following collections: C1000000020-LANCEAMSR2/9 arc_curator_collection/7 ', flash[:notice]
     end
 
     it 'ensure associate granule record not hidden, see CMRARC-586' do

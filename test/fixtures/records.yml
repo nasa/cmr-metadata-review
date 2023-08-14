@@ -53,16 +53,16 @@ in_arc_review:
 
 podaac_in_daac_review:
   id: 14
-  recordable_id: 2
+  recordable_id: 7
   recordable_type: "Collection"
-  revision_id: "7"
+  revision_id: 7
   state: "in_daac_review"
   format: "dif10"
   daac: PODAAC
 
 closed:
   id: 15
-  recordable_id: 2
+  recordable_id: 7
   recordable_type: "Collection"
   revision_id: 4
   daac: PODAAC
@@ -176,7 +176,7 @@ mdq_enabled_collection2:
   recordable_id: 7
   recordable_type: Collection
   state: in_arc_review
-  revision_id: 1
+  revision_id: 5
   daac: PODAAC
 
 mdq_enabled_collection3:
@@ -191,8 +191,8 @@ mdq_enabled_collection4:
   id: 29
   recordable_id: 7
   recordable_type: Collection
-  state: in_daac_review
-  revision_id: 1
+  state: ready_for_daac_review
+  revision_id: 6
   daac: PODAAC
 
 mdq_enabled_collection4_a:
@@ -200,7 +200,7 @@ mdq_enabled_collection4_a:
   recordable_id: 7
   recordable_type: Collection
   state: in_arc_review
-  revision_id: 2
+  revision_id: 8
   daac: PODAAC
 
 campaign_collection1:
