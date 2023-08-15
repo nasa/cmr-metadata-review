@@ -46,6 +46,26 @@ class CollectionsController < ApplicationController
       end
       @associated_granules_options << ['No Granule Review', 'No Granule Review']
       @associated_granules_options << ['Undefined', 'Undefined']
+
+      @granule_records = []
+      @granule_objects.each_with_index do |granule, index|
+        granule.get_records.each do | record |
+          @granule_records << record
+        end
+      end
+
+      finished = params[:finished]
+      if finished == 'true' # meaning we should only show closed reviews.
+        @collection_records.select! {|record| record.state == Record::STATE_CLOSED.to_s}
+        @granule_records.select! {|record| record.state == Record::STATE_CLOSED.to_s}
+      else
+        # If the user is a daac curator, we want to limit the list of reviews they can
+        # see to only in daac review.   Otherwise, show all reviews.
+        if current_user.daac_curator?
+          @collection_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
+          @granule_records.select! {|record| record.state == Record::STATE_IN_DAAC_REVIEW.to_s}
+        end
+      end
     else
       flash[:alert] = 'No record_id provided to find record details'
       redirect_to home_path

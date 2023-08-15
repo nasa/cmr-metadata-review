@@ -1,8 +1,10 @@
 <% report ||= false %>
 <% complete ||= false %>
 <% complete_title ||= '' %>
+<% form_id ||= '' %>
 
 <div class="navigate-buttons">
+  <%= hidden_field_tag :finished, "#{form_id == 'finished'}" %>
   <%= submit_tag("See Review Detail", class: "selectButton", disabled: true) %>
 
   <% if complete %>
