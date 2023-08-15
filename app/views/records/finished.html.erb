@@ -17,7 +17,7 @@
       <% if can?(:review_state, Record::STATE_CLOSED) %>
         <% content_for :form_buttons do %>
 
-          <%= render layout: "shared/record_buttons", locals: { form_id: "closed", report: true } do %>
+          <%= render layout: "shared/record_buttons", locals: { form_id: "finished", report: true } do %>
 
 
             <% if current_user.admin? %>
