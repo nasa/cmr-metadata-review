@@ -31,7 +31,7 @@
               <td><%= record.revision_id %></td>
               <td><%= record.short_name %></td>
               <td><%= record.daac %></td>
-              <td><%= link_to "UMM", record.umm_json_link %></td>
+              <td><%= link_to "UMM", record.umm_json_link, target:"_blank" %></td>
               <td><%= record.format == 'umm_json' ? 'umm-c' : record.format %></td>
               <td><%= record.formatted_closed_date %></td>
             </tr>
