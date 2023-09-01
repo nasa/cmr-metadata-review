@@ -149,6 +149,14 @@ class GranulesControllerTest < ActionController::TestCase
             'User-Agent' => 'Ruby'
           }).
         to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/G309210-GHRC.echo10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+
+          }).
+        to_return(status: 200, body: "", headers: {})
 
       user = User.find_by role: 'admin'
       sign_in(user)
@@ -191,6 +199,24 @@ class GranulesControllerTest < ActionController::TestCase
             'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub('search_granules_ummg.json'), headers: {})
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/G309210-GHRC.echo10").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+
+          }).
+        to_return(status: 200, body: "", headers: {})
+
+      stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/G309210-GHRC.umm_json").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: "", headers: {})
 
       user = User.find_by role: 'admin'
       sign_in(user)

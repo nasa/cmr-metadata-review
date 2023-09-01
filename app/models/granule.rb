@@ -49,7 +49,10 @@ class Granule < Metadata
     granule_info = Cmr.get_granule_with_collection_id(granule.concept_id)
     collection = Collection.find_by(concept_id: collection_concept_id)
     return nil unless collection
-    create_granule(granule, current_user, granule_info)
+    granules_components = []
+    granule_object, granule_record, granule_record_data_list, granule_ingest = create_granule(granule, current_user, granule_info)
+    granules_components.push([ granule_object, granule_record, granule_record_data_list, granule_ingest ])
+    return granules_components
   end
 
   def self.ingest_specific_granule(collection_concept_id, granule_concept_id, current_user = User.find_by(role: "admin"))
@@ -101,7 +104,7 @@ class Granule < Metadata
       granule_record_data_list.push(granule_record_data)
     end
     granule_record.campaign = ApplicationController.helpers.clean_up_campaign(granule_record.campaign_from_record_data)
-    granule_record.save
+    #granule_record.save
 
     ingest = Ingest.create(record: granule_record, user: current_user, date_ingested: DateTime.now)
     return granule, granule_record, granule_record_data_list, ingest
