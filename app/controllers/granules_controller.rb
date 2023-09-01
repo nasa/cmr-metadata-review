@@ -60,7 +60,17 @@ class GranulesController < ApplicationController
     granule = Granule.find(params[:id])
     collection = granule.collection
     begin
-      Granule.add_new_revision_to_granule(collection.concept_id, granule, current_user)
+      granule_components = Granule.add_new_revision_to_granule(collection.concept_id, granule, current_user)
+      #saving all the related collection and granule data in a combined transaction
+      granule_components.flatten.each {|savable_object|
+        if savable_object.is_a?(Array)
+          savable_object.each do |savable_item|
+            savable_item.save!
+          end
+        else
+          savable_object.save!
+        end
+      }
       flash[:notice] = "A new granule revision has been added for this collection."
       redirect_to collection_path(id: 1, record_id: collection.records.first.id)
     rescue ActiveRecord::ActiveRecordError => e
