@@ -80,8 +80,10 @@ All development work is done on local copies of the code base.  Follow the steps
 
 ## Installing rvm
     \curl -sSL https://get.rvm.io | bash
+    brew install openssl
+    PKG_CONFIG_PATH=/usr/local/opt/openssl@1.1/lib/pkgconfig rvm reinstall 3.0.6 --with-openssl --with-openssl-lib=/usr/local/opt/openssl@1.1/lib --with-openssl-include=/usr/local/opt/openssl@1.1/include
     rvm install 3.0.6
-    rvm use 3.0.6 --default 
+    rvm use 3.0.6 --default
 
 ### Installing Postgresql 9.6
     brew install postgresql@9.6
@@ -102,8 +104,10 @@ All development work is done on local copies of the code base.  Follow the steps
     bundle install
 
 ### Install reactjs deps
-    brew install yarn
-    yarn install
+    brew install nvm yarn
+    nvm install
+    nvm use
+    export NODE_OPTIONS=--openssl-legacy-provider (this should be added your your .zshrc file too)
 
 ### Startup the server
     rails s
@@ -147,16 +151,6 @@ It means one of the migration scripts did not run properly (not entirely sure wh
 redo the migration for that one script, it will work:
 
     rake db:migrate:redo VERSION=20200227150658
-
-## Installing pyQuARC
-
-   git clone https://github.com/NASA-IMPACT/pyQuARC.git
-   cd pyQuARC
-   python3 setup.py install
-(this will install pyQuARC globally)
-If you want to have dashboard use a local version of pyQuARC, do this instead:
-   python3 setup.py install --prefix ./local
-   cp ./local/lib/python3.9/site-packages/pyQuARC-1.1.4-py3.9.egg <path to dashboard>/lib/pyQuARC.egg
 
 # Bamboo Testing
 
