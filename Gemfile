@@ -41,6 +41,7 @@ gem 'dotenv-rails'
 gem 'rexml'
 
 group :test do
+  gem 'minitest', '5.18.1'
   gem 'minitest-spec-rails', '6.0.0'
   gem 'webmock', '3.12.2'
   gem 'mocha'
@@ -62,7 +63,7 @@ end
 gem 'simplecov', :require => false, :group => :test
 
 #using puma server instead of webBrick
-gem 'puma', '~> 4.3.12'
+gem 'puma', '~> 6.3.1'
 #base authentication gem
 gem 'devise'
 #setting user permissions for pages
