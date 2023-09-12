@@ -11,6 +11,8 @@ require 'minitest/mock'
 require 'webmock/minitest'
 require 'minitest/reporters'
 
+Selenium::WebDriver.logger.output = false
+
 # Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
 allow_list = ['googlechromelabs.github.io', 'edgedl.me.gvt1.com', 'chromedriver.storage.googleapis.com']
 WebMock.disable_net_connect!(
