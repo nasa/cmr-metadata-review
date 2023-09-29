@@ -174,3 +174,6 @@ Note: The above work-around is not necessary on GET requests, only POST, PUT, an
 See [https://bugs.earthdata.nasa.gov/browse/CMRARC-484] and [https://github.com/rails/rails/issues/24257]
 for more details.
 
+## Issues with running puma in daemon mode.
+Starting in version 5, puma no longer supports -d.   In order to run it in daemon mode, the 'puma-daemon' gem was added.   Example to launch: `RAILS_ENV=sit bundle exec pumad -C config/puma.rb -e sit`
+It is also worth noting that this does not work on a MAC without setting the following env variable: `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`, as noted here: https://github.com/rails/rails/issues/38560
