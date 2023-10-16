@@ -11,7 +11,7 @@ gem 'webpacker'
 gem 'react-rails'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 6.0'
+gem 'sass-rails', '~> 6.0', '>= 6.0.0'
 
 gem 'bourbon'
 gem 'neat'
