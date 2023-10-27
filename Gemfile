@@ -46,7 +46,7 @@ group :test do
   gem 'webmock', '3.12.2'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
-  gem 'minitest-rails', '6.1.0'
+  gem 'minitest-rails', '7.1.0'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'launchy'
