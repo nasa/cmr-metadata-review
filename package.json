@@ -15,7 +15,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react_ujs": "^2.6.1",
-    "save-dev": "0.0.1-security"
+    "save-dev": "0.0.1-security",
+    "postcss-preset-env": "7.2.3"
   },
   "babel": {
     "presets": [
@@ -26,8 +27,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.9.0",
-    "postcss-preset-env": "7.2.3"
+    "webpack-dev-server": "^4.9.0"
   },
   "resolutions": {
     "nth-check": "^2.1.1",
