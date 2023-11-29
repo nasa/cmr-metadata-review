@@ -18,7 +18,7 @@
 
   <% @records.each do |record| %>
     <%= render(partial: 'review_record', locals: {record: record}) %>
-    <% if @granule_associations[record.id] == 'Undefined' %>
+    <% if @granule_associations[record.id] == 'Undefined' || @granule_associations[record.id].nil? %>
       <div class="surrounding_box">
         <p class="granule_association_message">No Associated Granule Information</p>
       </div>
