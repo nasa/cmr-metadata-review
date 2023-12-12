@@ -60,7 +60,9 @@ class MultiRecordCsv
                 record_line += ['No Granule Review']
               else
                 granule_record = Record.where(id: associated_granule_value).first
-                record_line += generate_csv_line(granule_record, granule_fields, false)
+                if !granule_record.nil?
+                  record_line += generate_csv_line(granule_record, granule_fields, false)
+                end
               end
             end
             csv << record_line
