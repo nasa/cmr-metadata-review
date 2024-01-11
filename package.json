@@ -6,6 +6,7 @@
     "@babel/runtime": "^7.11.2",
     "@rails/webpacker": "^5.4.4",
     "antd": "^4.5.4",
+    "audit": "^0.0.6",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-app": "^9.1.2",
@@ -31,7 +32,11 @@
   "resolutions": {
     "nth-check": "^2.1.1",
     "semver": "^7.5.3",
+    "@babel/traverse": "^7.23.2",
+    "browserify-sign": "^4.2.2",
     "glob-parent": "^5.1.2",
+    "follow-redirects": "^1.15.4",
+    "postcss": "^8.4.31",
     "@rails/webpacker/**/@babel/traverse": "^7.23.2",
     "babel-preset-react-app/@babel/core/@babel/traverse": "^7.23.2",
     "@rails/webpacker/webpack/node-libs-browser/crypto-browserify/browserify-sign": "^4.2.2"
@@ -39,6 +44,13 @@
   "overrides": {
     "nth-check": "^2.1.1",
     "semver": "^7.5.3",
-    "glob-parent": "^5.1.2"
-  }
+    "@babel/traverse": "^7.23.2",
+    "browserify-sign": "^4.2.2",
+    "glob-parent": "^5.1.2",
+    "follow-redirects": "^1.15.4",
+    "postcss": "^8.4.31",
+    "@rails/webpacker/**/@babel/traverse": "^7.23.2",
+    "babel-preset-react-app/@babel/core/@babel/traverse": "^7.23.2",
+    "@rails/webpacker/webpack/node-libs-browser/crypto-browserify/browserify-sign": "^4.2.2"
+  }    
 }
