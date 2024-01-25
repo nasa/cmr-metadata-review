@@ -1,3 +1,4 @@
+require 'json'
 module CmrHelper
   module ClassMethods
 
@@ -22,13 +23,11 @@ module CmrHelper
           end
         end
       end
-
       collection_hash
     end
 
     def flatten_to_array(collection_hash, parent_string = "")
       new_collection_arr = []
-
       collection_hash.each do |key, sub_value|
         if sub_value.is_a?(Hash)
           #flattening the child tree
@@ -37,12 +36,13 @@ module CmrHelper
           new_collection_arr.concat(flattened_sub_array)
         elsif sub_value.is_a?(Array)
           #some keyword groupings are presented as lists of strings, do not want to seperate these
-          if sub_value[0].is_a?(String)
+          if ( sub_value[0].is_a?(String) || sub_value[0].is_a?(Numeric))
             #creating an inline object here [key_name, value]
             new_collection_arr_entry = [(parent_string + "/" + key), ""]
             value_index = 1
             sub_value.each_with_index do |array_entry|
-              new_collection_arr_entry[value_index] += (array_entry + " ")
+              array_entry_string = sub_value[0].is_a?(String) ? array_entry : array_entry.to_s
+              new_collection_arr_entry[value_index] += (array_entry_string + " ")
             end
             new_collection_arr_entry[value_index].strip
             new_collection_arr.push(new_collection_arr_entry)
