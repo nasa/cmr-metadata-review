@@ -13,14 +13,19 @@ development:
   password: dashpass
 
 sit:
+  host: localhost
   adapter: postgresql
-  database: <%= ENV['prod_db_database'] %>
-  host: <%= ENV['prod_db_host'] %>
-  port: <%= ENV['prod_db_port'] %>
-  username: <%= ENV['prod_db_user'] %>
-  password: <%= ENV['prod_db_password'] %>
-  min_messages: ERROR
-  pool: 16
+  database: cmrdash
+  username: cmrdash
+  password: dashpass
+#  adapter: postgresql
+#  database: <%#= ENV['prod_db_database'] %>
+#  host: <%#= ENV['prod_db_host'] %>
+#  port: <%#= ENV['prod_db_port'] %>
+#  username: <%#= ENV['prod_db_user'] %>
+#  password: <%#= ENV['prod_db_password'] %>
+#  min_messages: ERROR
+#  pool: 16
 
 uat:
   adapter: postgresql
