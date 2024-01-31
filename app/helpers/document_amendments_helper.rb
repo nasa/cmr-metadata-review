@@ -46,8 +46,8 @@ module DocumentAmendmentsHelper
           ["ScienceKeywords", "ScienceKeyword", "TermKeyword"],
           ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "Value"],
           ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "Value"],
-          ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "VariableLevel3Keyword"],
-          ["ScienceKeywords", "ScienceKeyword", "DetailedVariableKeyword"],
+          ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "VariableLevel3Keyword", "Value"],
+          ["ScienceKeywords", "ScienceKeyword", "DetailedVariableKeyword", "Value"],
         ]
       end
       if (data_format == 'dif10')
