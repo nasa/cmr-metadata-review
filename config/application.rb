@@ -33,7 +33,7 @@ module CmrMetadataReview
       'script-src-elem ' + ['\'self\'',
                             "\'unsafe-inline\'",
                             #"\'nonce-view012345\'",
-                            "www.google-analytics.com",
+                            "www.googletagmanager.com",
                             "fbm.earthdata.nasa.gov",
                             "cdn.earthdata.nasa.gov"].join(' ')
     ]
