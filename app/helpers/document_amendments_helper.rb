@@ -19,6 +19,8 @@ module DocumentAmendmentsHelper
     # This utility function will dig down into a nested hash and assign the "N/A" if the value doesn't exist.
     #
     def dig_and_set_na(parent, stack)
+      puts("@@@@@ parent=" + parent.to_s)
+      puts("@@@@@ stack=" + stack.to_s)
       return if (stack.length == 0)
       if parent.is_a?(Array)
         parent.each do |item|
@@ -38,6 +40,7 @@ module DocumentAmendmentsHelper
     end
 
     def assign_not_available_to_science_keywords(data_format, collection)
+      puts("@@@@@ collection=" + collection.to_json)
       keys = []
       if (data_format == 'echo10')
         keys = [
@@ -46,8 +49,8 @@ module DocumentAmendmentsHelper
           ["ScienceKeywords", "ScienceKeyword", "TermKeyword"],
           ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "Value"],
           ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "Value"],
-          ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "VariableLevel3Keyword", "Value"],
-          ["ScienceKeywords", "ScienceKeyword", "DetailedVariableKeyword", "Value"],
+          ["ScienceKeywords", "ScienceKeyword", "VariableLevel1Keyword", "VariableLevel2Keyword", "VariableLevel3Keyword"],
+          ["ScienceKeywords", "ScienceKeyword", "DetailedVariableKeyword"],
         ]
       end
       if (data_format == 'dif10')
