@@ -16,6 +16,7 @@ module ApplicationHelper
                    'LPDAAC_ECS',
                    'LANCEMODIS',
                    'NSIDC',
+                   'OB_CLOUD',
                    'OB_DAAC',
                    'CDDIS',
                    'PODAAC',
