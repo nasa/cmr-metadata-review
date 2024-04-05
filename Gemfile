@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0', '>= 7.0.8.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', group: [:test]
 # use pg for local and prod development
 gem 'pg', group: [:test, :development, :production]
 gem 'webpacker'
-gem 'react-rails'
+gem 'react-rails', '>= 2.7.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -22,31 +22,31 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 5.0.0'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '>= 4.6.0'
+gem 'jquery-ui-rails', '>= 7.0.0'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder' #, '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 2.3.1.0', group: :doc
+gem 'sdoc', '~> 2.3.2.0', group: :doc
 
 gem 'httparty', '~> 0.21.0'
 gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
 gem 'ruby-progressbar'
-gem 'dotenv-rails'
+gem 'dotenv-rails', '>= 3.0.0'
 gem 'rexml'
 
 group :test do
   gem 'minitest', '5.18.1'
-  gem 'minitest-spec-rails', '6.0.0'
+  gem 'minitest-spec-rails', '6.0.1'
   gem 'webmock', '3.12.2'
   gem 'mocha'
   gem 'minitest-reporters', '1.3.0'
-  gem 'minitest-rails', '6.1.0'
+  gem 'minitest-rails', '7.0.0'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'launchy'
@@ -66,7 +66,7 @@ gem 'simplecov', :require => false, :group => :test
 gem 'puma', '~> 6.4.2'
 gem 'puma-daemon', require: false
 #base authentication gem
-gem 'devise'
+gem 'devise', '>= 4.9.3'
 #setting user permissions for pages
 gem 'cancancan'
 
@@ -77,9 +77,9 @@ gem 'aws-sdk', '~> 3.0.0'
 
 # Should use 5.0.13 but compatibility issues with SIT version of RH, has older GCC.    Eventualaly when they upgrade RH, we can move back to the latest
 gem 'font-awesome-sass', '5.15.1'
-gem 'font-awesome-rails', '4.7.0.7'
+gem 'font-awesome-rails', '4.7.0.8'
 #gem 'activerecord', '~> 6.1'
-gem 'activerecord-session_store'#, '2.0.0'
+gem 'activerecord-session_store', '>= 2.1.0' #, '2.0.0'
 gem 'whenever', require: false
 gem 'oauth2'
 gem 'omniauth-oauth2'
@@ -94,10 +94,10 @@ gem 'rails-controller-testing'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console'
+  gem 'web-console', '>= 4.2.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'rdoc'
+  gem 'rdoc', '>= 6.3.4.1'
   gem 'rubyzip', '1.3.0'
   gem 'rails-erd'
 end
