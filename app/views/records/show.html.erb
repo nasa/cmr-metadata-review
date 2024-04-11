@@ -123,7 +123,7 @@
                 <!--Column 1: the text-->
 
                 <% unless review.review_comment.blank? %>
-                  <div class="comment_text_label" style="display: flex;" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
+                  <div class="comment_text_label" style="display: flex; overflow-wrap: anywhere;" id=<%="text" + getFormReviewId(review)%>><%= string_html_format(review.review_comment) %></div>
                 <% else %>
                   <div id=<%="text" + getFormReviewId(review)%> class="no_comments_label">No Comment</div>
                 <% end %>
