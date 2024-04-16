@@ -55,9 +55,9 @@
   .comment_text_label {
     display: flex;
     overflow-wrap: anywhere;
-    border: 1px solid gray; /* Add gray border */
-    padding: 10px;
-    margin-bottom: 10px;
+    border-bottom: thin solid #d9d9d9;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   .no_comments_label {
     color: #fa8c16;
