@@ -152,7 +152,6 @@ export default class PagingTableViewModel {
       url = url + '&color_code='+colorCode+'&color_code_filter_collection='+colorCodeCollection+'&color_code_filter_granule='+colorCodeGranule
     }
 
-    console.log(url);
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }

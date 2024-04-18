@@ -32,7 +32,6 @@ const PaginationTableView = observer(
     getCampaign() {
       var element = document.getElementById("campaign")
       if (element != null) {
-        console.log("campaign element=",element)
         var value = element.options[element.selectedIndex].value
         return value
       }
@@ -42,7 +41,6 @@ const PaginationTableView = observer(
     getColorCode() {
       var element = document.getElementById("color_code")
       if (element != null) {
-        console.log("color element=",element)
         var value = element.options[element.selectedIndex].value
         return value
       }
@@ -52,7 +50,6 @@ const PaginationTableView = observer(
     getColorCodeCollection() {
       var element = document.getElementById("color_code_filter_collection")
       if (element != null) {
-        console.log("color collection element=",element.checked)
         return element.checked
       }
       return null
@@ -61,7 +58,6 @@ const PaginationTableView = observer(
     getColorCodeGranule() {
       var element = document.getElementById("color_code_filter_granule")
       if (element != null) {
-        console.log("color granule element=",element.checked)
         return element.checked
       }
       return null
