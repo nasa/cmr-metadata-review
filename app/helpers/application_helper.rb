@@ -21,7 +21,11 @@ module ApplicationHelper
                    'CDDIS',
                    'PODAAC',
                    'OMINRT',
-                   'ARCTEST']
+                   'ARCTEST',
+                   'LARC_CLOUD',
+                   'LM_FIRMS',
+                   'LPCLOUD',
+                   'GESDISCCLD']
 
   #providers are specified to identify only the records within EOSDIS which MDQ team curates
   MDQ_PROVIDERS = ['SCIOPS',
