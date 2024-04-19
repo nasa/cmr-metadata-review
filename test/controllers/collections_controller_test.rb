@@ -25,6 +25,15 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
           }).
         to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
 
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=GESDISCCLD").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
+
       get '/collections_search', params: { provider: 'DAAC: ANY', free_text: 'modis', curr_page:1 }
       count = assigns(:collection_count)
       search_iterator = assigns(:search_iterator)
