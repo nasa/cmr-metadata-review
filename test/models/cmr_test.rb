@@ -115,14 +115,15 @@ class CmrTest < ActiveSupport::TestCase
     it "get the total number of collections from CMR" do
 
       stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?page_size=1&provider=NSIDCV0&provider=ORNL_DAAC&provider=LARC_ASDC&provider=LARC&provider=LAADS&provider=GES_DISC&provider=GHRC&provider=SEDAC&provider=ASF&provider=LPDAAC_ECS&provider=LANCEMODIS&provider=NSIDC_ECS&provider=OB_DAAC&provider=CDDIS&provider=LANCEAMSR2&provider=PODAAC&provider=ARCTEST").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}).to_return(:status => 200, :body => '<?xml version=\"1.0\" encoding=\"UTF-8\"?><results><hits>6381</hits><took>33</took><result></result></results>', :headers => {"date"=>["Fri, 24 Mar 2017 15:36:33 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["32728"], "cmr-took"=>["33"], "cmr-request-id"=>["8633b6cd-cc02-4147-91b2-e0236fd1b72a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
-      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?page_size=1&provider=LM_FIRMS").
-        with(
-          headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?page_size=1&provider=NSIDCV0&provider=ORNL_DAAC&provider=LARC_ASDC&provider=LARC&provider=LAADS&provider=GES_DISC&provider=GHRC&provider=SEDAC&provider=ASF&provider=LPDAAC_ECS&provider=LANCEMODIS&provider=NSIDC_ECS&provider=OB_DAAC&provider=CDDIS&provider=LANCEAMSR2&provider=PODAAC&provider=ARCTEST&provider=LM_FIRMS").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}).to_return(:status => 200, :body => '<?xml version=\"1.0\" encoding=\"UTF-8\"?><results><hits>6381</hits><took>33</took><result></result></results>', :headers => {"date"=>["Fri, 24 Mar 2017 15:36:33 GMT"], "content-type"=>["application/echo10+xml; charset=utf-8"], "access-control-expose-headers"=>["CMR-Hits, CMR-Request-Id"], "access-control-allow-origin"=>["*"], "cmr-hits"=>["32728"], "cmr-took"=>["33"], "cmr-request-id"=>["8633b6cd-cc02-4147-91b2-e0236fd1b72a"], "vary"=>["Accept-Encoding, User-Agent"], "connection"=>["close"], "server"=>["Jetty(9.2.z-SNAPSHOT)"], "strict-transport-security"=>["max-age=31536000"]})
+      # stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?page_size=1&provider=LM_FIRMS").
+      #   with(
+      #     headers: {
+      #       'Accept'=>'*/*',
+      #       'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      #       'User-Agent'=>'Ruby'
+      #     }).
+      #   to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
       total_num = Cmr.total_collection_count(ApplicationHelper::ARC_PROVIDERS)
       assert_equal(total_num, 6381)
     end
