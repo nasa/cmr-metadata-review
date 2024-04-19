@@ -22,10 +22,7 @@ module ApplicationHelper
                    'PODAAC',
                    'OMINRT',
                    'ARCTEST',
-                   'LARC_CLOUD',
-                   'LM_FIRMS',
-                   'LPCLOUD',
-                   'GESDISCCLD']
+                   'LM_FIRMS']
 
   #providers are specified to identify only the records within EOSDIS which MDQ team curates
   MDQ_PROVIDERS = ['SCIOPS',
@@ -38,11 +35,13 @@ module ApplicationHelper
                    'MDQTEST']
 
   # arc virtual providers and members of each virtual provider
-  ARC_VIRTUAL_PROVIDERS = ['ASDC', 'LARC_ASDC', 'LARC',
+  ARC_VIRTUAL_PROVIDERS = ['ASDC', 'LARC_ASDC', 'LARC', 'LARC_CLOUD',
                    'NSIDC', 'NSIDCV0', 'NSIDC_ECS',
                    'GHRC', 'GHRC_CLOUD', 'GHRC_DAAC', 'LANCEAMSR2',
                    'PODAAC', 'POCLOUD', 'PO.DAAC',
-                   'ORNL_DAAC', 'ORNL_CLOUD']
+                   'ORNL_DAAC', 'ORNL_CLOUD',
+                           'LPDAAC_ECS', 'LPCLOUD',
+                           'GES_DISC', 'GESDISCCLD']
 
   # The application mode is determined by the logged in user's role or the associated daac.   If they are a
   # "mdq_curator" or a "daac_curator" who is associated with a daac in the MDQ_PROVIDERS list, then the mode will
@@ -141,22 +140,26 @@ module ApplicationHelper
 
   # convert the daac to virtual daac if necessary
   def self.virtual_daac(daac)
-    daac = 'ASDC'   if %w[LARC_ASDC LARC].include?(daac)
+    daac = 'ASDC'   if %w[LARC_ASDC LARC LARC_CLOUD].include?(daac)
     daac = 'NSIDC'  if %w[NSIDCV0 NSIDC_ECS].include?(daac)
     daac = 'GHRC'   if %w[GHRC_CLOUD GHRC_DAAC LANCEAMSR2].include?(daac)
     daac = 'PODAAC' if %w[POCLOUD PO.DAAC].include?(daac)
     daac = 'ORNL_DAAC' if %w[ORNL_CLOUD].include?(daac)
+    daac = 'LPDAAC_ECS' if %w[LPCLOUD].include?(daac)
+    daac = 'GES_DISC' if %w[GESDISCCLD].include?(daac)
     daac
   end
 
   # convert virtual daac into a provider list
   def self.providers(virtual_daac)
     providers = virtual_daac
-    providers = %w[ASDC LARC_ASDC LARC] if virtual_daac == 'ASDC'
+    providers = %w[ASDC LARC_ASDC LARC LARC_CLOUD] if virtual_daac == 'ASDC'
     providers = %w[NSIDC NSIDCV0 NSIDC_ECS] if virtual_daac == 'NSIDC'
     providers = %w[GHRC GHRC_CLOUD GHRC_DAAC LANCEAMSR2] if virtual_daac == 'GHRC'
     providers = %w[PODAAC POCLOUD PO.DAAC] if virtual_daac == 'PODAAC'
     providers = %w[ORNL_CLOUD ORNL_DAAC] if virtual_daac == 'ORNL_DAAC'
+    providers = %w[LPDAAC_ECS LPCLOUD] if virtual_daac == 'LPDAAC_ECS'
+    providers = %w[GESDISCCLD] if virtual_daac == 'GES_DISC'
     providers
   end
 
