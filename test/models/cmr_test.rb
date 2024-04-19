@@ -122,7 +122,7 @@ class CmrTest < ActiveSupport::TestCase
           }).
         to_return(status: 200, body: "", headers: {})
 
-      search_iterator, collection_count = Cmr.collection_search("doris", ApplicationHelper::ARC_PROVIDERS, 1, 10, provider=LM_FIRMS)
+      search_iterator, collection_count = Cmr.collection_search("doris", ApplicationHelper::ARC_PROVIDERS, 1, 10)
 
       assert_equal(search_iterator[0]["concept_id"], "C1000000020-CDDIS")
       assert_equal(search_iterator[1]["concept_id"], "C1000000080-CDDIS")
