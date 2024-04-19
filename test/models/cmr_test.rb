@@ -122,7 +122,7 @@ class CmrTest < ActiveSupport::TestCase
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'User-Agent'=>'Ruby'
           }).
-        to_return(status: 200, body: "", headers: {})
+        to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
       total_num = Cmr.total_collection_count(ApplicationHelper::ARC_PROVIDERS)
       assert_equal(total_num, 6381)
     end
