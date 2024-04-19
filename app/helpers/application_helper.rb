@@ -159,7 +159,7 @@ module ApplicationHelper
     providers = %w[PODAAC POCLOUD PO.DAAC] if virtual_daac == 'PODAAC'
     providers = %w[ORNL_CLOUD ORNL_DAAC] if virtual_daac == 'ORNL_DAAC'
     providers = %w[LPDAAC_ECS LPCLOUD] if virtual_daac == 'LPDAAC_ECS'
-    providers = %w[GESDISCCLD] if virtual_daac == 'GES_DISC'
+    providers = %w[GES_DISC GESDISCCLD] if virtual_daac == 'GES_DISC'
     providers
   end
 
