@@ -41,7 +41,7 @@ class ReportsControllerTest < ActionController::TestCase
         sign_in(@tester)
         stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
 
-        stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?page_size=1&provider=LM_FIRMS").
+        stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?page_size=1&provider=LM_FIRMS").
           with(
             headers: {
               'Accept'=>'*/*',
