@@ -43,6 +43,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   #
   #
+  parallelize(workers: 0)
   def get_stub(file_name)
     file = "#{Rails.root}/test/stubs/#{file_name}"
     File.read(file)
