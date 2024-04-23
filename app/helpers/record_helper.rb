@@ -40,7 +40,10 @@ module  RecordHelper
     # May 7 2020: Added status 'closed', this is a temporary change to allow users to associate
     # closed records until arc team either finishes reviewing all legacy imported records or
     # we fix the bug that is preventing users from marking all colors for a record.
-    return [true, nil] if %w(open in_arc_review closed).include?(collection_state)
+    # return [true, nil] if %w(open in_arc_review closed).include?(collection_state)
+
+    #  turn back on the validation of closed records to ensure integrity.
+    return [true, nil] if %w(open in_arc_review).include?(collection_state)
 
     success = true
     messages = []
