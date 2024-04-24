@@ -129,7 +129,7 @@ class RecordsControllerTest < ActionController::TestCase
       Record.any_instance.stubs(:associate_granule_to_collection).returns(false)
       record = Record.find(1)
 
-      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 13 }
 
       assert_equal 'Failed to associate granule.', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
