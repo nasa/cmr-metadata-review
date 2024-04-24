@@ -5,6 +5,8 @@
     <div class="report_drop_down">
     </div>
     <div class="report_buttons">
+    # <% modal_id = "export-metrics-modal-id" %>
+    # <input class="eui-btn--green confirm-modal-button" type="button" id="export_metrics_button" name="<%= modal_id %>" href="#<%= modal_id %>" value="EXPORT METRICS"/>
       <%= button_to reports_review_path(format: :csv), params: {record_id: @records.map(&:id)} , data: { turbolinks: false }, class: "report_button" do %>
         <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>

@@ -19,7 +19,7 @@ class MultiRecordCsv
     @collections = records.where(recordable_type: 'Collection')
   end
 
-  def to_csv
+  def to_csv(full_report = false)
     CSV.generate do |csv|
       csv << ['CMR Multiple Record Report']
 
@@ -46,12 +46,29 @@ class MultiRecordCsv
           # is supported.
           granule_fields = determine_fields(granules)
           collection_fields = determine_fields(records_for_format)
-          csv << [metadata_format]
-          csv << ['Collection'] + Array.new(csv_titles(collection_fields, true).count - 1) + ['Granule']
-          csv << csv_titles(collection_fields, true) + csv_titles(granule_fields, false)
+          # Create column titles based on report user requests
+          collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
+          granule_column_titles = []
 
+          csv << [metadata_format]
           records_for_format.each do |collection_record|
-            record_line = generate_csv_line(collection_record, collection_fields, true)
+            data_hash = record_datas_organized_by_title(collection_record)
+            collection_fields.each do |title|
+              record_data = data_hash[title]
+              if full_report == true
+                collection_column_titles << title
+              elsif !record_data.nil? && !full_report && (record_data.recommendation != "")
+                collection_column_titles << title
+              end
+            end
+
+            METRIC_FIELDS.each do |field|
+              collection_column_titles.push(field)
+            end
+
+            csv << ['Collection'] + Array.new(collection_column_titles.count - 1) + ['Granule']
+        
+            record_line = generate_csv_line(collection_record, collection_column_titles, true, full_report)
             associated_granule_value = collection_record.associated_granule_value
             if associated_granule_value.nil? || (associated_granule_value == 'Undefined')
               record_line += ['Associated Granule Undefined']
@@ -61,10 +78,25 @@ class MultiRecordCsv
               else
                 granule_record = Record.where(id: associated_granule_value).first
                 if !granule_record.nil?
-                  record_line += generate_csv_line(granule_record, granule_fields, false)
+                  granule_fields.each do |title|
+                    granule_record_data = data_hash[title]
+                    byebug
+                    if full_report == true
+                      granule_column_titles << title
+                    elsif granule_record_data && !full_report && (granule_record_data.recommendation != "")
+                      granule_column_titles << title
+                    end
+                  end
+
+                  METRIC_FIELDS.each do |field|
+                    granule_column_titles.push(field)
+                  end
+
+                  record_line += generate_csv_line(granule_record, granule_column_titles, false, full_report)
                 end
               end
             end
+            csv << collection_column_titles + granule_column_titles
             csv << record_line
           end
 
@@ -80,14 +112,6 @@ class MultiRecordCsv
     RecordData.where(record: records).pluck(:column_name).uniq.sort
   end
 
-  def csv_titles(fields, is_collection)
-    if is_collection
-      ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id'] + fields + METRIC_FIELDS
-    else
-      ['umm_json_link', 'granule ur', 'concept_id', 'revision id'] + fields + METRIC_FIELDS
-    end
-  end
-
   def record_datas_organized_by_title(record)
     {}.tap do |data_hash|
       record.record_datas.each do |record_data|
@@ -96,24 +120,32 @@ class MultiRecordCsv
     end
   end
 
-  def generate_csv_line(record, fields, is_collection)
+# need to take in another argument called full_report which is a boolean
+  def generate_csv_line(record, fields, is_collection, full_report_boolean)
     line = if is_collection
-             [record.umm_json_link] + [record.short_name] + [record.long_name] + [record.concept_id] + [record.revision_id]
-           else
-             [record.umm_json_link] + [record.long_name] + [record.concept_id] + [record.revision_id]
-           end
+      [record.umm_json_link] + [record.short_name] + [record.long_name] + [record.concept_id] + [record.revision_id]
+    else
+      [record.umm_json_link] + [record.long_name] + [record.concept_id] + [record.revision_id]
+    end
 
     data_hash = record_datas_organized_by_title(record)
-
+    
     fields.each do |title|
       data_string = nil
-      if record_data = data_hash[title]
+      record_data = data_hash[title]
+      if full_report_boolean
         data_string = "Color: #{record_data.color}\n"
         data_string += "Value: " + (record_data.value.blank? ? "n/a \n" : "#{record_data.value}\n")
         data_string += "Recommendation: #{record_data.recommendation}" unless record_data.recommendation.blank?
+      elsif !record_data.nil? && !full_report_boolean && (record_data.recommendation != "")
+        data_string = "Color: #{record_data.color}\n"
+        data_string += "Value: " + (record_data.value.blank? ? "n/a \n" : "#{record_data.value}\n")
+        data_string += "Recommendation: #{record_data.recommendation}"
       end
-
-      line << data_string
+      
+      if !data_string.nil?
+        line << data_string
+      end
     end
 
     line + metric_data_array(record)
