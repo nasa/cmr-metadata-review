@@ -126,10 +126,10 @@ class RecordsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      Record.any_instance.stubs(close!: false)
+      Record.any_instance.stubs(success?: false)
       record = Record.find(1)
 
-      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
+      post :complete, params: { id: record.id }
 
       assert_equal 'Failed to associate granule.', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
