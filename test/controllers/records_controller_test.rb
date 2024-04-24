@@ -126,7 +126,7 @@ class RecordsControllerTest < ActionController::TestCase
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-      Record.any_instance.stubs(close!: true)
+      Record.any_instance.stubs(close!: false)
       record = Record.find(1)
 
       post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16 }
