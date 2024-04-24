@@ -121,15 +121,21 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
 
-    it 'displays a failure message when granule association fails' do
+    it 'displays a failure message when attempting to associate a granule to a collection record that has been closed.' do
       user = User.find_by(email: 'abaker@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       Record.any_instance.stubs(close!: true)
-      record = Record.find(1)
-      
-      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: valid_granule_id }
+      Record.stubs(:find).with(1).returns(Record.new(id: 1))
+
+      Record.stubs(:find_by).with(id: 'non_existent_granule_id').returns(nil)
+
+      stubbed_success = false
+      stubbed_messages = ['An error occurred while associating granule.']
+      RecordsController.any_instance.stubs(:can_associate_granule?).returns([stubbed_success, stubbed_messages])
+
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 'non_existent_granule_id' }
 
       assert_equal 'Failed to associate granule.', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
