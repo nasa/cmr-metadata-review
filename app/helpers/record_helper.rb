@@ -148,11 +148,6 @@ module  RecordHelper
     record.copy_recommendations_note.nil? ? 'eui-btn--green confirm-modal-button' : 'eui-btn--disabled'
   end
 
-  def export_metrics_active_class
-    # record.copy_recommendations_note.nil? ? 'eui-btn--green confirm-modal-button' : 'eui-btn--disabled'
-    'eui-btn--green confirm-modal-button'
-  end
-
   # When a record has multiples, Dashboard stores them in the value field
   # formatted like: "• <value1>\n• <value2>\n ..."
   # Returns an array like: [value1, value2, ...]

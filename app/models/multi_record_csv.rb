@@ -46,10 +46,10 @@ class MultiRecordCsv
           # is supported.
           granule_fields = determine_fields(granules)
           collection_fields = determine_fields(records_for_format)
+          csv << [metadata_format]
 
           # Create collection column titles based on report user requests
           collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
-          csv << [metadata_format]
           records_for_format.each do |collection_record|
             data_hash = record_datas_organized_by_title(collection_record)
             collection_fields.each do |title|
