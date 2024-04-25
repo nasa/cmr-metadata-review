@@ -19,7 +19,7 @@ class MultiRecordCsv
     @collections = records.where(recordable_type: 'Collection')
   end
 
-  def to_csv(full_report = false)
+  def to_csv(full_report = true)
     CSV.generate do |csv|
       csv << ['CMR Multiple Record Report']
 
@@ -48,7 +48,7 @@ class MultiRecordCsv
           collection_fields = determine_fields(records_for_format)
           # Create column titles based on report user requests
           collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
-          granule_column_titles = []
+          granule_column_titles = ['umm_json_link', 'long name', 'concept_id', 'revision id']
 
           csv << [metadata_format]
           records_for_format.each do |collection_record|
@@ -77,10 +77,10 @@ class MultiRecordCsv
                 record_line += ['No Granule Review']
               else
                 granule_record = Record.where(id: associated_granule_value).first
+                granule_data_hash = record_datas_organized_by_title(granule_record)
                 if !granule_record.nil?
                   granule_fields.each do |title|
-                    granule_record_data = data_hash[title]
-                    byebug
+                    granule_record_data = granule_data_hash[title]
                     if full_report == true
                       granule_column_titles << title
                     elsif granule_record_data && !full_report && (granule_record_data.recommendation != "")
@@ -91,7 +91,7 @@ class MultiRecordCsv
                   METRIC_FIELDS.each do |field|
                     granule_column_titles.push(field)
                   end
-
+              
                   record_line += generate_csv_line(granule_record, granule_column_titles, false, full_report)
                 end
               end
@@ -133,11 +133,11 @@ class MultiRecordCsv
     fields.each do |title|
       data_string = nil
       record_data = data_hash[title]
-      if full_report_boolean
+      if full_report_boolean && !record_data.nil?
         data_string = "Color: #{record_data.color}\n"
         data_string += "Value: " + (record_data.value.blank? ? "n/a \n" : "#{record_data.value}\n")
         data_string += "Recommendation: #{record_data.recommendation}" unless record_data.recommendation.blank?
-      elsif !record_data.nil? && !full_report_boolean && (record_data.recommendation != "")
+      elsif !full_report_boolean && !record_data.nil? && (record_data.recommendation != "")
         data_string = "Color: #{record_data.color}\n"
         data_string += "Value: " + (record_data.value.blank? ? "n/a \n" : "#{record_data.value}\n")
         data_string += "Recommendation: #{record_data.recommendation}"
