@@ -127,17 +127,13 @@ class RecordsControllerTest < ActionController::TestCase
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
       Record.any_instance.stubs(close!: true)
-      Record.stubs(:find).with(1).returns(Record.new(id: 1))
+      record = Record.find(1)
 
-      Record.stubs(:find_by).with(id: 'non_existent_granule_id').returns(nil)
+      Record.stubs(:associate_granule_to_collection).returns(false)
 
-      stubbed_success = false
-      stubbed_messages = ['An error occurred while associating granule.']
-      RecordsController.any_instance.stubs(:can_associate_granule?).returns([stubbed_success, stubbed_messages])
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: false }
 
-      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 'non_existent_granule_id' }
-
-      assert_equal 'Failed to associate granule.', flash[:notice]
+      assert_equal 'An error occurred associating granule to the collection', flash[:notice]
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
 
