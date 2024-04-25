@@ -19,7 +19,7 @@ class MultiRecordCsv
     @collections = records.where(recordable_type: 'Collection')
   end
 
-  def to_csv(full_report = true)
+  def to_csv(full_report)
     CSV.generate do |csv|
       csv << ['CMR Multiple Record Report']
 
@@ -46,10 +46,9 @@ class MultiRecordCsv
           # is supported.
           granule_fields = determine_fields(granules)
           collection_fields = determine_fields(records_for_format)
-          # Create column titles based on report user requests
-          collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
-          granule_column_titles = ['umm_json_link', 'long name', 'concept_id', 'revision id']
 
+          # Create collection column titles based on report user requests
+          collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
           csv << [metadata_format]
           records_for_format.each do |collection_record|
             data_hash = record_datas_organized_by_title(collection_record)
@@ -69,6 +68,9 @@ class MultiRecordCsv
             csv << ['Collection'] + Array.new(collection_column_titles.count - 1) + ['Granule']
         
             record_line = generate_csv_line(collection_record, collection_column_titles, true, full_report)
+
+            # Create granule column titles based on report user requests
+            granule_column_titles = ['umm_json_link', 'long name', 'concept_id', 'revision id']
             associated_granule_value = collection_record.associated_granule_value
             if associated_granule_value.nil? || (associated_granule_value == 'Undefined')
               record_line += ['Associated Granule Undefined']

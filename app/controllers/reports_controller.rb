@@ -53,6 +53,7 @@ class ReportsController < ApplicationController
   end
 
   def review
+    full_report = params[:full_report] === "true"
     @records = Record.where(id: params[:record_id])
     @granule_associations = {}
     @records.each do |record|
@@ -69,7 +70,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data(MultiRecordCsv.new(@records).to_csv, filename: "metrics_report_#{DateTime.now.to_i}.csv", type: "application/csv", disposition: 'attachment') }
+      format.csv { send_data(MultiRecordCsv.new(@records).to_csv(full_report), filename: "metrics_report_#{DateTime.now.to_i}.csv", type: "application/csv", disposition: 'attachment') }
     end
   end
 end
