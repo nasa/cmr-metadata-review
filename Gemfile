@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.1.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
@@ -11,6 +11,7 @@ gem 'webpacker'
 gem 'react-rails'
 
 gem 'sprockets-rails'
+gem 'rspec-core'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -43,12 +44,12 @@ gem 'dotenv-rails'
 gem 'rexml'
 
 group :test do
-  gem 'minitest', '5.18.1'
-  gem 'minitest-spec-rails', '6.0.0'
-  gem 'webmock', '3.12.2'
+  gem 'minitest'
+  gem 'minitest-spec-rails'
+  gem 'webmock'
   gem 'mocha'
-  gem 'minitest-reporters', '>= 1.3.0'
-  gem 'minitest-rails', '>= 6.1.0'
+  gem 'minitest-reporters'
+  gem 'minitest-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'launchy'
