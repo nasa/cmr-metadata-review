@@ -127,7 +127,7 @@
 </div>
 
 <script type="text/javascript">
-  <%= render partial: 'reviewed_elements_charts.js', locals: { metric_data: metric_data, type: type } %>
+  <%= render partial: 'reviewed_elements_charts', formats: [:js], locals: { metric_data: metric_data, type: type } %>
 </script>
 
 

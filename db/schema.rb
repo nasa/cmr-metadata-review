@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_07_144837) do
-
+ActiveRecord::Schema[7.0].define(version: 2024_04_25_181335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cmr_syncs", force: :cascade do |t|
-    t.datetime "updated_since"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_since", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "collections", id: :serial, force: :cascade do |t|
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
   create_table "discussions", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date", null: false
+    t.datetime "date", precision: nil, null: false
     t.string "column_name", null: false
     t.string "comment"
     t.integer "category", default: 0
@@ -49,7 +48,7 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
   create_table "ingests", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
-    t.datetime "date_ingested", null: false
+    t.datetime "date_ingested", precision: nil, null: false
     t.index ["record_id"], name: "index_ingests_on_record_id"
     t.index ["user_id"], name: "index_ingests_on_user_id"
   end
@@ -63,15 +62,15 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
     t.string "invalid_keyword_path"
     t.string "valid_keyword_path"
     t.string "ummc_field"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "scheme"
   end
 
   create_table "record_data", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.string "value", default: ""
-    t.datetime "last_updated"
+    t.datetime "last_updated", precision: nil
     t.string "column_name", null: false
     t.string "color", default: ""
     t.string "script_comment", default: ""
@@ -88,12 +87,12 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
     t.string "recordable_type", null: false
     t.integer "recordable_id", null: false
     t.string "revision_id", null: false
-    t.datetime "closed_date"
+    t.datetime "closed_date", precision: nil
     t.string "format", default: ""
     t.string "state"
     t.string "associated_granule_value"
     t.string "copy_recommendations_note"
-    t.datetime "released_to_daac_date"
+    t.datetime "released_to_daac_date", precision: nil
     t.string "daac"
     t.string "campaign", default: [], null: false, array: true
     t.string "native_format"
@@ -102,13 +101,13 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
   end
 
   create_table "records_update_locks", id: :serial, force: :cascade do |t|
-    t.datetime "last_update", null: false
+    t.datetime "last_update", precision: nil, null: false
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|
     t.integer "record_id", null: false
     t.integer "user_id", null: false
-    t.datetime "review_completion_date"
+    t.datetime "review_completion_date", precision: nil
     t.integer "review_state", null: false
     t.string "review_comment", default: ""
     t.string "report_comment", default: ""
@@ -120,8 +119,8 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
   create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
@@ -130,20 +129,20 @@ ActiveRecord::Schema.define(version: 2022_05_07_144837) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "role"
     t.string "daac"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.string "provider"
     t.string "uid"
     t.string "access_token"

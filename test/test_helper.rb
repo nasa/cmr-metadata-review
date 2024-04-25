@@ -3,6 +3,24 @@
 ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 SimpleCov.start 'rails'
+# require_relative '../app/helpers/application_helper'
+# require_relative '../app/helpers/cmr_helper'
+# require_relative '../app/helpers/collections_helper'
+# require_relative '../app/helpers/document_amendments_helper'
+# require_relative '../app/helpers/record_helper'
+# require_relative '../app/helpers/reports_helper'
+# require_relative '../app/helpers/reviews_helper'
+# require_relative '../app/helpers/sessions_helper'
+# require_relative '../app/helpers/site_helper'
+# require_relative '../app/helpers/ummc_to_iso19115_helper'
+# require_relative '../app/helpers/ummc_to_iso_mends_helper'
+# require_relative '../app/helpers/ummc_to_iso_smap_helper'
+#
+# require 'action_view/helpers/tag_helper'
+# require 'action_view/helpers/text_helper'
+#
+# require 'font-awesome-rails'
+# include FontAwesome::Rails::IconHelper
 
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
@@ -14,10 +32,10 @@ require 'minitest/reporters'
 Selenium::WebDriver.logger.output = false
 
 # Not sure this is the best thing to do, but we don't call localhost for anything needed in our tests.
-allow_list = ['googlechromelabs.github.io', 'edgedl.me.gvt1.com', 'chromedriver.storage.googleapis.com']
+allow_list = ['127.0.0.1', 'storage.googleapis.com', 'googlechromelabs.github.io', 'edgedl.me.gvt1.com', 'chromedriver.storage.googleapis.com']
 WebMock.disable_net_connect!(
-   allow_localhost: true,
-   allow: allow_list
+  allow_localhost: true,
+  allow: allow_list
 )
 
 require 'minitest/rails/capybara'
@@ -31,7 +49,11 @@ Capybara.javascript_driver = :headless_chrome
 # WebMock.allow_net_connect!
 
 WebMock.after_request(real_requests_only: true) do |request_signature, response|
-  unless request_signature.uri.to_s.include?('127.0.0.1') || request_signature.uri.to_s.include?('chromedriver.storage.googleapis.com') || request_signature.uri.to_s.include?('googlechromelabs.github.io') || request_signature.uri.to_s.include?('edgedl.me.gvt1.com')
+  allowed = true
+  allow_list.each do |host|
+    allowed = false if request_signature.uri.to_s.include?(host)
+  end
+  if allowed
     puts "Request #{request_signature} was made. \nrequest headers=#{request_signature.headers}\nresponse body=#{response.body}"
   end
 end
