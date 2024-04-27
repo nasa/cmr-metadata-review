@@ -1,4 +1,4 @@
-class ISOFieldMapping
+class IsoFieldMapping
   include Singleton
 
   def initialize

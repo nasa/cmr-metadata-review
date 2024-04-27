@@ -1,6 +1,6 @@
 module UmmcToIsoSmapHelper
   def getISOSmapFieldMappingSections(ummJsonField)
-    map = ISOFieldMapping.instance.mapping('iso-smap')
+    map = IsoFieldMapping.instance.mapping('iso-smap')
     value = map[ummJsonField]
     value = 'No field mapping found.' if value.blank?
     sections = [ummJsonField]
@@ -19,7 +19,7 @@ module UmmcToIsoSmapHelper
   end
 
   def getISOSmapFieldText(field)
-    map = ISOFieldMapping.instance.mapping('iso-smap')
+    map = IsoFieldMapping.instance.mapping('iso-smap')
     value = map[field]
     return "\nNo field mapping found." if value.blank?
     "\n\n#{map[field]}\n\n"
