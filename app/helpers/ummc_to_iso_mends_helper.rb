@@ -1,6 +1,6 @@
 module UmmcToIsoMendsHelper
   def getISOMendsFieldMappingSections(ummJsonField)
-    map = ISOFieldMapping.instance.mapping('iso-mends')
+    map = IsoFieldMapping.instance.mapping('iso-mends')
     value = map[ummJsonField]
     value = 'No field mapping found.' if value.blank?
     sections = [ummJsonField]
@@ -19,7 +19,7 @@ module UmmcToIsoMendsHelper
   end
 
   def getISOMendsFieldText(field)
-    map = ISOFieldMapping.instance.mapping('iso-mends')
+    map = IsoFieldMapping.instance.mapping('iso-mends')
     value = map[field]
     return "\nNo field mapping found." if value.blank?
     "\n\n#{map[field]}\n\n"
