@@ -66,6 +66,7 @@ module OmniauthMacros
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization'=>'Bearer accesstoken',
+          'User-Agent'=>'Faraday v1.10.3'
           #
         }).
       to_return(status: 200, body: "{}", headers: {})
