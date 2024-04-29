@@ -41,8 +41,8 @@ class KeywordCheckerTest < ActiveSupport::TestCase
     @record = JSON.parse(json_record)
     @keyword_checker = KeywordChecker.new()
   end
-  describe 'KeywordChecker test' do
-    it 'get keywords from json' do
+  context 'KeywordChecker test' do
+    should 'get keywords from json' do
       keywords = @keyword_checker.get_record_keywords(@record, 'sciencekeywords')
       assert_equal('EARTH SCIENCE|SPECTRAL/ENGINEERING|VISIBLE WAVELENGTHS|VISIBLE IMAGERY', keywords[1])
       keywords = @keyword_checker.get_record_keywords(@record, 'platforms')
@@ -60,7 +60,7 @@ class KeywordCheckerTest < ActiveSupport::TestCase
       assert_equal('ZIP(HDF)', keywords[0])
     end
 
-    it 'get invalid keywords' do
+    should 'get invalid keywords' do
       invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'sciencekeywords')
       assert_equal('EARTH SCIENCE|SPECTRAL/ENGINEERING|VISIBLE WAVELENGTHS|VISIBLE IMAGERY TEST', invalid_keywords[0])
       invalid_keywords = @keyword_checker.get_invalid_keywords(@record, 'instruments')

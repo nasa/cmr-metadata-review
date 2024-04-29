@@ -16,9 +16,9 @@ class AssociatingGranulesTest < SystemTestCase
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  describe 'Granule Assocations' do
-    describe 'associate granules to collections' do
-      it 'can assign granule to collection' do
+  context 'Granule Assocations' do
+    context 'associate granules to collections' do
+      should 'can assign granule to collection' do
         visit '/home'
 
         within '#open' do
@@ -33,7 +33,7 @@ class AssociatingGranulesTest < SystemTestCase
       end
 
 
-      it 'can assign "no granule review" to a collection' do
+      should 'can assign "no granule review" to a collection' do
         visit '/home'
 
         within '#open' do
@@ -49,8 +49,8 @@ class AssociatingGranulesTest < SystemTestCase
 
     end
 
-    describe 'associated granule reports' do
-      it 'associated granule shows up in reports' do
+    context 'associated granule reports' do
+      should 'associated granule shows up in reports' do
         mock_login(role: 'admin')
         visit '/home'
 
@@ -79,8 +79,8 @@ class AssociatingGranulesTest < SystemTestCase
   end
 
   # Note had to move this test of the main tests as we were not getting proper database cleanup after each test
-  describe 'mark as undefined' do
-    it 'can mark a granule back to undefined' do
+  context 'mark as undefined' do
+    should 'can mark a granule back to undefined' do
       visit '/home'
 
       within '#open' do
@@ -99,8 +99,8 @@ class AssociatingGranulesTest < SystemTestCase
     end
   end
 
-  describe 'perform checks associating granule to collection' do
-    it 'checks has reviewers, all colors, and no second opinions' do
+  context 'perform checks associating granule to collection' do
+    should 'checks has reviewers, all colors, and no second opinions' do
       mock_login(role: 'admin')
       visit '/home'
 

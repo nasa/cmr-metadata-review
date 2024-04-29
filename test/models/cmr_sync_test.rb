@@ -1,19 +1,19 @@
 require 'test_helper'
 
 class CmrSyncTest < ActiveSupport::TestCase
-  describe "can read/write since data from cmr_sync table" do
-    it "can read sync date" do
+  context "can read/write since data from cmr_sync table" do
+    should "can read sync date" do
       assert_equal('1971-01-01T12:00:00Z', CmrSync.get_sync_date.utc.iso8601)
     end
 
-    it "can write sync date" do
+    should "can write sync date" do
       now = DateTime.now
       CmrSync.update_sync_date(now)
       retrieved_date = CmrSync.get_sync_date
       assert_in_delta retrieved_date, DateTime.now, 10
     end
 
-    it "returns all concept_id, revision_id, short_name, version for a given provider from CMR api" do
+    should "returns all concept_id, revision_id, short_name, version for a given provider from CMR api" do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.umm-json?page_num=1&page_size=30&provider=LARC&updated_since=1971-01-01T12:00:00Z").
         with(
           headers: {
@@ -41,7 +41,7 @@ class CmrSyncTest < ActiveSupport::TestCase
       assert_equal(32, concepts.length)
     end
 
-    it "returns umm-json collection with revision id from CMR api" do
+    should "returns umm-json collection with revision id from CMR api" do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/C28109-LARC/12.umm_json").
         with(
           headers: {
@@ -54,7 +54,7 @@ class CmrSyncTest < ActiveSupport::TestCase
       assert_equal(concept['ShortName'],'MISBR')
     end
 
-    it "returns umm-json collection without revision id from CMR api" do
+    should "returns umm-json collection without revision id from CMR api" do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/concepts/C28109-LARC.umm_json").
         with(
           headers: {

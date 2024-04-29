@@ -16,8 +16,8 @@ class UpdateReviewCommentTest < SystemTestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  describe 'update review comment.' do
-    it 'add review comments and then update, delete' do
+  context 'update review comment.' do
+    should 'add review comments and then update, delete' do
       visit '/home'
       within '#open' do
         all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"

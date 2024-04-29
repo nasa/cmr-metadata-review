@@ -5,7 +5,7 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
 
-  describe "POST #urs" do
+  context "POST #urs" do
     before do
       mock_normal_edl_user
       ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
@@ -26,8 +26,8 @@ class LoginControllerTest < ActionController::TestCase
     end
 
 
-    describe "#urs callback" do
-      it "should successfully create a user" do
+    context "#urs callback" do
+      should "should successfully create a user" do
         mock_normal_edl_user
 
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?client_id=clientid").

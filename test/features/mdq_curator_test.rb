@@ -15,13 +15,13 @@ class MdqCuratorTest < SystemTestCase
   # list the application_mode will be :arc_mode.   The mode will causing the filtering of collections, granules
   # based on a specific provider list.  This could affect performance and why we have made this a feature toggle.
 
-  describe 'mdq_enabled feature toggle - true' do
-    describe 'Access to mdq records' do
+  context 'mdq_enabled feature toggle - true' do
+    context 'Access to mdq records' do
       before do
         mock_login(role: "mdq_curator") # mdq curator
       end
 
-      it 'can see the mdq records' do
+      should 'can see the mdq records' do
         visit home_path
         within '#in_arc_review' do
           assert has_no_content? 'arc_curator_collection'
@@ -30,12 +30,12 @@ class MdqCuratorTest < SystemTestCase
       end
     end
 
-    describe 'Access to arc records' do
+    context 'Access to arc records' do
       before do
         mock_login(role: "arc_curator") # arc curator
       end
 
-      it 'can see the arc records' do
+      should 'can see the arc records' do
         visit home_path
         within '#in_arc_review' do
           assert has_content? 'arc_curator_collection'
@@ -44,12 +44,12 @@ class MdqCuratorTest < SystemTestCase
       end
     end
 
-    describe 'Access to daac records in mdq_mode' do
+    context 'Access to daac records in mdq_mode' do
       before do
         mock_login(id: 12) # daac curator, but mdq one
       end
 
-      it 'can see the mdq records in daac review section' do
+      should 'can see the mdq records in daac review section' do
         visit home_path
         within '#in_daac_review' do
           assert has_content? 'mdq_curator_collection'
@@ -58,12 +58,12 @@ class MdqCuratorTest < SystemTestCase
       end
     end
 
-    describe 'Access to daac records in arc_mode' do
+    context 'Access to daac records in arc_mode' do
       before do
         mock_login(role: "admin") # admin is considered in the :arc_mode
       end
 
-      it 'can see the arc records in daac review section' do
+      should 'can see the arc records in daac review section' do
         visit home_path
         within '#in_daac_review' do
           assert has_content? 'arc_curator_collection'
@@ -76,7 +76,7 @@ class MdqCuratorTest < SystemTestCase
 
   # turning off the feature toggle will show ALL records.  This will be the state for production to assure no
   # performance penalty until we can fully verify performance is not an issue with the new filtering of records.
-  describe 'mdq_enabled feature toggle - false' do
+  context 'mdq_enabled feature toggle - false' do
     before do
       Rails.configuration.mdq_enabled_feature_toggle = false
     end
@@ -85,12 +85,12 @@ class MdqCuratorTest < SystemTestCase
       Rails.configuration.mdq_enabled_feature_toggle = true
     end
 
-    describe 'Access to mdq records' do
+    context 'Access to mdq records' do
       before do
         mock_login(role: "mdq_curator") # mdq curator
       end
 
-      it 'can see the mdq records and arc records' do
+      should 'can see the mdq records and arc records' do
         visit home_path
         within '#in_arc_review' do
           assert has_content? 'arc_curator_collection'

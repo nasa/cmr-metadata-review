@@ -12,8 +12,8 @@ class UpdateReviewCommentTest < SystemTestCase
     mock_login(role: 'arc_curator')
   end
 
-  describe 'Show ingested iso record.' do
-    it 'Navigate to show iso mends field mapping' do
+  context 'Show ingested iso record.' do
+    should 'Navigate to show iso mends field mapping' do
       visit '/home'
       see_collection_review_details('#in_arc_review', 42)
       see_collection_revision_details(1)
@@ -21,7 +21,7 @@ class UpdateReviewCommentTest < SystemTestCase
       page.driver.browser.action.move_to(page.find('#ShortName').native).perform
       assert has_content? "/gco:CharacterString = gov.nasa.esdis.umm.shortname"
     end
-    it 'Navigate to show iso smap field mapping' do
+    should 'Navigate to show iso smap field mapping' do
       visit '/home'
       see_collection_review_details('#in_arc_review', 43)
       see_collection_revision_details(1)

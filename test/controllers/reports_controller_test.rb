@@ -10,8 +10,8 @@ class ReportsControllerTest < ActionController::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  describe 'GET #search' do
-    it 'it returns modis results' do
+  context 'GET #search' do
+    should 'it returns modis results' do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -35,8 +35,8 @@ class ReportsControllerTest < ActionController::TestCase
   end
 
 
-  describe "GET #home" do
-    it "gets home csv without error" do
+  context "GET #home" do
+    should "gets home csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -58,8 +58,8 @@ class ReportsControllerTest < ActionController::TestCase
     end
   end
 
-  describe "GET #provider" do
-    it "gets provider csv without error" do
+  context "GET #provider" do
+    should "gets provider csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -72,8 +72,8 @@ class ReportsControllerTest < ActionController::TestCase
     end
   end
 
-  describe "GET #selection" do
-    it "gets selection csv without error" do
+  context "GET #selection" do
+    should "gets selection csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -84,7 +84,7 @@ class ReportsControllerTest < ActionController::TestCase
     end
   end
 
-  it "can download csv review report" do
+  should "can download csv review report" do
     user = User.find_by(email: "abaker@element84.com")
     sign_in(user)
     stub_urs_access(user.uid, user.access_token, user.refresh_token)

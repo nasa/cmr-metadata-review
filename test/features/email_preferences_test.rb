@@ -8,12 +8,12 @@ class EmailPreferenceTest < SystemTestCase
     OmniAuth.config.test_mode = true
   end
 
-  describe 'Accessing and updating e-mail preference' do
+  context 'Accessing and updating e-mail preference' do
     before do
       mock_login(id: 5) # daac curator
     end
 
-    it 'a daac curator can see and access the e-mail preferences page' do
+    should 'a daac curator can see and access the e-mail preferences page' do
       visit home_path
       assert has_content?('Account Options')
       find('.account_options').hover
@@ -21,7 +21,7 @@ class EmailPreferenceTest < SystemTestCase
       assert has_content?('I would like the Curation Dashboard to send me e-mails summarizing available reports that are relevant to my DAAC:')
     end
 
-    it 'a daac curator can save a preference' do
+    should 'a daac curator can save a preference' do
       visit email_preferences_path
       assert has_content?('I would like the Curation Dashboard to send me e-mails summarizing available reports that are relevant to my DAAC:')
       # Default should be never

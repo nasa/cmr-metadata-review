@@ -4,7 +4,7 @@ Dir[Rails.root.join('test/**/*.rb')].each { |f| require f }
 class CanRevertRecordTest < SystemTestCase
   include Helpers::UserHelpers
 
-  describe 'Reverting Collections' do
+  context 'Reverting Collections' do
     before do
       OmniAuth.config.test_mode = true
       mock_login(role: 'admin')
@@ -18,7 +18,7 @@ class CanRevertRecordTest < SystemTestCase
 
     # Note although the test below mimics the workflow in CMRARC-494, we could not get capybara to replicate it,
     # but still figured it was worth including as an additional test in any case.
-    it 'can revert a record, mimics workflow in issue CMRARC-484' do
+    should 'can revert a record, mimics workflow in issue CMRARC-484' do
       visit '/home'
 
       within '#in_daac_review' do

@@ -5,8 +5,8 @@ class RecordsControllerTest < ActionController::TestCase
   include OmniauthMacros
 
 
-  describe 'POST #create' do
-    it 'updates record data from review params' do
+  context 'POST #create' do
+    should 'updates record data from review params' do
       @tester = User.find_by_email('abaker@element84.com')
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -35,7 +35,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal(record.discussions.where(column_name: 'LongName').sort_by(&:date).first.comment, 'new comment')
     end
 
-    it 'removes values when unselected' do
+    should 'removes values when unselected' do
       @tester = User.find_by_email('abaker@element84.com')
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -65,8 +65,8 @@ class RecordsControllerTest < ActionController::TestCase
     end
   end
 
-  describe 'POST #complete' do
-    it 'will set an error when the user does not have permission to advance the record' do
+  context 'POST #complete' do
+    should 'will set an error when the user does not have permission to advance the record' do
       user = User.find_by(email: 'arc_curator@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -79,7 +79,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to record_path(record)
     end
 
-    it 'will set an error when record cannot move to the next stage' do
+    should 'will set an error when record cannot move to the next stage' do
       user = User.find_by(email: 'abaker@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -93,7 +93,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to record_path(record.id)
     end
 
-    it "will send the user to the collection's page when successful" do
+    should "will send the user to the collection's page when successful" do
       user = User.find_by(email: 'abaker@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -107,7 +107,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
 
-    it 'associates a granule to a collection' do
+    should 'associates a granule to a collection' do
       user = User.find_by(email: 'abaker@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -121,7 +121,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
 
-    it 'roundtrip release to daac both a collection and assoc granule record and then revert it' do
+    should 'roundtrip release to daac both a collection and assoc granule record and then revert it' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -139,7 +139,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(19).state, 'ready_for_daac_review'
     end
 
-    it 'roundtrip release to daac just a collection record with no assoc granule record and then revert it' do
+    should 'roundtrip release to daac just a collection record with no assoc granule record and then revert it' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -155,7 +155,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(18).state, 'ready_for_daac_review'
     end
 
-    it 'marks complete while checking BOTH the collection review AND the associated granule review.' do
+    should 'marks complete while checking BOTH the collection review AND the associated granule review.' do
       user = User.find_by(email: 'arc_curator@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -167,7 +167,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Record failed to update.', flash[:notice]
     end
 
-    it 'will not flag second opinions until it hits ready for daac review state.' do
+    should 'will not flag second opinions until it hits ready for daac review state.' do
       user = User.find_by(email: 'arc_curator@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -186,7 +186,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Record failed to update.', flash[:notice]
     end
 
-    it 'will moves the granule review state forward along with the collection view' do
+    should 'will moves the granule review state forward along with the collection view' do
       user = User.find_by(email: 'arc_curator@element84.com')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -219,8 +219,8 @@ class RecordsControllerTest < ActionController::TestCase
 
   end
 
-  describe 'POST #revert ' do
-    it 'can reopen a closed record' do
+  context 'POST #revert ' do
+    should 'can reopen a closed record' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -231,7 +231,7 @@ class RecordsControllerTest < ActionController::TestCase
       record = Record.find(15)
       assert_equal Record::STATE_IN_DAAC_REVIEW.to_s, record.state
     end
-    it "reverting a record not 'in daac review' or 'closed' results in no change" do
+    should "reverting a record not 'in daac review' or 'closed' results in no change" do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -244,7 +244,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record::STATE_IN_ARC_REVIEW.to_s, record.state
     end
 
-    it 'revert both collection and assoc granule record' do
+    should 'revert both collection and assoc granule record' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -258,7 +258,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find(17).state, 'ready_for_daac_review'
     end
 
-    it 'can revert a record from in daac review back to ready for daac review' do
+    should 'can revert a record from in daac review back to ready for daac review' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -272,11 +272,11 @@ class RecordsControllerTest < ActionController::TestCase
     end
   end
 
-  describe 'POST#refresh' do
+  context 'POST#refresh' do
 
     # I've mocked a cmr response that returns a revision id 21 which is a newer revision that currently in fixtures.   The test
     # should post to Records#refresh and it should find this record, detect it is newer and ingest the new record.
-    it 'refresh record with id # with new record from cmr' do
+    should 'refresh record with id # with new record from cmr' do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.umm_json").
         with(
           headers: {
@@ -335,8 +335,8 @@ class RecordsControllerTest < ActionController::TestCase
     end
   end
 
-  describe 'post#hide' do
-    it 'it deletes a single record' do
+  context 'post#hide' do
+    should 'it deletes a single record' do
       @tester = User.find_by role: 'arc_curator'
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -344,7 +344,7 @@ class RecordsControllerTest < ActionController::TestCase
       post :hide, params: { 'record_id': 1 }
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 ', flash[:notice]
     end
-    it 'it properly undeletes a single record' do
+    should 'it properly undeletes a single record' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -359,7 +359,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal Record.find_by(id: 1).state, 'in_arc_review'
       assert_equal 'Undeleted the following collections: C1000000020-LANCEAMSR2/8 ', flash[:notice]
     end
-    it 'it deletes multiple records' do
+    should 'it deletes multiple records' do
       @tester = User.find_by role: 'arc_curator'
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -368,7 +368,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Deleted the following collections: C1000000020-LANCEAMSR2/8 C1000000020-LANCEAMSR2/9 ', flash[:notice]
     end
 
-    it 'it properly undeletes multiple records' do
+    should 'it properly undeletes multiple records' do
       @tester = User.find_by role: 'arc_curator'
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -385,7 +385,7 @@ class RecordsControllerTest < ActionController::TestCase
       assert_equal 'Undeleted the following collections: C1000000020-LANCEAMSR2/9 arc_curator_collection/7 ', flash[:notice]
     end
 
-    it 'ensure associate granule record not hidden, see CMRARC-586' do
+    should 'ensure associate granule record not hidden, see CMRARC-586' do
       user = User.find_by(role: 'admin')
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)

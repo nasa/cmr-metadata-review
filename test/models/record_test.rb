@@ -10,8 +10,8 @@ class RecordTest < ActiveSupport::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  describe "test remove_quotes_from_all_values" do
-    it "successfully removes quotes in 3+ levels deep." do
+  context "test remove_quotes_from_all_values" do
+    should "successfully removes quotes in 3+ levels deep." do
       example = { foo: { bar: { value: 'my "value"', alpha: { beta: 'my "gamma"' } } } }
       assert_equal(example[:foo][:bar][:value], 'my "value"')
       assert_equal(example[:foo][:bar][:alpha][:beta], 'my "gamma"')
@@ -22,8 +22,8 @@ class RecordTest < ActiveSupport::TestCase
   end
 
 
-  describe "attribute accessor methods" do
-    it "returns correct attribute information for a record" do
+  context "attribute accessor methods" do
+    should "returns correct attribute information for a record" do
       record = Record.find_by id: 1
       #had to remove description from yaml, json strings allow characters not allowed in yaml
       assert_equal(record.collection?, true)
@@ -37,8 +37,8 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
-  describe "script_values && script_score" do
-    it "adds script results and can return them on command" do
+  context "script_values && script_score" do
+    should "adds script results and can return them on command" do
       record = Record.find_by id: 1
 
       stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
@@ -61,8 +61,8 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
-  describe "bubble_map" do
-    it "returns correct bubble map" do
+  context "bubble_map" do
+    should "returns correct bubble map" do
       record = Record.find_by id: 1
 
       stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
@@ -108,8 +108,8 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
-  describe "color_coding_complete? && has_enough_reviews" do
-    it "catches incomplete record reviews" do
+  context "color_coding_complete? && has_enough_reviews" do
+    should "catches incomplete record reviews" do
       record = records(:first)
       assert_not(record.color_coding_complete?)
       assert_not(record.has_enough_reviews?)
@@ -137,7 +137,7 @@ class RecordTest < ActiveSupport::TestCase
       assert_not(record.no_second_opinions?)
     end
 
-    it "accepts complete reviews" do
+    should "accepts complete reviews" do
       record = Record.find_by id: 1
       color_codes = record.color_codes
       color_codes.each do |key, value|
@@ -164,9 +164,9 @@ class RecordTest < ActiveSupport::TestCase
     end
   end
 
-  describe "close" do
+  context "close" do
 
-    it "closes a record and sets the closed at date" do
+    should "closes a record and sets the closed at date" do
       record = records(:in_daac_review)
       record.close
 
@@ -181,8 +181,8 @@ class RecordTest < ActiveSupport::TestCase
 
   end
 
-  describe "evaluate_script" do
-    it "returns results of the automated collection_script" do
+  context "evaluate_script" do
+    should "returns results of the automated collection_script" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
@@ -208,7 +208,7 @@ class RecordTest < ActiveSupport::TestCase
       end
     end
 
-    it "returns results of the automated collection_script for dif10" do
+    should "returns results of the automated collection_script for dif10" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.dif10").
         with(
           headers: {
@@ -229,7 +229,7 @@ class RecordTest < ActiveSupport::TestCase
       end
     end
 
-    it "returns results of the automated collection_script for ummc" do
+    should "returns results of the automated collection_script for ummc" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.umm_json").
         with(
           headers: {
@@ -267,27 +267,27 @@ class RecordTest < ActiveSupport::TestCase
 
   end
 
-  describe "daac scope" do
-    it "will return records for the given DAAC" do
+  context "daac scope" do
+    should "will return records for the given DAAC" do
       records = Record.daac("PODAAC")
       assert_equal 19, records.length
     end
 
-    it "will not return records that belong to anoter DAAC" do
+    should "will not return records that belong to anoter DAAC" do
       records = Record.daac("FakeDAAC")
       assert records.empty?
     end
   end
 
-  describe "released_to_daac_date" do
-    it "updates the record's released_to_daac_date when releasing" do
+  context "released_to_daac_date" do
+    should "updates the record's released_to_daac_date when releasing" do
       record = Record.first
       assert_nil record.released_to_daac_date
       record.update_released_to_daac_date
       assert_in_delta record.released_to_daac_date, Time.zone.now, 10
     end
 
-    it "removes the record's released_to_daac_date when reverting" do
+    should "removes the record's released_to_daac_date when reverting" do
       record = Record.first
       record.released_to_daac_date = Time.zone.now
       assert_not_nil record.released_to_daac_date

@@ -141,8 +141,8 @@ class KeywordValidatorTest < ActiveSupport::TestCase
         to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
 
   end
-  describe 'keyword validator test' do
-    it 'validate keyword' do
+  context 'keyword validator test' do
+    should 'validate keyword' do
       KeywordValidator.validate_keywords(providers: TEST_PROVIDERS, clear_sync_date: true)
       assert_equal(InvalidKeyword.all.length, 9)
     end

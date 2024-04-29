@@ -1937,6 +1937,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    shoulda-context (2.0.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -2049,6 +2050,7 @@ DEPENDENCIES
   sass-rails (~> 6.0)
   sdoc (~> 2.3.1.0)
   selenium-webdriver
+  shoulda-context
   simplecov
   spring
   sprockets-rails
