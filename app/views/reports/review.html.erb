@@ -6,11 +6,11 @@
     </div>
     <div class="report_buttons">
       <%= button_to reports_review_path(format: :csv), params: {record_id: @records.map(&:id), full_report: true} , data: { turbolinks: false }, class: "report_button" do %>
-        <p>EXPORT ALL METRICS</p>
+        <p>EXPORT METRICS</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
       <%= button_to reports_review_path(format: :csv), params: {record_id: @records.map(&:id), full_report: false} , data: { turbolinks: false }, class: "report_button" do %>
-        <p>EXPORT ONLY METRICS WITH FEEDBACK</p>
+        <p>EXPORT FEEDBACK</p>
         <i class="fa fa-file-excel-o"></i>
       <% end %>
       <div id="pdf_button" class="report_button" >

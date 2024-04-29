@@ -73,7 +73,7 @@ class MultiRecordCsv
             granule_column_titles = ['umm_json_link', 'long name', 'concept_id', 'revision id']
             associated_granule_value = collection_record.associated_granule_value
             if associated_granule_value.nil? || (associated_granule_value == 'Undefined')
-              record_line += ['Associated Granule Undefined']
+              record_line += ['Associated Granule Undefined', 'N/A', 'N/A', 'N/A']
             else
               if associated_granule_value == 'No Granule Review'
                 record_line += ['No Granule Review']
