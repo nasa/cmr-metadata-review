@@ -37,7 +37,7 @@ module  RecordHelper
   # note if the checks fail, the caller should not associate the granule record to the collection.
   def can_associate_granule?(granule_record, collection_state)
     return [true, nil] if %w(open in_arc_review).include?(collection_state)
-   
+
     success = true
     messages = []
     if %w(closed).include?(collection_state)
@@ -45,7 +45,6 @@ module  RecordHelper
       success = false
       return [success, messages]
     end
-    [success, messages]
     unless granule_record.color_coding_complete?
       messages << 'Not all columns in the associated granule have been flagged with a color!'
       success = false
