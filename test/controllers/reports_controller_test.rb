@@ -79,7 +79,7 @@ class ReportsControllerTest < ActionController::TestCase
     user = User.find_by(email: "abaker@element84.com")
     sign_in(user)
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
-    post :review, params: { format: :csv, record_id: 12, full_report: false }
+    post :review, params: { format: :csv, record_id: 12 }
     assert_response :success
     assert_equal "application/csv", response.content_type
   end
