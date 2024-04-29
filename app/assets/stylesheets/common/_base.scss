@@ -33,14 +33,7 @@ button {
 
 //overwriting the normal eui menu styles.
 .eui-menu.menu_override {
-  // position:absolute;
-  // top:8px;
-  // right:25px;
-
-
   .menu_link {
-    padding-top:23px;
-    min-height: 70px;
     &:hover {
       background-color: $sky-blue;
     }
@@ -71,21 +64,19 @@ button {
   display: -webkit-flex; /* Safari */
   -webkit-justify-content: space-between; /* Safari 6.1+ */
   display: flex;
-  justify-content: space-between;
-
   color: white;
 
   background-color: $blue-dark;
   width:100%;
   min-height: 80px;
+  padding: 1em 2em;
+  align-items: center;
 
   .header_title {
     display: flex;
     flex-direction: column;
     letter-spacing: 0.5px;
     font-weight: 500;
-    padding-top: 25px;
-    padding-left: 40px;
     p {
       position: relative;
       bottom: 1px;
@@ -96,8 +87,8 @@ button {
   }
 
   .header_menu {
-    margin-top: 9px;
-    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
   }
 
   h3 {
