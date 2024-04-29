@@ -5,8 +5,3 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
-# require 'rake/testtask'
-# Rake::TestTask.new do |i|
-#   i.test_files = FileList['test/**/*.rb']
-#   i.verbose = true
-# end

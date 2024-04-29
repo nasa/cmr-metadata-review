@@ -16,8 +16,8 @@ class CuratorFeedbackTest < SystemTestCase
   # This is the base case there are no feedback records, so this:
   # 1) Verifies there are no feedback records
   # 2) Verifies only daac curators can click the curator feedback button
-  describe 'Curator Feedback with no feedback fields' do
-    it 'verifies no records in Requires Reviewer Feedback Records section.' do
+  context 'Curator Feedback with no feedback fields' do
+    should 'verifies no records in Requires Reviewer Feedback Records section.' do
       mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
@@ -25,7 +25,7 @@ class CuratorFeedbackTest < SystemTestCase
       end
     end
 
-    it 'only daac curators can click the curator feedback button' do
+    should 'only daac curators can click the curator feedback button' do
       mock_login(role: "admin") # admin
 
       visit '/home'
@@ -56,7 +56,7 @@ class CuratorFeedbackTest < SystemTestCase
   # 2) Verifies the record shows up in the required curator feedback section for daac curators
   # 3) Verifies the record shows up in the required curator feedback section for arc curators
   # 4) Verifies the record disappears once the record is closed.
-  describe 'Curator Feedback with a field requesting feedback' do
+  context 'Curator Feedback with a field requesting feedback' do
     before do
       mock_login(id: 5) # daac curator
       visit '/home'
@@ -83,7 +83,7 @@ class CuratorFeedbackTest < SystemTestCase
       end
     end
 
-    it 'verifies the record shows up in Requires Reviewer Feedback Records section for the daac curator.' do
+    should 'verifies the record shows up in Requires Reviewer Feedback Records section for the daac curator.' do
       mock_login(id: 5) # daac curator
       visit '/home'
       within '#provide_feedback' do
@@ -91,7 +91,7 @@ class CuratorFeedbackTest < SystemTestCase
       end
     end
 
-    it 'curator feedback shows up for arc curator' do
+    should 'curator feedback shows up for arc curator' do
       mock_login(id: 3) # arc curator
       visit '/home'
       within '#provide_feedback' do

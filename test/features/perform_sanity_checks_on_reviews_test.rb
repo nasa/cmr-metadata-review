@@ -17,7 +17,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
     OmniAuth.config.test_mode = true
   end
 
-  describe 'performs "mark complete" on a collection record and granule record' do
+  context 'performs "mark complete" on a collection record and granule record' do
     before do
       mock_login(role: 'arc_curator')
       visit '/home'
@@ -43,11 +43,11 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
       click_button 'MARK AS DONE'
     end
 
-    describe 'on granule record' do
+    context 'on granule record' do
 
       # in this case short name, long name are marked with a color, but version id is not in the granule
       # lets fix the granule first
-      it 'checks to see if it produces error' do
+      should 'checks to see if it produces error' do
         # Now click MARK AS DONE
         assert_equal Record.find_by(id: 1).state, 'in_arc_review'
         assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
@@ -58,7 +58,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
         assert has_content? 'Record failed to update.'
         assert_no_css '#done_button[disabled]' # still enabled
 
-        describe 'granule is fixed' do
+        context 'granule is fixed' do
           before do
             # Lets back out to fix the granule issues.
             find('#nav_back_button').click
@@ -85,7 +85,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
             click_button 'MARK AS DONE'
           end
 
-          it 'verifies only collection errors are left' do
+          should 'verifies only collection errors are left' do
 
             assert_equal Record.find_by(id: 1).state, 'in_arc_review'
             assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
@@ -96,7 +96,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
             assert has_content? 'Not all columns have been flagged with a color, cannot close review.'
             assert has_content? 'Record failed to update.'
 
-            describe 'on the collection' do
+            context 'on the collection' do
               before do
                 # fixes collections
                 see_collection_revision_details(8)
@@ -110,13 +110,13 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
                 click_button 'MARK AS DONE'
               end
 
-              it 'fixes the collection and produces success message - should ignore second opinion checks' do
+              should 'fixes the collection and produces success message - should ignore second opinion checks' do
                 assert_equal Record.find_by(id: 1).state, 'ready_for_daac_review'
                 assert_equal Record.find_by(id: 1).state, Record.find_by(id: 16).state
                 assert has_content? 'Record has been successfully updated.'
               end
 
-              describe 'tries to release to daac' do
+              context 'tries to release to daac' do
                 before do
                   # Now lets try to release to daac, it should fail because collection should fail the second opinion check,
                   # which is only checked when being released to a daac
@@ -125,7 +125,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
                   # Now the button should say "RELEASE TO DAAC" since we are in ready_for_daac_review state
                   click_button 'RELEASE TO DAAC'
                 end
-                it 'releases to daac' do
+                should 'releases to daac' do
                   assert has_content? 'Record failed to update.'
                   assert has_content? 'Some columns still need a second opinion review, cannot close review.'
 
@@ -148,13 +148,13 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
     end
   end
 
-  describe 'viewing the granule review, the buttons "Mark Complete","Release to DAAC", "CMR Updated" etc. are no longer present.' do
+  context 'viewing the granule review, the buttons "Mark Complete","Release to DAAC", "CMR Updated" etc. are no longer present.' do
     before do
       mock_login(role: 'arc_curator')
       visit '/home'
     end
 
-    it 'verify correct buttons appear' do
+    should 'verify correct buttons appear' do
       # Select First Collection in In Arc Review
       see_collection_review_details('#in_arc_review', 1)
       see_granule_revision_details(6)

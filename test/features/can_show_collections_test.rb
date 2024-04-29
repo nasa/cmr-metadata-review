@@ -6,9 +6,9 @@ class CanShowCollectionsTest < SystemTestCase
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
 
-  describe 'Showing Collections' do
+  context 'Showing Collections' do
 
-    describe 'when the user is an Arc Curator' do
+    context 'when the user is an Arc Curator' do
       before do
         OmniAuth.config.test_mode = true
         mock_login(role: 'arc_curator')
@@ -21,14 +21,14 @@ class CanShowCollectionsTest < SystemTestCase
 
       end
 
-      it 'can show collection' do
+      should 'can show collection' do
         visit '/home'
         see_collection_review_details('#open', 20)
         see_collection_revision_details(4)
         assert has_content? 'METADATA ELEMENTS'
       end
 
-      it 'back button works when viewing collection review' do
+      should 'back button works when viewing collection review' do
         visit '/home'
         see_collection_review_details('#open', 20)
         see_collection_revision_details(4)
@@ -38,7 +38,7 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_content? 'Granule Rev ID'
       end
 
-      it 'back button works when viewing granule review' do
+      should 'back button works when viewing granule review' do
         visit '/home'
         see_collection_review_details('#open', 20)
         see_granule_revision_details(21)
@@ -48,7 +48,7 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_content? 'Granule Rev ID'
       end
 
-      it 'cannot see link for editing mmt' do
+      should 'cannot see link for editing mmt' do
         visit '/home'
 
         within '#in_arc_review' do
@@ -66,7 +66,7 @@ class CanShowCollectionsTest < SystemTestCase
     end
   end
 
-  describe 'when the user is an Admin' do
+  context 'when the user is an Admin' do
     before do
       OmniAuth.config.test_mode = true
       mock_login(role: 'admin')
@@ -79,7 +79,7 @@ class CanShowCollectionsTest < SystemTestCase
 
     end
 
-    it 'cannot see link for editing mmt' do
+    should 'cannot see link for editing mmt' do
       visit '/home'
 
       within '#in_arc_review' do
@@ -95,7 +95,7 @@ class CanShowCollectionsTest < SystemTestCase
       page.wont_have_link('EDIT COLLECTION IN MMT')
     end
 
-    it 'can see 3 revisions when select record from in_daac_review section' do
+    should 'can see 3 revisions when select record from in_daac_review section' do
       visit '/home'
 
       within '#in_daac_review' do
@@ -110,7 +110,7 @@ class CanShowCollectionsTest < SystemTestCase
     end
   end
 
-  describe 'when the user is a Daac Curator' do
+  context 'when the user is a Daac Curator' do
     before do
       OmniAuth.config.test_mode = true
       mock_login(role: 'daac_curator', uid: 5)
@@ -122,7 +122,7 @@ class CanShowCollectionsTest < SystemTestCase
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
 
-    it 'can see link for editing mmt' do
+    should 'can see link for editing mmt' do
       visit '/home'
 
       within '#in_daac_review' do
@@ -140,7 +140,7 @@ class CanShowCollectionsTest < SystemTestCase
       page.must_have_button('See Granule Review Details', maximum: 1)
     end
 
-    it 'can see only one revision which is in_daac_review' do
+    should 'can see only one revision which is in_daac_review' do
       visit '/home'
       within '#in_daac_review' do
         # checks the check box next to the first collection record in the table

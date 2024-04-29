@@ -2,8 +2,8 @@ require 'test_helper'
 
 class ReviewTest < ActiveSupport::TestCase
 
-  describe "mark_complete" do
-      it "correctly marks a review as complete" do
+  context "mark_complete" do
+    should "correctly marks a review as complete" do
         record = Record.find_by id: 1
 
         first_review = record.add_review(1)
@@ -12,8 +12,8 @@ class ReviewTest < ActiveSupport::TestCase
       end
   end
 
-  describe "formatted_date" do
-    it "correctly formats the date before and after review completion" do
+  context "formatted_date" do
+    should "correctly formats the date before and after review completion" do
         record = Record.find_by id: 1
         first_review = record.add_review(1)
         assert_equal(first_review.state_string, "In Process")

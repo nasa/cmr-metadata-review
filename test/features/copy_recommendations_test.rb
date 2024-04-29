@@ -17,10 +17,10 @@ class CopyRecommendationsTest < SystemTestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
 
-    describe 'copying recommendations.' do
+    context 'copying recommendations.' do
       # this use case has a prior revision, so the button should be active and when we click it,
       # we will get a message that we successfully copied recommendations.
-      it 'copies recommendations from a prior revision.' do
+      should 'copies recommendations from a prior revision.' do
         visit '/home'
 
         within '#open' do
@@ -37,7 +37,7 @@ class CopyRecommendationsTest < SystemTestCase
 
       # this use case will copy recommendations from a prior revision but if we try it again, it will verify
       # the button is disabled so we can't perform the action again.
-      it 'prevents user from pressing the copy recommendations button twice.' do
+      should 'prevents user from pressing the copy recommendations button twice.' do
         visit '/home'
 
         within '#open' do
@@ -54,7 +54,7 @@ class CopyRecommendationsTest < SystemTestCase
 
 
       # this verifies the revision id text field and the concept id text field are empty if there is no prior revision.
-      it 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
+      should 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
         visit '/home'
 
         within '#open' do
@@ -72,7 +72,7 @@ class CopyRecommendationsTest < SystemTestCase
         page.must_have_content('No prior revision could be found!')
       end
 
-      it 'copies recommendations from a concept id and revision id.' do
+      should 'copies recommendations from a concept id and revision id.' do
         visit '/home'
         within '#open' do
           all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"

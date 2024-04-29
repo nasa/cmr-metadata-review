@@ -16,8 +16,8 @@ class UpdateDiscussionTest < SystemTestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  describe 'update discussion.' do
-    it 'add discussion and then update, delete' do
+  context 'update discussion.' do
+    should 'add discussion and then update, delete' do
       visit '/home'
       within '#open' do
         all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"

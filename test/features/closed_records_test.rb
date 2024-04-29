@@ -6,15 +6,15 @@ class CanShowCollectionsTest < SystemTestCase
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
 
-  describe 'Showing Closed Records' do
+  context 'Showing Closed Records' do
 
-    describe 'when the user is a daac curator' do
+    context 'when the user is a daac curator' do
       before do
         OmniAuth.config.test_mode = true
         mock_login(id: 5)
       end
 
-      it 'can show closed records' do
+      should 'can show closed records' do
         # view closed records tab
         visit '/records/finished'
         # Verify they can select the completed review and view it.

@@ -11,8 +11,8 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  describe 'GET #search' do
-    it 'it returns modis results' do
+  context 'GET #search' do
+    should 'it returns modis results' do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -42,8 +42,8 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  describe "GET #show" do
-    it "loads the correct collection on show" do
+  context "GET #show" do
+    should "loads the correct collection on show" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -72,7 +72,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
       assert_equal(6, collection_records.length)
     end
 
-    it "redirects when no concept id is provided" do
+    should "redirects when no concept id is provided" do
       #redirects no record_id
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -81,7 +81,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
       assert_equal(response.code, "302")
     end
 
-    it "redirects when no collection is found" do
+    should "redirects when no collection is found" do
       #redirects no collection found
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -90,7 +90,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
       assert_equal(response.code, "302")
     end
 
-    it "detects if a granule is no longer in cmr" do
+    should "detects if a granule is no longer in cmr" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -121,7 +121,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
                     :text => '[Granule Not Found in CMR]'
     end
 
-    it "detects if a new granule revision is available" do
+    should "detects if a new granule revision is available" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -152,8 +152,8 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
 
 
 
-  describe "POST #create" do
-    it "downloads and saves a new record" do
+  context "POST #create" do
+    should "downloads and saves a new record" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -291,7 +291,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
       assert_equal("abaker@element84.com", granule_record.ingest.user.email)
     end
 
-    it "downloads and saves a new iso record as umm-json" do
+    should "downloads and saves a new iso record as umm-json" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 

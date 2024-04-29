@@ -8,14 +8,14 @@ class CanShowCollectionsTest < SystemTestCase
     OmniAuth.config.test_mode = true
   end
 
-  describe 'Campaign Filtering' do
-    describe 'when the user is an Arc Curator' do
+  context 'Campaign Filtering' do
+    context 'when the user is an Arc Curator' do
       before do
         mock_login(id: 3) # arc curator
         visit home_path
       end
 
-      it 'has the expected campaigns in the filter box' do
+      should 'has the expected campaigns in the filter box' do
         # Capybara does not have a "without_options:" kind of filter.
         assert has_no_select?('campaign', with_options: ['TESTCAMP1'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP2'])
@@ -24,7 +24,7 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP3', 'TESTCAMP4'])
       end
 
-      it 'can see unfiltered records' do
+      should 'can see unfiltered records' do
         assert has_content?('campaign_test_collection_1-PODAAC')
         assert has_content?('campaign_test_collection_2-PODAAC')
         assert has_content?('campaign_test_collection_3-OB_DAAC')
@@ -33,13 +33,13 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_no_content?('campaign_test_collection_6-JAXA')
       end
 
-      describe 'when the user filters some records' do
+      context 'when the user filters some records' do
         before do
           select 'TESTCAMP3', from: 'campaign'
           click_on 'Filter'
         end
 
-        it 'can see filtered records' do
+        should 'can see filtered records' do
           assert has_content?('campaign_test_collection_1-PODAAC')
           assert has_no_content?('campaign_test_collection_2-PODAAC')
           assert has_content?('campaign_test_collection_3-OB_DAAC')
@@ -48,13 +48,13 @@ class CanShowCollectionsTest < SystemTestCase
           assert has_no_content?('campaign_test_collection_6-JAXA')
         end
 
-        describe 'when the user removes the filter' do
+        context 'when the user removes the filter' do
           before do
             select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
-          it 'can see unfiltered records' do
+          should 'can see unfiltered records' do
             assert has_content?('campaign_test_collection_1-PODAAC')
             assert has_content?('campaign_test_collection_2-PODAAC')
             assert has_content?('campaign_test_collection_3-OB_DAAC')
@@ -63,13 +63,13 @@ class CanShowCollectionsTest < SystemTestCase
       end
     end
 
-    describe 'when the user is an MDQ Curator' do
+    context 'when the user is an MDQ Curator' do
       before do
         mock_login(id: 11) # mdq curator
         visit home_path
       end
 
-      it 'has the expected campaigns in the filter box' do
+      should 'has the expected campaigns in the filter box' do
         # Capybara does not have a "without_options:" kind of filter.
         assert has_no_select?('campaign', with_options: ['TESTCAMP1'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP2'])
@@ -78,7 +78,7 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP5', 'TESTCAMP6'])
       end
 
-      it 'can see unfiltered records' do
+      should 'can see unfiltered records' do
         assert has_no_content?('campaign_test_collection_1-PODAAC')
         assert has_no_content?('campaign_test_collection_2-PODAAC')
         assert has_no_content?('campaign_test_collection_3-OB_DAAC')
@@ -87,13 +87,13 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_content?('campaign_test_collection_6-JAXA')
       end
 
-      describe 'when the user filters some records' do
+      context 'when the user filters some records' do
         before do
           select 'TESTCAMP5', from: 'campaign'
           click_on 'Filter'
         end
 
-        it 'can see filtered records' do
+        should 'can see filtered records' do
           assert has_no_content?('campaign_test_collection_1-PODAAC')
           assert has_no_content?('campaign_test_collection_2-PODAAC')
           assert has_no_content?('campaign_test_collection_3-OB_DAAC')
@@ -102,13 +102,13 @@ class CanShowCollectionsTest < SystemTestCase
           assert has_content?('campaign_test_collection_6-JAXA')
         end
 
-        describe 'when the user removes the filter' do
+        context 'when the user removes the filter' do
           before do
             select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
-          it 'can see unfiltered records' do
+          should 'can see unfiltered records' do
             # CG assert has_content?('campaign_test_collection_4-JAXA')
             # CG assert has_content?('campaign_test_collection_5-SCIOPS')
             # CG assert has_content?('campaign_test_collection_6-JAXA')
@@ -117,13 +117,13 @@ class CanShowCollectionsTest < SystemTestCase
       end
     end
 
-    describe 'when the user is a daac Curator, part 1' do
+    context 'when the user is a daac Curator, part 1' do
       before do
         mock_login(id: 5) # podaac curator
         visit home_path
       end
 
-      it 'has the expected campaigns in the filter box' do
+      should 'has the expected campaigns in the filter box' do
         assert has_no_select?('campaign', with_options: ['TESTCAMP3'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP4'])
         assert has_no_select?('campaign', with_options: ['TESTCAMP5'])
@@ -131,31 +131,31 @@ class CanShowCollectionsTest < SystemTestCase
         assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP1', 'TESTCAMP2'])
       end
 
-      it 'can see unfiltered records' do
+      should 'can see unfiltered records' do
         assert has_content?('campaign_test_collection_1-PODAAC')
         assert has_content?('campaign_test_collection_2-PODAAC')
         assert has_no_content?('campaign_test_collection_3-OB_DAAC')
       end
 
-      describe 'when the user filters some records' do
+      context 'when the user filters some records' do
         before do
           select 'TESTCAMP1', from: 'campaign'
           click_on 'Filter'
         end
 
-        it 'can see filtered records' do
+        should 'can see filtered records' do
           assert has_content?('campaign_test_collection_1-PODAAC')
           assert has_no_content?('campaign_test_collection_2-PODAAC')
           assert has_no_content?('campaign_test_collection_3-OB_DAAC')
         end
 
-        describe 'when the user removes the filter' do
+        context 'when the user removes the filter' do
           before do
             select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
             click_on 'Filter'
           end
 
-          it 'can see unfiltered records' do
+          should 'can see unfiltered records' do
             assert has_content?('campaign_test_collection_1-PODAAC')
             assert has_content?('campaign_test_collection_2-PODAAC')
             assert has_no_content?('campaign_test_collection_3-OB_DAAC')
@@ -165,13 +165,13 @@ class CanShowCollectionsTest < SystemTestCase
     end
   end
 
-  describe 'when the user is a daac Curator, part 2' do
+  context 'when the user is a daac Curator, part 2' do
     before do
       mock_login(id: 10) # ob_daac curator
       visit home_path
     end
 
-    it 'has the expected campaigns in the filter box' do
+    should 'has the expected campaigns in the filter box' do
       assert has_no_select?('campaign', with_options: ['TESTCAMP2'])
       assert has_no_select?('campaign', with_options: ['TESTCAMP3'])
       assert has_no_select?('campaign', with_options: ['TESTCAMP4'])
@@ -180,31 +180,31 @@ class CanShowCollectionsTest < SystemTestCase
       assert has_select?('campaign', with_options: ['CAMPAIGN/PROJECT: ANY', 'TESTCAMP1'])
     end
 
-    it 'can see unfiltered records' do
+    should 'can see unfiltered records' do
       assert has_no_content?('campaign_test_collection_1-PODAAC')
       assert has_no_content?('campaign_test_collection_2-PODAAC')
       assert has_content?('campaign_test_collection_3-OB_DAAC')
     end
 
-    describe 'when the user filters some records' do
+    context 'when the user filters some records' do
       before do
         select 'TESTCAMP1', from: 'campaign'
         click_on 'Filter'
       end
 
-      it 'can see filtered records' do
+      should 'can see filtered records' do
         assert has_no_content?('campaign_test_collection_1-PODAAC')
         assert has_no_content?('campaign_test_collection_2-PODAAC')
         assert has_content?('campaign_test_collection_3-OB_DAAC')
       end
 
-      describe 'when the user removes the filter' do
+      context 'when the user removes the filter' do
         before do
           select 'CAMPAIGN/PROJECT: ANY', from: 'campaign'
           click_on 'Filter'
         end
 
-        it 'can see unfiltered records' do
+        should 'can see unfiltered records' do
           assert has_no_content?('campaign_test_collection_1-PODAAC')
           assert has_no_content?('campaign_test_collection_2-PODAAC')
           assert has_content?('campaign_test_collection_3-OB_DAAC')
