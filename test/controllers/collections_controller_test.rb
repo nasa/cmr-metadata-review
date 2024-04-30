@@ -25,6 +25,15 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
           }).
         to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
 
+      stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/collections.echo10?keyword=*modis*&page_num=1&page_size=10&provider=GESDISCCLD").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('modis-search.xml'), headers: {})
+
       get '/collections_search', params: { provider: 'DAAC: ANY', free_text: 'modis', curr_page:1 }
       count = assigns(:collection_count)
       search_iterator = assigns(:search_iterator)
@@ -81,69 +90,69 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
       assert_equal(response.code, "302")
     end
 
-  it "detects if a granule is no longer in cmr" do
-    sign_in(user)
-    stub_urs_access(user.uid, user.access_token, user.refresh_token)
+    it "detects if a granule is no longer in cmr" do
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
-    #stubbing all requests for raw_data
-    stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
-      with(
-        headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent'=>'Ruby'
-        }).
-      to_return(status: 200, body: '{"hits" : 0,"took" : 105,"items" : []}', headers: {})
-    stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
+      #stubbing all requests for raw_data
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: '{"hits" : 0,"took" : 105,"items" : []}', headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
 
-    stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
-      with(
-        headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
 
-        }).
-      to_return(status: 200,
-                body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
-                headers: {})
+          }).
+        to_return(status: 200,
+                  body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>29</took></results>',
+                  headers: {})
 
-    get '/collections/1', params: { record_id: 1 }
-    assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 5,
-                  :text => '[Granule Not Found in CMR]'
+      get '/collections/1', params: { record_id: 1 }
+      assert_select "span[class='indicator_for_granule_deleted_in_cmr']", count: 5,
+                    :text => '[Granule Not Found in CMR]'
+    end
+
+    it "detects if a new granule revision is available" do
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).
+        to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
+
+      stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
+      stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
+          }).
+        to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
+      get '/collections/1', params: { record_id: 1 }
+      assert_select '.import_new_revision', count: 5
+    end
   end
 
-  it "detects if a new granule revision is available" do
-    sign_in(user)
-    stub_urs_access(user.uid, user.access_token, user.refresh_token)
-
-    stub_request(:get, "#{@cmr_base_url}/search/collections.echo10?concept_id=C1000000020-LANCEAMSR2").
-      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', }).
-      to_return(:status => 200, :body => get_stub('search_granules_by_collection_C1000000020-LANCEAMSR2.xml'))
-
-    stub_request(:get, "#{@cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
-      with(
-        headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-
-        }).
-      to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.xml'), headers: {})
-    stub_request(:get, "#{@cmr_base_url}/search/granules.umm_json?concept_id=G309210-GHRC").
-      with(
-        headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent'=>'Ruby'
-        }).
-      to_return(status: 200, body: get_stub('search_granules_G309210-GHRC.json'), headers: {})
-    get '/collections/1', params: { record_id: 1 }
-    assert_select '.import_new_revision', count: 5
-  end
-end
 
 
-
-describe "POST #create" do
+  describe "POST #create" do
     it "downloads and saves a new record" do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -165,11 +174,11 @@ describe "POST #create" do
           }).
         to_return(status: 200, body: "", headers: {})
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=1&page_size=10").
-          with(
-            headers: {
-                  'Accept'=>'*/*',
-                  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                  'User-Agent'=>'Ruby'
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby'
           }).
         to_return(status: 200, body: get_stub("search_granules_G309203-GHRC.json"), headers: {})
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C222702-GHRC&page_num=2&page_size=10").
@@ -409,7 +418,6 @@ describe "POST #create" do
 
     end
 
-end
-
+  end
 
 end
