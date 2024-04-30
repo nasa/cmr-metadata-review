@@ -121,6 +121,20 @@ class RecordsControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: record.id)
     end
 
+    it 'displays a failure message when attempting to associate a granule to a collection record that has been closed.' do
+      user = User.find_by(email: 'abaker@element84.com')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      Record.any_instance.stubs(close!: true)
+      record = Record.find(15)
+
+      post :associate_granule_to_collection, params: { id: record.id, associated_granule_value: 16  }
+
+      assert_equal "Can't associate collection to granule. Only open and in review collection records can be associated.", flash[:alert]
+      assert_redirected_to collection_path(id: 7, record_id: record.id)
+    end
+
     it 'roundtrip release to daac both a collection and assoc granule record and then revert it' do
       user = User.find_by(role: 'admin')
       sign_in(user)
