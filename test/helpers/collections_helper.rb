@@ -11,7 +11,7 @@ module Helpers
 
     def see_collection_revision_details(collection_revision_id)
       within "#collection_revision_#{collection_revision_id}" do
-        find('table > tbody > tr:nth-child(2) > td > div > form > input').click # click See Collection Review Details
+        find('table > tbody > tr:nth-child(2) > td > div > form > button').click # click See Collection Review Details
       end
     end
 
