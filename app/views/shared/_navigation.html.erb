@@ -8,9 +8,6 @@
 
   <div class="header_menu">
   <section id="user-info">
-  <%= link_to "https://wiki.earthdata.nasa.gov/pages/viewpage.action?spaceKey=CMR&title=CMR+Metadata+Curation+Dashboard+User+Documentation", class: "users-guide-link", target: "_blank" do %>
-    <p>User&apos;s Guide</p>
-  <% end %>
       <div class="prof-link-container">
           <div><strong><%= current_user.name %></strong>
             <span class="eui-badge--sm daac"><%= current_user.role %></span>
@@ -61,6 +58,13 @@
               </ul>
           </li>
         <% end %>
+
+        <li>
+        <%= link_to "https://wiki.earthdata.nasa.gov/pages/viewpage.action?spaceKey=CMR&title=CMR+Metadata+Curation+Dashboard+User+Documentation", class: "menu_link header_button", target: "_blank" do %>
+          <i class="fa fa-question-circle"></i>
+          <p>User&apos;s Guide</p>
+        <% end %>
+        </li>
 
         <li>
           <%= link_to destroy_user_session_path, method: :get, class: "menu_link header_button" do %>
