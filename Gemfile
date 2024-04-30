@@ -11,7 +11,7 @@ gem 'webpacker'
 gem 'react-rails'
 
 gem 'sprockets-rails'
-gem 'rspec-core'
+#gem 'rspec-core'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
