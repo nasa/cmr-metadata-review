@@ -70,7 +70,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_sciencekeywords.json'), headers: {})
@@ -82,7 +81,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_platforms.json'), headers: {})
@@ -94,7 +92,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
@@ -106,7 +103,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
@@ -118,7 +114,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_providers.json'), headers: {})
@@ -130,7 +125,6 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
@@ -142,16 +136,15 @@ class KeywordValidatorTest < ActiveSupport::TestCase
                 'Accept'=>'*/*',
                 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
                 'Content-Type'=>'application/json',
-                'User-Agent'=>'Faraday v1.10.3'
                 #
             }).
         to_return(status: 200, body: get_stub('keyword_validator_recommendations_empty.json'), headers: {})
 
   end
-  # context 'keyword validator test' do
-  test 'validate keyword' do
+  describe 'keyword validator test' do
+    it 'validate keyword' do
       KeywordValidator.validate_keywords(providers: TEST_PROVIDERS, clear_sync_date: true)
       assert_equal(InvalidKeyword.all.length, 9)
     end
-  # end
+  end
 end

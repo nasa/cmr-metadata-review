@@ -7,7 +7,7 @@ class CanSearchCollectionTest < SystemTestCase
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
 
-  setup do
+  before do
     OmniAuth.config.test_mode = true
     mock_login(role: 'admin')
     stub_request(:get, "#{Cmr.get_cmr_base_url}/search/collections.echo10?keyword=**&page_num=1&page_size=10&provider=LANCEAMSR2").
@@ -60,10 +60,10 @@ class CanSearchCollectionTest < SystemTestCase
       to_return(status: 200, body: '{"hits" : 0, "took" : 105, "items" : []}', headers: {})
 
   end
-  # describe 'search cmr collection' do
+  describe 'search cmr collection' do
 
     # This test fails due to a bug in pyQuARC:
-  test 'search collection by GHRC provider' do
+    it 'search collection by GHRC provider' do
       visit '/home'
       within '#provider' do
         find("#provider > option:nth-child(6)").click
@@ -80,5 +80,5 @@ class CanSearchCollectionTest < SystemTestCase
       end
       assert has_content?('C1996546695-GHRC_DAAC')
     end
-  # end
+  end
 end

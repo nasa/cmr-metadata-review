@@ -47,9 +47,9 @@ class KmsTest < ActiveSupport::TestCase
     @kms.download_kms_keywords(TEST_SCHEMES)
   end
 
-  # context 'kms accessor test' do
+  describe 'kms accessor test' do
 
-  test 'download keywords in all schemes' do
+    it 'download keywords in all schemes' do
       result = @kms.get_keyword_paths('sciencekeywords')
       key = 'EARTH SCIENCE SERVICES|DATA ANALYSIS AND VISUALIZATION|CALIBRATION/VALIDATION'
       assert_equal(true, result[key])
@@ -73,7 +73,7 @@ class KmsTest < ActiveSupport::TestCase
       assert_equal(true, result[key])
     end
 
-  test 'get recommended keywords' do
+    it 'get recommended keywords' do
       invalid_keywords = ['AQUATEST','CLOUDTEST']
       scheme = 'platforms'
       recommendations = @kms.get_recommended_keywords(invalid_keywords, scheme)
@@ -81,15 +81,15 @@ class KmsTest < ActiveSupport::TestCase
       assert_equal('ADEOS-I', recommendations['CLOUDTEST'])
     end
 
-  test 'get kms base url' do
+    it 'get kms base url' do
       kms_base_url = Kms.get_kms_base_url
       assert_equal('https://gcmd.sit.earthdata.nasa.gov', kms_base_url)
     end
 
-  test 'get kms url for science keywords' do
+    it 'get kms url for science keywords' do
       kms_url = @kms.get_kms_url('sciencekeywords')
       assert_equal('https://gcmd.sit.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords?format=csv', kms_url)
     end
 
-  # end
+  end
 end

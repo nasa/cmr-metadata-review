@@ -4,8 +4,12 @@ Dir[Rails.root.join("test/**/*.rb")].each { |f| require f }
 class GranulesControllerTest < ActionController::TestCase
   include OmniauthMacros
 
-  #describe "DELETE #delete" do
-  test "deletes a selected granule record from a collection" do
+  setup do
+    @controller = GranulesController.new
+  end
+
+  describe "DELETE #delete" do
+    it "deletes a selected granule record from a collection" do
       user = User.find_by role: "admin"
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -27,10 +31,10 @@ class GranulesControllerTest < ActionController::TestCase
 
       assert_equal "Granule has been deleted.", flash[:notice]
     end
-  #end
+  end
 
-  #describe "POST #create" do
-  test "creates a new random echo10 granule for a collection" do
+  describe "POST #create" do
+    it "creates a new random echo10 granule for a collection" do
 
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1581545525-LANCEAMSR2.echo10").
         with(
@@ -85,7 +89,7 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal "A new random granule has been added for this collection", flash[:notice]
     end
 
-    test "creates a new random umm-g granule for a collection" do
+    it "creates a new random umm-g granule for a collection" do
       stub_request(:get, /.*granules\.umm_json\?collection_concept_id=.*/).
         with(
           headers: {
@@ -129,10 +133,10 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal no_granules_after, (no_granules_before + 1)
       assert_equal "A new random granule has been added for this collection", flash[:notice]
     end
-  #end
+  end
 
-  #describe 'POST #pull_latest' do
-  test 'pulls in the latest revision of a echo10 granule for a collection.' do
+  describe 'POST #pull_latest' do
+    it 'pulls in the latest revision of a echo10 granule for a collection.' do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC").
         with(
           headers: {
@@ -240,10 +244,10 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal 'A new granule revision has been added for this collection.', flash[:notice]
       assert_includes array, '15'
     end
-  #end
+  end
 
-  #describe "DELETE #replace" do
-    test "prevents DAAC curators from replacing the Granule" do
+  describe "DELETE #replace" do
+    it "prevents DAAC curators from replacing the Granule" do
       user = User.find_by role: "daac_curator"
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -275,7 +279,16 @@ class GranulesControllerTest < ActionController::TestCase
     #   assert_equal "This granule is in review, and can no longer be changed to a different granule", flash[:alert]
     # end
 
-    test "will delete and replace the granule" do
+    it "will delete and replace the granule" do
+      stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/?client_id=clientid").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Bearer',
+            'User-Agent'=>'Faraday v1.10.3'
+          }).
+        to_return(status: 200, body: "{}", headers: {})
       user = User.find_by role: "admin"
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -292,10 +305,10 @@ class GranulesControllerTest < ActionController::TestCase
       assert_redirected_to collection_path(id: 1, record_id: collection.records.first.id)
       assert_equal "A new granule has been selected for this collection", flash[:notice]
     end
-  #end
+  end
 
-  #describe "POST #ingest_specific" do
-    test "can ingest a specifc echo10 granule review not found in CMR" do
+  describe "POST #ingest_specific" do
+    it "can ingest a specifc echo10 granule review not found in CMR" do
       user = User.find_by(role: "admin")
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -321,7 +334,7 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal 'Granule somegranule ingested.', flash[:notice]
     end
 
-    test "can ingest a specific umm-g granule review not found in CMR" do
+    it "can ingest a specific umm-g granule review not found in CMR" do
       user = User.find_by(role: "admin")
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -348,7 +361,7 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal 'Granule somegranule ingested.', flash[:notice]
     end
 
-    test "can ingest a specific granule review found in CMR and test that you cannot import the granule again (duplicate)" do
+    it "can ingest a specific granule review found in CMR and test that you cannot import the granule again (duplicate)" do
       user = User.find_by(role: "admin")
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
@@ -385,5 +398,5 @@ class GranulesControllerTest < ActionController::TestCase
       assert_equal 'Sorry, granule review G226251-GHRC already exists!', flash[:notice]
 
     end
-  #end
+  end
 end

@@ -10,7 +10,7 @@ require 'webmock/minitest'
 require 'minitest/reporters'
 require 'minitest/rails/capybara'
 
-#Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
+Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Reporters::JUnitReporter.new]
 
 Selenium::WebDriver.logger.output = false
 
@@ -39,10 +39,15 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
   # Add more helper methods to be used by all tests here...
-  parallelize(workers: 4)
+  #parallelize(workers: :number_of_processors)
 
   def get_stub(file_name)
     file = "#{Rails.root}/test/stubs/#{file_name}"
+    File.read(file)
+  end
+
+  def get_fixtures(file_path)
+    file = "#{Rails.root}/test/fixtures/#{file_path}"
     File.read(file)
   end
 end

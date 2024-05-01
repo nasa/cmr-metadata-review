@@ -9,15 +9,18 @@ class UpdateReviewCommentTest < SystemTestCase
     OmniAuth.config.test_mode = true
     mock_login(role: 'arc_curator')
 
-    stub_request(:get, "#{Cmr.get_cmr_base_url}/search/granules.echo10?concept_id=G309210-GHRC")
-        .with(
-            headers: {'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Accept' => '*/*'}
-        )
-        .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
+    stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/granules.echo10?concept_id=G309210-GHRC").
+      with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Ruby'
+        }).
+      to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  # describe 'update review comment.' do
-  test 'add review comments and then update, delete' do
+  describe 'update review comment.' do
+    it 'add review comments and then update, delete' do
       visit '/home'
       within '#open' do
         all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"
@@ -60,5 +63,5 @@ class UpdateReviewCommentTest < SystemTestCase
       # accept_confirm_dialog
       # assert has_no_content? 'an updated report comment'
     end
-  # end
+  end
 end
