@@ -61,8 +61,10 @@ class MultiRecordCsv
               end
             end
 
-            METRIC_FIELDS.each do |field|
-              collection_column_titles.push(field)
+            if full_report
+              METRIC_FIELDS.each do |field|
+                collection_column_titles.push(field)
+              end
             end
 
             csv << ['Collection'] + Array.new(collection_column_titles.count - 1) + ['Granule']
@@ -90,8 +92,10 @@ class MultiRecordCsv
                     end
                   end
 
-                  METRIC_FIELDS.each do |field|
-                    granule_column_titles.push(field)
+                  if full_report
+                    METRIC_FIELDS.each do |field|
+                      granule_column_titles.push(field)
+                    end
                   end
               
                   record_line += generate_csv_line(granule_record, granule_column_titles, false, full_report)
@@ -150,7 +154,11 @@ class MultiRecordCsv
       end
     end
 
-    line + metric_data_array(record)
+    if full_report_boolean
+      line + metric_data_array(record)
+    else 
+      line
+    end
   end
 
   def metric_data_array(record)
