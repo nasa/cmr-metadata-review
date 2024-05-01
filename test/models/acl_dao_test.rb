@@ -10,8 +10,8 @@ class AclDaoTest < ActiveSupport::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  # context "test acls" do
-  test "tests retrieving role as admin" do
+  describe "test acls" do
+    it "tests retrieving role as admin" do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=existingdeviseuser").
         with(
           headers: {
@@ -27,7 +27,7 @@ class AclDaoTest < ActiveSupport::TestCase
       assert_nil(daac)
     end
 
-  test "tests retrieving role as arc_curator" do
+    it "tests retrieving role as arc_curator" do
       stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser").
         with(
           headers: {
@@ -43,7 +43,7 @@ class AclDaoTest < ActiveSupport::TestCase
       assert_nil(daac)
     end
 
-  test 'tests retrieving acls as daac curator' do
+    it 'tests retrieving acls as daac curator' do
       stub_request(:get, "#{@cmr_base_url}/access-control/acls/ACL1200303063-CMR").
         with(
           headers: {
@@ -67,5 +67,5 @@ class AclDaoTest < ActiveSupport::TestCase
       assert_equal('daac_curator', role)
       assert_equal(daac, 'LARC')
     end
-  # end
+  end
 end

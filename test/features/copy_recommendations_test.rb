@@ -6,7 +6,7 @@ Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 class CopyRecommendationsTest < SystemTestCase
     include Helpers::UserHelpers
 
-    setup do
+    before do
       OmniAuth.config.test_mode = true
       mock_login(role: 'arc_curator')
 
@@ -17,10 +17,10 @@ class CopyRecommendationsTest < SystemTestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
     end
 
-    # describe 'copying recommendations.' do
+    describe 'copying recommendations.' do
       # this use case has a prior revision, so the button should be active and when we click it,
       # we will get a message that we successfully copied recommendations.
-    test 'copies recommendations from a prior revision.' do
+      it 'copies recommendations from a prior revision.' do
         visit '/home'
 
         within '#open' do
@@ -37,7 +37,7 @@ class CopyRecommendationsTest < SystemTestCase
 
       # this use case will copy recommendations from a prior revision but if we try it again, it will verify
       # the button is disabled so we can't perform the action again.
-    test 'prevents user from pressing the copy recommendations button twice.' do
+      it 'prevents user from pressing the copy recommendations button twice.' do
         visit '/home'
 
         within '#open' do
@@ -54,7 +54,7 @@ class CopyRecommendationsTest < SystemTestCase
 
 
       # this verifies the revision id text field and the concept id text field are empty if there is no prior revision.
-    test 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
+      it 'verifies the revision id text field and the concept id text field are empty if there is no prior revision' do
         visit '/home'
 
         within '#open' do
@@ -72,7 +72,7 @@ class CopyRecommendationsTest < SystemTestCase
         page.must_have_content('No prior revision could be found!')
       end
 
-    test 'copies recommendations from a concept id and revision id.' do
+      it 'copies recommendations from a concept id and revision id.' do
         visit '/home'
         within '#open' do
           all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"
@@ -88,6 +88,6 @@ class CopyRecommendationsTest < SystemTestCase
         page.must_have_content('Successfully copied recommendations')
       end
 
-    # end
+    end
 
 end

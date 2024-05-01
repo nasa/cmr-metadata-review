@@ -44,7 +44,7 @@ gem 'dotenv-rails'
 gem 'rexml'
 
 group :test do
-  gem 'minitest'
+  #gem 'minitest'
   #gem 'minitest-spec-rails'
   gem 'webmock'
   gem 'mocha'
@@ -55,7 +55,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-screenshot'
   gem 'minitest-stub_any_instance'
-  #gem 'shoulda-context'
+  gem 'rspec-rails'
 end
 
 group :development, :test do

@@ -36,14 +36,15 @@ module  RecordHelper
   # checks if the granule can be associated
   # note if the checks fail, the caller should not associate the granule record to the collection.
   def can_associate_granule?(granule_record, collection_state)
-    # it is ok to associate granule records without checks if in open or in_arc_review
-    # May 7 2020: Added status 'closed', this is a temporary change to allow users to associate
-    # closed records until arc team either finishes reviewing all legacy imported records or
-    # we fix the bug that is preventing users from marking all colors for a record.
-    return [true, nil] if %w(open in_arc_review closed).include?(collection_state)
+    return [true, nil] if %w(open in_arc_review).include?(collection_state)
 
     success = true
     messages = []
+    if %w(closed).include?(collection_state)
+      messages << "Can't associate collection to granule. Only open and in review collection records can be associated."
+      success = false
+      return [success, messages]
+    end
     unless granule_record.color_coding_complete?
       messages << 'Not all columns in the associated granule have been flagged with a color!'
       success = false
