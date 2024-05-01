@@ -4,30 +4,25 @@
   #user-info {
     @include row();
     display: inline-flex;
-    margin-left: 65%;
+    margin-left: 82%;
     font-size: 0.8em;
-    background-color: lighten($ocean-blue, 10%);
-    padding: .2em .6em .3em .6em;
-    border-radius: 5px;
     margin-bottom: 1em;
 
-    #profile-link {
-      .prof-link-container {
-        margin-top: .1em;
-      }
-
-      .hoverOver {
-        color: lighten($dolphin-grey, 30%);
-      }
-
-      #dropdown-caret {
-        transform: rotate(0deg);
+    .users-guide-link {
+      color: white;
+      padding: .2em .6em .3em .6em;
+      &:hover {
+        color: $midnight-blue;
       }
     }
+    .prof-link-container {
+      background-color: lighten($ocean-blue, 10%);
+      padding: .2em .6em .3em .6em;
+      border-radius: 5px;
+    }
   
-
-     .eui-badge--sm {
-      vertical-align: middle;
+    .eui-badge--sm {
+      margin-left: .2em;
     }
   
   }
