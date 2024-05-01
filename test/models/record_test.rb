@@ -10,8 +10,8 @@ class RecordTest < ActiveSupport::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  context "test remove_quotes_from_all_values" do
-    should "successfully removes quotes in 3+ levels deep." do
+  # context "test remove_quotes_from_all_values" do
+  test "successfully removes quotes in 3+ levels deep." do
       example = { foo: { bar: { value: 'my "value"', alpha: { beta: 'my "gamma"' } } } }
       assert_equal(example[:foo][:bar][:value], 'my "value"')
       assert_equal(example[:foo][:bar][:alpha][:beta], 'my "gamma"')
@@ -19,11 +19,11 @@ class RecordTest < ActiveSupport::TestCase
       assert_equal(example[:foo][:bar][:value], 'my value')
       assert_equal(example[:foo][:bar][:alpha][:beta], 'my gamma')
     end
-  end
+  # end
 
 
-  context "attribute accessor methods" do
-    should "returns correct attribute information for a record" do
+  # context "attribute accessor methods" do
+    test "returns correct attribute information for a record" do
       record = Record.find_by id: 1
       #had to remove description from yaml, json strings allow characters not allowed in yaml
       assert_equal(record.collection?, true)
@@ -35,10 +35,10 @@ class RecordTest < ActiveSupport::TestCase
       assert_equal(record.version_id, "0")
       assert_equal(record.ingested_by, "abaker@element84.com")
     end
-  end
+  # end
 
-  context "script_values && script_score" do
-    should "adds script results and can return them on command" do
+  # context "script_values && script_score" do
+  test "adds script results and can return them on command" do
       record = Record.find_by id: 1
 
       stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
@@ -59,10 +59,10 @@ class RecordTest < ActiveSupport::TestCase
       script_values = record.script_values
       assert_equal(script_values, { "LongName"=>"ok", "ShortName"=>"ok", "VersionId"=>"ok" })
     end
-  end
+  # end
 
-  context "bubble_map" do
-    should "returns correct bubble map" do
+  # context "bubble_map" do
+    test "returns correct bubble map" do
       record = Record.find_by id: 1
 
       stub_request(:get, "#{@cmr_base_url}/search/concepts/C1000000020-LANCEAMSR2.echo10").
@@ -106,10 +106,10 @@ class RecordTest < ActiveSupport::TestCase
       }
       assert_equal(expected, record.bubble_map)
     end
-  end
+  # end
 
-  context "color_coding_complete? && has_enough_reviews" do
-    should "catches incomplete record reviews" do
+  # context "color_coding_complete? && has_enough_reviews" do
+  test "catches incomplete record reviews" do
       record = records(:first)
       assert_not(record.color_coding_complete?)
       assert_not(record.has_enough_reviews?)
@@ -137,7 +137,7 @@ class RecordTest < ActiveSupport::TestCase
       assert_not(record.no_second_opinions?)
     end
 
-    should "accepts complete reviews" do
+  test "accepts complete reviews" do
       record = Record.find_by id: 1
       color_codes = record.color_codes
       color_codes.each do |key, value|
@@ -162,11 +162,11 @@ class RecordTest < ActiveSupport::TestCase
       record.reload
       assert_equal(record.no_second_opinions?, true)
     end
-  end
+  # end
 
-  context "close" do
+  # context "close" do
 
-    should "closes a record and sets the closed at date" do
+  test "closes a record and sets the closed at date" do
       record = records(:in_daac_review)
       record.close
 
@@ -179,10 +179,10 @@ class RecordTest < ActiveSupport::TestCase
       assert_equal(record.formatted_closed_date, "02/28/2017 at 11:25AM")
     end
 
-  end
+  # end
 
-  context "evaluate_script" do
-    should "returns results of the automated collection_script" do
+  # context "evaluate_script" do
+  test "returns results of the automated collection_script" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000020-LANCEAMSR2.echo10").
         with(
           headers: {
@@ -208,7 +208,7 @@ class RecordTest < ActiveSupport::TestCase
       end
     end
 
-    should "returns results of the automated collection_script for dif10" do
+  test "returns results of the automated collection_script for dif10" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.dif10").
         with(
           headers: {
@@ -229,7 +229,7 @@ class RecordTest < ActiveSupport::TestCase
       end
     end
 
-    should "returns results of the automated collection_script for ummc" do
+  test "returns results of the automated collection_script for ummc" do
       stub_request(:get, "https://cmr.sit.earthdata.nasa.gov/search/concepts/metric1-PODAAC.umm_json").
         with(
           headers: {
@@ -248,7 +248,7 @@ class RecordTest < ActiveSupport::TestCase
         expected = {"AdditionalAttributes/AdditionalAttribute/DataType"=>"OK", "AdditionalAttributes/AdditionalAttribute/Value"=>"doi_link_update failed<br>", "ArchiveCenter"=>"<b>Errors:</b><ul><li>Error: The provided data center short name `GHRC` does not comply with the GCMD. </li> </ul><b>Remediation:</b><br>Please submit a request to support@earthdata.nasa.gov to have this provider added to the GCMD Providers KMS.", "Campaigns/Campaign/ShortName"=>"OK", "CitationforExternalPublication"=>"<b>Errors:</b><ul><li>Warning: No CitationforExternalPublication is provided.</li> </ul><b>Remediation:</b><br>Please provide a citation for the dataset in the CitationforExternalPublication field.", "CollectionDataType"=>"OK", "Contacts/Contact/Role"=>"<b>Errors:</b><ul><li>Error: `['GHRC USER SERVICES']` is not a valid Contact Role.</li> </ul><b>Remediation:</b><br>Select a Contact Role from the following list: ['ARCHIVER', 'DISTRIBUTOR', 'PROCESSOR', 'ORIGINATOR'].", "DOI/Explanation"=>"OK", "DataSetId"=>"OK", "Description"=>"OK", "InsertTime"=>"OK", "LastUpdate"=>"OK", "OnlineResources/OnlineResource/MimeType"=>"OK", "OnlineResources/OnlineResource/Type"=>"<b>Errors:</b><ul><li>Error: Online Resource Type `Alternate Data Access` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `Browse` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `Worldview Imagery` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `Homepage` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `Guide` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `DOI` is not consistent with GCMD 'rucontenttype' list.</li> <li>Error: Online Resource Type `Citing GHRC Data` is not consistent with GCMD 'rucontenttype' list.</li> </ul><b>Remediation:</b><br>Please provide a GCMD compliant Online Resource Type.", "Orderable"=>"OK", "Platforms/Platform/Characteristics/Characteristic/DataType"=>"OK", "Platforms/Platform/Characteristics/Characteristic/Description"=>"OK", "Platforms/Platform/Characteristics/Characteristic/Name"=>"OK", "Platforms/Platform/Characteristics/Characteristic/Unit"=>"OK", "Platforms/Platform/Characteristics/Characteristic/Value"=>"OK", "Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/DataType"=>"OK", "Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Description"=>"OK", "Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Name"=>"OK", "Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Unit"=>"OK", "Platforms/Platform/Instruments/Instrument/Characteristics/Characteristic/Value"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/DataType"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/Description"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/Name"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/Unit"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/Characteristics/Characteristic/Value"=>"OK", "Platforms/Platform/Instruments/Instrument/Sensors/Sensor/ShortName"=>"OK", "Platforms/Platform/Instruments/Instrument/ShortName"=>"OK", "Platforms/Platform/LongName"=>"<b>Errors:</b><ul><li>Error: The provided platform long name `GCOM-W1` does not comply with the GCMD.</li> </ul><b>Remediation:</b><br>Please submit a request to support@earthdata.nasa.gov to have this platform added to the GCMD Platform KMS.", "Platforms/Platform/Type"=>"<b>Errors:</b><ul><li>Error: The provided platform type `SATELLITE` does not comply with the GCMD.</li> </ul><b>Remediation:</b><br>Please submit a request to support@earthdata.nasa.gov to have this platform type added to the GCMD Platforms KMS.", "ProcessingLevelId"=>"OK", "ScienceKeywords/ScienceKeyword/CategoryKeyword"=>"OK", "Spatial/GranuleSpatialRepresentation"=>"OK", "Spatial/HorizontalSpatialDomain/Geometry/CoordinateSystem"=>"<b>Errors:</b><ul><li>Error: Missing child element(s). Expected is one of ( Point, BoundingRectangle, GPolygon, Line ).</li> </ul>schema failed<br>", "Spatial/HorizontalSpatialDomain/Geometry/Point"=>"<b>Errors:</b><ul><li>Info: No spatial extent is provided.</li> </ul><b>Remediation:</b><br>Please provide a spatial extent in one of the following form: Point, Bounding Rectangle, GPolygon, Line", "Spatial/SpatialCoverageType"=>"<b>Errors:</b><ul><li>Error: The Spatial Coverage Type provided `['Horizontal']` is invalid.</li> </ul><b>Remediation:</b><br>Please provide a Spatial Coverage Type from the following list: ['HORIZONTAL', 'VERTICAL', 'ORBITAL', 'HORIZONTAL_VERTICAL', ORBITAL_VERTICAL', 'HORIZONTAL_ORBITAL', 'HORIZONTAL_VERTICAL_ORBITAL']", "SpatialInfo/HorizontalCoordinateSystem/GeodeticModel/HorizontalDatumName"=>"<b>Errors:</b><ul><li>Info: Horizontal Datum Name is missing.</li> </ul><b>Remediation:</b><br>Please provide a Horizontal Datum Name.", "SpatialKeywords/Keyword"=>"OK", "Temporal/EndsAtPresentFlag"=>"<b>Errors:</b><ul><li>Warning: Potential issue with:\n - No EndingDateTime provided; no EndsAtPresentFlag provided for a potentially active collection. \n - CollectionState is not \"COMPLETE\"; no EndsAtPresentFlag provided for a potentially active collection.</li> </ul><b>Remediation:</b><br>If data collection is ongoing, provide an EndsAtPresentFlag of \"true\"", "Temporal/RangeDateTime/BeginningDateTime"=>"OK", "Temporal/SingleDateTime"=>"OK", "UseConstraints"=>"<b>Errors:</b><ul><li>Warning: No license information is provided.</li> </ul><b>Remediation:</b><br>Please provide information about the license applicable to the dataset, preferably as a URL. For EOSDIS records, please providing the following link (unless under different usage terms): https://earthdata.nasa.gov/earth-observation-data/data-use-policy", "Visible"=>"OK"}
         assert_equal(expected, comment_hash)
       end
-    end
+    # end
 
     # it "returns results of the automated granule_script" do
     #   #manually setting the record as a granule so the evaluate script runs the write python script
@@ -267,32 +267,32 @@ class RecordTest < ActiveSupport::TestCase
 
   end
 
-  context "daac scope" do
-    should "will return records for the given DAAC" do
+  # context "daac scope" do
+  test "will return records for the given DAAC" do
       records = Record.daac("PODAAC")
       assert_equal 19, records.length
     end
 
-    should "will not return records that belong to anoter DAAC" do
+  test "will not return records that belong to anoter DAAC" do
       records = Record.daac("FakeDAAC")
       assert records.empty?
     end
-  end
+  # end
 
-  context "released_to_daac_date" do
-    should "updates the record's released_to_daac_date when releasing" do
+  # context "released_to_daac_date" do
+    test "updates the record's released_to_daac_date when releasing" do
       record = Record.first
       assert_nil record.released_to_daac_date
       record.update_released_to_daac_date
       assert_in_delta record.released_to_daac_date, Time.zone.now, 10
     end
 
-    should "removes the record's released_to_daac_date when reverting" do
+    test "removes the record's released_to_daac_date when reverting" do
       record = Record.first
       record.released_to_daac_date = Time.zone.now
       assert_not_nil record.released_to_daac_date
       record.remove_released_to_daac_date
       assert_nil record.released_to_daac_date
     end
-  end
+  # end
 end

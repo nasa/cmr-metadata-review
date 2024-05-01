@@ -4,15 +4,15 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class UserTest < ActiveSupport::TestCase
   include OmniauthMacros
 
-  context "DAAC curator role" do
+  # context "DAAC curator role" do
 
-    should "is invalid without an associated DAAC" do
+    test "is invalid without an associated DAAC" do
       user = users(:user2)
       user.role = "daac_curator"
       assert_not user.valid?
     end
 
-    should "can see the e-mail preferences page" do
+    test "can see the e-mail preferences page" do
       user = User.new
       user.id = 8
       user.role = 'daac_curator'
@@ -20,11 +20,11 @@ class UserTest < ActiveSupport::TestCase
       ability = Ability.new(user)
       assert ability.can?(:update_email_preferences, user)
     end
-  end
+  # end
 
-  context "ARC curator role" do
+  # context "ARC curator role" do
 
-    should "can see screen 'Awaiting Release to DAAC' but cannot release or delete a record" do
+  test "can see screen 'Awaiting Release to DAAC' but cannot release or delete a record" do
       arc_user = User.new
       arc_user.role = 'arc_curator'
 
@@ -38,18 +38,18 @@ class UserTest < ActiveSupport::TestCase
       #User should not be able to delete a record
       assert_not arc_user.admin?
     end
-  end
+  # end
 
-  context "check active for authentication" do
+  # context "check active for authentication" do
 
-    should "the account is active" do
+  test "the account is active" do
       user = users(:user2)
       user.role = "daac_curator"
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
       assert user.active_for_authentication? == true
     end
 
-    should "the account is inactive" do
+  test "the account is inactive" do
       user = users(:user2)
       user.role = "daac_curator"
       user.daac = 'LARC'
@@ -72,10 +72,10 @@ class UserTest < ActiveSupport::TestCase
       # the user will still be deactivated.
       assert user.active_for_authentication? == false
     end
-  end
+  # end
 
-  context "saving user email preferences" do
-    should "can save user email preferences" do
+  # context "saving user email preferences" do
+  test "can save user email preferences" do
       user = User.new(id: 8, role: 'daac_curator')
       assert user.email_preference == nil
       user.save_email_preference('biweekly')
@@ -83,5 +83,5 @@ class UserTest < ActiveSupport::TestCase
       user.save_email_preference('never')
       assert user.email_preference == nil
     end
-  end
+  # end
 end

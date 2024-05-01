@@ -18,7 +18,7 @@ module Helpers
     def see_granule_revision_details(granule_revision)
       # Click button to see Granule Review Details
       within "#granule_revision_#{granule_revision}" do
-        find('#granule_review_link > form > input').click
+        find('#granule_review_link > form > button').click
       end
     end
   end

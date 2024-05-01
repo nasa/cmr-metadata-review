@@ -5,8 +5,8 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
 
-  context "POST #urs" do
-    before do
+  #describe "POST #urs" do
+  setup do
       mock_normal_edl_user
       ENV['urs_site'] = 'https://sit.urs.earthdata.nasa.gov'
       ENV['urs_client_id'] = 'clientid'
@@ -23,11 +23,11 @@ class LoginControllerTest < ActionController::TestCase
 
       request.env["devise.mapping"] = Devise.mappings[:user]
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:urs]
-    end
+  end
 
 
-    context "#urs callback" do
-      should "should successfully create a user" do
+  #describe "#urs callback" do
+  test "should successfully create a user" do
         mock_normal_edl_user
 
         stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/normaluser?client_id=clientid").
@@ -35,8 +35,7 @@ class LoginControllerTest < ActionController::TestCase
             headers: {
               'Accept' => '*/*',
               'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-              'Authorization' => 'Bearer accesstoken',
-              'User-Agent'=>'Faraday v1.10.3'
+              'Authorization' => 'Bearer accesstoken'
             }).
           to_return(status: 200, body: "{}", headers: {})
 
@@ -45,8 +44,8 @@ class LoginControllerTest < ActionController::TestCase
         after_count = User.count
         assert(after_count.must_equal(before_count + 1))
       end
-    end
+  #end
 
-  end
+#end
 end
 

@@ -6,17 +6,19 @@ class CanShowCollectionsTest < SystemTestCase
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
 
-  context 'Showing Closed Records' do
-
-    context 'when the user is a daac curator' do
-      before do
+  # describe 'Showing Closed Records' do
+  #
+  #   describe 'when the user is a daac curator' do
+  setup do
         OmniAuth.config.test_mode = true
         mock_login(id: 5)
       end
 
-      should 'can show closed records' do
+  test 'can show closed records' do
         # view closed records tab
         visit '/records/finished'
+        # save_and_open_page
+        # screenshot_and_open_image
         # Verify they can select the completed review and view it.
         see_collection_review_details('#finished', 15)
         # There are 5 revisions for this collection, but only one that is closed
@@ -25,7 +27,7 @@ class CanShowCollectionsTest < SystemTestCase
         see_collection_revision_details(4)
         assert has_content? 'METADATA ELEMENTS'
       end
-    end
+    # end
 
-  end
+  # end
 end

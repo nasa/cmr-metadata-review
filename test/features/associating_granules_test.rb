@@ -5,7 +5,7 @@ class AssociatingGranulesTest < SystemTestCase
   include Helpers::UserHelpers
   include Helpers::HomeHelper
 
-  before do
+  setup do
     OmniAuth.config.test_mode = true
     mock_login(role: 'arc_curator')
 
@@ -16,9 +16,9 @@ class AssociatingGranulesTest < SystemTestCase
       .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  context 'Granule Assocations' do
-    context 'associate granules to collections' do
-      should 'can assign granule to collection' do
+  # describe 'Granule Assocations' do
+  #   describe 'associate granules to collections' do
+      test 'can assign granule to collection' do
         visit '/home'
 
         within '#open' do
@@ -33,7 +33,7 @@ class AssociatingGranulesTest < SystemTestCase
       end
 
 
-      should 'can assign "no granule review" to a collection' do
+      test 'can assign "no granule review" to a collection' do
         visit '/home'
 
         within '#open' do
@@ -47,10 +47,10 @@ class AssociatingGranulesTest < SystemTestCase
         page.must_have_content("associated granule will be marked as 'No Granule Review'")
       end
 
-    end
+    # end
 
-    context 'associated granule reports' do
-      should 'associated granule shows up in reports' do
+    # describe 'associated granule reports' do
+      test 'associated granule shows up in reports' do
         mock_login(role: 'admin')
         visit '/home'
 
@@ -75,12 +75,12 @@ class AssociatingGranulesTest < SystemTestCase
         page.must_have_content('RECORD METRICS') # verify it has report metrics
         page.assert_selector('.checked_num', count: 2) # of elements reviewed appears twice.
       end
-    end
-  end
+    # end
+  # end
 
   # Note had to move this test of the main tests as we were not getting proper database cleanup after each test
-  context 'mark as undefined' do
-    should 'can mark a granule back to undefined' do
+  # describe 'mark as undefined' do
+    test 'can mark a granule back to undefined' do
       visit '/home'
 
       within '#open' do
@@ -97,10 +97,10 @@ class AssociatingGranulesTest < SystemTestCase
       end
       page.must_have_content("associated granule will be marked as 'Undefined'")
     end
-  end
+  # end
 
-  context 'perform checks associating granule to collection' do
-    should 'checks has reviewers, all colors, and no second opinions' do
+  # describe 'perform checks associating granule to collection' do
+    test 'checks has reviewers, all colors, and no second opinions' do
       mock_login(role: 'admin')
       visit '/home'
 
@@ -115,5 +115,5 @@ class AssociatingGranulesTest < SystemTestCase
       page.must_have_content('Not all columns in the associated granule have been flagged with a color!')
       page.must_have_content('Some columns in the associated granule still need a second opinion review.')
     end
-  end
+  # end
 end
