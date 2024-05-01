@@ -4,16 +4,16 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class CanAccessTopPageTest < SystemTestCase
   include OmniauthMacros
 
-  context "POST #urs" do
-    before do
+  # describe "POST #urs" do
+    setup do
       OmniAuth.config.test_mode = true
       mock_normal_edl_user
       Rails.application.env_config["devise.mapping"] = Devise.mappings[:user] # If using Devise
       Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:urs]
     end
 
-    context "access top page" do
-      should "can maps an EDL user to Devise user" do
+    # describe "access top page" do
+  test "can maps an EDL user to Devise user" do
         mock_existing_devise_user
         User.any_instance.stubs(:check_if_account_active).returns(true)
         AclDao.any_instance.stubs(:get_role_and_daac).with('existingdeviseuser').returns(['admin',nil])
@@ -28,7 +28,7 @@ class CanAccessTopPageTest < SystemTestCase
         assert(user.uid == 'existingdeviseuser')
         assert(user.provider == 'urs')
       end
-      should "can create a new user from an existing EDL user" do
+      test "can create a new user from an existing EDL user" do
         mock_new_devise_user
 
         User.any_instance.stubs(:check_if_account_active).returns(true)
@@ -44,7 +44,7 @@ class CanAccessTopPageTest < SystemTestCase
         assert(user.provider == 'urs')
       end
 
-      should "can sign in user with oauth account with admin privileges" do
+      test "can sign in user with oauth account with admin privileges" do
         mock_normal_edl_user
 
         User.any_instance.stubs(:check_if_account_active).returns(true)
@@ -62,7 +62,7 @@ class CanAccessTopPageTest < SystemTestCase
         page.must_have_content("Requires Reviewer Feedback Records:")
       end
 
-      should "can sign in user with oauth account with arc curator privileges" do
+      test "can sign in user with oauth account with arc curator privileges" do
         mock_normal_edl_user
 
         User.any_instance.stubs(:check_if_account_active).returns(true)
@@ -80,7 +80,7 @@ class CanAccessTopPageTest < SystemTestCase
 
       end
 
-      should "can sign in user with oauth account with daac curator privileges" do
+      test "can sign in user with oauth account with daac curator privileges" do
         mock_normal_edl_user
         User.any_instance.stubs(:check_if_account_active).returns(true)
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','LP_DAAC'])
@@ -94,7 +94,7 @@ class CanAccessTopPageTest < SystemTestCase
         page.wont_have_content("Unreviewed Records:")
       end
 
-      should "it contains the invalid keywords report icon" do
+      test "it contains the invalid keywords report icon" do
         mock_normal_edl_user
         User.any_instance.stubs(:check_if_account_active).returns(true)
         AclDao.any_instance.stubs(:get_role_and_daac).with('normaluser').returns(['daac_curator','NSIDCV0'])
@@ -105,12 +105,12 @@ class CanAccessTopPageTest < SystemTestCase
         page.must_have_content('There are 1 invalid keywords found across 1 collection records')
       end
 
-      should "can handle authentication error" do
+      test "can handle authentication error" do
         OmniAuth.config.mock_auth[:urs] = :invalid_credentials
         visit '/'
         find('#urs_login_button').click
         page.must_have_content('Could not authenticate you from URS because "Invalid credentials".')
       end
-    end
-  end
+    # end
+  # end
 end

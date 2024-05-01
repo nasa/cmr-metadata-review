@@ -5,7 +5,7 @@ class UpdateDiscussionTest < SystemTestCase
   include Helpers::UserHelpers
   include Helpers::ReviewsHelper
 
-  before do
+  setup do
     OmniAuth.config.test_mode = true
     mock_login(role: 'arc_curator')
 
@@ -16,8 +16,8 @@ class UpdateDiscussionTest < SystemTestCase
         .to_return(status: 200, body: '<?xml version="1.0" encoding="UTF-8"?><results><hits>0</hits><took>32</took></results>', headers: {})
   end
 
-  context 'update discussion.' do
-    should 'add discussion and then update, delete' do
+  # describe 'update discussion.' do
+  test 'add discussion and then update, delete' do
       visit '/home'
       within '#open' do
         all('#record_id_')[0].click  # Selects the first checkbox in "unreviewed records"
@@ -54,5 +54,5 @@ class UpdateDiscussionTest < SystemTestCase
       accept_confirm_dialog
       assert has_no_content? 'second discussion'
     end
-  end
+  # end
 end

@@ -7,13 +7,13 @@ class UpdateReviewCommentTest < SystemTestCase
   include Helpers::CollectionsHelper
   include Helpers::HomeHelper
 
-  before do
+  setup do
     OmniAuth.config.test_mode = true
     mock_login(role: 'arc_curator')
   end
 
-  context 'Show ingested iso record.' do
-    should 'Navigate to show iso mends field mapping' do
+  # describe 'Show ingested iso record.' do
+  test 'Navigate to show iso mends field mapping' do
       visit '/home'
       see_collection_review_details('#in_arc_review', 42)
       see_collection_revision_details(1)
@@ -21,7 +21,7 @@ class UpdateReviewCommentTest < SystemTestCase
       page.driver.browser.action.move_to(page.find('#ShortName').native).perform
       assert has_content? "/gco:CharacterString = gov.nasa.esdis.umm.shortname"
     end
-    should 'Navigate to show iso smap field mapping' do
+  test 'Navigate to show iso smap field mapping' do
       visit '/home'
       see_collection_review_details('#in_arc_review', 43)
       see_collection_revision_details(1)
@@ -29,5 +29,5 @@ class UpdateReviewCommentTest < SystemTestCase
       page.driver.browser.action.move_to(page.find('#ShortName').native).perform
       assert has_content? "/gco:CharacterString = The ECS Short Name"
     end
-  end
+  # end
 end

@@ -10,8 +10,8 @@ class ReportsControllerTest < ActionController::TestCase
     @cmr_base_url = Cmr.get_cmr_base_url
   end
 
-  context 'GET #search' do
-    should 'it returns modis results' do
+  #describe 'GET #search' do
+  test 'it returns modis results' do
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
 
@@ -32,11 +32,11 @@ class ReportsControllerTest < ActionController::TestCase
       assert(1, count)
       assert('C1200019523-OB_DAAC', search_iterator[0]['concept_id'])
     end
-  end
+  #end
 
 
-  context "GET #home" do
-    should "gets home csv without error" do
+  #describe "GET #home" do
+  test "gets home csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -56,10 +56,10 @@ class ReportsControllerTest < ActionController::TestCase
 
       assert_equal((response.body.include? "CMR System Wide Report"), true)
     end
-  end
+  #end
 
-  context "GET #provider" do
-    should "gets provider csv without error" do
+  #describe "GET #provider" do
+  test "gets provider csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -70,10 +70,10 @@ class ReportsControllerTest < ActionController::TestCase
 
       assert_equal((response.body.include? "CMR DAAC Report"), true)
     end
-  end
+  #end
 
-  context "GET #selection" do
-    should "gets selection csv without error" do
+  #describe "GET #selection" do
+  test "gets selection csv without error" do
       @tester = User.find_by_email("abaker@element84.com")
       sign_in(@tester)
       stub_urs_access(@tester.uid, @tester.access_token, @tester.refresh_token)
@@ -82,9 +82,9 @@ class ReportsControllerTest < ActionController::TestCase
 
       assert_equal((response.body.include? "CMR Selection Report"), true)
     end
-  end
+  #end
 
-  should "can download csv review report" do
+  test "can download csv review report" do
     user = User.find_by(email: "abaker@element84.com")
     sign_in(user)
     stub_urs_access(user.uid, user.access_token, user.refresh_token)
