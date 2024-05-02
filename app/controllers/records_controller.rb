@@ -101,12 +101,11 @@ class RecordsController < ApplicationController
     response_array = []
     response_records.each do |record|
       response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
-                          "date_ingested": record[:date_ingested],
-                          "revision_id": record.revision_id, "short_name": record[:short_name],
-                          "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-                          "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
+        "date_ingested": record[:date_ingested], "format": record.format,
+        "revision_id": record.revision_id, "short_name": record[:short_name],
+        "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
+        "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
-    # puts "*** Count query=" + count_query
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
     result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: response_array}
     render json: result
@@ -470,7 +469,7 @@ class RecordsController < ApplicationController
   end
 
   def get_sort_column(sort_column)
-    %w[concept_id short_name date_ingested].include?(sort_column) ? sort_column : nil
+    %w[concept_id short_name date_ingested format].include?(sort_column) ? sort_column : nil
   end
 
   def get_color_code(color_code)
