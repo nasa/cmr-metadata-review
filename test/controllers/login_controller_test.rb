@@ -5,6 +5,10 @@ Dir[Rails.root.join("test/**/*.rb")].each {|f| require f}
 class LoginControllerTest < ActionController::TestCase
   include OmniauthMacros
 
+  setup do
+    @controller = LoginController.new
+  end
+
   describe "POST #urs" do
     before do
       mock_normal_edl_user

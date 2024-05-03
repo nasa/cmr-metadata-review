@@ -6,5 +6,5 @@
 </div>
 
 <script type="text/javascript">
-  <%= render partial: 'errors_chart.js', locals: { metric_data: metric_data, type: type } %>
+  <%= render partial: 'errors_chart', formats: [:js], locals: { metric_data: metric_data, type: type } %>
 </script>

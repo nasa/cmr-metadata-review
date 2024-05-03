@@ -4,6 +4,10 @@ Dir[Rails.root.join("test/**/*.rb")].each { |f| require f }
 class GranulesControllerTest < ActionController::TestCase
   include OmniauthMacros
 
+  setup do
+    @controller = GranulesController.new
+  end
+
   describe "DELETE #delete" do
     it "deletes a selected granule record from a collection" do
       user = User.find_by role: "admin"
@@ -276,6 +280,15 @@ class GranulesControllerTest < ActionController::TestCase
     # end
 
     it "will delete and replace the granule" do
+      stub_request(:get, "https://sit.urs.earthdata.nasa.gov/api/users/?client_id=clientid").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Bearer',
+            'User-Agent'=>'Faraday v1.10.3'
+          }).
+        to_return(status: 200, body: "{}", headers: {})
       user = User.find_by role: "admin"
       sign_in(user)
       stub_urs_access(user.uid, user.access_token, user.refresh_token)
