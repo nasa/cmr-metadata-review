@@ -4,6 +4,9 @@ Dir[Rails.root.join('test/**/*.rb')].each {|f| require f}
 class RecordsControllerTest < ActionController::TestCase
   include OmniauthMacros
 
+  setup do
+    @controller = RecordsController.new
+  end
 
   describe 'POST #create' do
     it 'updates record data from review params' do

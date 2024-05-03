@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class InvalidKeywordsControllerTest < ActionController::TestCase
+  setup do
+    @controller = InvalidKeywordsController.new
+  end
   describe 'GET #invalid_keywords' do
     it 'produces csv report for all providers' do
       get :csv_report, params: { format: :csv }

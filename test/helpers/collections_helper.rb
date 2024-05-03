@@ -11,14 +11,14 @@ module Helpers
 
     def see_collection_revision_details(collection_revision_id)
       within "#collection_revision_#{collection_revision_id}" do
-        find('table > tbody > tr:nth-child(2) > td > div > form > input').click # click See Collection Review Details
+        find('table > tbody > tr:nth-child(2) > td > div > form > button').click # click See Collection Review Details
       end
     end
 
     def see_granule_revision_details(granule_revision)
       # Click button to see Granule Review Details
       within "#granule_revision_#{granule_revision}" do
-        find('#granule_review_link > form > input').click
+        find('#granule_review_link > form > button').click
       end
     end
   end

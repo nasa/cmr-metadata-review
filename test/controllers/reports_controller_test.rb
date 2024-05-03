@@ -8,6 +8,7 @@ class ReportsControllerTest < ActionController::TestCase
 
   setup do
     @cmr_base_url = Cmr.get_cmr_base_url
+    @controller = ReportsController.new
   end
 
   describe 'GET #search' do
