@@ -7,7 +7,7 @@ gem 'rails', '~> 7.0.0'
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
 gem 'pg', group: [:test, :development, :production]
-gem 'webpacker'
+gem "shakapacker", "= 6.5"
 gem 'react-rails'
 
 gem 'sprockets-rails'
@@ -19,7 +19,7 @@ gem 'bourbon'
 gem 'neat'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+#gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5.0.0'
 

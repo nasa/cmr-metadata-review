@@ -1926,6 +1926,11 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    shakapacker (6.5.0)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -1970,11 +1975,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.4)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket (1.2.10)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -2035,6 +2035,7 @@ DEPENDENCIES
   sass-rails (~> 6.0)
   sdoc (~> 2.3.1.0)
   selenium-webdriver
+  shakapacker (= 6.5)
   simplecov
   spring
   sprockets-rails
@@ -2044,7 +2045,6 @@ DEPENDENCIES
   web-console
   webdrivers
   webmock
-  webpacker
   whenever
 
 RUBY VERSION
