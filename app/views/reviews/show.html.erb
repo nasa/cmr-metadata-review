@@ -13,7 +13,7 @@
         <!-- bubbles -->
         <div class="bubble_title">
           <% @bubble_data.each do |bubble| %>
-            <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
+            <button data-target="<%= bubble[:field_name] %>" class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
               <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
               <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
                 <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
@@ -22,7 +22,7 @@
               <% else %>
                 <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
               <% end %>
-            </div>
+            </button>
           <% end %>
         </div>
       </div>
@@ -42,7 +42,7 @@
 
             <!-- for each of shown value list, create td for value -->
             <% @section_titles.each do |title| %>
-              <td class="title_column column_<%= title %>">
+              <td class="title_column" id="column_<%= title %>">
                 <div class="title_text">
               <span class="title_value">
                 <span class="title_value_star">
@@ -189,6 +189,24 @@
 
 
     <script type="text/javascript">
+      //Users who are directed to the reviews page from a bubble click redirect to section they clicked on
+        var targetField = sessionStorage.getItem('targetField')
+        var escapedTargetField = $.escapeSelector(targetField)
+        var targetFieldElement = $('#column_' + escapedTargetField)[0]
+        
+        targetFieldElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      
+      //Allows users to click on bubble up top and be auto-directed to the column it's referring to
+        $(document).ready(function() {
+          $('.inline_bubble').click(function() {
+            var targetId = $(this).data('target')
+            var escapedTargetId = $.escapeSelector(targetId)
+            var targetElement = $('#column_' + escapedTargetId)[0]
+          
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          })
+        })
+
       //This is adding the ability to drag to adjust column widths
       //all column widths are determine by the top row of table, with class title_column
       (function setupWidthAdjustment() {
