@@ -202,6 +202,12 @@ class RecordsController < ApplicationController
     redirect_to collection_path(id: collection.id, record_id: @record.id)
   end
 
+  def destroy
+    @record = Record.find(params[:id])
+    @record.destroy
+    redirect_to root_path, notice: "Collection was successfully deleted."
+  end
+
   def show
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map

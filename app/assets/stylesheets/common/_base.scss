@@ -202,6 +202,7 @@ tr:nth-child(odd) {background: #FFF}
   @include small_button_sizing;
   @include button_disabled;
   background-color:$green-light;
+  margin-right: 10px
 }
 
 .deleteButton {
@@ -284,3 +285,9 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $review-gray;
   color: white;
 }
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
