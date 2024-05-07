@@ -7,8 +7,9 @@ gem 'rails', '~> 7.0.0'
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
 gem 'pg', group: [:test, :development, :production]
-gem 'webpacker'
-gem 'react-rails'
+
+gem "shakapacker", "= 6.5"
+gem "react-rails", "= 2.6"
 
 gem 'sprockets-rails'
 
