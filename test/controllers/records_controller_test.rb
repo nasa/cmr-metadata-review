@@ -289,6 +289,22 @@ class RecordsControllerTest < ActionController::TestCase
     end
   end
 
+  describe 'POST #destroy' do
+    it 'deletes the record' do
+      user = User.find_by(role: 'admin')
+      sign_in(user)
+      stub_urs_access(user.uid, user.access_token, user.refresh_token)
+
+      record = Record.find(1)
+      assert_difference('Record.count', -1) do
+        delete :destroy, params: { id: record.id }
+      end
+
+      assert_redirected_to root_path
+      assert_equal 'Collection was successfully deleted.', flash[:notice]
+    end
+  end
+
   describe 'POST#refresh' do
 
     # I've mocked a cmr response that returns a revision id 21 which is a newer revision that currently in fixtures.   The test

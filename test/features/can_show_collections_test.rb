@@ -155,6 +155,7 @@ class CanShowCollectionsTest < SystemTestCase
       page.must_have_link('EDIT COLLECTION IN MMT')
       # There should be only one revision with state 'in_daac_review' shown
       page.must_have_button('See Collection Review Details', maximum: 1)
+      page.must_have_button('Delete Collection', maximum: 1)
     end
 
   end

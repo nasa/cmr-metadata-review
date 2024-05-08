@@ -284,13 +284,13 @@ tr:nth-child(odd) {background: #FFF}
   background-color: $review-gray;
   color: white;
 }
-.button-container {
+.button_container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.each-button {
+.each_button {
   margin: 3.5px 5px 10px 0px;
 }
 
