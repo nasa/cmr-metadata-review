@@ -24,7 +24,7 @@ module CmrMetadataReview
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    
+
     config.middleware.insert_after Rails::Rack::Logger, MiddlewareHealthcheck
 
     # Content Security Policy controls which javascript can be run in the
@@ -57,6 +57,7 @@ module CmrMetadataReview
       '(unknown)'
     end
 
+    config.react.server_renderer_extensions = ["jsx", "js", "tsx", "ts"]
     config.react.jsx_transform_options = {
       optional: ["es7.classProperties"]
     }
