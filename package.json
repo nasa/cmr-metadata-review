@@ -1,47 +1,42 @@
 {
+  "name": "app",
+  "private": true,
   "dependencies": {
-    "-": "0.0.1",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/runtime": "^7.11.2",
-    "@rails/webpacker": "^5.4.4",
-    "antd": "^4.5.4",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react-app": "^9.1.2",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react_ujs": "^2.6.1",
-    "save-dev": "0.0.1-security"
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react_ujs": "^3.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.9.0"
+    "@babel/core": "7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/plugin-transform-class-properties": "^7.24.1",
+    "@babel/plugin-transform-numeric-separator": "^7.24.1",
+    "@babel/plugin-transform-runtime": "7",
+    "@babel/preset-env": "7",
+    "@babel/preset-react": "^7.24.1",
+    "@babel/runtime": "^7.24.5",
+    "babel-loader": "8",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "babel-preset-react-app": "^10.0.1",
+    "compression-webpack-plugin": "9",
+    "webpack": "5",
+    "webpack-assets-manifest": "5",
+    "webpack-cli": "4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-merge": "5",
+    "terser-webpack-plugin": "5",
+    "shakapacker": "6.5.0"
   },
-  "resolutions": {
-    "nth-check": "^2.1.1",
-    "semver": "^7.5.3",
-    "glob-parent": "^5.1.2",
-    "@babel/traverse": "^7.23.2",
-    "browserify-sign": "^4.2.2",
-    "follow-redirects": "^1.15.4"
+  "version": "0.1.0",
+  "babel": {
+    "presets": [
+      "./node_modules/shakapacker/package/babel/preset.js"
+    ]
   },
-  "overrides": {
-    "nth-check": "^2.1.1",
-    "semver": "^7.5.3",
-    "glob-parent": "^5.1.2",
-    "@babel/traverse": "^7.23.2",
-    "browserify-sign": "^4.2.2",
-    "follow-redirects": "^1.15.4"
-  }
+  "browserslist": [
+    "defaults"
+  ]
 }
