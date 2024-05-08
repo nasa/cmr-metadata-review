@@ -202,7 +202,6 @@ tr:nth-child(odd) {background: #FFF}
   @include small_button_sizing;
   @include button_disabled;
   background-color:$green-light;
-  margin-right: 10px
 }
 
 .deleteButton {
@@ -289,5 +288,9 @@ tr:nth-child(odd) {background: #FFF}
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.each-button {
+  margin: 3.5px 5px 10px 0px;
 }
 
