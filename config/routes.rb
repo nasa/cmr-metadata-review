@@ -50,7 +50,6 @@ Rails.application.routes.draw do
         get "copy_prior_recommendations"
         post "complete"
         post "associate_granule_to_collection"
-        delete 'records/:id', to: 'records#destroy', as: :destroy_record
       end
 
       collection do

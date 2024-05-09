@@ -61,6 +61,7 @@
                     <td>Completion Date</td>
                   </tr>
 
+
                   <% record.reviews.each do |review| %>
                     <tr>
                       <td><%= review.user.email %></td>
@@ -72,24 +73,27 @@
                 </table>
 
                 <div class="review_actions">
+
                   <div class="ingest_score">
                     <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
                   </div>
-                  <div class="button_container">
-                    <div class ="each_button">
+                  <div class="collection_revisions_button">
+                    <div class ="revisions_button">
                       <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
                     </div>
-                    <div class ="each_button">
+                    <div class ="revisions_button">
                       <%= button_to "Delete Collection", record_path(record.id), class: "deleteButton", method: :delete, data: { confirm: "Are you sure you want to delete this collection?" } %>
                     </div>
                   </div>
                 </div>
+
               </td>
             </tr>
+
           </table>
         </div>
       <% end %>
-      
+
     </div>
 
     <% if @granule_objects.count > 0 %>
