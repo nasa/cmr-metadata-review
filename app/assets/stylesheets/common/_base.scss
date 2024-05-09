@@ -166,6 +166,8 @@ tr:nth-child(odd) {background: #FFF}
   vertical-align: middle;
   transition: background 0.15s ease-in-out;
   outline: none;
+  padding: 0.6em;
+  margin: 0.3em;
 
   -webkit-appearance: button;
   cursor: pointer;
@@ -187,8 +189,6 @@ tr:nth-child(odd) {background: #FFF}
     color: $disabled-gray-light;
   }
 }
-
-
 
 .selectButton {
   @include button_attributes;
