@@ -100,19 +100,13 @@ class RecordsController < ApplicationController
 
     response_array = []
     response_records.each do |record|
-      if record.format == 'umm_json'
-        response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
-        "date_ingested": record[:date_ingested], format: 'umm-c',
-        "revision_id": record.revision_id, "short_name": record[:short_name],
-        "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-        "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
-      else 
-        response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
-        "date_ingested": record[:date_ingested], format: record[:format],
-        "revision_id": record.revision_id, "short_name": record[:short_name],
-        "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-        "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
-      end
+      record_format = (record[:format] == 'umm_json') ? 'umm-c' : record[:format]
+    
+      response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
+      "date_ingested": record[:date_ingested], format: record_format,
+      "revision_id": record.revision_id, "short_name": record[:short_name],
+      "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
+      "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
 
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
