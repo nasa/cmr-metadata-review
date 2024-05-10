@@ -77,11 +77,11 @@
                   <div class="ingest_score">
                     <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
                   </div>
-                  <div class="collection_revisions_button">
-                    <div class ="revisions_button">
+                  <div class="collection_revisions_button_container">
+                    <div class ="see_review_details_button">
                       <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
                     </div>
-                    <div class ="revisions_button">
+                    <div class ="see_review_details_button">
                       <%= button_to "Delete Collection", record_path(record.id), class: "deleteButton", method: :delete, data: { confirm: "Are you sure you want to delete this collection?" } %>
                     </div>
                   </div>
@@ -130,7 +130,6 @@
           <% else %>
             <h3 class="granules_revision_header">Granules</h3>
           <% end %>
-
         </div>
           <% @granule_records.each do |granule_record| %>
             <table id="granule_revision_<%= granule_record.revision_id %>" class="revision_table">
