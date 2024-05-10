@@ -77,8 +77,14 @@
                   <div class="ingest_score">
                     <p>Collection Review Status: <%= record.closed? || record.finished? ? "Closed" : "In Process" %></p>
                   </div>
-
-                  <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
+                  <div class="collection_revisions_button_container">
+                    <div class ="see_review_details_button">
+                      <%= button_to "See Collection Review Details", record_path(record.id), class: "smallSelectButton", method: :get %>
+                    </div>
+                    <div class ="see_review_details_button">
+                      <%= button_to "Delete Collection", record_path(record.id), class: "deleteButton", method: :delete, data: { confirm: "Are you sure you want to delete this collection?" } %>
+                    </div>
+                  </div>
                 </div>
 
               </td>
@@ -178,7 +184,7 @@
                     </div>
                     <% if can?(:delete_granule, granule_record.recordable) %>&nbsp;
                       <% modal_id = "delete-granule-modal-id-#{granule_record.recordable_id}-#{granule_record.id}" %>
-                      <input class="smallSelectButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
+                      <input class="deleteButton confirm-modal-button" type="button" id="delete-granule-modal" name="<%= modal_id %>" href="#<%= modal_id %>" value="Delete Granule"/>
 
                       <div id="<%= modal_id %>" class="eui-modal-content confirm-modal">
                         <a href="#" class="modal-close float-r"><i class="fa fa-times"></i><span class="is-invisible">Close</span></a>
