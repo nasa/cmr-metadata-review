@@ -11,9 +11,9 @@
           <p class="bubble_title_text"><%= @section_title %></p>
         </div>
         <!-- bubbles -->
-        <div class="bubble_title">
+        <div id="bubble_title" class="bubble_title">
           <% @bubble_data.each do |bubble| %>
-            <button onclick="bubbleFocus('<%= bubble[:field_name] %>')" class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
+            <button id="bubble_<%= bubble[:field_name] %>" onclick="bubbleFocus('<%= bubble[:field_name] %>')" class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
               <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
               <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
                 <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
@@ -36,7 +36,7 @@
     <div>
       <div class="scroll_table" id="scroll_table">
 
-        <table class="review_table">
+        <table id="review_table" class="review_table">
           <tr class="section_title_row">
             <th class="headcol first_headcol"></th>
 
