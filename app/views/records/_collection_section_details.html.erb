@@ -5,10 +5,10 @@
   <div class="eui-icon eui-fa-arrow-circle-right"></div>
   </button>
   <!-- dynamically add bubble divs -->
-  <div class="record_bubbles">
+  <div id="record_bubbles" class="record_bubbles">
     <% section[1].each do |field| %>
       <% if current_field = bubble_data[field] %>
-        <div class="single_bubble_container">
+        <div id="single_bubble_container_<%= field %>" class="single_bubble_container">
           <button onclick="redirectToSection('<%= review_path(id: params["id"], section_index: index_count) %>', '<%= field %>')" class="bubble flag_<%= current_field[:color] %> <%= script_class(current_field) %> bubbletooltip">
               <p class="bubbletooltiptext"><%= split_on_capitals(field) %></p>
             <% if current_user.arc? && current_field[:opinion] && current_field[:opinion] != "" %>
