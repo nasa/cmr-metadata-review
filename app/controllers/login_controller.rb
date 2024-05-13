@@ -23,7 +23,7 @@ class LoginController < Devise::OmniauthCallbacksController
     else
       redirect_to root_path
       if (@user.role.nil?)
-        flash.notice = "User is not provisioned with the proper ACLs.   Please contact the Earthdata Operations team."
+        flash.notice = "The user is not provisioned with the proper ACLs. Please contact User Support at support@earthdata.nasa.gov."
       else
         flash.notice = "Could not authenticate from Earthdata Login"
       end
