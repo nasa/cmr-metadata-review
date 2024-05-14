@@ -103,7 +103,6 @@
   float: left;
   margin-right: 5px;
   font-weight: normal;
-  margin-bottom: 10px;
 }
 
 .edit_collection_in_mmt_link {
@@ -160,7 +159,15 @@
   align-items: center;
 }
 
+.collection_revisions_button_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
 
+.see_review_details_button {
+  margin: 3.5px 5px 10px 0px;
+}
 
 
 
