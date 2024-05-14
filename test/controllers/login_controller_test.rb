@@ -48,6 +48,16 @@ class LoginControllerTest < ActionController::TestCase
         after_count = User.count
         assert(after_count.must_equal(before_count + 1))
       end
+
+      it "should set flash notice when user role is nil" do
+        mock_normal_edl_user
+
+        User.any_instance.stubs(:role).returns(nil)
+
+        post :urs, params: { provider: :urs }
+
+        assert_equal "The user is not provisioned with the proper ACLs. Please contact User Support at support@earthdata.nasa.gov.", flash[:notice]
+      end
     end
 
   end
