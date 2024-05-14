@@ -200,10 +200,13 @@
       setTimeout(function() {
         storedTargetFieldElement.classList.remove("highlighted");
       }, 2000);
+
+      sessionStorage.setItem('targetField', '')
       
     //Allows users to click on bubble up top and be auto-directed to the column it's referring to
       function bubbleFocus(targetName) {
         var escapedTargetName = $.escapeSelector(targetName)
+        console.log("🚀 ~ bubbleFocus ~ escapedTargetName:", escapedTargetName)
         var associatedTargetElement = $('#column_' + escapedTargetName)[0]
         
         associatedTargetElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
