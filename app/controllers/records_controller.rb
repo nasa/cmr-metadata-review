@@ -100,12 +100,15 @@ class RecordsController < ApplicationController
 
     response_array = []
     response_records.each do |record|
+      record_format = (record[:format] == 'umm_json') ? 'umm-c' : record[:format]
+    
       response_array.push({"id":record.id, "state":record.state, "concept_id": record[:concept_id],
-        "date_ingested": record[:date_ingested], "format": record.format,
-        "revision_id": record.revision_id, "short_name": record[:short_name],
-        "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
-        "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
+      "date_ingested": record[:date_ingested], format: record_format,
+      "revision_id": record.revision_id, "short_name": record[:short_name],
+      "version": record.version_id, "no_completed_reviews": record.completed_reviews(record.reviews),
+      "no_second_reviews_requested": record_second_opinion_counts[record.id].to_i})
     end
+
     count_result = ActiveRecord::Base.connection.exec_query(count_query)
     result = {total_count: count_result.rows[0][0], page_num: page_num, page_size: page_size, records: response_array}
     render json: result
@@ -202,6 +205,12 @@ class RecordsController < ApplicationController
     redirect_to collection_path(id: collection.id, record_id: @record.id)
   end
 
+  def destroy
+    @record = Record.find(params[:id])
+    @record.destroy
+    redirect_to root_path, notice: "Collection was successfully deleted."
+  end
+
   def show
     @record_sections = @record.sections
     @bubble_data = @record.bubble_map
@@ -275,10 +284,10 @@ class RecordsController < ApplicationController
       raise ActiveRecord::Rollback, ' rollback Error reverting!' unless success
     end
     flash[:notice] = if success
-                     "The record #{@record.concept_id} was successfully updated."
-                   else
-                     "Sorry, encountered an error reverting #{@record.concept_id}"
-                   end
+        "The record #{@record.concept_id} was successfully updated."
+      else
+        "Sorry, encountered an error reverting #{@record.concept_id}"
+      end
     redirect_to home_path
   end
 
