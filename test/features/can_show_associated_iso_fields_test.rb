@@ -19,7 +19,7 @@ class UpdateReviewCommentTest < SystemTestCase
       see_collection_revision_details(1)
       click_on 'Collection Info'
       page.driver.browser.action.move_to(page.find('#ShortName').native).perform
-      assert has_content? "/gco:CharacterString = gov.nasa.esdis.umm.shortname"
+      page.has_content? "/gco:CharacterString = gov.nasa.esdis.umm.shortname"
     end
     it 'Navigate to show iso smap field mapping' do
       visit '/home'
@@ -27,7 +27,7 @@ class UpdateReviewCommentTest < SystemTestCase
       see_collection_revision_details(1)
       click_on 'Collection Info'
       page.driver.browser.action.move_to(page.find('#ShortName').native).perform
-      assert has_content? "/gco:CharacterString = The ECS Short Name"
+      page.has_content? "/gco:CharacterString = The ECS Short Name"
     end
   end
 end
