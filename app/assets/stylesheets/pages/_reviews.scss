@@ -374,6 +374,7 @@
 
       .height_holder {
         height: 40px;
+        overflow: hidden;
       }
 
       .color_code_background {
@@ -531,6 +532,7 @@
   .discussion_td {
     vertical-align: top;
     max-height: 300px;
+    padding-bottom: 30px;
   }
 
   .discussion_holder {
