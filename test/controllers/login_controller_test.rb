@@ -50,13 +50,28 @@ class LoginControllerTest < ActionController::TestCase
       end
 
       it "should set flash notice when user role is nil" do
-        mock_normal_edl_user
 
-        User.any_instance.stubs(:role).returns(nil)
+        AclDao.any_instance.stubs(:get_role_and_daac).returns([nil, nil])
 
         post :urs, params: { provider: :urs }
 
         assert_equal "The user is not provisioned with the proper ACLs. Please contact User Support at support@earthdata.nasa.gov.", flash[:notice]
+      end
+
+      it "should set flash notice when CMR ACL request fails" do
+
+        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser")
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization' => 'Bearer accesstoken'
+            })
+          .to_return(status: 500)
+
+        post :urs, params: { provider: :urs }
+
+        assert_equal "Error retrieving ACLs from CMR for normaluser", flash[:notice]
       end
     end
 
