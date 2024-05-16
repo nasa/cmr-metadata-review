@@ -50,8 +50,15 @@ class LoginControllerTest < ActionController::TestCase
       end
 
       it "should set flash notice when user role is nil" do
-
-        AclDao.any_instance.stubs(:get_role_and_daac).returns([nil, nil])
+        stub_request(:get, "#{Cmr.get_cmr_base_url}/access-control/acls?page_num=1&page_size=2000&permitted_user=normaluser")
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'Authorization' => 'Bearer accesstoken'
+            }
+          )
+          .to_return(status: 200, body: '{"hits":0,"took":661,"items":[]}', headers: {})
 
         post :urs, params: { provider: :urs }
 
