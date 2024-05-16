@@ -11,9 +11,9 @@
           <p class="bubble_title_text"><%= @section_title %></p>
         </div>
         <!-- bubbles -->
-        <div class="bubble_title">
+        <div id="bubble_title" class="bubble_title">
           <% @bubble_data.each do |bubble| %>
-            <div class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
+            <button id="bubble_<%= bubble[:field_name] %>" onclick="bubbleFocus('<%= bubble[:field_name] %>')" class="bubble inline_bubble flag_<%= bubble[:color] %> <%= script_class(bubble) %> bubbletooltip" title="<%= bubble[:field_name] %>">
               <p class="bubbletooltiptext"><%= split_on_capitals(bubble[:field_name]) %></p>
               <% if current_user.arc? && bubble[:opinion] && bubble[:opinion] != "" %>
                 <div class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
@@ -22,7 +22,7 @@
               <% else %>
                 <div style="visibility: hidden;" class="<%= script_text_class(bubble) %> bubble_opinion">2</div>
               <% end %>
-            </div>
+            </button>
           <% end %>
         </div>
       </div>
@@ -36,41 +36,41 @@
     <div>
       <div class="scroll_table" id="scroll_table">
 
-        <table class="review_table">
+        <table id="review_table" class="review_table">
           <tr class="section_title_row">
             <th class="headcol first_headcol"></th>
 
             <!-- for each of shown value list, create td for value -->
             <% @section_titles.each do |title| %>
-              <td class="title_column column_<%= title %>">
+              <td class="title_column column_<%= title %>" id="column_<%= title %>">
                 <div class="title_text">
-              <span class="title_value">
-                <span class="title_value_star">
-                  <%= split_on_capitals(title) %>
-                  <% if @controlled_notices[title] %>
-                    <i class="fa fa-asterisk controlled_icon tooltip">
-                      <p class="tooltiptext"><%= @controlled_notices[title] %></p>
-                    </i>
-                  <% end %>
-                </span>
-                <% if @record.native_format == 'iso19115' %>
-                  <% sections = getISOMendsFieldMappingSections(title) %>
-                  <span class="iso_label tooltip" id="<%= title %>">ISO
-                  <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %>
-                    <span style="font-weight: normal"><%= getISOMendsFieldText(section) %></span></span><% } %></p>
+                  <span class="title_value">
+                    <span class="title_value_star">
+                      <%= split_on_capitals(title) %>
+                      <% if @controlled_notices[title] %>
+                        <i class="fa fa-asterisk controlled_icon tooltip">
+                          <p class="tooltiptext"><%= @controlled_notices[title] %></p>
+                        </i>
+                      <% end %>
+                    </span>
+                    <% if @record.native_format == 'iso19115' %>
+                      <% sections = getISOMendsFieldMappingSections(title) %>
+                      <span class="iso_label tooltip" id="<%= title %>">ISO
+                      <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %>
+                        <span style="font-weight: normal"><%= getISOMendsFieldText(section) %></span></span><% } %></p>
+                      </span>
+                    <% end %>
+                    <% if @record.native_format == 'iso-smap' %>
+                      <% sections = getISOSmapFieldMappingSections(title) %>
+                      <span class="iso_label tooltip" id="<%= title %>">ISO
+                      <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %>
+                        <span style="font-weight: normal"><%= getISOSmapFieldText(section) %></span></span><% } %></p>
+                      </span>
+                    <% end %>
                   </span>
-                <% end %>
-                <% if @record.native_format == 'iso-smap' %>
-                  <% sections = getISOSmapFieldMappingSections(title) %>
-                  <span class="iso_label tooltip" id="<%= title %>">ISO
-                  <p class="iso_tooltiptext"><% sections.each { |section| %><span style="font-weight: bold"><%= section %>
-                    <span style="font-weight: normal"><%= getISOSmapFieldText(section) %></span></span><% } %></p>
-                  </span>
-                <% end %>
-              </span>
-                </div>
-                <div class="widthGrab">
-                  <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                  <div class="widthGrab">
+                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                  </div>
                 </div>
               </td>
             <% end %>
@@ -189,6 +189,34 @@
 
 
     <script type="text/javascript">
+      //Users who are directed to the reviews page from a bubble click redirect to section they clicked on
+      var storedTargetField = sessionStorage.getItem('targetField')
+      var escapedTargetField = $.escapeSelector(storedTargetField)
+      var storedTargetFieldElement = $('#column_' + escapedTargetField)[0]
+
+      storedTargetFieldElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+      storedTargetFieldElement.classList.add("highlighted")
+
+      setTimeout(function() {
+        storedTargetFieldElement.classList.remove("highlighted");
+      }, 2000);
+
+      sessionStorage.setItem('targetField', '')
+      
+    //Allows users to click on bubble up top and be auto-directed to the column it's referring to
+      function bubbleFocus(targetName) {
+        var escapedTargetName = $.escapeSelector(targetName)
+        console.log("🚀 ~ bubbleFocus ~ escapedTargetName:", escapedTargetName)
+        var associatedTargetElement = $('#column_' + escapedTargetName)[0]
+        
+        associatedTargetElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+        associatedTargetElement.classList.add("highlighted")
+
+        setTimeout(function() {
+          associatedTargetElement.classList.remove("highlighted");
+        }, 2000);
+      }
+
       //This is adding the ability to drag to adjust column widths
       //all column widths are determine by the top row of table, with class title_column
       (function setupWidthAdjustment() {
