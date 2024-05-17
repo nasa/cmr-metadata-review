@@ -27,7 +27,7 @@
       <!--Column 4: the update and delete icons-->
       <div id=<%= "icon-group" + getFormDiscussionId(message) %> class="discussion_update_icons">
         <i class="fa fa-edit fa-lg" style="font-size:16px" aria-hidden="true" onclick='toggle("<%=getFormDiscussionId(message)%>");toggle("<%="text" + getFormDiscussionId(message)%>"); toggle("<%="icon-group" + getFormDiscussionId(message)%>")'></i>
-        <%= link_to("javascript:submitDeleteForm(#{message.id.to_s})", data: {confirm: 'Delete discussion. Are you sure?'}) do %>
+        <%= link_to("javascript:submitDeleteForm(#{message.id.to_s})", data: {confirm: 'Delete discussion. Any unsaved changes will be lost. Are you sure?'}) do %>
           <i class="fa fa-remove fa-lg" style="font-size:16px; color: red" aria-hidden="true"></i>
         <% end %>
       </div>
