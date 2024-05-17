@@ -233,8 +233,8 @@
     border-bottom: none;
 
     &__user-row {
-       border-left-color: $review-gray-dark;
-       border-top-color: $review-gray-dark;
+      border-left-color: $review-gray-dark;
+      border-top-color: $review-gray-dark;
     }
 
     &__script-row {
@@ -363,7 +363,7 @@
   }
 
   tr div {
-    max-height: fit-content;
+    max-height: 180px;
     min-height: 19px;
     overflow: auto;
   }
