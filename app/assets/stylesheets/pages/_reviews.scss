@@ -233,8 +233,8 @@
     border-bottom: none;
 
     &__user-row {
-       border-left-color: $review-gray-dark;
-       border-top-color: $review-gray-dark;
+      border-left-color: $review-gray-dark;
+      border-top-color: $review-gray-dark;
     }
 
     &__script-row {
@@ -363,7 +363,7 @@
   }
 
   tr div {
-    max-height:180px;
+    max-height: 180px;
     min-height: 19px;
     overflow: auto;
   }
@@ -374,6 +374,7 @@
 
       .height_holder {
         height: 40px;
+        overflow: hidden;
       }
 
       .color_code_background {
@@ -507,9 +508,6 @@
   }
 
   .new_discussion {
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color:black;
 
     textarea {
       background-color:white;
@@ -518,6 +516,7 @@
       box-shadow: inset 2px 2px 2px 2px #dddddd;
       padding: 5px;
       box-sizing: border-box;
+      height: 150px;
     }
 
     textarea:disabled {
@@ -533,6 +532,7 @@
   .discussion_td {
     vertical-align: top;
     max-height: 300px;
+    padding-bottom: 30px;
   }
 
   .discussion_holder {
@@ -544,16 +544,16 @@
   }
 
   .discussion_comment {
+    padding-bottom: 2px;
+    margin-bottom: 5px;
 
     .discussion_title {
-      padding: 5px;
-
+      padding-bottom: 5px;
       font-size: 0.8em;
       font-weight: bold;
     }
 
     .discussion_text {
-      border-bottom: 1px solid black;
       display: flex;
       align-content: stretch;
       justify-content: center;
@@ -567,10 +567,12 @@
     justify-content: center;
     align-self: stretch;
     flex-grow: 1;
+    padding-bottom: 20px;
   }
   .discussion_text_label {
     display: flex;
     flex-grow: 1;
+    max-width: 73%;
   }
   .discussion_update_form {
     display: none;
