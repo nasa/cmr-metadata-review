@@ -661,7 +661,7 @@ class Record < ApplicationRecord
     end
   end
 
-  # Returns should return a list where each entry is a (title,[title_list])
+  # Should return a list where each entry is a (title,[title_list])
   def mmt_sections
     section_list = []
 
