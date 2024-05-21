@@ -19,6 +19,7 @@
       background-color: lighten($ocean-blue, 10%);
       padding: .2em .6em .3em .6em;
       border-radius: 5px;
+      min-width: 150px;
     }
   
     .eui-badge--sm {
