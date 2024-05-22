@@ -1,5 +1,5 @@
 <article class="section_display flex_item">
-  <button class="section_button" onclick="location.href='<%= review_path(id: params["id"], section_index: index_count) %>';">
+  <button data-testid="records--show__<%=section[0]%>" class="section_button" onclick="location.href='<%= review_path(id: params["id"], section_index: index_count) %>';">
   <%= space_digits(section[0]) %>
   <!-- arrow to review section -->
   <div class="eui-icon eui-fa-arrow-circle-right"></div>

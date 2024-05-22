@@ -345,3 +345,16 @@ granule_red_longname:
   opinion: false
   flag: []
   recommendation: "ok"
+
+iso_collection_1_quality:
+  id: 42
+  record_id: 42
+  column_name: "Quality"
+  value: "Test Iso Collection 1 Quality"
+  last_updated: null
+  color: "green"
+  script_comment: "ok"
+  opinion: false
+  flag: [ ]
+  recommendation: "ok"
+
