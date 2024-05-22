@@ -626,6 +626,10 @@ class Record < ApplicationRecord
 
   #should return a list where each entry is a (title,[title_list])
   def sections
+    if format == 'umm_json' and recordable_type == "Collection"
+      return mmt_sections
+    end
+
     section_list = []
 
     get_section_titles.each do |title|
@@ -655,6 +659,49 @@ class Record < ApplicationRecord
       end
       section_list
     end
+  end
+
+  # Should return a list where each entry is a (title,[title_list])
+  def mmt_sections
+    section_list = []
+
+    path = File.join(Rails.root,"/data/ummc_section_titles.json")
+    json = JSON.load(File.read(path))
+    field_list = []
+    map = {}
+    json.each do |obj|
+      display_name = obj["displayName"]
+      field_list << display_name
+      map[display_name] = obj["properties"]
+    end
+
+    field_list.each do |title|
+      section = self.get_mmt_section(title, map)
+      if section[0][1].count > 0
+        section_list += section
+      end
+    end
+
+    used_titles = (section_list.map {|section| section[1]}).flatten
+    all_titles = self.sorted_record_datas.map { |data| data.column_name }
+
+    others = [["Other", all_titles.select {|title| !used_titles.include? title }]]
+
+    section_list + others
+  end
+
+  def get_mmt_section(section_name, map)
+    section_list = []
+
+    all_titles = self.sorted_record_datas.map { |data| data.column_name }
+    sections = map[section_name]
+    sections.each do |sub_section_name|
+      one_section = all_titles.select { |title| title.match(/^#{sub_section_name}/) }
+      if one_section.any?
+        section_list.push(one_section)
+      end
+    end
+    [[section_name, section_list.flatten]]
   end
 
   def color_codes
