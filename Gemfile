@@ -40,7 +40,7 @@ gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
 gem 'ruby-progressbar'
-gem 'dotenv-rails'
+gem 'dotenv-rails', '>= 3.1.2'
 gem 'rexml'
 
 group :test do
