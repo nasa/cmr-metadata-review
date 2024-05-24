@@ -44,7 +44,7 @@ gem 'dotenv-rails'
 gem 'rexml'
 
 group :test do
-  gem 'webmock'
+  gem 'webmock', '>= 3.23.1'
   gem 'mocha'
   gem 'minitest-reporters'
   gem 'minitest-rails'
