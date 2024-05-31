@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.0.8', '>= 7.0.8.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
 gem 'pg', group: [:test, :development, :production]
 
-gem "shakapacker", "6.5"
-gem "react-rails", "2.6"
+gem "shakapacker", "6.5.1"
+gem "react-rails", "2.6.1"
 
 gem 'sprockets-rails'
 
@@ -40,14 +40,14 @@ gem 'aasm', '~> 4.12.0'
 
 gem 'rubyXL'
 gem 'ruby-progressbar'
-gem 'dotenv-rails'
+gem 'dotenv-rails', '>= 3.1.2'
 gem 'rexml'
 
 group :test do
   gem 'webmock'
   gem 'mocha'
   gem 'minitest-reporters'
-  gem 'minitest-rails'
+  gem 'minitest-rails', '>= 7.1.0'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'launchy'
@@ -88,7 +88,7 @@ gem 'omniauth-oauth2'
 gem 'faraday_middleware', '1.2.0'
 
 gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", tag: "release/v1.2.0"
-gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-rails_csrf_protection', '>= 1.0.2'
 # gem 'omniauth-urs', :git => "https://git.earthdata.nasa.gov/scm/cmrarc/omniauth-urs.git", path: "/Users/cgokey/src/rails/ruby2.7.2/omniauth-urs"
 
 gem 'figaro'
