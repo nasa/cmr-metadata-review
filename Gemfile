@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.0.8.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
@@ -41,7 +41,8 @@ gem 'aasm', '~> 4.12.0'
 gem 'rubyXL'
 gem 'ruby-progressbar'
 gem 'dotenv-rails'
-gem 'rexml'
+gem 'rexml', '>= 3.2.7'
+gem 'nokogiri', '>= 1.16.5'
 
 group :test do
   gem 'webmock'
