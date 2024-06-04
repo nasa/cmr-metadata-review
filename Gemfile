@@ -42,7 +42,6 @@ gem 'rubyXL'
 gem 'ruby-progressbar'
 gem 'dotenv-rails'
 gem 'rexml', '>= 3.2.7'
-gem 'nokogiri', '>= 1.16.5'
 
 group :test do
   gem 'webmock'
