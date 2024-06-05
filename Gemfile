@@ -41,7 +41,6 @@ gem 'aasm', '~> 4.12.0'
 gem 'rubyXL'
 gem 'ruby-progressbar'
 gem 'dotenv-rails'
-gem 'rexml', '>= 3.2.7'
 
 group :test do
   gem 'webmock'

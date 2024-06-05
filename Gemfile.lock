@@ -2033,7 +2033,6 @@ DEPENDENCIES
   rails-erd
   rdoc
   react-rails (= 2.6)
-  rexml (>= 3.2.7)
   rspec-rails
   ruby-progressbar
   rubyXL
