@@ -80,7 +80,7 @@ gem 'aws-sdk', '~> 3.0.0'
 gem 'font-awesome-sass', '>= 5.15.1'
 gem 'font-awesome-rails', '>= 4.7.0.7'
 #gem 'activerecord', '~> 6.1'
-gem 'activerecord-session_store'#, '2.0.0'
+gem 'activerecord-session_store', '>= 2.1.0' #, '2.0.0'
 gem 'whenever', require: false
 gem 'oauth2'
 gem 'omniauth-oauth2'
