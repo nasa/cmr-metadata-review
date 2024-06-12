@@ -189,42 +189,6 @@
 
 
     <script type="text/javascript">
-      //sets all of the flag colors on first/following page loads and updates
-      function update_color_backgrounds() {
-        //hidden select inputs
-        var color_selects = document.getElementsByClassName("color_code_select");
-        //full td cell
-        var color_cells = document.getElementsByClassName("color_code_cell");
-        //the div containing the color selecting icons
-        var color_button_sets = document.getElementsByClassName("color_code_background");
-        //the divs containing the x out option to remove a selected color
-        var color_cancels = document.getElementsByClassName("color_cancel_selection");
-
-        var counter = 0;
-        //iterating over all the hidden color select inputs
-        while (counter < color_selects.length) {
-          var color = color_selects[counter].value
-          //Removing all BG colors from the cell
-          <% ["color_green", "color_yellow", "color_red", "color_blue", "color_gray"].each do |color_class| %>
-          color_cells[counter].classList.remove("<%=color_class%>");
-          <% end %>
-          //adding the class that corresponds to the color selected in the select input
-          color_cells[counter].classList.add("color_" + color.toString());
-          //if no color selected, show the set of color icons to click
-          if (color == "") {
-            color_button_sets[counter].style.display = "flex";
-            color_cancels[counter].style.display = "none";
-            //if color is selected, hide color icons, and show the x out button to remove color selection
-          } else {
-            color_button_sets[counter].style.display = "none";
-            color_cancels[counter].style.display = "block";
-          }
-          counter = counter + 1;
-        }
-      }
-      
-      update_color_backgrounds()
-
       //Users who are directed to the reviews page from a bubble click redirect to section they clicked on
       var storedTargetField = sessionStorage.getItem('targetField')
       var escapedTargetField = $.escapeSelector(storedTargetField)
@@ -242,6 +206,7 @@
     //Allows users to click on bubble up top and be auto-directed to the column it's referring to
       function bubbleFocus(targetName) {
         var escapedTargetName = $.escapeSelector(targetName)
+        console.log("🚀 ~ bubbleFocus ~ escapedTargetName:", escapedTargetName)
         var associatedTargetElement = $('#column_' + escapedTargetName)[0]
         
         associatedTargetElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
@@ -320,6 +285,42 @@
         }, false);
       })();
 
+
+      //sets all of the flag colors on page loads and updates
+      function update_color_backgrounds() {
+        //hidden select inputs
+        var color_selects = document.getElementsByClassName("color_code_select");
+        //full td cell
+        var color_cells = document.getElementsByClassName("color_code_cell");
+        //the div containing the color selecting icons
+        var color_button_sets = document.getElementsByClassName("color_code_background");
+        //the divs containing the x out option to remove a selected color
+        var color_cancels = document.getElementsByClassName("color_cancel_selection");
+
+        var counter = 0;
+        //iterating over all the hidden color select inputs
+        while (counter < color_selects.length) {
+          var color = color_selects[counter].value
+          //Removing all BG colors from the cell
+          <% ["color_green", "color_yellow", "color_red", "color_blue", "color_gray"].each do |color_class| %>
+          color_cells[counter].classList.remove("<%=color_class%>");
+          <% end %>
+          //adding the class that corresponds to the color selected in the select input
+          color_cells[counter].classList.add("color_" + color.toString());
+          //if no color selected, show the set of color icons to click
+          if (color == "") {
+            color_button_sets[counter].style.display = "flex";
+            color_cancels[counter].style.display = "none";
+            //if color is selected, hide color icons, and show the x out button to remove color selection
+          } else {
+            color_button_sets[counter].style.display = "none";
+            color_cancels[counter].style.display = "block";
+          }
+          counter = counter + 1;
+        }
+      }
+
+      update_color_backgrounds();
     </script>
 
 

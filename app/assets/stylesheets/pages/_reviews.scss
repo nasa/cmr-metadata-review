@@ -253,10 +253,13 @@
     min-width: 220px;
     position: relative;
     padding-right: 25px;
+    height: 50px;
+    position: relative;
   }
 
   .title_column::after {
     display: block;
+    content: '';
     position: absolute;
     inset: 0;
     background-color: transparent;
@@ -265,7 +268,6 @@
 
   .title_column.highlighted::after {
     background-color: rgba(255, 255, 0, 0.5);
-    content: '';
     transition: background-color 1s;
   }
 
