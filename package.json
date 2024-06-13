@@ -13,7 +13,6 @@
     "babel-loader": "8",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-react-app": "^10.0.1",
-    "braces": "^3.0.3",
     "compression-webpack-plugin": "9",
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
