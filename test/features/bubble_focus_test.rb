@@ -35,6 +35,7 @@ class BubbleFocusTest < SystemTestCase
         end
         within "#review_table" do
           assert_selector('#column_LongName.highlighted')
+          assert_selector('td.color_code_cell.column_LongName.color_green')
         end
         within "#bubble_title" do
           find('#bubble_ShortName', wait: 10).click
