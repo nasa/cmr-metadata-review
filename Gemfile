@@ -67,7 +67,7 @@ gem 'simplecov', :require => false, :group => :test
 gem 'puma', '~> 6.4.2'
 gem 'puma-daemon', require: false
 #base authentication gem
-gem 'devise'
+gem 'devise', '>= 4.9.3'
 #setting user permissions for pages
 gem 'cancancan'
 
