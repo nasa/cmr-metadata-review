@@ -194,12 +194,14 @@
       var escapedTargetField = $.escapeSelector(storedTargetField)
       var storedTargetFieldElement = $('#column_' + escapedTargetField)[0]
 
-      storedTargetFieldElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
-      storedTargetFieldElement.classList.add("highlighted")
-
-      setTimeout(function() {
-        storedTargetFieldElement.classList.remove("highlighted");
-      }, 2000);
+      if (storedTargetFieldElement) {
+        storedTargetFieldElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+        storedTargetFieldElement.classList.add("highlighted")
+  
+        setTimeout(function() {
+          storedTargetFieldElement.classList.remove("highlighted");
+        }, 2000);
+      }
 
       sessionStorage.setItem('targetField', '')
       
