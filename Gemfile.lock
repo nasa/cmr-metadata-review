@@ -2034,6 +2034,7 @@ DEPENDENCIES
   rails-erd
   rdoc
   react-rails (= 2.6)
+  rexml
   rspec-rails
   ruby-progressbar
   rubyXL
