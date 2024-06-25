@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     resources :discussions
     resources :reviews do
       member do
+        get "json"
+        put "save_review"
         put "update_review_comment"
         put "update_report_comment"
       end
