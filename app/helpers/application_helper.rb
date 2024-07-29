@@ -172,11 +172,7 @@ module ApplicationHelper
   end
 
   def pyquarc_version
-    version_file = "#{Rails.configuration.root}/lib/pyQuARC.egg/pyQuARC/version.txt"
-    if File.exist?(version_file)
-      return IO.read(version_file)
-    end
-    '(unknown)'
+    return Quarc.instance.version
   end
 
 end
