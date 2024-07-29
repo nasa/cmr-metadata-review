@@ -3,26 +3,22 @@ class Quarc
   include Singleton
 
   def validate(format, metadata)
-    conn = Faraday.new(QUARC_API) do |f|
-      f.request :multipart
-      f.request :url_encoded
-      f.adapter :net_http # This is what ended up making it work
-    end
-
     Tempfile.create do |file|
       file << metadata
       file.flush
-      payload = { format: format,
-                  :file => Faraday::UploadIO.new(file.path, 'text/plain')
-      }
-      response = conn.post('/', payload)
-      if (response.status != 200)
-        raise Errors::PyQuARCError, "PyQuARC Error: (#{response.body})"
+      response = HTTParty.post(
+        QUARC_API,
+        body: {
+          format: format,
+          file: File.open(file.path)
+        }
+      )
+      if (response.code != 200)
+        raise Errors::PyQuARCError, "PyQuARC Error22222: (#{response.body} #{response.status})"
       end
       response = JSON.parse(response.body)
       process(response)
     end
-
   end
 
   def process(validation_results)
