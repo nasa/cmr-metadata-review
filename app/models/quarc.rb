@@ -1,13 +1,21 @@
 class Quarc
-  QUARC_API = "https://quarc.nasa-impact.net/validate"
+  QUARC_API = "https://quarc.nasa-impact.net"
   include Singleton
+
+  def version
+    response = HTTParty.get(
+      "https://quarc.nasa-impact.net/version"
+    )
+    response = JSON.parse(response.body)
+    response["pyQuARC"]
+  end
 
   def validate(format, metadata)
     Tempfile.create do |file|
       file << metadata
       file.flush
       response = HTTParty.post(
-        QUARC_API,
+        "#{QUARC_API}/validate",
         body: {
           format: format,
           file: File.open(file.path)
