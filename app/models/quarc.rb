@@ -6,6 +6,9 @@ class Quarc
     response = HTTParty.get(
       "https://quarc.nasa-impact.net/version"
     )
+    if (response.code != 200)
+      return "unknown"
+    end
     response = JSON.parse(response.body)
     response["pyQuARC"]
   end

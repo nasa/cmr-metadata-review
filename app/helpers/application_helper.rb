@@ -172,7 +172,10 @@ module ApplicationHelper
   end
 
   def pyquarc_version
-    return Quarc.instance.version
+    if Rails.env.test?
+      return "test"
+    end
+    Quarc.instance.version
   end
 
 end
