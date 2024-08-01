@@ -25,7 +25,7 @@ class Quarc
         }
       )
       if (response.code != 200)
-        raise Errors::PyQuARCError, "PyQuARC Error22222: (#{response.body} #{response.status})"
+        raise Errors::PyQuARCError, "PyQuARC Error: (#{response.body} #{response.code})"
       end
       response = JSON.parse(response.body)
       process(response)
