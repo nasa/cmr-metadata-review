@@ -28,8 +28,13 @@ class DocumentAmendmentsTest < ActiveSupport::TestCase
     end
     it 'will work properly with an empty document' do
       object = {}
-      Cmr.dig_and_set_na(object, ["alpha", "beta", "value"])
-      assert_equal(object, {"alpha"=>{"beta"=>{"value"=>"N/A"}}})
+      Cmr.dig_and_set_na(@object, ["alpha", "beta", "value"])
+      assert_equal(@object, {"alpha"=>{"beta"=>{"value"=>"N/A"}}})
+    end
+    it "only digs through hashes" do
+      # In this case value is a string, so it can't continue to dig.
+      Cmr.dig_and_set_na(@object, ["alpha", "beta", "value", "foo"])
+      assert_equal(@object, {:alpha=>{:beta=>{:value=>"foo", :gamma=>{}}}})
     end
   end
 
