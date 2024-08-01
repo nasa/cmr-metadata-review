@@ -42,7 +42,6 @@
 
             <!-- for each of shown value list, create td for value -->
             <% @section_titles.each do |title| %>
-              <%= puts title %>
               <td class="title_column column_<%= title %>" id="column_<%= title %>">
                 <div class="title_text">
                   <span class="title_value">
@@ -233,20 +232,20 @@
       if (storedTargetFieldElement) {
         storedTargetFieldElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
         storedTargetFieldElement.classList.add("highlighted")
-  
+
         setTimeout(function() {
           storedTargetFieldElement.classList.remove("highlighted");
         }, 2000);
       }
 
       sessionStorage.setItem('targetField', '')
-      
+
     //Allows users to click on bubble up top and be auto-directed to the column it's referring to
       function bubbleFocus(targetName) {
         var escapedTargetName = $.escapeSelector(targetName)
         console.log("🚀 ~ bubbleFocus ~ escapedTargetName:", escapedTargetName)
         var associatedTargetElement = $('#column_' + escapedTargetName)[0]
-        
+
         associatedTargetElement.scrollIntoView({ behavior: 'smooth', inline: 'center' })
         associatedTargetElement.classList.add("highlighted")
 
