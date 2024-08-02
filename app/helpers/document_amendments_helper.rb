@@ -25,15 +25,15 @@ module DocumentAmendmentsHelper
           dig_and_set_na(item, stack.dup)
         end
       else
-        field = stack.shift()
         if parent.is_a?(Hash)
+          field = stack.shift()
           value = parent[field]
+          if value.nil?
+            value = stack.length == 0 ? 'N/A' : {}
+            parent[field] = value
+          end
+          dig_and_set_na(parent[field], stack.dup)
         end
-        if value.nil?
-          value = stack.length == 0 ? 'N/A' : {}
-          parent[field] = value
-        end
-        dig_and_set_na(parent[field], stack.dup)
       end
     end
 
