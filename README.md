@@ -93,6 +93,9 @@ All development work is done on local copies of the code base.  Follow the steps
     createuser -s cmrdash_test
 
 ### Installing source code
+
+**Note:** You must first [fork](https://github.com/nasa/cmr-metadata-review/fork) this repository.
+
     git clone https://[userid]@github.com/nasa/cmr-metadata-review.git
     cd cmr-metadata-review
     rake db:create:all
