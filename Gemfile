@@ -52,7 +52,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-screenshot'
   gem 'minitest-stub_any_instance'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 6.1.3'
 end
 
 group :development, :test do
