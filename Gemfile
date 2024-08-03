@@ -43,11 +43,11 @@ gem 'ruby-progressbar'
 gem 'dotenv-rails'
 
 group :test do
-  gem 'webmock'
+  gem 'webmock', '>= 3.23.1'
   gem 'mocha'
   gem 'minitest-reporters'
   gem 'minitest-rails'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '>= 4.11.0'
   gem 'webdrivers'
   gem 'launchy'
   gem 'capybara-screenshot'
@@ -93,7 +93,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'figaro'
 gem 'rails-controller-testing'
 gem 'actionpack', '7.0.8.4'
-gem 'rexml'
+gem 'rexml', '>= 3.3.2'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
