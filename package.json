@@ -22,7 +22,7 @@
     "react_ujs": "^3.2.0",
     "shakapacker": "6.5.0",
     "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.91.0",
+    "webpack": "^5.94.0",
     "webpack-assets-manifest": "^5.2.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
