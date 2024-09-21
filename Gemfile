@@ -64,7 +64,7 @@ end
 gem 'simplecov', :require => false, :group => :test
 
 #using puma server instead of webBrick
-gem 'puma', '~> 6.4.2'
+gem 'puma', '~> 6.4.3'
 gem 'puma-daemon', require: false
 #base authentication gem
 gem 'devise'
