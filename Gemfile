@@ -93,7 +93,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'figaro'
 gem 'rails-controller-testing'
 gem 'actionpack', '7.0.8.4'
-gem 'rexml'
+gem 'rexml', '>= 3.3.9'
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
