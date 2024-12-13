@@ -11,7 +11,7 @@ gem 'pg', group: [:test, :development, :production]
 gem "shakapacker", "6.5"
 gem "react-rails", "2.6"
 
-gem 'sprockets-rails'
+gem 'sprockets-rails', '>= 3.5.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
