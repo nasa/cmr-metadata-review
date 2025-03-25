@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@babel/core": "7",
+    "@babel/core": "7.26.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-class-properties": "^7.24.1",
     "@babel/plugin-transform-numeric-separator": "^7.24.1",
