@@ -696,7 +696,7 @@ class Record < ApplicationRecord
     all_titles = self.sorted_record_datas.map { |data| data.column_name }
     sections = map[section_name]
     sections.each do |sub_section_name|
-      one_section = all_titles.select { |title| title.match(/^#{sub_section_name}/) }
+      one_section = all_titles.select { |title| title.match(/^#{sub_section_name}$/) }
       if one_section.any?
         section_list.push(one_section)
       end
