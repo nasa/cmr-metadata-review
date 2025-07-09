@@ -174,7 +174,7 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
       see_collection_review_details('#in_arc_review', 1)
       see_collection_revision_details(8)
       click_button 'Collection Info'
-      expect(page).to have_content("VersionDescription", count: 2)
+      page.must_have_content("VersionDescription", count: 2)
     end
   end
 end
