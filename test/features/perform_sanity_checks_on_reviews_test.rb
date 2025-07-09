@@ -162,6 +162,22 @@ class PerformsSanityChecksOnReviewsTest < SystemTestCase
       assert_no_css '#done_button'
     end
   end
+
+  describe 'viewing the Collection Info, only one VersionDescription column is present.' do
+    before do
+      mock_login(role: 'arc_curator')
+      visit '/home'
+    end
+
+    it 'verify only one VersionDescription appears' do
+      # Select First Collection in In Arc Review
+      see_collection_review_details('#in_arc_review', 1)
+      see_collection_revision_details(8)
+      click_button 'MARK AS DONE'
+      click_button 'Collection Info'
+      expect(page).to have_content("VersionDescription", count: 2)
+    end
+  end
 end
 
 
