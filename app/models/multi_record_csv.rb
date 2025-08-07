@@ -50,22 +50,28 @@ class MultiRecordCsv
 
           # Create collection column titles based on report user requests
           collection_column_titles = ['umm_json_link', 'short name', 'long name', 'concept_id', 'revision id']
+          # Make sure the collection titles are only added once
+          all_collection_titles_added = false
           records_for_format.each do |collection_record|
             data_hash = record_datas_organized_by_title(collection_record)
             collection_fields.each do |title|
               record_data = data_hash[title]
-              if full_report == true
-                collection_column_titles << title
-              elsif !record_data.nil? && !full_report && (record_data.recommendation != "")
-                collection_column_titles << title
+              if all_collection_titles_added == false 
+                if full_report == true
+                  collection_column_titles << title
+                elsif !record_data.nil? && !full_report && (record_data.recommendation != "")
+                  collection_column_titles << title
+                end
               end
             end
 
-            if full_report
+            if full_report && all_collection_titles_added == false
               METRIC_FIELDS.each do |field|
                 collection_column_titles.push(field)
               end
             end
+
+            all_collection_titles_added = true
 
             csv << ['Collection'] + Array.new(collection_column_titles.count - 1) + ['Granule']
         
@@ -129,14 +135,16 @@ class MultiRecordCsv
 # need to take in another argument called full_report which is a boolean
   def generate_csv_line(record, fields, is_collection, full_report_boolean)
     line = if is_collection
+      start_index = 4
       [record.umm_json_link] + [record.short_name] + [record.long_name] + [record.concept_id] + [record.revision_id]
     else
+      start_index = 3
       [record.umm_json_link] + [record.long_name] + [record.concept_id] + [record.revision_id]
     end
 
     data_hash = record_datas_organized_by_title(record)
     
-    fields.each do |title|
+    fields.each_with_index do |title, index|
       data_string = nil
       record_data = data_hash[title]
       if full_report_boolean && !record_data.nil?
@@ -151,6 +159,10 @@ class MultiRecordCsv
       
       if !data_string.nil?
         line << data_string
+      elsif index > start_index and !title.include?(" fields")
+        # Add nil entry to line up data properly for multi collection
+        # Ignore for the initial record entries or the metric fields
+        line << nil
       end
     end
 
