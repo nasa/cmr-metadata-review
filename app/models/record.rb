@@ -696,9 +696,17 @@ class Record < ApplicationRecord
     all_titles = self.sorted_record_datas.map { |data| data.column_name }
     sections = map[section_name]
     sections.each do |sub_section_name|
-      one_section = all_titles.select { |title| title.match(/^#{sub_section_name}$/) }
+      one_section = all_titles.select { |title| title.match(/^#{sub_section_name}/) }
       if one_section.any?
-        section_list.push(one_section)
+        # CMRARC-880: Check for mutiple matches and if they don't include "/", 
+        # then just add the sub_section_name. This is because Version matches on 
+        # both Version and VersionDescription and would add both, when it only
+        # should add Version
+        if one_section.length > 1 and !one_section.any? { |s| s.include?("/") } 
+          section_list.push(sub_section_name)
+        else 
+          section_list.push(one_section)
+        end
       end
     end
     [[section_name, section_list.flatten]]
