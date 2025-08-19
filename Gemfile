@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8.6'
+gem 'rails', '~> 7.1.5.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '1.7.3', group: [:test]
 # use pg for local and prod development
@@ -80,7 +80,7 @@ gem 'aws-sdk', '~> 3.0.0'
 gem 'font-awesome-sass', '>= 5.15.1'
 gem 'font-awesome-rails', '>= 4.7.0.7'
 #gem 'activerecord', '~> 6.1'
-gem 'activerecord-session_store'#, '2.0.0'
+gem 'activerecord-session_store', '>= 2.2.0' #, '2.0.0'
 gem 'whenever', require: false
 gem 'oauth2'
 gem 'omniauth-oauth2'
